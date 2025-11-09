@@ -5,7 +5,7 @@
 ![PyPI](https://img.shields.io/pypi/v/qteasy)
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/qteasy)
 [![Build Status](https://app.travis-ci.com/shepherdpp/qteasy.svg?branch=master)](https://app.travis-ci.com/shepherdpp/qteasy)
-[![Documentation Status](https://readthedocs.org/projects/qteasy/badge/?version=latest)](https://qteasy.readthedocs.io/zh/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/qteasy/badge/?version=latest)](https://qteasy.readthedocs.io/zh-cn/latest/)
 ![GitHub](https://img.shields.io/github/license/shepherdpp/qteasy)
 ![GitHub repo size](https://img.shields.io/github/repo-size/shepherdpp/qteasy)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/shepherdpp/qteasy)
@@ -97,7 +97,7 @@ $ pip install qteasy
 
 ## 文档
 
-关于`QTEASY`系统的更多详细解释和使用方法，请参阅[QTEASY文档](https://qteasy.readthedocs.io/zh/latest/)：
+关于`QTEASY`系统的更多详细解释和使用方法，请参阅[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)：
 
 
 ### python 版本
@@ -117,7 +117,7 @@ $ pip install qteasy
     ```bash
     $ conda install pytables  # 安装pytables
     ```
-- **`ta-lib`**, 以便使用所有的内置交易策略，下面的方法可以安装`ta-lib API`，但它还依赖C语言的`TA-Lib`包，安装方法请参考[FAQ](https://qteasy.readthedocs.io/zh/latest/faq.html#id2)
+- **`ta-lib`**, 以便使用所有的内置交易策略，下面的方法可以安装`ta-lib API`，但它还依赖C语言的`TA-Lib`包，安装方法请参考[FAQ](https://qteasy.readthedocs.io/zh-cn/latest/faq.html#id2)
     ```bash
     $ pip install 'qteasy[talib]'  # 安装qteasy时自动安装ta-lib
     $ pip install ta-lib  # 手动安装ta-lib
@@ -217,7 +217,7 @@ qt.get_history_data(htypes='open, high, low, close',
  2021-01-14  5556.2125  5568.0179  5458.6818  5470.4563
  2021-01-15  5471.3910  5500.6348  5390.2737  5458.0812}
 ```
-除了价格数据以外，`qteasy`还可以下载并管理包括财务报表、技术指标、基本面数据等在内的大量金融数据，详情请参见[qteasy文档](https://qteasy.readthedocs.io)
+除了价格数据以外，`qteasy`还可以下载并管理包括财务报表、技术指标、基本面数据等在内的大量金融数据，详情请参见[qteasy文档](https://qteasy.readthedocs.io/zh-cn/latest/manage_data/1.%20overview.html)
 
 股票的数据下载后，使用`qt.candle()`可以显示股票数据K线图。
 
@@ -278,7 +278,7 @@ qt.candle('000001.OF', start='20200101', asset_type='FD', adj='b', mav=[])
 
 ![gif](docs/source/img/output_dyna_plot.gif)
 
-关于`DataSource`对象的更多详细介绍，请参见[qteasy文档](https://qteasy.readthedocs.io)
+关于`DataSource`对象的更多详细介绍，请参见[qteasy文档](https://qteasy.readthedocs.io/zh-cn/latest/api/data_source.html)
 
 
 ###  创建一个投资策略并启动实盘自动化运行（模拟）
@@ -436,7 +436,7 @@ qt.run(op, mode=0,  # 交易模式为实盘运行)
   - 设置或调整实时价格监控的股票代码
   - 更多的功能正在逐步添加中
 
-上面两种方式都可以在实盘运行时使用，根据`qteasy`的配置参数进入不同的交互界，关于更多实盘运行的介绍，请参见[`QTEASY`文档](https://qteasy.readthedocs.io)
+上面两种方式都可以在实盘运行时使用，根据`qteasy`的配置参数进入不同的交互界，关于更多实盘运行的介绍，请参见[`QTEASY`文档](https://qteasy.readthedocs.io/zh-cn/latest/tutorials/1-get-started.html)
 
 
 ### 回测、评价并优化交易策略的性能表现
