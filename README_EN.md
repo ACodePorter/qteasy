@@ -5,7 +5,7 @@
 ![PyPI](https://img.shields.io/pypi/v/qteasy)
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/qteasy)
 [![Build Status](https://app.travis-ci.com/shepherdpp/qteasy.svg?branch=master)](https://app.travis-ci.com/shepherdpp/qteasy)
-[![Documentation Status](https://readthedocs.org/projects/qteasy/badge/?version=latest)](https://qteasy.readthedocs.io/zh/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/qteasy/badge/?version=latest)](https://qteasy.readthedocs.io/en/latest/)
 ![GitHub](https://img.shields.io/github/license/shepherdpp/qteasy)
 ![GitHub repo size](https://img.shields.io/github/repo-size/shepherdpp/qteasy)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/shepherdpp/qteasy)
@@ -92,7 +92,7 @@
 
 ## QTEASY Documentations
 
-You can find more about `qteasy` in the `QTEASY` [documents](https://qteasy.readthedocs.io/zh/latest/):
+You can find more about `qteasy` in the `QTEASY` [documents](https://qteasy.readthedocs.io/en/latest/):
 
 
 ## Installation and dependencies
@@ -121,7 +121,7 @@ All necessary dependencies of `qteasy` can be installed automatically when insta
     ```bash
     $ conda install pytables  # Install pytables
     ```
-  - **`ta-lib`**, to use all built-in trading strategies, the following methods can install the `ta-lib` API for python, but it also depends on the C language `TA-Lib` package, please refer to [FAQ](https://qteasy.readthedocs.io/zh/latest/faq.html#id2) for installation methods
+  - **`ta-lib`**, to use all built-in trading strategies, the following methods can install the `ta-lib` API for python, but it also depends on the C language `TA-Lib` package, please refer to [FAQ](https://qteasy.readthedocs.io/en/latest/faq.html#id2) for installation methods
     ```bash
     $ pip install 'qteasy[talib]'  # Install ta-lib automatically together with qteasy
     $ pip install ta-lib  # Manually install ta-lib
@@ -224,7 +224,7 @@ Above code returns a `dict` containing stock symbols as keys and Dataframe of pr
  2021-01-15  5471.3910  5500.6348  5390.2737  5458.0812}
 ```
 Apart from prices, `qteasy` can also download and manage a large amount of financial data, including financial statements, technical indicators, and basic information. For details, please refer to
-[QTEASY documents](https://qteasy.readthedocs.io)
+[QTEASY documents](https://qteasy.readthedocs.io/en/latest/manage_data/1.%20overview.html)
 
 As a shortcut, `qteasy` provides a `qt.candle()` function to plot candlestick charts of stock prices already downloaded
 
@@ -283,7 +283,7 @@ With the dynamic candlestick chart, users can control the display range of the K
 
 ![gif](docs/source/img/output_dyna_plot.gif)
 
-Find more detailed introduction to DataSource objects in [QTEASY documents](https://qteasy.readthedocs.io)
+Find more detailed introduction to DataSource objects in [QTEASY documents](https://qteasy.readthedocs.io/en/latest/api/data_source.html)
 
 
 ###  Create an investment strategy
@@ -573,5 +573,5 @@ To monitor the running process of the strategy and interact with `qteasy`, `qtea
 ![png](docs/source/examples/img/trader_app_light_theme.png) 
 ![png](docs/source/examples/img/trader_app_2.png) 
 
-Both interfaces can be used in live trading, enter different interactive interfaces according to the configuration parameters of qteasy, for more information about live trading, please refer to [`QTEASY` documents](https://qteasy.readthedocs.io)
+Both interfaces can be used in live trading, enter different interactive interfaces according to the configuration parameters of qteasy, for more information about live trading, please refer to [`QTEASY` documents](https://qteasy.readthedocs.io/en/latest/tutorials/1-get-started.html)
 
