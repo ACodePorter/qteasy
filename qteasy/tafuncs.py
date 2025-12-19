@@ -38,7 +38,7 @@ try:
 except ImportError as e:
     msg = (f'TA-lib is not installed, some built-in strategies are not available. '
            f'Install TA-lib to utilize full functionalities, please visit '
-           f'https://qteasy.readthedocs.io/zh/latest/faq.html to get more information')
+           f'https://qteasy.readthedocs.io/zh-cn/latest/faq.html to get more information')
     warnings.warn(msg, RuntimeWarning)
     TA_LIB_AVAILABLE = False
     pass

@@ -26,7 +26,7 @@ $ pip install qteasy
     ```bash
     $ conda install pytables  # 安装pytables
     ```
-- **`ta-lib`**, 以便使用所有的内置交易策略，下面的方法可以安装`ta-lib API`，但它还依赖C语言的`TA-Lib`包，安装方法请参考[FAQ](https://qteasy.readthedocs.io/zh/latest/faq.html#id2)
+- **`ta-lib`**, 以便使用所有的内置交易策略，下面的方法可以安装`ta-lib API`，但它还依赖C语言的`TA-Lib`包，安装方法请参考[FAQ](https://qteasy.readthedocs.io/zh-cn/latest/faq.html#id2)
     ```bash
     $ pip install 'qteasy[talib]'  # 安装qteasy时自动安装ta-lib
     $ pip install ta-lib  # 手动安装ta-lib

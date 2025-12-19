@@ -994,7 +994,7 @@ def is_market_trade_day(date, exchange: str = 'SSE'):
         msg = 'Trade Calendar is not available,  will use maybe_trade_day instead to check trade day\n' \
               'Trade Calendar can be downloaded to DataSource, Use:\n' \
               'qteasy.refill_data_source(tables="basics")\n' \
-              'see more details in qteasy docs: https://qteasy.readthedocs.io/zh/latest/'
+              'see more details in qteasy docs: https://qteasy.readthedocs.io/zh-cn/latest/'
         warnings.warn(msg, RuntimeWarning, stacklevel=2)
         return maybe_trade_day(_date)
 
@@ -1034,7 +1034,7 @@ def last_known_market_trade_day(exchange: str = 'SSE'):
     else:
         msg = 'Trade Calendar is not available, please download basic data into DataSource, Use:\n' \
               'qteasy.refill_data_source(tables="basics")\n' \
-              'see more details in qteasy docs: https://qteasy.readthedocs.io/zh/latest/'
+              'see more details in qteasy docs: https://qteasy.readthedocs.io/zh-cn/latest/'
         raise RuntimeError(msg)
 
 
@@ -1088,7 +1088,7 @@ def prev_market_trade_day(date, exchange='SSE'):
     else:
         msg = 'Trade Calendar is not available, please download basic data into DataSource, Use:\n' \
               'qteasy.refill_data_source(tables="basics")\n' \
-              'see more details in qteasy docs: https://qteasy.readthedocs.io/zh/latest/'
+              'see more details in qteasy docs: https://qteasy.readthedocs.io/zh-cn/latest/'
         raise RuntimeError(msg)
 
 

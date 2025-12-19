@@ -191,7 +191,7 @@ qt.configure(asset_pool=['000300.SH',
 - `trade_batch_size=0`：  买入资产时最小交易批量，`0`代表可以交易任意份额，1代表只能交易整数份，这里可以输入任意大于`0`的数
 - `sell_batch_size=0`： 卖出资产时最小交易批量为`0`
 
-`qteasy`还有其他的配置参数，参见[QTEASY文档](https://qteasy.readthedocs.io/zh/latest/)。
+`qteasy`还有其他的配置参数，参见[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)。
 
 ## 策略的回测结果
 

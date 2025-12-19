@@ -144,7 +144,7 @@ except Exception as e:
     msg = f'Failed Loading tushare_token, configure it in qteasy.cfg:\n' \
           f'tushare_token = your_token\n' \
           f'for more information, check qteasy tutorial: ' \
-          f'https://qteasy.readthedocs.io/zh/latest/tutorials/1-get-started.html'
+          f'https://qteasy.readthedocs.io/zh-cn/latest/tutorials/1-get-started.html'
     warnings.warn(msg, stacklevel=2)
 
 # 读取其他本地配置属性，更新QT_CONFIG, 允许用户自定义参数存在

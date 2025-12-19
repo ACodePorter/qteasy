@@ -115,7 +115,7 @@ pip install pymysql
 ### 安装TA-lib (可选)
 
 `qteasy`内置了大量的技术指标，这些技术指标的计算依赖于`TA-lib`，如果需要使用`qteasy`内置的所有技术指标，需要安装`TA-lib`。
-如果跳过这一步，将只能使用以下内置策略，这里有[完整的内置策略清单及详细说明参考文档](https://qteasy.readthedocs.io/zh/latest/api/Built_In.html)以及[内置交易策略回测结果](https://qteasy.readthedocs.io/zh/latest/references/1-build-in-results.html):
+如果跳过这一步，将只能使用以下内置策略，这里有[完整的内置策略清单及详细说明参考文档](https://qteasy.readthedocs.io/zh-cn/latest/api/Built_In.html)以及[内置交易策略回测结果](https://qteasy.readthedocs.io/zh/latest/references/1-build-in-results.html):
 
 | ID    | 策略名称    | 说明                                                                                                                                                                                                                                                 | 
 |:-------|:--------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
