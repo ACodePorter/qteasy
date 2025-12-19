@@ -552,13 +552,13 @@ def eval_max_drawdown(looped_value):
         dd_end = looped_value.index[i_end]
         dd_min = looped_value['underwater'].iloc[i_start:i_end].idxmin()
         dd = looped_value['underwater'].loc[dd_min]
-        dd_pool.in_pool((dd_start, dd_min, dd_end, dd), dd)
+        dd_pool.push((dd_start, dd_min, dd_end, dd), dd)
     if len(drawdown_starts) > drawdown_count:
         dd_start = looped_value.index[drawdown_starts[-1] - 1]
         dd_end = np.nan
         dd_min = looped_value['underwater'].iloc[drawdown_starts[-1]:].idxmin()
         dd = looped_value['underwater'].loc[dd_min]
-        dd_pool.in_pool((dd_start, dd_min, dd_end, dd), dd)
+        dd_pool.push((dd_start, dd_min, dd_end, dd), dd)
     dd_pool.cut(keep_largest=False)
     # 生成包含所有dd的DataFrame
     dd_df = pd.DataFrame(dd_pool.items, columns=['peak_date', 'valley_date', 'recover_date', 'drawdown'])
