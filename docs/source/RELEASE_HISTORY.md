@@ -1,5 +1,9 @@
 # RELEASE HISTORY
 
+## 1.4.10 (2025-12-19)
+Bug fixes:
+- Fixed a bug that will lead to low performance in optimization algorithm 2 when running with multiprocessing in some systems
+
 ## 1.4.9 (2025-03-11)
 Bug fixes:
 - Fixed problem in trader logger that causes duplicated logs in live trade mode
