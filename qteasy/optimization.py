@@ -114,7 +114,7 @@ def _evaluate_all_parameters(par_generator,
         for f in as_completed(futures):
             eval_dict = f.result()
             target_value = eval_dict[opti_target]
-            pool.in_pool(item=futures[f], perf=target_value, extra=eval_dict)
+            pool.push(item=futures[f], perf=target_value, extra=eval_dict)
             i += 1
             if target_value > best_so_far:
                 best_so_far = target_value
@@ -131,7 +131,7 @@ def _evaluate_all_parameters(par_generator,
                                            config=config,
                                            stage=stage)
             target_value = perf[opti_target]
-            pool.in_pool(item=par, perf=target_value, extra=perf)
+            pool.push(item=par, perf=target_value, extra=perf)
             i += 1
             if target_value > best_so_far:
                 best_so_far = target_value
@@ -641,20 +641,22 @@ def _search_incremental(hist, benchmark, benchmark_type, op, config):
     # 从当前space开始搜索，当subspace的体积小于min_volume或循环次数达到max_rounds时停止循环
     while current_volume >= min_volume and current_round < max_rounds:
         # 在每一轮循环中，spaces列表存储该轮所有的空间或子空间
-        while spaces:
-            space = spaces.pop()
-            # 逐个弹出子空间列表中的子空间，随机选择参数，生成参数生成器generator
+        par_list = list()
+        round_total = 0
+        for space in spaces:
             # 生成的所有参数及评价结果压入pool结果池，每一轮所有空间遍历完成后再排序择优
             par_generator, total = space.extract(sample_count // space_count_in_round, how='rand')
-            # TODO: progress bar does not work properly, find a way to get progress bar working
-            pool = pool + _evaluate_all_parameters(par_generator=par_generator,
-                                                   total=total,
-                                                   op=op,
-                                                   trade_price_list=history_list,
-                                                   benchmark_history_data=benchmark,
-                                                   benchmark_history_data_type=benchmark_type,
-                                                   config=config,
-                                                   stage='optimize')
+            par_list.extend(par_generator)
+            round_total += total
+
+        pool = pool + _evaluate_all_parameters(par_generator=par_list,
+                                               total=round_total,
+                                               op=op,
+                                               trade_price_list=history_list,
+                                               benchmark_history_data=benchmark,
+                                               benchmark_history_data_type=benchmark_type,
+                                               config=config,
+                                               stage='optimize')
         # 本轮所有结果都进入结果池，根据择优方向选择最优结果保留，剪除其余结果
         pool.cut(config.maximize_target)
         """
@@ -677,6 +679,7 @@ def _search_incremental(hist, benchmark, benchmark_type, op, config):
         reduced_size = tuple(np.array(base_space.size) * size_reduce_ratio / 2)
         # 完成一轮搜索后，检查pool中留存的所有点，并生成由所有点的邻域组成的子空间集合
         current_volume = 0
+        spaces = []
         for point in pool.items:
             subspace = base_space.from_point(point=point, distance=reduced_size)
             spaces.append(subspace)
