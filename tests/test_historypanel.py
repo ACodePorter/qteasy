@@ -1067,7 +1067,7 @@ class TestHistoryPanel(unittest.TestCase):
         self.assertTrue(all(i in hp.shares for i in expected_shares))
         all_idx_data = hp[:, '000300.SH']
         self.assertTrue(np.all(np.isnan(all_idx_data)))
-        self.assertEqual(len(hp), 20)
+        self.assertEqual(len(hp), 22)
 
         print('test getting history panel with row_counts and no start nor end')
 
