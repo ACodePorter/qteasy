@@ -730,8 +730,12 @@ def get_broker(name: str = 'simulator', params=None):
 
     if name in names_to_be_deprecated:
         import warnings
-        warnings.warn(f'the broker {name} will be deprecated in next version, '
-                      f'use {names_to_be_deprecated[name]} instead', DeprecationWarning, stacklevel=2)
+        warnings.warn(
+            f'The broker name "{name}" is deprecated and will be removed in qteasy 2.0. '
+            f'Use "{names_to_be_deprecated[name]}" instead.',
+            FutureWarning,
+            stacklevel=2,
+        )
     broker_func = all_brokers.get(name, SimulatorBroker)
     if params is not None:
         return broker_func(**params)

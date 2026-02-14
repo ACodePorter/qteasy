@@ -1242,8 +1242,11 @@ def get_history_data(htypes=None,
             f'htypes and htype_names can not both be None if data_types is not given'
 
         if htypes is not None:
-            msg = f'htypes parameter is deprecated, please use htype_names instead'
-            warn(msg, DeprecationWarning)
+            warn(
+                "Parameter 'htypes' is deprecated and will be removed in qteasy 2.0. Use 'htype_names' instead.",
+                FutureWarning,
+                stacklevel=2,
+            )
             htype_names = htypes
 
         if isinstance(htype_names, str):
@@ -1282,9 +1285,11 @@ def get_history_data(htypes=None,
         asset_type = [item.upper() for item in asset_type]
 
         if adj is not None:
-            msg = f'parameter adj is deprecated, please add adj suffixes for htype names instead\n' \
-                  f'for example: use "close:b" for back-adjusted close prices'
-            warn(msg, DeprecationWarning)
+            msg = (
+                "Parameter 'adj' will be removed in qteasy 2.0. "
+                "Add adj suffixes for htype names instead, e.g. use \"close:b\" for back-adjusted close prices."
+            )
+            warn(msg, FutureWarning, stacklevel=2)
         else:
             adj = 'none'
         if not isinstance(adj, str):

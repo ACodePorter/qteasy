@@ -198,6 +198,10 @@ class Operator:
         self._signal_type = ''
         self._op_type = ''
         self._next_stg_index = 0  # int——递增的策略index，确保不会出现重复的index
+        # 用于 2.0 弃用 API 的每实例单次告警
+        self._op_type_warned = False
+        self._op_data_freq_warned = False
+        self._get_share_idx_warned = False
         self._strategy_id = []  # List——保存所有交易策略的id，便于识别每个交易策略
         self._strategies = {}  # Dict——保存实际的交易策略对象
         self._op_history_data = {}  # Dict——保存供各个策略进行交易信号生成的历史数据（ndarray，与个股有关）
@@ -303,11 +307,27 @@ class Operator:
     @property
     def op_type(self):
         """ 返回operator对象的运行类型"""
+        if not self._op_type_warned:
+            self._op_type_warned = True
+            warnings.warn(
+                'Operator.op_type is deprecated and will be removed in qteasy 2.0. '
+                'Run mode is determined per strategy group.',
+                FutureWarning,
+                stacklevel=2,
+            )
         return self._op_type
 
     @op_type.setter
     def op_type(self, op_type):
         """ 设置operator对象的运行类型"""
+        if not self._op_type_warned:
+            self._op_type_warned = True
+            warnings.warn(
+                'Operator.op_type is deprecated and will be removed in qteasy 2.0. '
+                'Run mode is determined per strategy group.',
+                FutureWarning,
+                stacklevel=2,
+            )
         if not isinstance(op_type, str):
             raise KeyError(f'op_type should be a string, got {type(op_type)} instead.')
         op_type = op_type.lower()
@@ -351,6 +371,14 @@ class Operator:
         """返回operator对象所有策略子对象所需数据的采样频率
             如果所有strategy的data_freq相同时，给出这个值，否则给出一个排序的列表
         """
+        if not self._op_data_freq_warned:
+            self._op_data_freq_warned = True
+            warnings.warn(
+                'Operator.op_data_freq is deprecated and will be removed in qteasy 2.0. '
+                'Use strategy-level data type and frequency information instead.',
+                FutureWarning,
+                stacklevel=2,
+            )
         d_freq = [stg.data_freq for stg in self.strategies]
         d_freq = list(set(d_freq))
         d_freq.sort()
@@ -1227,6 +1255,13 @@ class Operator:
         int
             返回一个整数，表示share对应的index
         """
+        if not self._get_share_idx_warned:
+            self._get_share_idx_warned = True
+            warnings.warn(
+                'Operator.get_share_idx() is deprecated and will be removed in qteasy 2.0.',
+                FutureWarning,
+                stacklevel=2,
+            )
         if self._op_list_shares == {}:
             return
         return self._op_list_shares[share]

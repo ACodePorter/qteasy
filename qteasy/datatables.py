@@ -1570,7 +1570,11 @@ def get_table_map() -> pd.DataFrame:  # deprecated
     pd.DataFrame
     数据表清单
     """
-    warnings.warn('get_table_map() is deprecated, use get_table_master() instead', DeprecationWarning)
+    warnings.warn(
+        'get_table_map() is deprecated and will be removed in qteasy 2.0. Use get_table_master() instead.',
+        FutureWarning,
+        stacklevel=2,
+    )
     return get_table_master()
 
 

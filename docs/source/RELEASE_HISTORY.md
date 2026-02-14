@@ -1,5 +1,17 @@
 # RELEASE HISTORY
 
+## 1.4.11 (2026-02-14)
+- Added FutureWarning for APIs that will be removed or changed in qteasy 2.0. Users are advised to migrate to the recommended alternatives so as to upgrade smoothly to 2.0.
+- Affected APIs:
+  - `get_history_data(htypes=..., adj=...)`: use `htype_names` and htype suffixes (e.g. `close:b`) instead.
+  - Config keys `print_trade_log` / `print_backtest_log`: use `trade_log` instead.
+  - `get_table_map()`: use `get_table_master()` instead.
+  - Broker name `random`: use `simulator` instead.
+  - Trader method `info(verbose=...)`: use `detail` instead.
+  - `Operator.op_type`: run mode will be determined per strategy group in 2.0.
+  - `Operator.op_data_freq`: use strategy-level data type and frequency information in 2.0.
+  - `Operator.get_share_idx()`: will be removed in 2.0.
+
 ## 1.4.10 (2025-12-19)
 Bug fixes:
 - Fixed a bug that will lead to low performance in optimization algorithm 2 when running with multiprocessing in some systems
