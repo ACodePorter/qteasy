@@ -1275,7 +1275,11 @@ def _process_deprecated_keys(key):
     # 处理 deprecated keys, send deprecation warning and use new key
     new_key = deprecated.get(key, key)
     if new_key != key:
-        warnings.warn(f'config_key <{key}> is deprecated, please use <{new_key}> instead')
+        warnings.warn(
+            f'Config key "{key}" is deprecated and will be removed in qteasy 2.0. Use "{new_key}" instead.',
+            FutureWarning,
+            stacklevel=2,
+        )
     return key
 
 

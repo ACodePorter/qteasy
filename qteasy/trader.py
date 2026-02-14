@@ -567,8 +567,11 @@ class Trader(object):
 
         if verbose:
             import warnings
-            warnings.warn('verbose argument is deprecated, use detail instead',
-                          DeprecationWarning, stacklevel=2)
+            warnings.warn(
+                'Argument "verbose" is deprecated and will be removed in qteasy 2.0. Use "detail" instead.',
+                FutureWarning,
+                stacklevel=2,
+            )
 
         position_info = self.account_position_info
         total_market_value = position_info['market_value'].sum()
