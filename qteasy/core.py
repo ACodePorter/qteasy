@@ -11,7 +11,7 @@
 import pandas as pd
 import numpy as np
 import time
-from warnings import warn, FutureWarning
+from warnings import warn
 
 import datetime
 
