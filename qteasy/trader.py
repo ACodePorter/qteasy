@@ -2892,10 +2892,14 @@ def refill_missing_datasource_data(operator,
     elif len(related_tables) >= 1:
         pass
     table_availabilities = trader.datasource.overview(tables=related_tables, print_out=False)
-    last_available_date = table_availabilities['max2'].max()
-    try:
-        last_available_date = pd.to_datetime(last_available_date)
-    except:
+    # max2 可能包含 'N/A'（str）与 NaN（float），先统一解析为 datetime 再取最大值
+    max2_dates = pd.to_datetime(table_availabilities.get('max2', pd.Series(dtype='object')), errors='coerce')
+    last_available_date = max2_dates.max()
+    # 部分表日期可能在 max1；若 max2 全为空，回退尝试 max1
+    if pd.isna(last_available_date):
+        max1_dates = pd.to_datetime(table_availabilities.get('max1', pd.Series(dtype='object')), errors='coerce')
+        last_available_date = max1_dates.max()
+    if pd.isna(last_available_date):
         last_available_date = trader.get_current_tz_datetime() - pd.Timedelta(value=100, unit='d')
 
     from qteasy.utilfuncs import prev_market_trade_day
