@@ -509,42 +509,50 @@ def fetch_real_time_klines(
 
     # 使用ProcessPoolExecutor, as_completed加速数据获取，当parallel=False时，不使用多进程
     if parallel:
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            futures = {
-                executor.submit(fetch_realtime_kline, qt_code=symbol, date=today, freq=freq): symbol
-                for symbol
-                in qt_codes
-            }
-            for future in as_completed(futures):
-                try:
-                    df = future.result(timeout=2)
-                    symbol = futures[future]
-                except TimeoutError:
-                    continue
-                except Exception as exc:
-                    print(f'Encountered an exception: {exc}')
-                    if '权限' in str(exc):
+        try:
+            with ThreadPoolExecutor(max_workers=10) as executor:
+                futures = {
+                    executor.submit(fetch_realtime_kline, qt_code=symbol, date=today, freq=freq): symbol
+                    for symbol
+                    in qt_codes
+                }
+                for future in as_completed(futures):
+                    try:
+                        df = future.result(timeout=2)
+                        symbol = futures[future]
+                    except TimeoutError:
                         continue
-                    elif 'not_implemented' in str(exc):
-                        continue
-                    else:
-                        raise exc
-                else:
-                    if df.empty:
-                        continue
-                    df['ts_code'] = symbol
-                    # 根据当前时间确定哪个是matured kline，而不是直接取最后一个，因为最后一个可能是不完整的
-                    if matured_kline_only:
-                        last_matured_index = np.searchsorted(df.index, current_time, side='right') - 1
-                        if last_matured_index < 0:
+                    except Exception as exc:
+                        print(f'Encountered an exception: {exc}')
+                        if '权限' in str(exc):
                             continue
-                        if normalized_scope == 'all':
-                            k_line = df.iloc[:last_matured_index + 1, :]
+                        elif 'not_implemented' in str(exc):
+                            continue
                         else:
-                            k_line = df.iloc[last_matured_index:last_matured_index + 1, :]
-                    else:  # 否则就直接取最后一个，不管是否完整
-                        k_line = df.iloc[-1:, :]
-                    data.append(k_line)
+                            raise exc
+                    else:
+                        if df.empty:
+                            continue
+                        df['ts_code'] = symbol
+                        # 根据当前时间确定哪个是matured kline，而不是直接取最后一个，因为最后一个可能是不完整的
+                        if matured_kline_only:
+                            last_matured_index = np.searchsorted(df.index, current_time, side='right') - 1
+                            if last_matured_index < 0:
+                                continue
+                            if normalized_scope == 'all':
+                                k_line = df.iloc[:last_matured_index + 1, :]
+                            else:
+                                k_line = df.iloc[last_matured_index:last_matured_index + 1, :]
+                        else:  # 否则就直接取最后一个，不管是否完整
+                            k_line = df.iloc[-1:, :]
+                        data.append(k_line)
+        except RuntimeError as exc:
+            warning_msg = f'Parallel realtime fetch aborted due to runtime shutdown state: {exc}'
+            if logger is not None:
+                logger.warning(warning_msg)
+            else:
+                logging.getLogger(__name__).warning(warning_msg)
+            return pd.DataFrame()
     else:  # parallel == False, 不使用多进程
         for symbol in qt_codes:
             df = fetch_realtime_kline(qt_code=symbol, date=today, freq=freq)

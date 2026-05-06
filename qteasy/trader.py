@@ -2140,6 +2140,9 @@ class Trader(object):
         self.send_message(f'Break point saved to {break_point_file_name}')
         self.send_message('Stopping Trader, the broker will be stopped as well...')
         self._broker.status = 'stopped'
+        broker_idle = self._broker.wait_until_idle(timeout=10.0)
+        if not broker_idle:
+            self.send_message('Broker did not become idle before stop timeout.')
         self.status = 'stopped'
 
     def _sleep(self) -> None:

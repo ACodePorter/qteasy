@@ -830,7 +830,7 @@ class SimulatorBroker(Broker):
             # TODO: 这里应该使用fetch_realtime_quotes， 而不是fetch_real_time_klines来获取最新价格
             from .data_channels import fetch_real_time_klines
             live_prices = fetch_real_time_klines(qt_codes=symbol, channel='eastmoney',
-                                                 freq='D', verbose=True, parallel=True)
+                                                 freq='D', verbose=True, parallel=False)
             if not live_prices.empty:
                 live_prices['close'] = live_prices['close'].astype('float')
                 change = (live_prices['close'] / live_prices['pre_close'] - 1).iloc[-1]
