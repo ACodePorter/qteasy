@@ -2323,7 +2323,7 @@ class TraderShell(Cmd):
 
                         # adjust message length to terminal width
                         message = self.trader.add_message_prefix(message, self.debug)
-                        message = adjust_string_length(message, text_width - 2)
+                        message = adjust_string_length(message, text_width - 2, format_tags=True)
                         rich.print(message)
                     else:
                         # 如果没有消息，原位显示倒计时/实时价格
