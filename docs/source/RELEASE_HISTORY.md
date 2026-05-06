@@ -1,5 +1,12 @@
 # RELEASE HISTORY
 
+## 2.4.3 (2026-05-06)
+- **Live trading TUI**
+  Fixed live-trade terminal UI refresh so the System and Info tabs update correctly without crashing when portfolio and environment summaries are refreshed.
+- **Rule Iterator parameters**
+  Clearer error guidance when a per-share parameter dict is accidentally wrapped in a one-element tuple (a common trailing-comma typo).
+- **fixed bugs in live trade examples**
+
 ## 2.4.2 (2026-04-19)
 - Multiple bug fixes:
   - **Broker async replay reliability** #263
