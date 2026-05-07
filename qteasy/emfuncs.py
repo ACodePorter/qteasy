@@ -11,17 +11,21 @@
 # functions to acquire price k-lines.
 # ======================================
 
+import json
+import logging
 import time
 import datetime
 import pandas as pd
 import numpy as np
 import requests
-from urllib.parse import urlencode
 
+from qteasy.em_public_http import eastmoney_public_get_json
 from qteasy.utilfuncs import (
     prev_market_trade_day, retry,
     format_str_to_float,
 )
+
+logger = logging.getLogger(__name__)
 
 ERRORS_TO_CHECK_ON_RETRY = Exception
 
@@ -243,19 +247,22 @@ def _get_k_history(code: str, beg: str = '16000101', end: str = '20500101',
         ('klt', f'{klt}'),
         ('fqt', f'{fqt}'),
     )
-    # base_url = 'https://push2his.eastmoney.com/api/qt/stock/kline/get'
     base_url = 'https://push2his.eastmoney.com/api/qt/stock/kline/get'
-    url = base_url + '?' + urlencode(params)
     try:
-        json_response = requests.get(
-                url, headers=EastmoneyHeaders).json()
-    except:
+        json_response = eastmoney_public_get_json(
+                base_url,
+                params=params,
+                headers=EastmoneyHeaders,
+        )
+    except (requests.RequestException, json.JSONDecodeError, UnicodeDecodeError) as exc:
+        logger.warning('Eastmoney k-line HTTP request failed: %s', exc)
         return pd.DataFrame()
-    data = json_response['data']
-
+    data = json_response.get('data')
     if data is None:
         return pd.DataFrame()
-    klines = data['klines']
+    klines = data.get('klines')
+    if not klines:
+        return pd.DataFrame()
     rows = []
     for _kline in klines:
         kline = _kline.split(',')
@@ -283,16 +290,22 @@ def _get_rt_quote(code: str) -> pd.DataFrame:
         "fltt":   "1",
         # "cb": "jQuery35108939078769986013_1701853424476",
         "fields": "f58,f734,f107,f57,f43,f59,f169,f301,f60,f170,f152,f177,f111,f46,f44,f45,f47,f260,f48,f261,f279,f277,f278,f288,f19,f17,f531,f15,f13,f11,f20,f18,f16,f14,f12,f39,f37,f35,f33,f31,f40,f38,f36,f34,f32,f211,f212,f213,f214,f215,f210,f209,f208,f207,f206,f161,f49,f171,f50,f86,f84,f85,f168,f108,f116,f167,f164,f162,f163,f92,f71,f117,f292,f51,f52,f191,f192,f262,f294,f295,f748,f747",
-        "secid":  f"0.{symbol}",
+        "secid":  symbol,
         "ut":     "fa5fd1943c7b386f172d6893dbfba10b",
         "wbp2u":  "|0|0|0|web",
         "_":      str(int(time.time() * 1000))
     }
-    url = base_url + '?' + urlencode(params)
-
-    # print(params["secid"])
-    response = requests.get(url, headers=dc_cookies, cookies=dc_headers, params=params)
-    data_info = response.json()["data"]
+    try:
+        body = eastmoney_public_get_json(
+                base_url,
+                params=params,
+                headers=dc_headers,
+                cookies=dc_cookies,
+        )
+    except (requests.RequestException, json.JSONDecodeError, UnicodeDecodeError) as exc:
+        logger.warning('Eastmoney realtime quote HTTP request failed: %s', exc)
+        return pd.DataFrame()
+    data_info = body.get('data')
     if not data_info:
         return pd.DataFrame()
     name = data_info["f58"]
