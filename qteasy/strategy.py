@@ -1489,6 +1489,20 @@ class RuleIterator(BaseStrategy):
             super().update_par_values(**kwargs)
             return
 
+        # 检测常见误用：update_par_values(dict_value,) 由于尾随逗号导致 par_values == ((dict,),)
+        if (len(par_values) == 1
+                and isinstance(par_values[0], (tuple, list))
+                and len(par_values[0]) == 1
+                and isinstance(par_values[0][0], dict)):
+            raise TypeError(
+                f'Expected a dict for multi_par, but got a length-1 '
+                f'{type(par_values[0]).__name__} wrapping a dict. '
+                f'This usually happens when the dict literal has a trailing '
+                f'comma (e.g. "par_values = {{...}},"). '
+                f'Remove the trailing comma and call '
+                f'update_par_values(par_values) again.'
+            )
+
         # 只有当第一个参数是 dict 时，才可能是 multi_par
         # tuple/list 形式的 par_values 不应被当作 multi_par
         if isinstance(par_values[0], dict):

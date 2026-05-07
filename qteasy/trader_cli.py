@@ -615,6 +615,7 @@ class TraderShell(Cmd):
         self._trader = trader
         self._timezone = trader.time_zone
         self._status = None
+        self._shutdown_requested = False
         self._watch_list = self.trader.watch_list  # set default watch list
         self._watched_price_string = ' == Realtime prices can be displayed here. ' \
                                'Use "watch" command to add stocks to watch list. =='  # watched prices string
@@ -1029,13 +1030,35 @@ class TraderShell(Cmd):
         args = self.parse_args('bye', arg)
         if not args:
             return False
-        print(f'canceling all unfinished orders')
-        print(f'cancelling all pending tasks: {self.trader.task_daily_schedule}')
-        self.trader.add_task('post_close')
-        print(f'stopping trader...')
-        self.trader.add_task('stop')
-        self._status = 'stopped'
+        self._request_shutdown()
         return True
+
+    def _request_shutdown(self) -> None:
+        """请求停止 Trader/Broker（幂等），供 CLI 退出路径复用。"""
+        if not self._shutdown_requested:
+            print(f'canceling all unfinished orders')
+            print(f'cancelling all pending tasks: {self.trader.task_daily_schedule}')
+            self.trader.add_task('post_close')
+            print(f'stopping trader...')
+            self.trader.add_task('stop')
+            self._shutdown_requested = True
+        self._status = 'stopped'
+
+    def _wait_for_shutdown(self, timeout: float = 60.0) -> None:
+        """等待 Trader 停机并收敛 Broker 在途订单线程。"""
+        start_time = time.time()
+        check_interval = 0.05
+        while self.trader.status != 'stopped' and (time.time() - start_time) < timeout:
+            time.sleep(check_interval)
+
+        if self.trader.status != 'stopped':
+            print('Warning: trader stop timeout reached, continuing shutdown.')
+            return
+
+        remaining = max(0.0, timeout - (time.time() - start_time))
+        broker_idle = self.trader.broker.wait_until_idle(timeout=remaining)
+        if not broker_idle:
+            print('Warning: broker still has in-flight tasks during shutdown timeout.')
 
     def do_exit(self, arg):
         """usage: exit [-h]
@@ -2300,7 +2323,7 @@ class TraderShell(Cmd):
 
                         # adjust message length to terminal width
                         message = self.trader.add_message_prefix(message, self.debug)
-                        message = adjust_string_length(message, text_width - 2)
+                        message = adjust_string_length(message, text_width - 2, format_tags=True)
                         rich.print(message)
                     else:
                         # 如果没有消息，原位显示倒计时/实时价格
@@ -2379,5 +2402,6 @@ class TraderShell(Cmd):
                 # self.do_bye('')
 
         sys.stdout.write('Thank you for using qteasy!\n')
-        self.do_bye('')
+        self._request_shutdown()
+        self._wait_for_shutdown()
 

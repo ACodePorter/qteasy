@@ -364,6 +364,28 @@ def _valid_qt_kwargs():
                           '例如，设置hist_dnld_backoff = 2时，每次重试失败\n'
                           '后延迟时间会变为前一次的2倍，取值范围为[1.0, 3.0]'},
 
+        'em_public_http_timeout':
+            {'Default':   20.,
+             'Validator': lambda value: isinstance(value, (int, float)) and 0 < float(value) <= 120,
+             'level':     4,
+             'text':      '访问东方财富等公网行情接口时 requests 超时时间（秒），取值范围为 (0, 120]'},
+
+        'em_public_http_trust_env':
+            {'Default':   True,
+             'Validator': lambda value: isinstance(value, bool),
+             'level':     4,
+             'text':      '为 True 时遵循环境变量 HTTP_PROXY/HTTPS_PROXY；为 False 时忽略系统代理（直连）'},
+
+        'em_public_http_proxies':
+            {'Default':   None,
+             'Validator': lambda value: value is None or (
+                 isinstance(value, dict)
+                 and all(isinstance(k, str) for k in value)
+                 and all(v is None or isinstance(v, str) for v in value.values())
+             ),
+             'level':     4,
+             'text':      '传给 requests 的 proxies 字典；为 None 时不显式设置（由 trust_env 与环境变量决定）'},
+
         'log_level':
             {'Default':   'INFO',
              'Validator': lambda value: isinstance(value, str)

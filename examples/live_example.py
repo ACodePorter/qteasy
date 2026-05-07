@@ -5,10 +5,9 @@
 # Contact:  jackie.pengzhao@gmail.com
 # Created:  2023-12-11
 # Desc:
-#   live_rolling:
-#   一个用于ETF基金的多市场轮动
-# 交易策略略，同时监控多只ETF基
-# 金，轮动持有20日涨幅最大的两只。
+#   live_example:
+#   使用内置 MACD 与 DMA 策略进行
+#   多标的模拟实盘示例
 # ======================================
 
 
@@ -32,8 +31,8 @@ if __name__ == '__main__':
     op.add_strategy(alpha, run_freq='10min', freq='5min', window_length=50)  # 每10分钟运行
     op.add_strategy(beta, run_freq='30min', freq='30min', window_length=50)  # 每30分钟运行
 
-    op.set_parameter('alpha', par_values=(32, 16, 9))
-    op.set_parameter('beta', par_values=(10, 50, 10))
+    op.set_parameter('macd', par_values=(32, 16, 9))
+    op.set_parameter('dma', par_values=(10, 50, 10))
 
     asset_pool = ['000651.SZ', '688609.SH', '000550.SZ', '301215.SZ', '002676.SZ', '603726.SH']
 

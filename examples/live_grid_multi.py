@@ -1,6 +1,6 @@
 # coding=utf-8
 # ======================================
-# File:     live_grid.py
+# File:     live_grid_multi.py
 # Author:   Jackie PENG
 # Contact:  jackie.pengzhao@gmail.com
 # Created:  2021-08-29
@@ -82,11 +82,14 @@ if __name__ == '__main__':
                   Parameter((0, 400), par_type='float', name='base_grid')],
             data_types=[qt.StgData('close', freq='5min', asset_type='E', window_length=10)],
     )
+    asset_pool = ['000651.SZ', '600036.SH', '601398.SH']
     par_values = {'000651.SZ': (0.3, 500, 0),
                   '600036.SH': (0.3, 600, 0),
-                  '601398.SH': (0.1, 1000, 0)},  # 当基准网格为0时，代表首次运行，此时买入20000股，并设置当前价为基准网格
+                  '601398.SH': (0.1, 1000, 0)}  # 当基准网格为0时，代表首次运行，此时买入20000股，并设置当前价为基准网格
 
     alpha.allow_multi_par = True  # 允许多参数输入
+    op = Operator(alpha, signal_type='VS', op_type='step', run_timing='close', run_freq='5min')
+    op.set_shares(asset_pool)
     alpha.update_par_values(par_values)
     datasource = qt.QT_DATA_SOURCE
 
@@ -96,14 +99,12 @@ if __name__ == '__main__':
 
         delete_account(account_id=args.account, data_source=datasource, keep_account_id=True)
 
-    op = Operator(alpha, signal_type='VS', op_type='step', run_timing='close', run_freq='5min')
-
     print('in live_grid_multi:', "config['live_trade_daily_refill_tables'] = 'stock_1min...fund_hourly'")
     qt.configure(
             mode=0,
             time_zone='Asia/Shanghai',
             asset_type='E',
-            asset_pool=['000651.SZ', '600036.SH', '601398.SH'],
+            asset_pool=asset_pool,
             benchmark_asset='000651.SZ',
             trade_batch_size=100,
             sell_batch_size=1,

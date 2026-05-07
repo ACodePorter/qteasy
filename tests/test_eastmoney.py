@@ -9,12 +9,14 @@
 # acquiring functions and apis.
 # ======================================
 
+import os
 import unittest
 
 import pandas as pd
 import numpy as np
 
 from qteasy.emfuncs import (
+    _gen_eastmoney_code,
     stock_daily,
     stock_weekly,
     stock_1min,
@@ -24,9 +26,29 @@ from qteasy.emfuncs import (
 )
 from qteasy.utilfuncs import is_market_trade_day
 
+_LIVE_EM_ENV = os.environ.get('QTEASY_LIVE_EM', '').strip().lower() in ('1', 'true', 'yes')
 
+
+class TestEastmoneyUnit(unittest.TestCase):
+    """不依赖外网的东方财富 secid 与本地逻辑。"""
+
+    def test_gen_eastmoney_code_sz_sh_bj(self) -> None:
+        print('\n[TestEastmoneyUnit] _gen_eastmoney_code market suffix')
+        self.assertEqual(_gen_eastmoney_code('000001'), '0.000001')
+        self.assertEqual(_gen_eastmoney_code('000001.SZ'), '0.000001')
+        self.assertEqual(_gen_eastmoney_code('000001.SH'), '1.000001')
+        self.assertEqual(_gen_eastmoney_code('920000.BJ'), '0.920000')
+        self.assertEqual(_gen_eastmoney_code('600519'), '1.600519')
+        self.assertEqual(_gen_eastmoney_code('399001.SZ'), '0.399001')
+        print(' secid samples OK')
+
+
+@unittest.skipUnless(
+        _LIVE_EM_ENV,
+        'Live Eastmoney HTTP tests; set environment variable QTEASY_LIVE_EM=1 to enable.',
+)
 class TestEastmoney(unittest.TestCase):
-    """ Test eastmoney data acquiring functions and apis """
+    """ Test eastmoney data acquiring functions and apis (live network). """
 
     def SetUp(self):
         pass

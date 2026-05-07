@@ -759,8 +759,8 @@ class TraderApp(App):
         if not self.refresh_ui:
             return
 
-        info = self.query_one(InfoPanel)
-        system = self.query_one(SysLog)
+        info_panel = self.query_one('#info', Static)
+        system_panel = self.query_one('#system', Static)
 
         account = trader_info['Account ID']
         user_name = trader_info['User Name']
@@ -802,11 +802,11 @@ class TraderApp(App):
             investment_info += f'[b]Total Stock Value:[/b]  [b green]{total_stock_value:.2f}[/b green]\n'
             investment_info += f'[b]Total Stock Profit:[/b] [b green]{total_stock_profit:.2f}[/b green]\n'
 
-        info.update(
+        info_panel.update(
                 investment_info
         )
 
-        system.update(
+        system_panel.update(
                 f'[b]Python:[/b]             {trader_info["python"]}\n'
                 f'[b]qteasy:[/b]             {trader_info["qteasy"]}\n'
                 f'[b]Tushare:[/b]            {trader_info["tushare"]}\n'
