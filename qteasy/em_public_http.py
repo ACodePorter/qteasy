@@ -23,12 +23,17 @@ logger = logging.getLogger(__name__)
 
 
 def _eastmoney_public_request_extras() -> dict[str, Any]:
-    """从 QT_CONFIG 组装 timeout、trust_env、可选 proxies。"""
+    """从 QT_CONFIG 组装 timeout、可选 proxies。
+
+    说明
+    ----
+    ``trust_env`` 不能作为 ``requests.get()`` / ``Session.request()`` 的关键字参数传入
+    官方 ``requests``；是否信任环境代理须设置 ``Session.trust_env``（见 ``_one_get``）。
+    """
 
     timeout = float(QT_CONFIG['em_public_http_timeout'])
     extras: dict[str, Any] = {
-        'timeout':   timeout,
-        'trust_env': bool(QT_CONFIG['em_public_http_trust_env']),
+        'timeout': timeout,
     }
     proxies = QT_CONFIG['em_public_http_proxies']
     if proxies is not None:
@@ -72,17 +77,20 @@ def eastmoney_public_get_json(
     mtries = int(QT_CONFIG['hist_dnld_retry_cnt'])
     mdelay = float(QT_CONFIG['hist_dnld_retry_wait'])
     backoff = float(QT_CONFIG['hist_dnld_backoff'])
-    extras = _eastmoney_public_request_extras()
 
     def _one_get() -> dict[str, Any]:
+        # 每次请求重新读取 QT_CONFIG，与 configure() 热改一致。
+        req_extras = _eastmoney_public_request_extras()
         req_kw: dict[str, Any] = {
             'params': params,
             'headers': headers,
-            **extras,
+            **req_extras,
         }
         if cookies is not None:
             req_kw['cookies'] = cookies
-        resp = requests.get(url, **req_kw)
+        with requests.Session() as session:
+            session.trust_env = bool(QT_CONFIG['em_public_http_trust_env'])
+            resp = session.get(url, **req_kw)
         resp.raise_for_status()
         return resp.json()
 

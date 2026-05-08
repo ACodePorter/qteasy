@@ -9,7 +9,6 @@
 # acquiring functions and apis.
 # ======================================
 
-import os
 import unittest
 
 import pandas as pd
@@ -26,8 +25,6 @@ from qteasy.emfuncs import (
 )
 from qteasy.utilfuncs import is_market_trade_day
 
-_LIVE_EM_ENV = os.environ.get('QTEASY_LIVE_EM', '').strip().lower() in ('1', 'true', 'yes')
-
 
 class TestEastmoneyUnit(unittest.TestCase):
     """不依赖外网的东方财富 secid 与本地逻辑。"""
@@ -43,10 +40,6 @@ class TestEastmoneyUnit(unittest.TestCase):
         print(' secid samples OK')
 
 
-@unittest.skipUnless(
-        _LIVE_EM_ENV,
-        'Live Eastmoney HTTP tests; set environment variable QTEASY_LIVE_EM=1 to enable.',
-)
 class TestEastmoney(unittest.TestCase):
     """ Test eastmoney data acquiring functions and apis (live network). """
 
