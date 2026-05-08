@@ -31,7 +31,7 @@ if __name__ == '__main__':
             grid_size, trade_batch, base_grid = self.par_values
 
             # 读取最新价格
-            price = self.get_data('close')[-1]  # 最近一个K线周期的close价格
+            price = self.get_data('close_E_5min')[-1]  # 最近一个K线周期的close价格
             # 计算当前价格与当前网格的偏离程度，判断是否产生交易信号
             if base_grid <= 0.01:
                 # 基准网格尚未设置，此时为首次运行，首次买入2000股并设置基准网格为当前价格（精确到0.1元）
