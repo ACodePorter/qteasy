@@ -1615,15 +1615,20 @@ class RuleIterator(BaseStrategy):
         # 生成iterators, 将参数送入realize_no_nan中逐个迭代后返回结果
         signal = np.empty(self.share_count, dtype=float)
 
-        for i in range(self.share_count):
-            if self.allow_multi_par and self.multi_pars:
-                # 如果允许多参数，则为每个股票使用不同的参数
-                par = self.multi_pars[i]
-                self.update_par_values(*par)
-            # 更新股票使用的数据
-            for dtype_name in self.data_types:
-                setattr(self, dtype_name, self._data_windows[dtype_name][:, i])
-            signal[i] = self.realize()
+        try:
+            for i in range(self.share_count):
+                # 供 realize() 在多参数模式下写回 per-share 状态（如更新 multi_pars 中第 i 组参数）
+                self._generate_share_index = i
+                if self.allow_multi_par and self.multi_pars:
+                    # 如果允许多参数，则为每个股票使用不同的参数
+                    par = self.multi_pars[i]
+                    self.update_par_values(*par)
+                # 更新股票使用的数据
+                for dtype_name in self.data_types:
+                    setattr(self, dtype_name, self._data_windows[dtype_name][:, i])
+                signal[i] = self.realize()
+        finally:
+            self._generate_share_index = None
 
         return signal
 

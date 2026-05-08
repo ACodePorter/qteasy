@@ -1,5 +1,13 @@
 # RELEASE HISTORY
 
+## 2.4.4 (2026-05-08)
+Patch release after 2.4.3 with live-trading and Eastmoney fixes.
+- **Eastmoney public HTTP / live watched prices**  
+  Fixed a regression in 2.4.3 where Eastmoney JSON over HTTPS passed `trust_env` into `requests.get()`. 
+  Fixed `_add_task_from_schedule` so agenda tuples `(time, 'run_strategy', step_index)` enqueue as `('run_strategy', (step_index,))`, matching `add_task` and avoiding `TypeError: Value after * must be an iterable, not int` when the main loop runs the task.
+  Fixed `_get_rt_quote` to pass `_format_em_date_str` as the `Series.apply` callable instead of calling `apply(_format_em_date_str())`.
+- **Fixed Example `live_grid_multi`**  
+
 ## 2.4.3 (2026-05-06)
 - **Live trading TUI**
   Fixed live-trade terminal UI refresh so the System and Info tabs update correctly without crashing when portfolio and environment summaries are refreshed.
