@@ -1,5 +1,9 @@
 # RELEASE HISTORY
 
+## 2.4.4 (2026-05-08)
+- **emergency hotfix after 2.4.3: Eastmoney public HTTP / live watched prices**  
+  Fixed a regression in 2.4.3 where Eastmoney JSON over HTTPS used `requests.get(..., trust_env=...)`. Standard `requests` does not accept `trust_env` on `Session.request()`, which raised `TypeError: request() got an unexpected keyword argument 'trust_env'` and broke realtime K-line fetches (for example Trader `update_watched_prices`). The client now uses `requests.Session` and sets `session.trust_env` from `em_public_http_trust_env`, preserving proxy behavior without invalid kwargs.
+
 ## 2.4.3 (2026-05-06)
 - **Live trading TUI**
   Fixed live-trade terminal UI refresh so the System and Info tabs update correctly without crashing when portfolio and environment summaries are refreshed.

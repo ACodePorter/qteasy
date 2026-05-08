@@ -114,10 +114,10 @@ if __name__ == '__main__':
             live_trade_broker_type='simulator',
             live_trade_ui_type=args.ui,
             watched_price_refresh_interval=5,
-            live_trade_daily_refill_tables='stock_1min, stock_5min, stock_15min, stock_30min, stock_hourly, '
-                                           'index_1min, index_5min, index_15min, index_30min, index_hourly, '
-                                           'fund_1min, fund_5min, fund_15min, fund_30min, fund_hourly',
-            live_trade_weekly_refill_tables='stock_daily, index_daily, fund_daily',
+            # live_trade_daily_refill_tables='stock_1min, stock_5min, stock_15min, stock_30min, stock_hourly, '
+            #                                'index_1min, index_5min, index_15min, index_30min, index_hourly, '
+            #                                'fund_1min, fund_5min, fund_15min, fund_30min, fund_hourly',
+            # live_trade_weekly_refill_tables='stock_daily, index_daily, fund_daily',
             live_trade_data_refill_batch_size=20,
             live_trade_data_refill_batch_interval=3,
     )
