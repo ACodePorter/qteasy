@@ -1871,6 +1871,42 @@ class TestTraderTaskState(unittest.TestCase):
 
         self.assertEqual(queued_tasks, ['pre_open', 'open_market', 'close_market', 'open_market'])
 
+    def test_add_task_from_schedule_run_strategy_wraps_step_index_as_args_tuple(self):
+        """日程三元组 (time, run_strategy, n) 入队须与 add_task 一致为 ('run_strategy', (n,))，避免 *int。"""
+        print('\n[TestScheduleRunStrategyQueue] expired run_strategy must enqueue (name, (step,))')
+        self.trader._run_task('start')
+        self.trader.task_daily_schedule = [
+            ('10:00:00', 'run_strategy', 0),
+            ('15:00:00', 'close_market'),
+        ]
+        import datetime as dt
+        current = dt.time(10, 30, 0)
+        print(f'current={current}, schedule before={self.trader.task_daily_schedule}')
+        self.trader._add_task_from_schedule(current)
+        queued = self.trader.task_queue.get()
+        self.trader.task_queue.task_done()
+        print(f'first queued item: {queued!r}')
+        self.assertEqual(queued, ('run_strategy', (0,)))
+        self.assertEqual(self.trader.task_daily_schedule, [('15:00:00', 'close_market')])
+
+    def test_add_task_from_schedule_refill_keeps_payload_tuple_shape(self):
+        """refill 第三项已为 (tables, duration)，入队不得再包一层单元素元组。"""
+        print('\n[TestScheduleRefillQueue] refill payload tuple shape unchanged')
+        self.trader._run_task('start')
+        self.trader.task_daily_schedule = [
+            ('12:00:00', 'refill', ('some_table', 7)),
+            ('15:00:00', 'close_market'),
+        ]
+        import datetime as dt
+        current = dt.time(12, 1, 0)
+        print(f'current={current}, schedule before={self.trader.task_daily_schedule}')
+        self.trader._add_task_from_schedule(current)
+        queued = self.trader.task_queue.get()
+        self.trader.task_queue.task_done()
+        print(f'first queued item: {queued!r}')
+        self.assertEqual(queued, ('refill', ('some_table', 7)))
+        self.assertEqual(self.trader.task_daily_schedule, [('15:00:00', 'close_market')])
+
 
 # --------------- Plan 3.5: Individual tasks + TASK_WHITELIST ---------------
 

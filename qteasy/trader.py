@@ -2682,7 +2682,13 @@ class Trader(object):
                 self.task_daily_schedule.pop(idx)
                 self.send_message(f'adding task: {task_tuple} from agenda', debug=True)
                 if len(task_tuple) == 3:
-                    task = task_tuple[1:3]
+                    # 与 add_task 一致：队列项为 (task_name, args_tuple)，主循环用 *args 展开。
+                    # run_strategy 第三段为标量 step_index；refill 第三段已为 (tables, duration) 元组。
+                    name, payload = task_tuple[1], task_tuple[2]
+                    if isinstance(payload, tuple):
+                        task = (name, payload)
+                    else:
+                        task = (name, (payload,))
                 elif len(task_tuple) == 2:
                     task = task_tuple[1]
                 else:
