@@ -1453,7 +1453,7 @@ TUSHARE_API_MAP = {
         ['index_dailybasic', 'trade_date', 'trade_date', '20040102', '', '', ''],
 
     'index_weight':
-        ['composite', 'trade_date', 'datetime', '20050408', '', '', ''],
+        ['composite', 'index', 'table_index', 'index_basic', 'SH,CSI,SZ', 'Y', '7'],
 
     'income':
         ['income', 'ts_code', 'table_index', 'stock_basic', '', 'Y', ''],

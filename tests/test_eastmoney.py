@@ -44,7 +44,8 @@ class TestEastmoney(unittest.TestCase):
     """ Test eastmoney data acquiring functions and apis (live network). """
 
     def SetUp(self):
-        pass
+        import qteasy as qt
+        qt.configure(em_public_http_trust_env=False)
 
     def test_get_k_history(self):
         """ Test _get_k_history function """
@@ -79,7 +80,6 @@ class TestEastmoney(unittest.TestCase):
 
     def test_real_time_kline_price(self):
         """ Test real_time_klines function """
-
         code = '000016.SZ'
         date = '20241227'
         res = real_time_klines(qt_code=code, freq='D', date=date)

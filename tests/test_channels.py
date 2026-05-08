@@ -453,6 +453,24 @@ class TestChannels(unittest.TestCase):
                           {'end': '20210110', 'start': '20210101', 'ts_code': '000006.SH'},
                           {'end': '20210110', 'start': '20210101', 'ts_code': '000007.SH'}])
 
+        table = 'index_weight'
+        print(f'\n[TestChannels] test_table_arg_parsing: {table} (composite + index + 7d chunks)')
+        args = parse_data_fetch_args(table=table,
+                                     channel='tushare',
+                                     symbols='000001.SH',
+                                     start_date='20210101',
+                                     end_date='20210110',
+                                     list_arg_filter=None,
+                                     reversed_par_seq=False,
+                                     )
+        args = list(args)
+        print(f'index_weight args (expect index + start/end per 7d chunk): {args}')
+        expected_iw = [
+            {'index': '000001.SH', 'start': '20210101', 'end': '20210108'},
+            {'index': '000001.SH', 'start': '20210108', 'end': '20210110'},
+        ]
+        self.assertEqual(args, expected_iw)
+
         table = 'shibor'  # parse ['shibor', '', '', '', '', 'Y', '365'] type of args
         print(f'testing parsing args for table: {table}')
         # parse the filling args and pick the first filling arg value from the range
