@@ -346,7 +346,7 @@ def _get_rt_quote(code: str) -> pd.DataFrame:
                   b1_v, b1_p, b2_v, b2_p, b3_v, b3_p, b4_v, b4_p, b5_v, b5_p,
                   a1_v, a1_p, a2_v, a2_p, a3_v, a3_p, a4_v, a4_p, a5_v, a5_p, date, times, code]]
     df = pd.DataFrame(data_list, columns=LIVE_QUOTE_COLS)
-    df["DATE"] = df["DATE"].apply(_format_em_date_str())
+    df["DATE"] = df["DATE"].apply(_format_em_date_str)
     df["ASK"] = df["ASK"].apply(_format_em_str)
     df["OPEN"] = df["OPEN"].apply(_format_em_str)
     df["HIGH"] = df["HIGH"].apply(_format_em_str)

@@ -31,7 +31,8 @@ if __name__ == '__main__':
 
             # 此时传入的pars参数为dict对象，dict的key与监控的股票一一对应，value为参数，需分别处理
             pars_dict = self.par_values
-            h = self.get_data('close')  # 获取历史数据价格，形状为(股票数量, 时间步长, 数据维度)
+            # get_data 使用 dtype_id（与 StgData 派生 id 一致，如 close_E_5min），勿用裸 'close'
+            h = self.get_data(self.data_type_ids[0])  # 历史收盘价，形状为(股票数量, 时间步长, 数据维度)
             if not isinstance(pars_dict, dict):
                 raise TypeError(f'self.pars should be a dict, got {type(self.par_values)} instead.')
             # 检查参数的个数必须与输入的历史数据价格的层数相同，因为每一层代表一只股票，股票数量必须与参数的数量相同
