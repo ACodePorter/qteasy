@@ -219,7 +219,9 @@ class TestTraderPhase0Observability(unittest.TestCase):
             if task == 'process_result':
                 trader.status = 'stopped'
                 return
-            return original_run_task(task, *args, run_in_main_thread=run_in_main_thread)
+            return original_run_task(
+                task, *args, run_in_main_thread=run_in_main_thread, task_spec=task_spec
+            )
 
         trader._run_task = fake_run_task
         trader._add_task_from_schedule = lambda current_time=None: None
@@ -265,7 +267,9 @@ class TestTraderPhase0Observability(unittest.TestCase):
             if task == 'start':
                 trader.status = 'running'
                 return
-            return original_run_task(task, *args, run_in_main_thread=run_in_main_thread)
+            return original_run_task(
+                task, *args, run_in_main_thread=run_in_main_thread, task_spec=task_spec
+            )
 
         trader._run_task = fake_run_task
         trader._add_task_from_schedule = lambda current_time=None: None

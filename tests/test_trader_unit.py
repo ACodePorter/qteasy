@@ -616,7 +616,7 @@ class TestTraderRuntimeLifecycle(unittest.TestCase):
 
         added_tasks = []
 
-        def fake_add_task(task, *args):
+        def fake_add_task(task, *args, **kwargs):
             added_tasks.append((task, args))
 
         self._trader.add_task = fake_add_task
@@ -637,7 +637,7 @@ class TestTraderRuntimeLifecycle(unittest.TestCase):
 
         called = {}
 
-        def fake_run_task(task, *args, run_in_main_thread=False):
+        def fake_run_task(task, *args, run_in_main_thread=False, task_spec=None):
             called['task'] = task
             called['run_in_main_thread'] = run_in_main_thread
             self._trader.status = 'stopped'
