@@ -1,14 +1,20 @@
 # coding=utf-8
 # ======================================
 # File:     test_trader_integration.py
+# Author:   Jackie PENG
+# Contact:  jackie.pengzhao@gmail.com
+# Created:  2026-05-09
 # Desc:
-#   集成测试：Trader 日志与断点、成交与交割、调度与 run()，
-#   使用专用测试 DataSource（非 QT_DATA_SOURCE），测试完成后清理表数据。
+#   集成测试：
+#   Trader 日志与断点、成交与交割、调度与 run()，
+#   使用专用测试 DataSource（非 QT_DATA_SOURCE），
+#   测试完成后清理表数据。
 # ======================================
 
 import os
 import time
 import unittest
+from unittest.mock import patch
 
 import pandas as pd
 
@@ -151,8 +157,149 @@ class TestTraderRunStatus(unittest.TestCase):
         trader, self._test_ds = create_trader_with_account()
         trader.status = 'stopped'
         # 不真正启动 run() 的无限循环，仅验证状态被尊重；若需测 run() 可在此起线程后短时 join
+        print('\n[TestTraderRunStatus] status:', trader.status)
         self.assertEqual(trader.status, 'stopped')
         print('test_run_respects_stopped_status: ok')
+
+
+class TestTraderPhase0Observability(unittest.TestCase):
+    """阶段0：关键链路结构化日志与回归行为验证。"""
+
+    def tearDown(self):
+        if getattr(self, '_test_ds', None) is not None:
+            _clear_tables(self._test_ds)
+
+    def test_add_task_writes_structured_queue_trace(self):
+        print('\n[TestTraderPhase0Observability] add_task trace')
+        trader, self._test_ds = create_trader_with_account(debug=True)
+        trader.init_system_logger()
+        log_path = sys_log_file_path_name(trader.account_id, trader.datasource)
+        size_before = os.path.getsize(log_path) if os.path.exists(log_path) else 0
+
+        trader.add_task('pause')
+        for handler in trader.live_sys_logger.handlers:
+            handler.flush()
+
+        with open(log_path, 'r', encoding='utf-8') as f:
+            f.seek(size_before)
+            new_logs = f.read()
+
+        print(' new log tail:\n', new_logs[-500:])
+        print(' queue size now:', trader.task_queue.qsize())
+        self.assertIn('category=task_queue event=task_add_requested', new_logs)
+        self.assertIn('category=task_queue event=task_enqueued', new_logs)
+
+    def test_run_enqueues_and_executes_process_result_task(self):
+        print('\n[TestTraderPhase0Observability] run broker-result chain')
+        trader, self._test_ds = create_trader_with_account(debug=True)
+        trader.init_system_logger()
+        log_path = sys_log_file_path_name(trader.account_id, trader.datasource)
+        size_before = os.path.getsize(log_path) if os.path.exists(log_path) else 0
+
+        broker_result = {
+            'order_id': 123456,
+            'filled_qty': 100.0,
+            'price': 10.0,
+            'transaction_fee': 1.0,
+            'canceled_qty': 0.0,
+        }
+        trader.broker.result_queue.put(broker_result)
+
+        executed_tasks = []
+        original_run_task = trader._run_task
+
+        def fake_run_task(task, *args, run_in_main_thread=False):
+            executed_tasks.append((task, args))
+            if task == 'start':
+                trader.status = 'running'
+                return
+            if task == 'process_result':
+                trader.status = 'stopped'
+                return
+            return original_run_task(task, *args, run_in_main_thread=run_in_main_thread)
+
+        trader._run_task = fake_run_task
+        trader._add_task_from_schedule = lambda current_time=None: None
+
+        trader.run()
+        for handler in trader.live_sys_logger.handlers:
+            handler.flush()
+        with open(log_path, 'r', encoding='utf-8') as f:
+            f.seek(size_before)
+            new_logs = f.read()
+
+        executed_names = [task for task, _ in executed_tasks]
+        print(' executed_tasks:', executed_tasks)
+        print(' new log tail:\n', new_logs[-800:])
+        self.assertIn('start', executed_names)
+        self.assertIn('process_result', executed_names)
+        self.assertIn('category=broker event=result_received', new_logs)
+        self.assertIn('category=task_runner event=task_execute_started', new_logs)
+        self.assertIn('task=process_result', new_logs)
+
+    def test_run_emits_task_execute_failed_trace_on_runtime_error(self):
+        print('\n[TestTraderPhase0Observability] run task failure trace')
+        trader, self._test_ds = create_trader_with_account(debug=True)
+        trader.init_system_logger()
+        log_path = sys_log_file_path_name(trader.account_id, trader.datasource)
+        size_before = os.path.getsize(log_path) if os.path.exists(log_path) else 0
+
+        trader.add_task('pause')
+        trader.add_task('stop')
+
+        executed_tasks = []
+
+        def fake_run_task(task, *args, run_in_main_thread=False):
+            executed_tasks.append((task, args))
+            if task == 'start':
+                trader.status = 'running'
+                return
+            if task == 'pause':
+                raise RuntimeError('phase0-test-runtime-error')
+            if task == 'stop':
+                trader.status = 'stopped'
+                return
+            return None
+
+        trader._run_task = fake_run_task
+        trader._add_task_from_schedule = lambda current_time=None: None
+
+        trader.run()
+        for handler in trader.live_sys_logger.handlers:
+            handler.flush()
+        with open(log_path, 'r', encoding='utf-8') as f:
+            f.seek(size_before)
+            new_logs = f.read()
+
+        print(' executed_tasks:', executed_tasks)
+        print(' new log tail:\n', new_logs[-1000:])
+        self.assertIn('category=task_runner event=task_execute_failed', new_logs)
+        self.assertIn('error_type=RuntimeError', new_logs)
+        self.assertIn('task=pause', new_logs)
+
+    def test_process_result_emits_failed_trace_when_processing_raises(self):
+        print('\n[TestTraderPhase0Observability] process_result failure trace')
+        trader, self._test_ds = create_trader_with_account(debug=True)
+        trader.init_system_logger()
+        log_path = sys_log_file_path_name(trader.account_id, trader.datasource)
+        size_before = os.path.getsize(log_path) if os.path.exists(log_path) else 0
+        result = {'order_id': 888001, 'filled_qty': 1.0, 'price': 1.0, 'transaction_fee': 0.0, 'canceled_qty': 0.0}
+
+        with patch('qteasy.trader.process_trade_result', side_effect=ValueError('phase0-process-result-error')):
+            trader._process_result(result)
+
+        for handler in trader.live_sys_logger.handlers:
+            handler.flush()
+        with open(log_path, 'r', encoding='utf-8') as f:
+            f.seek(size_before)
+            new_logs = f.read()
+
+        print(' process_result input:', result)
+        print(' new log tail:\n', new_logs[-1000:])
+        self.assertIn('category=trade_result event=process_started', new_logs)
+        self.assertIn('category=trade_result event=process_failed', new_logs)
+        self.assertIn('order_id=888001', new_logs)
+        self.assertIn('error_type=ValueError', new_logs)
 
 
 if __name__ == '__main__':

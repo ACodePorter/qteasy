@@ -1036,29 +1036,16 @@ class TraderShell(Cmd):
     def _request_shutdown(self) -> None:
         """请求停止 Trader/Broker（幂等），供 CLI 退出路径复用。"""
         if not self._shutdown_requested:
-            print(f'canceling all unfinished orders')
-            print(f'cancelling all pending tasks: {self.trader.task_daily_schedule}')
-            self.trader.add_task('post_close')
-            print(f'stopping trader...')
-            self.trader.add_task('stop')
+            print('requesting trader runtime shutdown...')
+            self.trader.stop(wait=False, include_post_close=True)
             self._shutdown_requested = True
         self._status = 'stopped'
 
     def _wait_for_shutdown(self, timeout: float = 60.0) -> None:
         """等待 Trader 停机并收敛 Broker 在途订单线程。"""
-        start_time = time.time()
-        check_interval = 0.05
-        while self.trader.status != 'stopped' and (time.time() - start_time) < timeout:
-            time.sleep(check_interval)
-
-        if self.trader.status != 'stopped':
-            print('Warning: trader stop timeout reached, continuing shutdown.')
-            return
-
-        remaining = max(0.0, timeout - (time.time() - start_time))
-        broker_idle = self.trader.broker.wait_until_idle(timeout=remaining)
-        if not broker_idle:
-            print('Warning: broker still has in-flight tasks during shutdown timeout.')
+        self.trader.join(timeout=timeout)
+        if self.trader.is_alive():
+            print('Warning: trader runtime stop timeout reached, continuing shutdown.')
 
     def do_exit(self, arg):
         """usage: exit [-h]
@@ -2299,11 +2286,8 @@ class TraderShell(Cmd):
         return line
 
     def run(self):
-        from threading import Thread
-
         self.do_dashboard('')
-        Thread(target=self.trader.run).start()
-        Thread(target=self.trader.broker.run).start()
+        self.trader.start()
 
         live_price_refresh_interval = 0.05
         live_price_refresh_timer = 0

@@ -547,8 +547,7 @@ class TraderApp(App):
         this event loop should be running in a separate thread.
 
         """
-        Thread(target=self.trader.run).start()
-        Thread(target=self.trader.broker.run).start()
+        self.trader.start()
 
         system_log = self.query_one(SysLog)
         display = self.query_one(DisplayPanel)
@@ -931,8 +930,8 @@ class TraderApp(App):
         """Actions to perform before exiting the app.
         """
         # stop the trader, broker and the trader event loop
-        self.trader._run_task('stop')
-        time.sleep(0.1)
+        self.trader.stop(wait=False, include_post_close=True)
+        self.trader.join(timeout=5.0)
 
         self.status = 'stopped'
 

@@ -1,14 +1,20 @@
 # coding=utf-8
 # ======================================
 # File:     test_trader_unit.py
+# Author:   Jackie PENG
+# Contact:  jackie.pengzhao@gmail.com
+# Created:  2026-05-09
 # Desc:
-#   单元测试：Trader 初始化、status、任务调度、account_cash、watch_list 等，
-#   使用专用测试 DataSource（非 QT_DATA_SOURCE），测试完成后清理数据。
+#   单元测试：Trader 初始化、status、任务调度、
+#   account_cash、watch_list 等，使用专
+#   用测试 DataSource（非 QT_DATA_SOURCE），
+#   测试完成后清理表数据。
 # ======================================
 
 import os
 import datetime as dt
 import unittest
+from unittest.mock import patch
 
 import pandas as pd
 
@@ -449,6 +455,96 @@ class TestTraderWatchList(unittest.TestCase):
         self.assertEqual(trader.watch_list, ['000300.SH', '000001.SZ'])
         _clear_tables(test_ds)
         print('test_watch_list_initialization_with_list_asset_pool: ok')
+
+
+class TestTraderRuntimeLifecycle(unittest.TestCase):
+    """Trader 运行时生命周期接口单测。"""
+
+    def setUp(self):
+        self._trader, self._test_ds = create_trader_with_account()
+
+    def tearDown(self):
+        _clear_tables(self._test_ds)
+
+    def test_start_creates_trader_and_broker_threads(self):
+        print('\n[TestTraderRuntimeLifecycle] start threads')
+        started_targets = []
+
+        class DummyThread:
+            def __init__(self, target=None, daemon=None, name=None):
+                self._target = target
+                self._alive = False
+                self.name = name or 'dummy-thread'
+
+            def start(self):
+                started_targets.append(self._target)
+                self._alive = True
+
+            def is_alive(self):
+                return self._alive
+
+            def join(self, timeout=None):
+                self._alive = False
+
+        with patch('qteasy.trader.threading.Thread', new=DummyThread):
+            started = self._trader.start()
+            print(' started:', started, 'target_count:', len(started_targets))
+            self.assertTrue(started)
+            self.assertEqual(len(started_targets), 2)
+            self.assertIn(self._trader.run, started_targets)
+            self.assertIn(self._trader.broker.run, started_targets)
+            self.assertTrue(self._trader.is_alive())
+
+    def test_stop_requests_post_close_and_stop_when_alive(self):
+        print('\n[TestTraderRuntimeLifecycle] stop request with alive runtime')
+        self._trader.status = 'running'
+        self._trader._runtime_shutdown_requested = False
+
+        added_tasks = []
+
+        def fake_add_task(task, *args):
+            added_tasks.append((task, args))
+
+        self._trader.add_task = fake_add_task
+        self._trader.join = lambda timeout=None: None
+        self._trader._runtime_trader_thread = type('T', (), {'is_alive': lambda _self: True})()
+        self._trader._runtime_broker_thread = None
+
+        self._trader.stop(wait=False, include_post_close=True)
+        print(' added_tasks:', added_tasks)
+        self.assertEqual([item[0] for item in added_tasks], ['post_close', 'stop'])
+
+    def test_stop_fallback_executes_stop_task_when_not_alive(self):
+        print('\n[TestTraderRuntimeLifecycle] stop fallback path')
+        self._trader.status = 'running'
+        self._trader._runtime_shutdown_requested = False
+        self._trader._runtime_trader_thread = None
+        self._trader._runtime_broker_thread = None
+
+        called = {}
+
+        def fake_run_task(task, *args, run_in_main_thread=False):
+            called['task'] = task
+            called['run_in_main_thread'] = run_in_main_thread
+            self._trader.status = 'stopped'
+
+        self._trader._run_task = fake_run_task
+        self._trader.stop(wait=False, include_post_close=False)
+        print(' stop fallback called:', called)
+        self.assertEqual(called.get('task'), 'stop')
+        self.assertTrue(called.get('run_in_main_thread'))
+        self.assertEqual(self._trader.status, 'stopped')
+
+    def test_start_is_idempotent_when_runtime_alive(self):
+        print('\n[TestTraderRuntimeLifecycle] start idempotent')
+        self._trader._runtime_trader_thread = type('T', (), {'is_alive': lambda _self: True})()
+        self._trader._runtime_broker_thread = type('B', (), {'is_alive': lambda _self: True})()
+
+        with patch('qteasy.trader.threading.Thread') as mock_thread_cls:
+            started = self._trader.start()
+            print(' started:', started, 'thread_ctor_called:', mock_thread_cls.called)
+            self.assertFalse(started)
+            self.assertFalse(mock_thread_cls.called)
 
 
 if __name__ == '__main__':
