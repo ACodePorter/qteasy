@@ -44,6 +44,7 @@ from qteasy.trade_recording import (
     read_trade_order_detail,
     read_trade_results_by_delivery_status,
     write_trade_result,
+    read_trade_result_by_broker_result_id,
     read_trade_results_by_order_id,
     get_account_cash_availabilities,
     update_account_balance,
@@ -1480,181 +1481,167 @@ def process_trade_result(raw_trade_result, data_source=None) -> dict:
             'order_status': str, 交易订单的状态 'filled'/'partial-filled'/'canceled'
         }
     """
-    # TODO: 一个函数只做一件事情，我感觉这个函数太长了，需要拆分成多个子函数
-
     if not isinstance(raw_trade_result, dict):
         raise TypeError(f'raw_trade_result must be a dict, got {type(raw_trade_result)} instead')
+    if data_source is None:
+        import qteasy as qt
+        data_source = qt.QT_DATA_SOURCE
 
     order_id = raw_trade_result['order_id']
-    order_detail = read_trade_order_detail(order_id, data_source=data_source)
+    broker_result_id = raw_trade_result.get('broker_result_id', '')
+    if not isinstance(broker_result_id, str):
+        raise TypeError(f'broker_result_id must be a str, got {type(broker_result_id)} instead')
 
-    # 确认交易订单的状态不为 'created'. 'filled' or 'canceled'，如果是，则抛出异常
-    if order_detail['status'] in ['created']:
-        raise AttributeError(f'order {order_id} is noy submitted yet')
-    if order_detail['status'] in ['filled', 'canceled']:
-        raise AttributeError(f'order {order_id} has already been filled or canceled')
+    if broker_result_id:
+        existed_result = read_trade_result_by_broker_result_id(broker_result_id, data_source=data_source)
+        if existed_result:
+            if int(existed_result['order_id']) != int(order_id):
+                raise RuntimeError(
+                        f'broker_result_id {broker_result_id} already exists on order '
+                        f'{existed_result["order_id"]}, can not reuse on order {order_id}'
+                )
+            existed_order = read_trade_order_detail(int(existed_result['order_id']), data_source=data_source)
+            existed_result['order_status'] = existed_order.get('status')
+            return existed_result
 
-    # 读取交易订单的历史交易记录，计算尚未成交的数量：remaining_qty
-    trade_results = read_trade_results_by_order_id(order_id, data_source=data_source)
-    filled_qty = np.round(
-            trade_results['filled_qty'].sum(),
-            AMOUNT_DECIMAL_PLACES
-    ) if not trade_results.empty else 0
-    remaining_qty = np.round(
-            order_detail['qty'] - filled_qty,
-            AMOUNT_DECIMAL_PLACES,
-    )
-    if not isinstance(remaining_qty, (int, float, np.int64, np.float64)):
-        raise TypeError(f'remaining qty {remaining_qty} is not a number!')
-    # 当前交易结果确认后的累计成交量，用于稳定判定订单状态，避免依赖上一笔结果先写库
-    filled_qty_after = np.round(filled_qty + raw_trade_result['filled_qty'], AMOUNT_DECIMAL_PLACES)
-    total_order_qty = np.round(order_detail['qty'], AMOUNT_DECIMAL_PLACES)
+    def _do_process_once() -> dict:
+        order_detail = read_trade_order_detail(order_id, data_source=data_source)
 
-    # 如果交易结果中的cancel_qty大于0，则将交易订单的状态设置为 'canceled'，同时确认 canceled_qty等于remaining_qty
-    if raw_trade_result['canceled_qty'] > 0:
-        if raw_trade_result['canceled_qty'] != remaining_qty:
-            err = RuntimeError(f'canceled_qty {raw_trade_result["canceled_qty"]} '
-                               f'does not match remaining_qty {remaining_qty}')
-            raise err
-        order_detail['status'] = 'canceled'
-    # 如果交易结果中的canceled_qty等于0，则检查filled_qty的数量是大于remaining_qty，如果大于，则抛出异常
-    else:
-        if raw_trade_result['filled_qty'] > remaining_qty:
-            err = RuntimeError(f'filled_qty {raw_trade_result["filled_qty"]} '
-                               f'is greater than remaining_qty {remaining_qty}')
-            raise err
-        # 如果当前结果确认后累计成交量达到整单数量，则订单应转为filled
-        if filled_qty_after == total_order_qty:
-            order_detail['status'] = 'filled'
+        # 确认交易订单的状态不为 'created'. 'filled' or 'canceled'，如果是，则抛出异常
+        if order_detail['status'] in ['created']:
+            raise AttributeError(f'order {order_id} is noy submitted yet')
+        if order_detail['status'] in ['filled', 'canceled']:
+            raise AttributeError(f'order {order_id} has already been filled or canceled')
 
-        # 如果累计成交量仍小于整单数量，则维持partial-filled
-        elif filled_qty_after < total_order_qty:
-            order_detail['status'] = 'partial-filled'
+        # 读取交易订单的历史交易记录，计算尚未成交的数量：remaining_qty
+        trade_results = read_trade_results_by_order_id(order_id, data_source=data_source)
+        filled_qty = np.round(
+                trade_results['filled_qty'].sum(),
+                AMOUNT_DECIMAL_PLACES
+        ) if not trade_results.empty else 0
+        remaining_qty = np.round(
+                order_detail['qty'] - filled_qty,
+                AMOUNT_DECIMAL_PLACES,
+        )
+        if not isinstance(remaining_qty, (int, float, np.int64, np.float64)):
+            raise TypeError(f'remaining qty {remaining_qty} is not a number!')
+        # 当前交易结果确认后的累计成交量，用于稳定判定订单状态，避免依赖上一笔结果先写库
+        filled_qty_after = np.round(filled_qty + raw_trade_result['filled_qty'], AMOUNT_DECIMAL_PLACES)
+        total_order_qty = np.round(order_detail['qty'], AMOUNT_DECIMAL_PLACES)
+
+        if raw_trade_result['canceled_qty'] > 0:
+            if raw_trade_result['canceled_qty'] != remaining_qty:
+                err = RuntimeError(f'canceled_qty {raw_trade_result["canceled_qty"]} '
+                                   f'does not match remaining_qty {remaining_qty}')
+                raise err
+            order_detail['status'] = 'canceled'
         else:
-            err = RuntimeError(f'filled_qty_after {filled_qty_after} exceeds order_qty {total_order_qty}')
+            if raw_trade_result['filled_qty'] > remaining_qty:
+                err = RuntimeError(f'filled_qty {raw_trade_result["filled_qty"]} '
+                                   f'is greater than remaining_qty {remaining_qty}')
+                raise err
+            if filled_qty_after == total_order_qty:
+                order_detail['status'] = 'filled'
+            elif filled_qty_after < total_order_qty:
+                order_detail['status'] = 'partial-filled'
+            else:
+                err = RuntimeError(f'filled_qty_after {filled_qty_after} exceeds order_qty {total_order_qty}')
+                raise err
+
+        if order_detail['direction'] == 'sell':
+            position_change = - raw_trade_result['filled_qty']
+            cash_change = np.round(
+                    raw_trade_result['filled_qty'] * raw_trade_result['price'] - raw_trade_result['transaction_fee'],
+                    CASH_DECIMAL_PLACES,
+            )
+        elif order_detail['direction'] == 'buy':
+            position_change = raw_trade_result['filled_qty']
+            cash_change = np.round(
+                    - raw_trade_result['filled_qty'] * raw_trade_result['price'] - raw_trade_result['transaction_fee'],
+                    CASH_DECIMAL_PLACES,
+            )
+        else:
+            err = ValueError(f'Invalid direction: {order_detail["direction"]}')
             raise err
 
-    # 计算交易后持仓数量的变化 position_change 和现金的变化值 cash_change
-    if order_detail['direction'] == 'sell':
-        position_change = - raw_trade_result['filled_qty']
-        cash_change = np.round(
-                raw_trade_result['filled_qty'] * raw_trade_result['price'] - raw_trade_result['transaction_fee'],
-                CASH_DECIMAL_PLACES,
+        position_info = get_position_by_id(order_detail['pos_id'], data_source=data_source)
+        owned_qty = position_info['qty']
+        available_qty = position_info['available_qty']
+        position_cost = position_info['cost']
+        if position_cost is None:
+            position_cost = 0
+
+        available_cash = get_account_cash_availabilities(order_detail['account_id'], data_source=data_source)[1]
+        if available_qty + position_change < 0:
+            err = RuntimeError(f'position_change {position_change} is greater than '
+                               f'available position amount {available_qty}')
+            raise err
+        if available_cash + cash_change < 0:
+            err = RuntimeError(f'cash_change {cash_change:.3f} is greater than '
+                               f'available cash {available_cash:.3f}')
+            raise err
+
+        writable_trade_result = raw_trade_result.copy()
+        writable_trade_result['broker_result_id'] = broker_result_id
+        if order_detail['direction'] == 'buy':
+            writable_trade_result['delivery_amount'] = position_change
+        elif order_detail['direction'] == 'sell':
+            writable_trade_result['delivery_amount'] = cash_change
+        else:
+            err = ValueError(f'direction must be buy or sell, got {order_detail["direction"]} instead')
+            raise err
+        writable_trade_result['delivery_status'] = 'ND'
+        execution_time = pd.to_datetime('today').strftime('%Y-%m-%d %H:%M:%S')
+        writable_trade_result['execution_time'] = execution_time
+        result_id = write_trade_result(writable_trade_result, data_source=data_source)
+
+        full_trade_result = writable_trade_result.copy()
+        full_trade_result['result_id'] = result_id
+        full_trade_result['order_id'] = order_id
+        full_trade_result['pos_id'] = order_detail['pos_id']
+        full_trade_result['symbol'] = order_detail['symbol']
+        full_trade_result['position'] = position_info['position']
+        full_trade_result['direction'] = order_detail['direction']
+        full_trade_result['order_status'] = order_detail['status']
+
+        cost_change, new_cost = calculate_cost_change(
+                prev_qty=owned_qty,
+                prev_unit_cost=position_cost,
+                qty_change=position_change,
+                price=raw_trade_result['price'],
+                transaction_fee=raw_trade_result['transaction_fee'],
         )
+        full_trade_result['cost_change'] = cost_change
+        cash_amount_change = available_cash_change = cash_change
+        qty_change = available_qty_change = position_change
+        if order_detail['direction'] == 'buy':
+            available_qty_change = 0
+        else:
+            available_cash_change = 0
+        full_trade_result['qty_change'] = qty_change
+        full_trade_result['available_qty_change'] = available_qty_change
+        full_trade_result['cash_amount_change'] = cash_amount_change
+        full_trade_result['available_cash_change'] = available_cash_change
 
-    elif order_detail['direction'] == 'buy':
-        position_change = raw_trade_result['filled_qty']
-        cash_change = np.round(
-                - raw_trade_result['filled_qty'] * raw_trade_result['price'] - raw_trade_result['transaction_fee'],
-                CASH_DECIMAL_PLACES,
+        update_account_balance(
+                account_id=order_detail['account_id'],
+                data_source=data_source,
+                cash_amount_change=cash_amount_change,
+                available_cash_change=available_cash_change,
         )
-    else:  # for any other unexpected direction
-        err = ValueError(f'Invalid direction: {order_detail["direction"]}')
-        raise err
+        update_position(
+                position_id=order_detail['pos_id'],
+                data_source=data_source,
+                qty_change=qty_change,
+                available_qty_change=available_qty_change,
+                cost=new_cost,
+        )
+        update_trade_order(order_id, data_source=data_source, status=order_detail['status'])
+        return full_trade_result
 
-    position_info = get_position_by_id(order_detail['pos_id'], data_source=data_source)
-    owned_qty = position_info['qty']
-    available_qty = position_info['available_qty']
-    position_cost = position_info['cost']
-    if position_cost is None:
-        position_cost = 0
-
-    available_cash = get_account_cash_availabilities(order_detail['account_id'], data_source=data_source)[1]
-
-    # 如果position_change小于available_position_amount，则抛出异常
-    if available_qty + position_change < 0:
-        err = RuntimeError(f'position_change {position_change} is greater than '
-                           f'available position amount {available_qty}')
-        raise err
-    # 如果cash_change小于available_cash，则抛出异常
-    if available_cash + cash_change < 0:
-        err = RuntimeError(f'cash_change {cash_change:.3f} is greater than '
-                           f'available cash {available_cash:.3f}')
-        raise err
-
-    # 计算并生成交易结果的交割数量和交割状态，如果是买入订单，交割数量为position_change，如果是卖出订单，交割数量为cash_change
-    if order_detail['direction'] == 'buy':
-        raw_trade_result['delivery_amount'] = position_change
-    elif order_detail['direction'] == 'sell':
-        raw_trade_result['delivery_amount'] = cash_change
-    else:
-        err = ValueError(f'direction must be buy or sell, got {order_detail["direction"]} instead')
-        raise err
-    raw_trade_result['delivery_status'] = 'ND'
-
-    # 至此，如果前面所有步骤都没有发生错误，则交易结果有效，生成交易结果的execution_time字段，正式保存交易结果
-    execution_time = pd.to_datetime('today').strftime('%Y-%m-%d %H:%M:%S')  # 产生本地时区时间
-    raw_trade_result['execution_time'] = execution_time
-    result_id = write_trade_result(raw_trade_result, data_source=data_source)
-
-    # TODO: 这里可能会有Bug：为了避免在更新账户余额和持仓时出现错误，需要将更新账户余额和持仓的操作放在一个事务中
-    #  否则可能出现更新账户余额成功，但更新持仓失败的情况，或订单状态更新失败的情况
-
-    # 添加trade_result中的其他关键信息
-    full_trade_result = raw_trade_result
-    full_trade_result['result_id'] = result_id
-    full_trade_result['order_id'] = order_id
-    full_trade_result['pos_id'] = order_detail['pos_id']
-    full_trade_result['symbol'] = order_detail['symbol']
-    full_trade_result['position'] = position_info['position']
-    full_trade_result['direction'] = order_detail['direction']
-    full_trade_result['order_status'] = order_detail['status']
-
-    # calculate new cost
-    cost_change, new_cost = calculate_cost_change(
-            prev_qty=owned_qty,
-            prev_unit_cost=position_cost,
-            qty_change=position_change,
-            price=raw_trade_result['price'],
-            transaction_fee=raw_trade_result['transaction_fee'],
-    )
-    full_trade_result['cost_change'] = cost_change
-    # 更新现金及持仓的变动量
-    cash_amount_change = available_cash_change = cash_change
-    qty_change = available_qty_change = position_change
-    if order_detail['direction'] == 'buy': # 只更新qty，不更新available_qty，因为available_qty应该在交割时更新
-        available_qty_change = 0
-    else:  # 如果direction为sell, 只更新cash_amount，不更新available_cash，因为available_cash应该在交割时更新
-        available_cash_change = 0
-
-    full_trade_result['qty_change'] = qty_change
-    full_trade_result['available_qty_change'] = available_qty_change
-    full_trade_result['cash_amount_change'] = cash_amount_change
-    full_trade_result['available_cash_change'] = available_cash_change
-
-    # TODO: 严重bug：
-    #  如果两个订单的交易结果在同一时间内生成，那么在更新账户余额和持仓时，就会发生冲突
-    #  导致前一个订单的结果无法正确保存到数据库中，因为下面两个函数的执行过程都是：
-    #  1，从数据库中读取原始数据
-    #  2，将原始数据加上变更量，得到新的数据
-    #  3，将新的数据写入数据库
-    #  如果同时有两个线程同时执行上面的操作，就很有可能同时读取了原始的数据，各自加上变化量
-    #  后再分别写入数据库，导致数据写入错误，举例如下：
-    #  假如线程A和线程B分别同时打算更新账户余额，线程A需要增加1000元，线程B增加2000元，而
-    #  最初的账户余额为10000元。正确情况下，两个线程分别增加账户余额后，账户余额应该为
-    #  10000 + 1000 + 2000 = 13000元，但是如果两个线程同时读取了最初账户余额，各自增加后写入
-    #  数据库，那么最终的账户余额就会变成10000 + 1000 = 11000元或者10000 + 2000 = 12000元
-    #  从而导致数据错误。因此，本质上这个函数应该在一个阻塞线程内工作，等一个交易结果处理完毕，
-    #  再处理下一个交易结果，这样就不会出现数据错误的情况了。
-    # 更新现金余额和订单状态
-    update_account_balance(
-            account_id=order_detail['account_id'],
-            data_source=data_source,
-            cash_amount_change=cash_amount_change,
-            available_cash_change=available_cash_change,
-    )
-    # 更新账户持仓
-    update_position(
-            position_id=order_detail['pos_id'],
-            data_source=data_source,
-            qty_change=qty_change,
-            available_qty_change=available_qty_change,
-            cost=new_cost,
-    )
-    # 更新订单状态
-    update_trade_order(order_id, data_source=data_source, status=order_detail['status'])
-
-    return raw_trade_result
+    if getattr(data_source, 'source_type', None) == 'db':
+        return data_source.db_run_in_transaction(_do_process_once)
+    return _do_process_once()
 
 
 def calculate_cost_change(prev_qty, prev_unit_cost, qty_change, price, transaction_fee) -> tuple:

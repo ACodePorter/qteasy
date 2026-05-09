@@ -493,11 +493,11 @@ TABLE_SCHEMA = {
 
     'sys_op_trade_results':  # 实盘交易结果表
         {'columns':    ['result_id', 'order_id', 'filled_qty', 'price', 'transaction_fee', 'execution_time',
-                        'canceled_qty', 'delivery_amount', 'delivery_status'],
+                        'canceled_qty', 'delivery_amount', 'delivery_status', 'broker_result_id'],
          'dtypes':     ['int', 'int', 'double', 'double', 'double', 'datetime',
-                        'double', 'double', 'varchar(2)'],
+                        'double', 'double', 'varchar(2)', 'varchar(64)'],
          'remarks':    ['交易结果ID', '交易订单ID', '成交数量', '成交价格', '交易费用', '成交时间',
-                        '取消交易数量', '交割数量(现金或证券)', '交割状态{ND, DL}'],
+                        '取消交易数量', '交割数量(现金或证券)', '交割状态{ND, DL}', '回报幂等键（券商成交回报ID）'],
          'prime_keys': [0],
          },
 
