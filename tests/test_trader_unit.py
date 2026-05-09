@@ -23,6 +23,11 @@ from qteasy import DataSource, Operator
 from qteasy.trade_recording import new_account, get_account, get_or_create_position, update_position, update_account_balance
 from qteasy.trader import Trader
 from qteasy.broker import SimulatorBroker
+from qteasy.trading_util import (
+    apply_schedule_catch_up_policy,
+    create_daily_task_plan,
+    create_daily_task_schedule,
+)
 
 
 # --------------- 测试用 DataSource：从公共夹具导入（data_test_trader，legacy=False） ---------------
@@ -456,6 +461,106 @@ class TestTraderWatchList(unittest.TestCase):
         self.assertEqual(trader.watch_list, ['000300.SH', '000001.SZ'])
         _clear_tables(test_ds)
         print('test_watch_list_initialization_with_list_asset_pool: ok')
+
+
+class TestTraderSchedulerPhase3(unittest.TestCase):
+    """阶段3：日程规划与追赶策略单测。"""
+
+    def setUp(self):
+        self._trader, self._test_ds = create_trader_with_account(debug=True)
+
+    def tearDown(self):
+        _clear_tables(self._test_ds)
+
+    def test_create_daily_task_schedule_same_input_same_output(self):
+        print('\n[TestTraderSchedulerPhase3] deterministic daily schedule')
+        op = Operator(strategies='macd', run_freq='h', run_timing='open')
+        schedule_1 = create_daily_task_schedule(
+            op,
+            current_date='2023-05-10',
+            market_open_time_am='09:30:00',
+            market_close_time_am='11:30:00',
+            market_open_time_pm='13:00:00',
+            market_close_time_pm='15:00:00',
+            live_price_frequency='30min',
+            daily_refill_tables='',
+            weekly_refill_tables='',
+            monthly_refill_tables='',
+        )
+        schedule_2 = create_daily_task_schedule(
+            op,
+            current_date='2023-05-10',
+            market_open_time_am='09:30:00',
+            market_close_time_am='11:30:00',
+            market_open_time_pm='13:00:00',
+            market_close_time_pm='15:00:00',
+            live_price_frequency='30min',
+            daily_refill_tables='',
+            weekly_refill_tables='',
+            monthly_refill_tables='',
+        )
+        print(' schedule_1 size:', len(schedule_1), 'schedule_2 size:', len(schedule_2))
+        print(' first 3 entries:', schedule_1[:3])
+        self.assertEqual(schedule_1, schedule_2)
+
+    def test_create_daily_task_plan_run_strategy_args_are_normalized_tuple(self):
+        print('\n[TestTraderSchedulerPhase3] planner output uses normalized args tuple')
+        op = Operator(strategies='macd', run_freq='d', run_timing='close')
+        task_plan = create_daily_task_plan(
+            op,
+            current_date='2023-05-10',
+            daily_refill_tables='',
+            weekly_refill_tables='',
+            monthly_refill_tables='',
+            live_price_frequency='h',
+        )
+        run_tasks = [item for item in task_plan if item.task_spec.name == 'run_strategy']
+        print(' run task count:', len(run_tasks))
+        print(' run task sample args:', run_tasks[0].task_spec.args if run_tasks else None)
+        self.assertTrue(run_tasks)
+        self.assertIsInstance(run_tasks[0].task_spec.args, tuple)
+        self.assertEqual(len(run_tasks[0].task_spec.args), 1)
+        self.assertIsInstance(run_tasks[0].as_legacy_tuple()[2], int)
+
+    def test_initialize_schedule_uses_trader_current_date_for_monthly_refill(self):
+        print('\n[TestTraderSchedulerPhase3] initialize schedule should honor force_current_date')
+        self._trader.force_current_date = pd.to_datetime('2023-01-01').date()
+        self._trader.daily_refill_tables = ''
+        self._trader.weekly_refill_tables = ''
+        self._trader.monthly_refill_tables = 'stock_daily'
+        self._trader.task_daily_schedule = []
+        self._trader._initialize_schedule(dt.time(8, 0, 0))
+        refill_tasks = [task for task in self._trader.task_daily_schedule if task[1] == 'refill']
+        print(' refill tasks:', refill_tasks)
+        self.assertEqual(len(refill_tasks), 1)
+        self.assertEqual(refill_tasks[0], ('16:00:00', 'refill', ('stock_daily', 31)))
+
+    def test_apply_schedule_catch_up_policy_midday_keeps_key_tasks(self):
+        print('\n[TestTraderSchedulerPhase3] midday catch-up keep key task names')
+        schedule = [
+            ('09:15:00', 'pre_open'),
+            ('09:30:00', 'open_market'),
+            ('10:00:00', 'run_strategy', 0),
+            ('11:35:00', 'close_market'),
+            ('12:55:00', 'open_market'),
+            ('13:10:00', 'acquire_live_price'),
+        ]
+        out = apply_schedule_catch_up_policy(
+            task_schedule=schedule,
+            current_time=dt.time(13, 5, 0),
+            market_open_time_am='09:30:00',
+            market_close_time_am='11:30:00',
+            market_open_time_pm='13:00:00',
+            market_close_time_pm='15:00:00',
+        )
+        print(' output schedule:', out)
+        names = [task[1] for task in out]
+        print(' output names:', names)
+        self.assertNotIn('run_strategy', names)
+        self.assertIn('pre_open', names)
+        self.assertIn('open_market', names)
+        self.assertIn('close_market', names)
+        self.assertIn('acquire_live_price', names)
 
 
 class TestTraderRuntimeLifecycle(unittest.TestCase):

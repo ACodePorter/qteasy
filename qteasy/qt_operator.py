@@ -1749,6 +1749,23 @@ class Operator:
 
         return
 
+    @staticmethod
+    def _build_schedule_time_kwargs_from_config(config: Mapping[str, Any]) -> dict:
+        """从配置字典构建交易时段参数，统一供 ``prepare_running_schedule()`` 使用。"""
+
+        from qteasy.trading_util import build_operator_schedule_time_kwargs
+
+        return build_operator_schedule_time_kwargs(
+            market_open_time_am=config['market_open_time_am'],
+            market_close_time_am=config['market_close_time_am'],
+            market_open_time_pm=config['market_open_time_pm'],
+            market_close_time_pm=config['market_close_time_pm'],
+            include_start_am=True,
+            include_end_am=True,
+            include_start_pm=True,
+            include_end_pm=True,
+        )
+
     def get_signal_count(self, steps=None) -> int:
         """ 获取当前运行时间表中所有策略组生成的交易信号数量
 
@@ -2224,9 +2241,11 @@ class Operator:
         # 创建回测交易所需的各种参数和辅助参数，包括现金投入和交割所需数据表
         start_date, end_date = parse_backtest_start_end_dates(config=config)  # 回测开始和结束日期
         # 在生成交易信号之前准备运行计划及历史数据
+        schedule_time_kwargs = self._build_schedule_time_kwargs_from_config(config)
         self.prepare_running_schedule(
                 start_date=start_date,
                 end_date=end_date,
+                **schedule_time_kwargs,
         )
         # 现金投入和交割数据表
         invest_cash_plan = parse_backtest_cash_plan(config)
@@ -2438,11 +2457,12 @@ class Operator:
         # 准备优化数据
         # 生成优化交易运行计划
         # debug
+        schedule_time_kwargs = self._build_schedule_time_kwargs_from_config(config)
         print(f'Preparing optimization data from {opti_start} to {opti_end}...')
         self.prepare_running_schedule(
                 start_date=opti_start,
                 end_date=opti_end,
-                # TODO: 在这里应该引用config中的market_open_time等等属性，用于生成trade_time_index的时间点
+                **schedule_time_kwargs,
         )
 
         # debug
@@ -2488,7 +2508,7 @@ class Operator:
         self.prepare_running_schedule(
                 start_date=test_start,
                 end_date=test_end,
-                # TODO: 在这里应该引用config中的market_open_time等等属性，用于生成trade_time_index的时间点
+                **schedule_time_kwargs,
         )
         print(f'preparing data buffer...')
         self.prepare_data_buffer(
