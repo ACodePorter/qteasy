@@ -15,6 +15,7 @@ import logging
 import os
 import sys
 import time
+import threading
 from datetime import date, datetime
 
 import numpy as np
@@ -329,6 +330,9 @@ class Trader(object):
 
         self.task_queue = Queue()
         self.message_queue = Queue()
+        self._runtime_trader_thread: Optional[threading.Thread] = None
+        self._runtime_broker_thread: Optional[threading.Thread] = None
+        self._runtime_shutdown_requested = False
 
         self.task_daily_schedule = []
         self.time_zone = time_zone
@@ -775,6 +779,114 @@ class Trader(object):
         """
         self.broker.register(debug=debug, **kwargs)
 
+    def start(self) -> bool:
+        """ 启动 Trader 运行时线程与 Broker 线程。
+
+        Returns
+        -------
+        bool
+            True 表示本次调用触发了新的启动；False 表示运行时已在运行。
+        """
+
+        if self.is_alive():
+            self._trace_event(
+                category='runtime',
+                event='start_skipped_already_running',
+                trader_thread_alive=bool(self._runtime_trader_thread and self._runtime_trader_thread.is_alive()),
+                broker_thread_alive=bool(self._runtime_broker_thread and self._runtime_broker_thread.is_alive()),
+            )
+            return False
+
+        self._runtime_shutdown_requested = False
+        self._runtime_trader_thread = threading.Thread(
+            target=self.run,
+            daemon=True,
+            name=f'TraderMain-{self.account_id}',
+        )
+        self._runtime_broker_thread = threading.Thread(
+            target=self.broker.run,
+            daemon=True,
+            name=f'BrokerMain-{self.account_id}',
+        )
+        self._runtime_trader_thread.start()
+        self._runtime_broker_thread.start()
+        self._trace_event(
+            category='runtime',
+            event='started',
+            trader_thread=self._runtime_trader_thread.name,
+            broker_thread=self._runtime_broker_thread.name,
+        )
+        return True
+
+    def is_alive(self) -> bool:
+        """ 返回 Trader 运行时是否仍有活动线程。 """
+
+        trader_alive = bool(self._runtime_trader_thread and self._runtime_trader_thread.is_alive())
+        broker_alive = bool(self._runtime_broker_thread and self._runtime_broker_thread.is_alive())
+        return trader_alive or broker_alive
+
+    def join(self, timeout: Optional[float] = None) -> None:
+        """ 等待 Trader/Broker 运行时线程结束。
+
+        Parameters
+        ----------
+        timeout : float or None, optional
+            最长等待秒数；None 表示不限时。
+        """
+
+        start_ts = time.time()
+        trader_thread = self._runtime_trader_thread
+        broker_thread = self._runtime_broker_thread
+
+        if trader_thread is not None:
+            remaining = None if timeout is None else max(0.0, timeout - (time.time() - start_ts))
+            trader_thread.join(timeout=remaining)
+        if broker_thread is not None:
+            remaining = None if timeout is None else max(0.0, timeout - (time.time() - start_ts))
+            broker_thread.join(timeout=remaining)
+
+        if self.is_alive():
+            self._trace_event(category='runtime', event='join_timeout', timeout=timeout)
+        else:
+            self._trace_event(category='runtime', event='joined')
+
+    def stop(self, wait: bool = True, timeout: float = 60.0, include_post_close: bool = True) -> None:
+        """ 请求停止 Trader 运行时。
+
+        Parameters
+        ----------
+        wait : bool, optional
+            是否等待线程退出，默认 True。
+        timeout : float, optional
+            等待超时时间（秒），默认 60。
+        include_post_close : bool, optional
+            是否在停止前请求执行 post_close，默认 True。
+        """
+
+        if not self._runtime_shutdown_requested:
+            if include_post_close and self.status in ['running', 'sleeping', 'paused']:
+                self.add_task('post_close')
+
+            if self.is_alive():
+                self.add_task('stop')
+            else:
+                # 兜底：运行时线程不存在但状态未停止时，直接执行 stop 任务收敛状态。
+                if self.status != 'stopped':
+                    self._run_task('stop', run_in_main_thread=True)
+                else:
+                    self.broker.status = 'stopped'
+            self._runtime_shutdown_requested = True
+            self._trace_event(
+                category='runtime',
+                event='stop_requested',
+                wait=wait,
+                timeout=timeout,
+                include_post_close=include_post_close,
+            )
+
+        if wait:
+            self.join(timeout=timeout)
+
     def run(self) -> None:
         """ 交易系统的main loop：
 
@@ -804,6 +916,7 @@ class Trader(object):
                 if not self.task_queue.empty():
                     # 如果任务队列不为空，执行任务
                     white_listed_tasks = self.TASK_WHITELIST[self.status]
+                    queue_size_before_get = self.task_queue.qsize()
                     task = self.task_queue.get()
                     if isinstance(task, tuple):
                         self.send_message(f'tuple task: {task} is taken from task queue, task[0]: {task[0]}'
@@ -815,21 +928,54 @@ class Trader(object):
                         args = None
                     self.send_message(f'task queue is not empty, taking next task from queue: {task_name}', debug=True)
                     if task_name not in white_listed_tasks:
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_rejected_by_status',
+                            task=task_name,
+                            trader_status=self.status,
+                        )
                         self.send_message(f'task: {task} cannot be executed in current status: {self.status}',
                                           debug=True)
                         self.task_queue.task_done()
                         continue
                     try:
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_execute_started',
+                            task=task_name,
+                            args_count=0 if args is None else len(args),
+                            trader_status=self.status,
+                        )
                         if args:
                             self._run_task(task_name, *args)
                         else:
                             self._run_task(task_name)
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_execute_finished',
+                            task=task_name,
+                            trader_status=self.status,
+                        )
                     # error handling: (TODO: if there's connection problem, reconnect or hold the trader?)
                     except RuntimeError as e:
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_execute_failed',
+                            task=task_name,
+                            error_type=type(e).__name__,
+                            error=str(e),
+                        )
                         import traceback
                         self.send_message(f'Runtime Error occurred when executing task: {task_name}, error: {e}')
                         self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
                     except Exception as e:
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_execute_failed',
+                            task=task_name,
+                            error_type=type(e).__name__,
+                            error=str(e),
+                        )
                         import traceback
                         self.send_message(f'error occurred when executing task: {task_name}, error: {e}')
                         self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
@@ -850,6 +996,14 @@ class Trader(object):
                 # TODO: 不要在trader中操作broker的所有Queue，而应该调用broker的API来获取交易结果
                 if not self.broker.result_queue.empty():
                     result = self.broker.result_queue.get()
+                    order_id = result.get('order_id') if isinstance(result, dict) else 'N/A'
+                    self._trace_event(
+                        category='broker',
+                        event='result_received',
+                        order_id=order_id,
+                        result_type=type(result).__name__,
+                        trader_status=self.status,
+                    )
                     if self.broker.debug:
                         self.send_message(f'got new result from broker for order {result["order_id"]}, '
                                           f'adding process_result task to queue')
@@ -1072,6 +1226,42 @@ class Trader(object):
 
         return message
 
+    def _format_trace_message(self, category: str, event: str, **fields: Any) -> str:
+        """ 生成结构化调试消息文本。
+
+        Parameters
+        ----------
+        category : str
+            事件分类，如 task_queue / task_runner / broker。
+        event : str
+            事件名称，如 task_enqueued / task_execute_started。
+        **fields : Any
+            事件上下文键值对。
+
+        Returns
+        -------
+        str
+            可直接写入系统日志的结构化文本。
+        """
+
+        field_items = []
+        for key in sorted(fields.keys()):
+            value = str(fields[key]).replace('\n', '\\n')
+            field_items.append(f'{key}={value}')
+        field_part = ' '.join(field_items)
+        base = f'[TRACE] category={category} event={event}'
+        if field_part:
+            return f'{base} {field_part}'
+        return base
+
+    def _trace_event(self, category: str, event: str, **fields: Any) -> None:
+        """ 记录结构化调试事件。 """
+
+        self.send_message(
+            message=self._format_trace_message(category=category, event=event, **fields),
+            debug=True,
+        )
+
     def add_task(self, task, *args) -> None:
         """ 添加任务到任务队列
 
@@ -1086,8 +1276,16 @@ class Trader(object):
             err = TypeError('task should be a str')
             raise err
 
+        queue_size_before = self.task_queue.qsize()
         if args:
             task = (task, args)
+        self._trace_event(
+            category='task_queue',
+            event='task_add_requested',
+            task=task,
+            queue_size_before=queue_size_before,
+            trader_status=self.status,
+        )
         self.send_message(f'adding task: {task}', debug=True)
         self._add_task_to_queue(task)
 
@@ -2362,6 +2560,13 @@ class Trader(object):
         None
         """
 
+        order_id = result.get('order_id') if isinstance(result, dict) else 'N/A'
+        self._trace_event(
+            category='trade_result',
+            event='process_started',
+            order_id=order_id,
+            result_type=type(result).__name__,
+        )
         self.send_message(f'running task process_result, got result: \n{result}', debug=True)
 
         try:
@@ -2370,6 +2575,13 @@ class Trader(object):
             result_id = trade_result['result_id']
 
         except Exception as e:
+            self._trace_event(
+                category='trade_result',
+                event='process_failed',
+                order_id=order_id,
+                error_type=type(e).__name__,
+                error=str(e),
+            )
             self.send_message(f'{e} Error occurred during processing trade result, result will be ignored')
             import traceback
             self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
@@ -2377,7 +2589,18 @@ class Trader(object):
 
         # 生成交易结果后，逐个检查交易结果并记录到trade_log文件并推送到信息队列（记录到system_log中）
         if result_id is None:
+            self._trace_event(
+                category='trade_result',
+                event='process_skipped_empty_result',
+                order_id=order_id,
+            )
             return
+        self._trace_event(
+            category='trade_result',
+            event='process_succeeded',
+            order_id=order_id,
+            result_id=result_id,
+        )
         self.log_trade_result(full_trade_result=trade_result)
 
         # 执行交易结果的立即交割; 如果交割期为0，则立即交割结果，否则第二天开盘前集中交割
@@ -2391,7 +2614,21 @@ class Trader(object):
 
         # 记录交割结果到trade_log和system_log
         if deliver_result.get('delivery_status') != 'DL':
+            self._trace_event(
+                category='trade_result',
+                event='delivery_pending',
+                order_id=order_id,
+                result_id=result_id,
+                delivery_status=deliver_result.get('delivery_status'),
+            )
             return
+        self._trace_event(
+            category='trade_result',
+            event='delivery_completed',
+            order_id=order_id,
+            result_id=result_id,
+            delivery_status=deliver_result.get('delivery_status'),
+        )
         self.log_cash_delivery(delivery_result=deliver_result)
         self.log_qty_delivery(delivery_result=deliver_result)
 
@@ -2638,9 +2875,23 @@ class Trader(object):
 
         async_tasks = ['acquire_live_price', 'run_strategy']
         if (not run_in_main_thread) and (task in async_tasks):
+            self._trace_event(
+                category='task_runner',
+                event='task_dispatch',
+                task=task,
+                mode='async',
+                args_count=len(args),
+            )
             self.send_message(f'will run async task: {task} with args: {args}', debug=True)
             run_async_task(task_func, *args)
         else:
+            self._trace_event(
+                category='task_runner',
+                event='task_dispatch',
+                task=task,
+                mode='sync',
+                args_count=len(args),
+            )
             self.send_message(f'running sync task: {task} with args: {args}', debug=True)
             run_sync_task(task_func, *args)
 
@@ -2654,8 +2905,17 @@ class Trader(object):
         task: str
             任务名称
         """
+        queue_size_before = self.task_queue.qsize()
         self.send_message(f'putting task {task} into task queue', debug=True)
         self.task_queue.put(task)
+        self._trace_event(
+            category='task_queue',
+            event='task_enqueued',
+            task=task,
+            queue_size_before=queue_size_before,
+            queue_size_after=self.task_queue.qsize(),
+            trader_status=self.status,
+        )
 
     def _add_task_from_schedule(self, current_time=None) -> None:
         """ 根据当前时间从任务日程中添加任务到任务队列，只有到时间时才添加任务。
