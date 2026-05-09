@@ -50,8 +50,9 @@ from .risk import AccountSnapshot, OrderIntent, RiskDecision, RiskManager
 from .live_config import LiveTradeConfig, apply_live_trade_config_to_trader
 
 from .trading_util import (
+    apply_schedule_catch_up_policy,
     cancel_order,
-    create_daily_task_schedule,
+    create_daily_task_plan,
     get_position_by_id,
     get_symbol_names,
     process_account_delivery,
@@ -3273,70 +3274,33 @@ class Trader(object):
             # 如果任务日程非空列表，直接返回
             self.send_message('task agenda is not empty, no need to initialize agenda', debug=True)
             return
-        self.task_daily_schedule = create_daily_task_schedule(
-                operator=self.operator,
-                is_trade_day=self.is_trade_day,
-                market_open_time_am=self.market_open_time_am,
-                market_close_time_am=self.market_close_time_am,
-                market_open_time_pm=self.market_open_time_pm,
-                market_close_time_pm=self.market_close_time_pm,
-                live_price_frequency=self.live_price_freq,
-                open_close_timing_offset=self.open_close_timing_offset,
-                daily_refill_tables=self.daily_refill_tables,
-                weekly_refill_tables=self.weekly_refill_tables,
-                monthly_refill_tables=self.monthly_refill_tables,
+        current_date = self.get_current_tz_datetime().date()
+        task_plan = create_daily_task_plan(
+            operator=self.operator,
+            is_trade_day=self.is_trade_day,
+            market_open_time_am=self.market_open_time_am,
+            market_close_time_am=self.market_close_time_am,
+            market_open_time_pm=self.market_open_time_pm,
+            market_close_time_pm=self.market_close_time_pm,
+            live_price_frequency=self.live_price_freq,
+            open_close_timing_offset=self.open_close_timing_offset,
+            daily_refill_tables=self.daily_refill_tables,
+            weekly_refill_tables=self.weekly_refill_tables,
+            monthly_refill_tables=self.monthly_refill_tables,
+            current_date=current_date,
         )
+        self.task_daily_schedule = [item.as_legacy_tuple() for item in task_plan]
         self.send_message(f'created complete daily schedule (to be further adjusted): {self.task_daily_schedule}',
                           debug=True)
-        # 根据当前时间删除过期的任务
-        moa = pd.to_datetime(self.market_open_time_am).time()
-        mca = pd.to_datetime(self.market_close_time_am).time()
-        moc = pd.to_datetime(self.market_open_time_pm).time()
-        mcc = pd.to_datetime(self.market_close_time_pm).time()
-        if current_time < moa:
-            # before market morning open, keep all tasks
-            self.send_message('before market morning open, keeping all tasks', debug=True)
-        elif moa < current_time < mca:
-            # market open time, remove all task before current time except pre_open
-            self.send_message('market open, removing all tasks before current time except pre_open and open_market',
-                              debug=True)
-            self.task_daily_schedule = [task for task in self.task_daily_schedule if
-                                        (pd.to_datetime(task[0]).time() >= current_time) or
-                                        (task[1] in ['pre_open',
-                                                     'open_market'])]
-        elif mca < current_time < moc:
-            # before market afternoon open, remove all task before current time except pre_open, open_market and sleep
-            self.send_message('before market afternoon open, removing all tasks before current time '
-                              'except pre_open, open_market and sleep', debug=True)
-            self.task_daily_schedule = [task for task in self.task_daily_schedule if
-                                        (pd.to_datetime(task[0]).time() >= current_time) or
-                                        (task[1] in ['pre_open',
-                                                     'open_market',
-                                                     'close_market'])]
-        elif moc < current_time < mcc:
-            # market afternoon open, remove all task before current time except pre_open, open_market, sleep, and wakeup
-            self.send_message('market afternoon open, removing all tasks before current time '
-                              'except pre_open, open_market, sleep and wakeup', debug=True)
-            self.task_daily_schedule = [task for task in self.task_daily_schedule if
-                                        (pd.to_datetime(task[0]).time() >= current_time) or
-                                        (task[1] in ['pre_open',
-                                                     'open_market',
-                                                     'close_market'])]
-        elif mcc < current_time:
-            # after market close, remove all tasks before current time except pre_open and post_close
-            self.send_message('market closed, removing all tasks before current time except '
-                              'pre_open and post_close',
-                              debug=True)
-            # previously considered to add refill), but looks like it is not the best practice,
-            # because this will result in multiple refill tasks if the user restart the trader
-            # for many times after 16:00, this might not be the ideal case,
-            self.task_daily_schedule = [task for task in self.task_daily_schedule if
-                                        (pd.to_datetime(task[0]).time() >= current_time) or
-                                        (task[1] in ['pre_open',
-                                                     'post_close', ])]
-        else:
-            err = ValueError(f'Invalid current time: {current_time}')
-            raise err
+        # 根据当前时间删除过期任务，保留关键节点以支持盘中启动追赶
+        self.task_daily_schedule = apply_schedule_catch_up_policy(
+            task_schedule=self.task_daily_schedule,
+            current_time=current_time,
+            market_open_time_am=self.market_open_time_am,
+            market_close_time_am=self.market_close_time_am,
+            market_open_time_pm=self.market_open_time_pm,
+            market_close_time_pm=self.market_close_time_pm,
+        )
 
         self.send_message(f'adjusted daily schedule: {self.task_daily_schedule}', debug=True)
 
