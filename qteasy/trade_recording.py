@@ -157,7 +157,7 @@ def update_account(account_id, data_source=None, **account_data) -> None:
     data_source.update_sys_table_data('sys_op_live_accounts', record_id=account_id, **account_data)
 
 
-def update_account_balance(account_id, data_source=None, **cash_change) -> None:
+def update_account_balance(account_id, data_source=None, transaction=False, **cash_change) -> None:
     """ 更新账户的资金总额和可用资金, 为了避免误操作，仅允许修改现金总额、可用现金和总投资额，其他字段不可修改
 
     Parameters
@@ -184,6 +184,15 @@ def update_account_balance(account_id, data_source=None, **cash_change) -> None:
         data_source = qt.QT_DATA_SOURCE
     if not isinstance(data_source, qt.DataSource):
         raise TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: update_account_balance(
+                        account_id=account_id,
+                        data_source=data_source,
+                        transaction=False,
+                        **cash_change,
+                )
+        )
 
     account_data = data_source.read_sys_table_record('sys_op_live_accounts', record_id=account_id)
     if account_data == {}:
@@ -539,7 +548,7 @@ def get_or_create_position(account_id: int, symbol: str, position_type: str, dat
     return position.index[0]
 
 
-def update_position(position_id, data_source=None, **position_data):
+def update_position(position_id, data_source=None, transaction=False, **position_data):
     """ 更新账户的持仓，包括持仓的数量和可用数量，account_id, position和symbol不可修改
 
     Parameters
@@ -565,6 +574,15 @@ def update_position(position_id, data_source=None, **position_data):
     if not isinstance(data_source, qt.DataSource):
         err = TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
         raise err
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: update_position(
+                        position_id=position_id,
+                        data_source=data_source,
+                        transaction=False,
+                        **position_data,
+                )
+        )
 
     if not isinstance(position_id, (int, np.int64)):
         err = TypeError(f'position_id must be an int, got {type(position_id)} instead')
@@ -898,7 +916,7 @@ def read_trade_order(order_id, data_source=None) -> dict:
     return data_source.read_sys_table_record('sys_op_trade_orders', record_id=order_id)
 
 
-def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_if_status_wrong=False):
+def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_if_status_wrong=False, transaction=False):
     """ 更新数据库中trade_signal的状态或其他信，这里只操作trade_signal，不处理交易结果
 
     trade_order的所有字段中，可以更新字段只有status和qty(qty只能在submit的时候更改，一旦submit之后就不能再更改。
@@ -952,6 +970,17 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
 
     if err is not None:
         raise err
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: update_trade_order(
+                        order_id=order_id,
+                        data_source=data_source,
+                        status=status,
+                        qty=qty,
+                        raise_if_status_wrong=raise_if_status_wrong,
+                        transaction=False,
+                )
+        )
 
     trade_signal = data_source.read_sys_table_record('sys_op_trade_orders', record_id=order_id)
 
@@ -1186,7 +1215,7 @@ def save_parsed_trade_orders(account_id: int,
 
 
 # 5 foundational functions for trade result
-def write_trade_result(trade_result, data_source=None):
+def write_trade_result(trade_result, data_source=None, transaction=False):
     """ 将交易结果写入数据库, 并返回交易结果的id
 
     Parameters
@@ -1205,6 +1234,8 @@ def write_trade_result(trade_result, data_source=None):
     if not isinstance(trade_result, dict):
         err = TypeError('trade_results must be a dict')
         raise err
+    if 'broker_result_id' not in trade_result:
+        trade_result['broker_result_id'] = ''
 
     if not isinstance(trade_result['order_id'], (int, np.int64)):
         err = TypeError(f'order_id of trade_result must be an int, got {type(trade_result["order_id"])} instead')
@@ -1234,6 +1265,10 @@ def write_trade_result(trade_result, data_source=None):
     if not isinstance(trade_result['delivery_status'], str):
         err = TypeError(f'delivery_status of trade_result must be a str, '
                         f'got {type(trade_result["delivery_status"])} instead')
+        raise err
+    if not isinstance(trade_result['broker_result_id'], str):
+        err = TypeError(f'broker_result_id of trade_result must be a str, '
+                        f'got {type(trade_result["broker_result_id"])} instead')
         raise err
     if not isinstance(trade_result['delivery_amount'], (int, float, np.int64, np.float64)):
         err = TypeError(f'delivery_amount of trade_result must be a number, got '
@@ -1267,12 +1302,20 @@ def write_trade_result(trade_result, data_source=None):
     if not isinstance(data_source, qt.DataSource):
         err = TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
         raise err
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: write_trade_result(
+                        trade_result=trade_result,
+                        data_source=data_source,
+                        transaction=False,
+                )
+        )
 
     result_id = data_source.insert_sys_table_data('sys_op_trade_results', **trade_result)
     return result_id
 
 
-def update_trade_result(result_id, delivery_status, data_source=None):
+def update_trade_result(result_id, delivery_status, data_source=None, transaction=False):
     """ 更新交易结果的delivery_status
 
     Parameters
@@ -1300,6 +1343,15 @@ def update_trade_result(result_id, delivery_status, data_source=None):
     if not isinstance(data_source, qt.DataSource):
         err = TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
         raise err
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: update_trade_result(
+                        result_id=result_id,
+                        delivery_status=delivery_status,
+                        data_source=data_source,
+                        transaction=False,
+                )
+        )
 
     data_source.update_sys_table_data(
             'sys_op_trade_results',
@@ -1398,11 +1450,38 @@ def read_trade_results_by_order_id(order_id, data_source=None):
         )
     if trade_results.empty:
         return pd.DataFrame(columns=['order_id', 'filled_qty', 'price', 'transaction_fee', 'execution_time',
-                                     'canceled_qty', 'delivery_amount', 'delivery_status'])
+                                     'canceled_qty', 'delivery_amount', 'delivery_status', 'broker_result_id'])
     if isinstance(order_id, list):
         trade_results = trade_results[trade_results['order_id'].isin(order_id)]
 
     return trade_results
+
+
+def read_trade_result_by_broker_result_id(broker_result_id, data_source=None) -> dict:
+    """根据 broker_result_id 读取单条交易结果。"""
+    if not isinstance(broker_result_id, str):
+        err = TypeError(f'broker_result_id must be a str, got {type(broker_result_id)} instead')
+        raise err
+
+    import qteasy as qt
+    if data_source is None:
+        data_source = qt.QT_DATA_SOURCE
+    if not isinstance(data_source, qt.DataSource):
+        err = TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
+        raise err
+
+    if broker_result_id == '':
+        return {}
+    trade_results = data_source.read_sys_table_data(
+            'sys_op_trade_results',
+            **{'broker_result_id': broker_result_id},
+    )
+    if trade_results.empty:
+        return {}
+    first_id = int(trade_results.index[0])
+    first_result = trade_results.iloc[0].to_dict()
+    first_result['result_id'] = first_id
+    return first_result
 
 
 def read_trade_results_by_delivery_status(delivery_status, data_source=None) -> pd.DataFrame:
