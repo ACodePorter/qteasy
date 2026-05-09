@@ -6,7 +6,8 @@
 # Created:  2024-03-04
 # Desc:
 #   Unittest for trader CLI.
-#   使用专用测试 DataSource（非 QT_DATA_SOURCE），测试结束后清理测试数据。
+#   使用专用测试 DataSource（非 QT_DATA_SOURCE），
+#   测试结束后清理表数据。
 # ======================================
 
 import os
@@ -14,6 +15,7 @@ import unittest
 import time
 import io
 from contextlib import redirect_stdout
+from unittest.mock import patch
 import pandas as pd
 
 from qteasy import DataSource, Operator
@@ -266,6 +268,17 @@ class TestTraderCLI(unittest.TestCase):
 
         print(f'testing run command with wrong arguments and returns False')
         self.assertFalse(tss.do_exit('wrong_argument'))
+
+    def test_request_shutdown_calls_trader_runtime_stop(self):
+        """测试 shell 退出路径调用 Trader.stop(wait=False)。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] _request_shutdown runtime stop call')
+        with patch.object(tss.trader, 'stop') as mock_stop:
+            tss._shutdown_requested = False
+            tss._request_shutdown()
+        print(' stop call args:', mock_stop.call_args)
+        mock_stop.assert_called_once_with(wait=False, include_post_close=True)
+        self.assertEqual(tss.status, 'stopped')
 
     def test_command_pool(self):
         """ test pool command"""
