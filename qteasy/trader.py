@@ -17,11 +17,13 @@ import sys
 import time
 import threading
 from datetime import date, datetime
+from dataclasses import dataclass
+from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pandas as pd
 
-from typing import Union, Optional, Any
+from typing import Union, Optional, Any, Dict, List
 from queue import Queue
 
 from rich.text import Text
@@ -102,6 +104,45 @@ ASSET_UNIT_TO_TABLE = {
     ('FT', '1min'):  'future_1min',
     ('FT', 'min'):   'future_1min',
 }
+
+TASK_DEFAULT_MAX_RETRIES = {
+    'acquire_live_price': 2,
+    'run_strategy': 1,
+    'process_result': 1,
+}
+
+
+@dataclass
+class TaskSpec:
+    """Trader 任务描述对象。"""
+
+    task_id: str
+    name: str
+    args: tuple = ()
+    max_retries: int = 0
+    retry_count: int = 0
+    status: str = 'queued'
+    canceled: bool = False
+    last_error: str = ''
+
+    def as_legacy(self):
+        """返回历史兼容格式（str 或 (name, args)）。"""
+        if self.args:
+            return self.name, self.args
+        return self.name
+
+    def __eq__(self, other):
+        if isinstance(other, TaskSpec):
+            return (
+                self.task_id == other.task_id and
+                self.name == other.name and
+                self.args == other.args
+            )
+        if isinstance(other, str):
+            return self.as_legacy() == other
+        if isinstance(other, tuple):
+            return self.as_legacy() == other
+        return False
 
 
 def _resolve_tables_for_refresh(asset_type_str: Union[str, list[str], tuple[str, ...]],
@@ -330,6 +371,11 @@ class Trader(object):
 
         self.task_queue = Queue()
         self.message_queue = Queue()
+        self._task_seq = 0
+        self._task_lock = threading.Lock()
+        self._task_registry: Dict[str, TaskSpec] = {}
+        self._dead_letter_tasks: List[TaskSpec] = []
+        self._async_executor: Optional[ThreadPoolExecutor] = None
         self._runtime_trader_thread: Optional[threading.Thread] = None
         self._runtime_broker_thread: Optional[threading.Thread] = None
         self._runtime_shutdown_requested = False
@@ -917,43 +963,66 @@ class Trader(object):
                     # 如果任务队列不为空，执行任务
                     white_listed_tasks = self.TASK_WHITELIST[self.status]
                     queue_size_before_get = self.task_queue.qsize()
-                    task = self.task_queue.get()
-                    if isinstance(task, tuple):
-                        self.send_message(f'tuple task: {task} is taken from task queue, task[0]: {task[0]}'
-                                          f'task[1]: {task[1]}', debug=True)
-                        task_name = task[0]
-                        args = task[1]
-                    else:
-                        task_name = task
-                        args = None
-                    self.send_message(f'task queue is not empty, taking next task from queue: {task_name}', debug=True)
+                    raw_task = self.task_queue.get()
+                    task_spec = self._normalize_task_spec(raw_task)
+                    task_name = task_spec.name
+                    args = task_spec.args
+                    self._trace_event(
+                        category='task_queue',
+                        event='task_dequeued',
+                        task=task_name,
+                        task_id=task_spec.task_id,
+                        args_count=len(args),
+                        queue_size_before_get=queue_size_before_get,
+                        queue_size_after_get=self.task_queue.qsize(),
+                        trader_status=self.status,
+                    )
+                    self.send_message(
+                        f'task queue is not empty, taking next task from queue: {task_name}({task_spec.task_id})',
+                        debug=True,
+                    )
+
+                    if task_spec.canceled:
+                        task_spec.status = 'canceled'
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_skipped_canceled',
+                            task=task_name,
+                            task_id=task_spec.task_id,
+                        )
+                        self.task_queue.task_done()
+                        continue
                     if task_name not in white_listed_tasks:
+                        task_spec.status = 'rejected'
                         self._trace_event(
                             category='task_runner',
                             event='task_rejected_by_status',
                             task=task_name,
+                            task_id=task_spec.task_id,
                             trader_status=self.status,
                         )
-                        self.send_message(f'task: {task} cannot be executed in current status: {self.status}',
+                        self.send_message(f'task: {task_name} cannot be executed in current status: {self.status}',
                                           debug=True)
                         self.task_queue.task_done()
                         continue
                     try:
+                        task_spec.status = 'running'
                         self._trace_event(
                             category='task_runner',
                             event='task_execute_started',
                             task=task_name,
-                            args_count=0 if args is None else len(args),
+                            task_id=task_spec.task_id,
+                            args_count=len(args),
                             trader_status=self.status,
                         )
-                        if args:
-                            self._run_task(task_name, *args)
-                        else:
-                            self._run_task(task_name)
+                        self._run_task(task_name, *args, task_spec=task_spec)
+                        if task_spec.status == 'running':
+                            task_spec.status = 'done'
                         self._trace_event(
                             category='task_runner',
                             event='task_execute_finished',
                             task=task_name,
+                            task_id=task_spec.task_id,
                             trader_status=self.status,
                         )
                     # error handling: (TODO: if there's connection problem, reconnect or hold the trader?)
@@ -962,9 +1031,11 @@ class Trader(object):
                             category='task_runner',
                             event='task_execute_failed',
                             task=task_name,
+                            task_id=task_spec.task_id,
                             error_type=type(e).__name__,
                             error=str(e),
                         )
+                        self._handle_task_failure(task_spec, e)
                         import traceback
                         self.send_message(f'Runtime Error occurred when executing task: {task_name}, error: {e}')
                         self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
@@ -973,9 +1044,11 @@ class Trader(object):
                             category='task_runner',
                             event='task_execute_failed',
                             task=task_name,
+                            task_id=task_spec.task_id,
                             error_type=type(e).__name__,
                             error=str(e),
                         )
+                        self._handle_task_failure(task_spec, e)
                         import traceback
                         self.send_message(f'error occurred when executing task: {task_name}, error: {e}')
                         self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
@@ -1262,7 +1335,110 @@ class Trader(object):
             debug=True,
         )
 
-    def add_task(self, task, *args) -> None:
+    def _next_task_id(self) -> str:
+        """生成下一个任务ID。"""
+        with self._task_lock:
+            self._task_seq += 1
+            return f'task-{self._task_seq}'
+
+    def _resolve_task_max_retries(self, task_name: str, max_retries: Optional[int] = None) -> int:
+        """解析任务最大重试次数。"""
+        if max_retries is None:
+            return int(TASK_DEFAULT_MAX_RETRIES.get(task_name, 0))
+        return max(0, int(max_retries))
+
+    def _new_task_spec(self, task_name: str, args: tuple = (), max_retries: Optional[int] = None) -> TaskSpec:
+        """构造并登记任务对象。"""
+        task_spec = TaskSpec(
+            task_id=self._next_task_id(),
+            name=task_name,
+            args=args,
+            max_retries=self._resolve_task_max_retries(task_name, max_retries=max_retries),
+        )
+        self._task_registry[task_spec.task_id] = task_spec
+        return task_spec
+
+    def cancel_task(self, task_id: str) -> bool:
+        """取消一个已登记任务（协作式）。
+
+        Parameters
+        ----------
+        task_id : str
+            任务ID。
+
+        Returns
+        -------
+        bool
+            True 表示任务存在并已标记取消；False 表示任务不存在。
+        """
+        task_spec = self._task_registry.get(task_id)
+        if task_spec is None:
+            return False
+        task_spec.canceled = True
+        if task_spec.status == 'queued':
+            task_spec.status = 'canceled'
+        self._trace_event(
+            category='task_queue',
+            event='task_cancel_requested',
+            task_id=task_id,
+            task=task_spec.name,
+            status=task_spec.status,
+        )
+        return True
+
+    def cancel_tasks(self, name: Optional[str] = None, status: Optional[str] = 'queued') -> int:
+        """按条件批量取消任务。
+
+        Parameters
+        ----------
+        name : str or None, optional
+            任务名过滤；None 表示不过滤任务名。
+        status : str or None, optional
+            状态过滤；None 表示不过滤状态。
+
+        Returns
+        -------
+        int
+            成功标记取消的任务数量。
+        """
+        canceled_count = 0
+        for task_spec in self._task_registry.values():
+            if name is not None and task_spec.name != name:
+                continue
+            if status is not None and task_spec.status != status:
+                continue
+            if task_spec.canceled:
+                continue
+            if self.cancel_task(task_spec.task_id):
+                canceled_count += 1
+        self._trace_event(
+            category='task_queue',
+            event='task_batch_cancel_requested',
+            name=name if name is not None else 'ALL',
+            status=status if status is not None else 'ALL',
+            canceled_count=canceled_count,
+        )
+        return canceled_count
+
+    def get_task(self, task_id: str) -> Optional[TaskSpec]:
+        """按任务ID查询任务。"""
+        return self._task_registry.get(task_id)
+
+    def list_tasks(self, status: Optional[str] = None, name: Optional[str] = None) -> List[TaskSpec]:
+        """列出任务快照，可按状态和任务名过滤。"""
+        tasks = list(self._task_registry.values())
+        if status is not None:
+            tasks = [task for task in tasks if task.status == status]
+        if name is not None:
+            tasks = [task for task in tasks if task.name == name]
+        return list(tasks)
+
+    @property
+    def dead_letter_tasks(self) -> List[TaskSpec]:
+        """返回死信任务列表快照。"""
+        return list(self._dead_letter_tasks)
+
+    def add_task(self, task, *args, max_retries: Optional[int] = None) -> str:
         """ 添加任务到任务队列
 
         Parameters
@@ -1271,23 +1447,33 @@ class Trader(object):
             任务名称
         args: Any
             任务参数
+        max_retries: int, optional
+            覆盖默认重试次数，不给时按任务类型使用默认值
+
+        Returns
+        -------
+        str
+            新创建任务ID
         """
         if not isinstance(task, str):
             err = TypeError('task should be a str')
             raise err
 
         queue_size_before = self.task_queue.qsize()
-        if args:
-            task = (task, args)
+        task_args = tuple(args) if args else ()
+        task_spec = self._new_task_spec(task_name=task, args=task_args, max_retries=max_retries)
         self._trace_event(
             category='task_queue',
             event='task_add_requested',
-            task=task,
+            task=task_spec.name,
+            task_id=task_spec.task_id,
+            retry_limit=task_spec.max_retries,
             queue_size_before=queue_size_before,
             trader_status=self.status,
         )
-        self.send_message(f'adding task: {task}', debug=True)
-        self._add_task_to_queue(task)
+        self.send_message(f'adding task: {task_spec.name}({task_spec.task_id})', debug=True)
+        self._add_task_to_queue(task_spec)
+        return task_spec.task_id
 
     def history_orders(self, with_trade_results=True) -> pd.DataFrame:
         """ 账户的历史订单详细信息
@@ -2337,6 +2523,9 @@ class Trader(object):
         break_point_file_name = self.save_break_point()
         self.send_message(f'Break point saved to {break_point_file_name}')
         self.send_message('Stopping Trader, the broker will be stopped as well...')
+        if self._async_executor is not None:
+            self._async_executor.shutdown(wait=False, cancel_futures=True)
+            self._async_executor = None
         self._broker.status = 'stopped'
         broker_idle = self._broker.wait_until_idle(timeout=10.0)
         if not broker_idle:
@@ -2829,7 +3018,43 @@ class Trader(object):
         )
 
     # ================ task operations =================
-    def _run_task(self, task, *args: Any, run_in_main_thread=False) -> None:
+    def _record_task_dead_letter(self, task_spec: TaskSpec, error: Exception) -> None:
+        """将任务记录到死信队列。"""
+        task_spec.status = 'failed'
+        task_spec.last_error = str(error)
+        self._dead_letter_tasks.append(task_spec)
+        self._trace_event(
+            category='task_runner',
+            event='task_dead_lettered',
+            task=task_spec.name,
+            task_id=task_spec.task_id,
+            retry_count=task_spec.retry_count,
+            max_retries=task_spec.max_retries,
+            error_type=type(error).__name__,
+            error=str(error),
+        )
+
+    def _handle_task_failure(self, task_spec: Optional[TaskSpec], error: Exception) -> None:
+        """处理任务失败：重试或转入死信。"""
+        if task_spec is None:
+            return
+        task_spec.last_error = str(error)
+        if task_spec.retry_count < task_spec.max_retries:
+            task_spec.retry_count += 1
+            task_spec.status = 'queued'
+            self._trace_event(
+                category='task_runner',
+                event='task_retry_scheduled',
+                task=task_spec.name,
+                task_id=task_spec.task_id,
+                retry_count=task_spec.retry_count,
+                max_retries=task_spec.max_retries,
+            )
+            self._add_task_to_queue(task_spec)
+            return
+        self._record_task_dead_letter(task_spec, error)
+
+    def _run_task(self, task, *args: Any, run_in_main_thread=False, task_spec: Optional[TaskSpec] = None) -> None:
         """ 运行任务，这个API不应该开放给用户使用，而是应该在trader的主循环中被调用
 
         Parameters
@@ -2883,7 +3108,46 @@ class Trader(object):
                 args_count=len(args),
             )
             self.send_message(f'will run async task: {task} with args: {args}', debug=True)
-            run_async_task(task_func, *args)
+
+            if self._async_executor is None:
+                self._async_executor = ThreadPoolExecutor(
+                    max_workers=1,
+                    thread_name_prefix=f'TraderAsync-{self.account_id}',
+                )
+
+            def _async_call():
+                if task_spec is not None:
+                    if task_spec.canceled:
+                        task_spec.status = 'canceled'
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_canceled_before_async_run',
+                            task=task_spec.name,
+                            task_id=task_spec.task_id,
+                        )
+                        return
+                    task_spec.status = 'running'
+                run_sync_task(task_func, *args)
+                if task_spec is not None:
+                    task_spec.status = 'done'
+
+            future = self._async_executor.submit(_async_call)
+
+            def _on_done(done_future):
+                exc = done_future.exception()
+                if exc is None:
+                    return
+                self._trace_event(
+                    category='task_runner',
+                    event='async_task_failed',
+                    task=task,
+                    task_id=getattr(task_spec, 'task_id', 'N/A'),
+                    error_type=type(exc).__name__,
+                    error=str(exc),
+                )
+                self._handle_task_failure(task_spec, exc)
+
+            future.add_done_callback(_on_done)
         else:
             self._trace_event(
                 category='task_runner',
@@ -2897,6 +3161,24 @@ class Trader(object):
 
     # =============== internal methods =================
 
+    def _normalize_task_spec(self, task) -> TaskSpec:
+        """将旧式任务表示转换为 TaskSpec。"""
+        if isinstance(task, TaskSpec):
+            self._task_registry[task.task_id] = task
+            return task
+
+        if isinstance(task, tuple):
+            if len(task) != 2 or not isinstance(task[0], str):
+                raise ValueError(f'Invalid task tuple: {task}')
+            task_name = task[0]
+            task_args = task[1] if isinstance(task[1], tuple) else (task[1],)
+            return self._new_task_spec(task_name=task_name, args=task_args)
+
+        if isinstance(task, str):
+            return self._new_task_spec(task_name=task, args=())
+
+        raise TypeError(f'Unsupported task type: {type(task)}')
+
     def _add_task_to_queue(self, task) -> None:
         """ 添加任务到任务队列
 
@@ -2905,13 +3187,18 @@ class Trader(object):
         task: str
             任务名称
         """
+        task_spec = self._normalize_task_spec(task)
         queue_size_before = self.task_queue.qsize()
-        self.send_message(f'putting task {task} into task queue', debug=True)
-        self.task_queue.put(task)
+        task_spec.status = 'queued'
+        self.send_message(f'putting task {task_spec.name}({task_spec.task_id}) into task queue', debug=True)
+        self.task_queue.put(task_spec)
         self._trace_event(
             category='task_queue',
             event='task_enqueued',
-            task=task,
+            task=task_spec.name,
+            task_id=task_spec.task_id,
+            retry_count=task_spec.retry_count,
+            max_retries=task_spec.max_retries,
             queue_size_before=queue_size_before,
             queue_size_after=self.task_queue.qsize(),
             trader_status=self.status,
