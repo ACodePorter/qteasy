@@ -12,6 +12,7 @@
 # ======================================
 
 import os
+import time
 import datetime as dt
 import unittest
 from unittest.mock import patch
@@ -545,6 +546,92 @@ class TestTraderRuntimeLifecycle(unittest.TestCase):
             print(' started:', started, 'thread_ctor_called:', mock_thread_cls.called)
             self.assertFalse(started)
             self.assertFalse(mock_thread_cls.called)
+
+
+class TestTraderTaskManagerPhase2(unittest.TestCase):
+    """阶段2：任务管理器能力单测。"""
+
+    def setUp(self):
+        self._trader, self._test_ds = create_trader_with_account(debug=True)
+
+    def tearDown(self):
+        if getattr(self._trader, '_async_executor', None) is not None:
+            self._trader._async_executor.shutdown(wait=False, cancel_futures=True)
+            self._trader._async_executor = None
+        _clear_tables(self._test_ds)
+
+    def test_add_task_returns_task_id_and_cancel_marks_task(self):
+        print('\n[TestTraderTaskManagerPhase2] add/cancel task')
+        task_id = self._trader.add_task('pause')
+        print(' task_id:', task_id)
+        self.assertTrue(task_id.startswith('task-'))
+        self.assertIn(task_id, self._trader._task_registry)
+        canceled = self._trader.cancel_task(task_id)
+        print(' canceled:', canceled, 'status:', self._trader._task_registry[task_id].status)
+        self.assertTrue(canceled)
+        self.assertTrue(self._trader._task_registry[task_id].canceled)
+
+    def test_handle_task_failure_retries_then_dead_letter(self):
+        print('\n[TestTraderTaskManagerPhase2] retry and dead-letter')
+        task_id = self._trader.add_task('pause', max_retries=1)
+        task_spec = self._trader._task_registry[task_id]
+        print(' initial retry_count/max:', task_spec.retry_count, task_spec.max_retries)
+
+        self._trader._handle_task_failure(task_spec, RuntimeError('first-fail'))
+        print(' after first fail retry_count:', task_spec.retry_count, 'queue size:', self._trader.task_queue.qsize())
+        self.assertEqual(task_spec.retry_count, 1)
+        self.assertEqual(task_spec.status, 'queued')
+
+        retry_task = self._trader.task_queue.get()
+        self._trader.task_queue.task_done()
+        self._trader._handle_task_failure(retry_task, RuntimeError('second-fail'))
+        print(' dead_letter size:', len(self._trader.dead_letter_tasks))
+        self.assertEqual(retry_task.status, 'failed')
+        self.assertEqual(len(self._trader.dead_letter_tasks), 1)
+
+    def test_async_task_uses_single_worker_executor(self):
+        print('\n[TestTraderTaskManagerPhase2] async executor limit')
+        task_id = self._trader.add_task('acquire_live_price')
+        task_spec = self._trader._task_registry[task_id]
+        with patch.object(self._trader, '_update_live_price', return_value=None):
+            self._trader._run_task('acquire_live_price', task_spec=task_spec)
+        print(' executor workers:', self._trader._async_executor._max_workers)
+        self.assertIsNotNone(self._trader._async_executor)
+        self.assertEqual(self._trader._async_executor._max_workers, 1)
+
+    def test_cancel_tasks_batch_and_list_tasks_filters(self):
+        print('\n[TestTraderTaskManagerPhase2] batch cancel and list')
+        task_id_1 = self._trader.add_task('pause')
+        task_id_2 = self._trader.add_task('pause')
+        task_id_3 = self._trader.add_task('resume')
+        print(' task_ids:', task_id_1, task_id_2, task_id_3)
+
+        canceled_count = self._trader.cancel_tasks(name='pause', status='queued')
+        paused_tasks = self._trader.list_tasks(name='pause')
+        queued_resume = self._trader.list_tasks(status='queued', name='resume')
+        print(' canceled_count:', canceled_count)
+        print(' paused statuses:', [task.status for task in paused_tasks])
+        print(' queued resume:', [task.task_id for task in queued_resume])
+
+        self.assertEqual(canceled_count, 2)
+        self.assertTrue(all(task.canceled for task in paused_tasks))
+        self.assertEqual(len(queued_resume), 1)
+        self.assertEqual(queued_resume[0].task_id, task_id_3)
+
+    def test_async_task_failure_goes_dead_letter_after_retry_exhausted(self):
+        print('\n[TestTraderTaskManagerPhase2] async failure dead-letter')
+        task_id = self._trader.add_task('acquire_live_price', max_retries=0)
+        task_spec = self._trader.get_task(task_id)
+        self.assertIsNotNone(task_spec)
+
+        with patch.object(self._trader, '_update_live_price', side_effect=RuntimeError('async-fail-test')):
+            self._trader._run_task('acquire_live_price', task_spec=task_spec)
+            time.sleep(0.2)
+
+        print(' task status:', task_spec.status, 'dead_letter_count:', len(self._trader.dead_letter_tasks))
+        self.assertEqual(task_spec.status, 'failed')
+        self.assertEqual(len(self._trader.dead_letter_tasks), 1)
+        self.assertEqual(self._trader.dead_letter_tasks[0].task_id, task_id)
 
 
 if __name__ == '__main__':

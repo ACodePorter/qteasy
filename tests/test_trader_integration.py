@@ -208,7 +208,7 @@ class TestTraderPhase0Observability(unittest.TestCase):
         executed_tasks = []
         original_run_task = trader._run_task
 
-        def fake_run_task(task, *args, run_in_main_thread=False):
+        def fake_run_task(task, *args, run_in_main_thread=False, task_spec=None):
             executed_tasks.append((task, args))
             if task == 'start':
                 trader.status = 'running'
@@ -249,7 +249,7 @@ class TestTraderPhase0Observability(unittest.TestCase):
 
         executed_tasks = []
 
-        def fake_run_task(task, *args, run_in_main_thread=False):
+        def fake_run_task(task, *args, run_in_main_thread=False, task_spec=None):
             executed_tasks.append((task, args))
             if task == 'start':
                 trader.status = 'running'
