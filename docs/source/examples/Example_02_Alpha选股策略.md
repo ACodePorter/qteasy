@@ -1,5 +1,7 @@
 # Alpha选股交易策略
 
+参考来源：`docs/_joinquant_migration_source/Example_02_Alpha选股策略.ipynb` 第一个 Markdown cell。
+
 本策略每隔1个月定时触发计算SHSE.000300成份股的过去的EV/EBITDA并选取EV/EBITDA大于0的股票，随后平掉排名EV/EBITDA不在最小的30的股票持仓并等权购买EV/EBITDA最小排名在前30的股票
 
 回测数据为:SHSE.000300沪深300指数成份股

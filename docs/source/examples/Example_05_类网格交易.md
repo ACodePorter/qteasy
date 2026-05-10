@@ -1,5 +1,7 @@
 # 类网格交易策略
 
+参考来源：`docs/_joinquant_migration_source/Example_05_类网格交易.ipynb` 第一个 Markdown cell。
+
 - 本策略首先计算过去300个价格数据的均值和标准差 (天数是一个可调参数)
 - 并根据均值加减1和2个标准差得到网格的区间分界线,（加减标准差的倍数是可调参数)
 - 并分别配以0.3和0.5的仓位权重 (仓位权重是可调参数）
@@ -19,50 +21,45 @@ print(qt.__version__)
 
 ```python
 import numpy as np
+from qteasy import Parameter, StgData
+
+
 class GridTrading(qt.GeneralStg):
-    
-    def __init__(self, pars: tuple = (2.0, 3.0, 0.3, 0.5, 300)):
+
+    def __init__(self):
         super().__init__(
-                pars=pars,
-                par_count=5,
-                par_types=['float', 'float', 'float', 'float', 'int'],  # 仓位配置的阈值：参数1:低仓位阈值，参数2: 高仓位阈值，参数3：低仓位比例，参数4:高仓位比例，参数5:计算天数
-                par_range=[(0.5, 3.0), (2.0, 10.), (0.01, 0.5), (0.5, 0.99), (10, 300)],
-                name='GridTrading',
-                description='根据过去300份钟的股价均值和标准差，改变投资金额的仓位',
-                strategy_run_timing='close',  # 在周期结束（收盘）时运行
-                run_freq='1min',  # 每份钟执行一次调整
-                strategy_data_types='close',  # 使用份钟收盘价调整
-                data_freq='1min',  # 数据频率（包括股票数据和参考数据）
-                window_length=300,
-                use_latest_data_cycle=False,  # 高频数据不需要使用当前数据区间
-                reference_data_types='',  # 不需要使用参考数据
+            name='GridTrading',
+            description='根据过去窗口的均值和标准差分档生成目标仓位',
+            pars=[
+                Parameter((0.5, 3.0), name='low_th', par_type='float', value=2.0),
+                Parameter((2.0, 8.0), name='high_th', par_type='float', value=3.0),
+                Parameter((0.01, 0.6), name='low_pos', par_type='float', value=0.3),
+                Parameter((0.1, 1.0), name='high_pos', par_type='float', value=0.5),
+                Parameter((60, 500), name='lookback', par_type='int', value=300),
+            ],
+            data_types=StgData('close', freq='1min', asset_type='ANY', window_length=500),
+            use_latest_data_cycle=False,
         )
-    
-    def realize(self, h, r=None, t=None, pars=None):
-        """策略输出PT信号，即仓位目标信号"""
 
-        low_threshold, high_threshold, low_pos, hi_pos, days = self.pars
-
-        # 读取最近N天的收盘价
-        close = h[:, - days:, 0]  # 最新连续收盘价
-        current_close = h[:, -1, 0]  # 当天的收盘价
-
-        # 计算N天的平均价和标准差，并计算仓位阈值
-        close_mean = np.nanmean(close, axis=1)
-        close_std = np.nanstd(close, axis=1)
-        hi_positive = close_mean + high_threshold * close_std
-        low_positive = close_mean + low_threshold * close_std
-        low_negative = close_mean - low_threshold * close_std
-        hi_negative = close_mean - high_threshold * close_std
-
-        # 根据当前的实际价格确定目标仓位，并将目标仓位作为信号输出
-        pos = np.zeros_like(close_mean)
-        pos = np.where(current_close > hi_positive, hi_pos, pos)
-        pos = np.where(hi_positive >= current_close > low_positive, low_pos, pos)
-        pos = np.where(low_positive >= current_close > low_negative, 0, pos)
-        pos = np.where(low_negative >= current_close > hi_negative, - low_pos, pos)
-        pos = np.where(current_close >= hi_negative, - hi_pos, pos)
-
+    def realize(self):
+        low_th, high_th, low_pos, high_pos, lookback = self.get_pars(
+            'low_th', 'high_th', 'low_pos', 'high_pos', 'lookback'
+        )
+        close = self.get_data('close_ANY_1min')
+        close = close[-lookback:]
+        close_mean = np.nanmean(close, axis=0)
+        close_std = np.nanstd(close, axis=0)
+        current_close = close[-1]
+        hi_positive = close_mean + high_th * close_std
+        low_positive = close_mean + low_th * close_std
+        low_negative = close_mean - low_th * close_std
+        hi_negative = close_mean - high_th * close_std
+        pos = np.zeros_like(close_mean, dtype=float)
+        pos = np.where(current_close > hi_positive, high_pos, pos)
+        pos = np.where((current_close <= hi_positive) & (current_close > low_positive), low_pos, pos)
+        pos = np.where((current_close <= low_positive) & (current_close > low_negative), 0.0, pos)
+        pos = np.where((current_close <= low_negative) & (current_close > hi_negative), -low_pos, pos)
+        pos = np.where(current_close <= hi_negative, -high_pos, pos)
         return pos
 ```
 ## 设定交易员对象，并且设置交易配置，实施交易回测
@@ -71,8 +68,8 @@ class GridTrading(qt.GeneralStg):
 alpha = GridTrading()
 op = qt.Operator(alpha, signal_type='PT')
 op.op_type = 'batch'
-op.set_blender("1.0*s0", 'close')
-op.run(
+op.set_blender("1.0*s0")
+res = qt.run(op,
         mode=1,
         invest_start='20220401',
         invest_end='20220731',
