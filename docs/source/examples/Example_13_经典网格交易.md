@@ -1,5 +1,7 @@
 # 经典网格交易策略
 
+参考来源：`docs/_joinquant_migration_source/Example_13_经典网格交易.ipynb` 第一个 Markdown cell。
+
 本策略是一个经典的网格交易策略
 策略的运行标的是000651.SZ格力电器，策略第一次运行时，买入1000股并持有，同时设定当前买入价格（四舍五入到0.1元）为基准网格，
 并根据网格尺寸计算出卖出网格和买入网格， 接下来每隔5分钟运行一次，当股票价格触及买入网格或卖出网格时，产生交易信号，并刷新网格：
@@ -22,59 +24,64 @@ import numpy as np
 
 
 ```python
+from qteasy import Parameter, StgData
+
+
 class GridTrade(qt.RuleIterator):
-    
-    def realize(self, h, r=None, t=None, pars=None):
-        
+
+    def __init__(self):
+        super().__init__(
+            name='GridTrade',
+            description='网格交易策略，价格触发网格后交易并更新基准网格',
+            pars=[
+                Parameter((0.2, 2.0), name='grid_size', par_type='float', value=0.5),
+                Parameter((100, 1000), name='trade_batch', par_type='int', value=200),
+                Parameter((0.0, 10000.0), name='base_grid', par_type='float', value=0.0),
+            ],
+            data_types=StgData('close', freq='5min', asset_type='ANY', window_length=60),
+            use_latest_data_cycle=False,
+        )
+
+    def realize(self):
+
         # 读取当前保存的策略参数，首次运行时base_grid参数为0，此时买入1000股并设置当前价格为基准网格
-        grid_size, trade_batch, base_grid = self.pars
+        grid_size, trade_batch, base_grid = self.get_pars('grid_size', 'trade_batch', 'base_grid')
 
         # 读取最新价格
-        price = h[-1, 0]  # 最近一个K线周期的close价格
-        
+        price = self.get_data('close_ANY_5min')[-1]
+
         # 计算当前价格与当前网格的偏离程度，判断是否产生交易信号
         if base_grid <= 0.01:
             # 基准网格尚未设置，此时为首次运行，首次买入1000股并设置基准网格为当前价格（精确到0.1元）
-            result = 1510
+            result = float(trade_batch * 5)
             base_grid = np.round(price / 0.1) * 0.1
         elif price - base_grid > grid_size:
             # 触及卖出网格线，产生卖出信号
-            result = - trade_batch  # 交易信号等于交易数量，必须使用VS信号类型
+            result = -float(trade_batch)  # 交易信号等于交易数量，必须使用VS信号类型
             # 重新计算基准网格
-            base_grid += grid_size 
+            base_grid += grid_size
         elif base_grid - price > grid_size:
             # 触及买入网格线，产生买入信号
-            result = trade_batch + 10
+            result = float(trade_batch)
             # 重新计算基准网格
             base_grid -= grid_size
         else:
-            result = 0
-        
+            result = 0.0
+
         # 使用新的基准网格更新交易参数
-        self.pars = grid_size, trade_batch, base_grid
-        
+        self.par_values = (grid_size, trade_batch, base_grid)
+
         return result
-            
+
 ```
 
 
 ```python
-alpha = GridTrade(pars=(0.5, 200, 0.0),  # 当基准网格为0时，代表首次运行，此时买入1000股，并设置当前价为基准网格
-                   par_count=3,
-                   par_types=['float', 'int', 'float'],
-                   par_range=[(0.2, 2), (100, 300), (0, 40)],
-                   name='GridTrade',
-                   description='网格交易策略，当前股票价格波动幅度超过网格尺寸时，产生卖出或买入交易信号，并更新网格',
-                   strategy_run_timing='close',
-                   run_freq='5min',
-                   data_freq='5min',
-                   window_length=20,
-                  ) 
+alpha = GridTrade()
 
 op = qt.Operator(alpha, signal_type='VS')  # 交易信号等于交易数量，必须使用VS信号类型
 op.op_type = 'stepwise'  # 需要动态更新策略参数，必须使用'stepwise'交易类型
-op.set_parameter(0, (0.5, 200, 0.0))
-op.run(mode=1,
+res = qt.run(op, mode=1,
        asset_type='E',
        asset_pool='000651.SZ',
        benchmark_asset='000651.SZ',

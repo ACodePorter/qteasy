@@ -7,14 +7,12 @@ qteasy/__pycache__/core.cpython-36.pyc
 *.pyc
 .idea/workspace.xml
 *.xml
-*.ipynb
 .ipynb_checkpoints/
 *.pyc
 qteasy/__pycache__/
 .idea/
 **.csv
 **.pyc
-**.ipynb
 examples/*.ipynb
 examples/basic.ipynb
 examples/strategy_optimization.ipynb
@@ -53,7 +51,6 @@ tests/data_test_trader_legacy/
 /question.py
 *.xlsx
 *.numbers
-
 examples/live_daily.py
 examples/live_grid.py
 examples/live_example.py
@@ -83,3 +80,4 @@ qteasy/qteasy_backup.cfg
 *.json
 /_build
 /docs/promotion
+/docs/_joinquant_migration_source/
