@@ -5,7 +5,7 @@
 # Contact: jackie.pengzhao@gmail.com
 # Created: 2026-05-11
 # Desc:
-#   将 notebook 无头八阶段中与阶段 0～3.5 相关的链路固化为 unittest：
+#   将 notebook 无头脚本中与阶段 0～3.5 相关的链路固化为 unittest：
 #   使用隔离 file DataSource + 固定回放日（非真实时钟、非 QT_DATA_SOURCE）。
 # ======================================
 
