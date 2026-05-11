@@ -137,6 +137,23 @@ def _prepare_isolated_replay_data(ds: DataSource, account_id: int = 1) -> None:
     )
 
 
+def _sys_op_trade_results_has_broker_result_id_column(ds: DataSource) -> bool:
+    """判断当前数据源物理表是否包含 broker_result_id 列（与内置 schema 可能不一致）。"""
+    if getattr(ds, 'source_type', None) == 'db':
+        try:
+            if not ds._db_table_exists('sys_op_trade_results'):
+                return False
+            schema = ds._get_db_table_schema('sys_op_trade_results')
+            return 'broker_result_id' in schema
+        except Exception:
+            return False
+    try:
+        preview = ds.read_sys_table_data('sys_op_trade_results')
+        return 'broker_result_id' in preview.columns
+    except Exception:
+        return False
+
+
 def _seed_account_and_positions(ds: DataSource, account_id: int = 1) -> None:
     """写入最小账户与初始持仓。"""
     new_account(user_name='notebook_headless_user', cash_amount=100000.0, data_source=ds)
@@ -368,8 +385,12 @@ def stage4_phase35_checks(session: HeadlessNotebookSession, info: bool = False) 
     ds = session.datasource
 
     result_columns, _, _, _ = get_built_in_table_schema('sys_op_trade_results')
-    supports_broker_result_id = 'broker_result_id' in result_columns
-    print(' supports broker_result_id:', supports_broker_result_id)
+    supports_broker_result_id = (
+        'broker_result_id' in result_columns
+        and _sys_op_trade_results_has_broker_result_id_column(ds)
+    )
+    print(' supports broker_result_id (builtin schema):', 'broker_result_id' in result_columns)
+    print(' supports broker_result_id (physical table):', supports_broker_result_id)
 
     # 1) 手动提交一个订单
     trade_order = trader.submit_trade_order(

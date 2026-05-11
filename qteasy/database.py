@@ -1987,8 +1987,10 @@ class DataSource:
         if res_df.empty:
             return res_df
 
-        # 筛选数据
+        # 筛选数据（物理表若尚未包含某列，视为无匹配行，避免 KeyError）
         for k, v in kwargs.items():
+            if k not in res_df.columns:
+                return pd.DataFrame()
             res_df = res_df.loc[res_df[k] == v]
 
         return res_df.sort_index()
