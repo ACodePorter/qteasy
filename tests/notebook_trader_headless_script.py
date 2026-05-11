@@ -47,6 +47,27 @@ from qteasy.datatables import get_built_in_table_schema
 from tests.trader_test_helpers import clear_tables, write_minimal_stock_daily
 
 
+def _repo_root_for_subprocess() -> str:
+    """本文件位于仓库 ``tests/`` 下，由此得到仓库根目录，供子进程 unittest 的 cwd / PYTHONPATH 使用。"""
+    return os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
+
+
+def _unittest_subprocess_env() -> Dict[str, str]:
+    """构造子进程环境：在 PYTHONPATH 前部插入仓库根，使 ``import tests.*`` 可用。"""
+    repo = _repo_root_for_subprocess()
+    env = os.environ.copy()
+    prev = env.get('PYTHONPATH', '').strip()
+    if prev:
+        parts = [p for p in prev.split(os.pathsep) if p]
+        if repo not in parts:
+            env['PYTHONPATH'] = repo + os.pathsep + prev
+        else:
+            env['PYTHONPATH'] = prev
+    else:
+        env['PYTHONPATH'] = repo
+    return env
+
+
 # %% [markdown]
 # # Notebook 无头 Trader 测试脚本（8 阶段）
 #
@@ -54,6 +75,8 @@ from tests.trader_test_helpers import clear_tables, write_minimal_stock_daily
 # 1. `session = create_headless_notebook_session()`  # 默认 QT_DATA_SOURCE + 固定回放日
 #    真实时钟：`create_headless_notebook_session(use_real_time=True)`
 # 2. 依次运行 `stage1_...` 到 `stage8_...`（各 stage 可传 `info=True` 查看中文范围说明）
+#    Stage1 在 `run_commands=True` 时会自动设置子进程 `cwd` 与 `PYTHONPATH` 指向本仓库根，无需在 notebook 里改 sys.path。
+#    整类 unittest 可能极久，非死锁；可用 `unittest_timeout_s`（默认 3600s）或 `None` 取消限时。
 # 3. 若中途调试，最后执行 `shutdown_session(session)`
 
 
@@ -256,8 +279,16 @@ def stage1_preflight_tests(
     session: HeadlessNotebookSession,
     run_commands: bool = False,
     info: bool = False,
+    unittest_timeout_s: Optional[float] = 3600.0,
 ) -> Dict[str, Any]:
-    """阶段1：开盘前测试记录（可选执行命令）。"""
+    """阶段1：开盘前测试记录（可选执行命令）。
+
+    Parameters
+    ----------
+    unittest_timeout_s : float or None, optional
+        单条 unittest 子进程的最长等待秒数；默认 3600（1 小时）。子进程仍在跑时主线程会阻塞在
+        ``subprocess.run`` 上，并非死锁。``None`` 表示不限制时长（整类 ``TestDataSource`` 可能极久）。
+    """
     _print_stage_scope(
         '阶段1 stage1_preflight_tests',
         [
@@ -271,16 +302,66 @@ def stage1_preflight_tests(
         '/opt/anaconda3/envs/py39/bin/python -m unittest tests.test_trading.TestTradingUtilFuncs -v',
         '/opt/anaconda3/envs/py39/bin/python -m unittest tests.test_datasource.TestDataSource -v',
     ]
-    result: Dict[str, Any] = {'commands': cmds, 'executed': []}
+    result: Dict[str, Any] = {
+        'commands': cmds,
+        'executed': [],
+        'unittest_timeout_s': unittest_timeout_s,
+    }
     if run_commands:
+        repo_root = _repo_root_for_subprocess()
+        tests_pkg = os.path.join(repo_root, 'tests', '__init__.py')
+        if not os.path.isfile(tests_pkg):
+            print(
+                ' stage1 warning: expected tests package not found at',
+                tests_pkg,
+                '(unittest subprocess may still fail)',
+            )
+        else:
+            print(' stage1 unittest repo_root:', repo_root)
+        if unittest_timeout_s is not None:
+            print(
+                ' stage1 note: each subprocess has timeout=',
+                unittest_timeout_s,
+                's; use unittest_timeout_s=None for no limit (may run a very long time).',
+            )
+        else:
+            print(
+                ' stage1 note: no subprocess timeout (full classes may take many minutes; this is not a deadlock).',
+            )
+        env = _unittest_subprocess_env()
         for cmd in cmds:
-            cp = subprocess.run(cmd, shell=True, text=True, capture_output=True)
-            result['executed'].append({
-                'command': cmd,
-                'return_code': cp.returncode,
-                'stdout_tail': '\n'.join(cp.stdout.splitlines()[-15:]),
-                'stderr_tail': '\n'.join(cp.stderr.splitlines()[-15:]),
-            })
+            print(' stage1 running:', cmd)
+            try:
+                cp = subprocess.run(
+                    cmd,
+                    shell=True,
+                    text=True,
+                    capture_output=True,
+                    cwd=repo_root,
+                    env=env,
+                    timeout=unittest_timeout_s,
+                )
+                result['executed'].append({
+                    'command': cmd,
+                    'return_code': cp.returncode,
+                    'stdout_tail': '\n'.join((cp.stdout or '').splitlines()[-15:]),
+                    'stderr_tail': '\n'.join((cp.stderr or '').splitlines()[-15:]),
+                    'timed_out': False,
+                })
+            except subprocess.TimeoutExpired as e:
+                tail_out = '\n'.join((e.stdout or '').splitlines()[-15:]) if e.stdout else ''
+                tail_err = '\n'.join((e.stderr or '').splitlines()[-15:]) if e.stderr else ''
+                msg = (
+                    f'SubprocessTimeout: unittest exceeded unittest_timeout_s={unittest_timeout_s!r} seconds. '
+                    f'Increase unittest_timeout_s or pass unittest_timeout_s=None for no limit.'
+                )
+                result['executed'].append({
+                    'command': cmd,
+                    'return_code': None,
+                    'stdout_tail': tail_out,
+                    'stderr_tail': (msg + '\n' + tail_err).strip(),
+                    'timed_out': True,
+                })
     print(' run_commands:', run_commands)
     print(' preflight command count:', len(cmds))
     session.record.stage1_preflight = result
