@@ -104,7 +104,7 @@ class TestBrokerContract(unittest.TestCase):
         print('\n[TestBrokerContract] 检查 Simulator/Simple 新接口存在性')
         for broker in [SimulatorBroker(), SimpleBroker()]:
             for method_name in [
-                'connect', 'disconnect', 'submit', 'cancel', 'poll_fills',
+                'connect', 'disconnect', 'submit', 'cancel', 'poll_fills', 'poll_messages',
                 'get_remote_orders', 'get_remote_positions', 'get_remote_cash', 'drain_order_queue',
             ]:
                 print(f' broker={broker.broker_name}, method={method_name}')
@@ -197,14 +197,42 @@ class TestBrokerContract(unittest.TestCase):
         print(' error:', message)
         self.assertIn('not connected', message)
 
-    def test_poll_fills_when_not_connected_raises_runtime_error(self):
-        print('\n[TestBrokerContract] 未 connect 调用 poll_fills')
+    def test_poll_fills_when_not_connected_returns_empty_for_legacy_path(self):
+        print('\n[TestBrokerContract] 未 connect 调用 poll_fills（legacy 空队列）')
         broker = MinimalBrokerForContractTest()
-        with self.assertRaises(RuntimeError) as cm:
-            broker.poll_fills()
-        message = str(cm.exception)
-        print(' error:', message)
-        self.assertIn('not connected', message)
+        fills = broker.poll_fills()
+        print(' fills:', fills)
+        self.assertEqual(fills, [])
+
+    def test_poll_fills_reads_legacy_result_queue_without_connect(self):
+        print('\n[TestBrokerContract] poll_fills 兼容 legacy result_queue 未 connect 路径')
+        broker = MinimalBrokerForContractTest()
+        raw_result = {
+            'order_id': 777001,
+            'filled_qty': 10.0,
+            'price': 12.3,
+            'transaction_fee': 0.5,
+            'execution_time': '2026-05-11 09:31:00',
+            'canceled_qty': 0.0,
+            'delivery_amount': 0.0,
+            'delivery_status': 'ND',
+        }
+        broker.result_queue.put(raw_result)
+        fills = broker.poll_fills()
+        print(' fills:', fills)
+        self.assertEqual(len(fills), 1)
+        self.assertEqual(fills[0]['order_id'], raw_result['order_id'])
+        self.assertTrue(broker.result_queue.empty())
+
+    def test_poll_messages_returns_and_drains_one_message(self):
+        print('\n[TestBrokerContract] poll_messages 返回并消费 broker_messages')
+        broker = MinimalBrokerForContractTest()
+        broker.send_message('hello from broker')
+        polled_messages = broker.poll_messages()
+        print(' polled_messages:', polled_messages)
+        self.assertEqual(len(polled_messages), 1)
+        self.assertIn('hello from broker', polled_messages[0])
+        self.assertEqual(broker.poll_messages(), [])
 
     def test_connect_disconnect_idempotent(self):
         print('\n[TestBrokerContract] connect/disconnect 幂等')

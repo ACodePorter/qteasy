@@ -201,7 +201,10 @@ class TestTraderPhase0Observability(unittest.TestCase):
             'filled_qty': 100.0,
             'price': 10.0,
             'transaction_fee': 1.0,
+            'execution_time': '2026-05-11 09:31:00',
             'canceled_qty': 0.0,
+            'delivery_amount': 0.0,
+            'delivery_status': 'ND',
         }
         trader.broker.result_queue.put(broker_result)
 
@@ -236,6 +239,41 @@ class TestTraderPhase0Observability(unittest.TestCase):
         self.assertIn('category=broker event=result_received', new_logs)
         self.assertIn('category=task_runner event=task_execute_started', new_logs)
         self.assertIn('task=process_result', new_logs)
+
+    def test_run_forwards_polled_broker_messages_to_trader_queue(self):
+        print('\n[TestTraderPhase0Observability] run broker-message poll chain')
+        trader, self._test_ds = create_trader_with_account(debug=True)
+
+        polled_once = {'done': False}
+
+        def fake_poll_fills(timeout=0.0):
+            return []
+
+        def fake_poll_messages(timeout=0.0):
+            if polled_once['done']:
+                return []
+            polled_once['done'] = True
+            trader.status = 'stopped'
+            return ['[BrokerMock]: polled-message']
+
+        trader.broker.poll_fills = fake_poll_fills
+        trader.broker.poll_messages = fake_poll_messages
+
+        original_run_task = trader._run_task
+
+        def fake_run_task(task, *args, run_in_main_thread=False, task_spec=None):
+            if task == 'start':
+                trader.status = 'running'
+                return
+            return original_run_task(task, *args, run_in_main_thread=run_in_main_thread)
+
+        trader._run_task = fake_run_task
+        trader._add_task_from_schedule = lambda current_time=None: None
+
+        trader.run()
+        broker_message = trader.message_queue.get_nowait()
+        print(' broker_message:', broker_message)
+        self.assertIn('polled-message', broker_message)
 
     def test_run_emits_task_execute_failed_trace_on_runtime_error(self):
         print('\n[TestTraderPhase0Observability] run task failure trace')

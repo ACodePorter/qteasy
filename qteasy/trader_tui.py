@@ -589,11 +589,6 @@ class TraderApp(App):
                     self.refresh_holdings()
                     self.refresh_trade_log()
 
-            # check the message queue of the broker
-            if not self.trader.broker.broker_messages.empty():
-                msg = self.trader.broker.broker_messages.get()
-                system_log.write_with_timestamp(msg)
-
             if self.trader.status not in ['running', 'paused']:
                 info_refresh_interval = 600  # every 1 minutes
             else:

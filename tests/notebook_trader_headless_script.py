@@ -762,12 +762,16 @@ def shutdown_session(session: HeadlessNotebookSession) -> None:
 if __name__ == '__main__':
     # 作为脚本快速演示：默认隔离数据源，避免直跑时改写 QT_DATA_SOURCE。
     s = create_headless_notebook_session(debug=True, use_isolated_datasource=True)
-    stage1_preflight_tests(s, run_commands=False)
-    stage2_opening_baseline(s)
-    stage3_intraday_runtime(s)
-    stage4_phase35_checks(s)
-    stage5_stage0to3_regression(s)
-    stage6_closing_reconcile(s)
-    stage7_exception_and_rollback_probe(s, use_db_probe=False)
-    stage8_conclusion(s)
-    shutdown_session(s)
+    try:
+        stage1_preflight_tests(s, run_commands=False)
+        stage2_opening_baseline(s)
+        stage3_intraday_runtime(s)
+        stage4_phase35_checks(s)
+        stage5_stage0to3_regression(s)
+        stage6_closing_reconcile(s)
+        stage7_exception_and_rollback_probe(s, use_db_probe=False)
+        stage8_conclusion(s)
+    except KeyboardInterrupt:
+        print('\n[Interrupted] KeyboardInterrupt captured, will stop headless session.')
+    finally:
+        shutdown_session(s)
