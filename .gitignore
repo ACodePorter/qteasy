@@ -81,3 +81,4 @@ qteasy/qteasy_backup.cfg
 /_build
 /docs/promotion
 /docs/_joinquant_migration_source/
+/sql/
