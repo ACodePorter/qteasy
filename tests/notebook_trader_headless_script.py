@@ -6,8 +6,7 @@
 # Created: 2026-05-10
 # Desc:
 #   Notebook 友好的无头 Trader 集成测试脚本（分八阶段执行），
-# 使用专用测试 DataSource（非 QT_DATA_SOURCE），
-# 测试结束后清理表数据。
+# 默认使用 qteasy.cfg 对应的 QT_DATA_SOURCE；可选隔离文件型数据源回放。
 # ======================================
 
 from __future__ import annotations
@@ -52,8 +51,9 @@ from tests.trader_test_helpers import clear_tables, write_minimal_stock_daily
 # # Notebook 无头 Trader 测试脚本（8 阶段）
 #
 # 用法（建议在 notebook 分 cell 执行）：
-# 1. `session = create_headless_notebook_session()`
-# 2. 依次运行 `stage1_...` 到 `stage8_...`
+# 1. `session = create_headless_notebook_session()`  # 默认 QT_DATA_SOURCE + 固定回放日
+#    真实时钟：`create_headless_notebook_session(use_real_time=True)`
+# 2. 依次运行 `stage1_...` 到 `stage8_...`（各 stage 可传 `info=True` 查看中文范围说明）
 # 3. 若中途调试，最后执行 `shutdown_session(session)`
 
 
@@ -80,7 +80,20 @@ class HeadlessNotebookSession:
     broker: SimulatorBroker
     trader_thread: Optional[threading.Thread] = None
     broker_thread: Optional[threading.Thread] = None
+    use_real_time: bool = False
     record: NotebookDayRecord = field(default_factory=NotebookDayRecord)
+
+
+def _print_stage_scope(title: str, lines: List[str], *, enabled: bool) -> None:
+    """当 enabled 为 True 时，用中文打印本阶段的测试范围与目的。"""
+    if not enabled:
+        return
+    print(f'\n【{title}】测试范围与目的')
+    for line in lines:
+        print(line)
+
+
+NOTEBOOK_ASSET_POOL: List[str] = ['000001.SZ', '000002.SZ', '000004.SZ', '000005.SZ']
 
 
 def _build_notebook_operator() -> Operator:
@@ -96,13 +109,32 @@ def _build_notebook_operator() -> Operator:
     return op
 
 
-def _create_datasource() -> DataSource:
-    """创建 notebook 测试专用数据源。"""
+def _configure_notebook_operator(op: Operator, asset_pool: List[str]) -> None:
+    """为 notebook 演示 Operator 设置资产池与各策略组混合器。"""
+    op.set_shares(asset_pool)
+    for group_id in op.group_ids:
+        op.set_group_parameters(group_id, blender_str='s0')
+    print(' notebook operator groups:', op.group_ids)
+
+
+def _create_isolated_datasource() -> DataSource:
+    """创建隔离文件型数据源并清空表（仅用于可重复回放，不写入 QT_DATA_SOURCE）。"""
     data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data_test_trader_notebook')
     os.makedirs(data_dir, exist_ok=True)
     ds = DataSource('file', file_type='csv', file_loc=data_dir, allow_drop_table=True)
     clear_tables(ds)
     return ds
+
+
+def _prepare_isolated_replay_data(ds: DataSource, account_id: int = 1) -> None:
+    """在隔离数据源上写入最小账户、持仓与日线样本。"""
+    _seed_account_and_positions(ds, account_id=account_id)
+    write_minimal_stock_daily(
+        datasource=ds,
+        symbols=['000001.SZ', '000002.SZ', '000004.SZ', '000005.SZ'],
+        start_date='2023-02-01',
+        end_date='2023-06-30',
+    )
 
 
 def _seed_account_and_positions(ds: DataSource, account_id: int = 1) -> None:
@@ -118,25 +150,51 @@ def _seed_account_and_positions(ds: DataSource, account_id: int = 1) -> None:
         update_position(position_id=pos_id, data_source=ds, qty_change=qty, available_qty_change=avail)
 
 
-def create_headless_notebook_session(debug: bool = True) -> HeadlessNotebookSession:
-    """创建可在 notebook 中逐步执行的无头 Trader 会话。"""
-    ds = _create_datasource()
-    _seed_account_and_positions(ds, account_id=1)
-    write_minimal_stock_daily(
-        datasource=ds,
-        symbols=['000001.SZ', '000002.SZ', '000004.SZ', '000005.SZ'],
-        start_date='2023-02-01',
-        end_date='2023-06-30',
-    )
+def create_headless_notebook_session(
+    debug: bool = True,
+    use_real_time: bool = False,
+    account_id: int = 1,
+    use_isolated_datasource: bool = False,
+) -> HeadlessNotebookSession:
+    """创建可在 notebook 中逐步执行的无头 Trader 会话。
+
+    Parameters
+    ----------
+    debug : bool, default True
+        是否开启 Trader / Broker 调试输出。
+    use_real_time : bool, default False
+        True 时使用本机真实时钟（不设置 ``force_current_date``）；False 时固定回放日 2023-05-10。
+    account_id : int, default 1
+        交易账户 ID；连接 QT_DATA_SOURCE 时须已存在对应账户与持仓。
+    use_isolated_datasource : bool, default False
+        True 时使用仓库内隔离 CSV 数据源并写入演示账户/行情；False 时使用 ``qt.QT_DATA_SOURCE``。
+
+    Returns
+    -------
+    HeadlessNotebookSession
+        已执行 ``start`` 与 ``register_broker`` 的无头会话。
+    """
+    if use_isolated_datasource:
+        ds = _create_isolated_datasource()
+        _prepare_isolated_replay_data(ds, account_id=account_id)
+    else:
+        ds = qt.QT_DATA_SOURCE
+
+    print('\n[create_headless_notebook_session] session bootstrap')
+    print(' use_real_time:', use_real_time)
+    print(' use_isolated_datasource:', use_isolated_datasource)
+    print(' account_id:', account_id)
+    print(' datasource source_type:', getattr(ds, 'source_type', type(ds).__name__))
 
     op = _build_notebook_operator()
-    broker = SimulatorBroker()
+    _configure_notebook_operator(op, NOTEBOOK_ASSET_POOL)
+    broker = SimulatorBroker(data_source=ds)
     trader = Trader(
         operator=op,
-        account_id=1,
+        account_id=account_id,
         broker=broker,
         datasource=ds,
-        asset_pool='000001.SZ,000002.SZ,000004.SZ,000005.SZ',
+        asset_pool=','.join(NOTEBOOK_ASSET_POOL),
         asset_type='E',
         exchange='SSE',
         market_open_time_am='09:30:00',
@@ -150,18 +208,47 @@ def create_headless_notebook_session(debug: bool = True) -> HeadlessNotebookSess
         stock_delivery_period=0,
         debug=debug,
     )
-    trader.force_current_date = pd.to_datetime('2023-05-10').date()
+    if use_real_time:
+        trader.force_current_date = None
+    else:
+        trader.force_current_date = pd.to_datetime('2023-05-10').date()
+    # 避免 QT_DATA_SOURCE 上历史断点覆盖本次 notebook Operator（常见仅剩 Group_1）
+    trader.clear_break_point()
     trader._run_task('start')
-    trader.operator.set_shares(trader.asset_pool)
-    trader.operator.set_group_parameters('Group_1', blender_str='s0')
-    trader.operator.set_group_parameters('Group_2', blender_str='s0')
-    trader.operator.set_group_parameters('Group_3', blender_str='s0')
-    trader.live_price = pd.DataFrame(index=trader.asset_pool, data={'price': [12.0] * len(trader.asset_pool)})
-    return HeadlessNotebookSession(trader=trader, datasource=ds, broker=broker)
+    if trader.operator.group_ids != op.group_ids:
+        print(' warning: operator groups after start differ from notebook op:', trader.operator.group_ids)
+        _configure_notebook_operator(trader.operator, NOTEBOOK_ASSET_POOL)
+    if not use_real_time:
+        trader.live_price = pd.DataFrame(
+            index=trader.asset_pool,
+            data={'price': [12.0] * len(trader.asset_pool)},
+        )
+    print(' trader effective datetime:', trader.get_current_tz_datetime())
+    print(' trader is_trade_day:', trader.is_trade_day)
+    # 与 run_live_trade 一致：Broker.run() 要求 is_registered，否则线程内抛 RuntimeError
+    trader.register_broker(debug=debug)
+    return HeadlessNotebookSession(
+        trader=trader,
+        datasource=ds,
+        broker=broker,
+        use_real_time=use_real_time,
+    )
 
 
-def stage1_preflight_tests(session: HeadlessNotebookSession, run_commands: bool = False) -> Dict[str, Any]:
+def stage1_preflight_tests(
+    session: HeadlessNotebookSession,
+    run_commands: bool = False,
+    info: bool = False,
+) -> Dict[str, Any]:
     """阶段1：开盘前测试记录（可选执行命令）。"""
+    _print_stage_scope(
+        '阶段1 stage1_preflight_tests',
+        [
+            '范围：Notebook 实盘日前预检清单。',
+            '目的：列出可选执行的 unittest 命令（交易工具函数与数据源）；根据 run_commands 决定是否在本机实际跑子进程并收集尾部输出，便于确认环境是否就绪。',
+        ],
+        enabled=info,
+    )
     print('\n[Stage1] Preflight tests')
     cmds = [
         '/opt/anaconda3/envs/py39/bin/python -m unittest tests.test_trading.TestTradingUtilFuncs -v',
@@ -183,8 +270,16 @@ def stage1_preflight_tests(session: HeadlessNotebookSession, run_commands: bool 
     return result
 
 
-def stage2_opening_baseline(session: HeadlessNotebookSession) -> Dict[str, Any]:
+def stage2_opening_baseline(session: HeadlessNotebookSession, info: bool = False) -> Dict[str, Any]:
     """阶段2：开盘前账户/持仓/订单基线。"""
+    _print_stage_scope(
+        '阶段2 stage2_opening_baseline',
+        [
+            '范围：当前会话专用 DataSource 上的账户与持仓。',
+            '目的：打印开盘前账户现金字段、各标的持仓与订单条数，作为后续阶段对比的基线快照。',
+        ],
+        enabled=info,
+    )
     print('\n[Stage2] Opening baseline')
     account = get_account(session.trader.account_id, data_source=session.datasource)
     positions = get_account_positions(session.trader.account_id, data_source=session.datasource)
@@ -201,8 +296,20 @@ def stage2_opening_baseline(session: HeadlessNotebookSession) -> Dict[str, Any]:
     return baseline
 
 
-def stage3_intraday_runtime(session: HeadlessNotebookSession, sleep_s: float = 1.0) -> Dict[str, Any]:
+def stage3_intraday_runtime(
+    session: HeadlessNotebookSession,
+    sleep_s: float = 1.0,
+    info: bool = False,
+) -> Dict[str, Any]:
     """阶段3：无头运行、任务调度与关键时间点。"""
+    _print_stage_scope(
+        '阶段3 stage3_intraday_runtime',
+        [
+            '范围：Broker / Trader 后台线程与任务队列。',
+            '目的：启动已注册的 SimulatorBroker 与 Trader.run() 主循环，按序投递 wakeup、run_strategy、pause、resume，并记录时间戳与 status / 下一计划任务 / 队列长度，验证无头调度链路。',
+        ],
+        enabled=info,
+    )
     print('\n[Stage3] Headless runtime, task flow and timestamps')
     if session.broker_thread is None or not session.broker_thread.is_alive():
         session.broker_thread = threading.Thread(target=session.broker.run, daemon=True)
@@ -225,7 +332,7 @@ def stage3_intraday_runtime(session: HeadlessNotebookSession, sleep_s: float = 1
     time.sleep(sleep_s)
     t4 = pd.Timestamp.now().isoformat()
 
-    info = {
+    runtime_result = {
         'timestamps': {
             'before_wakeup': t0,
             'after_wakeup': t1,
@@ -238,16 +345,24 @@ def stage3_intraday_runtime(session: HeadlessNotebookSession, sleep_s: float = 1
         'count_down_to_next_task': session.trader.count_down_to_next_task,
         'queue_size': session.trader.task_queue.qsize(),
     }
-    print(' status:', info['status'])
-    print(' next_task:', info['next_task'])
-    print(' count_down_to_next_task:', info['count_down_to_next_task'])
-    print(' task_queue_size:', info['queue_size'])
-    session.record.stage3_intraday_points = info
-    return info
+    print(' status:', runtime_result['status'])
+    print(' next_task:', runtime_result['next_task'])
+    print(' count_down_to_next_task:', runtime_result['count_down_to_next_task'])
+    print(' task_queue_size:', runtime_result['queue_size'])
+    session.record.stage3_intraday_points = runtime_result
+    return runtime_result
 
 
-def stage4_phase35_checks(session: HeadlessNotebookSession) -> Dict[str, Any]:
+def stage4_phase35_checks(session: HeadlessNotebookSession, info: bool = False) -> Dict[str, Any]:
     """阶段4：阶段3.5核心检查（提交/撤单/幂等/读写一致）。"""
+    _print_stage_scope(
+        '阶段4 stage4_phase35_checks',
+        [
+            '范围：手工下单、成交回报入账、撤单、交割与订单历史查询。',
+            '目的：验证阶段 3.5 相关能力：含 broker_result_id 时的幂等重复回报、撤单路径、process_account_delivery 与 history_orders 读写一致性。',
+        ],
+        enabled=info,
+    )
     print('\n[Stage4] Phase3.5 checks: submit/cancel/idempotent consistency')
     trader = session.trader
     ds = session.datasource
@@ -344,8 +459,16 @@ def stage4_phase35_checks(session: HeadlessNotebookSession) -> Dict[str, Any]:
     return out
 
 
-def stage5_stage0to3_regression(session: HeadlessNotebookSession) -> Dict[str, Any]:
+def stage5_stage0to3_regression(session: HeadlessNotebookSession, info: bool = False) -> Dict[str, Any]:
     """阶段5：顺带回归阶段0~3能力点。"""
+    _print_stage_scope(
+        '阶段5 stage5_stage0to3_regression',
+        [
+            '范围：Trader 消息队列与日程相关只读字段。',
+            '目的：排空 message_queue 做轻量材料收集，结合当前 status、日程长度与 next_task，用于人工对照阶段 0~3（初始化、调度、运行节奏）是否异常。',
+        ],
+        enabled=info,
+    )
     print('\n[Stage5] Regression checks for phase0~3 capabilities')
     trader = session.trader
     messages: List[str] = []
@@ -367,8 +490,16 @@ def stage5_stage0to3_regression(session: HeadlessNotebookSession) -> Dict[str, A
     return checks
 
 
-def stage6_closing_reconcile(session: HeadlessNotebookSession) -> Dict[str, Any]:
+def stage6_closing_reconcile(session: HeadlessNotebookSession, info: bool = False) -> Dict[str, Any]:
     """阶段6：收盘后对账（本地侧快照）。"""
+    _print_stage_scope(
+        '阶段6 stage6_closing_reconcile',
+        [
+            '范围：会话数据源上的账户资金、持仓与订单状态分布。',
+            '目的：在本地侧做一次「收盘」快照：现金、持仓表、submitted / partial-filled 订单数量，便于与阶段 2 基线或外部对账材料比对。',
+        ],
+        enabled=info,
+    )
     print('\n[Stage6] Closing reconcile snapshot (local)')
     trader = session.trader
     ds = session.datasource
@@ -391,8 +522,20 @@ def stage6_closing_reconcile(session: HeadlessNotebookSession) -> Dict[str, Any]
     return snapshot
 
 
-def stage7_exception_and_rollback_probe(session: HeadlessNotebookSession, use_db_probe: bool = False) -> Dict[str, Any]:
+def stage7_exception_and_rollback_probe(
+    session: HeadlessNotebookSession,
+    use_db_probe: bool = False,
+    info: bool = False,
+) -> Dict[str, Any]:
     """阶段7：异常与日志摘要（可选 DB 回滚探针）。"""
+    _print_stage_scope(
+        '阶段7 stage7_exception_and_rollback_probe',
+        [
+            '范围：异常路径说明与（可选）独立测试库上的事务回滚探针。',
+            '目的：默认仅记录说明；当 use_db_probe=True 时，在测试库中构造订单并在 process_trade_result 中途注入错误，观察整笔事务是否回滚、成交表是否未落脏数据。',
+        ],
+        enabled=info,
+    )
     print('\n[Stage7] Exception/log summary and optional rollback probe')
     summary: Dict[str, Any] = {
         'db_rollback_probe_enabled': use_db_probe,
@@ -462,8 +605,16 @@ def save_order_for_probe(ds_db: DataSource) -> int:
     return order_id
 
 
-def stage8_conclusion(session: HeadlessNotebookSession) -> Dict[str, Any]:
+def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> Dict[str, Any]:
     """阶段8：当日结论与下一步建议。"""
+    _print_stage_scope(
+        '阶段8 stage8_conclusion',
+        [
+            '范围：汇总阶段 4、5、7 写入 record 的关键标志。',
+            '目的：根据幂等检查结果、日程与可选 DB 探针结果，给出是否适合进入下一阶段的主观判定与后续操作建议（打印 ready_for_next_phase、risk_level、next_steps）。',
+        ],
+        enabled=info,
+    )
     print('\n[Stage8] Conclusion and next actions')
     s4 = session.record.stage4_phase35_checks
     s5 = session.record.stage5_stage0to3_checks
@@ -507,8 +658,8 @@ def shutdown_session(session: HeadlessNotebookSession) -> None:
 
 
 if __name__ == '__main__':
-    # 作为脚本快速演示：可直接运行，也可在 notebook 分阶段调用。
-    s = create_headless_notebook_session(debug=True)
+    # 作为脚本快速演示：默认隔离数据源，避免直跑时改写 QT_DATA_SOURCE。
+    s = create_headless_notebook_session(debug=True, use_isolated_datasource=True)
     stage1_preflight_tests(s, run_commands=False)
     stage2_opening_baseline(s)
     stage3_intraday_runtime(s)
