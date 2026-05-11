@@ -738,6 +738,45 @@ class TestTraderTaskManagerPhase2(unittest.TestCase):
         self.assertEqual(len(self._trader.dead_letter_tasks), 1)
         self.assertEqual(self._trader.dead_letter_tasks[0].task_id, task_id)
 
+    def test_add_task_skips_reentry_for_run_strategy_when_prev_running(self):
+        print('\n[TestTraderTaskManagerPhase2] run_strategy reentry skip_reason=prev_running')
+        first_task_id = self._trader.add_task('run_strategy', 0)
+        first_task_spec = self._trader.get_task(first_task_id)
+        self.assertIsNotNone(first_task_spec)
+        self.assertEqual(self._trader.task_queue.qsize(), 1)
+        self._trader.task_queue.get()
+        self._trader.task_queue.task_done()
+        first_task_spec.status = 'running'
+
+        second_task_id = self._trader.add_task('run_strategy', 1)
+        second_task_spec = self._trader.get_task(second_task_id)
+        print(' first_task_status:', first_task_spec.status)
+        print(' second_task_status:', second_task_spec.status)
+        print(' second_last_error:', second_task_spec.last_error)
+        print(' queue_size:', self._trader.task_queue.qsize())
+        self.assertEqual(second_task_spec.status, 'skipped')
+        self.assertIn('skip_reason=prev_running', second_task_spec.last_error)
+        self.assertEqual(self._trader.task_queue.qsize(), 0)
+
+    def test_process_result_reentry_policy_drop_is_forced_to_queue(self):
+        print('\n[TestTraderTaskManagerPhase2] process_result never dropped by reentry policy')
+        first_task_id = self._trader.add_task('process_result', {'order_id': 1})
+        first_task_spec = self._trader.get_task(first_task_id)
+        self.assertIsNotNone(first_task_spec)
+        self._trader.task_queue.get()
+        self._trader.task_queue.task_done()
+        first_task_spec.status = 'running'
+
+        second_task_id = self._trader.add_task('process_result', {'order_id': 2}, reentry_policy='drop')
+        second_task_spec = self._trader.get_task(second_task_id)
+        print(' first_task_status:', first_task_spec.status)
+        print(' second_task_status:', second_task_spec.status)
+        print(' second_task_reentry_policy:', second_task_spec.reentry_policy)
+        print(' queue_size:', self._trader.task_queue.qsize())
+        self.assertEqual(second_task_spec.reentry_policy, 'queue')
+        self.assertEqual(second_task_spec.status, 'queued')
+        self.assertEqual(self._trader.task_queue.qsize(), 1)
+
 
 if __name__ == '__main__':
     unittest.main()

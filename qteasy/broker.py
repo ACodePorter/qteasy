@@ -353,14 +353,47 @@ class Broker(object):
         list[dict[str, Any]]
             最多返回一条成交回报，未取到则返回空列表。
         """
-        self._ensure_adapter_connected()
-        if timeout > 0 and not self._pending_fills:
+        if timeout > 0 and self.result_queue.empty() and not self._pending_fills:
             time.sleep(float(timeout))
+
+        try:
+            legacy_fill = self.result_queue.get_nowait()
+        except Empty:
+            legacy_fill = None
+        if legacy_fill is not None:
+            self.result_queue.task_done()
+            validate_raw_trade_result(legacy_fill, context='Broker.poll_fills.raw_trade_result')
+            return [legacy_fill]
+
         if not self._pending_fills:
             return []
-        fill = self._pending_fills.popleft()
-        validate_raw_trade_result(fill, context='Broker.poll_fills.raw_trade_result')
-        return [fill]
+
+        self._ensure_adapter_connected()
+        adapter_fill = self._pending_fills.popleft()
+        validate_raw_trade_result(adapter_fill, context='Broker.poll_fills.raw_trade_result')
+        return [adapter_fill]
+
+    def poll_messages(self, timeout: float = 0.0) -> list[str]:
+        """异步拉取券商消息。
+
+        Parameters
+        ----------
+        timeout: float, default 0.0
+            等待秒数，<=0 时立即返回。
+
+        Returns
+        -------
+        list[str]
+            最多返回一条消息，未取到则返回空列表。
+        """
+        if timeout > 0 and self.broker_messages.empty():
+            time.sleep(float(timeout))
+        try:
+            message = self.broker_messages.get_nowait()
+        except Empty:
+            return []
+        self.broker_messages.task_done()
+        return [message]
 
     def get_remote_orders(self, *, account_id: Optional[int] = None) -> list[dict[str, Any]]:
         """返回券商侧订单占位结果，S1.3 默认空列表。"""

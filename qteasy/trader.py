@@ -112,6 +112,12 @@ TASK_DEFAULT_MAX_RETRIES = {
     'process_result': 1,
 }
 
+TASK_DEFAULT_REENTRY_POLICIES = {
+    'acquire_live_price': 'drop',
+    'run_strategy': 'drop',
+    'process_result': 'queue',
+}
+
 
 @dataclass
 class TaskSpec:
@@ -124,6 +130,7 @@ class TaskSpec:
     retry_count: int = 0
     status: str = 'queued'
     canceled: bool = False
+    reentry_policy: str = 'queue'
     last_error: str = ''
 
     def as_legacy(self):
@@ -939,7 +946,7 @@ class Trader(object):
 
         1，检查task_queue中是否有任务，如果有任务，则提取任务，根据当前status确定是否执行任务，如果可以执行，则执行任务，否则忽略任务
         2，如果当前是交易日，检查当前时间是否在task_daily_agenda中，如果在，则将任务添加到task_queue中
-        3，如果当前是交易日，检查broker的result_queue中是否有交易结果，如果有，则添加"process_result"任务到task_queue中
+        3，如果当前是交易日，通过 broker 公开 API 拉取交易结果并添加"process_result"任务到task_queue中
         """
 
         self._run_task('start')
@@ -949,10 +956,6 @@ class Trader(object):
         current_date_time = self.get_current_tz_datetime()  # 产生当地时间
         current_date = current_date_time.date()
 
-        # 在try-block中开始主循环，以抓取KeyboardInterrupt
-        # TODO: 这里似乎应该重新思考trader和UI的关系，将trader和UI彻底分开：
-        #  1，抓取 KeyboardInterrupt 似乎应该是UI的任务，trader应该专注于交易任务
-        #  2，trader应该专注于交易任务，UI应该专注于交互任务，两者应该分开
         try:
             while self.status != 'stopped':
                 pre_date = current_date
@@ -990,6 +993,7 @@ class Trader(object):
                             event='task_skipped_canceled',
                             task=task_name,
                             task_id=task_spec.task_id,
+                            skip_reason='canceled',
                         )
                         self.task_queue.task_done()
                         continue
@@ -1001,6 +1005,7 @@ class Trader(object):
                             task=task_name,
                             task_id=task_spec.task_id,
                             trader_status=self.status,
+                            skip_reason='status_not_allowed',
                         )
                         self.send_message(f'task: {task_name} cannot be executed in current status: {self.status}',
                                           debug=True)
@@ -1066,10 +1071,12 @@ class Trader(object):
                 if current_date != pre_date:
                     self._initialize_schedule(current_time)
 
-                # 检查broker的result_queue中是否有交易结果，如果有，则添加"process_result"任务到task_queue中
-                # TODO: 不要在trader中操作broker的所有Queue，而应该调用broker的API来获取交易结果
-                if not self.broker.result_queue.empty():
-                    result = self.broker.result_queue.get()
+                # 通过 broker 公开 API 拉取交易结果并加入任务队列
+                while True:
+                    polled_results = self.broker.poll_fills(timeout=0.0)
+                    if not polled_results:
+                        break
+                    result = polled_results[0]
                     order_id = result.get('order_id') if isinstance(result, dict) else 'N/A'
                     self._trace_event(
                         category='broker',
@@ -1082,22 +1089,20 @@ class Trader(object):
                         self.send_message(f'got new result from broker for order {result["order_id"]}, '
                                           f'adding process_result task to queue')
                     self.add_task('process_result', result)
-                    self.broker.result_queue.task_done()
-                # 检查broker的message_queue中是否有消息，如果有，则处理消息，通常情况将消息添加到消息队列中
-                # TODO: 不要在trader中操作broker的message Queue，应该调用broker的API来获取消息
-                if not self.broker.broker_messages.empty():
-                    message = self.broker.broker_messages.get()
+
+                # 通过 broker 公开 API 拉取消息并转发至 trader 消息队列
+                while True:
+                    polled_messages = self.broker.poll_messages(timeout=0.0)
+                    if not polled_messages:
+                        break
+                    message = polled_messages[0]
                     self.send_message(message)
-                    self.broker.broker_messages.task_done()
 
                 time.sleep(sleep_interval)
             else:
                 # process trader when trader is normally stopped
                 self.send_message(f'Trader is stopped.\n'
                                   f'{"=" * 20}\n')
-        except KeyboardInterrupt:
-            self.send_message('KeyboardInterrupt, stopping trader...')
-            self._run_task('stop')
         except Exception as e:
             self.send_message(f'error occurred when running trader, error: {e}')
             import traceback
@@ -1348,16 +1353,50 @@ class Trader(object):
             return int(TASK_DEFAULT_MAX_RETRIES.get(task_name, 0))
         return max(0, int(max_retries))
 
-    def _new_task_spec(self, task_name: str, args: tuple = (), max_retries: Optional[int] = None) -> TaskSpec:
+    def _resolve_task_reentry_policy(self, task_name: str, reentry_policy: Optional[str] = None) -> str:
+        """解析任务重入策略。"""
+        policy = reentry_policy or TASK_DEFAULT_REENTRY_POLICIES.get(task_name, 'queue')
+        normalized_policy = str(policy).strip().lower()
+        if normalized_policy not in ['queue', 'drop', 'reject']:
+            raise ValueError(f'Invalid reentry policy: {reentry_policy} for task {task_name}')
+        if task_name == 'process_result' and normalized_policy == 'drop':
+            return 'queue'
+        return normalized_policy
+
+    def _new_task_spec(self,
+                       task_name: str,
+                       args: tuple = (),
+                       max_retries: Optional[int] = None,
+                       reentry_policy: Optional[str] = None) -> TaskSpec:
         """构造并登记任务对象。"""
         task_spec = TaskSpec(
             task_id=self._next_task_id(),
             name=task_name,
             args=args,
             max_retries=self._resolve_task_max_retries(task_name, max_retries=max_retries),
+            reentry_policy=self._resolve_task_reentry_policy(task_name, reentry_policy=reentry_policy),
         )
         self._task_registry[task_spec.task_id] = task_spec
         return task_spec
+
+    def _find_reentry_skip_reason(self, task_spec: TaskSpec) -> str:
+        """根据重入策略判断任务是否应该被跳过。"""
+        if task_spec.name == 'process_result':
+            return ''
+        if task_spec.reentry_policy == 'queue':
+            return ''
+        for existing_task in self._task_registry.values():
+            if existing_task.task_id == task_spec.task_id:
+                continue
+            if existing_task.name != task_spec.name:
+                continue
+            if existing_task.canceled:
+                continue
+            if existing_task.status == 'running':
+                return 'prev_running'
+            if existing_task.status == 'queued':
+                return 'already_queued'
+        return ''
 
     def cancel_task(self, task_id: str) -> bool:
         """取消一个已登记任务（协作式）。
@@ -1439,7 +1478,11 @@ class Trader(object):
         """返回死信任务列表快照。"""
         return list(self._dead_letter_tasks)
 
-    def add_task(self, task, *args, max_retries: Optional[int] = None) -> str:
+    def add_task(self,
+                 task,
+                 *args,
+                 max_retries: Optional[int] = None,
+                 reentry_policy: Optional[str] = None) -> str:
         """ 添加任务到任务队列
 
         Parameters
@@ -1450,6 +1493,8 @@ class Trader(object):
             任务参数
         max_retries: int, optional
             覆盖默认重试次数，不给时按任务类型使用默认值
+        reentry_policy: str, optional
+            重入策略，支持 ``queue`` / ``drop`` / ``reject``，不给时按任务默认策略。
 
         Returns
         -------
@@ -1462,13 +1507,37 @@ class Trader(object):
 
         queue_size_before = self.task_queue.qsize()
         task_args = tuple(args) if args else ()
-        task_spec = self._new_task_spec(task_name=task, args=task_args, max_retries=max_retries)
+        task_spec = self._new_task_spec(
+            task_name=task,
+            args=task_args,
+            max_retries=max_retries,
+            reentry_policy=reentry_policy,
+        )
+        skip_reason = self._find_reentry_skip_reason(task_spec=task_spec)
+        if skip_reason:
+            task_spec.status = 'rejected' if task_spec.reentry_policy == 'reject' else 'skipped'
+            task_spec.last_error = f'skip_reason={skip_reason}'
+            self._trace_event(
+                category='task_runner',
+                event='task_skipped_reentry',
+                task=task_spec.name,
+                task_id=task_spec.task_id,
+                reentry_policy=task_spec.reentry_policy,
+                skip_reason=skip_reason,
+                trader_status=self.status,
+            )
+            self.send_message(
+                f'task {task_spec.name} skipped, skip_reason={skip_reason}, '
+                f'reentry_policy={task_spec.reentry_policy}'
+            )
+            return task_spec.task_id
         self._trace_event(
             category='task_queue',
             event='task_add_requested',
             task=task_spec.name,
             task_id=task_spec.task_id,
             retry_limit=task_spec.max_retries,
+            reentry_policy=task_spec.reentry_policy,
             queue_size_before=queue_size_before,
             trader_status=self.status,
         )
@@ -2783,6 +2852,7 @@ class Trader(object):
                 category='trade_result',
                 event='process_skipped_empty_result',
                 order_id=order_id,
+                skip_reason='empty_trade_result',
             )
             return
         self._trace_event(
@@ -3250,7 +3320,10 @@ class Trader(object):
         for task_time, _, task, task_tuple in expired_tasks:
             self.send_message(f'current time {current_time} >= task time {task_time}, '
                               f'adding task: {task} from agenda ({task_tuple})', debug=True)
-            self._add_task_to_queue(task)
+            if isinstance(task, tuple):
+                self.add_task(task[0], *task[1])
+            else:
+                self.add_task(task)
 
     def _initialize_schedule(self, current_time=None) -> None:
         """ 初始化交易日的任务日程, 在任务清单中添加以下任务：
