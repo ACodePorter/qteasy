@@ -102,6 +102,7 @@ if __name__ == '__main__':
             live_trade_debug_mode=args.debug,
             live_trade_broker_type='simulator',
             live_trade_ui_type=args.ui,
+            hist_dnld_parallel=2,
             watched_price_refresh_interval=5,
             # live_trade_daily_refill_tables='stock_1min, stock_5min, stock_15min, stock_30min, stock_hourly, '
             #                                'index_1min, index_5min, index_15min, index_30min, index_hourly, '
