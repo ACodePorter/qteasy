@@ -322,7 +322,10 @@ def _valid_qt_kwargs():
             {'Default':   16,
              'Validator': lambda value: isinstance(value, int) and value >= 0,
              'level':     4,
-             'text':      '下载历史数据时启用的线程数量，大于等于0的整数，为0或1时采用单线程下载，大于1时启用多线程'},
+             'text':      '多标的并行拉取时的线程池上限（ThreadPoolExecutor.max_workers）。'
+                          '用于 fetch_real_time_klines 并行模式；'
+                          'fetch_batched_table_data / refill_data_source 在 process_count 为 None 时亦使用该值。'
+                          '为 0 或 1 时等价于单线程（实现上映射为 1）；大于 1 时为多线程并发上限。'},
 
         'hist_dnld_delay':
             {'Default':   0.,
