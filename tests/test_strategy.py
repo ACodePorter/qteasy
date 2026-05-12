@@ -10,7 +10,6 @@
 # ======================================
 
 import unittest
-import warnings
 import numpy as np
 
 from qteasy.strategy import (
@@ -1822,7 +1821,7 @@ class TestRuleIteratorMultiPar(unittest.TestCase):
         class BumpStg(RuleIterator):
             def realize(self) -> float:
                 pa, pb = self.get_pars('pa', 'pb')
-                self.commit_share_par_values(pa + 1, pb + 1)
+                self.update_par_values(pa + 1, pb + 1)
                 return float(pa)
 
         return BumpStg(
@@ -1834,7 +1833,7 @@ class TestRuleIteratorMultiPar(unittest.TestCase):
         )
 
     def _make_static_strategy(self):
-        """realize 不修改参数，用于 kwargs / 告警类用例。"""
+        """realize 不修改参数，用于 kwargs / 无索引上下文合并用例。"""
         p1 = Parameter(name='pa', par_type='int', par_range=(1, 100), value=1)
         p2 = Parameter(name='pb', par_type='int', par_range=(1, 100), value=2)
         dt = StgData('close', freq='d', asset_type='E', window_length=2)
@@ -1860,36 +1859,30 @@ class TestRuleIteratorMultiPar(unittest.TestCase):
         wind = rolling_window(raw, 2)
         return {did: wind}, {did: np.array([0], dtype=int)}
 
-    def test_kwargs_warning_when_multi_pars_active(self):
-        print('\n[TestRuleIteratorMultiPar] multi_pars 已存在时用 kwargs 更新应告警且 generate 仍按股恢复')
+    def test_kwargs_merges_all_rows_when_no_generate_index(self):
+        print('\n[TestRuleIteratorMultiPar] multi_pars 已存在、无 _generate_share_index 时 kwargs 合并到每一行')
         stg = self._make_static_strategy()
         stg.update_shares(share_names=['S0', 'S1'])
         stg.update_par_values({'S0': (10, 20), 'S1': (30, 40)})
+        stg.update_par_values(pa=99)
+        print(' multi_pars after kwargs:', stg.get_multi_pars())
+        self.assertEqual(stg.get_multi_pars(), ((99, 20), (99, 40)))
+        self.assertEqual(stg.get_pars('pa', 'pb'), (99, 20))
         dw, wi = self._minimal_windows(stg)
         stg.update_running_data_window(dw, wi, 0)
-        with warnings.catch_warnings(record=True) as wrec:
-            warnings.simplefilter('always')
-            stg.update_par_values(pa=99)
-        msgs = [str(w.message) for w in wrec]
-        print(' warnings count:', len(msgs))
-        print(' warning sample:', msgs[0] if msgs else None)
-        self.assertTrue(any('multi_pars' in m for m in msgs))
-        self.assertEqual(stg.pa, 99)
-        self.assertEqual(stg.get_pars_for_share('S0'), (10, 20))
         _ = stg.generate()
         print(' after generate pa pb:', stg.pa, stg.pb)
-        self.assertEqual(stg.get_pars('pa', 'pb'), (30, 40))
-        self.assertEqual(stg.get_pars_for_share(0), (10, 20))
+        self.assertEqual(stg.get_pars('pa', 'pb'), (99, 40))
+        self.assertEqual(stg.get_pars_for_share(0), (99, 20))
 
-    def test_positional_tuple_warning_outside_generate(self):
-        print('\n[TestRuleIteratorMultiPar] multi_pars 已存在时位置元组更新在网格外应告警')
+    def test_positional_tuple_broadcasts_when_no_generate_index(self):
+        print('\n[TestRuleIteratorMultiPar] 无 _generate_share_index 时全长位置元组广播到所有 multi_pars 行')
         stg = self._make_bump_strategy()
         stg.update_shares(share_names=['S0', 'S1'])
         stg.update_par_values({'S0': (1, 2), 'S1': (3, 4)})
-        with warnings.catch_warnings(record=True) as wrec:
-            warnings.simplefilter('always')
-            stg.update_par_values(9, 9)
-        self.assertTrue(any('positional tuple' in str(w.message).lower() or 'tuple' in str(w.message) for w in wrec))
+        stg.update_par_values(9, 9)
+        print(' multi_pars after broadcast:', stg.get_multi_pars())
+        self.assertEqual(stg.get_multi_pars(), ((9, 9), (9, 9)))
 
     def test_commit_share_par_values_two_rounds_generate(self):
         print('\n[TestRuleIteratorMultiPar] commit_share_par_values 两轮 generate 独立演进')
@@ -1925,14 +1918,17 @@ class TestRuleIteratorMultiPar(unittest.TestCase):
         stg.update_par_values({'S0': (1, 2), 'S1': (3, 4)})
         self.assertRaises(RuntimeError, stg.commit_share_par_values, 1, 1)
 
-    def test_operator_set_parameter_rejects_param_dict_when_multi_pars(self):
-        print('\n[TestRuleIteratorMultiPar] Operator.set_parameter 参数名 dict 在 multi_pars 存在时抛 ValueError')
+    def test_operator_set_parameter_merges_kwargs_into_all_multi_rows(self):
+        print('\n[TestRuleIteratorMultiPar] Operator.set_parameter 参数名 dict 在 multi_pars 存在时合并到各行')
         stg = self._make_bump_strategy()
         op = Operator()
         op.add_strategy(stg, run_freq='d', run_timing='close')
         op.set_shares(['S0', 'S1'])
-        stg.update_par_values({'S0': (1, 2), 'S1': (3, 4)})
-        self.assertRaises(ValueError, op.set_parameter, stg.strategy_id, par_values={'pa': 9})
+        stg.update_par_values({'S0': (1, 2), 'S1': (5, 6)})
+        op.set_parameter(stg.strategy_id, par_values={'pa': 9})
+        print(' multi_pars after set_parameter:', stg.get_multi_pars())
+        self.assertEqual(stg.get_multi_pars(), ((9, 2), (9, 6)))
+        self.assertEqual(stg.get_pars('pa', 'pb'), (9, 2))
 
 
 if __name__ == '__main__':

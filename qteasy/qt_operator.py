@@ -1346,12 +1346,6 @@ class Operator:
                 )
                 )
                 if is_kwargs:
-                    if getattr(strategy, 'multi_pars', None) is not None:
-                        raise ValueError(
-                                'Cannot set parameters by name via par_values dict while multi_pars is active. '
-                                'Pass a per-share dict {symbol: (v1, v2, ...)} to replace multi_pars, '
-                                'or update per-share values inside realize() using commit_share_par_values().'
-                        )
                     strategy.update_par_values(**par_values)
                 else:
                     # multi_par：至少有一个非 default 的 stock_id

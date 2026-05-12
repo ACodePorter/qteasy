@@ -28,8 +28,7 @@ if __name__ == '__main__':
         """网格交易策略, 同时监控多只股票并进行网格交易"""
 
         def realize(self):
-            # RuleIterator.generate() 按标的循环：每次 realize 仅处理当前标的；参数已由框架从 multi_pars
-            # 注入到命名参数，宜用 get_pars() 读取。写回每股状态请用 commit_share_par_values()。
+            # RuleIterator.generate() 按标的循环：读参/写参均用 get_pars / update_par_values，由框架同步 multi_pars。
             grid_size, trade_batch, base_grid = self.get_pars('grid_size', 'trade_batch', 'base_grid')
             grid_size, trade_batch, base_grid = float(grid_size), int(trade_batch), float(base_grid)
 
@@ -54,8 +53,8 @@ if __name__ == '__main__':
             if not np.isnan(base_grid):
                 base_grid = float(np.round(base_grid, 2))
 
-            if self.allow_multi_par and self.multi_pars is not None:
-                self.commit_share_par_values(grid_size, trade_batch, base_grid)
+            # 写回仅用 update_par_values：初始化为 dict 时由框架同步每股；为 tuple 时多标共享一套参数。
+            self.update_par_values(grid_size, trade_batch, base_grid)
 
             return trade_signal
 

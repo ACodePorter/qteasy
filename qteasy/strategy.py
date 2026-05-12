@@ -1420,6 +1420,11 @@ class RuleIterator(BaseStrategy):
     例如，用户可以设计一个均线交叉策略，并将其应用到投资组合中的所有股票上，同时可以为每只股票
     设定不同的均线周期参数。关于Strategy类的更详细说明，请参见qteasy的文档。
 
+    **多标的且每股参数不同**：须通过 ``update_par_values({股票代码: (p1, p2, ...), ...})`` 传入与
+    ``share_names`` 一致的股票代码键；若仅用位置元组初始化，多标的时全体共享一套运行时参数（见
+    用户文档《三种策略基类》中 RuleIterator 一节）。字典中可用键名 ``default`` 为未单独列出的标的
+    提供同一套默认初值；不支持 ``others`` 等其它保留键名。
+
     """
     __metaclass__ = ABCMeta
 
@@ -1517,10 +1522,30 @@ class RuleIterator(BaseStrategy):
         idx = self.share_names.index(share)
         return tuple(self.multi_pars[idx])
 
-    def commit_share_par_values(self, *values: Any) -> None:
-        """在 ``realize()`` 内将当前标的的一整组参数写回 ``multi_pars``，并与 ``_pars`` 同步。
+    @staticmethod
+    def _overlay_tuple_prefix_on_row(row: Tuple[Any, ...], prefix: Tuple[Any, ...]) -> Tuple[Any, ...]:
+        """将 prefix 按顺序覆盖 row 的前 len(prefix) 个槽位，用于位置参数部分更新。"""
+        out = list(row)
+        for i, v in enumerate(prefix):
+            if i >= len(out):
+                break
+            out[i] = v
+        return tuple(out)
 
-        仅应在 ``RuleIterator.generate()`` 触发的 ``realize()`` 中调用，依赖 ``_generate_share_index``。
+    def _merge_row_with_kwargs(self, row: Tuple[Any, ...], kwargs: Dict[str, Any]) -> Tuple[Any, ...]:
+        """将 kwargs 按参数名合并到一行元组中，键必须属于 ``par_names``。"""
+        out = list(row)
+        for par_name, par_value in kwargs.items():
+            if par_name not in self.par_names:
+                raise KeyError(f'parameter {par_name} is not defined in the strategy')
+            j = self.par_names.index(par_name)
+            out[j] = par_value
+        return tuple(out)
+
+    def commit_share_par_values(self, *values: Any) -> None:
+        """将当前标的的一整组参数写回 ``multi_pars`` 并与 ``_pars`` 同步。
+
+        推荐在 ``realize()`` 中直接使用 ``update_par_values(*values)``；本方法保留兼容。
 
         Parameters
         ----------
@@ -1531,6 +1556,10 @@ class RuleIterator(BaseStrategy):
         -------
         None
         """
+        if len(values) != self.par_count:
+            raise ValueError(
+                    f'commit_share_par_values expected {self.par_count} values, got {len(values)}'
+            )
         idx = getattr(self, '_generate_share_index', None)
         if idx is None:
             raise RuntimeError(
@@ -1541,44 +1570,52 @@ class RuleIterator(BaseStrategy):
             raise RuntimeError(
                     'commit_share_par_values() requires allow_multi_par=True and non-None multi_pars.'
             )
-        if len(values) != self.par_count:
-            raise ValueError(
-                    f'commit_share_par_values expected {self.par_count} values, got {len(values)}'
-            )
-        row = tuple(values)
-        mp = list(self.multi_pars)
-        mp[idx] = row
-        self.multi_pars = tuple(mp)
-        super().update_par_values(*row)
+        self.update_par_values(*values)
 
     def update_par_values(self, *par_values: Any, **kwargs: Any) -> None:
-        """ 快速更新策略的参数值，如果参数是一个multi_par，将其写入multi_par，
-        并将其第一组参数值写入par_values
+        """快速更新策略参数值；``multi_pars`` 与 ``_pars`` 的同步规则如下。
+
+        - 传入 ``dict``（按股票代码映射到参数元组）时，走 ``_update_multi_pars`` 全量重绑（与原先一致）。
+        - 当 ``allow_multi_par`` 且 ``multi_pars`` 已存在、且不在 ``_update_multi_pars`` 内部循环时：
+            - ``_generate_share_index is not None``（由 ``generate()`` 在调用 ``realize()`` 前设置）：位置参数
+              与 kwargs 仅作用于**当前标的**对应的一行 ``multi_pars``；位置参数长度等于 ``par_count`` 时整行替换，
+              否则按顺序覆盖当前行的前若干槽位；kwargs 与当前行按参数名合并。
+            - ``_generate_share_index is None``：无「当前标的」语义；位置参数长度等于 ``par_count`` 时将**同一行**
+              广播到所有标的，否则对每一行做相同的前缀覆盖；kwargs 按名合并到**每一行**；最后 ``_pars`` 与
+              ``multi_pars[0]`` 对齐。
+        - 无 ``multi_pars`` 或 ``allow_multi_par`` 为 False 时，行为与 ``BaseStrategy.update_par_values`` 一致。
 
         Parameters
         ----------
         par_values: tuple, optional
-            策略参数的值，元组中的每个元素是按顺序排列的所有参数值，如果
-            没有设置参数，则必须传入kwargs参数
+            位置参数；首元素为 dict 时表示 multi_par 全量设置。
         kwargs: dict
-            以字典形式传入具体需要更新的参数值，键为参数名，值为参数值
+            按参数名的部分更新。
 
         Returns
         -------
         None
         """
         if not par_values:
-            if (kwargs and self.allow_multi_par and self.multi_pars is not None
-                    and not self._updating_multi_pars_internal):
-                warnings.warn(
-                        'Updating parameter values by name while multi_pars is active only changes the '
-                        'global parameter snapshot; per-share rows in multi_pars are unchanged, and the next '
-                        'generate() will reload values from multi_pars. Use update_par_values({symbol: (...)}) '
-                        'or commit_share_par_values() from realize().',
-                        UserWarning,
-                        stacklevel=2,
-                )
-            super().update_par_values(**kwargs)
+            if (self.allow_multi_par and self.multi_pars is not None
+                    and not self._updating_multi_pars_internal and kwargs):
+                gen_idx = getattr(self, '_generate_share_index', None)
+                if gen_idx is not None:
+                    base_row = tuple(self.multi_pars[gen_idx])
+                    merged = self._merge_row_with_kwargs(base_row, kwargs)
+                    mp = list(self.multi_pars)
+                    mp[gen_idx] = merged
+                    self.multi_pars = tuple(mp)
+                    super().update_par_values(*merged)
+                else:
+                    new_mp = []
+                    for i in range(len(self.multi_pars)):
+                        merged = self._merge_row_with_kwargs(tuple(self.multi_pars[i]), kwargs)
+                        new_mp.append(merged)
+                    self.multi_pars = tuple(new_mp)
+                    super().update_par_values(*self.multi_pars[0])
+            else:
+                super().update_par_values(**kwargs)
             return
 
         # 检测常见误用：update_par_values(dict_value,) 由于尾随逗号导致 par_values == ((dict,),)
@@ -1604,22 +1641,33 @@ class RuleIterator(BaseStrategy):
             # 将第一个参数值写入par_values
             par_values = self.multi_pars[0]
             super().update_par_values(*par_values)
-        else:
-            # par_values是一个tuple或list，直接更新参数值
-            # 确保 multi_pars 不会被设置（tuple/list 形式不应设置 multi_pars）
-            # 注意：这里不修改 multi_pars，保持其原有值（通常为 None）
+        elif self._updating_multi_pars_internal:
+            super().update_par_values(*par_values)
+        elif self.allow_multi_par and self.multi_pars is not None:
             gen_idx = getattr(self, '_generate_share_index', None)
-            if (self.allow_multi_par and self.multi_pars is not None
-                    and not self._updating_multi_pars_internal
-                    and gen_idx is None):
-                warnings.warn(
-                        'Updating parameter values with a positional tuple while multi_pars is active only '
-                        'changes the global parameter snapshot; per-share rows in multi_pars are unchanged, and '
-                        'the next generate() will reload values from multi_pars. Use update_par_values({symbol: '
-                        '(...)}) or commit_share_par_values() from realize().',
-                        UserWarning,
-                        stacklevel=2,
-                )
+            tail = tuple(par_values)
+            if gen_idx is not None:
+                base_row = tuple(self.multi_pars[gen_idx])
+                if len(tail) == self.par_count:
+                    new_row = tail
+                else:
+                    new_row = self._overlay_tuple_prefix_on_row(base_row, tail)
+                mp = list(self.multi_pars)
+                mp[gen_idx] = new_row
+                self.multi_pars = tuple(mp)
+                super().update_par_values(*new_row)
+            else:
+                new_mp = []
+                for i in range(len(self.multi_pars)):
+                    base_row = tuple(self.multi_pars[i])
+                    if len(tail) == self.par_count:
+                        new_row = tail
+                    else:
+                        new_row = self._overlay_tuple_prefix_on_row(base_row, tail)
+                    new_mp.append(new_row)
+                self.multi_pars = tuple(new_mp)
+                super().update_par_values(*self.multi_pars[0])
+        else:
             super().update_par_values(*par_values)
 
     def _update_multi_pars(self, multi_pars):
@@ -1628,7 +1676,10 @@ class RuleIterator(BaseStrategy):
         Parameters
         ----------
         multi_pars: dict {str: tuple, list, ndarray}
-            策略参数字典，key为股票代码或'default'，value为参数的值元组
+            策略参数字典：键为与 ``share_names`` 完全一致的股票代码，值为该股的一组参数（长度须等于
+            ``par_count``）。未单独给出参数的标的，若字典中含键 ``"default"``，则使用该键对应元组
+            作为初值（等价于「除已列股票外其余标的共用同一套初值」）；**不存在**名为 ``others`` 等
+            其它保留键，请勿使用。
 
         Returns
         -------
