@@ -533,6 +533,7 @@ def fetch_real_time_klines(
                     else:
                         if df.empty:
                             continue
+                        df = df.copy()
                         df['ts_code'] = symbol
                         # 根据当前时间确定哪个是matured kline，而不是直接取最后一个，因为最后一个可能是不完整的
                         if matured_kline_only:
@@ -558,6 +559,7 @@ def fetch_real_time_klines(
             df = fetch_realtime_kline(qt_code=symbol, date=today, freq=freq)
             if df.empty:
                 continue
+            df = df.copy()
             df['ts_code'] = symbol
             # 根据当前时间确定哪个是matured kline，而不是直接取最后一个，因为最后一个可能是不完整的
             if matured_kline_only:
