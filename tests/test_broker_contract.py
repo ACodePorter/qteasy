@@ -322,5 +322,18 @@ class TestBrokerContract(unittest.TestCase):
         broker_thread.join(timeout=1.0)
 
 
+class TestBrokerRemoteReconcileContract(unittest.TestCase):
+    """Broker 远端现金/持仓钩子契约（阶段 5-B L3 可选路径）。"""
+
+    def test_minimal_broker_remote_cash_and_positions_are_unimplemented(self) -> None:
+        print('\n[TestBrokerRemoteReconcileContract] default remote hooks')
+        broker = MinimalBrokerForContractTest()
+        cash = broker.get_remote_cash(account_id=1)
+        pos = broker.get_remote_positions(account_id=1)
+        print(' remote_cash:', cash, ' remote_positions:', pos)
+        self.assertIsNone(cash)
+        self.assertEqual(pos, [])
+
+
 if __name__ == '__main__':
     unittest.main()

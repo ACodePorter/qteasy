@@ -24,3 +24,5 @@
    3-risk-and-order-lifecycle
    4-broker-adapter-and-integration
    5-artifacts-and-troubleshooting
+   6-trader-snapshot-gate
+   7-manual-smoke-live-grid-roadmap
