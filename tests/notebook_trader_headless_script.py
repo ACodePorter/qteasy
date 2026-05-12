@@ -566,8 +566,8 @@ def stage5_stage0to3_regression(session: HeadlessNotebookSession, info: bool = F
     _print_stage_scope(
         '阶段5 stage5_stage0to3_regression',
         [
-            '范围：Trader 消息队列与日程相关只读字段。',
-            '目的：排空 message_queue 做轻量材料收集，结合当前 status、日程长度与 next_task，用于人工对照阶段 0~3（初始化、调度、运行节奏）是否异常。',
+            '范围：Trader 消息队列、任务注册表与 Broker 公开 API 可用性。',
+            '目的：排空 message_queue 做轻量材料收集，结合当前 status、日程长度与 next_task，额外统计 skip_reason 与 task_registry 中的 skipped/rejected 任务，用于人工对照阶段 0~3 与 4-B（重入/SKIP 分桶）是否异常。',
         ],
         enabled=info,
     )
@@ -576,18 +576,44 @@ def stage5_stage0to3_regression(session: HeadlessNotebookSession, info: bool = F
     messages: List[str] = []
     while not trader.message_queue.empty():
         messages.append(str(trader.message_queue.get_nowait()))
+    skip_reason_hits: Dict[str, int] = {}
+    for msg in messages:
+        if 'skip_reason=' not in msg:
+            continue
+        reason = msg.split('skip_reason=', 1)[1].split()[0].strip().strip('.,;')
+        skip_reason_hits[reason] = skip_reason_hits.get(reason, 0) + 1
+    skipped_tasks = [
+        {
+            'task_id': task.task_id,
+            'name': task.name,
+            'status': task.status,
+            'reentry_policy': task.reentry_policy,
+            'last_error': task.last_error,
+        }
+        for task in trader._task_registry.values()
+        if task.status in ['skipped', 'rejected']
+    ]
     checks = {
         'trace_like_messages_count': len(messages),
         'contains_task_keywords': any(('task' in m.lower()) or ('run strategy' in m.lower()) for m in messages),
         'status_now': trader.status,
         'schedule_size': len(trader.task_daily_schedule),
         'next_task': trader.next_task,
+        'broker_poll_api_available': {
+            'poll_fills': callable(getattr(session.broker, 'poll_fills', None)),
+            'poll_messages': callable(getattr(session.broker, 'poll_messages', None)),
+        },
+        'skip_reason_hits': skip_reason_hits,
+        'skipped_or_rejected_tasks': skipped_tasks,
     }
     print(' trace/message count:', checks['trace_like_messages_count'])
     print(' contains task keywords:', checks['contains_task_keywords'])
     print(' status:', checks['status_now'])
     print(' schedule size:', checks['schedule_size'])
     print(' next task:', checks['next_task'])
+    print(' broker poll API available:', checks['broker_poll_api_available'])
+    print(' skip_reason hits:', checks['skip_reason_hits'])
+    print(' skipped/rejected tasks count:', len(checks['skipped_or_rejected_tasks']))
     session.record.stage5_stage0to3_checks = checks
     return checks
 
@@ -751,9 +777,12 @@ def shutdown_session(session: HeadlessNotebookSession) -> None:
     print('\n[Shutdown] Stopping headless trader session')
     if session.trader is not None:
         try:
-            session.trader.add_task('stop')
-            time.sleep(0.8)
-            session.trader.status = 'stopped'
+            # 对齐 TraderRuntime 停机语义：由 stop() 统一收敛状态与线程退出，避免直接改 status。
+            session.trader.stop(wait=True, timeout=10.0, include_post_close=True)
+            if session.trader_thread is not None:
+                session.trader_thread.join(timeout=2.0)
+            if session.broker_thread is not None:
+                session.broker_thread.join(timeout=2.0)
         except Exception as e:
             print(' shutdown warning:', e)
     print(' shutdown done')
