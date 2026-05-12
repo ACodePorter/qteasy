@@ -13,7 +13,9 @@ import unittest
 
 import pandas as pd
 import numpy as np
+import requests
 
+from qteasy.em_public_http import _is_proxy_related_request_failure
 from qteasy.emfuncs import (
     _gen_eastmoney_code,
     stock_daily,
@@ -38,6 +40,25 @@ class TestEastmoneyUnit(unittest.TestCase):
         self.assertEqual(_gen_eastmoney_code('600519'), '1.600519')
         self.assertEqual(_gen_eastmoney_code('399001.SZ'), '0.399001')
         print(' secid samples OK')
+
+    def test_is_proxy_related_request_failure(self) -> None:
+        """代理类异常应被识别，便于 em_public_http 自动直连回退。"""
+        print('\n[TestEastmoneyUnit] _is_proxy_related_request_failure')
+        pe = requests.exceptions.ProxyError('Unable to connect to proxy', OSError('eof'))
+        print(' ProxyError ->', _is_proxy_related_request_failure(pe))
+        self.assertTrue(_is_proxy_related_request_failure(pe))
+        outer = requests.exceptions.ConnectionError('HTTPSConnectionPool: Max retries exceeded')
+        outer.__cause__ = pe
+        print(' ConnectionError with ProxyError cause ->', _is_proxy_related_request_failure(outer))
+        self.assertTrue(_is_proxy_related_request_failure(outer))
+        msg_only = requests.exceptions.ConnectionError(
+            'HTTPSConnectionPool(host=example): Max retries exceeded '
+            "(Caused by ProxyError('Unable to connect to proxy'))"
+        )
+        print(' ConnectionError message only ->', _is_proxy_related_request_failure(msg_only))
+        self.assertTrue(_is_proxy_related_request_failure(msg_only))
+        print(' TimeoutError ->', _is_proxy_related_request_failure(TimeoutError('read timed out')))
+        self.assertFalse(_is_proxy_related_request_failure(TimeoutError('read timed out')))
 
 
 class TestEastmoney(unittest.TestCase):
