@@ -1219,6 +1219,13 @@ class TestDataSource(unittest.TestCase):
                     'canceled_qty': [0, 0, 300, 0, 500],
                     'delivery_amount': [500, 1000, 0, 2000, 0],
                     'delivery_status': ['delivered', 'delivered', 'delivered', 'delivered', 'delivered'],
+                    'broker_result_id': [
+                        'ds-delete-table-1',
+                        'ds-delete-table-2',
+                        'ds-delete-table-3',
+                        'ds-delete-table-4',
+                        'ds-delete-table-5',
+                    ],
                 }
         )
 
@@ -1674,6 +1681,7 @@ class TestDataSource(unittest.TestCase):
             'canceled_qty': 0,
             'delivery_amount': 0.0,
             'delivery_status': 'ND',
+            'broker_result_id': 'ds-insert-read-single-1',
         }
         test_account_data = {
             'user_name': 'John Doe',
@@ -1757,6 +1765,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-1',
             },
             {
                 'order_id': 2,
@@ -1767,6 +1776,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-2',
             },
             {
                 'order_id': 3,
@@ -1777,6 +1787,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-3',
             },
             {
                 'order_id': 4,
@@ -1787,6 +1798,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-4',
             },
             {
                 'order_id': 5,
@@ -1797,6 +1809,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-5',
             },
 
         ]
