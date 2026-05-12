@@ -83,3 +83,4 @@ qteasy/qteasy_backup.cfg
 *.json
 /_build
 /docs/promotion
+/sql
