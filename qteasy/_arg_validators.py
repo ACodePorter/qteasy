@@ -257,6 +257,33 @@ def _valid_qt_kwargs():
                           '也可以给出数据表的用途，以下载所有相同用途的数据表，例如：\n'
                           '"events"，这样会下载所有事件数据表'},
 
+        'live_trade_split_strategy_prepare':
+            {'Default':   False,
+             'Validator': lambda value: isinstance(value, bool),
+             'level':     4,
+             'text':      '为 True 时：在每次 run_strategy 前插入 prepare_strategy_snapshot 任务，'
+                          'run_strategy 在快照新鲜时跳过重复行情/数据源拉取（阶段 5-A）。'},
+
+        'live_trade_strategy_snapshot_max_age_seconds':
+            {'Default':   180.,
+             'Validator': lambda value: isinstance(value, (int, float)) and float(value) > 0,
+             'level':     4,
+             'text':      'split 模式下 prepare_strategy_snapshot 完成后，run_strategy 可复用快照的最长秒数；'
+                          '超时则跳过本步并记 snapshot_stale。'},
+
+        'live_trade_prepare_lead_seconds':
+            {'Default':   5,
+             'Validator': lambda value: isinstance(value, int) and 0 <= value <= 300,
+             'level':     4,
+             'text':      'prepare_strategy_snapshot 相对同一步 run_strategy 计划时刻提前的秒数；'
+                          '0 表示与 run_strategy 同一时刻入队（排序保证先 prepare）。'},
+
+        'live_trade_startup_gate_mode':
+            {'Default':   'off',
+             'Validator': lambda value: isinstance(value, str) and value.lower().strip() in ('off', 'warn', 'block'),
+             'level':     4,
+             'text':      '实盘启动门禁：off 关闭；warn 失败仅告警仍允许交易；block 失败则拒绝 run_strategy 入队（阶段 5-B）。'},
+
         'watched_price_refresh_interval':
             {'Default':   5,
              'Validator': lambda value: isinstance(value, int) and value >= 5,

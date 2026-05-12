@@ -252,7 +252,15 @@ def create_daily_task_plan(operator,
             ),
         )
         stg_run_time_index = operator.group_timing_table.index.strftime('%H:%M:%S').tolist()
+        split_prepare = bool(QT_CONFIG.get('live_trade_split_strategy_prepare', False))
+        lead_sec = int(QT_CONFIG.get('live_trade_prepare_lead_seconds', 5))
+        day_str = a_trade_day.strftime('%Y-%m-%d')
         for signal_index, t in enumerate(stg_run_time_index):
+            if split_prepare:
+                run_dt = pd.Timestamp(f'{day_str} {t}')
+                prep_dt = run_dt - pd.Timedelta(seconds=lead_sec)
+                prep_t = prep_dt.strftime('%H:%M:%S')
+                task_plan.append(ScheduledTask(prep_t, ScheduleTaskSpec('prepare_strategy_snapshot', (signal_index,))))
             task_plan.append(ScheduledTask(t, ScheduleTaskSpec('run_strategy', (signal_index,))))
 
         open_close_timing_offset = int(open_close_timing_offset)
@@ -261,7 +269,7 @@ def create_daily_task_plan(operator,
             market_close_dt = pd.to_datetime(market_close_time)
             offset_plan = []
             for item in task_plan:
-                if item.task_spec.name != 'run_strategy':
+                if item.task_spec.name not in ('run_strategy', 'prepare_strategy_snapshot'):
                     offset_plan.append(item)
                     continue
                 task_time = pd.to_datetime(item.task_time)
@@ -296,7 +304,20 @@ def create_daily_task_plan(operator,
             ScheduledTask(data_source_refilling_time, ScheduleTaskSpec('refill', (monthly_refill_tables, 31)))
         )
 
-    task_plan.sort(key=lambda x: x.task_time)
+    def _scheduled_task_sort_key(st: ScheduledTask) -> tuple:
+        """同一时刻任务排序：prepare_strategy_snapshot 先于 run_strategy。"""
+        name = st.task_spec.name
+        if name == 'prepare_strategy_snapshot':
+            pri = 0
+        elif name == 'run_strategy':
+            pri = 1
+        elif name == 'acquire_live_price':
+            pri = 2
+        else:
+            pri = 9
+        return st.task_time, pri
+
+    task_plan.sort(key=_scheduled_task_sort_key)
     return task_plan
 
 

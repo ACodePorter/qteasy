@@ -5,8 +5,9 @@
 # Contact: jackie.pengzhao@gmail.com
 # Created: 2026-05-10
 # Desc:
-#   Notebook 友好的无头 Trader 集成测试脚本（分八阶段执行），
+#   Notebook 友好的无头 Trader 集成测试脚本（分九阶段执行；阶段 9 对齐路线图 5-A/5-B），
 # 默认使用 qteasy.cfg 对应的 QT_DATA_SOURCE；可选隔离文件型数据源回放。
+# 下一交易日集中冒烟：见 docs/source/live_trading/7-manual-smoke-live-grid-roadmap.rst 。
 # ======================================
 
 from __future__ import annotations
@@ -69,12 +70,14 @@ def _unittest_subprocess_env() -> Dict[str, str]:
 
 
 # %% [markdown]
-# # Notebook 无头 Trader 测试脚本（8 阶段）
+# # Notebook 无头 Trader 测试脚本（9 阶段；第 9 阶段对齐路线图 5-A/5-B）
 #
 # 用法（建议在 notebook 分 cell 执行）：
 # 1. `session = create_headless_notebook_session()`  # 默认 QT_DATA_SOURCE + 固定回放日
 #    真实时钟：`create_headless_notebook_session(use_real_time=True)`
-# 2. 依次运行 `stage1_...` 到 `stage8_...`（各 stage 可传 `info=True` 查看中文范围说明）
+#    路线图 5-A/5-B 相关：`create_headless_notebook_session(..., live_trade_smoke_overrides={...})`
+#    （在 Trader.start 之前写入 QT_CONFIG；shutdown_session 会尝试恢复被覆盖的键）
+# 2. 依次运行 `stage1_...` 到 `stage9_...` 再 `stage8_...`（各 stage 可传 `info=True` 查看中文范围说明）
 #    Stage1 在 `run_commands=True` 时会自动设置子进程 `cwd` 与 `PYTHONPATH` 指向本仓库根，无需在 notebook 里改 sys.path。
 #    整类 unittest 可能极久，非死锁；可用 `unittest_timeout_s`（默认 3600s）或 `None` 取消限时。
 # 3. 若中途调试，最后执行 `shutdown_session(session)`
@@ -91,6 +94,7 @@ class NotebookDayRecord:
     stage5_stage0to3_checks: Dict[str, Any] = field(default_factory=dict)
     stage6_closing_reconcile: Dict[str, Any] = field(default_factory=dict)
     stage7_exceptions_and_logs: Dict[str, Any] = field(default_factory=dict)
+    stage9_phase5_ab: Dict[str, Any] = field(default_factory=dict)
     stage8_conclusion: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -105,6 +109,8 @@ class HeadlessNotebookSession:
     broker_thread: Optional[threading.Thread] = None
     use_real_time: bool = False
     record: NotebookDayRecord = field(default_factory=NotebookDayRecord)
+    #: ``create_headless_notebook_session(..., live_trade_smoke_overrides=...)`` 写入前的键快照，供 shutdown 恢复。
+    qt_smoke_restore: Optional[Dict[str, Any]] = None
 
 
 def _print_stage_scope(title: str, lines: List[str], *, enabled: bool) -> None:
@@ -195,6 +201,7 @@ def create_headless_notebook_session(
     use_real_time: bool = False,
     account_id: int = 1,
     use_isolated_datasource: bool = False,
+    live_trade_smoke_overrides: Optional[Dict[str, Any]] = None,
 ) -> HeadlessNotebookSession:
     """创建可在 notebook 中逐步执行的无头 Trader 会话。
 
@@ -208,12 +215,22 @@ def create_headless_notebook_session(
         交易账户 ID；连接 QT_DATA_SOURCE 时须已存在对应账户与持仓。
     use_isolated_datasource : bool, default False
         True 时使用仓库内隔离 CSV 数据源并写入演示账户/行情；False 时使用 ``qt.QT_DATA_SOURCE``。
+    live_trade_smoke_overrides : dict or None, optional
+        在 ``Trader._run_task('start')`` 之前调用 ``qt.configure(**...)``，用于路线图 **5-A/5-B**
+        冒烟（如 ``live_trade_split_strategy_prepare``、``live_trade_startup_gate_mode``）。
+        传入的键会在 ``shutdown_session`` 时尽力恢复为会话创建前的值。
 
     Returns
     -------
     HeadlessNotebookSession
         已执行 ``start`` 与 ``register_broker`` 的无头会话。
     """
+    qt_smoke_restore: Optional[Dict[str, Any]] = None
+    if live_trade_smoke_overrides:
+        qt_smoke_restore = {}
+        for k in live_trade_smoke_overrides:
+            qt_smoke_restore[k] = qt.QT_CONFIG.get(k)
+        qt.configure(**live_trade_smoke_overrides)
     if use_isolated_datasource:
         ds = _create_isolated_datasource()
         _prepare_isolated_replay_data(ds, account_id=account_id)
@@ -272,6 +289,7 @@ def create_headless_notebook_session(
         datasource=ds,
         broker=broker,
         use_real_time=use_real_time,
+        qt_smoke_restore=qt_smoke_restore,
     )
 
 
@@ -717,6 +735,69 @@ def stage7_exception_and_rollback_probe(
     return summary
 
 
+def _schedule_task_name_counts(trader: Trader) -> Dict[str, int]:
+    """从 ``task_daily_schedule`` legacy 元组中粗略统计任务名出现次数。"""
+    counts: Dict[str, int] = {}
+    for row in trader.task_daily_schedule:
+        if not row:
+            continue
+        if len(row) >= 2 and isinstance(row[1], str):
+            name = row[1]
+            counts[name] = counts.get(name, 0) + 1
+    return counts
+
+
+def stage9_phase5_ab_smoke(session: HeadlessNotebookSession, info: bool = False) -> Dict[str, Any]:
+    """阶段9：路线图 5-A（split + 快照标记）与 5-B（启动门禁）集中冒烟。"""
+    _print_stage_scope(
+        '阶段9 stage9_phase5_ab_smoke',
+        [
+            '范围：全局 QT_CONFIG 中与 5-A/5-B 相关的键、当日日程是否含 prepare_strategy_snapshot、'
+            '重复调用 run_startup_gate 的返回值、Operator.is_ready。',
+            '目的：下一交易日对照《7-manual-smoke-live-grid-roadmap》做无头侧快速验收；'
+            '完整语义仍以真实 ``qt.run`` / ``live_grid_multi`` 手动方案为准。',
+        ],
+        enabled=info,
+    )
+    print('\n[Stage9] Phase 5-A / 5-B smoke (snapshot split + startup gate)')
+    trader = session.trader
+    cfg = qt.QT_CONFIG
+    keys = (
+        'live_trade_split_strategy_prepare',
+        'live_trade_strategy_snapshot_max_age_seconds',
+        'live_trade_prepare_lead_seconds',
+        'live_trade_startup_gate_mode',
+    )
+    qt_subset = {k: cfg.get(k) for k in keys}
+    print(' QT_CONFIG subset (5-A/5-B):', qt_subset)
+
+    sched_counts = _schedule_task_name_counts(trader)
+    print(' schedule task name counts:', sched_counts)
+    prep_n = int(sched_counts.get('prepare_strategy_snapshot', 0))
+    run_n = int(sched_counts.get('run_strategy', 0))
+
+    op_ready = bool(trader.operator.is_ready(tell_me_why=False, raise_error=False))
+    gate_ok = bool(trader.run_startup_gate())
+    gate_allowed = bool(getattr(trader, '_startup_gate_trading_allowed', True))
+
+    split_on = bool(qt_subset.get('live_trade_split_strategy_prepare'))
+    acceptance = {
+        'qt_config_subset': qt_subset,
+        'schedule_prepare_count': prep_n,
+        'schedule_run_strategy_count': run_n,
+        'prepare_leq_run_when_split': (not split_on) or (prep_n <= run_n),
+        'operator_is_ready': op_ready,
+        'gate_re_run_ok': gate_ok,
+        'startup_gate_trading_allowed': gate_allowed,
+    }
+    print(' operator_is_ready:', op_ready)
+    print(' run_startup_gate (repeat):', gate_ok, ' trading_allowed:', gate_allowed)
+    print(' acceptance (auto checks):', acceptance)
+
+    session.record.stage9_phase5_ab = acceptance
+    return acceptance
+
+
 def save_order_for_probe(ds_db: DataSource) -> int:
     """为回滚探针创建并提交一笔订单。"""
     from qteasy.trade_recording import save_parsed_trade_orders
@@ -738,8 +819,8 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
     _print_stage_scope(
         '阶段8 stage8_conclusion',
         [
-            '范围：汇总阶段 4、5、7 写入 record 的关键标志。',
-            '目的：根据幂等检查结果、日程与可选 DB 探针结果，给出是否适合进入下一阶段的主观判定与后续操作建议（打印 ready_for_next_phase、risk_level、next_steps）。',
+            '范围：汇总阶段 4、5、7、9 写入 record 的关键标志。',
+            '目的：根据幂等检查结果、日程、可选 DB 探针与 5-A/5-B 冒烟字段，给出是否适合进入下一阶段的主观判定与后续操作建议（打印 ready_for_next_phase、risk_level、next_steps）。',
         ],
         enabled=info,
     )
@@ -747,6 +828,7 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
     s4 = session.record.stage4_phase35_checks
     s5 = session.record.stage5_stage0to3_checks
     s7 = session.record.stage7_exceptions_and_logs
+    s9 = session.record.stage9_phase5_ab
     duplicate_ok = bool(
         (s4.get('supports_broker_result_id') and s4.get('duplicate_result_id_equal', False))
         or ((not s4.get('supports_broker_result_id')) and s4.get('duplicate_mode') in ['rejected_or_non_idempotent'])
@@ -755,14 +837,18 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
         duplicate_ok
         and s5.get('schedule_size', 0) > 0
         and (s7.get('db_rollback_probe_passed') in [None, True])
+        and (not s9 or s9.get('operator_is_ready', True))
+        and (not s9 or s9.get('prepare_leq_run_when_split', True))
     )
     result = {
         'ready_for_next_phase': passed,
         'risk_level': 'low' if passed else 'medium',
+        'stage9_phase5_ab': s9,
         'next_steps': [
             'Run next trade day smoke + broker-side reconciliation.',
             'Keep this script as source material to convert into unittest.',
             'When behavior changes, compare stage4/stage6 snapshots first.',
+            'For live_grid_multi manual checklist: docs/source/live_trading/7-manual-smoke-live-grid-roadmap.rst',
         ],
     }
     print(' ready_for_next_phase:', result['ready_for_next_phase'])
@@ -785,6 +871,14 @@ def shutdown_session(session: HeadlessNotebookSession) -> None:
                 session.broker_thread.join(timeout=2.0)
         except Exception as e:
             print(' shutdown warning:', e)
+    prev = getattr(session, 'qt_smoke_restore', None)
+    if prev:
+        try:
+            qt.configure(**prev)
+            print(' restored QT_CONFIG keys from live_trade_smoke_overrides:', list(prev.keys()))
+        except Exception as e:
+            print(' qt_smoke_restore warning:', e)
+        session.qt_smoke_restore = None
     print(' shutdown done')
 
 
@@ -799,6 +893,7 @@ if __name__ == '__main__':
         stage5_stage0to3_regression(s)
         stage6_closing_reconcile(s)
         stage7_exception_and_rollback_probe(s, use_db_probe=False)
+        stage9_phase5_ab_smoke(s, info=True)
         stage8_conclusion(s)
     except KeyboardInterrupt:
         print('\n[Interrupted] KeyboardInterrupt captured, will stop headless session.')

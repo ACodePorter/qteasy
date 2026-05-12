@@ -19,6 +19,7 @@ from unittest.mock import patch
 
 import pandas as pd
 
+import qteasy as qt
 from qteasy import DataSource, Operator
 from qteasy.trade_recording import new_account, get_account, get_or_create_position, update_position, update_account_balance
 from qteasy.trader import Trader
@@ -45,6 +46,13 @@ _clear_tables = clear_tables
 _create_operator = create_operator
 _default_trader_kwargs = default_trader_kwargs
 _create_test_datasource = create_test_datasource
+
+
+class _BrokerRemoteCashMismatch(SimulatorBroker):
+    """用于启动门禁 L3：返回与本地账本不一致的远端现金。"""
+
+    def get_remote_cash(self, *, account_id=None):
+        return 0.01
 
 
 # --------------- 初始化与参数验证 ---------------
@@ -776,6 +784,83 @@ class TestTraderTaskManagerPhase2(unittest.TestCase):
         self.assertEqual(second_task_spec.reentry_policy, 'queue')
         self.assertEqual(second_task_spec.status, 'queued')
         self.assertEqual(self._trader.task_queue.qsize(), 1)
+
+
+class TestTraderPhase5SnapshotAndGate(unittest.TestCase):
+    """阶段 5-A/5-B：日程 prepare、快照跳过原因、启动门禁与 run_strategy 入队。"""
+
+    def setUp(self) -> None:
+        self._cfg_snap = {
+            'live_trade_split_strategy_prepare': qt.QT_CONFIG.get('live_trade_split_strategy_prepare', False),
+            'live_trade_prepare_lead_seconds': qt.QT_CONFIG.get('live_trade_prepare_lead_seconds', 5),
+            'live_trade_startup_gate_mode': qt.QT_CONFIG.get('live_trade_startup_gate_mode', 'off'),
+            'live_trade_strategy_snapshot_max_age_seconds': qt.QT_CONFIG.get(
+                'live_trade_strategy_snapshot_max_age_seconds', 180.0
+            ),
+        }
+
+    def tearDown(self) -> None:
+        qt.configure(**self._cfg_snap)
+
+    def test_create_daily_task_plan_inserts_prepare_before_run_when_split(self) -> None:
+        print('\n[TestTraderPhase5] split schedule: prepare then run_strategy')
+        qt.configure(live_trade_split_strategy_prepare=True, live_trade_prepare_lead_seconds=60)
+        op = Operator(strategies='macd', run_freq='30min', run_timing='close')
+        task_plan = create_daily_task_plan(
+            op,
+            current_date='2023-05-10',
+            daily_refill_tables='',
+            weekly_refill_tables='',
+            monthly_refill_tables='',
+            live_price_frequency='30min',
+        )
+        day = '2000-01-01 '
+        for st in task_plan:
+            if st.task_spec.name != 'run_strategy':
+                continue
+            step_args = st.task_spec.args
+            prep_tasks = [
+                x for x in task_plan
+                if x.task_spec.name == 'prepare_strategy_snapshot' and x.task_spec.args == step_args
+            ]
+            print(' run_strategy args', step_args, 'prep matches:', len(prep_tasks))
+            self.assertEqual(len(prep_tasks), 1)
+            delta = (pd.to_datetime(day + st.task_time) - pd.to_datetime(day + prep_tasks[0].task_time)).total_seconds()
+            print('  lead seconds:', delta)
+            self.assertGreaterEqual(delta, 59.0)
+            self.assertLessEqual(delta, 61.0)
+
+    def test_strategy_snapshot_skip_reason_missing_when_split(self) -> None:
+        print('\n[TestTraderPhase5] snapshot_missing when marker unset')
+        trader, test_ds = create_trader_with_account()
+        try:
+            qt.configure(live_trade_split_strategy_prepare=True)
+            trader.debug = True
+            trader.force_current_date = pd.Timestamp('2023-05-10').date()
+            r = trader._strategy_snapshot_skip_reason(0)
+            print(' skip_reason:', r)
+            self.assertEqual(r, 'snapshot_missing')
+        finally:
+            _clear_tables(test_ds)
+
+    def test_startup_gate_block_skips_run_strategy_enqueue(self) -> None:
+        print('\n[TestTraderPhase5] gate block skips run_strategy via gate_failed')
+        trader, test_ds = create_trader_with_account()
+        try:
+            qt.configure(live_trade_startup_gate_mode='block')
+            trader.debug = True
+            trader.force_current_date = pd.Timestamp('2023-05-10').date()
+            trader._broker = _BrokerRemoteCashMismatch()
+            ok = trader.run_startup_gate()
+            print(' gate ok:', ok, 'allowed:', trader._startup_gate_trading_allowed)
+            self.assertFalse(ok)
+            tid = trader.add_task('run_strategy', 0)
+            spec = trader.get_task(tid)
+            print(' task status:', spec.status, 'last_error:', spec.last_error)
+            self.assertEqual(spec.status, 'skipped')
+            self.assertIn('gate_failed', spec.last_error or '')
+        finally:
+            _clear_tables(test_ds)
 
 
 if __name__ == '__main__':

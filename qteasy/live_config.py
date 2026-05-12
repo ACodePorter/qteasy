@@ -132,6 +132,10 @@ class LiveTradeConfig:
     live_trade_broker_params: Optional[Tuple[Tuple[str, Any], ...]]
     live_trade_ui_type: str
     live_trade_account_id: Optional[int]
+    live_trade_split_strategy_prepare: bool
+    live_trade_strategy_snapshot_max_age_seconds: float
+    live_trade_prepare_lead_seconds: int
+    live_trade_startup_gate_mode: str
     extra: Mapping[str, Any]
 
     def to_summary_dict(self) -> dict[str, Any]:
@@ -238,6 +242,10 @@ def build_live_trade_config(
         'live_trade_account_id': None,
         'asset_pool': '000300.SH',
         'asset_type': 'E',
+        'live_trade_split_strategy_prepare': False,
+        'live_trade_strategy_snapshot_max_age_seconds': 180.,
+        'live_trade_prepare_lead_seconds': 5,
+        'live_trade_startup_gate_mode': 'off',
     }
     for k, v in defaults.items():
         if k not in merged:
@@ -418,6 +426,32 @@ def build_live_trade_config(
             f'live_trade_account_id must be int or None, got {type(account_id).__name__} instead.'
         )
 
+    split_prep = merged['live_trade_split_strategy_prepare']
+    if not isinstance(split_prep, bool):
+        raise TypeError(
+            f'live_trade_split_strategy_prepare must be bool, got {type(split_prep).__name__} instead.'
+        )
+    max_age = merged['live_trade_strategy_snapshot_max_age_seconds']
+    if not isinstance(max_age, (int, float)) or float(max_age) <= 0:
+        raise ValueError(
+            f'Invalid live_trade_strategy_snapshot_max_age_seconds: {max_age!r}, must be a positive number.'
+        )
+    lead_sec = merged['live_trade_prepare_lead_seconds']
+    if not isinstance(lead_sec, int) or not (0 <= lead_sec <= 300):
+        raise ValueError(
+            f'Invalid live_trade_prepare_lead_seconds: {lead_sec}, must be int in [0, 300].'
+        )
+    gate_raw = merged['live_trade_startup_gate_mode']
+    if not isinstance(gate_raw, str):
+        raise TypeError(
+            f'live_trade_startup_gate_mode must be str, got {type(gate_raw).__name__} instead.'
+        )
+    gate_norm = gate_raw.lower().strip()
+    if gate_norm not in ('off', 'warn', 'block'):
+        raise ValueError(
+            f'Invalid live_trade_startup_gate_mode: {gate_raw!r}. Allowed: off, warn, block.'
+        )
+
     # 仅将 overrides 中未消费的键纳入 extra，避免把整个 QT_CONFIG 快照进 frozen 对象
     reserved_keys = set(defaults) | {
         'live_trade_init_holdings',
@@ -427,6 +461,10 @@ def build_live_trade_config(
         'cost_min_sell',
         'cost_slippage',
         'mode',
+        'live_trade_split_strategy_prepare',
+        'live_trade_strategy_snapshot_max_age_seconds',
+        'live_trade_prepare_lead_seconds',
+        'live_trade_startup_gate_mode',
     }
     extra_items: dict[str, Any] = {
         k: overrides[k] for k in overrides if k not in reserved_keys
@@ -465,6 +503,10 @@ def build_live_trade_config(
         live_trade_broker_params=broker_params,
         live_trade_ui_type=ui_norm,
         live_trade_account_id=account_id,
+        live_trade_split_strategy_prepare=split_prep,
+        live_trade_strategy_snapshot_max_age_seconds=float(max_age),
+        live_trade_prepare_lead_seconds=int(lead_sec),
+        live_trade_startup_gate_mode=gate_norm,
         extra=extra_view,
     )
 
@@ -577,3 +619,10 @@ def apply_live_trade_config_to_trader(trader: Any, cfg: LiveTradeConfig) -> None
     trader.daily_refill_tables = kwargs['daily_refill_tables']
     trader.weekly_refill_tables = kwargs['weekly_refill_tables']
     trader.monthly_refill_tables = kwargs['monthly_refill_tables']
+    from .configure import configure
+    configure(
+        live_trade_split_strategy_prepare=cfg.live_trade_split_strategy_prepare,
+        live_trade_strategy_snapshot_max_age_seconds=cfg.live_trade_strategy_snapshot_max_age_seconds,
+        live_trade_prepare_lead_seconds=cfg.live_trade_prepare_lead_seconds,
+        live_trade_startup_gate_mode=cfg.live_trade_startup_gate_mode,
+    )
