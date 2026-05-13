@@ -1809,5 +1809,127 @@ class TestUpdateParRanges(unittest.TestCase):
         self.assertEqual(self.strategy._pars['param3'].par_range, original_ranges['param3'])
 
 
+class TestRuleIteratorMultiPar(unittest.TestCase):
+    """RuleIterator multi_pars 与标量参数更新交互、commit_share_par_values 回归。"""
+
+    def _make_bump_strategy(self):
+        """构造带两 int 参数、单日收盘窗的最小 RuleIterator。"""
+        p1 = Parameter(name='pa', par_type='int', par_range=(1, 100), value=1)
+        p2 = Parameter(name='pb', par_type='int', par_range=(1, 100), value=2)
+        dt = StgData('close', freq='d', asset_type='E', window_length=2)
+
+        class BumpStg(RuleIterator):
+            def realize(self) -> float:
+                pa, pb = self.get_pars('pa', 'pb')
+                self.update_par_values(pa + 1, pb + 1)
+                return float(pa)
+
+        return BumpStg(
+                name='bump_mp',
+                pars=[p1, p2],
+                data_types=[dt],
+                use_latest_data_cycle=False,
+                window_length=2,
+        )
+
+    def _make_static_strategy(self):
+        """realize 不修改参数，用于 kwargs / 无索引上下文合并用例。"""
+        p1 = Parameter(name='pa', par_type='int', par_range=(1, 100), value=1)
+        p2 = Parameter(name='pb', par_type='int', par_range=(1, 100), value=2)
+        dt = StgData('close', freq='d', asset_type='E', window_length=2)
+
+        class StaticStg(RuleIterator):
+            def realize(self) -> float:
+                return 0.0
+
+        return StaticStg(
+                name='static_mp',
+                pars=[p1, p2],
+                data_types=[dt],
+                use_latest_data_cycle=False,
+                window_length=2,
+        )
+
+    def _minimal_windows(self, stg: RuleIterator):
+        """为当前 data_types 构造 2 列标的、单步的滑窗视图。"""
+        from qteasy.utilfuncs import rolling_window
+
+        did = stg.data_type_ids[0]
+        raw = np.ones((5, stg.share_count), dtype=float)
+        wind = rolling_window(raw, 2)
+        return {did: wind}, {did: np.array([0], dtype=int)}
+
+    def test_kwargs_merges_all_rows_when_no_generate_index(self):
+        print('\n[TestRuleIteratorMultiPar] multi_pars 已存在、无 _generate_share_index 时 kwargs 合并到每一行')
+        stg = self._make_static_strategy()
+        stg.update_shares(share_names=['S0', 'S1'])
+        stg.update_par_values({'S0': (10, 20), 'S1': (30, 40)})
+        stg.update_par_values(pa=99)
+        print(' multi_pars after kwargs:', stg.get_multi_pars())
+        self.assertEqual(stg.get_multi_pars(), ((99, 20), (99, 40)))
+        self.assertEqual(stg.get_pars('pa', 'pb'), (99, 20))
+        dw, wi = self._minimal_windows(stg)
+        stg.update_running_data_window(dw, wi, 0)
+        _ = stg.generate()
+        print(' after generate pa pb:', stg.pa, stg.pb)
+        self.assertEqual(stg.get_pars('pa', 'pb'), (99, 40))
+        self.assertEqual(stg.get_pars_for_share(0), (99, 20))
+
+    def test_positional_tuple_broadcasts_when_no_generate_index(self):
+        print('\n[TestRuleIteratorMultiPar] 无 _generate_share_index 时全长位置元组广播到所有 multi_pars 行')
+        stg = self._make_bump_strategy()
+        stg.update_shares(share_names=['S0', 'S1'])
+        stg.update_par_values({'S0': (1, 2), 'S1': (3, 4)})
+        stg.update_par_values(9, 9)
+        print(' multi_pars after broadcast:', stg.get_multi_pars())
+        self.assertEqual(stg.get_multi_pars(), ((9, 9), (9, 9)))
+
+    def test_commit_share_par_values_two_rounds_generate(self):
+        print('\n[TestRuleIteratorMultiPar] commit_share_par_values 两轮 generate 独立演进')
+        stg = self._make_bump_strategy()
+        stg.update_shares(share_names=['S0', 'S1'])
+        stg.update_par_values({'S0': (1, 2), 'S1': (5, 6)})
+        dw, wi = self._minimal_windows(stg)
+        stg.update_running_data_window(dw, wi, 0)
+        sig1 = stg.generate()
+        print(' multi_pars after gen1:', stg.get_multi_pars())
+        print(' signal1:', sig1)
+        self.assertTrue(np.allclose(sig1, np.array([1.0, 5.0])))
+        self.assertEqual(stg.get_multi_pars(), ((2, 3), (6, 7)))
+        sig2 = stg.generate()
+        print(' multi_pars after gen2:', stg.get_multi_pars())
+        print(' signal2:', sig2)
+        self.assertTrue(np.allclose(sig2, np.array([2.0, 6.0])))
+        self.assertEqual(stg.get_multi_pars(), ((3, 4), (7, 8)))
+
+    def test_get_pars_for_share_without_multi(self):
+        print('\n[TestRuleIteratorMultiPar] 无 multi_pars 时 get_pars_for_share 退回 par_values')
+        stg = self._make_bump_strategy()
+        stg.update_shares(share_names=['S0', 'S1'])
+        stg.update_par_values(7, 8)
+        self.assertIsNone(stg.get_multi_pars())
+        self.assertEqual(stg.get_pars_for_share('S0'), (7, 8))
+        self.assertEqual(stg.get_pars_for_share(1), (7, 8))
+
+    def test_commit_share_par_values_outside_generate_raises(self):
+        print('\n[TestRuleIteratorMultiPar] realize 外调用 commit_share_par_values 应抛 RuntimeError')
+        stg = self._make_bump_strategy()
+        stg.update_shares(share_names=['S0', 'S1'])
+        stg.update_par_values({'S0': (1, 2), 'S1': (3, 4)})
+        self.assertRaises(RuntimeError, stg.commit_share_par_values, 1, 1)
+
+    def test_operator_set_parameter_merges_kwargs_into_all_multi_rows(self):
+        print('\n[TestRuleIteratorMultiPar] Operator.set_parameter 参数名 dict 在 multi_pars 存在时合并到各行')
+        stg = self._make_bump_strategy()
+        op = Operator()
+        op.add_strategy(stg, run_freq='d', run_timing='close')
+        op.set_shares(['S0', 'S1'])
+        stg.update_par_values({'S0': (1, 2), 'S1': (5, 6)})
+        op.set_parameter(stg.strategy_id, par_values={'pa': 9})
+        print(' multi_pars after set_parameter:', stg.get_multi_pars())
+        self.assertEqual(stg.get_multi_pars(), ((9, 2), (9, 6)))
+        self.assertEqual(stg.get_pars('pa', 'pb'), (9, 2))
+
+
 if __name__ == '__main__':
     unittest.main()

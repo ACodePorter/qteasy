@@ -5173,5 +5173,44 @@ class TestOperatorSetParameter(unittest.TestCase):
         self.assertEqual(self.op[self.dma_id].window_lengths['close_ANY_d'], 95)
 
 
+class TestOperatorInfoMultiParsHint(unittest.TestCase):
+    """Operator.info(verbose=False) 与 Trader CLI strategies 列表视图中的 multi_pars 提示。"""
+
+    def test_info_non_verbose_includes_multipars_hint(self):
+        import contextlib
+        from io import StringIO
+
+        print('\n[TestOperatorInfoMultiParsHint] Operator.info(verbose=False) with multi_pars')
+
+        class MiniIter(RuleIterator):
+            def realize(self) -> float:
+                return 0.0
+
+        p1 = Parameter(name='pa', par_type='int', par_range=(1, 100), value=1)
+        p2 = Parameter(name='pb', par_type='int', par_range=(1, 100), value=2)
+        dt = StgData('close', freq='d', asset_type='E', window_length=2)
+        stg = MiniIter(
+                name='mini_mp',
+                pars=[p1, p2],
+                data_types=[dt],
+                use_latest_data_cycle=False,
+                window_length=2,
+        )
+        op = qt.Operator()
+        op.add_strategy(stg, run_freq='d', run_timing='close')
+        op.set_shares(['SY_A', 'SY_B'])
+        stg.update_par_values({'SY_A': (7, 8), 'SY_B': (9, 10)})
+
+        buf = StringIO()
+        with contextlib.redirect_stdout(buf):
+            op.info(verbose=False)
+        out = buf.getvalue()
+        needle = '[multi_pars] use strategies -d for per-share parameters.'
+        print(' output contains hint:', needle in out)
+        print(' output excerpt:', out[out.find('multi_pars'):out.find('multi_pars') + 120] if 'multi_pars' in out else out[:500])
+        self.assertIn(needle, out)
+        self.assertEqual(stg.par_values, (7, 8))
+
+
 if __name__ == '__main__':
     unittest.main()

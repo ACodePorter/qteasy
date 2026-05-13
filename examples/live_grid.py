@@ -27,8 +27,8 @@ if __name__ == '__main__':
 
         def realize(self):
 
-            # 读取当前保存的策略参数，首次运行时base_grid参数为0，此时买入1000股并设置当前价格为基准网格
-            grid_size, trade_batch, base_grid = self.par_values
+            # 读取当前保存的策略参数，首次运行时 base_grid 为 0 时买入并设置基准网格
+            grid_size, trade_batch, base_grid = self.get_pars('grid_size', 'trade_batch', 'base_grid')
 
             # 读取最新价格
             price = self.get_data('close_E_5min')[-1]  # 最近一个K线周期的close价格
@@ -53,7 +53,7 @@ if __name__ == '__main__':
             # 使用新的基准网格更新交易参数
             if not np.isnan(base_grid):
                 base_grid = np.round(base_grid, 2)
-            self.pars = (grid_size, trade_batch, base_grid)
+            self.update_par_values(float(grid_size), int(trade_batch), float(base_grid))
 
             return result
 
