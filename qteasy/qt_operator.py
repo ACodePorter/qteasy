@@ -2081,10 +2081,13 @@ class Operator:
 
         live_cfg = build_live_trade_config(config)
 
+        import qteasy as qt
+        ds = datasource if datasource is not None else qt.QT_DATA_SOURCE
+        from qteasy.trade_recording import get_or_create_position, resolve_live_trade_account_id, update_position
+
         init_holdings = config['live_trade_init_holdings']
-        account_id = config['live_trade_account_id']
+        account_id = resolve_live_trade_account_id(config, data_source=ds)
         # if init_holdings is not None then add holdings to account
-        from qteasy.trade_recording import get_or_create_position, update_position
         if init_holdings is not None:
             if not isinstance(init_holdings, dict):
                 err = ValueError(f'init_holdings must be a dict, got {type(init_holdings)} instead.')
@@ -2094,11 +2097,11 @@ class Operator:
                         account_id=account_id,
                         symbol=symbol,
                         position_type='long' if amount > 0 else 'short',
-                        data_source=datasource,
+                        data_source=ds,
                 )
                 update_position(
                         position_id=pos_id,
-                        data_source=datasource,
+                        data_source=ds,
                         **{
                             'qty_change':           abs(amount),
                             'available_qty_change': abs(amount),
@@ -2151,7 +2154,7 @@ class Operator:
                 operator=self,
                 account_id=account_id,
                 broker=broker,
-                datasource=datasource,
+                datasource=ds,
                 asset_pool=live_asset_pool,
                 asset_type=config['asset_type'],
                 time_zone=config['time_zone'],
@@ -2191,7 +2194,7 @@ class Operator:
         refill_missing_datasource_data(
                 operator=self,
                 trader=trader,
-                datasource=datasource,
+                datasource=ds,
         )
 
         ui_type = live_cfg.live_trade_ui_type
