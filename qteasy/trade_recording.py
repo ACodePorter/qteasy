@@ -13,7 +13,7 @@
 import os
 import pandas as pd
 import numpy as np
-from typing import Union, Dict
+from typing import Any, Mapping, Union, Dict
 
 from qteasy.database import DataSource
 
@@ -125,7 +125,74 @@ def get_account(account_id, user_name=None, data_source=None) -> dict:
         account = data_source.read_sys_table_data('sys_op_live_accounts', user_name=user_name)
         if account.empty:
             raise KeyError(f'Account (user_name={user_name}) not found!')
-        return account.to_dict(orient='records')[0]
+        record = account.to_dict(orient='records')[0]
+        # 文件型等数据源上 DataFrame 主键可能在 index 中，to_dict 行不含 account_id
+        if 'account_id' not in record and len(account.index) == 1:
+            record = {**record, 'account_id': int(account.index[0])}
+        return record
+
+
+def resolve_live_trade_account_id(config: Mapping[str, Any], data_source=None) -> int:
+    """根据实盘配置解析账户主键 ``account_id``。
+
+    优先使用 ``config['live_trade_account_id']``；若为 ``None``，则使用非空的
+    ``config['live_trade_account_name']`` 查找已有账户，不存在时按 ``live_trade_init_cash`` 新建。
+
+    Parameters
+    ----------
+    config : Mapping[str, Any]
+        含 ``live_trade_account_id``、``live_trade_account_name``、``live_trade_init_cash`` 等键的配置映射。
+    data_source : DataSource, optional
+        数据源；为 ``None`` 时使用 ``QT_DATA_SOURCE``。
+
+    Returns
+    -------
+    int
+        账户 ID。
+
+    Raises
+    ------
+    TypeError
+        ``live_trade_account_id`` 已给出但类型不是 ``int``。
+    ValueError
+        无法从配置得到合法账户（缺少 id/name 或新建时初始资金非正）；用户可见信息为英文。
+    """
+    import qteasy as qt
+
+    if data_source is None:
+        data_source = qt.QT_DATA_SOURCE
+    if not isinstance(data_source, qt.DataSource):
+        raise TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
+
+    raw_id = config.get('live_trade_account_id')
+    if isinstance(raw_id, int):
+        return int(raw_id)
+    if raw_id is not None:
+        raise TypeError(
+            f'live_trade_account_id must be int or None, got {type(raw_id).__name__} instead.'
+        )
+
+    acc_name = config.get('live_trade_account_name')
+    if isinstance(acc_name, str):
+        acc_name = acc_name.strip()
+    else:
+        acc_name = ''
+    if not acc_name:
+        raise ValueError(
+            'live_trade_account_id is not set. Provide live_trade_account_id (int) or '
+            'live_trade_account_name (str) to select or create a live trading account.'
+        )
+
+    try:
+        row = get_account(0, user_name=acc_name, data_source=data_source)
+    except KeyError:
+        cash = float(config.get('live_trade_init_cash', 0) or 0.0)
+        if cash <= 0:
+            raise ValueError(
+                'live_trade_init_cash must be positive when creating a new account with live_trade_account_name.'
+            ) from None
+        return new_account(user_name=acc_name, cash_amount=cash, data_source=data_source)
+    return int(row['account_id'])
 
 
 def update_account(account_id, data_source=None, **account_data) -> None:

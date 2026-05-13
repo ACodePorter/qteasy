@@ -83,10 +83,27 @@ if __name__ == '__main__':
     datasource = qt.QT_DATA_SOURCE
 
     if args.restart:
-        # clean up all trade data in current account
-        from qteasy.trade_recording import delete_account
+        from qteasy.trade_recording import delete_account, get_account
 
-        delete_account(account_id=args.account, data_source=datasource, keep_account_id=True)
+        restart_account_id = args.account
+        if restart_account_id is None and args.new_account:
+            try:
+                restart_account_id = int(
+                    get_account(0, user_name=args.new_account, data_source=datasource)['account_id']
+                )
+            except KeyError:
+                restart_account_id = None
+        if restart_account_id is not None:
+            delete_account(
+                account_id=restart_account_id,
+                data_source=datasource,
+                keep_account_id=True,
+            )
+        else:
+            print(
+                'restart skipped: provide --account or an existing --new_account user_name '
+                'to delete live-trade data; no account found to clear.'
+            )
 
     print('in live_grid_multi:', "config['live_trade_daily_refill_tables'] = 'stock_1min...fund_hourly'")
     qt.configure(
