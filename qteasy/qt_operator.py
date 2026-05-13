@@ -1622,6 +1622,11 @@ class Operator:
                     rprint(f'{adjust_string_length(stg_id, id_width) :<{id_width}}'
                            f'{adjust_string_length(stg.name, name_width) :<{name_width}}'
                            f'{adjust_string_length(str(stg.par_values), par_width) :^{par_width}}')
+                    if getattr(stg, 'multi_pars', None):
+                        hint = '[multi_pars] use strategies -d for per-share parameters.'
+                        print(f'{adjust_string_length("", id_width) :<{id_width}}'
+                              f'{adjust_string_length("", name_width) :<{name_width}}'
+                              f'{hint}')
                 print('=' * info_width)
             # 打印每个strategy的详细信息
             if (self.strategy_count > 0) and verbose:
