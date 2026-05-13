@@ -1,5 +1,18 @@
 # RELEASE HISTORY
 
+## 2.4.5 (2026-05-13)
+Patch release: **RuleIterator** per-share parameters (`multi_pars`) are easier to use and to inspect from the live Trader CLI.
+
+- **Unified `update_par_values` for `RuleIterator`**  
+  In `realize()`, reading with `get_pars` / `get_data` and writing with `update_par_values` now keeps `multi_pars` and `_pars` in sync: parameters can be updated in both multi pars and non-multi_pars with the same API.
+
+- **Examples and Documentations**  
+  `examples/live_grid.py` and `examples/live_grid_multi.py` use `get_pars` / `update_par_values` consistently (no raw `self.pars = ...` in the grid example).
+  `docs/source/manage_strategies/5. strategy_bases.md` clarifies that per-share different parameters require a **dict** keyed by symbol, tuple means one shared parameter set for all symbols, and the supported fallback key is **`default`** (not `others`).
+
+- **Trader CLI `strategies` listing**  
+  When `Operator.info(verbose=False)` prints the strategy table, strategies with `multi_pars` show an extra line telling users to run **`strategies -d`** for full per-share parameters. 
+
 ## 2.4.4 (2026-05-08)
 Patch release after 2.4.3 with live-trading and Eastmoney fixes.
 - **Eastmoney public HTTP / live watched prices**  
