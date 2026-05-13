@@ -48,6 +48,7 @@ from .trade_recording import (
 from .trade_io import validate_trade_order
 from .risk import AccountSnapshot, OrderIntent, RiskDecision, RiskManager
 from .live_config import LiveTradeConfig, apply_live_trade_config_to_trader
+from .configure import QT_CONFIG
 
 from .trading_util import (
     apply_schedule_catch_up_policy,
@@ -110,12 +111,14 @@ TASK_DEFAULT_MAX_RETRIES = {
     'acquire_live_price': 2,
     'run_strategy': 1,
     'process_result': 1,
+    'prepare_strategy_snapshot': 1,
 }
 
 TASK_DEFAULT_REENTRY_POLICIES = {
     'acquire_live_price': 'drop',
     'run_strategy': 'drop',
     'process_result': 'queue',
+    'prepare_strategy_snapshot': 'drop',
 }
 
 
@@ -387,6 +390,10 @@ class Trader(object):
         self._runtime_trader_thread: Optional[threading.Thread] = None
         self._runtime_broker_thread: Optional[threading.Thread] = None
         self._runtime_shutdown_requested = False
+        # 阶段 5-A：prepare_strategy_snapshot 与 run_strategy 之间的快照标记 (trade_date, step_index, monotonic_ts)
+        self._strategy_run_marker: Optional[tuple[str, int, float]] = None
+        # 阶段 5-B：启动门禁是否允许 run_strategy 入队（block 模式下失败则为 False）
+        self._startup_gate_trading_allowed: bool = True
 
         self.task_daily_schedule = []
         self.time_zone = time_zone
@@ -1383,6 +1390,10 @@ class Trader(object):
         """根据重入策略判断任务是否应该被跳过。"""
         if task_spec.name == 'process_result':
             return ''
+        if task_spec.name == 'run_strategy':
+            gate_skip = self._startup_gate_run_strategy_skip_reason()
+            if gate_skip:
+                return gate_skip
         if task_spec.reentry_policy == 'queue':
             return ''
         for existing_task in self._task_registry.values():
@@ -2579,6 +2590,7 @@ class Trader(object):
         self.status = 'sleeping'
         self.send_message('Checking trade day and initializing schedule...')
         self._initialize_schedule()
+        self.run_startup_gate()
 
         # 启动broker
         self.send_message(f'Trader is started, running with account_id: {self.account_id}\n'
@@ -2630,6 +2642,192 @@ class Trader(object):
         msg = Text(f'Trader is resumed to previous status({self.status})', style='bold red')
         self.send_message(message=msg)
 
+    def _live_trade_split_prepare_enabled(self) -> bool:
+        """是否启用「先 prepare_strategy_snapshot、再 run_strategy」的快照分工（阶段 5-A）。"""
+        return bool(QT_CONFIG.get('live_trade_split_strategy_prepare', False))
+
+    def _set_strategy_snapshot_marker(self, step_index: int) -> None:
+        """在成功完成市场数据准备后写入快照时间标记。"""
+        td = self.get_current_tz_datetime().strftime('%Y-%m-%d')
+        self._strategy_run_marker = (td, int(step_index), time.monotonic())
+
+    def _strategy_snapshot_skip_reason(self, step_index: int) -> str:
+        """split 模式下判断当前快照是否不可用；空串表示可执行 ``run_strategy``。"""
+        if not self._live_trade_split_prepare_enabled():
+            return ''
+        m = self._strategy_run_marker
+        today = self.get_current_tz_datetime().strftime('%Y-%m-%d')
+        if m is None:
+            return 'snapshot_missing'
+        td, idx, t0 = m
+        if td != today or int(idx) != int(step_index):
+            return 'snapshot_missing'
+        max_age = float(QT_CONFIG.get('live_trade_strategy_snapshot_max_age_seconds', 180.0))
+        if (time.monotonic() - t0) > max_age:
+            return 'snapshot_stale'
+        return ''
+
+    def _prepare_strategy_market_inputs(self, step_index: int) -> None:
+        """拉取/刷新策略步所需行情与历史数据包并填充 Operator 缓冲（同步 I/O）。
+
+        阶段 5-A：与 ``run_strategy`` 主链路拆分后可单独由 ``prepare_strategy_snapshot`` 调用。
+        """
+        operator = self._operator
+        today = self.get_current_tz_datetime().strftime('%Y-%m-%d')
+        t0 = time.monotonic()
+        max_run_freq = 'T'
+        group_timing = operator.group_timing_table.iloc[step_index].values
+        group_count = len(operator.groups)
+        groups_to_run = [operator.groups_by_index[i] for i in range(group_count) if group_timing[i]]
+
+        for group in groups_to_run:
+            for strategy in group.members:
+                freq = strategy.run_freq.upper()
+                if freq in TIME_FREQ_LEVELS and TIME_FREQ_LEVELS[freq] < TIME_FREQ_LEVELS[max_run_freq]:
+                    max_run_freq = freq
+        self.send_message(f'getting live price data for strategy run...', debug=True)
+        duration, unit, _ = parse_freq_string(max_run_freq, std_freq_only=False)
+        if (unit.lower() in ['min', '5min', '15min', '30min', 'h']) and self.is_trade_day:
+            self.refresh_datasource_price_data(unit=unit)
+
+        self.send_message(f'preparing data package...', debug=True)
+        data_packages = check_and_prepare_live_trade_data(
+                op=operator,
+                trade_date=today,
+                datasource=self._datasource,
+                shares=self.asset_pool,
+                live_prices=self.live_price,
+        )
+
+        self.send_message(f'read real time data and set operator data allocation', debug=True)
+        operator.prepare_data_buffer(
+                start_date=self.get_current_tz_datetime(),
+                end_date=self.get_current_tz_datetime(),
+                data_package=data_packages,
+        )
+        operator.create_data_windows()
+
+        self._update_live_price()
+        current_prices = self.live_price['price'].values
+        if self.operator.check_dynamic_data():
+            shares = self.asset_pool
+            own_amounts = self.account_positions['qty'].values
+            available_amounts = self.account_positions['available_qty'].values
+            own_cash = self.account_cash[0]
+            available_cash = self.account_cash[1]
+            share_count = len(shares)
+            operator._process_time_index = np.array([
+                pd.Timestamp(self.get_current_tz_datetime()).asm8
+            ], dtype=np.datetime64)
+            operator._process_data_sources = {
+                'own_cashes': np.array([own_cash], dtype=float),
+                'available_cashes': np.array([available_cash], dtype=float),
+                'own_amounts': np.asarray(own_amounts, dtype=float).reshape(1, share_count),
+                'available_amounts': np.asarray(available_amounts, dtype=float).reshape(1, share_count),
+                'trade_records': np.zeros((0, share_count), dtype=float),
+                'trade_costs': np.zeros((0, share_count), dtype=float),
+                'trade_prices': np.zeros((0, share_count), dtype=float),
+                'price_data': np.asarray(current_prices, dtype=float).reshape(1, share_count),
+            }
+
+        elapsed_ms = (time.monotonic() - t0) * 1000.0
+        self._trace_event(
+            category='live_strategy',
+            event='strategy_market_inputs_ready',
+            step_index=int(step_index),
+            trade_date=today,
+            duration_ms=round(elapsed_ms, 3),
+        )
+
+    def _prepare_strategy_snapshot(self, step_index: int) -> None:
+        """阶段 5-A：在 ``run_strategy`` 之前执行市场数据准备并打快照标记。"""
+        self._prepare_strategy_market_inputs(int(step_index))
+        self._set_strategy_snapshot_marker(int(step_index))
+
+    def run_startup_gate(self) -> bool:
+        """阶段 5-B：启动前校验；更新 ``_startup_gate_trading_allowed`` 并返回是否允许交易侧任务。
+
+        Returns
+        -------
+        bool
+            与 ``_startup_gate_trading_allowed`` 一致；``warn`` 模式下即使检查失败也返回 True。
+        """
+        mode = str(QT_CONFIG.get('live_trade_startup_gate_mode', 'off')).lower().strip()
+        failures: list[str] = []
+        if mode == 'off':
+            self._startup_gate_trading_allowed = True
+            self._trace_event(category='startup_gate', event='gate_skipped', mode=mode)
+            return True
+
+        if not self.is_trade_day:
+            self._trace_event(category='startup_gate', event='gate_skipped_non_trade_day', mode=mode)
+            self._startup_gate_trading_allowed = True
+            return True
+
+        if not self._operator.is_ready(tell_me_why=False, raise_error=False):
+            failures.append('operator_not_ready')
+
+        atype = str(getattr(self, '_asset_type', 'E')).upper()
+        primary_hist = {'E': 'stock_daily', 'FD': 'fund_daily', 'IDX': 'index_daily'}.get(atype, 'stock_daily')
+        if primary_hist not in self._datasource.tables:
+            failures.append('schema_missing_primary_history_table')
+
+        if self.account is None:
+            failures.append('account_missing')
+
+        remote_cash = self._broker.get_remote_cash(account_id=self.account_id)
+        if remote_cash is not None:
+            try:
+                acct = get_account(self.account_id, data_source=self._datasource)
+                local_total = float(acct['cash']) + float(acct.get('frozen_cash', 0.0) or 0.0)
+                if abs(local_total - float(remote_cash)) > 0.05:
+                    failures.append('broker_cash_mismatch')
+            except Exception as exc:
+                failures.append(f'account_read_error:{type(exc).__name__}')
+
+        remote_positions = self._broker.get_remote_positions(account_id=self.account_id)
+        if remote_positions:
+            try:
+                local_pos = get_account_positions(self.account_id, data_source=self._datasource)
+                remote_qty = sum(float(p.get('qty', p.get('quantity', 0)) or 0) for p in remote_positions)
+                local_qty = float(local_pos['qty'].sum()) if len(local_pos) else 0.0
+                if abs(remote_qty - local_qty) > 0.05:
+                    failures.append('broker_position_mismatch')
+            except Exception as exc:
+                failures.append(f'position_read_error:{type(exc).__name__}')
+
+        if failures and mode == 'warn':
+            self._trace_event(
+                category='startup_gate',
+                event='gate_warn',
+                mode=mode,
+                failures=','.join(failures),
+            )
+            self._startup_gate_trading_allowed = True
+            return True
+        if failures and mode == 'block':
+            self._trace_event(
+                category='startup_gate',
+                event='gate_failed',
+                mode=mode,
+                failures=','.join(failures),
+            )
+            self._startup_gate_trading_allowed = False
+            return False
+
+        self._trace_event(category='startup_gate', event='gate_passed', mode=mode)
+        self._startup_gate_trading_allowed = True
+        return True
+
+    def _startup_gate_run_strategy_skip_reason(self) -> str:
+        """若启动门禁禁止交易，则返回 ``gate_failed`` 供 ``add_task`` 跳过 ``run_strategy``。"""
+        mode = str(QT_CONFIG.get('live_trade_startup_gate_mode', 'off')).lower().strip()
+        if mode != 'block':
+            return ''
+        if getattr(self, '_startup_gate_trading_allowed', True):
+            return ''
+        return 'gate_failed'
+
     def _run_strategy(self, step_index) -> int:
         """ 运行交易策略
 
@@ -2660,69 +2858,26 @@ class Trader(object):
         available_cash = self.account_cash[1]
 
         today = self.get_current_tz_datetime().strftime('%Y-%m-%d')
+        split = self._live_trade_split_prepare_enabled()
+        if split:
+            snap_skip = self._strategy_snapshot_skip_reason(int(step_index))
+            if snap_skip:
+                self._trace_event(
+                    category='live_strategy',
+                    event='strategy_run_skipped',
+                    step_index=int(step_index),
+                    trade_date=today,
+                    skip_reason=snap_skip,
+                )
+                return 0
+        else:
+            self._prepare_strategy_market_inputs(int(step_index))
 
-        # 下载最小所需实时历史数据
-        max_run_freq = 'T'
         group_timing = operator.group_timing_table.iloc[step_index].values
         group_count = len(operator.groups)
         groups_to_run = [operator.groups_by_index[i] for i in range(group_count) if group_timing[i]]
 
-        for group in groups_to_run:
-            for strategy in group.members:
-                freq = strategy.run_freq.upper()
-                if freq in TIME_FREQ_LEVELS and TIME_FREQ_LEVELS[freq] < TIME_FREQ_LEVELS[max_run_freq]:
-                    max_run_freq = freq
-        # 解析strategy_run的运行频率，根据频率确定是否更新数据源中的数据
-        self.send_message(f'getting live price data for strategy run...', debug=True)
-        # # 将类似于'2H'或'15min'的时间频率转化为两个变量：duration和unit (duration=2, unit='H')/ (duration=15, unit='min')
-        duration, unit, _ = parse_freq_string(max_run_freq, std_freq_only=False)
-        if (unit.lower() in ['min', '5min', '15min', '30min', 'h']) and self.is_trade_day:
-            # 如果strategy_run的运行频率为分钟或小时，则调用fetch_realtime_price_data方法获取分钟级别的实时价格
-            self.refresh_datasource_price_data(unit=unit)
-        # TODO: 由于此时下载的是完整的K线数据，对应着DataType的ULC属性为False的情形，如果ULC为True，则需要继续下载不完整的K线
-        # 如果strategy_run的运行频率大于等于D，则不下载实时数据，使用datasource中的历史数据
-        else:
-            pass
-
-        # 从dataSource中读取最新数据,组装成data_package
-        self.send_message(f'preparing data package...', debug=True)
-        data_packages = check_and_prepare_live_trade_data(
-                op=operator,
-                trade_date=today,
-                datasource=self._datasource,
-                shares=self.asset_pool,
-                live_prices=self.live_price,
-        )
-
-        self.send_message(f'read real time data and set operator data allocation', debug=True)
-        operator.prepare_data_buffer(
-                start_date=self.get_current_tz_datetime(),
-                end_date=self.get_current_tz_datetime(),
-                data_package=data_packages,
-        )
-        operator.create_data_windows()
-
-        # 更新最新实时价格（供解析信号与 process data 注入使用）
-        self._update_live_price()
         current_prices = self.live_price['price'].values
-
-        # 如果策略需要用到交易过程数据，则向 Operator 注入当前账户/持仓视图，供 get_data('proc.xxx') 使用
-        if self.operator.check_dynamic_data():
-            share_count = len(shares)
-            # 实盘单次运行仅一个“步”，策略访问的 current_idx 为 0
-            operator._process_time_index = np.array([
-                pd.Timestamp(self.get_current_tz_datetime()).asm8
-            ], dtype=np.datetime64)
-            operator._process_data_sources = {
-                'own_cashes': np.array([own_cash], dtype=float),
-                'available_cashes': np.array([available_cash], dtype=float),
-                'own_amounts': np.asarray(own_amounts, dtype=float).reshape(1, share_count),
-                'available_amounts': np.asarray(available_amounts, dtype=float).reshape(1, share_count),
-                'trade_records': np.zeros((0, share_count), dtype=float),
-                'trade_costs': np.zeros((0, share_count), dtype=float),
-                'trade_prices': np.zeros((0, share_count), dtype=float),
-                'price_data': np.asarray(current_prices, dtype=float).reshape(1, share_count),
-            }
 
         # 开始运行交易策略，逐个生成交易信号
         submitted_qty = 0
@@ -3145,6 +3300,7 @@ class Trader(object):
             'close_market':       self._market_close,
             'post_close':         self._post_close,
             'run_strategy':       self._run_strategy,
+            'prepare_strategy_snapshot': self._prepare_strategy_snapshot,
             'process_result':     self._process_result,
             'acquire_live_price': self._update_live_price,
             # 'change_date':        self._change_date,
@@ -3169,7 +3325,9 @@ class Trader(object):
 
         task_func = available_tasks[task]
 
-        async_tasks = ['acquire_live_price', 'run_strategy']
+        async_tasks = ['acquire_live_price']
+        if not self._live_trade_split_prepare_enabled():
+            async_tasks.append('run_strategy')
         if (not run_in_main_thread) and (task in async_tasks):
             self._trace_event(
                 category='task_runner',
@@ -3439,7 +3597,7 @@ class Trader(object):
 
     TASK_WHITELIST = {
         'stopped':  ['start'],
-        'running':  ['stop', 'sleep', 'pause', 'run_strategy', 'process_result', 'pre_open',
+        'running':  ['stop', 'sleep', 'pause', 'prepare_strategy_snapshot', 'run_strategy', 'process_result', 'pre_open',
                      'open_market', 'close_market', 'acquire_live_price'],
         'sleeping': ['wakeup', 'stop', 'pause', 'pre_open', 'close_market',
                      'process_result',  # 如果交易结果已经产生，哪怕处理时Trader已经处于sleeping状态，也应该处理完所有结果

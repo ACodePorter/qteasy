@@ -28,13 +28,9 @@ if __name__ == '__main__':
         """网格交易策略, 同时监控多只股票并进行网格交易"""
 
         def realize(self):
-            # RuleIterator.generate() 按标的循环：每次 realize 仅处理当前标的；par_values 为该股元组，
-            # 数据已由框架切片为当前列（一维窗口）。多参数写回用 self._generate_share_index + multi_pars。
-            pars = self.par_values
-            if not isinstance(pars, (tuple, list)) or len(pars) != 3:
-                raise TypeError(
-                        f'expected par_values tuple (grid_size, trade_batch, base_grid), got {type(pars)}: {pars}')
-            grid_size, trade_batch, base_grid = float(pars[0]), int(pars[1]), float(pars[2])
+            # RuleIterator.generate() 按标的循环：读参/写参均用 get_pars / update_par_values，由框架同步 multi_pars。
+            grid_size, trade_batch, base_grid = self.get_pars('grid_size', 'trade_batch', 'base_grid')
+            grid_size, trade_batch, base_grid = float(grid_size), int(trade_batch), float(base_grid)
 
             h = self.get_data(self.data_type_ids[0])
             ha = np.asarray(h, dtype=float).ravel()
@@ -57,12 +53,8 @@ if __name__ == '__main__':
             if not np.isnan(base_grid):
                 base_grid = float(np.round(base_grid, 2))
 
-            if self.allow_multi_par and self.multi_pars is not None:
-                idx = getattr(self, '_generate_share_index', None)
-                if idx is not None:
-                    mp = list(self.multi_pars)
-                    mp[idx] = (grid_size, trade_batch, base_grid)
-                    self.multi_pars = tuple(mp)
+            # 写回仅用 update_par_values：初始化为 dict 时由框架同步每股；为 tuple 时多标共享一套参数。
+            self.update_par_values(grid_size, trade_batch, base_grid)
 
             return trade_signal
 
@@ -85,6 +77,8 @@ if __name__ == '__main__':
     alpha.allow_multi_par = True  # 允许多参数输入
     op = Operator(alpha, signal_type='VS', op_type='step', run_timing='close', run_freq='5min')
     op.set_shares(asset_pool)
+    # multi_pars 字典的键必须与 set_shares / configure(asset_pool) 中的代码字符串完全一致；
+    # 实盘入口 run_live_trade 会再次 set_shares(config['asset_pool'])，键名需与之对齐。
     alpha.update_par_values(par_values)
     datasource = qt.QT_DATA_SOURCE
 

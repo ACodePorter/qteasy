@@ -337,6 +337,89 @@ class TestTraderLiveConfigIntegration(unittest.TestCase):
         )
         self.assertEqual(trader.live_price_channel, kwargs['live_price_channel'])
 
+    def test_apply_live_config_writes_phase5_keys_to_qt_config(self) -> None:
+        print('\n[TestTraderLiveConfigIntegration] I3 phase5 keys via configure')
+        import qteasy as qt
+
+        snap = {
+            'live_trade_split_strategy_prepare': qt.QT_CONFIG.get('live_trade_split_strategy_prepare', False),
+            'live_trade_strategy_snapshot_max_age_seconds': qt.QT_CONFIG.get(
+                'live_trade_strategy_snapshot_max_age_seconds', 180.0
+            ),
+            'live_trade_prepare_lead_seconds': qt.QT_CONFIG.get('live_trade_prepare_lead_seconds', 5),
+            'live_trade_startup_gate_mode': qt.QT_CONFIG.get('live_trade_startup_gate_mode', 'off'),
+        }
+        try:
+            from qteasy.trade_recording import new_account
+
+            new_account(user_name='lc_u3', cash_amount=100000.0, data_source=self.ds)
+            op = create_operator()
+            br = SimulatorBroker()
+            kwargs = default_trader_kwargs()
+            base = _minimal_valid_live_mapping()
+            base['live_trade_split_strategy_prepare'] = True
+            base['live_trade_startup_gate_mode'] = 'warn'
+            base['live_trade_strategy_snapshot_max_age_seconds'] = 90.0
+            base['live_trade_prepare_lead_seconds'] = 0
+            cfg = build_live_trade_config(base)
+            Trader(
+                account_id=1,
+                operator=op,
+                broker=br,
+                datasource=self.ds,
+                risk_manager=None,
+                live_config=cfg,
+                **kwargs,
+            )
+            print(
+                ' QT_CONFIG split:', qt.QT_CONFIG.get('live_trade_split_strategy_prepare'),
+                ' gate:', qt.QT_CONFIG.get('live_trade_startup_gate_mode'),
+                ' max_age:', qt.QT_CONFIG.get('live_trade_strategy_snapshot_max_age_seconds'),
+                ' lead:', qt.QT_CONFIG.get('live_trade_prepare_lead_seconds'),
+            )
+            self.assertTrue(qt.QT_CONFIG.get('live_trade_split_strategy_prepare'))
+            self.assertEqual(qt.QT_CONFIG.get('live_trade_startup_gate_mode'), 'warn')
+            self.assertEqual(float(qt.QT_CONFIG.get('live_trade_strategy_snapshot_max_age_seconds', 0)), 90.0)
+            self.assertEqual(int(qt.QT_CONFIG.get('live_trade_prepare_lead_seconds', -1)), 0)
+        finally:
+            qt.configure(**snap)
+
+
+class TestLiveTradeConfigPhase5(unittest.TestCase):
+    """阶段 5-A/5-B：split 与启动门禁相关字段。"""
+
+    def test_build_phase5_defaults(self) -> None:
+        print('\n[TestLiveTradeConfigPhase5] defaults for snapshot/gate keys')
+        base = _minimal_valid_live_mapping()
+        cfg = build_live_trade_config(base)
+        print(
+            ' split:', cfg.live_trade_split_strategy_prepare,
+            ' max_age:', cfg.live_trade_strategy_snapshot_max_age_seconds,
+            ' lead:', cfg.live_trade_prepare_lead_seconds,
+            ' gate:', cfg.live_trade_startup_gate_mode,
+        )
+        self.assertFalse(cfg.live_trade_split_strategy_prepare)
+        self.assertEqual(cfg.live_trade_strategy_snapshot_max_age_seconds, 180.0)
+        self.assertEqual(cfg.live_trade_prepare_lead_seconds, 5)
+        self.assertEqual(cfg.live_trade_startup_gate_mode, 'off')
+
+    def test_build_normalizes_startup_gate_mode_case(self) -> None:
+        print('\n[TestLiveTradeConfigPhase5] gate mode normalization')
+        base = _minimal_valid_live_mapping()
+        base['live_trade_startup_gate_mode'] = 'BLOCK'
+        cfg = build_live_trade_config(base)
+        print(' gate mode:', cfg.live_trade_startup_gate_mode)
+        self.assertEqual(cfg.live_trade_startup_gate_mode, 'block')
+
+    def test_build_rejects_invalid_startup_gate_mode(self) -> None:
+        print('\n[TestLiveTradeConfigPhase5] invalid gate mode')
+        base = _minimal_valid_live_mapping()
+        base['live_trade_startup_gate_mode'] = 'strict'
+        with self.assertRaises(ValueError) as ctx:
+            build_live_trade_config(base)
+        print(' error:', ctx.exception)
+        self.assertTrue(str(ctx.exception).isascii())
+
 
 class TestOperatorRunLivePrerequisite(unittest.TestCase):
     """J：与 Operator 入口一致的最小校验（不启动 UI）。"""
