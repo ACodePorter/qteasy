@@ -95,7 +95,7 @@ class TestTraderCLI(unittest.TestCase):
         # 创建一个操作员
         operator = Operator(strategies=['macd', 'dma'], op_type='step')
         # 创建一个经纪商
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
 
         test_ds.reconnect()
 

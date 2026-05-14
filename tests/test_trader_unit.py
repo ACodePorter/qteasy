@@ -70,7 +70,7 @@ class TestTraderInit(unittest.TestCase):
     def test_init_invalid_account_id_type(self):
         """account_id 非 int 时应抛出 TypeError。"""
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         test_ds = _create_test_datasource()
         self._test_ds = test_ds
         _clear_tables(test_ds)
@@ -92,7 +92,7 @@ class TestTraderInit(unittest.TestCase):
         self._test_ds = test_ds
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -125,7 +125,7 @@ class TestTraderInit(unittest.TestCase):
     def test_init_invalid_datasource_type(self):
         """datasource 非 DataSource 时应抛出 TypeError。"""
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -146,7 +146,7 @@ class TestTraderInit(unittest.TestCase):
         # new_account 返回的是新账户 id，可能不是 10**9，这里用已存在的 account_id=1
         # 若 new_account 支持指定 id 则用 10**9；否则用大 id 需要先建账户
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         trader = Trader(
             account_id=1,
             operator=op,
@@ -172,7 +172,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = '000001.SZ, 000002.SZ'
         kwargs['benchmark_asset'] = ['000300.SH', '000905.SH']
@@ -193,7 +193,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -213,7 +213,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = []
         trader = Trader(
@@ -234,7 +234,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = '000001.SZ'
         kwargs['benchmark_asset'] = '000001.SZ'
@@ -456,7 +456,7 @@ class TestTraderWatchList(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = ['000001.SZ']  # 覆盖默认的 asset_pool，避免重复传参
         trader = Trader(

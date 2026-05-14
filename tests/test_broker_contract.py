@@ -11,6 +11,7 @@
 import unittest
 import threading
 import time
+from unittest.mock import patch
 
 from qteasy.broker import (
     Broker,
@@ -110,7 +111,7 @@ class TestBrokerContract(unittest.TestCase):
 
     def test_adapter_methods_exist_on_simulator_and_simple(self):
         print('\n[TestBrokerContract] 检查 Simulator/Simple 新接口存在性')
-        for broker in [SimulatorBroker(), SimpleBroker()]:
+        for broker in [SimulatorBroker(reject_submit_probability=0.0), SimpleBroker()]:
             for method_name in [
                 'connect', 'disconnect', 'submit', 'submit_with_ack', 'cancel', 'poll_fills', 'poll_messages',
                 'get_remote_orders', 'get_remote_positions', 'get_remote_cash', 'drain_order_queue',
@@ -119,6 +120,53 @@ class TestBrokerContract(unittest.TestCase):
                 self.assertTrue(callable(getattr(broker, method_name)))
             self.assertIsNone(broker.connect())
             self.assertIsNone(broker.disconnect())
+
+    def test_simulator_submit_with_ack_random_reject_branch(self):
+        print('\n[TestBrokerContract] SimulatorBroker submit_with_ack 随机拒单分支（patch）')
+        broker = SimulatorBroker(reject_submit_probability=0.1)
+        broker.connect()
+        fixed_reason = 'Order rejected: simulated test fixture reason.'
+        with patch('qteasy.broker.random.random', return_value=0.05):
+            with patch('qteasy.broker.random.choice', return_value=fixed_reason):
+                ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertFalse(ack['accepted'])
+        self.assertEqual(ack['broker_order_id'], '')
+        self.assertEqual(ack['reason_code'], 'SimulatedBrokerReject')
+        self.assertEqual(ack['reason'], fixed_reason)
+        self.assertEqual(ack['order_id'], self.order['order_id'])
+
+    def test_simulator_submit_with_ack_accepts_when_roll_above_threshold(self):
+        print('\n[TestBrokerContract] SimulatorBroker 随机拒单未触发时受理成功')
+        broker = SimulatorBroker(reject_submit_probability=0.1)
+        broker.connect()
+        with patch('qteasy.broker.random.random', return_value=0.99):
+            ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertTrue(ack['accepted'])
+        self.assertNotEqual(ack['broker_order_id'], '')
+        self.assertEqual(ack['reason'], '')
+        self.assertEqual(ack['reason_code'], '')
+
+    def test_simulator_reject_probability_one_uses_reason_pool(self):
+        print('\n[TestBrokerContract] 随机拒单理由取自预置英文池（概率=1）')
+        from qteasy.broker import _SIMULATOR_SUBMIT_REJECT_REASONS
+        broker = SimulatorBroker(reject_submit_probability=1.0)
+        broker.connect()
+        with patch('qteasy.broker.random.random', return_value=0.0):
+            ack = broker.submit_with_ack(self.order)
+        print(' ack reason:', ack.get('reason'))
+        self.assertFalse(ack['accepted'])
+        self.assertIn(ack['reason'], _SIMULATOR_SUBMIT_REJECT_REASONS)
+
+    def test_simulator_reject_probability_zero_skips_random_reject(self):
+        print('\n[TestBrokerContract] reject_submit_probability=0 跳过随机拒单')
+        broker = SimulatorBroker(reject_submit_probability=0.0)
+        broker.connect()
+        with patch('qteasy.broker.random.random', return_value=0.01):
+            ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertTrue(ack['accepted'])
 
     def test_submit_returns_non_empty_broker_order_id(self):
         print('\n[TestBrokerContract] submit 返回非空 broker_order_id')

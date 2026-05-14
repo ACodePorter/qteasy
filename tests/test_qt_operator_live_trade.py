@@ -278,7 +278,7 @@ class TestTraderAccountPositionInfoAssetType(unittest.TestCase):
         self.trader_fd = Trader(
             account_id=1,
             operator=op,
-            broker=SimulatorBroker(),
+            broker=SimulatorBroker(reject_submit_probability=0.0),
             datasource=self.test_ds,
             asset_pool=['515630.SH'],
             asset_type='FD',

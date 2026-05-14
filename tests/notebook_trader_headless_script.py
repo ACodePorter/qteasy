@@ -253,7 +253,7 @@ def create_headless_notebook_session(
 
     op = _build_notebook_operator()
     _configure_notebook_operator(op, NOTEBOOK_ASSET_POOL)
-    broker = BrokerFacade(SimulatorBroker(data_source=ds))
+    broker = BrokerFacade(SimulatorBroker(data_source=ds, reject_submit_probability=0.0))
     trader = Trader(
         operator=op,
         account_id=account_id,
@@ -829,7 +829,10 @@ def stage10_phase4_c_smoke(session: HeadlessNotebookSession, info: bool = False)
     print(' register temp broker factory:', broker_name)
     register_broker_factory(
         broker_name,
-        lambda **kwargs: SimulatorBroker(data_source=kwargs.get('data_source', session.datasource)),
+        lambda **kwargs: SimulatorBroker(
+            data_source=kwargs.get('data_source', session.datasource),
+            reject_submit_probability=0.0,
+        ),
     )
     registry_ok = False
     removed_ok = False

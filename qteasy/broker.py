@@ -16,6 +16,7 @@ from collections import deque
 from queue import Queue, Empty
 from abc import abstractmethod, ABCMeta
 from typing import Any, Callable, Mapping, Optional
+import random
 import threading
 
 import numpy as np
@@ -27,6 +28,18 @@ from qteasy.utilfuncs import get_current_timezone_datetime
 
 CASH_DECIMAL_PLACES = QT_CONFIG['cash_decimal_places']
 AMOUNT_DECIMAL_PLACES = QT_CONFIG['amount_decimal_places']
+
+# SimulatorBroker 受理阶段随机拒单时使用的英文理由（用户可见信息须为英文）
+_SIMULATOR_SUBMIT_REJECT_REASONS: tuple[str, ...] = (
+    'Order rejected: simulated venue liquidity constraint.',
+    'Order rejected: simulated exchange risk control.',
+    'Order rejected: simulated broker throttle limit.',
+    'Order rejected: simulated circuit breaker window.',
+    'Order rejected: simulated margin or buying power check.',
+    'Order rejected: simulated symbol trading halt.',
+    'Order rejected: simulated duplicate client order id.',
+    'Order rejected: simulated internal routing timeout.',
+)
 
 
 def _verify_trade_result(trade_result, order_qty) -> bool:
@@ -843,6 +856,7 @@ class SimulatorBroker(Broker):
         - 如果订单类型是限价单：若当前格低于叫买价，以当前价买入，若当前价高于叫卖价，以当前价卖出
     - 股票涨停时大概率买入交易失败，跌停时大概率卖出交易失败
     - 交易费率根据参数中的设置计算，包括固定费率、最低费用、滑点等
+    - ``submit_with_ack`` 受理阶段可按 ``reject_submit_probability`` 随机模拟拒单（默认约 10%）
     """
 
     def __init__(self,
@@ -858,6 +872,7 @@ class SimulatorBroker(Broker):
                  delay=1.0,
                  price_deviation=0.0,
                  probabilities=(0.9, 0.08, 0.02),  # ()
+                 reject_submit_probability: float = 0.1,
                  data_source=None):
         """ 生成一个Broker对象
 
@@ -889,6 +904,8 @@ class SimulatorBroker(Broker):
             卖出报价小于100+1元即可成交
         probabilities: tuple of 3 floats, default (0.90, 0.08, 0.02)
             模拟完全成交、部分成交和未成交三种情况出现的概率
+        reject_submit_probability: float, default 0.1
+            ``submit_with_ack`` 受理阶段随机拒单概率，取值 ``[0.0, 1.0]``；为 ``0`` 时关闭随机拒单（便于单测确定性）。
 
         """
         super(SimulatorBroker, self).__init__(data_source=data_source)
@@ -905,6 +922,50 @@ class SimulatorBroker(Broker):
         self.delay = delay
         self.price_deviation = price_deviation
         self.probabilities = probabilities
+        rp = float(reject_submit_probability)
+        self._reject_submit_probability = max(0.0, min(1.0, rp))
+
+    def submit_with_ack(self, order: Mapping[str, Any]) -> dict[str, Any]:
+        """同步提交订单；在订单校验通过后以给定概率随机模拟受理拒单。
+
+        Parameters
+        ----------
+        order: Mapping[str, Any]
+            订单数据，语义与基类 ``Broker.submit_with_ack`` 一致。
+
+        Returns
+        -------
+        dict[str, Any]
+            受理确认结果，字段与基类一致。随机拒单时 ``accepted`` 为 ``False``，
+            ``reason_code`` 为 ``SimulatedBrokerReject``，``reason`` 为随机英文说明。
+        """
+        order_id = None
+        if isinstance(order, Mapping):
+            try:
+                order_id = int(order.get('order_id'))
+            except Exception:
+                order_id = None
+        try:
+            self._ensure_adapter_connected()
+            order_dict = dict(order)
+            validate_trade_order(order_dict, context='Broker.submit_with_ack.order')
+        except Exception as e:
+            return {
+                'accepted':        False,
+                'order_id':        order_id,
+                'broker_order_id': '',
+                'reason':          str(e),
+                'reason_code':     type(e).__name__,
+            }
+        if self._reject_submit_probability > 0.0 and random.random() < self._reject_submit_probability:
+            return {
+                'accepted':        False,
+                'order_id':        order_id,
+                'broker_order_id': '',
+                'reason':          random.choice(_SIMULATOR_SUBMIT_REJECT_REASONS),
+                'reason_code':     'SimulatedBrokerReject',
+            }
+        return super().submit_with_ack(order)
 
     def transaction(self, symbol, order_qty, order_price, direction, position='long', order_type='market'):
         """ 读取实时价格模拟成交结果
