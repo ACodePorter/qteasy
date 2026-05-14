@@ -345,6 +345,55 @@ class Broker(object):
             self._pending_fills.append(raw_trade_result)
         return broker_order_id
 
+    def submit_with_ack(self, order: Mapping[str, Any]) -> dict[str, Any]:
+        """同步提交订单并返回受理确认结果。
+
+        Parameters
+        ----------
+        order: Mapping[str, Any]
+            订单数据。
+
+        Returns
+        -------
+        dict[str, Any]
+            受理确认结果，包含：
+            - accepted: bool，是否受理成功
+            - order_id: int，订单号（可解析时）
+            - broker_order_id: str，受理成功时的券商订单号，失败时为空字符串
+            - reason: str，失败原因，成功时为空字符串
+            - reason_code: str，失败类型码，成功时为空字符串
+        """
+        order_id = None
+        if isinstance(order, Mapping):
+            try:
+                order_id = int(order.get('order_id'))
+            except Exception:
+                order_id = None
+        try:
+            self._ensure_adapter_connected()
+            order_dict = dict(order)
+            validate_trade_order(order_dict, context='Broker.submit_with_ack.order')
+            self._broker_order_sequence += 1
+            broker_order_id = f'{self.broker_name}:{int(order_dict["order_id"])}:{self._broker_order_sequence}'
+            self._submitted_order_map[broker_order_id] = order_dict
+            # 受理阶段仅确认并入队，不同步撮合，成交仍由 run/_get_result 异步产出
+            self.order_queue.put(order_dict)
+            return {
+                'accepted':        True,
+                'order_id':        order_id,
+                'broker_order_id': broker_order_id,
+                'reason':          '',
+                'reason_code':     '',
+            }
+        except Exception as e:
+            return {
+                'accepted':        False,
+                'order_id':        order_id,
+                'broker_order_id': '',
+                'reason':          str(e),
+                'reason_code':     type(e).__name__,
+            }
+
     def cancel(self, broker_order_id: str) -> bool:
         """受理撤单请求，返回是否成功匹配待撤单据。"""
         self._ensure_adapter_connected()
@@ -1046,6 +1095,9 @@ class BrokerFacade(Broker):
 
     def submit(self, order: Mapping[str, Any]) -> str:
         return self._inner.submit(order)
+
+    def submit_with_ack(self, order: Mapping[str, Any]) -> dict[str, Any]:
+        return self._inner.submit_with_ack(order)
 
     def cancel(self, broker_order_id: str) -> bool:
         return self._inner.cancel(broker_order_id)

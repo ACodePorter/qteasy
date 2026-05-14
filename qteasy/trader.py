@@ -43,6 +43,7 @@ from .trade_recording import (
     record_trade_order,
     get_or_create_position,
     read_trade_order,
+    update_trade_order,
 )
 
 from .trade_io import validate_trade_order
@@ -451,6 +452,7 @@ class Trader(object):
         self.account = get_account(self.account_id, data_source=self._datasource)
         self.risk_manager = risk_manager
         self._last_risk_decision: Optional[RiskDecision] = None
+        self._last_submit_reject_reason: Optional[str] = None
 
         if live_config is not None:
             apply_live_trade_config_to_trader(self, live_config)
@@ -476,6 +478,11 @@ class Trader(object):
     def last_risk_decision(self) -> Optional[RiskDecision]:
         """返回最近一次 ``submit_trade_order`` 的风控决策。"""
         return self._last_risk_decision
+
+    @property
+    def last_submit_reject_reason(self) -> Optional[str]:
+        """返回最近一次 ``submit_trade_order`` 非风控拒绝原因。"""
+        return self._last_submit_reject_reason
 
     def _get_next_scheduled_task_and_countdown(self, current_time=None):
         """ 计算 task_daily_schedule 中下一个未到点任务及距其的秒数，供 next_task、count_down_to_next_task 使用。
@@ -2225,6 +2232,7 @@ class Trader(object):
             order_type = 'market'
 
         self._last_risk_decision = None
+        self._last_submit_reject_reason = None
         if self.risk_manager is not None:
             snap = self.get_account_snapshot()
             intent = OrderIntent(
@@ -2264,21 +2272,54 @@ class Trader(object):
         }
 
         order_id = record_trade_order(trade_order, data_source=self._datasource)
-        # 提交交易订单
-        if submit_order(order_id=order_id, data_source=self._datasource) is not None:
-            trade_order['order_id'] = order_id
-            saved = read_trade_order(order_id, data_source=self._datasource)
-            trade_order['status'] = saved['status']
-            st = saved.get('submitted_time')
-            if st is not None and not isinstance(st, str):
-                trade_order['submitted_time'] = pd.Timestamp(st).strftime('%Y-%m-%d %H:%M:%S')
-            else:
-                trade_order['submitted_time'] = st
-            validate_trade_order(trade_order, context='Trader.submit_trade_order')
+        # 提交前做本地最小校验，现金不足时不进入submitted
+        try:
+            if submit_order(order_id=order_id, data_source=self._datasource, mark_submitted=False) is None:
+                return {}
+        except Exception as e:
+            self._last_submit_reject_reason = str(e)
+            self.send_message(
+                    f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
+                    debug=False,
+            )
+            return {}
 
-            return trade_order
+        # 由 broker 受理结果确认状态：accepted -> submitted, rejected -> rejected
+        try:
+            self._broker.connect()
+            ack = self._broker.submit_with_ack({**trade_order, 'order_id': order_id, 'status': 'submitted'})
+        except Exception as e:
+            self._last_submit_reject_reason = str(e)
+            update_trade_order(order_id, data_source=self._datasource, status='rejected')
+            self.send_message(
+                    f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
+                    debug=False,
+            )
+            return {}
+        if not ack.get('accepted', False):
+            reject_reason = ack.get('reason') or 'Broker rejected order submission'
+            self._last_submit_reject_reason = str(reject_reason)
+            update_trade_order(order_id, data_source=self._datasource, status='rejected')
+            self.send_message(
+                    f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
+                    debug=False,
+            )
+            return {}
+        broker_order_id = ack.get('broker_order_id', '')
 
-        return {}
+        update_trade_order(order_id=order_id, data_source=self._datasource, status='submitted')
+        trade_order['order_id'] = order_id
+        saved = read_trade_order(order_id, data_source=self._datasource)
+        trade_order['status'] = saved['status']
+        st = saved.get('submitted_time')
+        if st is not None and not isinstance(st, str):
+            trade_order['submitted_time'] = pd.Timestamp(st).strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            trade_order['submitted_time'] = st
+        trade_order['broker_order_id'] = broker_order_id
+        validate_trade_order(trade_order, context='Trader.submit_trade_order')
+
+        return trade_order
 
     def log_trade_result(self, full_trade_result) -> None:
         """ 根据返回的完整交易记录full_trade_result，生成交易记录
@@ -2303,10 +2344,6 @@ class Trader(object):
         filled_price = full_trade_result['price']
         trade_cost = full_trade_result['transaction_fee']
 
-        # TODO: 发现bug：
-        #  如果一个订单分批完成，第一个结果应返回状态partial-filled，第二个结果返回状态filled
-        #  但是在这里两个状态都会是partial-filled，需要查找原因并修改
-        # send message to indicate execution of order
         self.send_message(f'<ORDER EXECUTED {order_id}>: '
                           f'{d}-{pos} of {symbol}: {status} with {filled_qty} @ {filled_price}')
 
@@ -2988,7 +3025,6 @@ class Trader(object):
 
                 if trade_order:
                     order_id = trade_order['order_id']
-                    self._broker.enqueue_order(trade_order)
                     # format the message depending on buy/sell orders
                     msg = Text(f'<NEW ORDER {order_id}>: <{name} - {sym}> ', style='bold')
                     if d == 'buy':  # red for buy

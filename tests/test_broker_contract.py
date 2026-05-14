@@ -112,7 +112,7 @@ class TestBrokerContract(unittest.TestCase):
         print('\n[TestBrokerContract] 检查 Simulator/Simple 新接口存在性')
         for broker in [SimulatorBroker(), SimpleBroker()]:
             for method_name in [
-                'connect', 'disconnect', 'submit', 'cancel', 'poll_fills', 'poll_messages',
+                'connect', 'disconnect', 'submit', 'submit_with_ack', 'cancel', 'poll_fills', 'poll_messages',
                 'get_remote_orders', 'get_remote_positions', 'get_remote_cash', 'drain_order_queue',
             ]:
                 print(f' broker={broker.broker_name}, method={method_name}')
@@ -169,6 +169,30 @@ class TestBrokerContract(unittest.TestCase):
         self.assertAlmostEqual(total_filled, self.order['qty'])
         self.assertEqual(fills_round_1[0]['price'], self.order['price'])
         self.assertEqual(fills_round_2[0]['price'], self.order['price'])
+
+    def test_submit_with_ack_returns_structured_accept_result(self):
+        print('\n[TestBrokerContract] submit_with_ack 返回结构化 accept 回报')
+        broker = MinimalBrokerForContractTest()
+        broker.connect()
+        ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertIsInstance(ack, dict)
+        self.assertTrue(ack['accepted'])
+        self.assertEqual(ack['order_id'], self.order['order_id'])
+        self.assertTrue(isinstance(ack['broker_order_id'], str) and ack['broker_order_id'])
+        self.assertEqual(ack['reason'], '')
+
+    def test_submit_with_ack_returns_structured_reject_result(self):
+        print('\n[TestBrokerContract] submit_with_ack 返回结构化 reject 回报')
+        broker = MinimalBrokerForContractTest()
+        ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertIsInstance(ack, dict)
+        self.assertFalse(ack['accepted'])
+        self.assertEqual(ack['order_id'], self.order['order_id'])
+        self.assertEqual(ack['broker_order_id'], '')
+        self.assertTrue(isinstance(ack['reason'], str) and ack['reason'])
+        self.assertEqual(ack['reason_code'], 'RuntimeError')
 
     def test_legacy_queue_get_result_unchanged(self):
         print('\n[TestBrokerContract] legacy _get_result -> result_queue 路径')

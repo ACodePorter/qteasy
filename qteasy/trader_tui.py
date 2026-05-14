@@ -978,7 +978,6 @@ class TraderApp(App):
                 order_type='market',
         )
         if trade_order:
-            self.trader.broker.enqueue_order(trade_order)
             order_id = trade_order['order_id']
             syslog.write_with_timestamp(
                     f'Order <{order_id}> has been submitted to broker: '
@@ -993,7 +992,11 @@ class TraderApp(App):
                         f'rule_id={decision.rule_id!r}, reason={decision.reason!r}'
                 )
             else:
-                syslog.write_with_timestamp('Order submission failed.')
+                reason = self.trader.last_submit_reject_reason
+                if reason:
+                    syslog.write_with_timestamp(f'Order submission failed: {reason}')
+                else:
+                    syslog.write_with_timestamp('Order submission failed.')
 
         if not self.trader.is_market_open:
             syslog.write_with_timestamp(
