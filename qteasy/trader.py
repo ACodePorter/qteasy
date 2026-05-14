@@ -2744,6 +2744,70 @@ class Trader(object):
         self._prepare_strategy_market_inputs(int(step_index))
         self._set_strategy_snapshot_marker(int(step_index))
 
+    def collect_broker_reconcile_snapshot(self) -> Dict[str, Any]:
+        """采集启动门禁与冒烟共用的 Broker 对账快照。"""
+        tolerance = 0.05
+        snapshot: Dict[str, Any] = {
+            'failures': [],
+            'tolerance': tolerance,
+            'remote_cash': None,
+            'local_cash_total': None,
+            'cash_diff': None,
+            'remote_position_qty_total': None,
+            'local_position_qty_total': None,
+            'position_qty_diff': None,
+            'remote_orders_count': 0,
+        }
+        failures = snapshot['failures']
+        if not self._operator.is_ready(tell_me_why=False, raise_error=False):
+            failures.append('operator_not_ready')
+
+        atype = str(getattr(self, '_asset_type', 'E')).upper()
+        primary_hist = {'E': 'stock_daily', 'FD': 'fund_daily', 'IDX': 'index_daily'}.get(atype, 'stock_daily')
+        snapshot['primary_history_table'] = primary_hist
+        if primary_hist not in self._datasource.tables:
+            failures.append('schema_missing_primary_history_table')
+
+        if self.account is None:
+            failures.append('account_missing')
+
+        remote_cash = self._broker.get_remote_cash(account_id=self.account_id)
+        snapshot['remote_cash'] = remote_cash
+        if remote_cash is not None:
+            try:
+                acct = get_account(self.account_id, data_source=self._datasource)
+                local_total = float(acct['cash']) + float(acct.get('frozen_cash', 0.0) or 0.0)
+                snapshot['local_cash_total'] = local_total
+                cash_diff = float(remote_cash) - local_total
+                snapshot['cash_diff'] = cash_diff
+                if abs(cash_diff) > tolerance:
+                    failures.append('broker_cash_mismatch')
+            except Exception as exc:
+                failures.append(f'account_read_error:{type(exc).__name__}')
+
+        remote_positions = self._broker.get_remote_positions(account_id=self.account_id)
+        snapshot['remote_positions_count'] = len(remote_positions) if remote_positions else 0
+        if remote_positions:
+            try:
+                local_pos = get_account_positions(self.account_id, data_source=self._datasource)
+                remote_qty = sum(float(p.get('qty', p.get('quantity', 0)) or 0) for p in remote_positions)
+                local_qty = float(local_pos['qty'].sum()) if len(local_pos) else 0.0
+                snapshot['remote_position_qty_total'] = remote_qty
+                snapshot['local_position_qty_total'] = local_qty
+                pos_diff = remote_qty - local_qty
+                snapshot['position_qty_diff'] = pos_diff
+                if abs(pos_diff) > tolerance:
+                    failures.append('broker_position_mismatch')
+            except Exception as exc:
+                failures.append(f'position_read_error:{type(exc).__name__}')
+        try:
+            remote_orders = self._broker.get_remote_orders(account_id=self.account_id)
+            snapshot['remote_orders_count'] = len(remote_orders) if remote_orders else 0
+        except Exception as exc:
+            failures.append(f'remote_order_read_error:{type(exc).__name__}')
+        snapshot['is_ok'] = len(failures) == 0
+        return snapshot
+
     def run_startup_gate(self) -> bool:
         """阶段 5-B：启动前校验；更新 ``_startup_gate_trading_allowed`` 并返回是否允许交易侧任务。
 
@@ -2764,37 +2828,8 @@ class Trader(object):
             self._startup_gate_trading_allowed = True
             return True
 
-        if not self._operator.is_ready(tell_me_why=False, raise_error=False):
-            failures.append('operator_not_ready')
-
-        atype = str(getattr(self, '_asset_type', 'E')).upper()
-        primary_hist = {'E': 'stock_daily', 'FD': 'fund_daily', 'IDX': 'index_daily'}.get(atype, 'stock_daily')
-        if primary_hist not in self._datasource.tables:
-            failures.append('schema_missing_primary_history_table')
-
-        if self.account is None:
-            failures.append('account_missing')
-
-        remote_cash = self._broker.get_remote_cash(account_id=self.account_id)
-        if remote_cash is not None:
-            try:
-                acct = get_account(self.account_id, data_source=self._datasource)
-                local_total = float(acct['cash']) + float(acct.get('frozen_cash', 0.0) or 0.0)
-                if abs(local_total - float(remote_cash)) > 0.05:
-                    failures.append('broker_cash_mismatch')
-            except Exception as exc:
-                failures.append(f'account_read_error:{type(exc).__name__}')
-
-        remote_positions = self._broker.get_remote_positions(account_id=self.account_id)
-        if remote_positions:
-            try:
-                local_pos = get_account_positions(self.account_id, data_source=self._datasource)
-                remote_qty = sum(float(p.get('qty', p.get('quantity', 0)) or 0) for p in remote_positions)
-                local_qty = float(local_pos['qty'].sum()) if len(local_pos) else 0.0
-                if abs(remote_qty - local_qty) > 0.05:
-                    failures.append('broker_position_mismatch')
-            except Exception as exc:
-                failures.append(f'position_read_error:{type(exc).__name__}')
+        snapshot = self.collect_broker_reconcile_snapshot()
+        failures = list(snapshot.get('failures', []))
 
         if failures and mode == 'warn':
             self._trace_event(
@@ -2802,6 +2837,9 @@ class Trader(object):
                 event='gate_warn',
                 mode=mode,
                 failures=','.join(failures),
+                reconcile_cash_diff=snapshot.get('cash_diff'),
+                reconcile_position_qty_diff=snapshot.get('position_qty_diff'),
+                remote_orders_count=snapshot.get('remote_orders_count', 0),
             )
             self._startup_gate_trading_allowed = True
             return True
@@ -2811,11 +2849,19 @@ class Trader(object):
                 event='gate_failed',
                 mode=mode,
                 failures=','.join(failures),
+                reconcile_cash_diff=snapshot.get('cash_diff'),
+                reconcile_position_qty_diff=snapshot.get('position_qty_diff'),
+                remote_orders_count=snapshot.get('remote_orders_count', 0),
             )
             self._startup_gate_trading_allowed = False
             return False
 
-        self._trace_event(category='startup_gate', event='gate_passed', mode=mode)
+        self._trace_event(
+            category='startup_gate',
+            event='gate_passed',
+            mode=mode,
+            remote_orders_count=snapshot.get('remote_orders_count', 0),
+        )
         self._startup_gate_trading_allowed = True
         return True
 
@@ -2942,7 +2988,7 @@ class Trader(object):
 
                 if trade_order:
                     order_id = trade_order['order_id']
-                    self._broker.order_queue.put(trade_order)
+                    self._broker.enqueue_order(trade_order)
                     # format the message depending on buy/sell orders
                     msg = Text(f'<NEW ORDER {order_id}>: <{name} - {sym}> ', style='bold')
                     if d == 'buy':  # red for buy

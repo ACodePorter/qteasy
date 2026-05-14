@@ -2134,9 +2134,10 @@ class Operator:
                 "probabilities":   (0.5, 0.45, 0.05),  # originally: (0.9, 0.08, 0.02)
             }
 
-        from qteasy.broker import get_broker
+        from qteasy.broker import BrokerFacade, get_broker
         from qteasy.trader import Trader
         broker = get_broker(broker_type, broker_params)
+        broker = BrokerFacade(broker)
 
         cost_params = np.array(
                 list(parse_trade_cost_params(config, asset_type=config.get('asset_type')).values()),

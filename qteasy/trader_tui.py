@@ -978,7 +978,7 @@ class TraderApp(App):
                 order_type='market',
         )
         if trade_order:
-            self.trader.broker.order_queue.put(trade_order)
+            self.trader.broker.enqueue_order(trade_order)
             order_id = trade_order['order_id']
             syslog.write_with_timestamp(
                     f'Order <{order_id}> has been submitted to broker: '

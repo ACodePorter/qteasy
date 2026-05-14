@@ -28,6 +28,7 @@ def _live_trade_config_base(account_id: int) -> dict:
     cfg['live_trade_broker_params'] = None
     cfg['live_trade_ui_type'] = 'cli'
     cfg['asset_pool'] = '000001.SZ'
+    cfg['asset_type'] = 'E'
     return cfg
 
 
@@ -129,6 +130,21 @@ class TestQtOperatorLiveTradeAssetType(unittest.TestCase):
         print(' captured set_shares arg:', captured.get('shares'))
         self.assertIn('shares', captured)
         self.assertEqual(captured['shares'], ['000001.SZ', '000002.SZ'])
+
+    @patch('qteasy.trader_cli.TraderShell')
+    @patch('qteasy.trader.refill_missing_datasource_data')
+    def test_run_live_trade_wraps_broker_with_facade(self, _mock_refill, _mock_shell):
+        print('\n[TestQtOperatorLiveTradeAssetType] broker should be wrapped by BrokerFacade')
+        from qteasy.broker import BrokerFacade
+
+        cfg = _live_trade_config_base(self.live_account_id)
+        op = Operator(strategies=['macd'])
+        op.set_parameter(stg_id='macd', window_length=5, run_freq='d')
+        op.run_live_trade(config=cfg, datasource=self.test_ds)
+        trader = _mock_shell.call_args[0][0]
+        print(' trader broker type:', type(trader.broker).__name__)
+        self.assertIsInstance(trader.broker, BrokerFacade)
+        self.assertIn('BrokerFacade(', trader.broker.broker_name)
 
     def test_run_live_trade_rejects_unsupported_asset_type(self):
         print('\n[TestQtOperatorLiveTradeAssetType] test_run_live_trade_rejects_unsupported_asset_type')

@@ -862,6 +862,32 @@ class TestTraderPhase5SnapshotAndGate(unittest.TestCase):
         finally:
             _clear_tables(test_ds)
 
+    def test_collect_broker_reconcile_snapshot_matches_gate_failure_reason(self) -> None:
+        print('\n[TestTraderPhase5] reconcile snapshot and startup gate share mismatch reasons')
+        trader, test_ds = create_trader_with_account()
+        try:
+            qt.configure(live_trade_startup_gate_mode='block')
+            trader.force_current_date = pd.Timestamp('2023-05-10').date()
+            trader._broker = _BrokerRemoteCashMismatch()
+            snapshot = trader.collect_broker_reconcile_snapshot()
+            print(' reconcile failures:', snapshot.get('failures'))
+            print(' reconcile cash_diff:', snapshot.get('cash_diff'))
+            print(' reconcile remote_orders_count:', snapshot.get('remote_orders_count'))
+            self.assertGreater(len(snapshot.get('failures', [])), 0)
+            self.assertIn(
+                True,
+                [
+                    'broker_cash_mismatch' in snapshot.get('failures', []),
+                    'operator_not_ready' in snapshot.get('failures', []),
+                ],
+            )
+            gate_ok = trader.run_startup_gate()
+            print(' gate ok:', gate_ok, 'allowed:', trader._startup_gate_trading_allowed)
+            self.assertFalse(gate_ok)
+            self.assertFalse(trader._startup_gate_trading_allowed)
+        finally:
+            _clear_tables(test_ds)
+
 
 if __name__ == '__main__':
     unittest.main()

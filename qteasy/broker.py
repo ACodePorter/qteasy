@@ -15,7 +15,7 @@
 from collections import deque
 from queue import Queue, Empty
 from abc import abstractmethod, ABCMeta
-from typing import Any, Mapping, Optional
+from typing import Any, Callable, Mapping, Optional
 import threading
 
 import numpy as np
@@ -251,6 +251,24 @@ class Broker(object):
         if not new_line:
             message += '_R'
         self.broker_messages.put(message)
+
+    def enqueue_order(self, order: Mapping[str, Any]) -> int:
+        """将订单写入 ``order_queue`` 并返回本地 ``order_id``。
+
+        Parameters
+        ----------
+        order : Mapping[str, Any]
+            订单数据，字段需满足 ``validate_trade_order`` 约束。
+
+        Returns
+        -------
+        int
+            入队订单对应的 ``order_id``。
+        """
+        order_dict = dict(order)
+        validate_trade_order(order_dict, context='Broker.enqueue_order.order')
+        self.order_queue.put(order_dict)
+        return int(order_dict['order_id'])
 
     def _ensure_adapter_connected(self) -> None:
         """确保适配层会话已连接。"""
@@ -971,6 +989,119 @@ class NotImplementedBroker(Broker):
         pass
 
 
+class BrokerFacade(Broker):
+    """Broker 兼容层：对外维持 Broker 契约，对内委托具体 Broker 实现。"""
+
+    def __init__(self, inner: Broker):
+        if not isinstance(inner, Broker):
+            raise TypeError(f'inner must be Broker, got {type(inner)}')
+        if isinstance(inner, BrokerFacade):
+            raise TypeError('inner broker must not be BrokerFacade')
+        self._inner = inner
+        super().__init__(data_source=inner.data_source)
+        self.broker_name = f'BrokerFacade({inner.broker_name})'
+        # 共享队列，保证 legacy 消费链路不变
+        self.order_queue = inner.order_queue
+        self.result_queue = inner.result_queue
+        self.broker_messages = inner.broker_messages
+
+    @property
+    def status(self) -> str:
+        return self._inner.status
+
+    @status.setter
+    def status(self, value: str) -> None:
+        self._inner.status = value
+
+    @property
+    def debug(self) -> bool:
+        return bool(self._inner.debug)
+
+    @debug.setter
+    def debug(self, value: bool) -> None:
+        self._inner.debug = bool(value)
+
+    @property
+    def is_registered(self) -> bool:
+        return bool(self._inner.is_registered)
+
+    @is_registered.setter
+    def is_registered(self, value: bool) -> None:
+        self._inner.is_registered = bool(value)
+
+    def register(self, debug=False, **kwargs):
+        self._inner.register(debug=debug, **kwargs)
+
+    def run(self):
+        return self._inner.run()
+
+    def enqueue_order(self, order: Mapping[str, Any]) -> int:
+        return self._inner.enqueue_order(order)
+
+    def connect(self) -> None:
+        self._inner.connect()
+
+    def disconnect(self) -> None:
+        self._inner.disconnect()
+
+    def submit(self, order: Mapping[str, Any]) -> str:
+        return self._inner.submit(order)
+
+    def cancel(self, broker_order_id: str) -> bool:
+        return self._inner.cancel(broker_order_id)
+
+    def poll_fills(self, timeout: float = 0.0) -> list[dict[str, Any]]:
+        return self._inner.poll_fills(timeout=timeout)
+
+    def poll_messages(self, timeout: float = 0.0) -> list[str]:
+        return self._inner.poll_messages(timeout=timeout)
+
+    def get_remote_orders(self, *, account_id: Optional[int] = None) -> list[dict[str, Any]]:
+        return self._inner.get_remote_orders(account_id=account_id)
+
+    def get_remote_positions(self, *, account_id: Optional[int] = None) -> list[dict[str, Any]]:
+        return self._inner.get_remote_positions(account_id=account_id)
+
+    def get_remote_cash(self, *, account_id: Optional[int] = None) -> Optional[float]:
+        return self._inner.get_remote_cash(account_id=account_id)
+
+    def drain_order_queue(self, *, max_items: Optional[int] = None) -> list[dict[str, Any]]:
+        return self._inner.drain_order_queue(max_items=max_items)
+
+    def wait_until_idle(self, timeout: Optional[float] = 5.0) -> bool:
+        return self._inner.wait_until_idle(timeout=timeout)
+
+    def transaction(self, symbol, order_qty, order_price, direction, position='long', order_type='market'):
+        raise NotImplementedError('BrokerFacade does not implement transaction() directly')
+
+
+_BUILTIN_BROKER_FACTORIES: dict[str, Callable[..., Broker]] = {
+    'random':    SimulatorBroker,
+    'simple':    SimpleBroker,
+    'manual':    NotImplementedBroker,
+    'simulator': SimulatorBroker,
+}
+_CUSTOM_BROKER_FACTORIES: dict[str, Callable[..., Broker]] = {}
+_NAMES_TO_BE_DEPRECATED = {'random': 'simulator'}
+
+
+def register_broker_factory(name: str, factory: Callable[..., Broker]) -> None:
+    """注册自定义 broker 工厂函数。"""
+    if not isinstance(name, str) or not name.strip():
+        raise TypeError(f'name must be a non-empty string, got {type(name)}')
+    if not callable(factory):
+        raise TypeError(f'factory must be callable, got {type(factory)}')
+    _CUSTOM_BROKER_FACTORIES[name.strip().lower()] = factory
+
+
+def unregister_broker_factory(name: str) -> bool:
+    """移除自定义 broker 工厂，返回是否存在并成功移除。"""
+    if not isinstance(name, str) or not name.strip():
+        raise TypeError(f'name must be a non-empty string, got {type(name)}')
+    key = name.strip().lower()
+    return _CUSTOM_BROKER_FACTORIES.pop(key, None) is not None
+
+
 def get_broker(name: str = 'simulator', params=None):
     """ get broker object by broker name
 
@@ -985,26 +1116,19 @@ def get_broker(name: str = 'simulator', params=None):
     ------
     Broker
     """
-    all_brokers = {
-        'random':    SimulatorBroker,
-        'simple':    SimpleBroker,
-        'manual':    NotImplementedBroker,
-        'simulator': SimulatorBroker,
-    }
-    names_to_be_deprecated = {'random': 'simulator'}
-
     if not isinstance(name, str):
         raise TypeError(f'name must be a string, got {type(name)}')
+    key = name.strip().lower()
 
-    if name in names_to_be_deprecated:
+    if key in _NAMES_TO_BE_DEPRECATED:
         import warnings
         warnings.warn(
             f'The broker name "{name}" is deprecated and will be removed in qteasy 2.0. '
-            f'Use "{names_to_be_deprecated[name]}" instead.',
+            f'Use "{_NAMES_TO_BE_DEPRECATED[key]}" instead.',
             FutureWarning,
             stacklevel=2,
         )
-    broker_func = all_brokers.get(name, SimulatorBroker)
+    broker_func = _CUSTOM_BROKER_FACTORIES.get(key, _BUILTIN_BROKER_FACTORIES.get(key, SimulatorBroker))
     if params is not None:
         return broker_func(**params)
     return broker_func()

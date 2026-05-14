@@ -12,7 +12,15 @@ import unittest
 import threading
 import time
 
-from qteasy.broker import Broker, SimpleBroker, SimulatorBroker
+from qteasy.broker import (
+    Broker,
+    BrokerFacade,
+    SimpleBroker,
+    SimulatorBroker,
+    get_broker,
+    register_broker_factory,
+    unregister_broker_factory,
+)
 from qteasy.trade_io import validate_raw_trade_result
 
 
@@ -197,6 +205,17 @@ class TestBrokerContract(unittest.TestCase):
         print(' error:', message)
         self.assertIn('not connected', message)
 
+    def test_enqueue_order_pushes_into_queue_with_validated_order(self):
+        print('\n[TestBrokerContract] enqueue_order 入队并返回 order_id')
+        broker = MinimalBrokerForContractTest()
+        order_id = broker.enqueue_order(self.order)
+        queued = broker.order_queue.get_nowait()
+        broker.order_queue.task_done()
+        print(' returned order_id:', order_id)
+        print(' queued order keys:', sorted(queued.keys()))
+        self.assertEqual(order_id, self.order['order_id'])
+        self.assertEqual(queued['order_id'], self.order['order_id'])
+
     def test_poll_fills_when_not_connected_returns_empty_for_legacy_path(self):
         print('\n[TestBrokerContract] 未 connect 调用 poll_fills（legacy 空队列）')
         broker = MinimalBrokerForContractTest()
@@ -334,6 +353,64 @@ class TestBrokerRemoteReconcileContract(unittest.TestCase):
         self.assertIsNone(cash)
         self.assertEqual(pos, [])
 
+
+class TestBrokerFacadeAndRegistry(unittest.TestCase):
+    """BrokerFacade 委托行为与注册表扩展回归。"""
+
+    def setUp(self) -> None:
+        self.order = {
+            'order_id': 9001,
+            'pos_id': 1,
+            'direction': 'buy',
+            'order_type': 'limit',
+            'qty': 10.0,
+            'price': 11.0,
+            'status': 'submitted',
+            'submitted_time': '2026-05-14 09:30:00',
+            'symbol': '000001.SH',
+            'position': 'long',
+        }
+
+    def test_broker_facade_delegates_contract_methods(self):
+        print('\n[TestBrokerFacadeAndRegistry] facade 委托 submit/poll/status')
+        inner = MinimalBrokerForContractTest()
+        facade = BrokerFacade(inner)
+        facade.connect()
+        broker_order_id = facade.submit(self.order)
+        fills_round_1 = facade.poll_fills()
+        fills_round_2 = facade.poll_fills()
+        print(' broker_order_id:', broker_order_id)
+        print(' fills round1/round2:', fills_round_1, fills_round_2)
+        self.assertTrue(broker_order_id.startswith('MinimalBroker:'))
+        self.assertEqual(len(fills_round_1), 1)
+        self.assertEqual(len(fills_round_2), 1)
+        self.assertEqual(fills_round_1[0]['status'], 'partial-filled')
+        self.assertEqual(fills_round_2[0]['status'], 'filled')
+        facade.status = 'paused'
+        print(' inner status after facade set:', inner.status)
+        self.assertEqual(inner.status, 'paused')
+
+    def test_register_broker_factory_then_get_broker(self):
+        print('\n[TestBrokerFacadeAndRegistry] register_broker_factory 可扩展 get_broker')
+        broker_name = 'contract_test_custom_broker'
+
+        def _factory(**kwargs):
+            _ = kwargs
+            b = MinimalBrokerForContractTest()
+            b.broker_name = 'ContractCustomBroker'
+            return b
+
+        print(' register broker name:', broker_name)
+        register_broker_factory(broker_name, _factory)
+        try:
+            broker = get_broker(broker_name, params={})
+            print(' broker type/name:', type(broker).__name__, broker.broker_name)
+            self.assertIsInstance(broker, MinimalBrokerForContractTest)
+            self.assertEqual(broker.broker_name, 'ContractCustomBroker')
+        finally:
+            removed = unregister_broker_factory(broker_name)
+            print(' unregister removed:', removed)
+            self.assertTrue(removed)
 
 if __name__ == '__main__':
     unittest.main()

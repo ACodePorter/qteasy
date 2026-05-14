@@ -5,7 +5,7 @@
 # Contact: jackie.pengzhao@gmail.com
 # Created: 2026-05-10
 # Desc:
-#   Notebook 友好的无头 Trader 集成测试脚本（分九阶段执行；阶段 9 对齐路线图 5-A/5-B），
+#   Notebook 友好的无头 Trader 集成测试脚本（分十阶段执行；阶段 9 对齐路线图 5-A/5-B，阶段 10 对齐 4-C），
 # 默认使用 qteasy.cfg 对应的 QT_DATA_SOURCE；可选隔离文件型数据源回放。
 # 下一交易日集中冒烟：见 docs/source/live_trading/7-manual-smoke-live-grid-roadmap.rst 。
 # ======================================
@@ -25,7 +25,14 @@ import pandas as pd
 
 import qteasy as qt
 from qteasy import DataSource, Operator
-from qteasy.broker import SimulatorBroker
+from qteasy.broker import (
+    Broker,
+    BrokerFacade,
+    SimulatorBroker,
+    get_broker,
+    register_broker_factory,
+    unregister_broker_factory,
+)
 from qteasy.trader import Trader
 from qteasy.trade_recording import (
     new_account,
@@ -70,14 +77,14 @@ def _unittest_subprocess_env() -> Dict[str, str]:
 
 
 # %% [markdown]
-# # Notebook 无头 Trader 测试脚本（9 阶段；第 9 阶段对齐路线图 5-A/5-B）
+# # Notebook 无头 Trader 测试脚本（10 阶段；第 9 阶段对齐路线图 5-A/5-B，第 10 阶段对齐 4-C）
 #
 # 用法（建议在 notebook 分 cell 执行）：
 # 1. `session = create_headless_notebook_session()`  # 默认 QT_DATA_SOURCE + 固定回放日
 #    真实时钟：`create_headless_notebook_session(use_real_time=True)`
 #    路线图 5-A/5-B 相关：`create_headless_notebook_session(..., live_trade_smoke_overrides={...})`
 #    （在 Trader.start 之前写入 QT_CONFIG；shutdown_session 会尝试恢复被覆盖的键）
-# 2. 依次运行 `stage1_...` 到 `stage9_...` 再 `stage8_...`（各 stage 可传 `info=True` 查看中文范围说明）
+# 2. 依次运行 `stage1_...` 到 `stage10_...` 再 `stage8_...`（各 stage 可传 `info=True` 查看中文范围说明）
 #    Stage1 在 `run_commands=True` 时会自动设置子进程 `cwd` 与 `PYTHONPATH` 指向本仓库根，无需在 notebook 里改 sys.path。
 #    整类 unittest 可能极久，非死锁；可用 `unittest_timeout_s`（默认 3600s）或 `None` 取消限时。
 # 3. 若中途调试，最后执行 `shutdown_session(session)`
@@ -95,6 +102,7 @@ class NotebookDayRecord:
     stage6_closing_reconcile: Dict[str, Any] = field(default_factory=dict)
     stage7_exceptions_and_logs: Dict[str, Any] = field(default_factory=dict)
     stage9_phase5_ab: Dict[str, Any] = field(default_factory=dict)
+    stage10_phase4_c: Dict[str, Any] = field(default_factory=dict)
     stage8_conclusion: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -104,7 +112,7 @@ class HeadlessNotebookSession:
 
     trader: Trader
     datasource: DataSource
-    broker: SimulatorBroker
+    broker: Broker
     trader_thread: Optional[threading.Thread] = None
     broker_thread: Optional[threading.Thread] = None
     use_real_time: bool = False
@@ -245,7 +253,7 @@ def create_headless_notebook_session(
 
     op = _build_notebook_operator()
     _configure_notebook_operator(op, NOTEBOOK_ASSET_POOL)
-    broker = SimulatorBroker(data_source=ds)
+    broker = BrokerFacade(SimulatorBroker(data_source=ds))
     trader = Trader(
         operator=op,
         account_id=account_id,
@@ -798,6 +806,68 @@ def stage9_phase5_ab_smoke(session: HeadlessNotebookSession, info: bool = False)
     return acceptance
 
 
+def stage10_phase4_c_smoke(session: HeadlessNotebookSession, info: bool = False) -> Dict[str, Any]:
+    """阶段10：路线图 4-C（BrokerFacade 与对账入口）集中冒烟。"""
+    _print_stage_scope(
+        '阶段10 stage10_phase4_c_smoke',
+        [
+            '范围：BrokerFacade 类型、enqueue_order 入口、broker registry 扩展、结构化对账快照。',
+            '目的：快速确认 4-C 最小闭环（Facade + 注册 + 对账入口）在无头会话中可用。',
+        ],
+        enabled=info,
+    )
+    print('\n[Stage10] Phase 4-C smoke (broker facade + registry + reconcile)')
+    trader = session.trader
+    broker = trader.broker
+    broker_type = type(broker).__name__
+    print(' trader broker type:', broker_type)
+    print(' trader broker name:', getattr(broker, 'broker_name', ''))
+    enqueue_exists = callable(getattr(broker, 'enqueue_order', None))
+    print(' enqueue_order callable:', enqueue_exists)
+
+    broker_name = f'notebook_stage10_custom_{int(time.time_ns())}'
+    print(' register temp broker factory:', broker_name)
+    register_broker_factory(
+        broker_name,
+        lambda **kwargs: SimulatorBroker(data_source=kwargs.get('data_source', session.datasource)),
+    )
+    registry_ok = False
+    removed_ok = False
+    created_type = ''
+    try:
+        created = get_broker(broker_name, params={'data_source': session.datasource})
+        created_type = type(created).__name__
+        registry_ok = isinstance(created, SimulatorBroker)
+        print(' custom broker created type:', created_type)
+    finally:
+        removed_ok = unregister_broker_factory(broker_name)
+        print(' unregister temp broker factory:', removed_ok)
+
+    reconcile = trader.collect_broker_reconcile_snapshot()
+    reconcile_failures = reconcile.get('failures', []) or []
+    reconcile_ok_for_smoke = bool(reconcile.get('is_ok')) or set(reconcile_failures) == {'operator_not_ready'}
+    print(' reconcile is_ok:', reconcile.get('is_ok'))
+    print(' reconcile failures:', reconcile_failures)
+    print(' reconcile cash_diff:', reconcile.get('cash_diff'))
+    print(' reconcile position_qty_diff:', reconcile.get('position_qty_diff'))
+    print(' reconcile remote_orders_count:', reconcile.get('remote_orders_count'))
+
+    acceptance = {
+        'broker_type': broker_type,
+        'broker_name': getattr(broker, 'broker_name', ''),
+        'broker_is_facade': isinstance(broker, BrokerFacade),
+        'enqueue_order_exists': enqueue_exists,
+        'registry_create_type': created_type,
+        'registry_roundtrip_ok': registry_ok and removed_ok,
+        'reconcile_snapshot': reconcile,
+        'reconcile_is_ok': bool(reconcile.get('is_ok')),
+        'reconcile_ok_for_smoke': reconcile_ok_for_smoke,
+    }
+    print(' acceptance (auto checks):', acceptance)
+    session.record.stage10_phase4_c = acceptance
+    return acceptance
+
+
 def save_order_for_probe(ds_db: DataSource) -> int:
     """为回滚探针创建并提交一笔订单。"""
     from qteasy.trade_recording import save_parsed_trade_orders
@@ -819,8 +889,8 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
     _print_stage_scope(
         '阶段8 stage8_conclusion',
         [
-            '范围：汇总阶段 4、5、7、9 写入 record 的关键标志。',
-            '目的：根据幂等检查结果、日程、可选 DB 探针与 5-A/5-B 冒烟字段，给出是否适合进入下一阶段的主观判定与后续操作建议（打印 ready_for_next_phase、risk_level、next_steps）。',
+            '范围：汇总阶段 4、5、7、9、10 写入 record 的关键标志。',
+            '目的：根据幂等检查结果、日程、可选 DB 探针、5-A/5-B 与 4-C 冒烟字段，给出是否适合进入下一阶段的主观判定与后续操作建议（打印 ready_for_next_phase、risk_level、next_steps）。',
         ],
         enabled=info,
     )
@@ -829,6 +899,7 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
     s5 = session.record.stage5_stage0to3_checks
     s7 = session.record.stage7_exceptions_and_logs
     s9 = session.record.stage9_phase5_ab
+    s10 = session.record.stage10_phase4_c
     duplicate_ok = bool(
         (s4.get('supports_broker_result_id') and s4.get('duplicate_result_id_equal', False))
         or ((not s4.get('supports_broker_result_id')) and s4.get('duplicate_mode') in ['rejected_or_non_idempotent'])
@@ -839,11 +910,16 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
         and (s7.get('db_rollback_probe_passed') in [None, True])
         and (not s9 or s9.get('operator_is_ready', True))
         and (not s9 or s9.get('prepare_leq_run_when_split', True))
+        and (not s10 or s10.get('broker_is_facade', True))
+        and (not s10 or s10.get('enqueue_order_exists', True))
+        and (not s10 or s10.get('registry_roundtrip_ok', True))
+        and (not s10 or s10.get('reconcile_ok_for_smoke', True))
     )
     result = {
         'ready_for_next_phase': passed,
         'risk_level': 'low' if passed else 'medium',
         'stage9_phase5_ab': s9,
+        'stage10_phase4_c': s10,
         'next_steps': [
             'Run next trade day smoke + broker-side reconciliation.',
             'Keep this script as source material to convert into unittest.',
@@ -894,6 +970,7 @@ if __name__ == '__main__':
         stage6_closing_reconcile(s)
         stage7_exception_and_rollback_probe(s, use_db_probe=False)
         stage9_phase5_ab_smoke(s, info=True)
+        stage10_phase4_c_smoke(s, info=True)
         stage8_conclusion(s)
     except KeyboardInterrupt:
         print('\n[Interrupted] KeyboardInterrupt captured, will stop headless session.')

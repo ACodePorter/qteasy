@@ -1331,7 +1331,7 @@ class TraderShell(Cmd):
                 order_type='market',
         )
         if trade_order:
-            self.trader.broker.order_queue.put(trade_order)
+            self.trader.broker.enqueue_order(trade_order)
             order_id = trade_order['order_id']
             print(f'Order <{order_id}> has been submitted to broker: '
                   f'{trade_order["direction"]} {trade_order["qty"]:.1f} of {symbol} '
@@ -1400,7 +1400,7 @@ class TraderShell(Cmd):
         )
 
         if trade_order:
-            self.trader.broker.order_queue.put(trade_order)
+            self.trader.broker.enqueue_order(trade_order)
             order_id = trade_order['order_id']
             print(f'Order <{order_id}> has been submitted to broker: '
                   f'{trade_order["direction"]} {trade_order["qty"]:.1f} of {symbol} '
