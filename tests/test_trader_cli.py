@@ -95,7 +95,7 @@ class TestTraderCLI(unittest.TestCase):
         # 创建一个操作员
         operator = Operator(strategies=['macd', 'dma'], op_type='step')
         # 创建一个经纪商
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
 
         test_ds.reconnect()
 
@@ -814,6 +814,71 @@ class TestTraderCLI(unittest.TestCase):
         self.assertFalse(tss.do_orders('wrong_argument'))
         self.assertFalse(tss.do_orders('000001 -w wrong_optional_argument'))
         self.assertFalse(tss.do_orders('000001 -t wrong_optional_argument'))
+
+    def test_command_orders_supports_submitted_active_and_nat_format(self):
+        """orders 支持 submitted/active 过滤，且 NaT 时统一格式输出。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] orders --status submitted / --active / NaT format')
+
+        parsed_signals_batch = (
+            ['000001.SZ'],
+            ['long'],
+            ['buy'],
+            [100],
+            [10.0],
+        )
+        order_ids = save_parsed_trade_orders(
+                account_id=1,
+                symbols=parsed_signals_batch[0],
+                positions=parsed_signals_batch[1],
+                directions=parsed_signals_batch[2],
+                quantities=parsed_signals_batch[3],
+                prices=parsed_signals_batch[4],
+                data_source=tss.trader.datasource,
+        )
+        print(' order_ids:', order_ids)
+        submit_order(order_ids[0], tss.trader.datasource)
+
+        self.assertIsNone(tss.do_orders('--status submitted'))
+        self.assertIsNone(tss.do_orders('--active'))
+
+        fake_df = tss.trader.history_orders().copy()
+        fake_df.loc[fake_df.index[0], 'execution_time'] = pd.NaT
+        capture = io.StringIO()
+        with patch.object(tss.trader, 'history_orders', return_value=fake_df):
+            with redirect_stdout(capture):
+                self.assertIsNone(tss.do_orders(''))
+        out = capture.getvalue()
+        print(' orders output with NaT:\n', out)
+        self.assertIn('--', out)
+
+    def test_command_cancel_success_and_failure(self):
+        """cancel 命令成功与失败路径。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] cancel command success/failure')
+
+        order_ids = save_parsed_trade_orders(
+                account_id=1,
+                symbols=['000001.SZ'],
+                positions=['long'],
+                directions=['buy'],
+                quantities=[100],
+                prices=[10.0],
+                data_source=tss.trader.datasource,
+        )
+        order_id = order_ids[0]
+        submit_order(order_id, tss.trader.datasource)
+        detail_before = read_trade_order_detail(order_id=order_id, data_source=tss.trader.datasource)
+        print(' before cancel:', detail_before)
+        self.assertEqual(detail_before['status'], 'submitted')
+
+        self.assertIsNone(tss.do_cancel(str(order_id)))
+        detail_after = read_trade_order_detail(order_id=order_id, data_source=tss.trader.datasource)
+        print(' after cancel:', detail_after)
+        self.assertEqual(detail_after['status'], 'canceled')
+
+        self.assertFalse(tss.do_cancel(str(order_id)))
+        self.assertFalse(tss.do_cancel('999999'))
 
     def test_command_change(self):
         """ test change command"""

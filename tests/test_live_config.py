@@ -296,7 +296,7 @@ class TestTraderLiveConfigIntegration(unittest.TestCase):
 
         new_account(user_name='lc_u1', cash_amount=100000.0, data_source=self.ds)
         op = create_operator()
-        br = SimulatorBroker()
+        br = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = default_trader_kwargs()
         print(' default live_price_channel:', kwargs.get('live_price_channel'))
         self.assertEqual(kwargs['live_price_channel'], 'eastmoney')
@@ -325,7 +325,7 @@ class TestTraderLiveConfigIntegration(unittest.TestCase):
 
         new_account(user_name='lc_u2', cash_amount=100000.0, data_source=self.ds)
         op = create_operator()
-        br = SimulatorBroker()
+        br = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = default_trader_kwargs()
         trader = Trader(
             account_id=1,
@@ -354,7 +354,7 @@ class TestTraderLiveConfigIntegration(unittest.TestCase):
 
             new_account(user_name='lc_u3', cash_amount=100000.0, data_source=self.ds)
             op = create_operator()
-            br = SimulatorBroker()
+            br = SimulatorBroker(reject_submit_probability=0.0)
             kwargs = default_trader_kwargs()
             base = _minimal_valid_live_mapping()
             base['live_trade_split_strategy_prepare'] = True

@@ -27,7 +27,7 @@ from cmd import Cmd
 from threading import Timer
 from rich.text import Text
 
-from qteasy.trading_util import get_symbol_names
+from qteasy.trading_util import get_symbol_names, cancel_order
 
 from qteasy.utilfuncs import (
     adjust_string_length,
@@ -349,10 +349,13 @@ class TraderShell(Cmd):
                                   'symbol like 000651 is accepted.'),
         'orders':     dict(prog='orders', description='Get account orders',
                            usage='usage: orders [SYMBOL [SYMBOL ...]] [-h] '
-                                 '[--status {filled,f,canceled,c,partial-filled,p}] '
+                                 '[--status {submitted,s,filled,f,canceled,c,partial-filled,p,rejected,r}] [--active] '
                                  '[--time {today,t,yesterday,y,3day,3,week,w,month,m,all,a}] '
                                  '[--type {buy,sell,b,s,all,a}] '
                                  '[--side {long,short,l,s,all,a}]'),
+        'cancel':     dict(prog='cancel', description='Cancel an active order',
+                           usage='cancel ORDER_ID [-h]',
+                           epilog='Cancel one submitted/partial-filled order by order id.'),
         'change':     dict(prog='change', description='Change account cash and positions',
                            usage='change [SYMBOL] [-h] [--amount AMOUNT] [--price PRICE] '
                                  '[--side {l,long,s,short}] [--cash CASH]',
@@ -416,9 +419,11 @@ class TraderShell(Cmd):
         'history':    [('symbol',)],
         'orders':     [('symbols',),
                        ('--status', '-s'),
+                       ('--active', '-a'),
                        ('--time', '-t'),
                        ('--type', '-y'),
                        ('--side', '-d')],
+        'cancel':     [('order_id',)],
         'change':     [('symbol',),
                        ('--amount', '-a'),
                        ('--price', '-p'),
@@ -530,8 +535,11 @@ class TraderShell(Cmd):
                         'help':   'stock symbol to show orders for'},
                        {'action':  'store',
                         'default': 'all',
-                        'choices': ['filled', 'f', 'canceled', 'c', 'partial-filled', 'p'],
+                        'choices': ['submitted', 's', 'filled', 'f', 'canceled', 'c', 'partial-filled', 'p',
+                                    'rejected', 'r'],
                         'help':    'order status to show'},
+                       {'action': 'store_true',
+                        'help':   'show active orders only (submitted + partial-filled)'},
                        {'action':  'store',
                         'default': 'today',
                         'choices': ['today', 't', 'yesterday', 'y', '3day', '3', 'week', 'w',
@@ -545,6 +553,9 @@ class TraderShell(Cmd):
                         'default': 'all',
                         'choices': ['long', 'short', 'l', 's', 'all', 'a'],
                         'help':    'order side to show'}],
+        'cancel':     [{'action': 'store',
+                        'type':   int,
+                        'help':   'order id to cancel'}],
         'change':     [{'action':  'store',
                         'nargs':   '?',  # one or zero (default value) argument is allowed
                         'default': '',
@@ -685,6 +696,7 @@ class TraderShell(Cmd):
                              *,
                              symbols: list[str] = None,
                              status: str = None,
+                             active_only: bool = False,
                              order_time: str = None,
                              order_type: str = None,
                              side: str = None,
@@ -742,13 +754,19 @@ class TraderShell(Cmd):
         order_details = order_details[(order_details['submitted_time'] >= start) &
                                       (order_details['submitted_time'] <= end)]
 
-        # select orders by status arguments like 'filled', 'canceled', 'partial-filled'
-        if status in ['filled', 'f']:
+        # select orders by status arguments like 'submitted', 'filled', 'canceled', 'partial-filled'
+        if active_only:
+            order_details = order_details[order_details['status'].isin(['submitted', 'partial-filled'])]
+        elif status in ['submitted', 's']:
+            order_details = order_details[order_details['status'] == 'submitted']
+        elif status in ['filled', 'f']:
             order_details = order_details[order_details['status'] == 'filled']
         elif status in ['canceled', 'c']:
             order_details = order_details[order_details['status'] == 'canceled']
         elif status in ['partial-filled', 'p']:
             order_details = order_details[order_details['status'] == 'partial-filled']
+        elif status in ['rejected', 'r']:
+            order_details = order_details[order_details['status'] == 'rejected']
         else:  # default to show all statuses
             pass
 
@@ -1331,7 +1349,6 @@ class TraderShell(Cmd):
                 order_type='market',
         )
         if trade_order:
-            self.trader.broker.order_queue.put(trade_order)
             order_id = trade_order['order_id']
             print(f'Order <{order_id}> has been submitted to broker: '
                   f'{trade_order["direction"]} {trade_order["qty"]:.1f} of {symbol} '
@@ -1344,7 +1361,11 @@ class TraderShell(Cmd):
                         f'rule_id={decision.rule_id!r}, reason={decision.reason!r}'
                 )
             else:
-                print('Order submission failed.')
+                reason = self.trader.last_submit_reject_reason
+                if reason:
+                    print(f'Order submission failed: {reason}')
+                else:
+                    print('Order submission failed.')
 
         if not self.trader.is_market_open:
             print(f'Market is not open, order might not be executed immediately')
@@ -1400,7 +1421,6 @@ class TraderShell(Cmd):
         )
 
         if trade_order:
-            self.trader.broker.order_queue.put(trade_order)
             order_id = trade_order['order_id']
             print(f'Order <{order_id}> has been submitted to broker: '
                   f'{trade_order["direction"]} {trade_order["qty"]:.1f} of {symbol} '
@@ -1416,7 +1436,11 @@ class TraderShell(Cmd):
                         f'rule_id={decision.rule_id!r}, reason={decision.reason!r}'
                 )
             else:
-                print('Order submission failed.')
+                reason = self.trader.last_submit_reject_reason
+                if reason:
+                    print(f'Order submission failed: {reason}')
+                else:
+                    print('Order submission failed.')
 
     def do_positions(self, arg):
         """usage: positions [-h]
@@ -1821,6 +1845,7 @@ class TraderShell(Cmd):
 
         symbols = [symbol for symbol_list in args.symbols for symbol in symbol_list] if args.symbols else []
         status = args.status
+        active_only = args.active
         order_time = args.time
         order_type = args.type
         side = args.side
@@ -1833,6 +1858,7 @@ class TraderShell(Cmd):
                 order_details=order_details,
                 symbols=symbols,
                 status=status,
+                active_only=active_only,
                 order_time=order_time,
                 order_type=order_type,
                 side=side,
@@ -1844,35 +1870,54 @@ class TraderShell(Cmd):
             symbols = order_details['symbol'].tolist()
             names = get_symbol_names(datasource=self.trader.datasource, symbols=symbols)
             order_details['name'] = names
-            # if NaT in order_details, then strftime will not work, will print out original form of order_details
-            if np.any(pd.isna(order_details.execution_time)) or np.any(pd.isna(order_details.submitted_time)):
-                print(order_details)
-            else:
-                rich.print(order_details.to_string(
-                        index=False,
-                        columns=['execution_time', 'symbol', 'position', 'direction', 'qty', 'price_quoted',
-                                 'submitted_time', 'status', 'price_filled', 'filled_qty', 'canceled_qty',
-                                 'delivery_status', 'name'],
-                        header=['time', 'symbol', 'pos', 'buy/sell', 'qty', 'price',
-                                'submitted', 'status', 'fill_price', 'fill_qty', 'canceled',
-                                'delivery', 'name'],
-                        formatters={'name':           '{:s}'.format,
-                                    'qty':            '{:,.2f}'.format,
-                                    'price_quoted':   '¥{:,.2f}'.format,
-                                    'price_filled':   '¥{:,.2f}'.format,
-                                    'filled_qty':     '{:,.2f}'.format,
-                                    'canceled_qty':   '{:,.2f}'.format,
-                                    'execution_time': lambda x: "{:%b%d %H:%M:%S}".format(pd.to_datetime(x)),
-                                    'submitted_time': lambda x: "{:%b%d %H:%M:%S}".format(pd.to_datetime(x))
-                                    },
-                        col_space={
-                            'price_quoted': 10,
-                            'price_filled': 10,
-                            'filled_qty':   10,
-                            'canceled_qty': 10,
-                        },
-                        justify='right',
-                ))
+            display_df = order_details.copy()
+            for col in ['price_filled', 'filled_qty', 'canceled_qty', 'delivery_status']:
+                display_df[col] = display_df[col].apply(lambda x: '--' if pd.isna(x) else x)
+            rich.print(display_df.to_string(
+                    index=False,
+                    columns=['execution_time', 'symbol', 'position', 'direction', 'qty', 'price_quoted',
+                             'submitted_time', 'status', 'price_filled', 'filled_qty', 'canceled_qty',
+                             'delivery_status', 'name'],
+                    header=['time', 'symbol', 'pos', 'buy/sell', 'qty', 'price',
+                            'submitted', 'status', 'fill_price', 'fill_qty', 'canceled',
+                            'delivery', 'name'],
+                    formatters={'name':           '{:s}'.format,
+                                'qty':            '{:,.2f}'.format,
+                                'price_quoted':   '¥{:,.2f}'.format,
+                                'price_filled':   lambda x: x if x == '--' else f'¥{float(x):,.2f}',
+                                'filled_qty':     lambda x: x if x == '--' else f'{float(x):,.2f}',
+                                'canceled_qty':   lambda x: x if x == '--' else f'{float(x):,.2f}',
+                                'execution_time': lambda x: '--' if pd.isna(x) else "{:%b%d %H:%M:%S}".format(
+                                        pd.to_datetime(x)),
+                                'submitted_time': lambda x: '--' if pd.isna(x) else "{:%b%d %H:%M:%S}".format(
+                                        pd.to_datetime(x))
+                                },
+                    col_space={
+                        'price_quoted': 10,
+                        'price_filled': 10,
+                        'filled_qty':   10,
+                        'canceled_qty': 10,
+                    },
+                    justify='right',
+            ))
+
+    def do_cancel(self, arg):
+        """usage: cancel ORDER_ID [-h]
+
+        Cancel one active order by order id.
+        """
+
+        args = self.parse_args('cancel', arg)
+        if not args:
+            return False
+
+        order_id = int(args.order_id)
+        try:
+            cancel_order(order_id=order_id, data_source=self.trader.datasource)
+            print(f'Order {order_id} has been canceled.')
+        except Exception as e:
+            print(f'Order cancellation failed: {e}')
+            return False
 
     def do_change(self, arg):
         """usage: change [SYMBOL] [-h] [--amount AMOUNT] [--price PRICE] [--side {l,long,s,short}]

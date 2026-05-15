@@ -143,7 +143,7 @@ def create_trader_with_account(
         update_position(position_id=3, data_source=test_ds, qty_change=300, available_qty_change=300)
         update_position(position_id=4, data_source=test_ds, qty_change=200, available_qty_change=100)
     operator = create_operator()
-    broker = SimulatorBroker()
+    broker = SimulatorBroker(reject_submit_probability=0.0)
     trader = Trader(
         account_id=account_id,
         operator=operator,

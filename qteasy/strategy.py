@@ -1476,7 +1476,7 @@ class RuleIterator(BaseStrategy):
                 extra_info += f'\n{"Multi-parameter":<{info_width}}\n{multi_par_str}'
             else:  # print out brief multi_pars info
                 extra_info += (
-                        f'\n{"Multi-parameter (pass verbose=True to view all multi pars)":<{info_width}}\n'
+                        f'\n{"Multi-parameter (first share only; full list: strategies -d in Trader CLI)":<{info_width}}\n'
                         f'{self.multi_pars[0]!r} ... ({len(self.multi_pars)} shares)\n'
                 )
 

@@ -1622,6 +1622,11 @@ class Operator:
                     rprint(f'{adjust_string_length(stg_id, id_width) :<{id_width}}'
                            f'{adjust_string_length(stg.name, name_width) :<{name_width}}'
                            f'{adjust_string_length(str(stg.par_values), par_width) :^{par_width}}')
+                    if getattr(stg, 'multi_pars', None):
+                        hint = '[multi_pars] use strategies -d for per-share parameters.'
+                        print(f'{adjust_string_length("", id_width) :<{id_width}}'
+                              f'{adjust_string_length("", name_width) :<{name_width}}'
+                              f'{hint}')
                 print('=' * info_width)
             # 打印每个strategy的详细信息
             if (self.strategy_count > 0) and verbose:
@@ -2129,9 +2134,10 @@ class Operator:
                 "probabilities":   (0.5, 0.45, 0.05),  # originally: (0.9, 0.08, 0.02)
             }
 
-        from qteasy.broker import get_broker
+        from qteasy.broker import BrokerFacade, get_broker
         from qteasy.trader import Trader
         broker = get_broker(broker_type, broker_params)
+        broker = BrokerFacade(broker)
 
         cost_params = np.array(
                 list(parse_trade_cost_params(config, asset_type=config.get('asset_type')).values()),

@@ -46,7 +46,7 @@ class TestTraderTUI(unittest.TestCase):
         operator = Operator(strategies=['macd', 'dma'], op_type='step')
         operator.set_parameter(stg_id='dma', window_length=20, run_freq='H')
         operator.set_parameter(stg_id='macd', window_length=30, run_freq='30min')
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         config = {
             'time_zone':             'local',
             'market_open_time_am':   '09:30:00',

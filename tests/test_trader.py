@@ -65,7 +65,7 @@ class TestTrader(unittest.TestCase):
                 window_length=30,
                 run_freq='30min',
         )
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         trader_kwargs = {
             'market_open_time_am':              '09:30:00',
             'market_close_time_pm':             '15:30:00',
@@ -1524,7 +1524,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(self.test_ds)
         new_account(user_name='init_test_user', cash_amount=50000, data_source=self.test_ds)
         self.operator = _create_operator()
-        self.broker = SimulatorBroker()
+        self.broker = SimulatorBroker(reject_submit_probability=0.0)
 
     def tearDown(self):
         """测试结束后清理测试数据。"""

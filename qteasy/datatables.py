@@ -487,7 +487,7 @@ TABLE_SCHEMA = {
                         'datetime', 'varchar(15)'],
          'remarks':    ['交易订单ID', '持仓ID', '交易方向(买Buy/卖Sell)', '委托类型(市价单/限价单)', '委托数量',
                         '委托报价',
-                        '委托时间', '状态(提交submitted/部分成交partial-filled/全部成交filled/取消canceled)'],
+                        '委托时间', '状态(提交submitted/部分成交partial-filled/全部成交filled/取消canceled/拒单rejected)'],
          'prime_keys': [0]
          },
 

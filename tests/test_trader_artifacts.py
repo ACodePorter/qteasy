@@ -46,7 +46,7 @@ from tests.trader_test_helpers import (
 
 def _make_trader(ds, *, risk_manager=None, account_id: int = 1) -> Trader:
     op = create_operator()
-    br = SimulatorBroker()
+    br = SimulatorBroker(reject_submit_probability=0.0)
     return Trader(
         account_id=account_id,
         operator=op,

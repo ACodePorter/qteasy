@@ -1116,7 +1116,7 @@ def output_trade_order():
     pass
 
 
-def submit_order(order_id, data_source):
+def submit_order(order_id, data_source, mark_submitted: bool = True):
     """ 将交易订单提交给交易平台或用户以等待交易结果，同时更新账户和持仓信息
 
     只有刚刚创建的交易订单（status == 'created'）才能提交，否则不需要再次提交
@@ -1144,7 +1144,6 @@ def submit_order(order_id, data_source):
     if trade_order['status'] != 'created':
         return None
 
-    # 实际上在parse_trade_signal的时候就已经检查过总买入数量与可用现金之间的关系了，这里不再检察
     # 如果交易方向为buy，则需要检查账户的现金是否足够
     position_id = trade_order['pos_id']
     position = get_position_by_id(position_id, data_source=data_source)
@@ -1155,11 +1154,17 @@ def submit_order(order_id, data_source):
     if trade_order['direction'] == 'buy':
         account_id = position['account_id']
         account = get_account(account_id, data_source=data_source)
-        # 如果账户的现金不足，则输出警告信息
-        if account['available_cash'] < trade_order['qty'] * trade_order['price']:
-            logger.warning(f'Available cash {account["available_cash"]:.3f} is not enough for trade order: \n'
-                           f'{trade_order}'
-                           f'trade order might not be executed!')
+        required_cash = float(trade_order['qty']) * float(trade_order['price'])
+        # 现金不足时拒绝提交，避免订单进入submitted后在记账阶段失败
+        if account['available_cash'] < required_cash:
+            logger.warning(
+                    f'Available cash {account["available_cash"]:.3f} is not enough for trade order: \n'
+                    f'{trade_order}'
+            )
+            raise RuntimeError(
+                    f'Insufficient available cash for order {order_id}: '
+                    f'need {required_cash:.3f}, available {float(account["available_cash"]):.3f}'
+            )
 
     # 如果交易方向为sell，则需要检查账户的持仓是否足够
     elif trade_order['direction'] == 'sell':
@@ -1169,10 +1174,9 @@ def submit_order(order_id, data_source):
                            f'{trade_order}'
                            f'trade order might not be executed!')
 
-    # 将signal的status改为"submitted"，并将trade_signal写入数据库
-    order_id = update_trade_order(order_id=order_id, data_source=data_source, status='submitted')
-    # 检查交易订单
-
+    if mark_submitted:
+        # 将signal的status改为"submitted"，并将trade_signal写入数据库
+        order_id = update_trade_order(order_id=order_id, data_source=data_source, status='submitted')
     return order_id
 
 

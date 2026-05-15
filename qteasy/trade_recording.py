@@ -988,10 +988,10 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
 
     trade_order的所有字段中，可以更新字段只有status和qty(qty只能在submit的时候更改，一旦submit之后就不能再更改。
     status的更新遵循下列规律：
-    1. 如果status为 'created'，则可以更新为 'submitted', 同时设置'submitted_time';
-    2. 如果status为 'submitted'，则可以更新为 'canceled', 'partial-filled' 或 'filled';
-    3. 如果status为 'partial-filled'，则可以更新为 'canceled' 或 'filled';
-    4. 如果status为 'canceled' 或 'filled'，则不可以再更新.
+    1. 如果status为 'created'，则可以更新为 'submitted' 或 'rejected'；
+    2. 如果status为 'submitted'，则可以更新为 'canceled', 'partial-filled' 或 'filled'；
+    3. 如果status为 'partial-filled'，则可以更新为 'canceled' 或 'filled'；
+    4. 如果status为 'canceled'/'filled'/'rejected'，则不可以再更新。
 
     Parameters
     ----------
@@ -1032,8 +1032,10 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
     if status is not None:
         if not isinstance(status, str):
             err = TypeError(f'status must be a str, got {type(status)} instead')
-        if status not in ['created', 'submitted', 'canceled', 'partial-filled', 'filled']:
-            err = RuntimeError(f'status ({status}) not in [created, submitted, canceled, partial-filled, filled]!')
+        if status not in ['created', 'submitted', 'canceled', 'partial-filled', 'filled', 'rejected']:
+            err = RuntimeError(
+                    f'status ({status}) not in [created, submitted, canceled, partial-filled, filled, rejected]!'
+            )
 
     if err is not None:
         raise err
@@ -1056,7 +1058,7 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         err = RuntimeError(f'Trade signal (order_id = {order_id}) not found!')
         raise err
 
-    # 如果trade_signal的状态为 'created'，则可以更新为 'submitted'
+    # 如果trade_signal的状态为 'created'，则可以更新为 'submitted' 或 'rejected'
     if trade_signal['status'] == 'created' and status == 'submitted':
         if qty is not None:
             assert isinstance(qty, (float, int, np.float64, np.int64)), f'qty must be a float, got {type(qty)} instead'
@@ -1070,6 +1072,12 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
                 submitted_time=submit_time,
                 status=status,
                 qty=qty,
+        )
+    if trade_signal['status'] == 'created' and status == 'rejected':
+        return data_source.update_sys_table_data(
+                'sys_op_trade_orders',
+                record_id=order_id,
+                status=status,
         )
     # 如果trade_signal的状态为 'submitted'，则可以更新为 'canceled', 'partial-filled' 或 'filled'
     if trade_signal['status'] == 'submitted' and status in ['canceled', 'partial-filled', 'filled']:
@@ -1114,7 +1122,7 @@ def query_trade_orders(account_id,
         交易方向, 默认为None, 表示不限制, 'buy' 表示买入, 'sell' 表示卖出
     order_type: str, optional, {'market', 'limit', 'stop', 'stop_limit'}
         交易类型, 默认为None, 表示不限制, 'market' 表示市价单, 'limit' 表示限价单, 'stop' 表示止损单, 'stop_limit' 表示止损限价单
-    status: str, optional, {'created', 'submitted', 'canceled', 'partial-filled', 'filled'}
+    status: str, optional, {'created', 'submitted', 'canceled', 'partial-filled', 'filled', 'rejected'}
         交易信号状态
     data_source: str, optional
         数据源的名称, 默认为None, 表示使用默认的数据源

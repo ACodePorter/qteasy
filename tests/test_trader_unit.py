@@ -70,7 +70,7 @@ class TestTraderInit(unittest.TestCase):
     def test_init_invalid_account_id_type(self):
         """account_id 非 int 时应抛出 TypeError。"""
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         test_ds = _create_test_datasource()
         self._test_ds = test_ds
         _clear_tables(test_ds)
@@ -92,7 +92,7 @@ class TestTraderInit(unittest.TestCase):
         self._test_ds = test_ds
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -125,7 +125,7 @@ class TestTraderInit(unittest.TestCase):
     def test_init_invalid_datasource_type(self):
         """datasource 非 DataSource 时应抛出 TypeError。"""
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -146,7 +146,7 @@ class TestTraderInit(unittest.TestCase):
         # new_account 返回的是新账户 id，可能不是 10**9，这里用已存在的 account_id=1
         # 若 new_account 支持指定 id 则用 10**9；否则用大 id 需要先建账户
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         trader = Trader(
             account_id=1,
             operator=op,
@@ -172,7 +172,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = '000001.SZ, 000002.SZ'
         kwargs['benchmark_asset'] = ['000300.SH', '000905.SH']
@@ -193,7 +193,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -213,7 +213,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = []
         trader = Trader(
@@ -234,7 +234,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = '000001.SZ'
         kwargs['benchmark_asset'] = '000001.SZ'
@@ -456,7 +456,7 @@ class TestTraderWatchList(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = ['000001.SZ']  # 覆盖默认的 asset_pool，避免重复传参
         trader = Trader(
@@ -616,7 +616,7 @@ class TestTraderRuntimeLifecycle(unittest.TestCase):
 
         added_tasks = []
 
-        def fake_add_task(task, *args):
+        def fake_add_task(task, *args, **kwargs):
             added_tasks.append((task, args))
 
         self._trader.add_task = fake_add_task
@@ -637,7 +637,7 @@ class TestTraderRuntimeLifecycle(unittest.TestCase):
 
         called = {}
 
-        def fake_run_task(task, *args, run_in_main_thread=False):
+        def fake_run_task(task, *args, run_in_main_thread=False, task_spec=None):
             called['task'] = task
             called['run_in_main_thread'] = run_in_main_thread
             self._trader.status = 'stopped'
@@ -859,6 +859,32 @@ class TestTraderPhase5SnapshotAndGate(unittest.TestCase):
             print(' task status:', spec.status, 'last_error:', spec.last_error)
             self.assertEqual(spec.status, 'skipped')
             self.assertIn('gate_failed', spec.last_error or '')
+        finally:
+            _clear_tables(test_ds)
+
+    def test_collect_broker_reconcile_snapshot_matches_gate_failure_reason(self) -> None:
+        print('\n[TestTraderPhase5] reconcile snapshot and startup gate share mismatch reasons')
+        trader, test_ds = create_trader_with_account()
+        try:
+            qt.configure(live_trade_startup_gate_mode='block')
+            trader.force_current_date = pd.Timestamp('2023-05-10').date()
+            trader._broker = _BrokerRemoteCashMismatch()
+            snapshot = trader.collect_broker_reconcile_snapshot()
+            print(' reconcile failures:', snapshot.get('failures'))
+            print(' reconcile cash_diff:', snapshot.get('cash_diff'))
+            print(' reconcile remote_orders_count:', snapshot.get('remote_orders_count'))
+            self.assertGreater(len(snapshot.get('failures', [])), 0)
+            self.assertIn(
+                True,
+                [
+                    'broker_cash_mismatch' in snapshot.get('failures', []),
+                    'operator_not_ready' in snapshot.get('failures', []),
+                ],
+            )
+            gate_ok = trader.run_startup_gate()
+            print(' gate ok:', gate_ok, 'allowed:', trader._startup_gate_trading_allowed)
+            self.assertFalse(gate_ok)
+            self.assertFalse(trader._startup_gate_trading_allowed)
         finally:
             _clear_tables(test_ds)
 

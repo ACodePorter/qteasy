@@ -15,7 +15,8 @@
 from collections import deque
 from queue import Queue, Empty
 from abc import abstractmethod, ABCMeta
-from typing import Any, Mapping, Optional
+from typing import Any, Callable, Mapping, Optional
+import random
 import threading
 
 import numpy as np
@@ -27,6 +28,18 @@ from qteasy.utilfuncs import get_current_timezone_datetime
 
 CASH_DECIMAL_PLACES = QT_CONFIG['cash_decimal_places']
 AMOUNT_DECIMAL_PLACES = QT_CONFIG['amount_decimal_places']
+
+# SimulatorBroker 受理阶段随机拒单时使用的英文理由（用户可见信息须为英文）
+_SIMULATOR_SUBMIT_REJECT_REASONS: tuple[str, ...] = (
+    'Order rejected: simulated venue liquidity constraint.',
+    'Order rejected: simulated exchange risk control.',
+    'Order rejected: simulated broker throttle limit.',
+    'Order rejected: simulated circuit breaker window.',
+    'Order rejected: simulated margin or buying power check.',
+    'Order rejected: simulated symbol trading halt.',
+    'Order rejected: simulated duplicate client order id.',
+    'Order rejected: simulated internal routing timeout.',
+)
 
 
 def _verify_trade_result(trade_result, order_qty) -> bool:
@@ -252,6 +265,24 @@ class Broker(object):
             message += '_R'
         self.broker_messages.put(message)
 
+    def enqueue_order(self, order: Mapping[str, Any]) -> int:
+        """将订单写入 ``order_queue`` 并返回本地 ``order_id``。
+
+        Parameters
+        ----------
+        order : Mapping[str, Any]
+            订单数据，字段需满足 ``validate_trade_order`` 约束。
+
+        Returns
+        -------
+        int
+            入队订单对应的 ``order_id``。
+        """
+        order_dict = dict(order)
+        validate_trade_order(order_dict, context='Broker.enqueue_order.order')
+        self.order_queue.put(order_dict)
+        return int(order_dict['order_id'])
+
     def _ensure_adapter_connected(self) -> None:
         """确保适配层会话已连接。"""
         if not self._adapter_connected:
@@ -326,6 +357,55 @@ class Broker(object):
             validate_raw_trade_result(raw_trade_result, context='Broker.submit.raw_trade_result')
             self._pending_fills.append(raw_trade_result)
         return broker_order_id
+
+    def submit_with_ack(self, order: Mapping[str, Any]) -> dict[str, Any]:
+        """同步提交订单并返回受理确认结果。
+
+        Parameters
+        ----------
+        order: Mapping[str, Any]
+            订单数据。
+
+        Returns
+        -------
+        dict[str, Any]
+            受理确认结果，包含：
+            - accepted: bool，是否受理成功
+            - order_id: int，订单号（可解析时）
+            - broker_order_id: str，受理成功时的券商订单号，失败时为空字符串
+            - reason: str，失败原因，成功时为空字符串
+            - reason_code: str，失败类型码，成功时为空字符串
+        """
+        order_id = None
+        if isinstance(order, Mapping):
+            try:
+                order_id = int(order.get('order_id'))
+            except Exception:
+                order_id = None
+        try:
+            self._ensure_adapter_connected()
+            order_dict = dict(order)
+            validate_trade_order(order_dict, context='Broker.submit_with_ack.order')
+            self._broker_order_sequence += 1
+            broker_order_id = f'{self.broker_name}:{int(order_dict["order_id"])}:{self._broker_order_sequence}'
+            self._submitted_order_map[broker_order_id] = order_dict
+            # 受理阶段仅确认并入队，不同步撮合，成交仍由 run/_get_result 异步产出
+            self.order_queue.put(order_dict)
+            return {
+                'accepted':        True,
+                'order_id':        order_id,
+                'broker_order_id': broker_order_id,
+                'reason':          '',
+                'reason_code':     '',
+            }
+        except Exception as e:
+            return {
+                'accepted':        False,
+                'order_id':        order_id,
+                'broker_order_id': '',
+                'reason':          str(e),
+                'reason_code':     type(e).__name__,
+            }
 
     def cancel(self, broker_order_id: str) -> bool:
         """受理撤单请求，返回是否成功匹配待撤单据。"""
@@ -776,6 +856,7 @@ class SimulatorBroker(Broker):
         - 如果订单类型是限价单：若当前格低于叫买价，以当前价买入，若当前价高于叫卖价，以当前价卖出
     - 股票涨停时大概率买入交易失败，跌停时大概率卖出交易失败
     - 交易费率根据参数中的设置计算，包括固定费率、最低费用、滑点等
+    - ``submit_with_ack`` 受理阶段可按 ``reject_submit_probability`` 随机模拟拒单（默认约 10%）
     """
 
     def __init__(self,
@@ -791,6 +872,7 @@ class SimulatorBroker(Broker):
                  delay=1.0,
                  price_deviation=0.0,
                  probabilities=(0.9, 0.08, 0.02),  # ()
+                 reject_submit_probability: float = 0.1,
                  data_source=None):
         """ 生成一个Broker对象
 
@@ -822,6 +904,8 @@ class SimulatorBroker(Broker):
             卖出报价小于100+1元即可成交
         probabilities: tuple of 3 floats, default (0.90, 0.08, 0.02)
             模拟完全成交、部分成交和未成交三种情况出现的概率
+        reject_submit_probability: float, default 0.1
+            ``submit_with_ack`` 受理阶段随机拒单概率，取值 ``[0.0, 1.0]``；为 ``0`` 时关闭随机拒单（便于单测确定性）。
 
         """
         super(SimulatorBroker, self).__init__(data_source=data_source)
@@ -838,6 +922,50 @@ class SimulatorBroker(Broker):
         self.delay = delay
         self.price_deviation = price_deviation
         self.probabilities = probabilities
+        rp = float(reject_submit_probability)
+        self._reject_submit_probability = max(0.0, min(1.0, rp))
+
+    def submit_with_ack(self, order: Mapping[str, Any]) -> dict[str, Any]:
+        """同步提交订单；在订单校验通过后以给定概率随机模拟受理拒单。
+
+        Parameters
+        ----------
+        order: Mapping[str, Any]
+            订单数据，语义与基类 ``Broker.submit_with_ack`` 一致。
+
+        Returns
+        -------
+        dict[str, Any]
+            受理确认结果，字段与基类一致。随机拒单时 ``accepted`` 为 ``False``，
+            ``reason_code`` 为 ``SimulatedBrokerReject``，``reason`` 为随机英文说明。
+        """
+        order_id = None
+        if isinstance(order, Mapping):
+            try:
+                order_id = int(order.get('order_id'))
+            except Exception:
+                order_id = None
+        try:
+            self._ensure_adapter_connected()
+            order_dict = dict(order)
+            validate_trade_order(order_dict, context='Broker.submit_with_ack.order')
+        except Exception as e:
+            return {
+                'accepted':        False,
+                'order_id':        order_id,
+                'broker_order_id': '',
+                'reason':          str(e),
+                'reason_code':     type(e).__name__,
+            }
+        if self._reject_submit_probability > 0.0 and random.random() < self._reject_submit_probability:
+            return {
+                'accepted':        False,
+                'order_id':        order_id,
+                'broker_order_id': '',
+                'reason':          random.choice(_SIMULATOR_SUBMIT_REJECT_REASONS),
+                'reason_code':     'SimulatedBrokerReject',
+            }
+        return super().submit_with_ack(order)
 
     def transaction(self, symbol, order_qty, order_price, direction, position='long', order_type='market'):
         """ 读取实时价格模拟成交结果
@@ -971,6 +1099,122 @@ class NotImplementedBroker(Broker):
         pass
 
 
+class BrokerFacade(Broker):
+    """Broker 兼容层：对外维持 Broker 契约，对内委托具体 Broker 实现。"""
+
+    def __init__(self, inner: Broker):
+        if not isinstance(inner, Broker):
+            raise TypeError(f'inner must be Broker, got {type(inner)}')
+        if isinstance(inner, BrokerFacade):
+            raise TypeError('inner broker must not be BrokerFacade')
+        self._inner = inner
+        super().__init__(data_source=inner.data_source)
+        self.broker_name = f'BrokerFacade({inner.broker_name})'
+        # 共享队列，保证 legacy 消费链路不变
+        self.order_queue = inner.order_queue
+        self.result_queue = inner.result_queue
+        self.broker_messages = inner.broker_messages
+
+    @property
+    def status(self) -> str:
+        return self._inner.status
+
+    @status.setter
+    def status(self, value: str) -> None:
+        self._inner.status = value
+
+    @property
+    def debug(self) -> bool:
+        return bool(self._inner.debug)
+
+    @debug.setter
+    def debug(self, value: bool) -> None:
+        self._inner.debug = bool(value)
+
+    @property
+    def is_registered(self) -> bool:
+        return bool(self._inner.is_registered)
+
+    @is_registered.setter
+    def is_registered(self, value: bool) -> None:
+        self._inner.is_registered = bool(value)
+
+    def register(self, debug=False, **kwargs):
+        self._inner.register(debug=debug, **kwargs)
+
+    def run(self):
+        return self._inner.run()
+
+    def enqueue_order(self, order: Mapping[str, Any]) -> int:
+        return self._inner.enqueue_order(order)
+
+    def connect(self) -> None:
+        self._inner.connect()
+
+    def disconnect(self) -> None:
+        self._inner.disconnect()
+
+    def submit(self, order: Mapping[str, Any]) -> str:
+        return self._inner.submit(order)
+
+    def submit_with_ack(self, order: Mapping[str, Any]) -> dict[str, Any]:
+        return self._inner.submit_with_ack(order)
+
+    def cancel(self, broker_order_id: str) -> bool:
+        return self._inner.cancel(broker_order_id)
+
+    def poll_fills(self, timeout: float = 0.0) -> list[dict[str, Any]]:
+        return self._inner.poll_fills(timeout=timeout)
+
+    def poll_messages(self, timeout: float = 0.0) -> list[str]:
+        return self._inner.poll_messages(timeout=timeout)
+
+    def get_remote_orders(self, *, account_id: Optional[int] = None) -> list[dict[str, Any]]:
+        return self._inner.get_remote_orders(account_id=account_id)
+
+    def get_remote_positions(self, *, account_id: Optional[int] = None) -> list[dict[str, Any]]:
+        return self._inner.get_remote_positions(account_id=account_id)
+
+    def get_remote_cash(self, *, account_id: Optional[int] = None) -> Optional[float]:
+        return self._inner.get_remote_cash(account_id=account_id)
+
+    def drain_order_queue(self, *, max_items: Optional[int] = None) -> list[dict[str, Any]]:
+        return self._inner.drain_order_queue(max_items=max_items)
+
+    def wait_until_idle(self, timeout: Optional[float] = 5.0) -> bool:
+        return self._inner.wait_until_idle(timeout=timeout)
+
+    def transaction(self, symbol, order_qty, order_price, direction, position='long', order_type='market'):
+        raise NotImplementedError('BrokerFacade does not implement transaction() directly')
+
+
+_BUILTIN_BROKER_FACTORIES: dict[str, Callable[..., Broker]] = {
+    'random':    SimulatorBroker,
+    'simple':    SimpleBroker,
+    'manual':    NotImplementedBroker,
+    'simulator': SimulatorBroker,
+}
+_CUSTOM_BROKER_FACTORIES: dict[str, Callable[..., Broker]] = {}
+_NAMES_TO_BE_DEPRECATED = {'random': 'simulator'}
+
+
+def register_broker_factory(name: str, factory: Callable[..., Broker]) -> None:
+    """注册自定义 broker 工厂函数。"""
+    if not isinstance(name, str) or not name.strip():
+        raise TypeError(f'name must be a non-empty string, got {type(name)}')
+    if not callable(factory):
+        raise TypeError(f'factory must be callable, got {type(factory)}')
+    _CUSTOM_BROKER_FACTORIES[name.strip().lower()] = factory
+
+
+def unregister_broker_factory(name: str) -> bool:
+    """移除自定义 broker 工厂，返回是否存在并成功移除。"""
+    if not isinstance(name, str) or not name.strip():
+        raise TypeError(f'name must be a non-empty string, got {type(name)}')
+    key = name.strip().lower()
+    return _CUSTOM_BROKER_FACTORIES.pop(key, None) is not None
+
+
 def get_broker(name: str = 'simulator', params=None):
     """ get broker object by broker name
 
@@ -985,26 +1229,19 @@ def get_broker(name: str = 'simulator', params=None):
     ------
     Broker
     """
-    all_brokers = {
-        'random':    SimulatorBroker,
-        'simple':    SimpleBroker,
-        'manual':    NotImplementedBroker,
-        'simulator': SimulatorBroker,
-    }
-    names_to_be_deprecated = {'random': 'simulator'}
-
     if not isinstance(name, str):
         raise TypeError(f'name must be a string, got {type(name)}')
+    key = name.strip().lower()
 
-    if name in names_to_be_deprecated:
+    if key in _NAMES_TO_BE_DEPRECATED:
         import warnings
         warnings.warn(
             f'The broker name "{name}" is deprecated and will be removed in qteasy 2.0. '
-            f'Use "{names_to_be_deprecated[name]}" instead.',
+            f'Use "{_NAMES_TO_BE_DEPRECATED[key]}" instead.',
             FutureWarning,
             stacklevel=2,
         )
-    broker_func = all_brokers.get(name, SimulatorBroker)
+    broker_func = _CUSTOM_BROKER_FACTORIES.get(key, _BUILTIN_BROKER_FACTORIES.get(key, SimulatorBroker))
     if params is not None:
         return broker_func(**params)
     return broker_func()

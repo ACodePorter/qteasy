@@ -127,7 +127,7 @@ class TestRefillMissingDatasourceAssetTypes(unittest.TestCase):
         tr = Trader(
                 account_id=1,
                 operator=op,
-                broker=SimulatorBroker(),
+                broker=SimulatorBroker(reject_submit_probability=0.0),
                 datasource=ds,
                 asset_pool=['515630.SH'],
                 asset_type='FD',
