@@ -486,7 +486,7 @@ class TraderShell(Cmd):
                        {'action':  'store',
                         'type':    float,
                         'default': 0.0,  # default to market price
-                        'help':    'price to buy at'},
+                        'help':    'limit price to buy at; use 0 (default) for market order'},
                        {'action':  'store',
                         'default': 'long',
                         'choices': ['long', 'short'],
@@ -501,7 +501,7 @@ class TraderShell(Cmd):
                        {'action':  'store',
                         'type':    float,
                         'default': 0.0,  # default to market price
-                        'help':    'price to sell at'},
+                        'help':    'limit price to sell at; use 0 (default) for market order'},
                        {'action':  'store',
                         'default': 'long',
                         'choices': ['long', 'short'],
@@ -1317,8 +1317,8 @@ class TraderShell(Cmd):
           --force, -f           force buy regardless of current prices (NOT IMPLEMENTED YET)
 
         the order will be submitted to broker and will be executed according to broker
-        rules, Currently only market price orders can be submitted, and the orders might
-        not be executed immediately if market is not open
+        rules. If --price/-p is provided with a positive value, a limit order is submitted.
+        If --price is omitted or set to 0, a market order is submitted using latest price.
 
         Examples:
         ---------
@@ -1332,6 +1332,7 @@ class TraderShell(Cmd):
         if not args:
             return False
 
+        user_set_limit_price = args.price != 0.0
         if not self.check_buy_sell_args(args, 'buy'):
             return False
 
@@ -1346,7 +1347,7 @@ class TraderShell(Cmd):
                 price=price,
                 position=position,
                 direction='buy',
-                order_type='market',
+                order_type='limit' if user_set_limit_price else 'market',
         )
         if trade_order:
             order_id = trade_order['order_id']
@@ -1388,8 +1389,8 @@ class TraderShell(Cmd):
           --force, -f           force sell regardless of current prices (NOT IMPLEMENTED YET)
 
         the order will be submitted to broker and will be executed according to broker
-        rules, Currently only market price orders can be submitted, and the orders might
-        not be executed immediately if market is not open
+        rules. If --price/-p is provided with a positive value, a limit order is submitted.
+        If --price is omitted or set to 0, a market order is submitted using latest price.
 
         Examples:
         ---------
@@ -1403,6 +1404,7 @@ class TraderShell(Cmd):
         if not args:
             return False
 
+        user_set_limit_price = args.price != 0.0
         if not self.check_buy_sell_args(args, 'sell'):
             return False
 
@@ -1417,7 +1419,7 @@ class TraderShell(Cmd):
                 price=price,
                 position=position,
                 direction='sell',
-                order_type='market',
+                order_type='limit' if user_set_limit_price else 'market',
         )
 
         if trade_order:
@@ -1913,7 +1915,11 @@ class TraderShell(Cmd):
 
         order_id = int(args.order_id)
         try:
-            cancel_order(order_id=order_id, data_source=self.trader.datasource)
+            cancel_order(
+                    order_id=order_id,
+                    data_source=self.trader.datasource,
+                    account_id=self.trader.account_id,
+            )
             print(f'Order {order_id} has been canceled.')
         except Exception as e:
             print(f'Order cancellation failed: {e}')

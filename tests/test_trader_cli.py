@@ -880,6 +880,85 @@ class TestTraderCLI(unittest.TestCase):
         self.assertFalse(tss.do_cancel(str(order_id)))
         self.assertFalse(tss.do_cancel('999999'))
 
+    def test_command_cancel_rejects_other_account_order(self):
+        """cancel 命令不能撤销其它账户订单。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] cancel should reject other-account order')
+        account_id_2 = new_account(user_name='test_user2', cash_amount=100000, data_source=tss.trader.datasource)
+        print(' created account_id_2:', account_id_2)
+        get_or_create_position(
+                account_id=account_id_2,
+                symbol='000001.SZ',
+                position_type='long',
+                data_source=tss.trader.datasource,
+        )
+        order_ids = save_parsed_trade_orders(
+                account_id=account_id_2,
+                symbols=['000001.SZ'],
+                positions=['long'],
+                directions=['buy'],
+                quantities=[100],
+                prices=[10.0],
+                data_source=tss.trader.datasource,
+        )
+        order_id = int(order_ids[0])
+        submit_order(order_id, tss.trader.datasource)
+        detail_before = read_trade_order_detail(order_id=order_id, data_source=tss.trader.datasource)
+        print(' detail_before:', detail_before)
+        self.assertEqual(detail_before['status'], 'submitted')
+        self.assertEqual(detail_before['account_id'], account_id_2)
+
+        cancel_ok = tss.do_cancel(str(order_id))
+        detail_after = read_trade_order_detail(order_id=order_id, data_source=tss.trader.datasource)
+        print(' cancel_ok:', cancel_ok)
+        print(' detail_after:', detail_after)
+        self.assertFalse(cancel_ok)
+        self.assertEqual(detail_after['status'], 'submitted')
+
+    def test_submit_rejected_order_status_is_rejected(self):
+        """Broker 拒单后，订单状态应落为 rejected。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] rejected submit should persist order status as rejected')
+        before_orders = query_trade_orders(account_id=1, data_source=tss.trader.datasource)
+        before_ids = set(before_orders.index.tolist())
+        print(' before_ids:', sorted(before_ids))
+        tss.trader.live_price = pd.Series({'000001.SZ': 10.0})
+        tss.trader.broker._reject_submit_probability = 1.0
+        try:
+            self.assertIsNone(tss.do_buy('100 000001.SZ'))
+        finally:
+            tss.trader.broker._reject_submit_probability = 0.0
+        after_orders = query_trade_orders(account_id=1, data_source=tss.trader.datasource)
+        after_ids = set(after_orders.index.tolist())
+        new_ids = sorted(after_ids - before_ids)
+        print(' after_ids:', sorted(after_ids))
+        print(' new_ids:', new_ids)
+        self.assertTrue(new_ids)
+        rejected_order_id = int(new_ids[-1])
+        rejected_detail = read_trade_order_detail(order_id=rejected_order_id, data_source=tss.trader.datasource)
+        print(' rejected_detail:', rejected_detail)
+        self.assertEqual(rejected_detail['status'], 'rejected')
+
+    def test_command_buy_order_type_market_vs_limit(self):
+        """buy 命令应按是否显式 -p 区分 market/limit。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] buy order_type should split by explicit price argument')
+        tss.trader.live_price = pd.Series({'000001.SZ': 10.0})
+
+        before_orders = query_trade_orders(account_id=1, data_source=tss.trader.datasource)
+        before_ids = set(before_orders.index.tolist())
+        print(' before_ids:', sorted(before_ids))
+
+        self.assertIsNone(tss.do_buy('100 000001.SZ -p 11.2'))
+        self.assertIsNone(tss.do_buy('100 000001.SZ'))
+
+        after_orders = query_trade_orders(account_id=1, data_source=tss.trader.datasource)
+        new_orders = after_orders.loc[~after_orders.index.isin(before_ids)].sort_index()
+        print(' new_orders:\n', new_orders[['order_type', 'price', 'status']])
+        self.assertEqual(len(new_orders), 2)
+        self.assertEqual(new_orders.iloc[0]['order_type'], 'limit')
+        self.assertEqual(new_orders.iloc[1]['order_type'], 'market')
+
     def test_command_change(self):
         """ test change command"""
         tss = self.tss

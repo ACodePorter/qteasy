@@ -2278,6 +2278,12 @@ class Trader(object):
                 return {}
         except Exception as e:
             self._last_submit_reject_reason = str(e)
+            update_trade_order(
+                    order_id,
+                    data_source=self._datasource,
+                    status='rejected',
+                    raise_if_status_wrong=True,
+            )
             self.send_message(
                     f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
                     debug=False,
@@ -2290,7 +2296,12 @@ class Trader(object):
             ack = self._broker.submit_with_ack({**trade_order, 'order_id': order_id, 'status': 'submitted'})
         except Exception as e:
             self._last_submit_reject_reason = str(e)
-            update_trade_order(order_id, data_source=self._datasource, status='rejected')
+            update_trade_order(
+                    order_id,
+                    data_source=self._datasource,
+                    status='rejected',
+                    raise_if_status_wrong=True,
+            )
             self.send_message(
                     f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
                     debug=False,
@@ -2299,7 +2310,12 @@ class Trader(object):
         if not ack.get('accepted', False):
             reject_reason = ack.get('reason') or 'Broker rejected order submission'
             self._last_submit_reject_reason = str(reject_reason)
-            update_trade_order(order_id, data_source=self._datasource, status='rejected')
+            update_trade_order(
+                    order_id,
+                    data_source=self._datasource,
+                    status='rejected',
+                    raise_if_status_wrong=True,
+            )
             self.send_message(
                     f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
                     debug=False,
@@ -3202,7 +3218,11 @@ class Trader(object):
             self.send_message('unprocessed orders found, these orders will be canceled')
             for order in pending_orders:
                 order_id = order['order_id']
-                cancel_order(order_id, data_source=self._datasource)  # 生成订单取消记录，并记录到数据库
+                cancel_order(
+                        order_id,
+                        data_source=self._datasource,
+                        account_id=self.account_id,
+                )  # 生成订单取消记录，并记录到数据库
                 self.send_message(f'canceled unprocessed order: {order_id}')
         # 检查今日成交订单，确认是否有"部分成交"的订单，如果有，生成取消订单，取消尚未成交的部分
         partially_filled_orders = query_trade_orders(
@@ -3213,7 +3233,7 @@ class Trader(object):
         self.send_message(f'Looking for partial-filled orders... {len(partially_filled_orders)} found!')
         for order_id in partially_filled_orders.index:
             # 对于所有没有完全成交的订单，生成取消订单，取消剩余的部分
-            cancel_order(order_id=order_id, data_source=self._datasource)
+            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
             self.send_message(f'Canceled remaining qty of partial-filled order: {order_id}')
 
         # 检查未提交订单，确认是否有"created"的订单，如果有，生成取消订单
@@ -3226,7 +3246,7 @@ class Trader(object):
 
         for order_id in unsubmitted_orders.index:
             # 对于所有未成交的订单，生成取消订单
-            cancel_order(order_id=order_id, data_source=self._datasource)
+            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
             self.send_message(f'Canceled un-submitted order: {order_id}')
 
         # 检查未成交订单，确认是否有"submitted"的订单，如果有，生成取消订单
@@ -3239,7 +3259,7 @@ class Trader(object):
 
         for order_id in unfilled_orders.index:
             # 对于所有未成交的订单，生成取消订单
-            cancel_order(order_id=order_id, data_source=self._datasource)
+            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
             self.send_message(f'Canceled unfilled order: {order_id}')
 
     # def _change_date(self) -> None:

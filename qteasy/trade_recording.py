@@ -989,7 +989,7 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
     trade_order的所有字段中，可以更新字段只有status和qty(qty只能在submit的时候更改，一旦submit之后就不能再更改。
     status的更新遵循下列规律：
     1. 如果status为 'created'，则可以更新为 'submitted' 或 'rejected'；
-    2. 如果status为 'submitted'，则可以更新为 'canceled', 'partial-filled' 或 'filled'；
+    2. 如果status为 'submitted'，则可以更新为 'canceled', 'partial-filled', 'filled' 或 'rejected'；
     3. 如果status为 'partial-filled'，则可以更新为 'canceled' 或 'filled'；
     4. 如果status为 'canceled'/'filled'/'rejected'，则不可以再更新。
 
@@ -1079,8 +1079,8 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
                 record_id=order_id,
                 status=status,
         )
-    # 如果trade_signal的状态为 'submitted'，则可以更新为 'canceled', 'partial-filled' 或 'filled'
-    if trade_signal['status'] == 'submitted' and status in ['canceled', 'partial-filled', 'filled']:
+    # 如果trade_signal的状态为 'submitted'，则可以更新为 'canceled', 'partial-filled', 'filled' 或 'rejected'
+    if trade_signal['status'] == 'submitted' and status in ['canceled', 'partial-filled', 'filled', 'rejected']:
         return data_source.update_sys_table_data(
                 'sys_op_trade_orders',
                 order_id,

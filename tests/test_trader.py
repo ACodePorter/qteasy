@@ -316,7 +316,7 @@ class TestTrader(unittest.TestCase):
 
         print('generated execution result and delivered results')
         # order 8 is canceled
-        cancel_order(8, test_ds, delivery_config)
+        cancel_order(8, test_ds, delivery_config, account_id=1)
         deliver_results = process_account_delivery(account_id=1, data_source=test_ds)
 
         print('creating Trader object...')

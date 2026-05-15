@@ -235,7 +235,7 @@ def create_trader_with_orders_and_results(
         trader.log_qty_delivery(dr)
         trader.log_cash_delivery(dr)
         time.sleep(stoppage)
-    cancel_order(8, test_ds, delivery_config)
+    cancel_order(8, test_ds, delivery_config, account_id=account_id)
     process_account_delivery(account_id=account_id, data_source=test_ds)
     trader.init_trade_log_file()
     trader.init_system_logger()

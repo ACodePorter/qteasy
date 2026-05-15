@@ -577,6 +577,12 @@ class TestTradeRecording(unittest.TestCase):
         self.assertEqual(signal['qty'], 200)
         self.assertEqual(signal['price'], 10.0)
         self.assertEqual(signal['status'], 'submitted')
+        print(' test submitted -> rejected transition')
+        updated = update_trade_order(2, data_source=self.test_ds, status='rejected', raise_if_status_wrong=True)
+        signal = read_trade_order(2, data_source=self.test_ds)
+        print(' updated order_id:', updated)
+        print(' order after submitted->rejected:', signal)
+        self.assertEqual(signal['status'], 'rejected')
 
         # test read trade signal details
         signal = read_trade_order_detail(1, data_source=self.test_ds)
@@ -598,7 +604,7 @@ class TestTradeRecording(unittest.TestCase):
         self.assertEqual(signal['order_type'], 'market')
         self.assertEqual(signal['qty'], 200)
         self.assertEqual(signal['price'], 10.0)
-        self.assertEqual(signal['status'], 'submitted')
+        self.assertEqual(signal['status'], 'rejected')
         signal = read_trade_order_detail(3, data_source=self.test_ds)
         self.assertIsInstance(signal, dict)
         self.assertEqual(signal['pos_id'], 3)

@@ -1180,7 +1180,7 @@ def submit_order(order_id, data_source, mark_submitted: bool = True):
     return order_id
 
 
-def cancel_order(order_id, data_source=None, config=None) -> int:
+def cancel_order(order_id, data_source=None, config=None, account_id: int = None) -> int:
     """ 取消交易订单
 
     对于已经提交但尚未执行或者partially_fill的订单，可以取消订单，将订单的状态设置为 'canceled'
@@ -1195,6 +1195,8 @@ def cancel_order(order_id, data_source=None, config=None) -> int:
         数据源的名称, 默认为None, 表示使用默认的数据源
     config: dict, optional
         配置参数，主要包含股票和现金交割周期信息，如果为None，则使用默认的配置参数
+    account_id: int, optional
+        限制可撤单的账户ID。若给定，则仅允许撤销该账户下的订单。
 
     Returns
     -------
@@ -1206,6 +1208,11 @@ def cancel_order(order_id, data_source=None, config=None) -> int:
     order_status = order_details['status']
     if order_status not in ['submitted', 'partial-filled']:
         raise RuntimeError(f'order status wrong: {order_status} cannot be canceled')
+    if account_id is not None and int(order_details['account_id']) != int(account_id):
+        raise ValueError(
+                f'Order {order_id} does not belong to account {account_id}, '
+                f'it belongs to account {order_details["account_id"]}',
+        )
 
     order_results = read_trade_results_by_order_id(order_id=order_id, data_source=data_source)
     if not order_results.empty:  # 如果有交易结果，计算已经成交的数量和已经取消的数量

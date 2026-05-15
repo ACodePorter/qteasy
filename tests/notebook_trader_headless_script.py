@@ -552,7 +552,7 @@ def stage4_phase35_checks(session: HeadlessNotebookSession, info: bool = False) 
     cancelled_id = cancel_order(order_id_2, data_source=ds, config={
         'cash_delivery_period': trader.cash_delivery_period,
         'stock_delivery_period': trader.stock_delivery_period,
-    })
+    }, account_id=trader.account_id)
     order_detail_2 = read_trade_order_detail(order_id_2, data_source=ds)
     print(' cancel return id:', cancelled_id)
     print(' canceled order detail:', order_detail_2)
