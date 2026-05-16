@@ -8,8 +8,10 @@
 #   Unittest for trader CLI.
 #   使用专用测试 DataSource（非 QT_DATA_SOURCE），
 #   测试结束后清理表数据。
+#   Build 1 CLI 覆盖矩阵（PR 附件）见 TestTraderCLIBuild1Coverage。
 # ======================================
 
+import json
 import os
 import unittest
 import time
@@ -20,8 +22,18 @@ import pandas as pd
 
 from qteasy import DataSource, Operator
 from qteasy.trader import Trader
-from qteasy.trader_cli import TraderShell
-from qteasy.trading_util import process_account_delivery, process_trade_result, submit_order, update_position
+from qteasy.trader_cli import TraderShell, DEBUG_RUN_TASK_CHOICES, CLI_COMMAND_ALIASES
+from qteasy.trading_util import (
+    process_account_delivery,
+    process_trade_result,
+    submit_order,
+    update_position,
+    list_live_trade_artifacts,
+    sys_log_file_path_name,
+    trade_log_file_path_name,
+    break_point_file_path_name,
+    risk_log_file_path_name,
+)
 from qteasy.trade_recording import new_account, read_trade_order_detail, save_parsed_trade_orders
 from qteasy.trade_recording import get_or_create_position, get_position_by_id, get_account
 from qteasy.trade_recording import query_trade_orders
@@ -1197,6 +1209,16 @@ class TestTraderCLI(unittest.TestCase):
         with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
             self.assertIsNone(tss.do_run('--task diagnose_pending_orders'))
             mock_run_task.assert_called_with('diagnose_pending_orders', run_in_main_thread=True)
+        print('testing run task open_market / close_market with patched _run_task')
+        with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
+            self.assertIsNone(tss.do_run('--task open_market'))
+            mock_run_task.assert_called_with('open_market', run_in_main_thread=True)
+        with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
+            self.assertIsNone(tss.do_run('--task close_market'))
+            mock_run_task.assert_called_with('close_market', run_in_main_thread=True)
+        print('DEBUG_RUN_TASK_CHOICES:', DEBUG_RUN_TASK_CHOICES)
+        self.assertIn('open_market', DEBUG_RUN_TASK_CHOICES)
+        self.assertIn('close_market', DEBUG_RUN_TASK_CHOICES)
 
         print(f'testing getting help and returns False')
         self.assertFalse(tss.do_run('-h'))
@@ -1204,7 +1226,184 @@ class TestTraderCLI(unittest.TestCase):
         print(f'testing run command with wrong arguments and returns False')
         self.assertFalse(tss.do_run(''))
         self.assertFalse(tss.do_run('wrong_argument'))
-        self.assertFalse(tss.do_run('-- wrong task'))
+        self.assertFalse(tss.do_run('--task not_a_valid_task'))
+
+    def test_command_artifacts(self):
+        """test artifacts command and ls-artifacts alias"""
+        tss = self.tss
+        ds = self.ts.datasource
+        aid = self.ts.account_id
+
+        print('\n[TestCommandArtifacts] help returns False')
+        self.assertFalse(tss.do_artifacts('-h'))
+
+        print('[TestCommandArtifacts] artifacts paths vs helpers')
+        expected = list_live_trade_artifacts(aid, data_source=ds)
+        print(' expected artifacts:', expected)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_artifacts(''))
+        out = buf.getvalue()
+        print(' cli output:', out)
+        self.assertIn('sys_log:', out)
+        self.assertIn('trade_log:', out)
+        self.assertIn('break_point:', out)
+        self.assertIn('risk_log:', out)
+        self.assertIn('.risk.log', out)
+        self.assertIn(sys_log_file_path_name(aid, ds), out)
+        self.assertIn(trade_log_file_path_name(aid, ds), out)
+        self.assertIn(break_point_file_path_name(aid, ds), out)
+        self.assertIn(risk_log_file_path_name(aid, ds), out)
+
+        print('[TestCommandArtifacts] ls-artifacts alias via precmd')
+        self.assertEqual(tss.precmd('ls-artifacts'), 'artifacts')
+
+    def test_command_liveconfig(self):
+        """test liveconfig command and live-config alias"""
+        tss = self.tss
+
+        print('\n[TestCommandLiveconfig] help returns False')
+        self.assertFalse(tss.do_liveconfig('-h'))
+
+        print('[TestCommandLiveconfig] summary JSON keys')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_liveconfig(''))
+        summary = json.loads(buf.getvalue())
+        print(' summary:', summary)
+        self.assertIn('broker_type', summary)
+        self.assertIn('asset_pool', summary)
+        self.assertIn('live_trade_account_id', summary)
+        self.assertEqual(summary['broker_type'], 'simulator')
+
+        print('[TestCommandLiveconfig] live-config alias via precmd')
+        self.assertEqual(tss.precmd('live-config --detail'), 'liveconfig --detail')
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_liveconfig('--detail'))
+        detail = json.loads(buf.getvalue())
+        print(' detail keys:', sorted(detail.keys()))
+        self.assertIn('live_trade_startup_gate_mode', detail)
+
+    def test_command_tasks(self):
+        """test tasks list and task show/cancel"""
+        tss = self.tss
+
+        print('\n[TestCommandTasks] empty queue')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_tasks(''))
+        out = buf.getvalue()
+        print(' tasks output:', out)
+        self.assertIn('Trader tasks: 0', out)
+
+        print('[TestCommandTasks] add task then list/show/cancel')
+        task_id = tss.trader.add_task('refill', 'stock_daily')
+        print(' task_id:', task_id)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_tasks(''))
+        out = buf.getvalue()
+        print(' tasks after add:', out)
+        self.assertIn('Trader tasks: 1', out)
+        self.assertIn(task_id, out)
+        self.assertIn('name=refill', out)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_task(task_id))
+        task_json = json.loads(buf.getvalue())
+        print(' task detail:', task_json)
+        self.assertEqual(task_json['task_id'], task_id)
+        self.assertEqual(task_json['name'], 'refill')
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_task(f'--cancel {task_id}'))
+        cancel_out = buf.getvalue()
+        print(' cancel output:', cancel_out)
+        self.assertIn(f'Canceled Trader queue task: {task_id}', cancel_out)
+
+        self.assertFalse(tss.do_task('missing-task-id'))
+
+    def test_command_gate(self):
+        """test gate command and startup-gate alias"""
+        tss = self.tss
+
+        print('\n[TestCommandGate] help returns False')
+        self.assertFalse(tss.do_gate('-h'))
+
+        print('[TestCommandGate] patched run_startup_gate True/False')
+        with patch.object(tss.trader, 'run_startup_gate', return_value=True):
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                self.assertIsNone(tss.do_gate(''))
+            out = buf.getvalue()
+            print(' gate allowed output:', out)
+            self.assertIn('allowed=True', out)
+
+        with patch.object(tss.trader, 'run_startup_gate', return_value=False):
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                self.assertIsNone(tss.do_gate(''))
+            out = buf.getvalue()
+            print(' gate blocked output:', out)
+            self.assertIn('allowed=False', out)
+
+        print('[TestCommandGate] startup-gate alias via precmd')
+        self.assertEqual(tss.precmd('startup-gate'), 'gate')
+
+    def test_command_reconcile(self):
+        """test reconcile command prints broker snapshot JSON"""
+        tss = self.tss
+
+        print('\n[TestCommandReconcile] help returns False')
+        self.assertFalse(tss.do_reconcile('-h'))
+
+        print('[TestCommandReconcile] snapshot on SimulatorBroker')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_reconcile(''))
+        snapshot = json.loads(buf.getvalue())
+        print(' reconcile snapshot:', snapshot)
+        self.assertIn('is_ok', snapshot)
+        self.assertIn('failures', snapshot)
+        self.assertIn('remote_orders_count', snapshot)
+        self.assertIsInstance(snapshot['is_ok'], bool)
+        self.assertIsInstance(snapshot['failures'], list)
+
+        print('[TestCommandReconcile] snapshot-reconcile alias via precmd')
+        self.assertEqual(tss.precmd('snapshot-reconcile'), 'reconcile')
+
+    def test_cli_command_aliases_defined(self):
+        """Build 1 CLI 覆盖矩阵：别名与 DEBUG 任务白名单常量存在"""
+        print('\n[TestCliCoverage] CLI_COMMAND_ALIASES:', CLI_COMMAND_ALIASES)
+        self.assertEqual(CLI_COMMAND_ALIASES.get('ls-artifacts'), 'artifacts')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('live-config'), 'liveconfig')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('startup-gate'), 'gate')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('snapshot-reconcile'), 'reconcile')
+        self.assertEqual(len(DEBUG_RUN_TASK_CHOICES), 7)
+
+
+class TestTraderCLIBuild1Coverage(unittest.TestCase):
+    """Build 1 CLI 覆盖矩阵（PR 交付物）：Trader/Broker 公有能力与 CLI 命令对照。"""
+
+    def test_coverage_matrix_rows(self):
+        """核对矩阵关键行：Build1 新增命令已在 TraderShell 注册。"""
+        print('\n[TestTraderCLIBuild1Coverage] TraderShell command registration')
+        shell = TraderShell.__dict__
+        build1_commands = (
+            'do_artifacts',
+            'do_liveconfig',
+            'do_tasks',
+            'do_task',
+            'do_gate',
+            'do_reconcile',
+        )
+        for cmd in build1_commands:
+            print(' registered:', cmd, cmd in shell)
+            self.assertIn(cmd, shell)
 
 
 if __name__ == '__main__':

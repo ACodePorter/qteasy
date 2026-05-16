@@ -35,6 +35,25 @@ from qteasy.utilfuncs import (
     list_to_str_format,
 )
 
+# DEBUG 模式下 ``run --task`` 可手动触发的任务白名单（与 ``Trader._run_task`` 子集对齐）
+DEBUG_RUN_TASK_CHOICES = (
+    'process_result',
+    'pre_open',
+    'open_market',
+    'close_market',
+    'post_close',
+    'refill',
+    'diagnose_pending_orders',
+)
+
+# ``precmd`` 命令别名（``Cmd`` 不支持带连字符的 ``do_*`` 方法名）
+CLI_COMMAND_ALIASES = {
+    'ls-artifacts': 'artifacts',
+    'live-config': 'liveconfig',
+    'startup-gate': 'gate',
+    'snapshot-reconcile': 'reconcile',
+}
+
 
 def pack_system_info(trader_info, width=80):
     """ 打包账户信息字符串, 用于在shell中格式化显示trader_info中的系统信息
@@ -271,6 +290,11 @@ class TraderShell(Cmd):
     - schedule: 查看交易日程
     - help: 查看帮助信息
     - run: 手动运行交易策略，此功能仅在debug模式下可用
+    - artifacts: 列出实盘账户磁盘产物路径（别名 ls-artifacts）
+    - liveconfig: 只读展示 LiveTradeConfig 摘要（别名 live-config）
+    - tasks / task: 查看或取消 Trader 任务队列（非 broker 订单）
+    - gate: 手动触发启动门禁（别名 startup-gate）
+    - reconcile: 打印 Broker 对账快照 JSON（别名 snapshot-reconcile）
 
     qteasy Shell的命令支持参数解析，用户可以通过命令行参数来调整命令的行为，要查看所有命令的帮助，
     可以使用命令 "help" 或者 "?"，要查看某个命令的帮助，可以使用命令 "help <command>" 或者
@@ -378,9 +402,21 @@ class TraderShell(Cmd):
                                  '[--coverage -c COVERAGE] [--channel -ch CHANNEL]'),
         'run':        dict(prog='', description='Run strategies manually',
                            usage='run [STRATEGY [STRATEGY ...]] [-h] '
-                                 '[--task {process_result,pre_open,open_market,'
-                                 'close_market,post_close,refill,diagnose_pending_orders}] '
+                                 f'[--task {{{",".join(DEBUG_RUN_TASK_CHOICES)}}}] '
                                  '[--args [ARGS [ARGS ...]]]'),
+        'artifacts':  dict(prog='artifacts', description='List live-trade artifact paths (implemented)',
+                           usage='artifacts [-h]'),
+        'liveconfig': dict(prog='liveconfig', description='Show LiveTradeConfig summary (implemented)',
+                           usage='liveconfig [-h] [--detail]'),
+        'tasks':      dict(prog='tasks', description='List Trader task queue entries (implemented)',
+                           usage='tasks [-h] [--status STATUS] [--name NAME]'),
+        'task':       dict(prog='task', description='Show or cancel a Trader queue task (implemented)',
+                           usage='task TASK_ID [-h] [--cancel]'),
+        'gate':       dict(prog='gate', description='Run startup gate manually for smoke/debug (implemented)',
+                           usage='gate [-h]'),
+        'reconcile':  dict(prog='reconcile',
+                           description='Print broker reconcile snapshot JSON (implemented)',
+                           usage='reconcile [-h]'),
     }
 
     command_arguments = {
@@ -443,6 +479,14 @@ class TraderShell(Cmd):
         'run':        [('strategy',),
                        ('--task', '-t'),
                        ('--args', '-a')],
+        'artifacts':  [],
+        'liveconfig': [('--detail', '-d')],
+        'tasks':      [('--status', '-s'),
+                       ('--name', '-n')],
+        'task':       [('task_id',),
+                       ('--cancel', '-c')],
+        'gate':       [],
+        'reconcile':  [],
     }
 
     command_arg_properties = {
@@ -613,13 +657,26 @@ class TraderShell(Cmd):
                         'help':   'strategies to run'},
                        {'action':  'store',
                         'default': '',
-                        'choices': ['process_result', 'pre_open',
-                                    'open_market', 'close_market', 'post_close', 'refill',
-                                    'diagnose_pending_orders'],
-                        'help':    'task to run'},
+                        'choices': list(DEBUG_RUN_TASK_CHOICES),
+                        'help':    'task to run (DEBUG mode only)'},
                        {'action': 'append',  # TODO: for python version >= 3.8, use action='extend' instead
                         'nargs':  '*',
                         'help':   'arguments for the task to run'}],
+        'artifacts':  [],
+        'liveconfig': [{'action': 'store_true',
+                        'help':   'include extended live-trade fields beyond summary dict'}],
+        'tasks':      [{'action':  'store',
+                        'default': '',
+                        'help':    'filter by task status (e.g. queued, running, done)'},
+                       {'action':  'store',
+                        'default': '',
+                        'help':    'filter by task name (e.g. refill, run_strategy)'}],
+        'task':       [{'action':  'store',
+                        'help':    'task id to show or cancel'},
+                       {'action': 'store_true',
+                        'help':   'cancel Trader queue task (not broker order; use cancel ORDER_ID for orders)'}],
+        'gate':       [],
+        'reconcile':  [],
     }
 
     def __init__(self, trader):
@@ -861,6 +918,11 @@ class TraderShell(Cmd):
             return None
 
         return args
+
+    def _print_json(self, payload: dict, *, indent: int = 2) -> None:
+        """将字典以 JSON 格式打印到 stdout（用户可见英文键值）。"""
+        import json
+        print(json.dumps(payload, indent=indent, ensure_ascii=False, default=str))
 
     def check_buy_sell_args(self, args, type) -> bool:
         """ 检查买卖参数是否合法
@@ -2242,19 +2304,20 @@ class TraderShell(Cmd):
         return False
 
     def do_run(self, arg):
-        """usage: run [STRATEGY [STRATEGY ...]] [-h]
-                [--task {process_result,pre_open,post_close,refill,diagnose_pending_orders}]
+        f"""usage: run [STRATEGY [STRATEGY ...]] [-h]
+                [--task {{{",".join(DEBUG_RUN_TASK_CHOICES)}}}]
                 [--args [ARGS [ARGS ...]]]
 
-        Run strategies or tasks manually. If run refill task, only one table can be refilled at a time.
+        Run strategies or tasks manually (DEBUG mode only).
+        If run refill task, only one table can be refilled at a time.
 
         positional arguments:
           strategy              strategies to run
 
         optional arguments:
           -h, --help            show this help message and exit
-          --task {process_result,pre_open,post_close,refill,diagnose_pending_orders},
-          -t {process_result,pre_open,post_close,refill,diagnose_pending_orders}
+          --task {{{",".join(DEBUG_RUN_TASK_CHOICES)}}},
+          -t {{{",".join(DEBUG_RUN_TASK_CHOICES)}}}
                                 task to run
           --args [ARGS [ARGS ...]], -a [ARGS [ARGS ...]]
                                 arguments for the task to run
@@ -2265,10 +2328,10 @@ class TraderShell(Cmd):
         (QTEASY): run stg1
         to run strategy "stg1" and "stg2":
         (QTEASY): run stg1 stg2
-        to run task "task1":
-        (QTEASY): run --task task1
-        to run task "task1" with arguments "arg1" and "arg2":
-        (QTEASY): run --task task1 --args arg1 arg2
+        to run task pre_open:
+        (QTEASY): run --task pre_open
+        to run refill with table argument:
+        (QTEASY): run --task refill --args stock_daily
 
         """
 
@@ -2312,7 +2375,7 @@ class TraderShell(Cmd):
             self.trader.status = current_trader_status
             self.trader.broker.status = current_broker_status
         else:  # run tasks
-            if task not in ['process_result', 'pre_open', 'post_close', 'refill', 'diagnose_pending_orders']:
+            if task not in DEBUG_RUN_TASK_CHOICES:
                 print(f'Invalid task name: {task}, please input a valid task name.')
                 return False
             try:
@@ -2323,6 +2386,178 @@ class TraderShell(Cmd):
                 print(f'Error in running task: {e}')
                 print(traceback.format_exc())
                 return False
+
+    def do_artifacts(self, arg):
+        """usage: artifacts [-h]
+
+        List live-trade artifact paths for the current account (implemented).
+        Alias: ls-artifacts
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('artifacts', arg)
+        if not args:
+            return False
+
+        import qteasy as qt
+
+        try:
+            arts = qt.list_live_trade_artifacts(self.trader.account_id, self.trader.datasource)
+        except KeyError as exc:
+            print(f'Account not found: {exc}')
+            return False
+
+        for key in ('sys_log', 'trade_log', 'break_point', 'risk_log'):
+            print(f'{key}: {arts[key]}')
+        return None
+
+    def do_liveconfig(self, arg):
+        """usage: liveconfig [-h] [--detail]
+
+        Show read-only LiveTradeConfig summary derived from current trader config (implemented).
+        Alias: live-config
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          --detail, -d          include extended live-trade fields
+        """
+
+        args = self.parse_args('liveconfig', arg)
+        if not args:
+            return False
+
+        from qteasy.live_config import build_live_trade_config
+
+        cfg = build_live_trade_config(self.trader.get_config())
+        summary = dict(cfg.to_summary_dict())
+        if args.detail:
+            summary.update({
+                'live_trade_startup_gate_mode': cfg.live_trade_startup_gate_mode,
+                'live_trade_split_strategy_prepare': cfg.live_trade_split_strategy_prepare,
+                'live_trade_strategy_snapshot_max_age_seconds': cfg.live_trade_strategy_snapshot_max_age_seconds,
+                'live_trade_prepare_lead_seconds': cfg.live_trade_prepare_lead_seconds,
+                'live_trade_data_refill_channel': cfg.live_trade_data_refill_channel,
+                'live_trade_data_refill_batch_size': cfg.live_trade_data_refill_batch_size,
+                'live_trade_data_refill_batch_interval': cfg.live_trade_data_refill_batch_interval,
+            })
+        self._print_json(summary)
+        return None
+
+    def do_tasks(self, arg):
+        """usage: tasks [-h] [--status STATUS] [--name NAME]
+
+        List Trader task queue entries (implemented). Does not list broker orders.
+        For dead-letter details see TRACE events.
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          --status, -s STATUS   filter by task status
+          --name, -n NAME       filter by task name
+        """
+
+        args = self.parse_args('tasks', arg)
+        if not args:
+            return False
+
+        status = args.status or None
+        name = args.name or None
+        tasks = self.trader.list_tasks(status=status, name=name)
+        print(f'Trader tasks: {len(tasks)}')
+        for task_spec in tasks:
+            print(
+                f'  {task_spec.task_id}  name={task_spec.name}  status={task_spec.status}  '
+                f'retry={task_spec.retry_count}/{task_spec.max_retries}'
+            )
+        return None
+
+    def do_task(self, arg):
+        """usage: task TASK_ID [-h] [--cancel]
+
+        Show or cancel one Trader queue task (implemented). Use cancel ORDER_ID for broker orders.
+
+        positional arguments:
+          task_id               task id to show or cancel
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          --cancel, -c          cancel the queue task instead of showing details
+        """
+
+        args = self.parse_args('task', arg)
+        if not args:
+            return False
+
+        task_id = args.task_id
+        if not task_id:
+            print('Please provide a task id.')
+            return False
+
+        if args.cancel:
+            if self.trader.cancel_task(task_id):
+                print(f'Canceled Trader queue task: {task_id}')
+            else:
+                print(f'Task not found: {task_id}')
+            return None
+
+        task_spec = self.trader.get_task(task_id)
+        if task_spec is None:
+            print(f'Task not found: {task_id}')
+            return False
+
+        self._print_json({
+            'task_id': task_spec.task_id,
+            'name': task_spec.name,
+            'status': task_spec.status,
+            'args': list(task_spec.args),
+            'retry_count': task_spec.retry_count,
+            'max_retries': task_spec.max_retries,
+            'canceled': task_spec.canceled,
+            'reentry_policy': task_spec.reentry_policy,
+            'last_error': task_spec.last_error,
+        })
+        return None
+
+    def do_gate(self, arg):
+        """usage: gate [-h]
+
+        Manually run startup gate and print whether trading-side tasks are allowed (implemented).
+        Alias: startup-gate
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('gate', arg)
+        if not args:
+            return False
+
+        import qteasy as qt
+
+        allowed = self.trader.run_startup_gate()
+        mode = str(qt.QT_CONFIG.get('live_trade_startup_gate_mode', 'off'))
+        print(f'Startup gate result: allowed={allowed} (mode={mode})')
+        return None
+
+    def do_reconcile(self, arg):
+        """usage: reconcile [-h]
+
+        Print broker reconcile snapshot as JSON (implemented).
+        On Simulator, remote_* fields may be empty placeholders until QMT (S2.1) is connected.
+        Alias: snapshot-reconcile
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('reconcile', arg)
+        if not args:
+            return False
+
+        snapshot = self.trader.collect_broker_reconcile_snapshot()
+        self._print_json(snapshot)
+        return None
 
     # ----- overridden methods -----
     def precmd(self, line: str) -> str:
@@ -2335,6 +2570,10 @@ class TraderShell(Cmd):
         line = line.strip()
         line = line.replace(',', ' ')
         line = ' '.join(line.split())
+        parts = line.split(' ', 1)
+        if parts and parts[0] in CLI_COMMAND_ALIASES:
+            alias_cmd = CLI_COMMAND_ALIASES[parts[0]]
+            line = alias_cmd + (' ' + parts[1] if len(parts) > 1 else '')
         return line
 
     def run(self):
