@@ -23,11 +23,12 @@
 
 ## 2. 拒单语义与可见性
 
-S1.3 之后，拒单可见性增强：
+S1.3 之后，拒单可见性增强。须区分 **风控拒单** 与 **柜台受理拒单**（后者在订单表有 `rejected` 行且 `broker_order_id` 通常为空）；完整对照见 :doc:`6-trader-snapshot-gate`。
 
 - CLI/TUI 会显示英文拒因摘要（`rule_id` + `reason`）
-- 日志链路可检索拒绝信息，便于审计与复盘
-- 拒单兼容语义保持不变：提交接口仍可返回空结果表示未放行
+- 风控拒单写入 `risk_log`（`<RISK REJECTED>`），**不**写入 `sys_op_trade_orders`
+- 柜台受理拒单在订单表留痕，broker 字段为空
+- 风控路径下提交接口返回空 `{}` 表示未进入 Broker 队列
 
 示例（用户可见文案）：
 
@@ -75,6 +76,8 @@ optional backlog B1 修复后，分批成交状态判定更贴近实际累计成
 
 ## 8. 相关跳转
 
-- 配置启动：`live_trading/2-configuration-and-run.md`
-- 排错手册：`live_trading/5-artifacts-and-troubleshooting.md`
+- 配置启动：:doc:`2-configuration-and-run`
+- 排错手册：:doc:`5-artifacts-and-troubleshooting`
+- 拒单与门禁细节：:doc:`6-trader-snapshot-gate`
+- CLI 命令：:doc:`8-cli-trader-capability-matrix`
 - 双路径教程：`tutorials/8-live-trade-risk-and-broker-walkthrough.md`

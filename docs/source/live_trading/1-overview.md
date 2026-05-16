@@ -36,7 +36,8 @@
 1. 先读 :doc:`2-configuration-and-run`，完成最小可运行配置  
 2. 再读 :doc:`../tutorials/8-live-trade-risk-and-broker-walkthrough`，按步骤走一遍  
 3. 遇到问题时查 :doc:`5-artifacts-and-troubleshooting`  
-4. 需要扩展 Broker 时读 :doc:`4-broker-adapter-and-integration`
+4. 需要扩展 Broker 时读 :doc:`4-broker-adapter-and-integration`  
+5. 使用 CLI 运维/冒烟时查 :doc:`8-cli-trader-capability-matrix`；长跑可对照 :doc:`6-trader-snapshot-gate` 与 :doc:`7-manual-smoke-live-grid-roadmap`
 
 ## 5. 相关索引
 

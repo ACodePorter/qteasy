@@ -26,3 +26,4 @@
    5-artifacts-and-troubleshooting
    6-trader-snapshot-gate
    7-manual-smoke-live-grid-roadmap
+   8-cli-trader-capability-matrix
