@@ -19,6 +19,9 @@ pip install qteasy
 ```
 2.5.0
 ```
+
+- [qteasy发布历史](RELEASE_HISTORY.md) — 各版本变更说明，升级前可查阅
+
 ---
 
 ## 一分钟跑通

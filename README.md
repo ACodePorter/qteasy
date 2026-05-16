@@ -51,7 +51,7 @@
 - 作者: **Jackie PENG**
 - email: *jackie_pengzhao@163.com*
 - Created: 2019, July, 16
-- Latest Version: `2.5.0`
+- Latest Version: `2.5.0` — [发布历史](https://qteasy.readthedocs.io/zh-cn/latest/RELEASE_HISTORY.html)
 - Document: [https://qteasy.readthedocs.io/zh-cn/latest/](https://qteasy.readthedocs.io/zh-cn/latest/)
 - License: BSD 3-Clause License
 
@@ -129,7 +129,7 @@ $ pip install qteasy
 
 ## 文档
 
-关于`QTEASY`系统的更多详细解释和使用方法，请参阅[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)：
+关于`QTEASY`系统的更多详细解释和使用方法，请参阅[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)；各版本用户可见变更见 [发布历史](https://qteasy.readthedocs.io/zh-cn/latest/RELEASE_HISTORY.html)。
 
 
 ### python 版本

@@ -1,583 +1,643 @@
-# RELEASE HISTORY
+# 发布历史
+
+本页记录 qteasy 各版本的**用户可见**变更。升级前可查阅对应版本；2.0 大版本请参阅 [2.0 迁移指南](qteasy_2_migration_guide.md)。
 
 ## 2.5.0 (2026-05-17)
-Minor release: **Trader Shell CLI** and **live-trading documentation** for day-to-day simulated and live-trading operations.
-- **Trader Shell CLI**  
-  From the Trader prompt you can now inspect live-trade artifacts, review effective live settings, list or cancel queued tasks, run startup checks and reconcile snapshots, rotate expired trade and risk logs, and check broker connection status—all without leaving the shell. Debug **run --task** accepts open/close market tasks as shown in help. **sync** is reserved for future QMT integration and prints a clear notice until that work lands.
-- **Live-trading documentation**  
-  Expanded guides for configuration, broker integration, snapshots, startup gate, reconcile checkpoints, artifacts, and troubleshooting, plus a CLI capability matrix (implemented vs planned). Local risk rejections and broker-side rejections are explained separately, so you can diagnose live runs and follow smoke-test checklists with less guesswork.
+
+- **Trader 命令行运维能力**  
+  在 Trader 提示符下可直接查看实盘产物、有效配置、任务队列与取消排队任务、运行启动检查与快照对账、轮换过期交易/风控日志、查看券商连接状态等，无需退出 Shell 即可完成日常运维；调试命令 `run --task` 支持按帮助说明运行开盘/收盘类任务；`sync` 预留给后续 QMT 集成，当前会给出明确提示。
+- **模拟/实盘文档**  
+  扩充配置、券商接入、快照、启动门禁、对账检查点、产物清单与排障说明，并附 CLI 能力矩阵（已实现 vs 计划中）；本地风控拒单与券商侧拒单分开说明，便于按清单做冒烟测试与问题定位。
 
 ## 2.4.5 (2026-05-13)
-Patch release: **RuleIterator** per-share parameters (`multi_pars`) are easier to use and to inspect from the live Trader CLI.
-- **Unified `update_par_values` for `RuleIterator`**  
-  In `realize()`, reading with `get_pars` / `get_data` and writing with `update_par_values` now keeps `multi_pars` and `_pars` in sync: parameters can be updated in both multi pars and non-multi_pars with the same API.
-- **Examples and Documentations**  
-  `examples/live_grid.py` and `examples/live_grid_multi.py` use `get_pars` / `update_par_values` consistently (no raw `self.pars = ...` in the grid example).
-  `docs/source/manage_strategies/5. strategy_bases.md` clarifies that per-share different parameters require a **dict** keyed by symbol, tuple means one shared parameter set for all symbols, and the supported fallback key is **`default`** (not `others`).
-- **Trader CLI `strategies` listing**  
-  When `Operator.info(verbose=False)` prints the strategy table, strategies with `multi_pars` show an extra line telling users to run **`strategies -d`** for full per-share parameters. 
+
+- **RuleIterator 分标的参数**  
+  在 `realize()` 中用 `get_pars` / `get_data` 读取、用 `update_par_values` 写入时，`multi_pars` 与普通参数保持同步，分标的与统一参数可用同一套 API 更新。
+- **示例与文档**  
+  `examples/live_grid.py`、`examples/live_grid_multi.py` 统一采用 `get_pars` / `update_par_values` 写法；策略基类文档明确：分标的参数须用**字典**（键为代码），元组表示全池共用一组参数，兜底键为 **`default`**（非 `others`）。
+- **Trader CLI 策略列表**  
+  简要列表模式下，带 `multi_pars` 的策略会提示运行 **`strategies -d`** 查看完整分标的参数。
 
 ## 2.4.4 (2026-05-08)
-Patch release after 2.4.3 with live-trading and Eastmoney fixes.
-- **Eastmoney public HTTP / live watched prices**  
-  Fixed a regression in 2.4.3 where Eastmoney JSON over HTTPS passed `trust_env` into `requests.get()`. 
-  Fixed `_add_task_from_schedule` so agenda tuples `(time, 'run_strategy', step_index)` enqueue as `('run_strategy', (step_index,))`, matching `add_task` and avoiding `TypeError: Value after * must be an iterable, not int` when the main loop runs the task.
-  Fixed `_get_rt_quote` to pass `_format_em_date_str` as the `Series.apply` callable instead of calling `apply(_format_em_date_str())`.
-- **Fixed Example `live_grid_multi`**  
+
+- **东方财富行情与盘中任务**  
+  修复 2.4.3 回归：东方财富 HTTPS 行情请求在部分环境下失败、盘中追赶任务入队格式错误导致主循环报错、实时 K 线日期解析异常等问题，恢复自选价与盘中启动后的正常调度。
+- **示例脚本**  
+  修正 `live_grid_multi` 示例中的配置与用法，避免执行时不必要的 refill 干扰。
 
 ## 2.4.3 (2026-05-06)
-- **Live trading TUI**
-  Fixed live-trade terminal UI refresh so the System and Info tabs update correctly without crashing when portfolio and environment summaries are refreshed.
-- **Rule Iterator parameters**
-  Clearer error guidance when a per-share parameter dict is accidentally wrapped in a one-element tuple (a common trailing-comma typo).
-- **fixed bugs in live trade examples**
+
+- **实盘终端界面**  
+  修复 System / Info 页在刷新持仓与环境摘要时界面不更新或崩溃的问题。
+- **分标的参数提示**  
+  当分标的参数字典被误写成单元素元组（常见尾逗号笔误）时，错误信息更清晰，便于自行纠正。
+- **实盘示例**  
+  修正若干 live trade 官方示例中的用法问题。
 
 ## 2.4.2 (2026-04-19)
-- Multiple bug fixes:
-  - **Broker async replay reliability** #263
-    Added `Broker.wait_until_idle()` to provide a reliable synchronization point for replay scripts running with asynchronous broker workers. It waits for queued orders to be consumed and for all in-flight `_get_result` worker threads to finish, so replay steps no longer need to infer completion from `order_queue.empty()` and can avoid stale-position double-order issues.
-  - **Live datasource refresh table mapping by asset type** #265
-    Fixed a live refresh bug where minute/hourly realtime bars could be written to hardcoded stock tables regardless of `asset_type`. Refresh table resolution is now based on `(asset_type, unit)` mapping, so fund/index/future live bars are written into the correct datasource tables.
-  - **Live minute-signal data pipeline reliability** #266
-    Fixed a chain of issues that could leave minute strategies without enough intraday data in live mode.
+
+- **异步回放与持仓同步**  
+  模拟券商异步回放时，脚本可可靠等待队列订单与在途成交处理完毕，避免仅凭队列是否为空判断完成而导致持仓滞后、重复下单。
+- **实盘数据源刷新**  
+  分钟/小时级实时 K 线按资产类型写入对应数据表，不再一律写入股票表，基金/指数/期货等 live 数据落表正确。
+- **分钟策略数据链路**  
+  修复实盘分钟级策略可能拿不到足够日内数据的一连串问题，盘中信号生成更稳定。
 
 ## 2.4.1 (2026-04-18)
-- **Live trader startup reliability**
-  Fixed a live-trading scheduler issue where starting Trader during market hours could replay overdue `pre_open/open_market/close_market` tasks in reverse order and leave the state machine stuck in `sleeping`. Overdue tasks are now enqueued in chronological order, so intraday startup can correctly catch up to the current market state and continue running strategy and live-price tasks.
+
+- **盘中启动 Trader**  
+  修复交易时段内启动 Trader 时，逾期的开盘/收盘类任务可能被逆序重放、状态机卡在 sleeping 的问题；逾期任务现按时间顺序入队，盘中启动可正确追到当前市场状态并继续运行策略与行情任务。
 
 ## 2.4.0 (2026-04-14)
-- **Live trading (S1.3 complete)**  
-  Added a configurable, testable live-trading foundation: `LiveTradeConfig` for validated runtime configuration; a pluggable `RiskManager` that can reject unsafe orders before submission with clear reasons; and broker-side adapter skeleton APIs (`connect/submit/cancel/poll_fills`) to prepare for future integrations (e.g. QMT).  
-  Improved observability and recovery for live runs: clearer artifacts inventory (logs/breakpoints/risk logs) and more consistent order lifecycle behaviors in CLI/TUI.
-- **Documentation**  
-  Added a dedicated live-trading documentation module (`docs/source/live_trading/`) covering overview, configuration/run, risk and order lifecycle, broker adapter integration, and troubleshooting.  
-  Added a hands-on tutorial with dual simulator paths (`asset_type='E'` and `asset_type='FD'`) and a design note explaining S1.3 architecture decisions and compatibility boundaries.  
-  Refined simulation references (overview/CLI/TUI), API cross-links, and home-page navigation so users can reach live-trading guidance with a clearer path.
+
+- **模拟/实盘基础架构（S1.3）**  
+  提供可配置、可测试的 live 基础：`LiveTradeConfig` 校验运行时配置；可插拔 `RiskManager` 在提交前拦截不安全订单并给出原因；券商适配骨架（连接/下单/撤单/轮询成交）为后续 QMT 等接入做准备。产物清单（日志/断点/风控日志）与 CLI/TUI 订单生命周期展示更清晰。
+- **文档**  
+  新增独立 live_trading 文档系列（概览、配置运行、风控与订单、券商适配、排障）；教程含股票与 ETF 双路径模拟示例及 S1.3 设计说明；首页与 API 交叉链接便于找到 live 指引。
 
 ## 2.3.1 (2026-04-11)
-- **Configuration**  
-  Default ``trade_log_keep_days`` is now **3** (was 0): on each fresh Python process that imports qteasy, CSV trade reports older than the retention window under ``trade_log_file_path`` are removed once at startup. Set ``trade_log_keep_days`` to ``None`` or **0 or below** to disable automatic deletion. Documentation for rotation timing has been aligned with this behavior (cleanup is not run immediately before each new backtest CSV write).
-- **Bug fixes**  
-  Fixed issue #257: Commission fees are now taken into consideration in live trade order generation, the way slippage involved in the operation result of backtest is now optimized
-  Now asset type "FD" will no longer raise in live trade mode
-  Positive VS signals are now treated in live trade mode the same way as in backtest mode, orders will no longer be silently omitted when order quantity is less than MOQ after commission.
-- **Data refill API**  
-  Fixed `refill_data_source` so optional dtype inference runs only when data-type names are supplied; calling it with tables and `asset_types` alone (as in pre-open refill) no longer raises an error.
+
+- **交易日志保留**  
+  默认 `trade_log_keep_days` 改为 **3**（原 0）：每次新 Python 进程导入 qteasy 时，会在 `trade_log_file_path` 下清理超龄 CSV；设为 `None` 或 **0 及以下** 可关闭自动删除。文档已与「启动时清理、非每次回测前清理」的行为对齐。
+- **实盘与回测一致性**  
+  实盘下单生成现已计入佣金；滑点处理与回测侧优化对齐；资产类型 **FD**（ETF/场内基金）不再在 live 模式入口被拒；正 **VS** 信号在 live 下与回测一致，小单量不足最小成交单位时不再被静默丢弃。
+- **数据补齐 API**  
+  仅在显式传入数据类型名时才做类型推断；仅传表名与 `asset_types`（如盘前 refill）不再报错。
 
 ## 2.3.0 (2026-04-08)
-- **Documentation and tutorials**  
-  Reorganized the tutorial layout for clearer learning paths; expanded HistoryPanel- and package-level guidance from research-style exploration to backtesting workflows; refreshed examples so common end-to-end paths are easier to follow.
-- **HistoryPanel plot highlights**  
-  Highlight conditions can be driven by two-dimensional boolean masks aligned with shares and dates, so multi-symbol views can emphasize the same logical condition consistently without ad hoc per-series wiring.
+
+- **文档与教程**  
+  教程结构重组，学习路径更清晰；HistoryPanel 与包级用法从研究探索延伸到回测工作流；示例刷新，常见端到端路径更易跟做。
+- **HistoryPanel 高亮**  
+  可用与标的、日期对齐的二维布尔掩码驱动高亮，多标的视图下同一逻辑条件可一致强调，无需逐序列手工接线。
 
 ## 2.2.9 (2026-03-31)
-- **HistoryPanel research operators (returns, portfolios, presets, and alignment)**  
-  Added `cum_return()` and `normalize()` for research-grade cumulative returns and base-1 normalization with mask-aware behavior; `portfolio()` to build equal/weighted portfolios, group-based portfolios, and optional benchmarks on top of HP price columns; `kline.*(inplace=)` to optionally append technical-indicator columns without copying; `research_preset()` and paged `plot()` for one-line OHLCV+indicator presets and multi-share pagination; `assign()` for column-level DSL; cross-sectional vs time-series `rank()` / `zscore(method='cs'|'ts')`; and explicit `align_to()` / `resample()` to avoid silent misalignment. See [HistoryPanel API](api/HistoryPanel.rst) and tutorial [2.5-historypanel-data-analysis](tutorials/2.5-historypanel-data-analysis.md) for examples and behavior details.
-- **HistoryPanel operator semantics and copy()**  
-  `HistoryPanel` arithmetic operators now return a new panel instead of mutating in place; in-place operators (`+=`, etc.) remain explicit. `HistoryPanel.copy(deep=True)` now performs a deep copy by default; `deep=False` keeps shared underlying data.
+
+- **HistoryPanel 研究算子**  
+  新增累计收益 `cum_return()`、归一化 `normalize()`（支持掩码）、组合 `portfolio()`（等权/加权/分组及可选基准）、K 线指标 `kline.*(inplace=)`、一键预设 `research_preset()` 与分页 `plot()`、列级 DSL `assign()`、截面/时序 `rank()` 与 `zscore(method='cs'|'ts')`、显式 `align_to()` / `resample()` 避免静默错位。详见 [HistoryPanel API](api/HistoryPanel.rst) 与教程 [2.5-historypanel-data-analysis](tutorials/2.5-historypanel-data-analysis.md)。
+- **运算符语义**  
+  算术运算符返回新面板而非原地修改；`copy(deep=True)` 默认为深拷贝，`deep=False` 共享底层数据。
 
 ## 2.2.8 (2026-03-30)
-- **HistoryPanel (research-oriented workflow)** — Bracket indexing returns a labeled sub-panel (breaking); `subpanel` / `to_numpy`, in-place columns via `__setitem__`, `where()` masks, read-only htype attributes (e.g. `panel.close`), comparisons yielding bool ndarrays for `where` chaining, and `loc` for time-axis selection. Docstrings, [HistoryPanel API](api/HistoryPanel.rst), and tutorial [2.5-historypanel-data-analysis](tutorials/2.5-historypanel-data-analysis.md) describe behavior and limits (vs pandas).
+
+- **HistoryPanel 研究与索引（破坏性）**  
+  方括号索引返回带标签子面板；支持 `subpanel` / `to_numpy`、列赋值、`where()` 掩码、只读 htype 属性（如 `panel.close`）、比较得 bool 数组以便链式 `where`、`loc` 时间轴选取。文档与教程说明与 pandas 的差异及使用边界。
 
 ## 2.2.7 (2026-03-26)
-- **HistoryPanel interactive highlight (Q06)**  
-  `hp.plot(..., highlight=...)` now works on interactive Plotly charts for both line and candlestick panels. In two-symbol overlay mode, the highlight marker is shown only for the current primary share and switches together with the primary/secondary focus when you click.
+
+- **交互图高亮（Q06）**  
+  `hp.plot(..., highlight=...)` 在 Plotly 交互折线/蜡烛图上可用；双标的叠加时高亮标记随当前主标的切换。
 
 ## 2.2.6 (2026-03-25)
-- **HistoryPanel interactive plot polish**  
-  For two-symbol overlay on interactive Plotly charts, primary vs secondary series now differ not only in opacity but also in line width. FigureWidget and HTML click-to-focus updates keep these styles in sync when you switch which share is primary.
+
+- **双标的交互图样式**  
+  主/次序列除透明度外区分线宽；FigureWidget 与 HTML 点击切换主标的时样式保持同步。
 
 ## 2.2.5 (2026-03-23)
-- **HistoryPanel interactive plot visual improvement**
-  Added a reusable selected-bar crosshair indicator to interactive Plotly charts: clicking any bar shows a solid crosshair in the main price panel at the bar midpoint. The indicator stays synced during pan/zoom and hides when the selected bar scrolls out of view. 
+
+- **交互图十字线**  
+  Plotly 交互图点击任意 K 线可在主图显示实心十字线（bar 中点）；平移/缩放时指示器同步，bar 滚出视口时自动隐藏。
 
 ## 2.2.4 (2026-03-22)
-- **HistoryPanel charts with adjusted OHLC columns (Q01)**  
-  Fixed a bug in `HistoryPanel.plot()` where adjusted price column names (e.g. `open|b`, `high|b`, `low|b`, `close|b`) are not recognized, now candlestick charts are rendered correctly for back-/forward-adjusted panels. When both raw and adjusted OHLC are present, the raw (unsuffixed) family is used for the candlestick, matching existing price-column resolution conventions.
-- **Interactive chart x-axis zoom/pan (HTML and FigureWidget)**  
-  HTML-embedded charts apply the same x-axis clamp and minimum visible bar width as before (Q03). FigureWidget multi-row charts now listen on Plotly’s **master** shared x-axis and write the normalized range to **all** `xaxis*` entries, so panning past the data edge no longer leaves a persistent blank half-view.
+
+- **复权 OHLC 蜡烛图（Q01）**  
+  修复 `plot()` 无法识别 `open|b` 等复权列名导致蜡烛图错误的问题；同时存在裸名与复权列时，蜡烛图优先裸名 OHLC，与既有价格列约定一致。
+- **交互图 X 轴**  
+  HTML 嵌入图保留 Q03 的 X 轴 clamp 与最小可见 bar 宽度；FigureWidget 多行图监听主 X 轴并同步写入各 `xaxis*`，平移越界不再留下半屏空白。
 
 ## 2.2.3 (2026-03-22)
-- **HistoryPanel static vs interactive chart parity (P1)**  
-  OHLC summary headers are shown only when a candlestick panel is present: static charts use a dedicated top row for the **last** bar; interactive charts default the same and update the header when you click a bar (labels in English). Matplotlib and Plotly now share one logical theme with small adapter layers for font sizes and candlestick colors so the two backends look closer; the Plotly legend is inset at the upper-left (paper coordinates) to save horizontal space.
-- **`plotly_backend_app` on `HistoryPanel.plot()`**  
-  With `interactive=True`, pass `plotly_backend_app='auto'` (default: try FigureWidget, fall back to HTML), `'FigureWidget'` (force widget or raise), or `'html'` (force HTML wrapper or raise).
+
+- **静/交互图一致性（P1）**  
+  仅在有蜡烛面板时显示 OHLC 摘要头：静态图固定末 bar，交互图默认同理且点击 bar 更新（英文标签）；Matplotlib 与 Plotly 共用逻辑主题，图例 inset 于左上以省横向空间。
+- **`plotly_backend_app`**  
+  `interactive=True` 时可指定 `auto`（默认，先试 FigureWidget 再 HTML）、`FigureWidget` 或 `html`。
 
 ## 2.2.2 (2026-03-20)
-- **DataSource robustness and compatibility**
-  Fixed a bug where `DataSource` could fail when optional file backends (e.g. `tables`/`pyarrow`) were missing; fallback to `csv` now guarantees the data directory is available, added `hdf5` alias for `hdf`, and improved fallback warnings for clearer diagnosis.
+
+- **DataSource 兼容性**  
+  缺少可选文件后端（如 `tables`/`pyarrow`）时不再失败；回退 `csv` 时保证数据目录可用；`hdf5` 作为 `hdf` 别名；回退警告更易诊断。
 
 ## 2.2.1 (2026-03-19)
-- **NaN-price safe in Backtest**
-  Fixed a problem that NaN prices will no longer pullut signal parsing and trade result calculation in Backtest result.
+
+- **回测 NaN 价格**  
+  修复价格为 NaN（停牌等）时污染信号解析与成交结果的问题；NaN 价位不再产生虚假成交或费用。
 
 ## 2.2.0 (2026-03-17)
-- **Data visualization and charts**  
-  Introduced a new charting pipeline that automatically builds candlestick, volume, MACD and line charts from your historical data, so you can mix multiple indicators and compare several symbols in one view without extra code.
-- **Interactive K‑line experience**  
-  Added interactive charts that support zooming, panning and hovering to inspect OHLCV and key indicators directly in the notebook, making it much easier to explore price action and drill into specific bars.
-- **`qt.candle` behavior update**  
-  Updated `qt.candle` to use the new visualization pipeline under the hood while keeping the existing API, so your existing scripts continue to work but immediately benefit from the new static and interactive charts; Renko plots are no longer supported and the old interactive widget is now considered legacy.
-- **Logging and trade file maintenance**  
-  Improved how log and trade report files are stored and rotated, so system and trade logs, as well as value‑curve CSV files, are kept in predictable locations and old files are cleaned up automatically to save disk space.
-- **Backtest accuracy and time handling**  
-  Refined how different signal types and intraday time grids are executed in backtests, so portfolio rebalancing and intraday schedules better match real‑world trading behavior and are easier to reason about.
+
+- **数据可视化**  
+  新图表流水线可从历史数据自动生成蜡烛、成交量、MACD、折线等组合图，多指标多标的同屏对比无需额外代码。
+- **交互 K 线**  
+  Notebook 内支持缩放、平移、悬停查看 OHLCV 与指标，探索价格行为更直观。
+- **`qt.candle` 升级**  
+  底层接入新可视化管线，API 保持兼容；Renko 不再支持，旧交互 widget 视为遗留。
+- **日志与交易文件**  
+  系统/交易日志与净值曲线 CSV 路径更可预期，旧文件按配置自动清理以节省磁盘。
+- **回测精度与时间网格**  
+  PT/PS/VS 与日内时间网格执行更贴近真实交易节奏，组合调仓与日内调度更易理解。
 
 ## 2.1.4 (2026-03-10)
-- **Evaluation fixes**  
-  - Corrected the `oper_count` DataFrame in backtest.
-  - Large backtests no longer trigger pandas `PerformanceWarning` in evaluation; the aggregation and concatenation logic has been refactored to be more efficient while keeping the same outputs.
-- **Data type definitions and get_history_data**  
-  - Fixed a few misdefined built-in data types.
-  - Improved the resolution logic in `DataType` / `get_history_data` for `(dtype_name, freq, asset_type)` combinations: multiple definitions for the same logical name are merged safely instead of causing empty data or duplicate-column errors.
+
+- **回测评价**  
+  修正回测报告中 `oper_count` 表；大规模回测评价不再触发 pandas 性能警告，输出与原先一致。
+- **数据类型与历史取数**  
+  修正若干内置类型定义；`get_history_data` 对 `(dtype, freq, asset_type)` 组合解析更稳健，同名多定义安全合并，避免空数据或重复列错误。
 
 ## 2.1.3 (2026-03-09)
-- **Filenames**  
-  Internal filename generation has been updated so that all generated file names (e.g. trade logs, system logs, data exports) comply with Windows, Linux, and macOS requirements. You no longer need to worry about invalid characters or path issues when using qteasy on different operating systems.
-- **value_curve file when trade_log=True**  
-  When `trade_log=True`, the full value curve is also saved as a CSV file (`value_curve_{name}_{datetime}.csv`) in the same directory as trade_log and trade_summary, and is rotated with them according to `trade_log_keep_days`, so you can keep or archive it with your other backtest logs.
-- **Backtest result and reports**  
-  Optimized backtest reports and added price information into backtest results in complete values, made backtest result analysis much easier.
+
+- **生成文件名**  
+  交易日志、系统日志、数据导出等文件名符合 Windows / Linux / macOS 要求，跨平台路径更省心。
+- **净值曲线**  
+  `trade_log=True` 时完整净值曲线另存为 `value_curve_{name}_{datetime}.csv`，与 trade_log / trade_summary 同目录并按 `trade_log_keep_days` 轮换。
+- **回测结果与报告**  
+  回测结果补充价格信息，报告展示更清晰，结果分析更省力。
 
 ## 2.1.2 (2026-03-08)
-- **Backtest trade prices**  
-  Asset pool passed as a comma-separated string is now handled correctly; trade price columns are aligned to the full pool so backtests work with back-adjusted prices or missing data for some symbols.
-- **get_history_data**  
-  Invalid type names now raise a `ValueError` listing unmatched names (and suggest `qt.define()` / DATA_TYPE_MAP) instead of being silently skipped; deprecated `htypes` only overrides `htype_names` when given explicitly.
-- **Visualization chart titles**  
-  Backtest result charts now show a title with the Operator name and backtest date-time, so you can match charts to the corresponding trade_log and trade_summary files.
-- **Error messages**  
-  Fixed typo and clarified message when a requested column is missing in DataType ("columu" → "column").
+
+- **回测成交价**  
+  逗号分隔资产池字符串正确处理；成交价列与全池对齐，后复权或部分标的缺数据时回测仍可运行。
+- **历史取数**  
+  无效类型名抛出 `ValueError` 并列出未匹配项（提示 `qt.define()`）；弃用参数 `htypes` 仅在显式传入时覆盖 `htype_names`。
+- **回测结果图标题**  
+  图表标题含 Operator 名称与回测时间，便于与 trade_log / trade_summary 文件对应。
+- **错误信息**  
+  修正 DataType 缺列提示中的拼写错误。
 
 ## 2.1.1 (2026-03-07)
-- Fixed backtest report "Total operation fee" always showing zero when daily evaluation uses `evaluate_price_data`. Fees were aggregated by date but then reindexed against the daily index that carries a time-of-day (e.g. 15:00), so the index mismatch produced all NaNs and the subsequent fillna(0) zeroed the fee column. Alignment is now done on normalized dates so that `backtest_result['total_fee']` matches the sum of per-trade fees in trade_log.
-- Added automatic rotation for trade_log and trade_summary files: old `trade_log_*.csv` and `trade_summary_*.csv` files are removed according to the configured retention period to avoid unbounded growth of the log directory, a new configure key `trade_log_keep_days` is now added to configure trade log rotation behavior.
+
+- **回测报告手续费**  
+  修复日频评价下报告「Total operation fee」恒为 0：`total_fee` 现与 trade_log 逐笔费用之和一致。
+- **交易日志轮换**  
+  新增配置 `trade_log_keep_days`，按保留天数自动删除过期 `trade_log_*.csv` 与 `trade_summary_*.csv`，避免日志目录无限增长。
 
 ## 2.1.0 (2026-03-06)
-- **Process data (proc.\*) API**: Strategies can access runtime state (cash, positions, trade records, etc.) via `get_data('proc.own_cash')`, `get_data('proc.trade_records', lag=0)` and other `proc.*` fields in `realize()` without declaring them in `data_types`. Process data is injected by Backtester (backtest) and Trader (live) and respects no-look-ahead: at step k the strategy sees only results from steps 0..k-1 for trade data.
-- **Dynamic backtest path selection**: If any strategy uses `proc.*` in its `realize()` source, backtest automatically uses the stepwise path (`_backtest_dynamic_operator`); otherwise the static path (batch signals + vectorized backtest) is used. Detection is via `_strategies_use_proc_data()` so no declaration is required.
-- **Live trading process data**: When `operator.check_dynamic_data()` is True, Trader injects current account/position and price views into the operator so that `get_data('proc.xxx')` works in live mode with the same API as in backtest.
-- **Removed legacy dynamic data types**: `TRADE_OPERATION_DATA_TYPES` and all `op_*` DataTypes (e.g. `op_cashes`, `op_trade_volumes`) have been removed from `qteasy.datatypes`. Creating `DataType('op_cashes')` etc. now raises `KeyError`. Process data must be accessed only via `get_data('proc.xxx')`. `Operator.prepare_dynamic_data_buffer` is now a no-op; `all_dynamic_dtypes` always returns an empty dict.
-- **Tests**: Added `tests/test_process_data_api.py` for process data API, branch selection, static/dynamic equivalence, no-look-ahead, and dynamic strategy correctness. `TestDependentData` in operator tests was refactored to use `proc.*` instead of old `op_*` types.
-- **Docs**: Design doc `docs/source/design/09-process-data-and-dynamic-backtest.md`; process data section in `03-data-in-strategies.md`; branch selection note in `06-backtest-live-optimization.md`.
-- **Pandas frequency alias compatibility**: Fixed `pandas_freq_alias_version_conversion()` so that it normalizes both legacy (<2.2) and new (>=2.2) pandas frequency aliases (e.g. `M/ME`, `H/h`, `MIN/min`, `5MIN/5min`), avoiding mis-matched freq errors and warnings across different pandas versions.
+
+- **过程数据 API**  
+  策略可在 `realize()` 中通过 `get_data('proc.own_cash')`、`get_data('proc.trade_records')` 等访问运行时现金、持仓、成交等，无需在 `data_types` 中声明；回测与 live 注入一致，严格无前视。
+- **动态回测路径**  
+  策略源码使用 `proc.*` 时自动走逐步回测；否则仍用批量信号 + 向量化回测，无需手动声明。
+- **实盘过程数据**  
+  动态数据策略在 Trader 中同样可用 `get_data('proc.xxx')`，与回测 API 一致。
+- **移除旧式 op_* 类型**  
+  `op_cashes` 等 `op_*` DataType 已删除，请改用过程数据 API，详见 [2.0 迁移指南](qteasy_2_migration_guide.md)。
+- **pandas 频率别名**  
+  兼容 pandas 2.2 前后频率别名（如 `M/ME`、`H/h`），减少跨版本 freq 不匹配警告。
 
 ## 2.0.1 (2026-03-05)
-- Improved documentation and docstrings, adding more explanations about the overall design and architecture of qteasy.
-- Fixed the post-backtest performance evaluation so that all evaluation tables and plotted equity curves are consistently computed on daily frequency, independent of the strategy running frequency.
-- Removed configuration keys `price_priority_OHLC` and `price_priority_quote`, which are no longer meaningful under the new pricing architecture.
-- Fixed issues where trade prices could sometimes not be correctly fetched during backtests.
-- Fixed incorrect inclusion of market opening time in strategy running schedules for high-frequency backtests such as hourly and minute-level runs.
-- Unified the adjustment method for trading prices and evaluation prices so that both now use the same adjustment convention.
-- Refined the semantics and execution behavior of PT / PS / VS signals: for PT signals, the backtest matching engine now reuses cash obtained from same-step sells as much as possible to reach the target portfolio; for PS and VS signals, the engine keeps naive order semantics and drops orders that cannot be filled due to resource limits.
+
+- **文档**  
+  补充整体架构与设计说明。
+- **回测评价频率**  
+  评价表与权益曲线统一按日频计算，与策略运行频率无关。
+- **配置清理**  
+  移除已无意义的 `price_priority_OHLC`、`price_priority_quote`。
+- **回测成交价与调度**  
+  修复部分场景成交价获取失败；小时/分钟回测默认运行时间表不再包含开盘时刻；成交价与评价价复权方式统一。
+- **PT / PS / VS 语义**  
+  PT 在 T+0 现金交割下尽量复用同步卖出现金调仓；PS/VS 保持朴素订单语义，资源不足则放弃该笔。
 
 ## 2.0.0 (2026-02-27)
-- Major update: qteasy 2.0 will be released with significant changes in the architecture and APIs, aiming to provide a more powerful and flexible framework for quantitative trading. Users are advised to check the migration guide in the documentation to smoothly upgrade to 2.0.
-- Key changes in 2.0 include:
-  - Major improvements in `Operator` / `Strategy` class:
-    - Introduced `Parameter` class to represent strategy parameters, and `Operator` can now specify the parameters it needs with Parameter instances, and users can set the parameters with more flexible ways, including setting parameters with different values for different symbols.
-    - Introduced `Group` class to represent strategy groups, and `Operator` now groups strategies into different groups, and each group can have its own running frequency and running timing and blender, thus strategies can be run with more flexible and powerful ways.
-    - An improved operator running schedule is introduced in 2.0, now all strategies are running at a more granular level allowing more flexible running timing and more accurate backtesting results, and the running schedule is determined per strategy group, allowing different groups of strategies to be run with different frequencies and timings.
-    - Improved how strategies utilizes historical data, now strategies are able to utilize data with different frequencies and window lengths in the same run, and the data are extracted and allocated to strategies in a more efficient way.
-    - Improved efficiency of strategy backtesting and optimization, now the backtesting and optimization process is more efficient with better utilization of system resources, and the performance is improved significantly especially when running with multiprocessing.
-    - Introduced Tracing mode in `Operator` to allow users to trace backtest results of each strategy group in more detail by defining tracing points in strategy realization, tracing results will be saved in trade logs.
-    - Simplified definition of strategy realization, now users can acquire historical data and parameters with simpler APIs with user-defined names in more intuitive ways.
-    - Introduced more strategy optimization algorithms, and users can set up different optimization algorithms for different strategy groups, and the optimization process is more efficient and more powerful with better utilization of system resources.
-    - Improved backtest / optimization result evaluation processes with more comprehensive evaluation metrics and more intuitive result presentation.
-  - `DataType` class now supports asset type "ANY" to represent any type of asset, and strategy can specify the asset type of its target symbols with "ANY" to be compatible with all types of assets.
-  - Introduced `StgData` class in strategy definition as syntax suger for users to specify window length and other related properties of Data used in strategy
-  - **Removed configuration keys**: `maximize_cash_usage`, `benchmark_asset_type`, `benchmark_dtype`. Logic is now inferred from execution flow and `benchmark_asset`. See [qteasy_2_migration_guide](qteasy_2_migration_guide.md) for migration.
-  - Other bug fixes and improvements
+
+- **2.0 主版本**  
+  架构与 API 重大升级，提供更灵活的多策略、多频率、多窗口与优化能力。**升级前请阅读** [2.0 迁移指南](qteasy_2_migration_guide.md)。
+- **Operator / Strategy / Group**  
+  引入 `Parameter` 与 `Group`：参数可按标的分别设置；策略分组可各自设定运行频率、时机与信号混合；运行时间表更细粒度；Tracing 可写入 trade log；优化算法与评价指标更丰富。
+- **DataType**  
+  支持资产类型 `ANY`；`StgData` 简化策略数据声明。
+- **移除配置项**  
+  `maximize_cash_usage`、`benchmark_asset_type`、`benchmark_dtype` 已移除，逻辑由执行流与 `benchmark_asset` 推断，迁移见指南。
 
 ## 1.4.11 (2026-02-14)
-- Added FutureWarning for APIs that will be removed or changed in qteasy 2.0. Users are advised to migrate to the recommended alternatives so as to upgrade smoothly to 2.0.
-- Affected APIs:
-  - `get_history_data(htypes=..., adj=...)`: use `htype_names` and htype suffixes (e.g. `close:b`) instead.
-  - Config keys `print_trade_log` / `print_backtest_log`: use `trade_log` instead.
-  - `get_table_map()`: use `get_table_master()` instead.
-  - Broker name `random`: use `simulator` instead.
-  - Trader method `info(verbose=...)`: use `detail` instead.
-  - `Operator.op_type`: run mode will be determined per strategy group in 2.0.
-  - `Operator.op_data_freq`: use strategy-level data type and frequency information in 2.0.
-  - `Operator.get_share_idx()`: will be removed in 2.0.
+
+- **2.0 弃用预告**  
+  对将在 2.0 移除或变更的 API 发出 FutureWarning，便于提前迁移：`get_history_data(htypes=...)` → `htype_names` 与后缀（如 `close:b`）；`print_trade_log` / `print_backtest_log` → `trade_log`；`get_table_map()` → `get_table_master()`；broker `random` → `simulator`；Trader `info(verbose=...)` → `detail`；以及 `Operator.op_type`、`op_data_freq`、`get_share_idx()` 等变更提示。
 
 ## 1.4.10 (2025-12-19)
-Bug fixes:
-- Fixed a bug that will lead to low performance in optimization algorithm 2 when running with multiprocessing in some systems
+
+- **优化性能**  
+  修复部分系统上优化算法 2 多进程运行时性能偏低的问题。
 
 ## 1.4.9 (2025-03-11)
-Bug fixes:
-- Fixed problem in trader logger that causes duplicated logs in live trade mode
-- Fixed a bug in trader: when two trade results are generated at nearly the same time for the same position, the results will be wrongly recorded in the database due to data recording conflicts
-- Fixed a bug in trader that very occasionally price data with wrong timestamp will be returned and may cause NaN values output from strategies for some symbols.
-- Fixed a bug that strategy will not get enough extracted data to run in live trade mode in some cases on Monday morning due to not mis-calculation of date offset due to weekends.
-- Corrected automatic datasource refill timing for weekly data refilling, now it will refill data every Friday evening
+
+- **Trader 日志与成交**  
+  修复 live 模式日志重复；几乎同时两笔同标的成交写入冲突；偶发错误时间戳行情导致策略 NaN；周一早盘数据窗口不足；周频 refill 改为每周五晚间自动补齐。
 
 ## 1.4.8 (2025-03-01)
-New features:
-- Added a new CLI command in trader CLI: `refill`, to manually refill datasource tables in trader CLI
-- Allowed users to manually refill datasource table with trader CLI command `run` with parameter `--task refill`
-Bug fixes:
-- Fixed a bug that will lead to failure of automatic datasource refilling in trader
+
+- **Trader CLI refill**  
+  新增 `refill` 命令及 `run --task refill`，可在 Shell 内手动补齐数据源表。
+- **自动 refill**  
+  修复 live 模式自动数据源补齐失败的问题。
 
 ## 1.4.7 (2025-02-26)
-New features:
-- Added configuration settings: `live_trade_daily_refill_tables`, `live_trade_weekly_refill_tables`, `live_trade_monthly_refill_tables`, to allow users to set up tables to be refilled in live trade mode
-Fixed bugs:
-- Sometimes the configure settings might be overwritten unexpectedly in trading mode
-- `DataSource.all_basic_tables` will not return correct tables in some cases
-- CLI command `schedule` fails to print out current scheduled tasks in trader shell
+
+- **live refill 配置**  
+  新增 `live_trade_daily_refill_tables`、`live_trade_weekly_refill_tables`、`live_trade_monthly_refill_tables`，可指定 live 模式下按日/周/月补齐的表。
+- **稳定性**  
+  修复交易模式下配置偶被覆盖、`DataSource.all_basic_tables` 返回不正确、CLI `schedule` 无法打印当前任务等问题。
 
 ## 1.4.6 (2025-02-19)
-- Improved function `qt.refill_data_source()`, now it will skip the tables that are not available from current channel and provide a warning message
-- Fixed a bug that will sometimes result in duplicated data being refilled from channels while running `qt.refill_data_source()`
+
+- **refill_data_source**  
+  当前渠道不可用的表会跳过并警告；修复重复下载写入重复数据的问题。
 
 ## 1.4.5 (2025-02-18)
-- Fixed a bug that may cause incorrect k-line data being stored in the datasource when running in live trade mode
-- Added APIs to get minute level and daily candle bar price data for funds from channel 'eastmoney'
+
+- **live K 线存储**  
+  修复 live 模式下 K 线偶发写入错误。
+- **基金行情**  
+  东方财富渠道支持基金分钟与日 K 取价 API。
 
 ## 1.4.4 (2025-02-12)
-- Fixed bugs: 
-  - Simulator broker and Trader module in live trade mode might fail to fetch real time price data in some cases
-  - Sometimes the historical data extracted from datasource are not re-indexed to exactly matching the stock market open time.
-  - Corrected the data formats and errors downloaded from channel `eastmoney`, improved error handling and stability
+
+- **模拟券商与 Trader**  
+  修复部分场景无法获取实时价；历史数据 index 与开盘时刻对齐问题；东方财富渠道格式与稳定性改进。
 
 ## 1.4.3 (2025-02-11)
-- Fixed a bug: Trader might fail to acquire live prices from correct channel and may fail to save the prices to datasource due to channel updates
-- Improved `refill_data_source()`: added an optional parameter: `refill_dependent_tabes: bool = True`, to give user control if dependent tables are downloaded
+
+- **live 行情渠道**  
+  修复 Trader 偶从错误渠道取 live 价、无法写入数据源的问题。
+- **refill_data_source**  
+  新增可选参数控制是否下载依赖表。
 
 ## 1.4.2 (2025-02-07)
-- Added `dbutil` as mandatory dependency, and moved `pymysql` also as mandatory, removed optional dependencies as database
-- Fixed a bug: warnings showing missing of some dependencies are not properly displayed.
+
+- **依赖**  
+  `dbutil`、`pymysql` 改为必选依赖；缺少可选依赖时的警告展示修正。
 
 ## 1.4.1 (2025-02-06)
-- Fixed bugs:
-  - sometimes the back-adjusted prices are not properly get from data source
-  - sometimes data types with parameters will not set correct parameter into the kwargs, and will cause problem
-  - sometimes the realtime kline data will have no valid trade time in index
-- Improvement:
-  - Improved function refill_data_source, made parameters "channel" and "data_source" optional and provided type and validity check
+
+- **数据质量**  
+  修复后复权价偶发获取错误、带参 DataType kwargs 错误、实时 K 线索引无有效交易时间等问题。
+- **refill_data_source**  
+  `channel` 与 `data_source` 可选并增加校验。
 
 ## 1.4.0 (2025-02-05)
-- New features:
-  - A new DataType class has been introduced, making it much easier and more flexible to utilize historical data stored in local datasources
-  - Now datatypes can be defined with parameters followed by a "|" in its name, like "close|b" represents "back adjusted close price".
-  - A new data_channel module has been defined for qteasy, allowing users to download data from different online sources
-  - More data tables are defined to store more types of financial historical data.
-  - Enhanced real-time price data acquisition APIs, allowing real-time data been downloaded from different sources
-  - More introduction to above new features can be found in qteasy documents.
-- Deprecated
-  - The old way of extracting adjusted price data with parameter "adj" is deprecated, although still supported, now adjusted prices can be acquired with datatypes with parameter like "close|b" or "open|f"
-  - The old way of getting composition data, "wt_000300.SH" is deprecated and replaced by datatype with parameter: "wt_idx|%" where % is any index code
-  - More introductions to the new datatypes can be found in qteasy documents.
+
+- **DataType 体系**  
+  新 DataType 类简化本地数据取用；名称可用 `|` 参数（如 `close|b` 后复权收盘）。
+- **数据渠道**  
+  新 `data_channel` 模块，支持多在线源；更多预定义数据表与实时价 API。
+- **弃用**  
+  旧 `adj` 参数、`wt_000300.SH` 成份写法仍兼容但建议改用新 dtype 语法，详见文档。
 
 ## 1.3.12 (2024-12-18)
-- Improved Log information and print outs in trader TUI and CLI:
-  - excessive digits of amount changes are now truncated to 2 or 3 digits in trader CLI for RESULT DELIVERY
-  - added timestamp before all system logs on the system log pane
-  - added system environment information in TUI system info panel
+
+- **Trader TUI/CLI 日志**  
+  RESULT DELIVERY 数量显示截断至 2～3 位小数；系统日志面板增加时间戳；TUI 系统信息面板展示环境信息。
 
 ## 1.3.11 (2024-11-03)
-- fixed a bug: pure digit strings are not properly parsed from start up configuration file
+
+- **启动配置**  
+  修复纯数字字符串在启动配置文件中解析不正确的问题。
 
 ## 1.3.10 (2024-09-03)
-- removed deprecated pandas syntax from database.py and updated version requirements
-- added qt level configure keys for Chinese font names in candle chart for different Operating systems respectively:
-  - `ZH_font_name_MAC` / `ZH_font_name_WIN` / `ZH_font_name_LINUX`
-- added qt function and attributes:
-  - `get_start_up_settings()`
-  - `start_up_config`
-- corrected help messages for live trader users
+
+- **依赖与字体**  
+  更新 database 中弃用 pandas 语法与版本要求；新增按操作系统配置 K 线图中文字体（`ZH_font_name_MAC/WIN/LINUX`）。
+- **启动配置 API**  
+  新增 `get_start_up_settings()`、`start_up_config`；修正 live trader 帮助信息。
 
 ## 1.3.9 (2024-09-01)
-- Added setting key validation in `qt.update_start_up_setting()` to prevent from invalid values if the key is in qt_config_kwargs
-- improved print outs and return values of `qt.start_up_settings()`
-- improved the way the start up setting file is written to always keep intro messages
+
+- **启动配置**  
+  `update_start_up_setting()` 对 qt 配置键做合法性校验；`start_up_settings()` 输出与返回值改进；写文件时保留说明头。
 
 ## 1.3.8 (2024-09-01)
-- Added new features: now qteasy has multiple functions to access and modify start up setting file:
-  - Added new function `qt.start_up_settings()`, to access and print contents of start up settings file
-  - Added new function `qt.update_start_up_setting()`, to modify start up settings file
-  - Added new function `qt.remove_start_up_setting()`, to remove settings from the file
-- Fixed bugs in trader TUI buy and sell orders, added error handling for wrong inputs
+
+- **启动配置文件**  
+  新增 `start_up_settings()`、`update_start_up_setting()`、`remove_start_up_setting()` 读写启动配置。
+- **TUI 下单**  
+  修复 TUI 买卖单输入错误处理。
 
 ## 1.3.7 (2024-08-31)
-- Added features in trader TUI:
-  - Added commands and short-cuts to manually place buy and sell orders
-  - Added commands and short-cuts to cancel submitted orders
-  - Added a new data table to display trade logs
+
+- **TUI 交易**  
+  支持快捷键手动买卖、撤单；新增交易日志表格。
 
 ## 1.3.6 (2024-08-25)
-- Fixed bugs in command `orders` in trader CLI:
-  - now `orders` command selects symbols correctly
-  - now parameter `--time` works with value 'all' or 'a'
-- Added new command `summary` that displays trading operations in given period in human readable way
+
+- **CLI orders**  
+  `orders` 正确筛选标的；`--time all/a` 生效。
+- **CLI summary**  
+  新增 `summary`，以可读方式展示指定时段交易操作。
 
 ## 1.3.5 (2024-08-22)
-- Added new feature: now trader will save the latest operation status on the dist while exit, and will restore the status when re-enter
-- Improved delete_account() function, now it will delete all account related files, including trade logs, trade records, and trader break points
-- Other bug fixes and optimizations in trader
+
+- **Trader 状态持久化**  
+  退出时保存最近运行状态，再次进入可恢复。
+- **delete_account()**  
+  删除账户时一并清理交易日志、记录与断点文件。
 
 ## 1.3.4 (2024-08-17)
-- Improved Live trade broker, added retry count before canceling submitted orders when live price is not available, reduced chance of order filling failure
-- Corrected a mistake in grid trading example files, nan prices are now not written to strategy parameters
+
+- **模拟券商**  
+  无 live 价时增加重试再撤单，降低填单失败率。
+- **网格示例**  
+  修正示例中 NaN 价格写入策略参数的问题。
 
 ## 1.3.3 (2024-08-16)
-- Fixed a bug that will cause buying stock with 0 price when live prices are not available
-- Added freq alias support for pandas version >= 2.2.0, to prevent from FutureWarning raised by pandas
+
+- **零价买入**  
+  修复 live 无价时可能以 0 价买入的问题。
+- **pandas 2.2**  
+  频率别名兼容，避免 FutureWarning。
 
 ## 1.3.2 (2024-08-13)
-- Corrected Font name in candle chart in Windows environment
+
+- **Windows K 线字体**  
+  修正 Windows 下蜡烛图中文字体名。
 
 ## 1.3.1 (2024-08-13)
-- Added trader CLI command `debug`, to set or toggle debug mode while trader is running
-- Fixed and improved watched prices in trader CLI
-- Fixed a bug that may lead to failure displaying watched prices in trader CLI
-- Corrected a font name issue in candle chart in Windows environment
+
+- **CLI debug**  
+  新增 `debug` 命令切换调试模式。
+- **自选价**  
+  改进 CLI 监控价显示与修复展示失败；Windows 字体名再次修正。
 
 ## 1.3.0 (2024-08-09)
-- New Feature:
-  - Running example strategy files with parameter -r can now remove orders only for designated account, instead of all accounts
-- Improvements and bug fixes:
-  - Improved live trade log, Now delivery records for selling stocks are also displayed in a new line
-  - Now delivery records are clearer shown
-  - Fixed a bug that may cause wrong stock or cash change in trade logs
-  - Fixed a bug that causes buying results not being delivered properly
-  - Fixed a bug that sometimes empty data will be extracted even with valid data id from system datasource tables
-  - Fixed a few bugs that will lead to error in CLI command `CHANGE`:
-    - Prevented from acquiring latest price when only cash is to be changed
-    - Ensured symbol be given when changing quantity of a stock
+
+- **示例运行**  
+  `-r` 清除订单时可指定账户，而非清空全部账户。
+- **交割与日志**  
+  卖出现金交割记录更清晰；修复 trade log 现金/持仓记录错误、买入交割异常、空数据提取及 CLI `CHANGE` 若干边界问题。
 
 ## 1.2.15 (2024-07-28)
-- Added new built-in strategies: `ATR` and `OBV`, with docstrings
+
+- **内置策略**  
+  新增 `ATR`、`OBV` 内置策略及文档。
 
 ## 1.2.14 (2024-07-12)
-- Updated Built-in Strategy AD and ADOSC, corrected mistakes, added docstring and optimized realization
+
+- **内置策略**  
+  更新 AD、ADOSC，修正实现并补充 docstring。
 
 ## 1.2.13 (2024-06-19)
-- Changed function qt.built_ins(), now it always return a dict of id and type of built-in strategies, and if incorrect strategy id is given as argument, it returns all fuzzy matched strategy ids
-- Changed function qt.built_in_list() and qt.built_in_strategies(), now they return list of strategy ids and strategy types, respectively; and return fuzzy matched strategy ids for incorrect strategy id given as argument
-- Added new function qt.built_in_doc(), to return the docstring of a built-in strategy
+
+- **内置策略查询**  
+  `built_ins()` 恒返回 id→类型 dict，错误 id 时模糊匹配；`built_in_list()` / `built_in_strategies()` 行为对齐；新增 `built_in_doc()` 返回策略 docstring。
 
 ## 1.2.12 (2024-06-12)
-- Fixed a bug, now cash gained by selling stocks can be delivered immediately to update available cash amount.
-- Fixed a bug, now unfilled orders can be correctly canceled after each trading day
-- Fixed a bug that might lead to failure of getting table information in Windows environment
+
+- **T+0 卖现**  
+  卖股所得现金可立即计入可用现金。
+- **撤单与表信息**  
+  未成交订单日终正确撤销；Windows 下获取表信息失败问题修复。
 
 ## 1.2.11 (2024-06-09)
-- Fall back to default data source type if mysql connection fails
-- Fixed a bug in tui watch list management
+
+- **数据源**  
+  MySQL 连接失败时回退默认数据源类型。
+- **TUI 自选**  
+  修复 watch list 管理 bug。
 
 ## 1.2.10 (2024-06-07)
-- Now symbols can be added to or removed from the watch list in the live trader TUI, with two added short cuts: ctrl+a to add and ctrl+r to remove
-- Dialogs are now added to the live trader TUI to accept user inputs for adding symbols to the watch list, as well confirming to quit the App
-- Slightly adjusted the appearance of live trader TUI
+
+- **TUI 自选**  
+  Ctrl+A 添加、Ctrl+R 移除自选；添加/退出确认对话框；界面微调。
 
 ## 1.2.9 (2024-06-03)
-- Added more help information and docstrings for user to initialize live trades
+
+- **live 入门**  
+  补充 live 初始化帮助与 docstring。
 
 ## 1.2.8 (2024-06-02)
-- Changed argument "-u" in qt_argparser, now either "tui" or "cli" should be specified to choose ui type
-- qt parameter "live_trade_account" is now renamed to "live_trade_account_name", and more help info is provided to guide users to set up live trade accounts in live trade mode
-- Fixed a bug in qt.candle() that will fail to create candle charts when TA-lib is not installed
+
+- **UI 选择**  
+  命令行 `-u` 须显式指定 `tui` 或 `cli`。
+- **账户配置**  
+  `live_trade_account` 重命名为 `live_trade_account_name`，帮助信息更完整。
+- **qt.candle**  
+  未安装 TA-Lib 时仍可生成 K 线。
 
 ## 1.2.7 (2024-05-30)
-- Fixed a bug in database that may cause data refill failure when trade calendar is not available in some cases
+
+- **数据 refill**  
+  修复交易日历缺失时 refill 失败的问题。
 
 ## 1.2.6 (2024-05-07)
-- Fixed a bug in data source that causes failure of getting the last record id from system tables in some cases
+
+- **系统表**  
+  修复部分场景无法读取系统表最后 record id 的问题。
 
 ## 1.2.5 (2024-05-06)
-- Fixed a bug in HistoryPanel that causes recursive importing
+
+- **HistoryPanel**  
+  修复递归 import 问题。
 
 ## 1.2.4 (2024-05-05)
-- Fixed bugs in built-in strategies: `MACDEXT`, `WILLR`, `AROONOSC`, and `SLPHT`
-- Updated test cases for built-in strategies
+
+- **内置策略**  
+  修复 MACDEXT、WILLR、AROONOSC、SLPHT 等策略 bug。
 
 ## 1.2.3 (2024-04-30)
-- Corrected a mistake in version 1.2,2: '1.2.1' will be displayed when running `qteasy.__version__`
-- Fixed a bad information displayed with progress bar while downloading data from tushare with refill datasource
+
+- **版本显示**  
+  修正 `__version__` 显示错误（曾显示 1.2.1）。
+- **下载进度**  
+  tushare refill 进度条信息修正。
 
 ## 1.2.2 (2024-04-29)
-- Fixed a bug that causes abnormally low speed in some cases if TA-LIB is not installed
-- Fixed a bug that causes escaped failure in some cases when strategy is based on RuleIterator
-- Now it is possible to view all live accounts with `qt.live_trade_accounts()`
+
+- **性能**  
+  未安装 TA-Lib 时偶发极慢问题修复；RuleIterator 策略 escaped failure 修复。
+- **live 账户**  
+  `qt.live_trade_accounts()` 可查看全部 live 账户。
 
 ## 1.2.1 (2024-04-25)
-- Corrected a build mistake in version 1.2.0, which caused style files not being included in the package
-- Added new qt level function: `live_trade_accounts()` to get detailed information of all accounts for live trading
-- Corrected a mistake in trader CLI of wrong formatting of trade info
-- Improved help information for live trade related configurations
+
+- **打包**  
+  修正 1.2.0 样式文件未打入包的问题。
+- **live 账户 API**  
+  新增 `live_trade_accounts()` 返回各账户详情。
+- **CLI**  
+  修正 trade info 格式；live 相关配置帮助改进。
 
 ## 1.2.0 (2024-04-25)
-- New feature added: Now qteasy has a new Terminal UI for live trading, thus users can choose from one of the two UIs for live trading: the Trader Shell or the TUI
-  - A new configure key `qt.config['live_trade_ui_type']` is added to allow users to choose between the two UIs for live trading
-  - The new TUI has built in light mode and dark mode themes, and is more user-friendly for users who are not familiar with command line interfaces
-  - The new TUI displays live status of the account, on hand stocks, historical order, and live operation logs
-  - Use Ctrl=P and Ctrl+R to pause and resume the live trading process
+
+- **Trader TUI**  
+  新增终端 UI，与 Trader Shell 二选一（`live_trade_ui_type`）；内置亮/暗主题；展示账户、持仓、订单与日志；Ctrl+P / Ctrl+R 暂停恢复。
 
 ## 1.1.11 (2024-04-20)
-- Improved function `refill_data_source`, allowed data being downloaded in batches that are adjust-able in size and intervals in between
-- Improved error messages raised by qt when wrong values are set to configuration keys, providing better guidance for users
+
+- **refill_data_source**  
+  支持可调批次大小与间隔的分批下载。
+- **配置错误提示**  
+  配置键非法值时错误信息更友好。
 
 ## 1.1.10 (2024-04-19)
-- Fixed a bug that causes not taking effect the configuration that are related to automatic retries in data acquiring from tushare
+
+- **tushare 重试**  
+  修复 tushare 自动重试相关配置不生效的问题。
 
 ## 1.1.9 (2024-04-09)
-- Fixed a bug that might cause error extracting minute level data from local data source
-- Improved compatibilities
+
+- **分钟数据**  
+  修复本地分钟数据提取偶发错误；兼容性改进。
 
 ## 1.1.8 (2024-04-05)
-- Improved compatibility for higher versions of `python` from 3.9 up to 3.12
-- Improved compatibility for higher versions of `pandas` (v2.2.1), `numpy` (1.26.4), and `numba` (v0.59.1)
-- Fixed a bug that will cause failure of strategy optimizations in python 3.10 and above
-- Corrected and improved a few error messages
+
+- **Python 3.9–3.12**  
+  扩展支持；兼容 pandas 2.2.1、numpy 1.26.4、numba 0.59.1；修复 3.10+ 策略优化失败；若干错误信息改进。
 
 ## 1.1.7 (2024-04-03)
-- Now qteasy can be installed in higher versions of `python` from 3.9 up to 3.12
+
+- **Python 版本**  
+  官方支持 Python 3.9～3.12 安装运行。
 
 ## 1.1.4 (2024-03-30)
-- Updated version restrictions on dependencies, to solve the version conflicts between `numba` and `numpy`.
-- Slightly improved warning information when loading qteasy for the first time.
-- Fixed a few bugs that will cause compatibility issue with `pandas` > 2.0
-- Added performance warnings for strategy optimization method 2 when some `numpy` and `numba` versions will cause performance degrade in multiprocessing
+
+- **依赖冲突**  
+  调整 numba/numpy 版本约束；首次加载警告略改进；修复 pandas > 2.0 兼容问题；优化算法 2 在部分 numpy/numba 组合下的性能警告。
 
 ## 1.1.3 (2024-03-25)
-- now trade_log, trade_records, full_histories are added to the results returned from backtest run, and can be accessed by `res['trade_log']`, `res['trade_records']`, and `res['full_histories']`
+
+- **回测结果**  
+  回测返回 dict 新增 `trade_log`、`trade_records`、`full_histories` 键，便于直接访问。
 
 ## 1.1.2 (2024-03-18)
-- New parameter `--rewind` is now added to command `dashboard`, to allow users to view previously saved logs when switched to dashboard mode.
-- Added more information print-outs for command `buy` and `sell`, to show if orders are submitted successfully.
+
+- **CLI dashboard**  
+  `dashboard --rewind` 可查看历史保存日志。
+- **CLI buy/sell**  
+  提交结果打印更明确。
 
 ## 1.1.1 (2024-03-16)
-- corrected system log for live trade, now different live trade instances will log to different files
-- added capability of reading info from live trade log files and system log files
+
+- **live 系统日志**  
+  不同 live 实例写入不同系统日志文件；支持从 live / 系统日志文件读信息。
 
 ## 1.1.0 (2024-03-08)
-- New feature: The QTEASY shell is now parsing command arguments in a better and more intuitive way:
-  - Now all commands support `--parameter` / `-p` style parameters, same way as all other CLI tools
-  - All commands now support `--help` and `-h` to show help messages, are now fully documented in the shell help message
-  - All commands now have better error handling and usage messages when wrong arguments are given
-  - All commands are now thoroughly tested and debugged
-  - Arguments of some commands are now re-designed and re-organized to be more intuitive and easier to use:
-    - `watch` command now supports `--remove` / `-r` to remove symbols from watch list, and `--clear` / `-c` to clear the list
-    - `buy` and `sell` commands now uses `--price` / `-p` to specify price, and `--side` / `-s` to specify position side
-    - `info` and `overview` commands now support new argument `--system` to show system info, and `verbose` will be replaced by `detail` in future versions
-    - `history` command now accepts explicit argument `all` to show all history
-    - `orders` command now accepts order filter arguments with optional tags `--status`, `--time`, `--side`, and `--type`
-    - `config` command now support `--set` / `-s` to set configurations, and set view levels with count of `--level` / `-l`
-    - `strategies` command now supports `--set-par` to set strategy optimizable parameters, and to be implemented: possible to set blenders with `--blender` and `--timing`
-    - `run` command now supports running tasks with arguments given with optional flag `--args` / `-a`
-    - `orders` command now works with new optional arguments for time, type, side and status in more logical way
-    
-## 1.0.27 (2024-3-5)
-- Removed dependency on pandas to load dataframes from database, which will arouse UserWarnings in higher versions of pandas, requesting users to install sqlalchemy
 
-## 1.0.26 (2024-2-29)
-- Now live trade logs are kept in system log files, live logs are saved in the same file, with different account number as prefix
-- Fixed bugs
+- **Trader Shell 参数解析**  
+  全命令支持 `--parameter` / `-p` 风格及 `-h`/`--help`；错误提示与用法说明改进。`watch` 支持 `-r` 移除、`-c` 清空；`buy`/`sell` 用 `-p` 价格、`-s` 方向；`info`/`overview` 增加 `--system`；`orders` 增加 status/time/side/type 过滤；`config` 支持 `-s` 设置与 `-l` 层级；`strategies` 支持 `--set-par`；`run` 支持 `--args` 传任务参数。
 
-## 1.0.25 (2024-2-28)
-- Now trade logs are saved in a file in live trade mode, the file is saved in the same directory as set in `qt.config['trade_log_file_path']`
-- Fixed a few bugs in live trade mode, and added information print-outs on errors
+## 1.0.27 (2024-03-05)
+
+- **数据库读取**  
+  移除通过 pandas SQL 读库路径，避免高版本 pandas 要求 sqlalchemy 的 UserWarning。
+
+## 1.0.26 (2024-02-29)
+
+- **live 日志**  
+  live 交易日志写入系统日志文件，以账户号为前缀区分。
+
+## 1.0.25 (2024-02-28)
+
+- **live trade_log 文件**  
+  live 模式保存 trade log 文件至 `trade_log_file_path`；若干 live bug 修复与错误信息打印。
 
 ## 1.0.24 (2024-02-18)
-- Corrected a mistake introduced since version 1.0.18, with wrongly merged incomplete and untested features in broker. this bug will cause failure of execution orders in live trade mode.
+
+- **broker 回归**  
+  修复 1.0.18 以来 broker 合并不完整导致 live 下单失败的问题。
 
 ## 1.0.23 (2024-02-15)
-- Fixed a bug that will cause wrong type conversion when filtering stocks with `qt.filter_stocks()` and creating candle charts with `qt.candle()`
+
+- **filter_stocks / candle**  
+  修复类型转换错误导致筛选与 K 线失败的问题。
 
 ## 1.0.22 (2024-02-14)
-- Fixed a mistake in qt.get_config and qt.candle() that interprets wrong list dates in basic data
-- Improved progress bar: trim the text to screen width
-- Allows qt.get_stock_info() to run without all basic tables being downloaded
+
+- **get_config / candle**  
+  修正 list 日期解析错误；进度条文本截断至屏宽；`get_stock_info()` 无需全部基础表即可运行。
 
 ## 1.0.21 (2024-02-11)
-- Fixed bugs
+
+- **稳定性**  
+  若干 bug 修复。
 
 ## 1.0.20 (2024-02-08)
-- Fixed mistakes in ta-lib compatible functions `EMA()`, `MACD()`, `TRIX()`, and `DEMA()`, now they can be used without `ta-lib` installed, although the results are slightly different from their talib versions
+
+- **免 TA-Lib 指标**  
+  修正 EMA、MACD、TRIX、DEMA 在无 ta-lib 时的实现，结果与 talib 版略有差异但可用。
 
 ## 1.0.19 (2024-02-07)
-- Removed dependency on `ta-lib` package for ta functions `RSI()`, `MA()`, and `BBANDS()`, thus candle charts can be created without `ta-lib` installed
-- Updated dependencies, made package more use-able for beginners with no `ta-lib` and only basic `tushare` credits
+
+- **免 TA-Lib**  
+  RSI、MA、BBANDS 不再依赖 ta-lib，无 ta-lib 也可画 K 线；降低初学者依赖门槛。
 
 ## 1.0.18 (2024-02-05)
-- Improved Trader Shell live messages: now order execution results are better displayed with more info regarding change of stock qty and cash amounts
-- Command INFO and OVERVIEW in trader shell now will not print out system information in default.
-- Updated version requirements for numpy
-- Bug fixes
+
+- **Trader Shell 消息**  
+  订单成交展示含股数与现金变化；INFO/OVERVIEW 默认不再打印系统信息；numpy 版本要求更新。
 
 ## 1.0.17 (2024-01-29)
-- improved trader shell command "run", now it can run a strategy in main thread, making it easier to debug
-- fixed a bug that will cause error acquiring live price in live trade mode if running freq is lower than 1 hour
+
+- **CLI run**  
+  可在主线程运行策略便于调试。
+- **live 行情**  
+  修复运行频率低于 1 小时时 live 价获取失败。
 
 ## 1.0.16 (2024-01-27)
-- Added feature: if a valid trade signal can not be converted to an order due to lack of available cash/stock, a message will be posted in live mode
-- Fixed a bug in live trade mode that will cause trade results being processed and delivered for more than one time, thus leads to wrong available qty or available cash recorded
-- Fixed a mistake that will cause wrong cost being calculated during live trade
-- Fixed a mistake in live trade shell with command history, that wrong stock cost is calculated when history of multiple stocks are listed
-- Fixed bug in issue #85 where data are extracted and filled unexpectedly in non-trading days
-- Fixed other bugs
+
+- **信号无法下单提示**  
+  live 模式现金/持仓不足无法转订单时会提示。
+- **成交与成本**  
+  修复重复处理成交导致可用量/现金错误、成本计算错误、history 命令多标的成本错误；修复非交易日意外填数据（#85）等问题。
 
 ## 1.0.15 (2023-12-29)
-- Now live prices of Index and ETFs can also be watched in live running mode
-- ETF and Index are now supported in live trading mode as trading targets
-- Fixed bugs
+
+- **指数与 ETF live**  
+  支持监控指数/ETF live 价；live 交易目标支持 ETF 与指数。
 
 ## 1.0.14 (2023-12-22)
-- Removed optional dependency sqlalchemy
-- Added retry in broker to stop order execution after max retries
+
+- **依赖**  
+  移除可选 sqlalchemy；broker 增加最大重试后停止执行。
 
 ## 1.0.13 (2023-12-21)
-- Improvements in Trader Shell
-  - Now users can scroll to previous commands with up and down keys in Command mode
-  - Created new command `buy` / `sell` to allow users to manually submit orders to broker
-  - Optimized shell tasks and let live price acquisition to run in background threads
-- In Broker:
-  - Optimized behavior of Simulator Broker, to return execution result according to live prices
-  - Fixed bugs: order execution will not block each other
+
+- **Trader Shell**  
+  命令模式上下键翻阅历史；新增 `buy`/`sell` 手动下单；live 价后台线程获取。
+- **Simulator Broker**  
+  按 live 价返回模拟成交；修复订单互相阻塞。
 
 ## 1.0.12 (2023-12-07)
-- improved visual effects
-- now live prices are acquired in background threads, not causing lags in the main loop
-- mistake corrections that allow live prices to be displayed when time zone is not local
-- watched price refresh interval is now configurable
 
-*in next release:*
-
-- two new commands will be added to Shell: `buy` and `sell` 
+- **视觉与 live 价**  
+  界面效果改进；live 价后台线程避免主循环卡顿；非本地时区也可显示 live 价；监控刷新间隔可配置。
 
 ## 1.0.11 (2023-12-03)
-- Implemented "--parameter" / "-p" style parameter in Trader Shell, the old style will be deprecated in later versions
-- Allowed users to set up live trade broker parameters with QT configurations
-- Allowed users to set up live trade running time zone
-- Made dependency ta-lib as optional, kept a few critical built in strategies usable without `ta-lib`
+
+- **Shell 参数风格**  
+  支持 `--parameter` / `-p` 新风格（旧风格将弃用）。
+- **live 配置**  
+  可配置 broker 参数与时区；ta-lib 改为可选，部分内置策略无 ta-lib 仍可用。
 
 ## 1.0.10 (2023-11-25)
-- Corrected a mistake left out in version 1.0.9, which caused error when reference data is None in strategy
-- Changed default value of qteasy parameter `backtest_price_adj` to `none`
+
+- **reference 数据**  
+  修正 1.0.9 遗留的 reference None 错误。
+- **backtest_price_adj**  
+  默认值改为 `none`。
 
 ## 1.0.9 (2023-11-24)
-- Corrected a mistake in reference data generation and allocation to strategies, making reference data available to strategies
-- Improved documentations
+
+- **reference 数据**  
+  修正 reference 生成与注入策略的逻辑。
+- **文档**  
+  文档改进。
 
 ## 1.0.8 (2023-11-22)
-- Improved trader shell visual effects, added color coding for different types of messages, with dependency on `rich` package
-- Published `Qteasy` Docs to https://qteasy.readthedocs.io/zh-cn/latest/, added more supportive documents including api reference, examples, tutorials, etc.
-- Added parameter `qteasy.__version__`
-- Fixed bugs
+
+- **Trader Shell**  
+  依赖 `rich` 的消息着色；文档发布至 Read the Docs；新增 `qteasy.__version__`。
 
 ## 1.0.7 (2023-11-11)
-- Improved Strategy class, added Strategy.use_latest_data_cycle property to allow use the latest prices to create trade signals
-- now stock names are displayed in qt shell
-- Added shell command `watch`, to watch stock price in realtime
-- Implemented live price acquiring channel eastmoney
-- Improvements in text display effects and bug fixes
+
+- **Strategy**  
+  新增 `use_latest_data_cycle` 控制是否用最新价生成信号。
+- **Shell watch**  
+  新增 `watch` 实时监控价；Shell 显示股票名称；东方财富 live 价渠道。
 
 ## 1.0.6 (2023-10-19)
-- Added shell command `config`
-- Supported using FUND as investment type
+
+- **Shell config**  
+  新增 `config` 命令。
+- **FUND**  
+  支持 FUND 作为投资类型。
 
 ## 1.0.0 (2023-09-19)
-- First release of working version on PyPI.
+
+- **首次 PyPI 发布**  
+  qteasy 首个可在 PyPI 安装使用的正式版本。

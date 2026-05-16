@@ -44,7 +44,7 @@ $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple qteasy
 
 ## 如何升级qteasy到最新版本
 
-在使用qteasy时，我们可能需要升级到最新版本。升级qteasy到最新版本的方法如下：
+在使用qteasy时，我们可能需要升级到最新版本。升级前建议查阅 [发布历史](RELEASE_HISTORY.md) 了解各版本的用户可见变更。升级 qteasy 到最新版本的方法如下：
 
 ```bash
 $ pip install qteasy --upgrade
