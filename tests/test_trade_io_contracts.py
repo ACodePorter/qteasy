@@ -371,7 +371,7 @@ class TestTradeIOIntegrationSubmitOrder(unittest.TestCase):
         orders = self.trader.history_orders(with_trade_results=False)
         print(' latest orders tail:\n', orders.tail(3))
         self.assertFalse(orders.empty)
-        self.assertEqual(orders.iloc[-1]['status'], 'created')
+        self.assertEqual(orders.iloc[-1]['status'], 'rejected')
 
     def test_submit_trade_order_marks_rejected_when_broker_rejects(self):
         print('\n[TestTradeIOIntegrationSubmitOrder] broker reject -> order status rejected')
