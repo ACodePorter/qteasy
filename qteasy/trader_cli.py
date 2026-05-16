@@ -52,7 +52,11 @@ CLI_COMMAND_ALIASES = {
     'live-config': 'liveconfig',
     'startup-gate': 'gate',
     'snapshot-reconcile': 'reconcile',
+    'rotate-logs': 'rotatelogs',
+    'pull-state': 'sync',
 }
+
+BROKER_SUBCOMMANDS = ('status', 'connect', 'disconnect')
 
 
 def pack_system_info(trader_info, width=80):
@@ -295,6 +299,9 @@ class TraderShell(Cmd):
     - tasks / task: 查看或取消 Trader 任务队列（非 broker 订单）
     - gate: 手动触发启动门禁（别名 startup-gate）
     - reconcile: 打印 Broker 对账快照 JSON（别名 snapshot-reconcile）
+    - rotatelogs: 手动轮换 trade/risk 日志（别名 rotate-logs）
+    - broker: Broker 会话子命令 status/connect/disconnect
+    - sync: 远端状态同步预留（stub，别名 pull-state，S2.1-b）
 
     qteasy Shell的命令支持参数解析，用户可以通过命令行参数来调整命令的行为，要查看所有命令的帮助，
     可以使用命令 "help" 或者 "?"，要查看某个命令的帮助，可以使用命令 "help <command>" 或者
@@ -417,6 +424,15 @@ class TraderShell(Cmd):
         'reconcile':  dict(prog='reconcile',
                            description='Print broker reconcile snapshot JSON (implemented)',
                            usage='reconcile [-h]'),
+        'rotatelogs': dict(prog='rotatelogs',
+                           description='Rotate trade/risk logs under QT_TRADE_LOG_PATH (implemented)',
+                           usage='rotatelogs [-h] [--days DAYS]'),
+        'broker':     dict(prog='broker',
+                           description='Run broker session subcommands (implemented)',
+                           usage=f'broker {{{",".join(BROKER_SUBCOMMANDS)}}} [-h]'),
+        'sync':       dict(prog='sync',
+                           description='Pull broker remote state (stub, reserved for QMT S2.1-b)',
+                           usage='sync [-h]'),
     }
 
     command_arguments = {
@@ -487,6 +503,9 @@ class TraderShell(Cmd):
                        ('--cancel', '-c')],
         'gate':       [],
         'reconcile':  [],
+        'rotatelogs': [('--days', '-d')],
+        'broker':     [('action',)],
+        'sync':       [],
     }
 
     command_arg_properties = {
@@ -677,6 +696,14 @@ class TraderShell(Cmd):
                         'help':   'cancel Trader queue task (not broker order; use cancel ORDER_ID for orders)'}],
         'gate':       [],
         'reconcile':  [],
+        'rotatelogs': [{'action':  'store',
+                        'type':    int,
+                        'default': None,
+                        'help':    'keep days override; default from trade_log_keep_days'}],
+        'broker':     [{'action':  'store',
+                        'choices': list(BROKER_SUBCOMMANDS),
+                        'help':    'broker subcommand (Simulator connect is session flag only)'}],
+        'sync':       [],
     }
 
     def __init__(self, trader):
@@ -2558,6 +2585,91 @@ class TraderShell(Cmd):
         snapshot = self.trader.collect_broker_reconcile_snapshot()
         self._print_json(snapshot)
         return None
+
+    def do_rotatelogs(self, arg):
+        """usage: rotatelogs [-h] [--days DAYS]
+
+        Rotate trade/risk logs under current QT_TRADE_LOG_PATH (implemented).
+        Alias: rotate-logs
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          --days, -d DAYS       keep-days override; default from trade_log_keep_days
+        """
+
+        args = self.parse_args('rotatelogs', arg)
+        if not args:
+            return False
+
+        import qteasy as qt
+
+        if args.days is None:
+            keep_days = qt.QT_CONFIG.get('trade_log_keep_days', 3)
+        else:
+            keep_days = args.days
+
+        if keep_days is None or (isinstance(keep_days, int) and keep_days <= 0):
+            print('Rotation skipped (keep_days disabled)')
+            return None
+
+        log_path = qt.QT_TRADE_LOG_PATH
+        qt.rotate_trade_logs(days=args.days)
+        print(f'Trade log rotation completed (keep_days={keep_days}, path={log_path})')
+        return None
+
+    def do_broker(self, arg):
+        """usage: broker {status,connect,disconnect} [-h]
+
+        Run broker session subcommands (implemented).
+        On Simulator, connect/disconnect only toggles adapter session state.
+
+        positional arguments:
+          {status,connect,disconnect}
+                                broker subcommand
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('broker', arg)
+        if not args:
+            return False
+
+        if not args.action:
+            print('Please provide a broker subcommand: status, connect, or disconnect.')
+            return False
+
+        broker = self.trader.broker
+        action = args.action
+        if action == 'status':
+            print(
+                f'broker_name={broker.broker_name} status={broker.status} '
+                f'is_connected={broker.is_connected} is_registered={broker.is_registered}'
+            )
+        elif action == 'connect':
+            broker.connect()
+            print('Broker connected.')
+        elif action == 'disconnect':
+            broker.disconnect()
+            print('Broker disconnected.')
+        return None
+
+    def do_sync(self, arg):
+        """usage: sync [-h]
+
+        Pull broker remote state into local ledger (stub, reserved for QMT S2.1-b).
+        Alias: pull-state
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('sync', arg)
+        if not args:
+            return False
+
+        print('[NOT_IMPLEMENTED] sync_from_broker is reserved for QMT broker integration (S2.1-b).')
+        return False
 
     # ----- overridden methods -----
     def precmd(self, line: str) -> str:

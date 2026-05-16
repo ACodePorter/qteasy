@@ -305,6 +305,11 @@ class Broker(object):
         self._pending_fills.clear()
         self._submitted_order_map.clear()
 
+    @property
+    def is_connected(self) -> bool:
+        """Broker 适配层会话是否已连接（``connect()`` / ``disconnect()`` 维护）。"""
+        return bool(self._adapter_connected)
+
     def submit(self, order: Mapping[str, Any]) -> str:
         """同步受理一笔订单并返回 broker 侧追踪 ID。
 
@@ -1153,6 +1158,10 @@ class BrokerFacade(Broker):
 
     def disconnect(self) -> None:
         self._inner.disconnect()
+
+    @property
+    def is_connected(self) -> bool:
+        return self._inner.is_connected
 
     def submit(self, order: Mapping[str, Any]) -> str:
         return self._inner.submit(order)

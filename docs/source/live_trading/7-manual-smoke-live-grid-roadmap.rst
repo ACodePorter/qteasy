@@ -1,5 +1,5 @@
-模拟实盘手动冒烟方案（live_grid_multi × 路线图阶段 0～5-A/B）
-======================================================================
+模拟实盘手动冒烟方案（live_grid_multi × 路线图阶段 0～5-C / 阶段 11）
+==========================================================================
 
 本文档供 **下一交易日** 使用 **新测试账户、从零持仓** 做一次集中手工验证；策略基线采用仓库示例
 ``examples/live_grid_multi.py``（5 分钟 VS + 多标的网格）。路线图权威表述见
@@ -11,6 +11,8 @@
 - 仓库 ``tests/notebook_trader_headless_script.py`` 提供 **十一阶段** 无头冒烟（含 **阶段 9：5-A/5-B**、
   **阶段 10：4-C**、**阶段 11：5-C**），
   可在 Notebook 中分 cell 调用；**本手册**侧重 **真实 ``qt.run`` + 示例策略 + 人眼验收**。
+- **阶段 11** 对应 ``stage11_phase5_c_smoke``（订单映射、risk 轮换、在途单诊断、post_close 检查点）；
+  手工 live 与无头可 **二选一** 或 **组合**（例如交易日 live + 非交易日无头回归）。
 - 建议节奏：**交易日盘中/收盘后** 按本手册走 live；**非交易时段或回放日** 用无头脚本做架构回归。
 
 一、环境与前置条件
@@ -39,11 +41,12 @@
 
 - **无持仓冷启动**：建议新建 ``-n`` 账户 **或** ``--restart`` 后人工确认持仓为空。
 - 示例内 ``asset_pool``、``par_values``、``run_freq='5min'`` 与 ``live_trade_*`` 配置可按冒烟范围微调；**不要**在不明环境下放大 ``trade_batch`` 以免资金压力。
+- **5-C CLI 冒烟** 建议在 ``--debug`` 下进入 Trader Shell，以便 ``run --task diagnose_pending_orders`` 等 DEBUG 任务可用。
 
 三、路线图阶段与手工验收（逐项打勾）
 ------------------------------------
 
-下列「阶段」对应路线图 **0 / 1 / 2 / 3 / 3.5 / 4-A / 4-B / 5-A / 5-B**；每项均给出 **操作建议** 与 **验收标准**。
+下列「阶段」对应路线图 **0 / 1 / 2 / 3 / 3.5 / 4-A / 4-B / 5-A / 5-B / 5-C（阶段 11）**；每项均给出 **操作建议** 与 **验收标准**。
 
 阶段 0：基线、状态机与可观测性
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -114,7 +117,38 @@
 
   1. ``live_trade_startup_gate_mode='warn'``：人为制造轻微不一致（如仅测试环境改 Broker 返回值），确认 **仅告警、不阻断**。
   2. ``live_trade_startup_gate_mode='block'``：确认严重失败时 **首笔** ``run_strategy`` 不入队或 ``skip_reason=gate_failed``，且系统日志/trace 可解释。
+  3. Shell 中手动：``gate``（或 ``startup-gate``）复验 ``run_startup_gate`` 输出。
 - **验收**：门禁结果可观测；``block`` 不误杀正常交易日（先 ``warn`` 灰度）。
+
+阶段 11 / 5-C：账本映射、日志轮换、在途单诊断
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+对齐 ``stage11_phase5_c_smoke`` 四项验收；可在 **DEBUG Shell** 或 Notebook 无头脚本中执行。
+
+1. **订单受理映射**
+
+   - **操作**：完成一笔模拟成交；另造一笔 **柜台受理拒单**（测试环境可 patch ``submit_with_ack``）。
+     若有 ``RiskManager``，另造一笔 **风控拒单**（超限下单）。
+   - **验收**：受理成功订单 ``broker_order_id``/``broker_name`` 非空；受理拒单 ``rejected`` 且 broker 字段空；
+     风控拒单 **无** ``sys_op_trade_orders`` 新行，``*.risk.log`` 含 ``<RISK REJECTED>``。
+   - **CLI**：``orders`` 查看状态；``artifacts`` 确认 ``risk_log`` 路径。
+
+2. **产物与 risk 轮换**
+
+   - **操作**：``artifacts`` 确认四键目录可写；在隔离目录或测试环境执行 ``rotatelogs --days 30``（或 ``qt.rotate_trade_logs(days=30)``）。
+   - **验收**：超期 ``*.risk.log`` 被清理，近期文件保留；输出含 ``Trade log rotation completed``。
+
+3. **在途单只读诊断**
+
+   - **操作**：DEBUG 模式下 ``run --task diagnose_pending_orders``；或调用 ``collect_pending_order_diagnostics()``。
+   - **验收**：输出含 ``local_pending_count``、``remote_pending_count``、
+     ``local_pending_without_broker_order_id``、``local_pending_missing_remote``、``remote_pending_not_in_local``；
+     Simulator 上远端差异可为空/可解释。
+
+4. **post_close 检查点**
+
+   - **操作**：收盘后观察 trace 中 ``reconcile`` / ``checkpoint_passed`` 或 ``checkpoint_warn``；Shell 中 ``reconcile`` 打印 JSON。
+   - **验收**：含 ``is_ok``、``failures``、``cash_diff``（若远端非空）等字段；与 :doc:`6-trader-snapshot-gate` 拒单语义一致。
 
 四、与示例策略强相关的补充检查（live_grid_multi）
 --------------------------------------------------
@@ -194,12 +228,11 @@
      - split 开/关对比
      - prepare 与 run 顺序正确；stale 可解释
    * - 5-B
-     - warn / block 分档
+     - warn / block 分档；CLI ``gate``
      - 告警可懂；block 不误杀
-
-.. note::
-
-   **4-C BrokerFacade**、**5-C 账本/日志长期收口** 仍以路线图正文为准；本冒烟方案 **不** 替代其专项验收。
+   * - 11 / 5-C
+     - 映射 / rotatelogs / diagnose / reconcile
+     - 见上文「阶段 11」四节；stage11 或 CLI 等价通过
 
 七、交易日/非交易日记录模板（5-C）
 --------------------------------
@@ -217,17 +250,23 @@
      - 记录 ``git commit``、``py39``、核心配置键（``live_trade_*``、``trade_log_keep_days``）
      - 同左；并注明是否走 ``use_real_time=False`` 回放
    * - 启动门禁
-     - 记录 ``run_startup_gate`` 结果（``warn`` / ``block``）与 ``failures`` 字段
-     - 记录“非交易日跳过”行为与日志关键字
+     - 记录 ``run_startup_gate`` / CLI ``gate`` 结果（``warn`` / ``block``）与 ``failures``
+     - 记录非交易日跳过（``gate_skipped_non_trade_day``）与日志关键字
    * - 订单受理映射
-     - 抽样核对 ``sys_op_trade_orders.broker_order_id`` / ``broker_name``；受理拒单应为空且 ``rejected``
-     - 至少跑一笔受理成功 + 一笔受理拒单（可用 patch/模拟）并记录结果
+     - 抽样 ``broker_order_id`` / ``broker_name``；受理拒单为空且 ``rejected``
+     - 无头 ``stage11`` 或 patch 各一笔受理成功/拒单
+   * - 拒单语义抽检
+     - 风控拒单：无订单行 + ``risk_log``；柜台拒单：有 ``rejected`` 行 + 空 broker 字段
+     - 同左；对照 :doc:`6-trader-snapshot-gate` 表格
    * - 对账与恢复诊断
-     - 记录 ``post_close`` 检查点 trace（``checkpoint_passed``/``checkpoint_warn``）与 ``cash_diff`` / ``position_qty_diff``
-     - 记录 ``diagnose_pending_orders`` 输出字段是否齐全、差异是否可解释
+     - 收盘 ``reconcile`` JSON；``run --task diagnose_pending_orders``（DEBUG）
+     - ``reconcile`` 远端占位预期；无头 ``stage11`` pending 字段齐全
    * - 日志轮换
-     - 核对 ``trade_log`` 与 ``*.risk.log`` 在保留策略下无异常膨胀
-     - 可在隔离目录执行一次 ``rotate_trade_logs(days=30)`` 验证旧 risk 文件清理
+     - ``rotatelogs --days N`` 或观察 ``trade_log``/``*.risk.log`` 体积
+     - 隔离目录执行 ``rotatelogs`` 验证 risk 清理
+   * - Broker 会话
+     - ``broker status`` / ``connect`` / ``disconnect``（Simulator 为会话标志）
+     - 同左；``sync`` 仍为 stub（``[NOT_IMPLEMENTED]``）
    * - 结论
      - 通过 / 待查 / 阻塞；若阻塞，附 top1 错误与回滚点
      - 通过 / 待查 / 阻塞；附下一交易日跟进动作

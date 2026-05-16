@@ -13,6 +13,8 @@
 
 import json
 import os
+import shutil
+import tempfile
 import unittest
 import time
 import io
@@ -20,9 +22,10 @@ from contextlib import redirect_stdout
 from unittest.mock import patch
 import pandas as pd
 
+import qteasy as qt
 from qteasy import DataSource, Operator
 from qteasy.trader import Trader
-from qteasy.trader_cli import TraderShell, DEBUG_RUN_TASK_CHOICES, CLI_COMMAND_ALIASES
+from qteasy.trader_cli import TraderShell, DEBUG_RUN_TASK_CHOICES, CLI_COMMAND_ALIASES, BROKER_SUBCOMMANDS
 from qteasy.trading_util import (
     process_account_delivery,
     process_trade_result,
@@ -1383,7 +1386,109 @@ class TestTraderCLI(unittest.TestCase):
         self.assertEqual(CLI_COMMAND_ALIASES.get('live-config'), 'liveconfig')
         self.assertEqual(CLI_COMMAND_ALIASES.get('startup-gate'), 'gate')
         self.assertEqual(CLI_COMMAND_ALIASES.get('snapshot-reconcile'), 'reconcile')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('rotate-logs'), 'rotatelogs')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('pull-state'), 'sync')
         self.assertEqual(len(DEBUG_RUN_TASK_CHOICES), 7)
+
+    def test_command_rotatelogs(self):
+        """test rotatelogs command and rotate-logs alias"""
+        tss = self.tss
+
+        print('\n[TestCommandRotatelogs] help returns False')
+        self.assertFalse(tss.do_rotatelogs('-h'))
+
+        print('[TestCommandRotatelogs] rotate-logs alias via precmd')
+        self.assertEqual(tss.precmd('rotate-logs --days 30'), 'rotatelogs --days 30')
+
+        tmp_dir = tempfile.mkdtemp()
+        original_path = qt.QT_TRADE_LOG_PATH
+        try:
+            old_path = os.path.join(tmp_dir, 'old_account.risk.log')
+            recent_path = os.path.join(tmp_dir, 'recent_account.risk.log')
+            with open(old_path, 'w', encoding='utf-8') as f:
+                f.write('old-risk\n')
+            with open(recent_path, 'w', encoding='utf-8') as f:
+                f.write('recent-risk\n')
+            old_time = time.time() - 40 * 24 * 3600
+            recent_time = time.time() - 2 * 24 * 3600
+            os.utime(old_path, (old_time, old_time))
+            os.utime(recent_path, (recent_time, recent_time))
+
+            print(' tmp_dir:', tmp_dir)
+            print(' files before rotation:', sorted(os.listdir(tmp_dir)))
+            qt.QT_TRADE_LOG_PATH = tmp_dir
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                self.assertIsNone(tss.do_rotatelogs('--days 30'))
+            out = buf.getvalue()
+            print(' rotatelogs output:', out)
+            print(' files after rotation:', sorted(os.listdir(tmp_dir)))
+            self.assertIn('Trade log rotation completed', out)
+            self.assertIn(tmp_dir, out)
+            self.assertFalse(os.path.exists(old_path))
+            self.assertTrue(os.path.exists(recent_path))
+        finally:
+            qt.QT_TRADE_LOG_PATH = original_path
+            if os.path.isdir(tmp_dir):
+                shutil.rmtree(tmp_dir, ignore_errors=True)
+
+    def test_command_broker(self):
+        """test broker status/connect/disconnect subcommands"""
+        tss = self.tss
+        broker = tss.trader.broker
+
+        print('\n[TestCommandBroker] help returns False')
+        self.assertFalse(tss.do_broker('-h'))
+
+        print('[TestCommandBroker] status before connect')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_broker('status'))
+        status_out = buf.getvalue()
+        print(' status output:', status_out)
+        self.assertIn('is_connected=False', status_out)
+
+        print('[TestCommandBroker] connect then status')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_broker('connect'))
+        self.assertIn('Broker connected.', buf.getvalue())
+        self.assertTrue(broker.is_connected)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_broker('status'))
+        status_out = buf.getvalue()
+        print(' status after connect:', status_out)
+        self.assertIn('is_connected=True', status_out)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_broker('disconnect'))
+        self.assertIn('Broker disconnected.', buf.getvalue())
+        self.assertFalse(broker.is_connected)
+
+        print(' BROKER_SUBCOMMANDS:', BROKER_SUBCOMMANDS)
+        self.assertFalse(tss.do_broker(''))
+
+    def test_command_sync_stub(self):
+        """test sync stub and pull-state alias"""
+        tss = self.tss
+
+        print('\n[TestCommandSyncStub] help returns False')
+        self.assertFalse(tss.do_sync('-h'))
+
+        print('[TestCommandSyncStub] NOT_IMPLEMENTED message')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertFalse(tss.do_sync(''))
+        out = buf.getvalue()
+        print(' sync output:', out)
+        self.assertIn('[NOT_IMPLEMENTED]', out)
+        self.assertIn('S2.1-b', out)
+
+        print('[TestCommandSyncStub] pull-state alias via precmd')
+        self.assertEqual(tss.precmd('pull-state'), 'sync')
 
 
 class TestTraderCLIBuild1Coverage(unittest.TestCase):
@@ -1402,6 +1507,23 @@ class TestTraderCLIBuild1Coverage(unittest.TestCase):
             'do_reconcile',
         )
         for cmd in build1_commands:
+            print(' registered:', cmd, cmd in shell)
+            self.assertIn(cmd, shell)
+
+
+class TestTraderCLIBuild2Coverage(unittest.TestCase):
+    """Build 2 CLI 覆盖矩阵：P2/P3 命令已在 TraderShell 注册。"""
+
+    def test_coverage_matrix_rows(self):
+        """核对 Build2 新增命令注册。"""
+        print('\n[TestTraderCLIBuild2Coverage] TraderShell command registration')
+        shell = TraderShell.__dict__
+        build2_commands = (
+            'do_rotatelogs',
+            'do_broker',
+            'do_sync',
+        )
+        for cmd in build2_commands:
             print(' registered:', cmd, cmd in shell)
             self.assertIn(cmd, shell)
 
