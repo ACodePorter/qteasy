@@ -482,12 +482,13 @@ TABLE_SCHEMA = {
 
     'sys_op_trade_orders':  # 实盘交易订单表
         {'columns':    ['order_id', 'pos_id', 'direction', 'order_type', 'qty', 'price',
-                        'submitted_time', 'status'],
+                        'submitted_time', 'status', 'broker_order_id', 'broker_name'],
          'dtypes':     ['int', 'int', 'varchar(10)', 'varchar(8)', 'double', 'double',
-                        'datetime', 'varchar(15)'],
+                        'datetime', 'varchar(15)', 'varchar(64)', 'varchar(64)'],
          'remarks':    ['交易订单ID', '持仓ID', '交易方向(买Buy/卖Sell)', '委托类型(市价单/限价单)', '委托数量',
                         '委托报价',
-                        '委托时间', '状态(提交submitted/部分成交partial-filled/全部成交filled/取消canceled/拒单rejected)'],
+                        '委托时间', '状态(提交submitted/部分成交partial-filled/全部成交filled/取消canceled/拒单rejected)',
+                        '券商委托号（受理成功后写入）', '券商名称（可选，用于多柜台排障）'],
          'prime_keys': [0]
          },
 

@@ -35,6 +35,33 @@ Trader 主链路快照与启动门禁（阶段 5-A / 5-B）
 与 **下一交易日** 基于 ``examples/live_grid_multi.py`` 的 **全阶段手工冒烟清单**（路线图 0～5-A/B）见同目录文档
 :doc:`7-manual-smoke-live-grid-roadmap`；本页仅覆盖 5-A/5-B 技术语义与配置要点。
 
+5-C 增量：账本/日志/恢复（本次实现）
+-----------------------------------
+
+本次在 5-A/5-B 基础上补充了三类长期运行能力，便于排障与审计：
+
+- **订单受理映射（新增列）**：``sys_op_trade_orders`` 增加可空 ``broker_order_id`` 与 ``broker_name``。
+  在 ``submit_with_ack`` 返回 ``accepted=True`` 后立即回写；若受理拒单，字段保持空值且状态为 ``rejected``。
+- **日志轮换覆盖扩展**：``rotate_trade_logs()`` 现在除 ``trade_log`` / ``trade_summary`` /
+  ``value_curve`` 外，也会清理超期 ``*.risk.log``（按 ``trade_log_keep_days``，优先文件名时间戳，失败退回 ``mtime``）。
+- **恢复诊断与检查点 trace**：
+
+  - ``pre_open`` / ``post_close`` 结束后会输出 ``reconcile`` 分类检查点 trace（``checkpoint_passed`` /
+    ``checkpoint_warn``，含 ``cash_diff`` / ``position_qty_diff`` / ``remote_orders_count``）；
+  - 新增只读诊断任务 ``diagnose_pending_orders``，用于输出「本地在途单 vs Broker 远端在途单」差异摘要。
+
+``diagnose_pending_orders`` 的主要输出字段
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- ``local_pending_count``：本地在途订单数（``created`` / ``submitted`` / ``partial-filled``）。
+- ``remote_pending_count``：远端在途订单数（按 ``broker_order_id`` 或远端订单 ID 统计）。
+- ``local_pending_without_broker_order_id``：本地 ``submitted``/``partial-filled`` 但缺少 ``broker_order_id`` 的订单 ID 列表。
+- ``local_pending_missing_remote``：本地有 ``broker_order_id`` 但远端不存在的委托号列表。
+- ``remote_pending_not_in_local``：远端存在但本地未发现映射的委托号列表。
+
+说明：本阶段先交付 **只读诊断** 与 **结构化可观测性**，未启用自动改单/自动补偿流程。
+若后续引入自动补偿，建议在独立迭代中定义风控边界与人工确认开关。
+
 下一交易日验证建议
 --------------------
 

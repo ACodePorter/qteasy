@@ -2154,11 +2154,47 @@ class TestTraderAccountOrders(unittest.TestCase):
         self.assertIsInstance(tr, pd.DataFrame)
 
     def test_submit_trade_order_returns_dict_or_empty(self):
+        print('\n[TestTraderTradeOps] submit_trade_order 受理成功后应写入 broker_order_id / broker_name')
         res = self.trader.submit_trade_order(
             symbol='000001.SZ', position='long', direction='buy',
             order_type='limit', qty=10, price=50.0,
         )
         self.assertIsInstance(res, dict)
+        print(' submit result:', res)
+        self.assertTrue(bool(res.get('broker_order_id')))
+        self.assertTrue(bool(res.get('broker_name')))
+        stored = read_trade_order(res['order_id'], data_source=self.test_ds)
+        print(' stored order:', stored)
+        self.assertEqual(stored.get('broker_order_id'), res.get('broker_order_id'))
+        self.assertEqual(stored.get('broker_name'), res.get('broker_name'))
+
+    def test_submit_trade_order_rejected_keeps_broker_fields_empty(self):
+        print('\n[TestTraderTradeOps] submit_with_ack 拒单时 broker 字段保持为空')
+        with patch.object(
+                self.trader.broker,
+                'submit_with_ack',
+                return_value={
+                    'accepted': False,
+                    'order_id': 0,
+                    'broker_order_id': '',
+                    'submitted_qty': 0.0,
+                    'reason': 'unit-test reject',
+                },
+        ):
+            res = self.trader.submit_trade_order(
+                symbol='000001.SZ', position='long', direction='buy',
+                order_type='limit', qty=10, price=50.0,
+            )
+        print(' reject submit result:', res)
+        self.assertEqual(res, {})
+        orders = self.trader.history_orders(with_trade_results=False)
+        print(' history orders tail:\n', orders.tail(3))
+        last_order_id = int(orders.index.max())
+        stored = read_trade_order(last_order_id, data_source=self.test_ds)
+        print(' rejected stored order:', stored)
+        self.assertEqual(stored['status'], 'rejected')
+        self.assertTrue(stored.get('broker_order_id') in [None, ''] or pd.isna(stored.get('broker_order_id')))
+        self.assertTrue(stored.get('broker_name') in [None, ''] or pd.isna(stored.get('broker_name')))
 
     def test_manual_change_cash_positive_increases(self):
         c0 = self.trader.account_cash

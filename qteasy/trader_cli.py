@@ -379,7 +379,7 @@ class TraderShell(Cmd):
         'run':        dict(prog='', description='Run strategies manually',
                            usage='run [STRATEGY [STRATEGY ...]] [-h] '
                                  '[--task {process_result,pre_open,open_market,'
-                                 'close_market,post_close,refill}] '
+                                 'close_market,post_close,refill,diagnose_pending_orders}] '
                                  '[--args [ARGS [ARGS ...]]]'),
     }
 
@@ -614,7 +614,8 @@ class TraderShell(Cmd):
                        {'action':  'store',
                         'default': '',
                         'choices': ['process_result', 'pre_open',
-                                    'open_market', 'close_market', 'post_close', 'refill'],
+                                    'open_market', 'close_market', 'post_close', 'refill',
+                                    'diagnose_pending_orders'],
                         'help':    'task to run'},
                        {'action': 'append',  # TODO: for python version >= 3.8, use action='extend' instead
                         'nargs':  '*',
@@ -2242,7 +2243,7 @@ class TraderShell(Cmd):
 
     def do_run(self, arg):
         """usage: run [STRATEGY [STRATEGY ...]] [-h]
-                [--task {process_result,pre_open,post_close,refill}]
+                [--task {process_result,pre_open,post_close,refill,diagnose_pending_orders}]
                 [--args [ARGS [ARGS ...]]]
 
         Run strategies or tasks manually. If run refill task, only one table can be refilled at a time.
@@ -2252,8 +2253,8 @@ class TraderShell(Cmd):
 
         optional arguments:
           -h, --help            show this help message and exit
-          --task {process_result,pre_open,post_close,refill},
-          -t {process_result,pre_open,post_close,refill}
+          --task {process_result,pre_open,post_close,refill,diagnose_pending_orders},
+          -t {process_result,pre_open,post_close,refill,diagnose_pending_orders}
                                 task to run
           --args [ARGS [ARGS ...]], -a [ARGS [ARGS ...]]
                                 arguments for the task to run
@@ -2311,7 +2312,7 @@ class TraderShell(Cmd):
             self.trader.status = current_trader_status
             self.trader.broker.status = current_broker_status
         else:  # run tasks
-            if task not in ['process_result', 'pre_open', 'post_close', 'refill']:
+            if task not in ['process_result', 'pre_open', 'post_close', 'refill', 'diagnose_pending_orders']:
                 print(f'Invalid task name: {task}, please input a valid task name.')
                 return False
             try:

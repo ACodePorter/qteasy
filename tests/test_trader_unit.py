@@ -888,6 +888,62 @@ class TestTraderPhase5SnapshotAndGate(unittest.TestCase):
         finally:
             _clear_tables(test_ds)
 
+    def test_post_close_emits_reconcile_checkpoint_trace(self) -> None:
+        print('\n[TestTraderPhase5] post_close emits reconcile checkpoint trace')
+        trader, test_ds = create_trader_with_account()
+        try:
+            trader.is_market_open = False
+            with patch.object(
+                    trader,
+                    'collect_broker_reconcile_snapshot',
+                    return_value={
+                        'failures': ['broker_cash_mismatch'],
+                        'cash_diff': 123.45,
+                        'position_qty_diff': 0.0,
+                        'remote_orders_count': 2,
+                    },
+            ):
+                with patch.object(trader, '_trace_event') as mock_trace:
+                    trader._post_close()
+                    reconcile_calls = [
+                        call for call in mock_trace.call_args_list
+                        if call.kwargs.get('category') == 'reconcile'
+                    ]
+                    print(' reconcile trace calls:', [c.kwargs for c in reconcile_calls])
+                    self.assertGreater(len(reconcile_calls), 0)
+                    last_call = reconcile_calls[-1].kwargs
+                    self.assertEqual(last_call.get('event'), 'checkpoint_warn')
+                    self.assertEqual(last_call.get('checkpoint'), 'post_close')
+                    self.assertEqual(last_call.get('grade'), 'warn_only')
+                    self.assertIn('broker_cash_mismatch', last_call.get('failures', ''))
+        finally:
+            _clear_tables(test_ds)
+
+    def test_collect_pending_order_diagnostics_detects_mismatch(self) -> None:
+        print('\n[TestTraderPhase5] pending order diagnostics should detect mismatch')
+        trader, test_ds = create_trader_with_account()
+        try:
+            local_orders = pd.DataFrame(
+                [
+                    {'order_id': 11, 'status': 'submitted', 'broker_order_id': 'BRK-11'},
+                    {'order_id': 12, 'status': 'partial-filled', 'broker_order_id': None},
+                    {'order_id': 13, 'status': 'created', 'broker_order_id': None},
+                ],
+            ).set_index('order_id')
+            remote_orders = [{'broker_order_id': 'BRK-11'}, {'broker_order_id': 'BRK-99'}]
+            with patch('qteasy.trader.query_trade_orders', return_value=local_orders):
+                with patch.object(trader.broker, 'get_remote_orders', return_value=remote_orders):
+                    diag = trader.collect_pending_order_diagnostics()
+            print(' pending diagnostics:', diag)
+            self.assertEqual(diag['local_pending_count'], 3)
+            self.assertEqual(diag['remote_pending_count'], 2)
+            self.assertEqual(diag['local_pending_without_broker_order_id'], [12])
+            self.assertEqual(diag['local_pending_missing_remote'], [])
+            self.assertEqual(diag['remote_pending_not_in_local'], ['BRK-99'])
+            self.assertFalse(diag['is_ok'])
+        finally:
+            _clear_tables(test_ds)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -13,6 +13,8 @@
 from __future__ import annotations
 
 import os
+import shutil
+import tempfile
 import time
 import threading
 import subprocess
@@ -77,7 +79,7 @@ def _unittest_subprocess_env() -> Dict[str, str]:
 
 
 # %% [markdown]
-# # Notebook 无头 Trader 测试脚本（10 阶段；第 9 阶段对齐路线图 5-A/5-B，第 10 阶段对齐 4-C）
+# # Notebook 无头 Trader 测试脚本（11 阶段；第 9 阶段对齐路线图 5-A/5-B，第 10 阶段对齐 4-C，第 11 阶段对齐 5-C）
 #
 # 用法（建议在 notebook 分 cell 执行）：
 # 1. `session = create_headless_notebook_session()`  # 默认 QT_DATA_SOURCE + 固定回放日
@@ -103,6 +105,7 @@ class NotebookDayRecord:
     stage7_exceptions_and_logs: Dict[str, Any] = field(default_factory=dict)
     stage9_phase5_ab: Dict[str, Any] = field(default_factory=dict)
     stage10_phase4_c: Dict[str, Any] = field(default_factory=dict)
+    stage11_phase5_c: Dict[str, Any] = field(default_factory=dict)
     stage8_conclusion: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -871,6 +874,130 @@ def stage10_phase4_c_smoke(session: HeadlessNotebookSession, info: bool = False)
     return acceptance
 
 
+def stage11_phase5_c_smoke(session: HeadlessNotebookSession, info: bool = False) -> Dict[str, Any]:
+    """阶段11：路线图 5-C（账本/日志/恢复）集中冒烟。"""
+    _print_stage_scope(
+        '阶段11 stage11_phase5_c_smoke',
+        [
+            '范围：trade order 与 broker_order_id 映射、risk_log 轮换、pending 只读诊断、post_close 检查点 trace。',
+            '目的：确认 5-C 新增能力可用且保持“受理成功写映射、拒单留空、日志可轮换、恢复可诊断”。',
+        ],
+        enabled=info,
+    )
+    print('\n[Stage11] Phase 5-C smoke (order mapping + risk rotation + pending diagnostics)')
+    trader = session.trader
+    ds = session.datasource
+
+    # 1) 订单受理映射：accepted 写 broker_order_id / broker_name，rejected 保持空值
+    accepted = trader.submit_trade_order(
+        symbol='000001.SZ',
+        position='long',
+        direction='buy',
+        order_type='limit',
+        qty=10.0,
+        price=20.0,
+    )
+    print(' accepted order:', accepted)
+
+    with mock.patch.object(
+            trader.broker,
+            'submit_with_ack',
+            return_value={
+                'accepted': False,
+                'order_id': 0,
+                'broker_order_id': '',
+                'submitted_qty': 0.0,
+                'reason': 'stage11 synthetic reject',
+            },
+    ):
+        rejected = trader.submit_trade_order(
+            symbol='000002.SZ',
+            position='long',
+            direction='buy',
+            order_type='limit',
+            qty=10.0,
+            price=20.0,
+        )
+    print(' rejected submit result:', rejected)
+    orders_df = query_trade_orders(account_id=trader.account_id, data_source=ds)
+    accepted_order = read_trade_order_detail(int(accepted['order_id']), data_source=ds) if accepted else {}
+    rejected_rows = orders_df.loc[orders_df['status'] == 'rejected'] if len(orders_df) else pd.DataFrame()
+    rejected_order = {}
+    if len(rejected_rows):
+        rejected_order = read_trade_order_detail(int(rejected_rows.index.max()), data_source=ds)
+    print(' accepted order detail:', accepted_order)
+    print(' rejected order detail:', rejected_order)
+    mapping_accept_ok = bool(accepted_order.get('broker_order_id')) and bool(accepted_order.get('broker_name'))
+    rejected_bid = rejected_order.get('broker_order_id')
+    rejected_bname = rejected_order.get('broker_name')
+    mapping_reject_ok = (
+        rejected_order.get('status') == 'rejected'
+        and (rejected_bid in [None, ''] or pd.isna(rejected_bid))
+        and (rejected_bname in [None, ''] or pd.isna(rejected_bname))
+    )
+
+    # 2) 产物路径与 risk 日志轮换
+    artifacts = qt.list_live_trade_artifacts(account_id=trader.account_id, data_source=ds)
+    print(' artifacts:', artifacts)
+    artifacts_writable = all(os.path.isdir(os.path.dirname(path)) for path in artifacts.values())
+    tmp_dir = tempfile.mkdtemp(prefix='qteasy_stage11_risk_rotate_')
+    original_trade_log_path = qt.QT_TRADE_LOG_PATH
+    risk_rotation_ok = False
+    try:
+        old_risk = os.path.join(tmp_dir, 'old_account.risk.log')
+        recent_risk = os.path.join(tmp_dir, 'recent_account.risk.log')
+        with open(old_risk, 'w', encoding='utf-8') as f:
+            f.write('old\n')
+        with open(recent_risk, 'w', encoding='utf-8') as f:
+            f.write('recent\n')
+        old_time = time.time() - 40 * 24 * 3600
+        recent_time = time.time() - 2 * 24 * 3600
+        os.utime(old_risk, (old_time, old_time))
+        os.utime(recent_risk, (recent_time, recent_time))
+        qt.QT_TRADE_LOG_PATH = tmp_dir
+        qt.rotate_trade_logs(days=30)
+        risk_rotation_ok = (not os.path.exists(old_risk)) and os.path.exists(recent_risk)
+    finally:
+        qt.QT_TRADE_LOG_PATH = original_trade_log_path
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+    print(' risk_rotation_ok:', risk_rotation_ok)
+
+    # 3) pending 只读诊断与 post_close 检查点
+    pending_diag = trader.collect_pending_order_diagnostics()
+    print(' pending diagnostics:', pending_diag)
+    trader.is_market_open = False
+    with mock.patch.object(trader, '_trace_event', wraps=trader._trace_event) as mock_trace:
+        trader._post_close()
+        post_close_checkpoint_called = any(
+            call.kwargs.get('category') == 'reconcile'
+            and call.kwargs.get('checkpoint') == 'post_close'
+            for call in mock_trace.call_args_list
+        )
+    print(' post_close checkpoint called:', post_close_checkpoint_called)
+
+    acceptance = {
+        'artifacts': artifacts,
+        'artifacts_writable': artifacts_writable,
+        'order_mapping_accept_ok': mapping_accept_ok,
+        'order_mapping_reject_ok': mapping_reject_ok,
+        'risk_rotation_ok': risk_rotation_ok,
+        'pending_diag': pending_diag,
+        'pending_diag_has_fields': all(
+            k in pending_diag for k in [
+                'local_pending_count',
+                'remote_pending_count',
+                'local_pending_without_broker_order_id',
+                'local_pending_missing_remote',
+                'remote_pending_not_in_local',
+            ]
+        ),
+        'post_close_checkpoint_called': post_close_checkpoint_called,
+    }
+    print(' acceptance (auto checks):', acceptance)
+    session.record.stage11_phase5_c = acceptance
+    return acceptance
+
+
 def save_order_for_probe(ds_db: DataSource) -> int:
     """为回滚探针创建并提交一笔订单。"""
     from qteasy.trade_recording import save_parsed_trade_orders
@@ -892,8 +1019,8 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
     _print_stage_scope(
         '阶段8 stage8_conclusion',
         [
-            '范围：汇总阶段 4、5、7、9、10 写入 record 的关键标志。',
-            '目的：根据幂等检查结果、日程、可选 DB 探针、5-A/5-B 与 4-C 冒烟字段，给出是否适合进入下一阶段的主观判定与后续操作建议（打印 ready_for_next_phase、risk_level、next_steps）。',
+            '范围：汇总阶段 4、5、7、9、10、11 写入 record 的关键标志。',
+            '目的：根据幂等检查结果、日程、可选 DB 探针、5-A/5-B、4-C、5-C 冒烟字段，给出是否适合进入下一阶段的主观判定与后续操作建议（打印 ready_for_next_phase、risk_level、next_steps）。',
         ],
         enabled=info,
     )
@@ -903,6 +1030,7 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
     s7 = session.record.stage7_exceptions_and_logs
     s9 = session.record.stage9_phase5_ab
     s10 = session.record.stage10_phase4_c
+    s11 = session.record.stage11_phase5_c
     duplicate_ok = bool(
         (s4.get('supports_broker_result_id') and s4.get('duplicate_result_id_equal', False))
         or ((not s4.get('supports_broker_result_id')) and s4.get('duplicate_mode') in ['rejected_or_non_idempotent'])
@@ -917,12 +1045,18 @@ def stage8_conclusion(session: HeadlessNotebookSession, info: bool = False) -> D
         and (not s10 or s10.get('enqueue_order_exists', True))
         and (not s10 or s10.get('registry_roundtrip_ok', True))
         and (not s10 or s10.get('reconcile_ok_for_smoke', True))
+        and (not s11 or s11.get('order_mapping_accept_ok', True))
+        and (not s11 or s11.get('order_mapping_reject_ok', True))
+        and (not s11 or s11.get('risk_rotation_ok', True))
+        and (not s11 or s11.get('pending_diag_has_fields', True))
+        and (not s11 or s11.get('post_close_checkpoint_called', True))
     )
     result = {
         'ready_for_next_phase': passed,
         'risk_level': 'low' if passed else 'medium',
         'stage9_phase5_ab': s9,
         'stage10_phase4_c': s10,
+        'stage11_phase5_c': s11,
         'next_steps': [
             'Run next trade day smoke + broker-side reconciliation.',
             'Keep this script as source material to convert into unittest.',
@@ -974,6 +1108,7 @@ if __name__ == '__main__':
         stage7_exception_and_rollback_probe(s, use_db_probe=False)
         stage9_phase5_ab_smoke(s, info=True)
         stage10_phase4_c_smoke(s, info=True)
+        stage11_phase5_c_smoke(s, info=True)
         stage8_conclusion(s)
     except KeyboardInterrupt:
         print('\n[Interrupted] KeyboardInterrupt captured, will stop headless session.')

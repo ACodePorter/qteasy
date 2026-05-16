@@ -2321,9 +2321,16 @@ class Trader(object):
                     debug=False,
             )
             return {}
-        broker_order_id = ack.get('broker_order_id', '')
+        broker_order_id = str(ack.get('broker_order_id', '') or '')
+        broker_name = getattr(self._broker, 'broker_name', '') or ''
 
-        update_trade_order(order_id=order_id, data_source=self._datasource, status='submitted')
+        update_trade_order(
+                order_id=order_id,
+                data_source=self._datasource,
+                status='submitted',
+                broker_order_id=broker_order_id or None,
+                broker_name=broker_name or None,
+        )
         trade_order['order_id'] = order_id
         saved = read_trade_order(order_id, data_source=self._datasource)
         trade_order['status'] = saved['status']
@@ -2332,7 +2339,8 @@ class Trader(object):
             trade_order['submitted_time'] = pd.Timestamp(st).strftime('%Y-%m-%d %H:%M:%S')
         else:
             trade_order['submitted_time'] = st
-        trade_order['broker_order_id'] = broker_order_id
+        trade_order['broker_order_id'] = saved.get('broker_order_id', broker_order_id)
+        trade_order['broker_name'] = saved.get('broker_name', broker_name)
         validate_trade_order(trade_order, context='Trader.submit_trade_order')
 
         return trade_order
@@ -2861,6 +2869,150 @@ class Trader(object):
         snapshot['is_ok'] = len(failures) == 0
         return snapshot
 
+    def _emit_reconcile_checkpoint(self, checkpoint: str, block_on_failure: bool = False) -> bool:
+        """在关键生命周期节点输出统一的对账检查点 trace。"""
+        try:
+            snapshot = self.collect_broker_reconcile_snapshot()
+        except Exception as exc:
+            self._trace_event(
+                category='reconcile',
+                event='checkpoint_error',
+                checkpoint=checkpoint,
+                error_type=type(exc).__name__,
+                error=str(exc),
+            )
+            return False
+
+        failures = list(snapshot.get('failures', []))
+        if not failures:
+            self._trace_event(
+                category='reconcile',
+                event='checkpoint_passed',
+                checkpoint=checkpoint,
+                grade='pass',
+                reconcile_cash_diff=snapshot.get('cash_diff'),
+                reconcile_position_qty_diff=snapshot.get('position_qty_diff'),
+                remote_orders_count=snapshot.get('remote_orders_count', 0),
+            )
+            return True
+
+        self._trace_event(
+            category='reconcile',
+            event='checkpoint_failed' if block_on_failure else 'checkpoint_warn',
+            checkpoint=checkpoint,
+            grade='block_next_day' if block_on_failure else 'warn_only',
+            failures=','.join(failures),
+            reconcile_cash_diff=snapshot.get('cash_diff'),
+            reconcile_position_qty_diff=snapshot.get('position_qty_diff'),
+            remote_orders_count=snapshot.get('remote_orders_count', 0),
+        )
+        return False
+
+    def collect_pending_order_diagnostics(self) -> Dict[str, Any]:
+        """汇总本地在途订单与 Broker 远端订单差异（只读诊断）。"""
+        pending_statuses = {'submitted', 'partial-filled', 'created'}
+        diagnostics: Dict[str, Any] = {
+            'failures': [],
+            'local_pending_count': 0,
+            'remote_pending_count': 0,
+            'local_pending_without_broker_order_id': [],
+            'local_pending_missing_remote': [],
+            'remote_pending_not_in_local': [],
+            'is_ok': False,
+        }
+        failures = diagnostics['failures']
+
+        try:
+            local_orders = query_trade_orders(
+                    account_id=self.account_id,
+                    data_source=self._datasource,
+            )
+        except Exception as exc:
+            failures.append(f'local_pending_read_error:{type(exc).__name__}')
+            diagnostics['is_ok'] = False
+            return diagnostics
+
+        if local_orders is None or len(local_orders) == 0:
+            local_pending = pd.DataFrame(columns=['status', 'broker_order_id'])
+        else:
+            local_pending = local_orders.loc[local_orders['status'].isin(pending_statuses)].copy()
+        diagnostics['local_pending_count'] = int(len(local_pending))
+
+        local_broker_ids: set[str] = set()
+        local_pending_without_broker_order_id: list[int] = []
+        for order_id, row in local_pending.iterrows():
+            broker_order_id = row.get('broker_order_id')
+            status = str(row.get('status', ''))
+            if isinstance(broker_order_id, str) and broker_order_id.strip():
+                local_broker_ids.add(broker_order_id.strip())
+            elif status in ['submitted', 'partial-filled']:
+                local_pending_without_broker_order_id.append(int(order_id))
+        diagnostics['local_pending_without_broker_order_id'] = sorted(local_pending_without_broker_order_id)
+
+        remote_broker_ids: set[str] = set()
+        try:
+            remote_orders = self._broker.get_remote_orders(account_id=self.account_id) or []
+        except Exception as exc:
+            failures.append(f'remote_pending_read_error:{type(exc).__name__}')
+            remote_orders = []
+
+        for remote_order in remote_orders:
+            if not isinstance(remote_order, dict):
+                continue
+            remote_order_id = (
+                remote_order.get('broker_order_id')
+                or remote_order.get('order_id')
+                or remote_order.get('id')
+                or ''
+            )
+            if isinstance(remote_order_id, str) and remote_order_id.strip():
+                remote_broker_ids.add(remote_order_id.strip())
+        diagnostics['remote_pending_count'] = int(len(remote_broker_ids))
+
+        diagnostics['local_pending_missing_remote'] = sorted(local_broker_ids - remote_broker_ids)
+        diagnostics['remote_pending_not_in_local'] = sorted(remote_broker_ids - local_broker_ids)
+        diagnostics['is_ok'] = (
+            len(failures) == 0
+            and len(diagnostics['local_pending_without_broker_order_id']) == 0
+            and len(diagnostics['local_pending_missing_remote']) == 0
+            and len(diagnostics['remote_pending_not_in_local']) == 0
+        )
+        return diagnostics
+
+    def _diagnose_pending_orders(self) -> Dict[str, Any]:
+        """执行本地在途订单与 Broker 远端订单差异诊断并输出 trace。"""
+        diagnostics = self.collect_pending_order_diagnostics()
+        failures = diagnostics.get('failures', []) or []
+        local_missing = diagnostics.get('local_pending_missing_remote', []) or []
+        remote_orphans = diagnostics.get('remote_pending_not_in_local', []) or []
+        without_bid = diagnostics.get('local_pending_without_broker_order_id', []) or []
+
+        if diagnostics.get('is_ok', False):
+            self._trace_event(
+                category='reconcile',
+                event='pending_orders_diag_passed',
+                local_pending_count=diagnostics.get('local_pending_count', 0),
+                remote_pending_count=diagnostics.get('remote_pending_count', 0),
+            )
+            self.send_message('<PENDING DIAG OK>: local/remote pending orders are consistent.', debug=False)
+            return diagnostics
+
+        self._trace_event(
+            category='reconcile',
+            event='pending_orders_diag_warn',
+            failures=','.join(failures),
+            local_pending_count=diagnostics.get('local_pending_count', 0),
+            remote_pending_count=diagnostics.get('remote_pending_count', 0),
+            local_pending_without_broker_order_id=','.join(str(i) for i in without_bid),
+            local_pending_missing_remote=','.join(str(i) for i in local_missing),
+            remote_pending_not_in_local=','.join(str(i) for i in remote_orphans),
+        )
+        self.send_message(
+            '<PENDING DIAG WARN>: local/remote pending orders mismatch, check TRACE reconcile event.',
+            debug=False,
+        )
+        return diagnostics
+
     def run_startup_gate(self) -> bool:
         """阶段 5-B：启动前校验；更新 ``_startup_gate_trading_allowed`` 并返回是否允许交易侧任务。
 
@@ -3195,6 +3347,7 @@ class Trader(object):
 
         # 获取当日实时价格
         self._update_live_price()
+        self._emit_reconcile_checkpoint(checkpoint='pre_open', block_on_failure=False)
 
     def _post_close(self) -> None:
         """ 所有收盘后应该完成的任务
@@ -3261,6 +3414,8 @@ class Trader(object):
             # 对于所有未成交的订单，生成取消订单
             cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
             self.send_message(f'Canceled unfilled order: {order_id}')
+
+        self._emit_reconcile_checkpoint(checkpoint='post_close', block_on_failure=False)
 
     # def _change_date(self) -> None:
     #     """ 改变日期，在日期改变（午夜）前执行的操作，包括：
@@ -3401,6 +3556,7 @@ class Trader(object):
             'open_market':        self._market_open,
             'close_market':       self._market_close,
             'post_close':         self._post_close,
+            'diagnose_pending_orders': self._diagnose_pending_orders,
             'run_strategy':       self._run_strategy,
             'prepare_strategy_snapshot': self._prepare_strategy_snapshot,
             'process_result':     self._process_result,

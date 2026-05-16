@@ -8,7 +8,8 @@
 与无头脚本的关系
 ----------------
 
-- 仓库 ``tests/notebook_trader_headless_script.py`` 提供 **九阶段** 无头冒烟（含 **阶段 9：5-A/5-B**），
+- 仓库 ``tests/notebook_trader_headless_script.py`` 提供 **十一阶段** 无头冒烟（含 **阶段 9：5-A/5-B**、
+  **阶段 10：4-C**、**阶段 11：5-C**），
   可在 Notebook 中分 cell 调用；**本手册**侧重 **真实 ``qt.run`` + 示例策略 + 人眼验收**。
 - 建议节奏：**交易日盘中/收盘后** 按本手册走 live；**非交易时段或回放日** 用无头脚本做架构回归。
 
@@ -137,6 +138,8 @@
         stage6_closing_reconcile,
         stage7_exception_and_rollback_probe,
         stage9_phase5_ab_smoke,
+        stage10_phase4_c_smoke,
+        stage11_phase5_c_smoke,
         stage8_conclusion,
         shutdown_session,
     )
@@ -153,7 +156,7 @@
         account_id=<你的测试账户ID>,
         live_trade_smoke_overrides=overrides,
     )
-    # 依次执行 stage1 … stage7、stage9、stage8，最后：
+    # 依次执行 stage1 … stage7、stage9、stage10、stage11、stage8，最后：
     shutdown_session(session)
 
 六、当日收工清单（简表）
@@ -197,3 +200,34 @@
 .. note::
 
    **4-C BrokerFacade**、**5-C 账本/日志长期收口** 仍以路线图正文为准；本冒烟方案 **不** 替代其专项验收。
+
+七、交易日/非交易日记录模板（5-C）
+--------------------------------
+
+建议每次冒烟后填写以下模板，便于回归对照与异常分级：
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 40 40
+
+   * - 记录项
+     - 交易日（开市）建议
+     - 非交易日（休市）建议
+   * - 版本与环境
+     - 记录 ``git commit``、``py39``、核心配置键（``live_trade_*``、``trade_log_keep_days``）
+     - 同左；并注明是否走 ``use_real_time=False`` 回放
+   * - 启动门禁
+     - 记录 ``run_startup_gate`` 结果（``warn`` / ``block``）与 ``failures`` 字段
+     - 记录“非交易日跳过”行为与日志关键字
+   * - 订单受理映射
+     - 抽样核对 ``sys_op_trade_orders.broker_order_id`` / ``broker_name``；受理拒单应为空且 ``rejected``
+     - 至少跑一笔受理成功 + 一笔受理拒单（可用 patch/模拟）并记录结果
+   * - 对账与恢复诊断
+     - 记录 ``post_close`` 检查点 trace（``checkpoint_passed``/``checkpoint_warn``）与 ``cash_diff`` / ``position_qty_diff``
+     - 记录 ``diagnose_pending_orders`` 输出字段是否齐全、差异是否可解释
+   * - 日志轮换
+     - 核对 ``trade_log`` 与 ``*.risk.log`` 在保留策略下无异常膨胀
+     - 可在隔离目录执行一次 ``rotate_trade_logs(days=30)`` 验证旧 risk 文件清理
+   * - 结论
+     - 通过 / 待查 / 阻塞；若阻塞，附 top1 错误与回滚点
+     - 通过 / 待查 / 阻塞；附下一交易日跟进动作

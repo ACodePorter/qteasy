@@ -18,6 +18,7 @@ from tests.notebook_trader_headless_script import (
     stage4_phase35_checks,
     stage5_stage0to3_regression,
     stage10_phase4_c_smoke,
+    stage11_phase5_c_smoke,
 )
 
 
@@ -99,6 +100,29 @@ class TestNotebookHeadlessSmoke(unittest.TestCase):
         self.assertTrue(out.get('enqueue_order_exists'))
         self.assertTrue(out.get('registry_roundtrip_ok'))
         self.assertTrue(out.get('reconcile_ok_for_smoke'))
+
+    def test_stage11_phase5c_order_mapping_rotation_and_diag_isolated(self) -> None:
+        """阶段 5-C：隔离库无头脚本验证订单映射、risk 轮换、pending 诊断与 post_close 检查点。"""
+        print('\n[TestNotebookHeadlessSmoke] stage11 phase5-c smoke on isolated datasource')
+        session = create_headless_notebook_session(
+            debug=False,
+            use_real_time=False,
+            use_isolated_datasource=True,
+        )
+        out = stage11_phase5_c_smoke(session, info=False)
+        print(' stage11 out keys:', sorted(out.keys()))
+        print(' artifacts_writable:', out.get('artifacts_writable'))
+        print(' order_mapping_accept_ok:', out.get('order_mapping_accept_ok'))
+        print(' order_mapping_reject_ok:', out.get('order_mapping_reject_ok'))
+        print(' risk_rotation_ok:', out.get('risk_rotation_ok'))
+        print(' pending_diag_has_fields:', out.get('pending_diag_has_fields'))
+        print(' post_close_checkpoint_called:', out.get('post_close_checkpoint_called'))
+        self.assertTrue(out.get('artifacts_writable'))
+        self.assertTrue(out.get('order_mapping_accept_ok'))
+        self.assertTrue(out.get('order_mapping_reject_ok'))
+        self.assertTrue(out.get('risk_rotation_ok'))
+        self.assertTrue(out.get('pending_diag_has_fields'))
+        self.assertTrue(out.get('post_close_checkpoint_called'))
 
 
 if __name__ == '__main__':

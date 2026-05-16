@@ -1193,6 +1193,10 @@ class TestTraderCLI(unittest.TestCase):
         with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
             self.assertIsNone(tss.do_run('--task pre_open'))
             mock_run_task.assert_called_with('pre_open', run_in_main_thread=True)
+        print('testing run task diagnose_pending_orders with patched _run_task')
+        with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
+            self.assertIsNone(tss.do_run('--task diagnose_pending_orders'))
+            mock_run_task.assert_called_with('diagnose_pending_orders', run_in_main_thread=True)
 
         print(f'testing getting help and returns False')
         self.assertFalse(tss.do_run('-h'))

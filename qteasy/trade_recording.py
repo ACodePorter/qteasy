@@ -951,7 +951,29 @@ def record_trade_order(order, data_source=None):
     if err is not None:
         raise err
 
-    return data_source.insert_sys_table_data('sys_op_trade_orders', **order)
+    broker_order_id = order.get('broker_order_id', None)
+    broker_name = order.get('broker_name', None)
+    if broker_order_id in ['', None]:
+        broker_order_id = None
+    elif not isinstance(broker_order_id, str):
+        raise TypeError(f'signal["broker_order_id"] must be a str or None, got {type(broker_order_id)} instead')
+    if broker_name in ['', None]:
+        broker_name = None
+    elif not isinstance(broker_name, str):
+        raise TypeError(f'signal["broker_name"] must be a str or None, got {type(broker_name)} instead')
+
+    order_payload = {
+        'pos_id': order['pos_id'],
+        'direction': order['direction'],
+        'order_type': order['order_type'],
+        'qty': order['qty'],
+        'price': order['price'],
+        'submitted_time': order.get('submitted_time', None),
+        'status': order['status'],
+        'broker_order_id': broker_order_id,
+        'broker_name': broker_name,
+    }
+    return data_source.insert_sys_table_data('sys_op_trade_orders', **order_payload)
 
 
 def read_trade_order(order_id, data_source=None) -> dict:
@@ -983,7 +1005,14 @@ def read_trade_order(order_id, data_source=None) -> dict:
     return data_source.read_sys_table_record('sys_op_trade_orders', record_id=order_id)
 
 
-def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_if_status_wrong=False, transaction=False):
+def update_trade_order(order_id,
+                       data_source=None,
+                       status=None,
+                       qty=None,
+                       broker_order_id=None,
+                       broker_name=None,
+                       raise_if_status_wrong=False,
+                       transaction=False):
     """ 更新数据库中trade_signal的状态或其他信，这里只操作trade_signal，不处理交易结果
 
     trade_order的所有字段中，可以更新字段只有status和qty(qty只能在submit的时候更改，一旦submit之后就不能再更改。
@@ -1003,6 +1032,10 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         交易信号的状态, 默认为None, 表示不更新状态
     qty: float, optional
         交易信号的数量, 默认为None, 表示不更新数量
+    broker_order_id: str, optional
+        券商委托号，通常在订单受理成功后回写，默认为None
+    broker_name: str, optional
+        券商名称，通常在订单受理成功后回写，默认为None
     raise_if_status_wrong: bool, default False
         如果status不符合规则，则抛出RuntimeError, 默认为False, 表示不抛出异常
 
@@ -1020,7 +1053,7 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         如果status不符合规则，则抛出RuntimeError
     """
 
-    if status is None:
+    if status is None and broker_order_id is None and broker_name is None:
         return None
 
     import qteasy as qt
@@ -1036,6 +1069,10 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
             err = RuntimeError(
                     f'status ({status}) not in [created, submitted, canceled, partial-filled, filled, rejected]!'
             )
+    if broker_order_id is not None and not isinstance(broker_order_id, str):
+        err = TypeError(f'broker_order_id must be a str, got {type(broker_order_id)} instead')
+    if broker_name is not None and not isinstance(broker_name, str):
+        err = TypeError(f'broker_name must be a str, got {type(broker_name)} instead')
 
     if err is not None:
         raise err
@@ -1046,6 +1083,8 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
                         data_source=data_source,
                         status=status,
                         qty=qty,
+                        broker_order_id=broker_order_id,
+                        broker_name=broker_name,
                         raise_if_status_wrong=raise_if_status_wrong,
                         transaction=False,
                 )
@@ -1058,6 +1097,14 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         err = RuntimeError(f'Trade signal (order_id = {order_id}) not found!')
         raise err
 
+    update_fields = {}
+    if qty is not None and status is not None:
+        update_fields['qty'] = qty
+    if broker_order_id is not None:
+        update_fields['broker_order_id'] = broker_order_id
+    if broker_name is not None:
+        update_fields['broker_name'] = broker_name
+
     # 如果trade_signal的状态为 'created'，则可以更新为 'submitted' 或 'rejected'
     if trade_signal['status'] == 'created' and status == 'submitted':
         if qty is not None:
@@ -1066,32 +1113,44 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         else:
             qty = trade_signal['qty']
         submit_time = pd.to_datetime('today').strftime('%Y-%m-%d %H:%M:%S')
+        update_fields['submitted_time'] = submit_time
+        update_fields['status'] = status
+        update_fields['qty'] = qty
         return data_source.update_sys_table_data(
                 'sys_op_trade_orders',
                 record_id=order_id,
-                submitted_time=submit_time,
-                status=status,
-                qty=qty,
+                **update_fields,
         )
     if trade_signal['status'] == 'created' and status == 'rejected':
+        update_fields['status'] = status
         return data_source.update_sys_table_data(
                 'sys_op_trade_orders',
                 record_id=order_id,
-                status=status,
+                **update_fields,
         )
     # 如果trade_signal的状态为 'submitted'，则可以更新为 'canceled', 'partial-filled', 'filled' 或 'rejected'
     if trade_signal['status'] == 'submitted' and status in ['canceled', 'partial-filled', 'filled', 'rejected']:
+        update_fields['status'] = status
         return data_source.update_sys_table_data(
                 'sys_op_trade_orders',
-                order_id,
-                status=status
+                record_id=order_id,
+                **update_fields
         )
     # 如果trade_signal的状态为 'partial-filled'，则可以更新为 'canceled' 或 'filled'
     if trade_signal['status'] == 'partial-filled' and status in ['canceled', 'filled']:
+        update_fields['status'] = status
         return data_source.update_sys_table_data(
                 'sys_op_trade_orders',
-                order_id,
-                status=status
+                record_id=order_id,
+                **update_fields
+        )
+
+    # status 不变，仅更新broker字段（例如补写broker_order_id / broker_name）
+    if status is None and any(k in update_fields for k in ['broker_order_id', 'broker_name']):
+        return data_source.update_sys_table_data(
+                'sys_op_trade_orders',
+                record_id=order_id,
+                **update_fields,
         )
 
     if raise_if_status_wrong:
