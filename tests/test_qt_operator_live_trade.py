@@ -48,6 +48,22 @@ def _live_trade_config_name_only(user_name: str) -> dict:
     return cfg
 
 
+def _live_trade_config_name_only(user_name: str) -> dict:
+    """仅用户名、无 account_id 的实盘配置（用于解析/新建账户）。"""
+    cfg = QT_CONFIG.copy()
+    cfg['mode'] = 0
+    cfg['live_trade_account_id'] = None
+    cfg['live_trade_account_name'] = user_name
+    cfg['live_trade_init_cash'] = 888_888.0
+    cfg['live_trade_init_holdings'] = None
+    cfg['live_trade_broker_type'] = 'simulator'
+    cfg['live_trade_broker_params'] = None
+    cfg['live_trade_ui_type'] = 'cli'
+    cfg['asset_pool'] = '000001.SZ'
+    cfg['asset_type'] = 'E'
+    return cfg
+
+
 class TestQtOperatorLiveTradeAssetType(unittest.TestCase):
     """P0-fd：live-trade 对 E/FD 的白名单与 Trader.asset_type 透传。"""
 
