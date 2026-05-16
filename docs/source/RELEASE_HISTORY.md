@@ -1,5 +1,12 @@
 # RELEASE HISTORY
 
+## 2.5.0 (2026-05-17)
+Minor release: **Trader Shell CLI** and **live-trading documentation** for day-to-day simulated and live-trading operations.
+- **Trader Shell CLI**  
+  From the Trader prompt you can now inspect live-trade artifacts, review effective live settings, list or cancel queued tasks, run startup checks and reconcile snapshots, rotate expired trade and risk logs, and check broker connection status—all without leaving the shell. Debug **run --task** accepts open/close market tasks as shown in help. **sync** is reserved for future QMT integration and prints a clear notice until that work lands.
+- **Live-trading documentation**  
+  Expanded guides for configuration, broker integration, snapshots, startup gate, reconcile checkpoints, artifacts, and troubleshooting, plus a CLI capability matrix (implemented vs planned). Local risk rejections and broker-side rejections are explained separately, so you can diagnose live runs and follow smoke-test checklists with less guesswork.
+
 ## 2.4.5 (2026-05-13)
 Patch release: **RuleIterator** per-share parameters (`multi_pars`) are easier to use and to inspect from the live Trader CLI.
 - **Unified `update_par_values` for `RuleIterator`**  
