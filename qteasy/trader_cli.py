@@ -765,9 +765,70 @@ class TraderShell(Cmd):
         self._watched_price_string = ' == Realtime prices can be displayed here. ' \
                                'Use "watch" command to add stocks to watch list. =='  # watched prices string
 
+        # dashboard 模式下上一行是否为 ``\\r`` 状态行（打印普通日志前需清除以免残留）
+        self._dashboard_on_status_line: bool = False
+
         self.argparsers = {}
 
         self.init_arg_parsers()
+
+    def _print_log_line(self, text: str) -> None:
+        """在 dashboard 中打印一行日志文本；若当前仍为状态行则先清除该行。
+
+        Parameters
+        ----------
+        text : str
+            已格式化的一行内容（不含末尾换行亦可）。
+
+        Returns
+        -------
+        None
+        """
+        if self._dashboard_on_status_line:
+            _clear_current_line()
+        rich.print(text)
+        self._dashboard_on_status_line = False
+
+    def _print_status_line(self, text: Text) -> None:
+        """在终端当前行输出状态 ``Text``，用空格填充至终端宽度并以 ``\\r`` 结尾。
+
+        Parameters
+        ----------
+        text : rich.text.Text
+            状态行内容（可含样式）。
+
+        Returns
+        -------
+        None
+        """
+        width = _terminal_width()
+        line = text.copy()
+        if len(line.plain) > width:
+            line.truncate(width, overflow='ellipsis')
+        pad_len = max(0, width - len(line.plain))
+        padded = line + (' ' * pad_len) if pad_len else line
+        rich.print(padded, end='\r')
+        self._dashboard_on_status_line = True
+
+    def _replay_dashboard_logs(self, rewind: int) -> None:
+        """排空消息队列并按当前 ``debug`` 设置回放系统日志尾部若干行。
+
+        ``send_message`` 会先写入系统日志再放入队列；此处排空队列不做打印，
+        仅回放日志尾部，避免与 ``read_sys_log`` 同一内容重复输出。
+
+        Parameters
+        ----------
+        rewind : int
+            系统日志回卷行数，与 ``dashboard -r`` 一致。
+
+        Returns
+        -------
+        None
+        """
+        _drain_message_queue(self.trader)
+        lines = self.trader.read_sys_log(row_count=rewind, include_debug=self.debug)
+        for raw in lines:
+            self._print_log_line(raw.rstrip('\n'))
 
     @property
     def trader(self):
@@ -2202,12 +2263,11 @@ class TraderShell(Cmd):
         os.system('cls' if os.name == 'nt' else 'clear')
 
         self._status = 'dashboard'
+        self._dashboard_on_status_line = False
         print('\nWelcome to TraderShell! currently in dashboard mode, live status will be displayed here.\n'
-              'You can not input commands in this mode, if you want to enter interactive mode, please'
+              'You can not input commands in this mode, if you want to enter interactive mode, please '
               'press "Ctrl+C" to exit dashboard mode and select from prompted options.\n')
-        # read all system logs and display them on the screen
-        lines = self.trader.read_sys_log(row_count=args.rewind)
-        rich.print(''.join(lines))
+        self._replay_dashboard_logs(args.rewind)
         return True
 
     def do_strategies(self, arg: str):
@@ -2760,14 +2820,13 @@ class TraderShell(Cmd):
                         # adjust message length to terminal width
                         message = self.trader.add_message_prefix(msg.text, msg.debug)
                         message = adjust_string_length(message, text_width - 2, format_tags=True)
-                        rich.print(message)
+                        self._print_log_line(message)
                     else:
                         # 如果没有消息，原位显示倒计时/实时价格
                         next_task = self.trader.next_task
                         count_down = self.trader.count_down_to_next_task
                         count_down_string = sec_to_duration(count_down, estimation=True)
-                        message = ''
-                        message = self.trader.add_message_prefix(message, self.debug)
+                        message = self.trader.add_message_prefix('', debug=False)
                         # print(f'next task: {next_task}')
                         next_task_string = next_task[1] if next_task else 'None'
                         message += f'{next_task_string}'
@@ -2777,9 +2836,7 @@ class TraderShell(Cmd):
                         else:
                             message.append(f' in {count_down_string}', style='bold red')
                         message = message + ' ' + self._watched_price_string
-                        message.truncate(text_width, overflow='ellipsis')
-                        # 倒计时信息覆盖原有信息
-                        rich.print(message, end='\r')
+                        self._print_status_line(message)
 
                     # check if live price refresh timer is up, if yes, refresh live prices
                     live_price_refresh_timer += live_price_refresh_interval

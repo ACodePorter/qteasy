@@ -12,6 +12,7 @@
 # ======================================
 
 import json
+import logging
 import os
 import shutil
 import tempfile
@@ -21,6 +22,7 @@ import io
 from contextlib import redirect_stdout
 from unittest.mock import patch
 import pandas as pd
+from rich.text import Text
 
 import qteasy as qt
 from qteasy import DataSource, Operator
@@ -50,6 +52,14 @@ from qteasy.trade_recording import get_or_create_position, get_position_by_id, g
 from qteasy.trade_recording import query_trade_orders
 from qteasy.broker import SimulatorBroker
 from qteasy.risk import MaxOrderQtyRule, RiskManager
+
+
+def _detach_live_logger_handlers() -> None:
+    """拆掉全局 ``live`` Logger 已有 Handler，防止跨用例重复挂载 ``FileHandler`` 导致单行双写。"""
+    live = logging.getLogger('live')
+    for h in list(live.handlers):
+        live.removeHandler(h)
+        h.close()
 
 
 def _get_cli_test_data_dir():
@@ -1600,6 +1610,7 @@ class TestTraderCLIDashboardHelpers(unittest.TestCase):
 
         trader, test_ds = create_trader_with_account(debug=False, legacy=True)
         try:
+            _detach_live_logger_handlers()
             trader.init_system_logger()
             trader.send_message('queued', debug=False)
             drained = _drain_message_queue(trader)
@@ -1607,6 +1618,103 @@ class TestTraderCLIDashboardHelpers(unittest.TestCase):
             self.assertEqual(len(drained), 1)
             self.assertEqual(drained[0].text, 'queued')
             self.assertTrue(trader.message_queue.empty())
+        finally:
+            clear_tables(test_ds)
+
+
+class TestTraderCLIDashboardDisplay(unittest.TestCase):
+    """TraderShell dashboard 显示：日志回放、状态行与普通行切换。"""
+
+    def test_replay_dashboard_logs_drains_queue_and_filters_debug(self):
+        """排空队列不重复打印；``include_debug=False`` 时系统日志回放不含 DEBUG 行。"""
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIDashboardDisplay] replay drains queue and filters debug')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            _detach_live_logger_handlers()
+            trader.init_system_logger()
+            log_path = sys_log_file_path_name(trader.account_id, test_ds)
+            # 与同目录下固定 account_id=1 的其它用例隔离：重写种子行后再追加 send_message 的日志
+            with open(log_path, 'w', encoding='utf-8') as f:
+                f.write('INFO: cli_dashboard_extra_info_line\n')
+                f.write('DEBUG: cli_dashboard_extra_debug_line\n')
+            trader.send_message('cli_dashboard_queue_line', debug=False)
+            trader.send_message('cli_dashboard_debug_logged_only', debug=True)
+            print(' replay 前队列非空(仅非 debug send_message):', not trader.message_queue.empty())
+            self.assertFalse(trader.message_queue.empty())
+            shell = TraderShell(trader)
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                shell._replay_dashboard_logs(50)
+            out = buf.getvalue()
+            print(' captured stdout:\n', out)
+            self.assertTrue(trader.message_queue.empty())
+            self.assertEqual(out.count('cli_dashboard_queue_line'), 1)
+            self.assertEqual(out.count('cli_dashboard_extra_info_line'), 1)
+            self.assertEqual(out.count('cli_dashboard_extra_debug_line'), 0)
+            self.assertEqual(out.count('cli_dashboard_debug_logged_only'), 0)
+        finally:
+            clear_tables(test_ds)
+
+    def test_print_status_line_pads_to_width(self):
+        """状态行按终端宽度用空格填充并以 ``\\r`` 结尾。"""
+        tss = TraderShell.__new__(TraderShell)
+        tss._dashboard_on_status_line = False
+        print('\n[TestTraderCLIDashboardDisplay] status line padding')
+        with patch('qteasy.trader_cli._terminal_width', return_value=18):
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                tss._print_status_line(Text('xyz'))
+        raw = buf.getvalue()
+        print(' raw repr:', repr(raw))
+        self.assertTrue(tss._dashboard_on_status_line)
+        self.assertTrue(raw.endswith('\r'), msg=f'expected carriage return ending, got {raw!r}')
+        if '\x1b' not in raw:
+            self.assertEqual(len(raw.rstrip('\r')), 18)
+
+    def test_print_log_line_clears_status_flag(self):
+        """``_print_log_line`` 在状态行之后打印时清除状态并复位标志。"""
+        tss = TraderShell.__new__(TraderShell)
+        tss._dashboard_on_status_line = True
+        print('\n[TestTraderCLIDashboardDisplay] log line clears status flag')
+        with patch('qteasy.trader_cli._clear_current_line') as mock_clear:
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                tss._print_log_line('log_after_status')
+        mock_clear.assert_called_once()
+        self.assertFalse(tss._dashboard_on_status_line)
+        self.assertIn('log_after_status', buf.getvalue())
+
+    def test_do_dashboard_no_duplicate_on_reentry(self):
+        """单次回放不因「队列一次 + 日志一次」重复；再次回放日志尾部仍可含同一条入库消息。"""
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIDashboardDisplay] no duplicate queue on reentry')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            _detach_live_logger_handlers()
+            trader.init_system_logger()
+            log_path = sys_log_file_path_name(trader.account_id, test_ds)
+            with open(log_path, 'w', encoding='utf-8') as f:
+                f.write('INFO: cli_dashboard_reentry_log\n')
+            trader.send_message('cli_dashboard_reentry_queue', debug=False)
+            shell = TraderShell(trader)
+            with patch('os.system'):
+                buf1 = io.StringIO()
+                with redirect_stdout(buf1):
+                    shell.do_dashboard('-r 20')
+            out1 = buf1.getvalue()
+            print(' first do_dashboard output sample:', out1[:400])
+            self.assertEqual(out1.count('cli_dashboard_reentry_queue'), 1)
+            self.assertTrue(trader.message_queue.empty())
+            buf2 = io.StringIO()
+            with redirect_stdout(buf2):
+                shell._replay_dashboard_logs(20)
+            out2 = buf2.getvalue()
+            print(' second replay output sample:', out2[:400])
+            self.assertEqual(out2.count('cli_dashboard_reentry_queue'), 1)
+            self.assertIn('cli_dashboard_reentry_log', out2)
         finally:
             clear_tables(test_ds)
 
