@@ -35,6 +35,9 @@ from qteasy.trader_cli import (
     BROKER_SUBCOMMANDS,
     _filter_sys_log_lines,
     _drain_message_queue,
+    _parse_mode_menu_choice,
+    _read_line_with_timeout,
+    _read_line_with_timeout_unix,
 )
 from qteasy.trading_util import (
     process_account_delivery,
@@ -1715,6 +1718,97 @@ class TestTraderCLIDashboardDisplay(unittest.TestCase):
             print(' second replay output sample:', out2[:400])
             self.assertEqual(out2.count('cli_dashboard_reentry_queue'), 1)
             self.assertIn('cli_dashboard_reentry_log', out2)
+        finally:
+            clear_tables(test_ds)
+
+
+class TestTraderCLIModeMenu(unittest.TestCase):
+    """TraderShell Ctrl+C 模式选单：解析、超时读取与中断处理。"""
+
+    def test_parse_mode_menu_choice(self):
+        print('\n[TestTraderCLIModeMenu] _parse_mode_menu_choice')
+        self.assertEqual(_parse_mode_menu_choice('1'), 'command')
+        self.assertEqual(_parse_mode_menu_choice('2'), 'dashboard')
+        self.assertEqual(_parse_mode_menu_choice('3'), 'exit')
+        self.assertEqual(_parse_mode_menu_choice(None), 'resume')
+        self.assertEqual(_parse_mode_menu_choice(''), 'resume')
+        self.assertEqual(_parse_mode_menu_choice('9'), 'resume')
+        print(' choices: 1->command, 2->dashboard, 3->exit, None/empty/9->resume')
+
+    def test_read_line_with_timeout_non_tty_returns_none(self):
+        print('\n[TestTraderCLIModeMenu] _read_line_with_timeout non-TTY')
+        mock_in = io.StringIO()
+        mock_out = io.StringIO()
+        with patch('qteasy.trader_cli._is_tty_stream', return_value=False):
+            result = _read_line_with_timeout('prompt> ', timeout=1.0,
+                                             input_stream=mock_in, output_stream=mock_out)
+        print(' result:', result, ' output:', repr(mock_out.getvalue()))
+        self.assertIsNone(result)
+        self.assertEqual(mock_out.getvalue(), '')
+
+    def test_read_line_with_timeout_unix_returns_line(self):
+        print('\n[TestTraderCLIModeMenu] _read_line_with_timeout_unix line')
+        mock_in = io.StringIO('1\n')
+        mock_out = io.StringIO()
+        with patch('select.select', return_value=([mock_in], [], [])):
+            result = _read_line_with_timeout_unix(1.0, mock_in, mock_out)
+        print(' result:', result, ' output:', repr(mock_out.getvalue()))
+        self.assertEqual(result, '1')
+
+    def test_read_line_with_timeout_unix_timeout(self):
+        print('\n[TestTraderCLIModeMenu] _read_line_with_timeout_unix timeout')
+        mock_in = io.StringIO()
+        mock_out = io.StringIO()
+        with patch('select.select', return_value=([], [], [])):
+            result = _read_line_with_timeout_unix(0.1, mock_in, mock_out)
+        print(' result:', result, ' output:', repr(mock_out.getvalue()))
+        self.assertIsNone(result)
+        self.assertEqual(mock_out.getvalue(), '\n')
+
+    def test_handle_mode_interrupt_resume(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt resume on timeout')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value=None):
+                keep_running = shell._handle_mode_interrupt()
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertTrue(keep_running)
+            self.assertEqual(shell._status, 'dashboard')
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_mode_interrupt_command(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt command choice')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value='1'):
+                keep_running = shell._handle_mode_interrupt()
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertTrue(keep_running)
+            self.assertEqual(shell._status, 'command')
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_mode_interrupt_exit(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt exit choice')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value='3'):
+                keep_running = shell._handle_mode_interrupt()
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertFalse(keep_running)
         finally:
             clear_tables(test_ds)
 

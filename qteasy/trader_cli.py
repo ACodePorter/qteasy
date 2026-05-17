@@ -24,7 +24,6 @@ import pandas as pd
 
 from typing import List, Optional
 from cmd import Cmd
-from threading import Timer
 from rich.text import Text
 
 from qteasy.trader import TraderMessage, coerce_trader_message, drain_trader_message_queue
@@ -106,6 +105,104 @@ def _filter_sys_log_lines(lines: List[str], include_debug: bool = True) -> List[
 def _drain_message_queue(trader) -> List[TraderMessage]:
     """排空 trader 消息队列并返回结构化消息列表。"""
     return drain_trader_message_queue(trader.message_queue)
+
+
+MODE_MENU_TIMEOUT = 5.0
+
+
+def _mode_menu_prompt() -> str:
+    """返回 Ctrl+C 中断后模式选单的英文提示文本。"""
+    return (
+        '\nCurrent mode interrupted. Input 1, 2, or 3 within '
+        f'{MODE_MENU_TIMEOUT:.0f} seconds:\n'
+        '[1] Enter command mode\n'
+        '[2] Enter dashboard mode\n'
+        '[3] Exit and stop the trader\n'
+        'please input your choice: '
+    )
+
+
+def _parse_mode_menu_choice(line: Optional[str]) -> str:
+    """解析模式选单输入，返回 ``command`` / ``dashboard`` / ``exit`` / ``resume``。"""
+    if line is None:
+        return 'resume'
+    stripped = line.strip()
+    if stripped == '1':
+        return 'command'
+    if stripped == '2':
+        return 'dashboard'
+    if stripped == '3':
+        return 'exit'
+    return 'resume'
+
+
+def _read_line_with_timeout_unix(timeout, input_stream, output_stream) -> Optional[str]:
+    """在 Unix 上使用 ``select`` 读取一行，超时返回 ``None`` 并输出换行。"""
+    import select
+
+    line_parts: List[str] = []
+    deadline = time.monotonic() + timeout
+    while True:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            output_stream.write('\n')
+            output_stream.flush()
+            return None
+        ready, _, _ = select.select([input_stream], [], [], remaining)
+        if not ready:
+            output_stream.write('\n')
+            output_stream.flush()
+            return None
+        ch = input_stream.read(1)
+        if not ch:
+            output_stream.write('\n')
+            output_stream.flush()
+            return None
+        if ch == '\n':
+            return ''.join(line_parts)
+        if ch == '\r':
+            continue
+        line_parts.append(ch)
+
+
+def _read_line_with_timeout_windows(timeout, input_stream, output_stream) -> Optional[str]:
+    """在 Windows 上使用 ``msvcrt.kbhit`` 轮询读取一行，超时返回 ``None`` 并输出换行。"""
+    import msvcrt
+
+    line_parts: List[str] = []
+    deadline = time.monotonic() + timeout
+    while True:
+        if time.monotonic() >= deadline:
+            output_stream.write('\n')
+            output_stream.flush()
+            return None
+        if msvcrt.kbhit():
+            ch = msvcrt.getwch()
+            if ch in ('\r', '\n'):
+                output_stream.write('\n')
+                output_stream.flush()
+                return ''.join(line_parts)
+            line_parts.append(ch)
+            output_stream.write(ch)
+            output_stream.flush()
+        else:
+            time.sleep(0.05)
+
+
+def _read_line_with_timeout(
+        prompt: str,
+        timeout: float = MODE_MENU_TIMEOUT,
+        input_stream=sys.stdin,
+        output_stream=sys.stdout,
+) -> Optional[str]:
+    """在 TTY 上带超时读取一行；非 TTY 或超时返回 ``None``。"""
+    if not _is_tty_stream(input_stream):
+        return None
+    output_stream.write(prompt)
+    output_stream.flush()
+    if sys.platform == 'win32':
+        return _read_line_with_timeout_windows(timeout, input_stream, output_stream)
+    return _read_line_with_timeout_unix(timeout, input_stream, output_stream)
 
 
 def pack_system_info(trader_info, width=80):
@@ -356,7 +453,8 @@ class TraderShell(Cmd):
     可以使用命令 "help" 或者 "?"，要查看某个命令的帮助，可以使用命令 "help <command>" 或者
     命令的-h参数，如<command -h>。
 
-    在Shell运行过程中按下 ctrl + c 进入状态选单，用户可以选择进入dashboard模式或者退出shell
+    在 Shell 运行过程中按下 Ctrl+C 进入模式选单：选项 1 进入 command 模式，选项 2 进入
+    dashboard 模式，选项 3 停止 trader 并退出 Shell；5 秒内无有效输入则自动恢复中断前的模式。
 
     """
     intro = 'Welcome to the trader shell interactive mode. Type help or ? to list commands.\n' \
@@ -2797,6 +2895,31 @@ class TraderShell(Cmd):
             line = alias_cmd + (' ' + parts[1] if len(parts) > 1 else '')
         return line
 
+    def _handle_mode_interrupt(self) -> bool:
+        """处理 Ctrl+C 模式选单；返回 ``False`` 时主循环应退出。
+
+        Returns
+        -------
+        bool
+            为 ``False`` 表示用户选择退出 Shell。
+        """
+        previous_mode = self._status
+        if self._dashboard_on_status_line:
+            _clear_current_line()
+            self._dashboard_on_status_line = False
+        choice = _read_line_with_timeout(_mode_menu_prompt(), MODE_MENU_TIMEOUT)
+        action = _parse_mode_menu_choice(choice)
+        if action == 'resume':
+            print('No input received; resuming previous mode.\n')
+            self._status = previous_mode
+        elif action == 'command':
+            self._status = 'command'
+        elif action == 'dashboard':
+            self.do_dashboard('')
+        elif action == 'exit':
+            return False
+        return True
+
     def run(self):
         self.do_dashboard('')
         self.trader.start()
@@ -2864,27 +2987,8 @@ class TraderShell(Cmd):
                     break
                 time.sleep(live_price_refresh_interval)
             except KeyboardInterrupt:
-                # ask user if he/she wants to: [1], command mode; [2], stop trader; [3 or other], resume dashboard mode
-                t = Timer(5, lambda: print(
-                        "\nNo input in 5 seconds, press Enter to continue current mode. "))
-                t.start()
-                option = input('\nCurrent mode interrupted, Input 1 or 2 or 3 for below options: \n'
-                               '[1], Enter command mode; \n'
-                               '[2], Enter dashboard mode. \n'
-                               '[3], Exit and stop the trader; \n'
-                               'please input your choice: ')
-                if option == '1':
-                    self._status = 'command'
-                elif option == '2':
-                    self.do_dashboard('')
-                elif option == '3':
-                    # self.do_bye('')
-                    t.cancel()
+                if not self._handle_mode_interrupt():
                     break
-                else:
-                    continue
-                t.cancel()
-                # TODO: 上面这种5秒定时的方式有问题，如果用户五秒后再次按下Ctrl+C，会导致Shell异常退出
                 continue
             # looks like finally block is better than except block here
             except Exception as e:
