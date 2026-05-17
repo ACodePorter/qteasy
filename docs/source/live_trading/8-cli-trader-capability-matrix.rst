@@ -135,6 +135,17 @@ Trader Shell 支持**短别名**，便于少打字。别名在 qteasy 内部 rew
      - —
      - 仅 Operator / Notebook
 
+Dashboard 与 interactive 模式
+------------------------------
+
+启动后默认进入 **dashboard 模式**：终端底部单行显示下一任务倒计时、监视价与系统消息；Trader 主循环在后台继续运行。按 **Ctrl+C** 可切换模式或退出：
+
+- **1** — 进入 interactive（命令）模式，输入 ``buy``、``config``、``artifacts`` 等  
+- **2** — 回到 dashboard  
+- **3** — 退出 Shell 并停止 Trader  
+
+**5 秒内无输入**自动恢复中断前的模式；选单等待期间**再次按 Ctrl+C** 立即退出。在命令模式下输入 ``dashboard`` 可返回 dashboard。主循环若遇未预期异常，默认 **5 秒**后回到 dashboard（按 **3** 可退出）。
+
 DEBUG ``run --task`` 白名单
 ---------------------------
 

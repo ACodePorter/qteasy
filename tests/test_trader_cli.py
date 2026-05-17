@@ -38,6 +38,7 @@ from qteasy.trader_cli import (
     _drain_message_queue,
     _accept_mode_menu_char,
     _parse_mode_menu_choice,
+    _parse_error_recovery_choice,
     _read_line_with_timeout,
     _read_line_with_timeout_unix,
 )
@@ -1890,6 +1891,82 @@ class TestTraderCLIModeMenu(unittest.TestCase):
             self.assertIn('Interrupted again; shutting down trader...', out)
         finally:
             clear_tables(test_ds)
+
+
+class TestTraderCLIPhase4(unittest.TestCase):
+    """Trader CLI Phase 4：监视价 debounce 与运行时错误恢复。"""
+
+    def test_maybe_refresh_watched_prices_skips_alive_worker(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIPhase4] _maybe_refresh_watched_prices skips alive worker')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            trader.is_market_open = True
+            mock_worker = MagicMock()
+            mock_worker.is_alive.return_value = True
+            with patch('qteasy.trader_cli.Thread') as mock_thread_cls:
+                mock_thread_cls.return_value = mock_worker
+                with patch.object(shell, 'format_watched_prices'):
+                    shell._maybe_refresh_watched_prices()
+                    first_thread_calls = mock_thread_cls.call_count
+                    first_start_calls = mock_worker.start.call_count
+                    shell._maybe_refresh_watched_prices()
+                    second_thread_calls = mock_thread_cls.call_count
+                    second_start_calls = mock_worker.start.call_count
+            print(' thread calls:', first_thread_calls, '->', second_thread_calls)
+            print(' start calls:', first_start_calls, '->', second_start_calls)
+            self.assertEqual(first_thread_calls, 1)
+            self.assertEqual(second_thread_calls, 1)
+            self.assertEqual(first_start_calls, 1)
+            self.assertEqual(second_start_calls, 1)
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_runtime_error_default_dashboard(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIPhase4] _handle_runtime_error default dashboard on timeout')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'command'
+            buf = io.StringIO()
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value=None):
+                with redirect_stdout(buf):
+                    keep_running = shell._handle_runtime_error(RuntimeError('test failure'))
+            out = buf.getvalue()
+            print(' keep_running:', keep_running, ' status:', shell._status, ' stdout sample:', out[:160])
+            self.assertTrue(keep_running)
+            self.assertEqual(shell._status, 'dashboard')
+            self.assertIn('Returning to dashboard mode.', out)
+            self.assertIn('Unexpected Error: test failure', out)
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_runtime_error_exit_on_3(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIPhase4] _handle_runtime_error exit on choice 3')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value='3'):
+                keep_running = shell._handle_runtime_error(ValueError('fatal'))
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertFalse(keep_running)
+        finally:
+            clear_tables(test_ds)
+
+    def test_parse_error_recovery_choice(self):
+        print('\n[TestTraderCLIPhase4] _parse_error_recovery_choice')
+        self.assertEqual(_parse_error_recovery_choice('3'), 'exit')
+        self.assertEqual(_parse_error_recovery_choice('1'), 'dashboard')
+        self.assertEqual(_parse_error_recovery_choice(None), 'dashboard')
+        self.assertEqual(_parse_error_recovery_choice(''), 'dashboard')
+        print(' choices: 3->exit, 1/None/empty->dashboard')
 
 
 if __name__ == '__main__':

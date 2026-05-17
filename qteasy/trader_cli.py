@@ -18,6 +18,8 @@ import shlex
 import shutil
 import sys
 import time
+import traceback
+from threading import Thread
 
 import numpy as np
 import pandas as pd
@@ -140,6 +142,25 @@ def _parse_mode_menu_choice(line: Optional[str]) -> str:
     if stripped == '3':
         return 'exit'
     return 'resume'
+
+
+ERROR_RECOVERY_TIMEOUT = 5.0
+
+
+def _error_recovery_prompt() -> str:
+    """返回运行时异常恢复选单的英文提示文本。"""
+    return (
+        '\nAn unexpected error occurred. Press 1 to return to dashboard, '
+        f'3 to exit (default dashboard in {ERROR_RECOVERY_TIMEOUT:.0f}s, no Enter needed):\n'
+        'Your choice: '
+    )
+
+
+def _parse_error_recovery_choice(line: Optional[str]) -> str:
+    """解析运行时异常恢复选单输入，返回 ``dashboard`` 或 ``exit``。"""
+    if line == '3':
+        return 'exit'
+    return 'dashboard'
 
 
 def _accept_mode_menu_char(ch: str, line_parts: List[str]) -> Optional[str]:
@@ -912,6 +933,7 @@ class TraderShell(Cmd):
 
         # dashboard 模式下上一行是否为 ``\\r`` 状态行（打印普通日志前需清除以免残留）
         self._dashboard_on_status_line: bool = False
+        self._watch_price_worker: Optional[Thread] = None
 
         self.argparsers = {}
 
@@ -994,6 +1016,18 @@ class TraderShell(Cmd):
     def toggle_debug(self):
         """ toggle debug value"""
         self.trader.debug = not self.trader.debug
+
+    def _maybe_refresh_watched_prices(self) -> None:
+        """在 dashboard 模式下异步刷新监视价格，避免重叠 worker 线程。"""
+        if not self.trader.is_market_open:
+            self.format_watched_prices()
+            return
+        worker = self._watch_price_worker
+        if worker is not None and worker.is_alive():
+            return
+        self._watch_price_worker = Thread(target=self.trader.update_watched_prices, daemon=True)
+        self._watch_price_worker.start()
+        self.format_watched_prices()
 
     def format_watched_prices(self):
         """ 根据watch list返回清单中股票的信息：代码、名称、当前价格、涨跌幅
@@ -2978,6 +3012,40 @@ class TraderShell(Cmd):
             return False
         return True
 
+    def _handle_runtime_error(self, exc: Exception) -> bool:
+        """处理主循环未捕获异常；返回 ``False`` 时 Shell 应退出。
+
+        Parameters
+        ----------
+        exc : Exception
+            主循环中捕获的异常。
+
+        Returns
+        -------
+        bool
+            为 ``False`` 表示用户选择退出 Shell。
+        """
+        if self._dashboard_on_status_line:
+            _clear_current_line()
+            self._dashboard_on_status_line = False
+        self._print_log_line(f'Unexpected Error: {exc}')
+        if self.trader.debug:
+            traceback.print_exc()
+        try:
+            choice = _read_line_with_timeout(_error_recovery_prompt(), ERROR_RECOVERY_TIMEOUT)
+        except ModeMenuExitRequest:
+            print('Interrupted again; shutting down trader...\n')
+            return False
+        except KeyboardInterrupt:
+            print('Interrupted again; shutting down trader...\n')
+            return False
+        if _parse_error_recovery_choice(choice) == 'exit':
+            return False
+        print('Returning to dashboard mode.\n')
+        self._status = 'dashboard'
+        self._dashboard_on_status_line = False
+        return True
+
     def run(self):
         self.do_dashboard('')
         self.trader.start()
@@ -3022,13 +3090,7 @@ class TraderShell(Cmd):
                     # check if live price refresh timer is up, if yes, refresh live prices
                     live_price_refresh_timer += live_price_refresh_interval
                     if live_price_refresh_timer > watched_price_refresh_interval:
-                        # 在一个新的进程中读取实时价格, 收盘后不获取
-                        if self.trader.is_market_open:
-                            from threading import Thread
-                            t = Thread(target=self.trader.update_watched_prices, daemon=True)
-                            t.start()
-
-                        self.format_watched_prices()
+                        self._maybe_refresh_watched_prices()
                         live_price_refresh_timer = 0
                 elif self.status == 'command':
                     # get user command input and do commands
@@ -3048,13 +3110,10 @@ class TraderShell(Cmd):
                 if not self._handle_mode_interrupt():
                     break
                 continue
-            # looks like finally block is better than except block here
             except Exception as e:
-                self.stdout.write(f'Unexpected Error: {e}\n')
-                import traceback
-                traceback.print_exc()
-                break
-                # self.do_bye('')
+                if not self._handle_runtime_error(e):
+                    break
+                continue
 
         sys.stdout.write('Thank you for using qteasy!\n')
         self._request_shutdown()

@@ -181,6 +181,24 @@ for key in ('mode', 'asset_type', 'live_trade_broker_type',
 
 命令全集见 :doc:`8-cli-trader-capability-matrix`。
 
+### 7.1 Dashboard 与 interactive 模式
+
+Trader Shell 启动后默认进入 **dashboard 模式**：单行状态区滚动显示下一任务倒计时、监视列表实时价与系统消息，无需输入命令即可观察运行节奏。需要手动下单、查配置或执行运维命令时，按 **Ctrl+C** 打开模式选单，或在 interactive（命令）模式下输入 **`dashboard`** 返回 dashboard。
+
+| 模式 | 行为 |
+|------|------|
+| **dashboard** | 自动刷新状态行与监视价；Trader 主循环在后台继续运行 |
+| **interactive（命令）** | 传统 `Cmd` 提示符，可输入 `buy`、`config`、`artifacts` 等命令 |
+
+**Ctrl+C 模式选单（dashboard 或命令模式下均可用）**
+
+- 在 **5 秒**内按 **1** → 进入命令模式；**2** → 回到 dashboard；**3** → 退出并停止 Trader  
+- **无需按 Enter**，数字键立即生效  
+- **5 秒内无输入** → 自动恢复中断前的模式  
+- **选单等待期间再次按 Ctrl+C** → 立即退出（与选 **3** 等效）
+
+若主循环发生未预期异常，Shell 会提示按 **1** 回到 dashboard 或 **3** 退出；**5 秒无输入**时默认回到 dashboard，Trader 继续运行。
+
 ## 8. 运行前检查清单
 
 - [ ] 账户 ID/名称可用，且与策略资产池匹配  
