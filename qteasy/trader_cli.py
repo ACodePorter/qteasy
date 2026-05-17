@@ -107,6 +107,11 @@ def _drain_message_queue(trader) -> List[TraderMessage]:
     return drain_trader_message_queue(trader.message_queue)
 
 
+class ModeMenuExitRequest(Exception):
+    """用户在模式选单等待期间再次按下 Ctrl+C，请求立即正常退出 Shell。"""
+    pass
+
+
 MODE_MENU_TIMEOUT = 5.0
 
 
@@ -115,6 +120,7 @@ def _mode_menu_prompt() -> str:
     return (
         '\nCurrent mode interrupted. Press 1, 2, or 3 within '
         f'{MODE_MENU_TIMEOUT:.0f} seconds (no Enter needed):\n'
+        'Press Ctrl+C again to exit immediately.\n'
         '[1] Enter command mode\n'
         '[2] Enter dashboard mode\n'
         '[3] Exit and stop the trader\n'
@@ -194,7 +200,7 @@ def _read_line_with_timeout_unix(timeout, input_stream, output_stream) -> Option
                 output_stream.flush()
                 return None
             if ch == '\x03':
-                raise KeyboardInterrupt
+                raise ModeMenuExitRequest
             decision = _accept_mode_menu_char(ch, line_parts)
             if decision is not None:
                 output_stream.write(decision + '\n')
@@ -218,7 +224,7 @@ def _read_line_with_timeout_windows(timeout, input_stream, output_stream) -> Opt
         if msvcrt.kbhit():
             ch = msvcrt.getwch()
             if ch == '\x03':
-                raise KeyboardInterrupt
+                raise ModeMenuExitRequest
             decision = _accept_mode_menu_char(ch, line_parts)
             if decision is not None:
                 output_stream.write(decision + '\n')
@@ -494,6 +500,8 @@ class TraderShell(Cmd):
 
     在 Shell 运行过程中按下 Ctrl+C 进入模式选单：选项 1 进入 command 模式，选项 2 进入
     dashboard 模式，选项 3 停止 trader 并退出 Shell；5 秒内无有效输入则自动恢复中断前的模式。
+    在模式选单等待期间再次按下 Ctrl+C 将立即按与选项 3 相同的正常关停路径退出 Shell，
+    不会重新进入选单或异常中断。
 
     """
     intro = 'Welcome to the trader shell interactive mode. Type help or ? to list commands.\n' \
@@ -2403,7 +2411,8 @@ class TraderShell(Cmd):
         self._dashboard_on_status_line = False
         print('\nWelcome to TraderShell! currently in dashboard mode, live status will be displayed here.\n'
               'You can not input commands in this mode, if you want to enter interactive mode, please '
-              'press "Ctrl+C" to exit dashboard mode and select from prompted options.\n')
+              'press "Ctrl+C" to exit dashboard mode and select from prompted options.\n'
+              'While the mode menu is waiting, press Ctrl+C again to exit immediately with normal shutdown.\n')
         self._replay_dashboard_logs(args.rewind)
         return True
 
@@ -2946,7 +2955,14 @@ class TraderShell(Cmd):
         if self._dashboard_on_status_line:
             _clear_current_line()
             self._dashboard_on_status_line = False
-        choice = _read_line_with_timeout(_mode_menu_prompt(), MODE_MENU_TIMEOUT)
+        try:
+            choice = _read_line_with_timeout(_mode_menu_prompt(), MODE_MENU_TIMEOUT)
+        except ModeMenuExitRequest:
+            print('Interrupted again; shutting down trader...\n')
+            return False
+        except KeyboardInterrupt:
+            print('Interrupted again; shutting down trader...\n')
+            return False
         action = _parse_mode_menu_choice(choice)
         if action == 'resume':
             if choice is None:

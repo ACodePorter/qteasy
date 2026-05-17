@@ -33,6 +33,7 @@ from qteasy.trader_cli import (
     DEBUG_RUN_TASK_CHOICES,
     CLI_COMMAND_ALIASES,
     BROKER_SUBCOMMANDS,
+    ModeMenuExitRequest,
     _filter_sys_log_lines,
     _drain_message_queue,
     _accept_mode_menu_char,
@@ -1864,6 +1865,29 @@ class TestTraderCLIModeMenu(unittest.TestCase):
                 keep_running = shell._handle_mode_interrupt()
             print(' keep_running:', keep_running, ' status:', shell._status)
             self.assertFalse(keep_running)
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_mode_interrupt_second_ctrl_c_exits(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt second Ctrl+C (ModeMenuExitRequest)')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+
+            def _raise_exit(*_args, **_kwargs):
+                raise ModeMenuExitRequest
+
+            buf = io.StringIO()
+            with patch('qteasy.trader_cli._read_line_with_timeout', side_effect=_raise_exit):
+                with redirect_stdout(buf):
+                    keep_running = shell._handle_mode_interrupt()
+            out = buf.getvalue()
+            print(' keep_running:', keep_running, ' stdout:', repr(out))
+            self.assertFalse(keep_running)
+            self.assertIn('Interrupted again; shutting down trader...', out)
         finally:
             clear_tables(test_ds)
 
