@@ -113,12 +113,12 @@ MODE_MENU_TIMEOUT = 5.0
 def _mode_menu_prompt() -> str:
     """返回 Ctrl+C 中断后模式选单的英文提示文本。"""
     return (
-        '\nCurrent mode interrupted. Input 1, 2, or 3 within '
-        f'{MODE_MENU_TIMEOUT:.0f} seconds:\n'
+        '\nCurrent mode interrupted. Press 1, 2, or 3 within '
+        f'{MODE_MENU_TIMEOUT:.0f} seconds (no Enter needed):\n'
         '[1] Enter command mode\n'
         '[2] Enter dashboard mode\n'
         '[3] Exit and stop the trader\n'
-        'please input your choice: '
+        'Your choice: '
     )
 
 
@@ -136,37 +136,76 @@ def _parse_mode_menu_choice(line: Optional[str]) -> str:
     return 'resume'
 
 
-def _read_line_with_timeout_unix(timeout, input_stream, output_stream) -> Optional[str]:
-    """在 Unix 上使用 ``select`` 读取一行，超时返回 ``None`` 并输出换行。"""
-    import select
+def _accept_mode_menu_char(ch: str, line_parts: List[str]) -> Optional[str]:
+    """解析模式选单单字节字符，立即接受 1/2/3；回车提交缓冲区中的合法选择。
 
+    非 1/2/3 的可打印字符被忽略；缓冲区仅在回车时按合法选择提交或清空。
+
+    Parameters
+    ----------
+    ch : str
+        读取到的单个字符。
+    line_parts : list of str
+        跨多次读取累积的缓冲片段（不含已立即提交的 1/2/3）。
+
+    Returns
+    -------
+    str or None
+        已确定的选项 ``'1'`` / ``'2'`` / ``'3'``；否则 ``None`` 表示继续读取。
+    """
+    if ch in ('1', '2', '3'):
+        line_parts.clear()
+        return ch
+    if ch in ('\n', '\r'):
+        buf = ''.join(line_parts)
+        line_parts.clear()
+        if buf in ('1', '2', '3'):
+            return buf
+        return None
+    return None
+
+
+def _read_line_with_timeout_unix(timeout, input_stream, output_stream) -> Optional[str]:
+    """在 Unix 上使用 ``termios`` 原始字符模式与 ``select`` 读取选单输入，超时返回 ``None``。"""
+    import select
+    import termios
+    import tty
+
+    fd = input_stream.fileno()
+    old_settings = termios.tcgetattr(fd)
     line_parts: List[str] = []
-    deadline = time.monotonic() + timeout
-    while True:
-        remaining = deadline - time.monotonic()
-        if remaining <= 0:
-            output_stream.write('\n')
-            output_stream.flush()
-            return None
-        ready, _, _ = select.select([input_stream], [], [], remaining)
-        if not ready:
-            output_stream.write('\n')
-            output_stream.flush()
-            return None
-        ch = input_stream.read(1)
-        if not ch:
-            output_stream.write('\n')
-            output_stream.flush()
-            return None
-        if ch == '\n':
-            return ''.join(line_parts)
-        if ch == '\r':
-            continue
-        line_parts.append(ch)
+    try:
+        tty.setcbreak(fd)
+        deadline = time.monotonic() + timeout
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                output_stream.write('\n')
+                output_stream.flush()
+                return None
+            ready, _, _ = select.select([input_stream], [], [], remaining)
+            if not ready:
+                output_stream.write('\n')
+                output_stream.flush()
+                return None
+            ch = input_stream.read(1)
+            if not ch:
+                output_stream.write('\n')
+                output_stream.flush()
+                return None
+            if ch == '\x03':
+                raise KeyboardInterrupt
+            decision = _accept_mode_menu_char(ch, line_parts)
+            if decision is not None:
+                output_stream.write(decision + '\n')
+                output_stream.flush()
+                return decision
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
 
 def _read_line_with_timeout_windows(timeout, input_stream, output_stream) -> Optional[str]:
-    """在 Windows 上使用 ``msvcrt.kbhit`` 轮询读取一行，超时返回 ``None`` 并输出换行。"""
+    """在 Windows 上使用 ``msvcrt`` 轮询读取选单输入，1/2/3 立即生效，超时返回 ``None``。"""
     import msvcrt
 
     line_parts: List[str] = []
@@ -178,13 +217,13 @@ def _read_line_with_timeout_windows(timeout, input_stream, output_stream) -> Opt
             return None
         if msvcrt.kbhit():
             ch = msvcrt.getwch()
-            if ch in ('\r', '\n'):
-                output_stream.write('\n')
+            if ch == '\x03':
+                raise KeyboardInterrupt
+            decision = _accept_mode_menu_char(ch, line_parts)
+            if decision is not None:
+                output_stream.write(decision + '\n')
                 output_stream.flush()
-                return ''.join(line_parts)
-            line_parts.append(ch)
-            output_stream.write(ch)
-            output_stream.flush()
+                return decision
         else:
             time.sleep(0.05)
 
@@ -2910,7 +2949,10 @@ class TraderShell(Cmd):
         choice = _read_line_with_timeout(_mode_menu_prompt(), MODE_MENU_TIMEOUT)
         action = _parse_mode_menu_choice(choice)
         if action == 'resume':
-            print('No input received; resuming previous mode.\n')
+            if choice is None:
+                print('No input received; resuming previous mode.\n')
+            else:
+                print('Invalid choice; resuming previous mode.\n')
             self._status = previous_mode
         elif action == 'command':
             self._status = 'command'

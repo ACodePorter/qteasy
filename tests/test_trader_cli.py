@@ -20,7 +20,7 @@ import unittest
 import time
 import io
 from contextlib import redirect_stdout
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 import pandas as pd
 from rich.text import Text
 
@@ -35,6 +35,7 @@ from qteasy.trader_cli import (
     BROKER_SUBCOMMANDS,
     _filter_sys_log_lines,
     _drain_message_queue,
+    _accept_mode_menu_char,
     _parse_mode_menu_choice,
     _read_line_with_timeout,
     _read_line_with_timeout_unix,
@@ -1748,22 +1749,56 @@ class TestTraderCLIModeMenu(unittest.TestCase):
 
     def test_read_line_with_timeout_unix_returns_line(self):
         print('\n[TestTraderCLIModeMenu] _read_line_with_timeout_unix line')
-        mock_in = io.StringIO('1\n')
+        mock_in = MagicMock()
+        mock_in.fileno.return_value = 0
+        mock_in.read.side_effect = ['1']
         mock_out = io.StringIO()
-        with patch('select.select', return_value=([mock_in], [], [])):
+        sentinel_attrs = object()
+        with patch('termios.tcgetattr', return_value=sentinel_attrs), \
+                patch('termios.tcsetattr') as mock_tcsetattr, \
+                patch('tty.setcbreak'), \
+                patch('select.select', return_value=([mock_in], [], [])):
             result = _read_line_with_timeout_unix(1.0, mock_in, mock_out)
         print(' result:', result, ' output:', repr(mock_out.getvalue()))
         self.assertEqual(result, '1')
+        self.assertIn('1\n', mock_out.getvalue())
+        mock_tcsetattr.assert_called()
 
     def test_read_line_with_timeout_unix_timeout(self):
         print('\n[TestTraderCLIModeMenu] _read_line_with_timeout_unix timeout')
-        mock_in = io.StringIO()
+        mock_in = MagicMock()
+        mock_in.fileno.return_value = 0
         mock_out = io.StringIO()
-        with patch('select.select', return_value=([], [], [])):
+        sentinel_attrs = object()
+        with patch('termios.tcgetattr', return_value=sentinel_attrs), \
+                patch('termios.tcsetattr'), \
+                patch('tty.setcbreak'), \
+                patch('select.select', return_value=([], [], [])):
             result = _read_line_with_timeout_unix(0.1, mock_in, mock_out)
         print(' result:', result, ' output:', repr(mock_out.getvalue()))
         self.assertIsNone(result)
         self.assertEqual(mock_out.getvalue(), '\n')
+
+    def test_accept_mode_menu_char_single_key(self):
+        print('\n[TestTraderCLIModeMenu] _accept_mode_menu_char')
+        parts: list = []
+        self.assertEqual(_accept_mode_menu_char('1', parts), '1')
+        self.assertEqual(parts, [])
+        parts = []
+        self.assertEqual(_accept_mode_menu_char('2', parts), '2')
+        parts = []
+        self.assertIsNone(_accept_mode_menu_char('x', parts))
+        self.assertEqual(parts, [])
+        parts = []
+        self.assertIsNone(_accept_mode_menu_char('\n', parts))
+        self.assertEqual(parts, [])
+        parts = ['1']
+        self.assertEqual(_accept_mode_menu_char('\n', parts), '1')
+        self.assertEqual(parts, [])
+        parts = ['9']
+        self.assertIsNone(_accept_mode_menu_char('\n', parts))
+        self.assertEqual(parts, [])
+        print(' accept: digits immediate; x/empty Enter ignored; buffered Enter for 1/9 cleared')
 
     def test_handle_mode_interrupt_resume(self):
         from tests.trader_test_helpers import create_trader_with_account, clear_tables
@@ -1773,11 +1808,15 @@ class TestTraderCLIModeMenu(unittest.TestCase):
         try:
             shell = TraderShell(trader)
             shell._status = 'dashboard'
+            buf = io.StringIO()
             with patch('qteasy.trader_cli._read_line_with_timeout', return_value=None):
-                keep_running = shell._handle_mode_interrupt()
-            print(' keep_running:', keep_running, ' status:', shell._status)
+                with redirect_stdout(buf):
+                    keep_running = shell._handle_mode_interrupt()
+            out = buf.getvalue()
+            print(' keep_running:', keep_running, ' status:', shell._status, ' stdout sample:', out[:120])
             self.assertTrue(keep_running)
             self.assertEqual(shell._status, 'dashboard')
+            self.assertIn('No input received; resuming previous mode.', out)
         finally:
             clear_tables(test_ds)
 
@@ -1794,6 +1833,22 @@ class TestTraderCLIModeMenu(unittest.TestCase):
             print(' keep_running:', keep_running, ' status:', shell._status)
             self.assertTrue(keep_running)
             self.assertEqual(shell._status, 'command')
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_mode_interrupt_dashboard(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt dashboard choice')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value='2'):
+                keep_running = shell._handle_mode_interrupt()
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertTrue(keep_running)
+            self.assertEqual(shell._status, 'dashboard')
         finally:
             clear_tables(test_ds)
 
