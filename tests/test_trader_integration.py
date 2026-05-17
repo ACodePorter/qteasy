@@ -274,10 +274,12 @@ class TestTraderPhase0Observability(unittest.TestCase):
         trader._run_task = fake_run_task
         trader._add_task_from_schedule = lambda current_time=None: None
 
+        from qteasy.trader import coerce_trader_message
+
         trader.run()
-        broker_message = trader.message_queue.get_nowait()
+        broker_message = coerce_trader_message(trader.message_queue.get_nowait())
         print(' broker_message:', broker_message)
-        self.assertIn('polled-message', broker_message)
+        self.assertIn('polled-message', broker_message.text)
 
     def test_run_emits_task_execute_failed_trace_on_runtime_error(self):
         print('\n[TestTraderPhase0Observability] run task failure trace')

@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 
 from typing import Union, Optional, Any, Dict, List
-from queue import Queue
+from queue import Queue, Empty
 
 from rich.text import Text
 
@@ -155,6 +155,60 @@ class TaskSpec:
         if isinstance(other, tuple):
             return self.as_legacy() == other
         return False
+
+
+@dataclass
+class TraderMessage:
+    """Trader 消息队列中的结构化消息。"""
+
+    text: str
+    debug: bool = False
+
+
+def coerce_trader_message(message: Union[str, Text, 'TraderMessage']) -> TraderMessage:
+    """将消息队列中的原始项统一转换为 ``TraderMessage``。
+
+    Parameters
+    ----------
+    message : str, Text, TraderMessage
+        队列中取出的消息，兼容历史 str / Text 格式。
+
+    Returns
+    -------
+    TraderMessage
+        结构化消息对象。
+    """
+    if isinstance(message, TraderMessage):
+        return message
+    return TraderMessage(text=str(message), debug=False)
+
+
+def drain_trader_message_queue(message_queue: Queue) -> List[TraderMessage]:
+    """排空 Trader 消息队列并返回全部 ``TraderMessage``。
+
+    Parameters
+    ----------
+    message_queue : Queue
+        Trader 实例的 ``message_queue``。
+
+    Returns
+    -------
+    list of TraderMessage
+        按出队顺序排列的消息列表。
+    """
+    messages: List[TraderMessage] = []
+    while True:
+        try:
+            messages.append(coerce_trader_message(message_queue.get_nowait()))
+        except Empty:
+            break
+    return messages
+
+
+def _is_debug_sys_log_line(line: str) -> bool:
+    """判断系统日志行是否为 DEBUG 级别或带 debug 前缀。"""
+    stripped = line.lstrip()
+    return stripped.startswith('DEBUG:') or '<DEBUG>' in line
 
 
 def _resolve_tables_for_refresh(asset_type_str: Union[str, list[str], tuple[str, ...]],
@@ -1286,8 +1340,8 @@ class Trader(object):
         # 如果debug 但 not self.debug，不发送消息到消息队列
         if debug and (not self.debug):
             return
-        # 其他情况下，发送原始消息到消息队列
-        self.message_queue.put(message)
+        # 其他情况下，发送结构化消息到消息队列
+        self.message_queue.put(TraderMessage(text=str(message), debug=debug))
 
     def add_message_prefix(self, message: str, debug=False) -> str:
         """ 在消息前添加时间、状态等信息
@@ -2027,13 +2081,15 @@ class Trader(object):
         else:
             return pd.DataFrame()
 
-    def read_sys_log(self, row_count: int = None) -> list:
+    def read_sys_log(self, row_count: int = None, include_debug: bool = True) -> list:
         """ 从系统log文件中读取文本信息，保存在一个列表中，如果指定row_count = N，则读取倒数N行
 
         Parameters
         ----------
         row_count: int, optional
-        如果给出row_count，则只读取倒数row_count行文本，如果为None，读取所有文本
+            如果给出row_count，则只读取倒数row_count行文本，如果为None，读取所有文本
+        include_debug: bool, optional, default True
+            为 False 时过滤 DEBUG 级别及带 ``<DEBUG>`` 前缀的日志行
 
         Returns
         -------
@@ -2053,6 +2109,9 @@ class Trader(object):
 
             if row_count > 0:
                 lines = lines[-row_count:]
+
+        if not include_debug:
+            lines = [line for line in lines if not _is_debug_sys_log_line(line)]
 
         return lines
 

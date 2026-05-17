@@ -17,6 +17,8 @@ from threading import Thread
 from rich.text import Text
 from textual.screen import ModalScreen
 
+from qteasy.trader import coerce_trader_message
+
 from textual import (
     work,
     on,
@@ -580,10 +582,10 @@ class TraderApp(App):
 
             # check the message queue of the trader
             if not self.trader.message_queue.empty():
-                msg = self.trader.message_queue.get()
-                system_log.write_with_timestamp(msg)
+                msg = coerce_trader_message(self.trader.message_queue.get())
+                system_log.write_with_timestamp(msg.text)
 
-                if any(words in msg for words in ['RAN STRATEGY', 'RESULT', 'DELIVERY']):
+                if any(words in msg.text for words in ['RAN STRATEGY', 'RESULT', 'DELIVERY']):
                     # if ran strategy or got result from broker, refresh UI
                     self.refresh_order()
                     self.refresh_holdings()

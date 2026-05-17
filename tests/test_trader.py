@@ -2365,6 +2365,55 @@ class TestTraderInfoAndMessages(unittest.TestCase):
         t = self.trader.get_current_tz_datetime()
         self.assertIsInstance(t, pd.Timestamp)
 
+    def test_send_message_queue_trader_message(self):
+        print('\n[TestTraderInfoAndMessages] send_message enqueues TraderMessage')
+        from qteasy.trader import TraderMessage, coerce_trader_message
+
+        self.trader.init_system_logger()
+        self.trader.send_message('normal message', debug=False)
+        self.trader.send_message('debug message', debug=True)
+        self.assertFalse(self.trader.message_queue.empty())
+
+        normal_msg = coerce_trader_message(self.trader.message_queue.get_nowait())
+        print(' normal_msg:', normal_msg)
+        self.assertIsInstance(normal_msg, TraderMessage)
+        self.assertEqual(normal_msg.text, 'normal message')
+        self.assertFalse(normal_msg.debug)
+
+        debug_trader, test_ds = create_trader_with_account(debug=True, legacy=True)
+        try:
+            debug_trader.init_system_logger()
+            debug_trader.send_message('debug only', debug=True)
+            debug_msg = coerce_trader_message(debug_trader.message_queue.get_nowait())
+            print(' debug_msg:', debug_msg)
+            self.assertIsInstance(debug_msg, TraderMessage)
+            self.assertEqual(debug_msg.text, 'debug only')
+            self.assertTrue(debug_msg.debug)
+        finally:
+            _clear_tables(test_ds)
+
+    def test_read_sys_log_exclude_debug(self):
+        print('\n[TestTraderInfoAndMessages] read_sys_log include_debug=False')
+        from qteasy.trading_util import sys_log_file_path_name
+
+        path = sys_log_file_path_name(self.trader.account_id, self.trader.datasource)
+        if os.path.exists(path):
+            os.remove(path)
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write('INFO: normal line\n')
+            f.write('DEBUG: debug line\n')
+            f.write('<DEBUG><Jan01 10:00:00>running: trace\n')
+
+        all_lines = self.trader.read_sys_log(include_debug=True)
+        filtered_lines = self.trader.read_sys_log(include_debug=False)
+        print(' all_lines:', all_lines)
+        print(' filtered_lines:', filtered_lines)
+        self.assertEqual(len(all_lines), 3)
+        self.assertEqual(len(filtered_lines), 1)
+        self.assertIn('normal line', filtered_lines[0])
+        if os.path.exists(path):
+            os.remove(path)
+
 
 class TestTraderBoundaries(unittest.TestCase):
     """Boundary and edge cases: empty account, cost_params None, read_sys_log row_count edge, etc."""

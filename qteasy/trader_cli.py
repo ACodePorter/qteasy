@@ -22,11 +22,12 @@ import time
 import numpy as np
 import pandas as pd
 
-from typing import Optional
+from typing import List, Optional
 from cmd import Cmd
 from threading import Timer
 from rich.text import Text
 
+from qteasy.trader import TraderMessage, coerce_trader_message, drain_trader_message_queue
 from qteasy.trading_util import get_symbol_names, cancel_order
 
 from qteasy.utilfuncs import (
@@ -57,6 +58,54 @@ CLI_COMMAND_ALIASES = {
 }
 
 BROKER_SUBCOMMANDS = ('status', 'connect', 'disconnect')
+
+
+def _terminal_width(fallback: int = 80) -> int:
+    """返回当前终端宽度，不可检测时返回 fallback。"""
+    try:
+        return int(shutil.get_terminal_size(fallback=(fallback, 24)).columns)
+    except (ValueError, OSError):
+        return fallback
+
+
+def _is_tty_stream(stream) -> bool:
+    """判断流是否连接到交互式终端。"""
+    return hasattr(stream, 'isatty') and stream.isatty()
+
+
+def _clear_current_line(stream=sys.stdout) -> None:
+    """清除终端当前行内容（仅 TTY 生效）。"""
+    if _is_tty_stream(stream):
+        stream.write('\r\033[K')
+        stream.flush()
+
+
+def _filter_sys_log_lines(lines: List[str], include_debug: bool = True) -> List[str]:
+    """过滤系统日志行，可选排除 DEBUG 级别内容。
+
+    Parameters
+    ----------
+    lines : list of str
+        原始日志行列表。
+    include_debug : bool, optional, default True
+        为 False 时排除 ``DEBUG:`` 开头或含 ``<DEBUG>`` 的行。
+
+    Returns
+    -------
+    list of str
+        过滤后的日志行。
+    """
+    if include_debug:
+        return list(lines)
+    return [
+        line for line in lines
+        if not line.lstrip().startswith('DEBUG:') and '<DEBUG>' not in line
+    ]
+
+
+def _drain_message_queue(trader) -> List[TraderMessage]:
+    """排空 trader 消息队列并返回结构化消息列表。"""
+    return drain_trader_message_queue(trader.message_queue)
 
 
 def pack_system_info(trader_info, width=80):
@@ -2704,12 +2753,12 @@ class TraderShell(Cmd):
                     break
                 if self.status == 'dashboard':
                     # check trader message queue and display messages
-                    text_width = int(shutil.get_terminal_size().columns)
+                    text_width = _terminal_width()
                     if not self._trader.message_queue.empty():
-                        message = self._trader.message_queue.get()
+                        msg = coerce_trader_message(self._trader.message_queue.get())
 
                         # adjust message length to terminal width
-                        message = self.trader.add_message_prefix(message, self.debug)
+                        message = self.trader.add_message_prefix(msg.text, msg.debug)
                         message = adjust_string_length(message, text_width - 2, format_tags=True)
                         rich.print(message)
                     else:

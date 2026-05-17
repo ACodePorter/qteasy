@@ -25,7 +25,15 @@ import pandas as pd
 import qteasy as qt
 from qteasy import DataSource, Operator
 from qteasy.trader import Trader
-from qteasy.trader_cli import TraderShell, DEBUG_RUN_TASK_CHOICES, CLI_COMMAND_ALIASES, BROKER_SUBCOMMANDS
+from qteasy.trader import TraderMessage, coerce_trader_message
+from qteasy.trader_cli import (
+    TraderShell,
+    DEBUG_RUN_TASK_CHOICES,
+    CLI_COMMAND_ALIASES,
+    BROKER_SUBCOMMANDS,
+    _filter_sys_log_lines,
+    _drain_message_queue,
+)
 from qteasy.trading_util import (
     process_account_delivery,
     process_trade_result,
@@ -1526,6 +1534,81 @@ class TestTraderCLIBuild2Coverage(unittest.TestCase):
         for cmd in build2_commands:
             print(' registered:', cmd, cmd in shell)
             self.assertIn(cmd, shell)
+
+
+class TestTraderCLIDashboardHelpers(unittest.TestCase):
+    """CLI dashboard 辅助函数：日志过滤、消息队列排空与消息 coercion。"""
+
+    def test_filter_sys_log_lines_excludes_debug(self):
+        print('\n[TestTraderCLIDashboardHelpers] _filter_sys_log_lines')
+        lines = [
+            'INFO: normal line\n',
+            'DEBUG: debug line\n',
+            '<DEBUG><Jan01 10:00:00>running: trace\n',
+        ]
+        filtered = _filter_sys_log_lines(lines, include_debug=False)
+        print(' filtered:', filtered)
+        self.assertEqual(len(filtered), 1)
+        self.assertIn('normal line', filtered[0])
+
+    def test_filter_sys_log_lines_include_debug_returns_copy(self):
+        print('\n[TestTraderCLIDashboardHelpers] _filter_sys_log_lines include_debug=True')
+        lines = ['INFO: a\n', 'DEBUG: b\n']
+        result = _filter_sys_log_lines(lines, include_debug=True)
+        print(' result:', result)
+        self.assertEqual(result, lines)
+        self.assertIsNot(result, lines)
+
+    def test_drain_message_queue_returns_trader_messages(self):
+        print('\n[TestTraderCLIDashboardHelpers] _drain_message_queue')
+        from queue import Queue
+
+        from qteasy.trader import drain_trader_message_queue
+
+        queue = Queue()
+        queue.put(TraderMessage(text='first', debug=False))
+        queue.put('legacy-string')
+        queue.put(TraderMessage(text='third', debug=True))
+
+        drained = drain_trader_message_queue(queue)
+        print(' drained:', drained)
+        self.assertEqual(len(drained), 3)
+        self.assertIsInstance(drained[0], TraderMessage)
+        self.assertEqual(drained[0].text, 'first')
+        self.assertFalse(drained[0].debug)
+        self.assertEqual(drained[1].text, 'legacy-string')
+        self.assertFalse(drained[1].debug)
+        self.assertTrue(drained[2].debug)
+        self.assertTrue(queue.empty())
+
+    def test_coerce_trader_message_backward_compatible(self):
+        print('\n[TestTraderCLIDashboardHelpers] coerce_trader_message')
+        original = TraderMessage(text='structured', debug=True)
+        coerced = coerce_trader_message(original)
+        print(' coerced from TraderMessage:', coerced)
+        self.assertIs(coerced, original)
+
+        from_str = coerce_trader_message('plain text')
+        print(' coerced from str:', from_str)
+        self.assertIsInstance(from_str, TraderMessage)
+        self.assertEqual(from_str.text, 'plain text')
+        self.assertFalse(from_str.debug)
+
+    def test_drain_message_queue_on_trader_instance(self):
+        print('\n[TestTraderCLIDashboardHelpers] _drain_message_queue trader instance')
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            trader.init_system_logger()
+            trader.send_message('queued', debug=False)
+            drained = _drain_message_queue(trader)
+            print(' drained:', drained)
+            self.assertEqual(len(drained), 1)
+            self.assertEqual(drained[0].text, 'queued')
+            self.assertTrue(trader.message_queue.empty())
+        finally:
+            clear_tables(test_ds)
 
 
 if __name__ == '__main__':
