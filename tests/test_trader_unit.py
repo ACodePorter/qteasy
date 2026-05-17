@@ -1,21 +1,34 @@
 # coding=utf-8
 # ======================================
 # File:     test_trader_unit.py
+# Author:   Jackie PENG
+# Contact:  jackie.pengzhao@gmail.com
+# Created:  2026-05-09
 # Desc:
-#   单元测试：Trader 初始化、status、任务调度、account_cash、watch_list 等，
-#   使用专用测试 DataSource（非 QT_DATA_SOURCE），测试完成后清理数据。
+#   单元测试：Trader 初始化、status、任务调度、
+#   account_cash、watch_list 等，使用专
+#   用测试 DataSource（非 QT_DATA_SOURCE），
+#   测试完成后清理表数据。
 # ======================================
 
 import os
+import time
 import datetime as dt
 import unittest
+from unittest.mock import patch
 
 import pandas as pd
 
+import qteasy as qt
 from qteasy import DataSource, Operator
 from qteasy.trade_recording import new_account, get_account, get_or_create_position, update_position, update_account_balance
 from qteasy.trader import Trader
 from qteasy.broker import SimulatorBroker
+from qteasy.trading_util import (
+    apply_schedule_catch_up_policy,
+    create_daily_task_plan,
+    create_daily_task_schedule,
+)
 
 
 # --------------- 测试用 DataSource：从公共夹具导入（data_test_trader，legacy=False） ---------------
@@ -35,6 +48,13 @@ _default_trader_kwargs = default_trader_kwargs
 _create_test_datasource = create_test_datasource
 
 
+class _BrokerRemoteCashMismatch(SimulatorBroker):
+    """用于启动门禁 L3：返回与本地账本不一致的远端现金。"""
+
+    def get_remote_cash(self, *, account_id=None):
+        return 0.01
+
+
 # --------------- 初始化与参数验证 ---------------
 
 class TestTraderInit(unittest.TestCase):
@@ -50,7 +70,7 @@ class TestTraderInit(unittest.TestCase):
     def test_init_invalid_account_id_type(self):
         """account_id 非 int 时应抛出 TypeError。"""
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         test_ds = _create_test_datasource()
         self._test_ds = test_ds
         _clear_tables(test_ds)
@@ -72,7 +92,7 @@ class TestTraderInit(unittest.TestCase):
         self._test_ds = test_ds
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -105,7 +125,7 @@ class TestTraderInit(unittest.TestCase):
     def test_init_invalid_datasource_type(self):
         """datasource 非 DataSource 时应抛出 TypeError。"""
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -126,7 +146,7 @@ class TestTraderInit(unittest.TestCase):
         # new_account 返回的是新账户 id，可能不是 10**9，这里用已存在的 account_id=1
         # 若 new_account 支持指定 id 则用 10**9；否则用大 id 需要先建账户
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         trader = Trader(
             account_id=1,
             operator=op,
@@ -152,7 +172,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = '000001.SZ, 000002.SZ'
         kwargs['benchmark_asset'] = ['000300.SH', '000905.SH']
@@ -173,7 +193,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         with self.assertRaises(TypeError) as ctx:
             Trader(
                 account_id=1,
@@ -193,7 +213,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = []
         trader = Trader(
@@ -214,7 +234,7 @@ class TestTraderInit(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = '000001.SZ'
         kwargs['benchmark_asset'] = '000001.SZ'
@@ -436,7 +456,7 @@ class TestTraderWatchList(unittest.TestCase):
         _clear_tables(test_ds)
         new_account(user_name='u', cash_amount=10000, data_source=test_ds)
         op = _create_operator()
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
         kwargs = _default_trader_kwargs()
         kwargs['asset_pool'] = ['000001.SZ']  # 覆盖默认的 asset_pool，避免重复传参
         trader = Trader(
@@ -449,6 +469,480 @@ class TestTraderWatchList(unittest.TestCase):
         self.assertEqual(trader.watch_list, ['000300.SH', '000001.SZ'])
         _clear_tables(test_ds)
         print('test_watch_list_initialization_with_list_asset_pool: ok')
+
+
+class TestTraderSchedulerPhase3(unittest.TestCase):
+    """阶段3：日程规划与追赶策略单测。"""
+
+    def setUp(self):
+        self._trader, self._test_ds = create_trader_with_account(debug=True)
+
+    def tearDown(self):
+        _clear_tables(self._test_ds)
+
+    def test_create_daily_task_schedule_same_input_same_output(self):
+        print('\n[TestTraderSchedulerPhase3] deterministic daily schedule')
+        op = Operator(strategies='macd', run_freq='h', run_timing='open')
+        schedule_1 = create_daily_task_schedule(
+            op,
+            current_date='2023-05-10',
+            market_open_time_am='09:30:00',
+            market_close_time_am='11:30:00',
+            market_open_time_pm='13:00:00',
+            market_close_time_pm='15:00:00',
+            live_price_frequency='30min',
+            daily_refill_tables='',
+            weekly_refill_tables='',
+            monthly_refill_tables='',
+        )
+        schedule_2 = create_daily_task_schedule(
+            op,
+            current_date='2023-05-10',
+            market_open_time_am='09:30:00',
+            market_close_time_am='11:30:00',
+            market_open_time_pm='13:00:00',
+            market_close_time_pm='15:00:00',
+            live_price_frequency='30min',
+            daily_refill_tables='',
+            weekly_refill_tables='',
+            monthly_refill_tables='',
+        )
+        print(' schedule_1 size:', len(schedule_1), 'schedule_2 size:', len(schedule_2))
+        print(' first 3 entries:', schedule_1[:3])
+        self.assertEqual(schedule_1, schedule_2)
+
+    def test_create_daily_task_plan_run_strategy_args_are_normalized_tuple(self):
+        print('\n[TestTraderSchedulerPhase3] planner output uses normalized args tuple')
+        op = Operator(strategies='macd', run_freq='d', run_timing='close')
+        task_plan = create_daily_task_plan(
+            op,
+            current_date='2023-05-10',
+            daily_refill_tables='',
+            weekly_refill_tables='',
+            monthly_refill_tables='',
+            live_price_frequency='h',
+        )
+        run_tasks = [item for item in task_plan if item.task_spec.name == 'run_strategy']
+        print(' run task count:', len(run_tasks))
+        print(' run task sample args:', run_tasks[0].task_spec.args if run_tasks else None)
+        self.assertTrue(run_tasks)
+        self.assertIsInstance(run_tasks[0].task_spec.args, tuple)
+        self.assertEqual(len(run_tasks[0].task_spec.args), 1)
+        self.assertIsInstance(run_tasks[0].as_legacy_tuple()[2], int)
+
+    def test_initialize_schedule_uses_trader_current_date_for_monthly_refill(self):
+        print('\n[TestTraderSchedulerPhase3] initialize schedule should honor force_current_date')
+        self._trader.force_current_date = pd.to_datetime('2023-01-01').date()
+        self._trader.daily_refill_tables = ''
+        self._trader.weekly_refill_tables = ''
+        self._trader.monthly_refill_tables = 'stock_daily'
+        self._trader.task_daily_schedule = []
+        self._trader._initialize_schedule(dt.time(8, 0, 0))
+        refill_tasks = [task for task in self._trader.task_daily_schedule if task[1] == 'refill']
+        print(' refill tasks:', refill_tasks)
+        self.assertEqual(len(refill_tasks), 1)
+        self.assertEqual(refill_tasks[0], ('16:00:00', 'refill', ('stock_daily', 31)))
+
+    def test_apply_schedule_catch_up_policy_midday_keeps_key_tasks(self):
+        print('\n[TestTraderSchedulerPhase3] midday catch-up keep key task names')
+        schedule = [
+            ('09:15:00', 'pre_open'),
+            ('09:30:00', 'open_market'),
+            ('10:00:00', 'run_strategy', 0),
+            ('11:35:00', 'close_market'),
+            ('12:55:00', 'open_market'),
+            ('13:10:00', 'acquire_live_price'),
+        ]
+        out = apply_schedule_catch_up_policy(
+            task_schedule=schedule,
+            current_time=dt.time(13, 5, 0),
+            market_open_time_am='09:30:00',
+            market_close_time_am='11:30:00',
+            market_open_time_pm='13:00:00',
+            market_close_time_pm='15:00:00',
+        )
+        print(' output schedule:', out)
+        names = [task[1] for task in out]
+        print(' output names:', names)
+        self.assertNotIn('run_strategy', names)
+        self.assertIn('pre_open', names)
+        self.assertIn('open_market', names)
+        self.assertIn('close_market', names)
+        self.assertIn('acquire_live_price', names)
+
+
+class TestTraderRuntimeLifecycle(unittest.TestCase):
+    """Trader 运行时生命周期接口单测。"""
+
+    def setUp(self):
+        self._trader, self._test_ds = create_trader_with_account()
+
+    def tearDown(self):
+        _clear_tables(self._test_ds)
+
+    def test_start_creates_trader_and_broker_threads(self):
+        print('\n[TestTraderRuntimeLifecycle] start threads')
+        started_targets = []
+
+        class DummyThread:
+            def __init__(self, target=None, daemon=None, name=None):
+                self._target = target
+                self._alive = False
+                self.name = name or 'dummy-thread'
+
+            def start(self):
+                started_targets.append(self._target)
+                self._alive = True
+
+            def is_alive(self):
+                return self._alive
+
+            def join(self, timeout=None):
+                self._alive = False
+
+        with patch('qteasy.trader.threading.Thread', new=DummyThread):
+            started = self._trader.start()
+            print(' started:', started, 'target_count:', len(started_targets))
+            self.assertTrue(started)
+            self.assertEqual(len(started_targets), 2)
+            self.assertIn(self._trader.run, started_targets)
+            self.assertIn(self._trader.broker.run, started_targets)
+            self.assertTrue(self._trader.is_alive())
+
+    def test_stop_requests_post_close_and_stop_when_alive(self):
+        print('\n[TestTraderRuntimeLifecycle] stop request with alive runtime')
+        self._trader.status = 'running'
+        self._trader._runtime_shutdown_requested = False
+
+        added_tasks = []
+
+        def fake_add_task(task, *args, **kwargs):
+            added_tasks.append((task, args))
+
+        self._trader.add_task = fake_add_task
+        self._trader.join = lambda timeout=None: None
+        self._trader._runtime_trader_thread = type('T', (), {'is_alive': lambda _self: True})()
+        self._trader._runtime_broker_thread = None
+
+        self._trader.stop(wait=False, include_post_close=True)
+        print(' added_tasks:', added_tasks)
+        self.assertEqual([item[0] for item in added_tasks], ['post_close', 'stop'])
+
+    def test_stop_fallback_executes_stop_task_when_not_alive(self):
+        print('\n[TestTraderRuntimeLifecycle] stop fallback path')
+        self._trader.status = 'running'
+        self._trader._runtime_shutdown_requested = False
+        self._trader._runtime_trader_thread = None
+        self._trader._runtime_broker_thread = None
+
+        called = {}
+
+        def fake_run_task(task, *args, run_in_main_thread=False, task_spec=None):
+            called['task'] = task
+            called['run_in_main_thread'] = run_in_main_thread
+            self._trader.status = 'stopped'
+
+        self._trader._run_task = fake_run_task
+        self._trader.stop(wait=False, include_post_close=False)
+        print(' stop fallback called:', called)
+        self.assertEqual(called.get('task'), 'stop')
+        self.assertTrue(called.get('run_in_main_thread'))
+        self.assertEqual(self._trader.status, 'stopped')
+
+    def test_start_is_idempotent_when_runtime_alive(self):
+        print('\n[TestTraderRuntimeLifecycle] start idempotent')
+        self._trader._runtime_trader_thread = type('T', (), {'is_alive': lambda _self: True})()
+        self._trader._runtime_broker_thread = type('B', (), {'is_alive': lambda _self: True})()
+
+        with patch('qteasy.trader.threading.Thread') as mock_thread_cls:
+            started = self._trader.start()
+            print(' started:', started, 'thread_ctor_called:', mock_thread_cls.called)
+            self.assertFalse(started)
+            self.assertFalse(mock_thread_cls.called)
+
+
+class TestTraderTaskManagerPhase2(unittest.TestCase):
+    """阶段2：任务管理器能力单测。"""
+
+    def setUp(self):
+        self._trader, self._test_ds = create_trader_with_account(debug=True)
+
+    def tearDown(self):
+        if getattr(self._trader, '_async_executor', None) is not None:
+            self._trader._async_executor.shutdown(wait=False, cancel_futures=True)
+            self._trader._async_executor = None
+        _clear_tables(self._test_ds)
+
+    def test_add_task_returns_task_id_and_cancel_marks_task(self):
+        print('\n[TestTraderTaskManagerPhase2] add/cancel task')
+        task_id = self._trader.add_task('pause')
+        print(' task_id:', task_id)
+        self.assertTrue(task_id.startswith('task-'))
+        self.assertIn(task_id, self._trader._task_registry)
+        canceled = self._trader.cancel_task(task_id)
+        print(' canceled:', canceled, 'status:', self._trader._task_registry[task_id].status)
+        self.assertTrue(canceled)
+        self.assertTrue(self._trader._task_registry[task_id].canceled)
+
+    def test_handle_task_failure_retries_then_dead_letter(self):
+        print('\n[TestTraderTaskManagerPhase2] retry and dead-letter')
+        task_id = self._trader.add_task('pause', max_retries=1)
+        task_spec = self._trader._task_registry[task_id]
+        print(' initial retry_count/max:', task_spec.retry_count, task_spec.max_retries)
+
+        self._trader._handle_task_failure(task_spec, RuntimeError('first-fail'))
+        print(' after first fail retry_count:', task_spec.retry_count, 'queue size:', self._trader.task_queue.qsize())
+        self.assertEqual(task_spec.retry_count, 1)
+        self.assertEqual(task_spec.status, 'queued')
+
+        retry_task = self._trader.task_queue.get()
+        self._trader.task_queue.task_done()
+        self._trader._handle_task_failure(retry_task, RuntimeError('second-fail'))
+        print(' dead_letter size:', len(self._trader.dead_letter_tasks))
+        self.assertEqual(retry_task.status, 'failed')
+        self.assertEqual(len(self._trader.dead_letter_tasks), 1)
+
+    def test_async_task_uses_single_worker_executor(self):
+        print('\n[TestTraderTaskManagerPhase2] async executor limit')
+        task_id = self._trader.add_task('acquire_live_price')
+        task_spec = self._trader._task_registry[task_id]
+        with patch.object(self._trader, '_update_live_price', return_value=None):
+            self._trader._run_task('acquire_live_price', task_spec=task_spec)
+        print(' executor workers:', self._trader._async_executor._max_workers)
+        self.assertIsNotNone(self._trader._async_executor)
+        self.assertEqual(self._trader._async_executor._max_workers, 1)
+
+    def test_cancel_tasks_batch_and_list_tasks_filters(self):
+        print('\n[TestTraderTaskManagerPhase2] batch cancel and list')
+        task_id_1 = self._trader.add_task('pause')
+        task_id_2 = self._trader.add_task('pause')
+        task_id_3 = self._trader.add_task('resume')
+        print(' task_ids:', task_id_1, task_id_2, task_id_3)
+
+        canceled_count = self._trader.cancel_tasks(name='pause', status='queued')
+        paused_tasks = self._trader.list_tasks(name='pause')
+        queued_resume = self._trader.list_tasks(status='queued', name='resume')
+        print(' canceled_count:', canceled_count)
+        print(' paused statuses:', [task.status for task in paused_tasks])
+        print(' queued resume:', [task.task_id for task in queued_resume])
+
+        self.assertEqual(canceled_count, 2)
+        self.assertTrue(all(task.canceled for task in paused_tasks))
+        self.assertEqual(len(queued_resume), 1)
+        self.assertEqual(queued_resume[0].task_id, task_id_3)
+
+    def test_async_task_failure_goes_dead_letter_after_retry_exhausted(self):
+        print('\n[TestTraderTaskManagerPhase2] async failure dead-letter')
+        task_id = self._trader.add_task('acquire_live_price', max_retries=0)
+        task_spec = self._trader.get_task(task_id)
+        self.assertIsNotNone(task_spec)
+
+        with patch.object(self._trader, '_update_live_price', side_effect=RuntimeError('async-fail-test')):
+            self._trader._run_task('acquire_live_price', task_spec=task_spec)
+            time.sleep(0.2)
+
+        print(' task status:', task_spec.status, 'dead_letter_count:', len(self._trader.dead_letter_tasks))
+        self.assertEqual(task_spec.status, 'failed')
+        self.assertEqual(len(self._trader.dead_letter_tasks), 1)
+        self.assertEqual(self._trader.dead_letter_tasks[0].task_id, task_id)
+
+    def test_add_task_skips_reentry_for_run_strategy_when_prev_running(self):
+        print('\n[TestTraderTaskManagerPhase2] run_strategy reentry skip_reason=prev_running')
+        first_task_id = self._trader.add_task('run_strategy', 0)
+        first_task_spec = self._trader.get_task(first_task_id)
+        self.assertIsNotNone(first_task_spec)
+        self.assertEqual(self._trader.task_queue.qsize(), 1)
+        self._trader.task_queue.get()
+        self._trader.task_queue.task_done()
+        first_task_spec.status = 'running'
+
+        second_task_id = self._trader.add_task('run_strategy', 1)
+        second_task_spec = self._trader.get_task(second_task_id)
+        print(' first_task_status:', first_task_spec.status)
+        print(' second_task_status:', second_task_spec.status)
+        print(' second_last_error:', second_task_spec.last_error)
+        print(' queue_size:', self._trader.task_queue.qsize())
+        self.assertEqual(second_task_spec.status, 'skipped')
+        self.assertIn('skip_reason=prev_running', second_task_spec.last_error)
+        self.assertEqual(self._trader.task_queue.qsize(), 0)
+
+    def test_process_result_reentry_policy_drop_is_forced_to_queue(self):
+        print('\n[TestTraderTaskManagerPhase2] process_result never dropped by reentry policy')
+        first_task_id = self._trader.add_task('process_result', {'order_id': 1})
+        first_task_spec = self._trader.get_task(first_task_id)
+        self.assertIsNotNone(first_task_spec)
+        self._trader.task_queue.get()
+        self._trader.task_queue.task_done()
+        first_task_spec.status = 'running'
+
+        second_task_id = self._trader.add_task('process_result', {'order_id': 2}, reentry_policy='drop')
+        second_task_spec = self._trader.get_task(second_task_id)
+        print(' first_task_status:', first_task_spec.status)
+        print(' second_task_status:', second_task_spec.status)
+        print(' second_task_reentry_policy:', second_task_spec.reentry_policy)
+        print(' queue_size:', self._trader.task_queue.qsize())
+        self.assertEqual(second_task_spec.reentry_policy, 'queue')
+        self.assertEqual(second_task_spec.status, 'queued')
+        self.assertEqual(self._trader.task_queue.qsize(), 1)
+
+
+class TestTraderPhase5SnapshotAndGate(unittest.TestCase):
+    """阶段 5-A/5-B：日程 prepare、快照跳过原因、启动门禁与 run_strategy 入队。"""
+
+    def setUp(self) -> None:
+        self._cfg_snap = {
+            'live_trade_split_strategy_prepare': qt.QT_CONFIG.get('live_trade_split_strategy_prepare', False),
+            'live_trade_prepare_lead_seconds': qt.QT_CONFIG.get('live_trade_prepare_lead_seconds', 5),
+            'live_trade_startup_gate_mode': qt.QT_CONFIG.get('live_trade_startup_gate_mode', 'off'),
+            'live_trade_strategy_snapshot_max_age_seconds': qt.QT_CONFIG.get(
+                'live_trade_strategy_snapshot_max_age_seconds', 180.0
+            ),
+        }
+
+    def tearDown(self) -> None:
+        qt.configure(**self._cfg_snap)
+
+    def test_create_daily_task_plan_inserts_prepare_before_run_when_split(self) -> None:
+        print('\n[TestTraderPhase5] split schedule: prepare then run_strategy')
+        qt.configure(live_trade_split_strategy_prepare=True, live_trade_prepare_lead_seconds=60)
+        op = Operator(strategies='macd', run_freq='30min', run_timing='close')
+        task_plan = create_daily_task_plan(
+            op,
+            current_date='2023-05-10',
+            daily_refill_tables='',
+            weekly_refill_tables='',
+            monthly_refill_tables='',
+            live_price_frequency='30min',
+        )
+        day = '2000-01-01 '
+        for st in task_plan:
+            if st.task_spec.name != 'run_strategy':
+                continue
+            step_args = st.task_spec.args
+            prep_tasks = [
+                x for x in task_plan
+                if x.task_spec.name == 'prepare_strategy_snapshot' and x.task_spec.args == step_args
+            ]
+            print(' run_strategy args', step_args, 'prep matches:', len(prep_tasks))
+            self.assertEqual(len(prep_tasks), 1)
+            delta = (pd.to_datetime(day + st.task_time) - pd.to_datetime(day + prep_tasks[0].task_time)).total_seconds()
+            print('  lead seconds:', delta)
+            self.assertGreaterEqual(delta, 59.0)
+            self.assertLessEqual(delta, 61.0)
+
+    def test_strategy_snapshot_skip_reason_missing_when_split(self) -> None:
+        print('\n[TestTraderPhase5] snapshot_missing when marker unset')
+        trader, test_ds = create_trader_with_account()
+        try:
+            qt.configure(live_trade_split_strategy_prepare=True)
+            trader.debug = True
+            trader.force_current_date = pd.Timestamp('2023-05-10').date()
+            r = trader._strategy_snapshot_skip_reason(0)
+            print(' skip_reason:', r)
+            self.assertEqual(r, 'snapshot_missing')
+        finally:
+            _clear_tables(test_ds)
+
+    def test_startup_gate_block_skips_run_strategy_enqueue(self) -> None:
+        print('\n[TestTraderPhase5] gate block skips run_strategy via gate_failed')
+        trader, test_ds = create_trader_with_account()
+        try:
+            qt.configure(live_trade_startup_gate_mode='block')
+            trader.debug = True
+            trader.force_current_date = pd.Timestamp('2023-05-10').date()
+            trader._broker = _BrokerRemoteCashMismatch()
+            ok = trader.run_startup_gate()
+            print(' gate ok:', ok, 'allowed:', trader._startup_gate_trading_allowed)
+            self.assertFalse(ok)
+            tid = trader.add_task('run_strategy', 0)
+            spec = trader.get_task(tid)
+            print(' task status:', spec.status, 'last_error:', spec.last_error)
+            self.assertEqual(spec.status, 'skipped')
+            self.assertIn('gate_failed', spec.last_error or '')
+        finally:
+            _clear_tables(test_ds)
+
+    def test_collect_broker_reconcile_snapshot_matches_gate_failure_reason(self) -> None:
+        print('\n[TestTraderPhase5] reconcile snapshot and startup gate share mismatch reasons')
+        trader, test_ds = create_trader_with_account()
+        try:
+            qt.configure(live_trade_startup_gate_mode='block')
+            trader.force_current_date = pd.Timestamp('2023-05-10').date()
+            trader._broker = _BrokerRemoteCashMismatch()
+            snapshot = trader.collect_broker_reconcile_snapshot()
+            print(' reconcile failures:', snapshot.get('failures'))
+            print(' reconcile cash_diff:', snapshot.get('cash_diff'))
+            print(' reconcile remote_orders_count:', snapshot.get('remote_orders_count'))
+            self.assertGreater(len(snapshot.get('failures', [])), 0)
+            self.assertIn(
+                True,
+                [
+                    'broker_cash_mismatch' in snapshot.get('failures', []),
+                    'operator_not_ready' in snapshot.get('failures', []),
+                ],
+            )
+            gate_ok = trader.run_startup_gate()
+            print(' gate ok:', gate_ok, 'allowed:', trader._startup_gate_trading_allowed)
+            self.assertFalse(gate_ok)
+            self.assertFalse(trader._startup_gate_trading_allowed)
+        finally:
+            _clear_tables(test_ds)
+
+    def test_post_close_emits_reconcile_checkpoint_trace(self) -> None:
+        print('\n[TestTraderPhase5] post_close emits reconcile checkpoint trace')
+        trader, test_ds = create_trader_with_account()
+        try:
+            trader.is_market_open = False
+            with patch.object(
+                    trader,
+                    'collect_broker_reconcile_snapshot',
+                    return_value={
+                        'failures': ['broker_cash_mismatch'],
+                        'cash_diff': 123.45,
+                        'position_qty_diff': 0.0,
+                        'remote_orders_count': 2,
+                    },
+            ):
+                with patch.object(trader, '_trace_event') as mock_trace:
+                    trader._post_close()
+                    reconcile_calls = [
+                        call for call in mock_trace.call_args_list
+                        if call.kwargs.get('category') == 'reconcile'
+                    ]
+                    print(' reconcile trace calls:', [c.kwargs for c in reconcile_calls])
+                    self.assertGreater(len(reconcile_calls), 0)
+                    last_call = reconcile_calls[-1].kwargs
+                    self.assertEqual(last_call.get('event'), 'checkpoint_warn')
+                    self.assertEqual(last_call.get('checkpoint'), 'post_close')
+                    self.assertEqual(last_call.get('grade'), 'warn_only')
+                    self.assertIn('broker_cash_mismatch', last_call.get('failures', ''))
+        finally:
+            _clear_tables(test_ds)
+
+    def test_collect_pending_order_diagnostics_detects_mismatch(self) -> None:
+        print('\n[TestTraderPhase5] pending order diagnostics should detect mismatch')
+        trader, test_ds = create_trader_with_account()
+        try:
+            local_orders = pd.DataFrame(
+                [
+                    {'order_id': 11, 'status': 'submitted', 'broker_order_id': 'BRK-11'},
+                    {'order_id': 12, 'status': 'partial-filled', 'broker_order_id': None},
+                    {'order_id': 13, 'status': 'created', 'broker_order_id': None},
+                ],
+            ).set_index('order_id')
+            remote_orders = [{'broker_order_id': 'BRK-11'}, {'broker_order_id': 'BRK-99'}]
+            with patch('qteasy.trader.query_trade_orders', return_value=local_orders):
+                with patch.object(trader.broker, 'get_remote_orders', return_value=remote_orders):
+                    diag = trader.collect_pending_order_diagnostics()
+            print(' pending diagnostics:', diag)
+            self.assertEqual(diag['local_pending_count'], 3)
+            self.assertEqual(diag['remote_pending_count'], 2)
+            self.assertEqual(diag['local_pending_without_broker_order_id'], [12])
+            self.assertEqual(diag['local_pending_missing_remote'], [])
+            self.assertEqual(diag['remote_pending_not_in_local'], ['BRK-99'])
+            self.assertFalse(diag['is_ok'])
+        finally:
+            _clear_tables(test_ds)
 
 
 if __name__ == '__main__':

@@ -18,22 +18,257 @@ import shlex
 import shutil
 import sys
 import time
+import traceback
+from threading import Thread
 
 import numpy as np
 import pandas as pd
 
-from typing import Optional
+from typing import List, Optional
 from cmd import Cmd
-from threading import Timer
 from rich.text import Text
 
-from qteasy.trading_util import get_symbol_names
+from qteasy.trader import TraderMessage, coerce_trader_message, drain_trader_message_queue
+from qteasy.trading_util import get_symbol_names, cancel_order
 
 from qteasy.utilfuncs import (
     adjust_string_length,
     sec_to_duration,
     list_to_str_format,
 )
+
+# DEBUG 模式下 ``run --task`` 可手动触发的任务白名单（与 ``Trader._run_task`` 子集对齐）
+DEBUG_RUN_TASK_CHOICES = (
+    'process_result',
+    'pre_open',
+    'open_market',
+    'close_market',
+    'post_close',
+    'refill',
+    'diagnose_pending_orders',
+)
+
+# ``precmd`` 命令别名（``Cmd`` 不支持带连字符的 ``do_*`` 方法名）
+CLI_COMMAND_ALIASES = {
+    'ls-artifacts': 'artifacts',
+    'live-config': 'liveconfig',
+    'startup-gate': 'gate',
+    'snapshot-reconcile': 'reconcile',
+    'rotate-logs': 'rotatelogs',
+    'pull-state': 'sync',
+}
+
+BROKER_SUBCOMMANDS = ('status', 'connect', 'disconnect')
+
+
+def _terminal_width(fallback: int = 80) -> int:
+    """返回当前终端宽度，不可检测时返回 fallback。"""
+    try:
+        return int(shutil.get_terminal_size(fallback=(fallback, 24)).columns)
+    except (ValueError, OSError):
+        return fallback
+
+
+def _is_tty_stream(stream) -> bool:
+    """判断流是否连接到交互式终端。"""
+    return hasattr(stream, 'isatty') and stream.isatty()
+
+
+def _clear_current_line(stream=sys.stdout) -> None:
+    """清除终端当前行内容（仅 TTY 生效）。"""
+    if _is_tty_stream(stream):
+        stream.write('\r\033[K')
+        stream.flush()
+
+
+def _filter_sys_log_lines(lines: List[str], include_debug: bool = True) -> List[str]:
+    """过滤系统日志行，可选排除 DEBUG 级别内容。
+
+    Parameters
+    ----------
+    lines : list of str
+        原始日志行列表。
+    include_debug : bool, optional, default True
+        为 False 时排除 ``DEBUG:`` 开头或含 ``<DEBUG>`` 的行。
+
+    Returns
+    -------
+    list of str
+        过滤后的日志行。
+    """
+    if include_debug:
+        return list(lines)
+    return [
+        line for line in lines
+        if not line.lstrip().startswith('DEBUG:') and '<DEBUG>' not in line
+    ]
+
+
+def _drain_message_queue(trader) -> List[TraderMessage]:
+    """排空 trader 消息队列并返回结构化消息列表。"""
+    return drain_trader_message_queue(trader.message_queue)
+
+
+class ModeMenuExitRequest(Exception):
+    """用户在模式选单等待期间再次按下 Ctrl+C，请求立即正常退出 Shell。"""
+    pass
+
+
+MODE_MENU_TIMEOUT = 5.0
+
+
+def _mode_menu_prompt() -> str:
+    """返回 Ctrl+C 中断后模式选单的英文提示文本。"""
+    return (
+        '\nCurrent mode interrupted. Press 1, 2, or 3 within '
+        f'{MODE_MENU_TIMEOUT:.0f} seconds (no Enter needed):\n'
+        'Press Ctrl+C again to exit immediately.\n'
+        '[1] Enter command mode\n'
+        '[2] Enter dashboard mode\n'
+        '[3] Exit and stop the trader\n'
+        'Your choice: '
+    )
+
+
+def _parse_mode_menu_choice(line: Optional[str]) -> str:
+    """解析模式选单输入，返回 ``command`` / ``dashboard`` / ``exit`` / ``resume``。"""
+    if line is None:
+        return 'resume'
+    stripped = line.strip()
+    if stripped == '1':
+        return 'command'
+    if stripped == '2':
+        return 'dashboard'
+    if stripped == '3':
+        return 'exit'
+    return 'resume'
+
+
+ERROR_RECOVERY_TIMEOUT = 5.0
+
+
+def _error_recovery_prompt() -> str:
+    """返回运行时异常恢复选单的英文提示文本。"""
+    return (
+        '\nAn unexpected error occurred. Press 1 to return to dashboard, '
+        f'3 to exit (default dashboard in {ERROR_RECOVERY_TIMEOUT:.0f}s, no Enter needed):\n'
+        'Your choice: '
+    )
+
+
+def _parse_error_recovery_choice(line: Optional[str]) -> str:
+    """解析运行时异常恢复选单输入，返回 ``dashboard`` 或 ``exit``。"""
+    if line == '3':
+        return 'exit'
+    return 'dashboard'
+
+
+def _accept_mode_menu_char(ch: str, line_parts: List[str]) -> Optional[str]:
+    """解析模式选单单字节字符，立即接受 1/2/3；回车提交缓冲区中的合法选择。
+
+    非 1/2/3 的可打印字符被忽略；缓冲区仅在回车时按合法选择提交或清空。
+
+    Parameters
+    ----------
+    ch : str
+        读取到的单个字符。
+    line_parts : list of str
+        跨多次读取累积的缓冲片段（不含已立即提交的 1/2/3）。
+
+    Returns
+    -------
+    str or None
+        已确定的选项 ``'1'`` / ``'2'`` / ``'3'``；否则 ``None`` 表示继续读取。
+    """
+    if ch in ('1', '2', '3'):
+        line_parts.clear()
+        return ch
+    if ch in ('\n', '\r'):
+        buf = ''.join(line_parts)
+        line_parts.clear()
+        if buf in ('1', '2', '3'):
+            return buf
+        return None
+    return None
+
+
+def _read_line_with_timeout_unix(timeout, input_stream, output_stream) -> Optional[str]:
+    """在 Unix 上使用 ``termios`` 原始字符模式与 ``select`` 读取选单输入，超时返回 ``None``。"""
+    import select
+    import termios
+    import tty
+
+    fd = input_stream.fileno()
+    old_settings = termios.tcgetattr(fd)
+    line_parts: List[str] = []
+    try:
+        tty.setcbreak(fd)
+        deadline = time.monotonic() + timeout
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                output_stream.write('\n')
+                output_stream.flush()
+                return None
+            ready, _, _ = select.select([input_stream], [], [], remaining)
+            if not ready:
+                output_stream.write('\n')
+                output_stream.flush()
+                return None
+            ch = input_stream.read(1)
+            if not ch:
+                output_stream.write('\n')
+                output_stream.flush()
+                return None
+            if ch == '\x03':
+                raise ModeMenuExitRequest
+            decision = _accept_mode_menu_char(ch, line_parts)
+            if decision is not None:
+                output_stream.write(decision + '\n')
+                output_stream.flush()
+                return decision
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
+
+def _read_line_with_timeout_windows(timeout, input_stream, output_stream) -> Optional[str]:
+    """在 Windows 上使用 ``msvcrt`` 轮询读取选单输入，1/2/3 立即生效，超时返回 ``None``。"""
+    import msvcrt
+
+    line_parts: List[str] = []
+    deadline = time.monotonic() + timeout
+    while True:
+        if time.monotonic() >= deadline:
+            output_stream.write('\n')
+            output_stream.flush()
+            return None
+        if msvcrt.kbhit():
+            ch = msvcrt.getwch()
+            if ch == '\x03':
+                raise ModeMenuExitRequest
+            decision = _accept_mode_menu_char(ch, line_parts)
+            if decision is not None:
+                output_stream.write(decision + '\n')
+                output_stream.flush()
+                return decision
+        else:
+            time.sleep(0.05)
+
+
+def _read_line_with_timeout(
+        prompt: str,
+        timeout: float = MODE_MENU_TIMEOUT,
+        input_stream=sys.stdin,
+        output_stream=sys.stdout,
+) -> Optional[str]:
+    """在 TTY 上带超时读取一行；非 TTY 或超时返回 ``None``。"""
+    if not _is_tty_stream(input_stream):
+        return None
+    output_stream.write(prompt)
+    output_stream.flush()
+    if sys.platform == 'win32':
+        return _read_line_with_timeout_windows(timeout, input_stream, output_stream)
+    return _read_line_with_timeout_unix(timeout, input_stream, output_stream)
 
 
 def pack_system_info(trader_info, width=80):
@@ -271,12 +506,23 @@ class TraderShell(Cmd):
     - schedule: 查看交易日程
     - help: 查看帮助信息
     - run: 手动运行交易策略，此功能仅在debug模式下可用
+    - artifacts: 列出实盘账户磁盘产物路径（别名 ls-artifacts）
+    - liveconfig: 只读展示 LiveTradeConfig 摘要（别名 live-config）
+    - tasks / task: 查看或取消 Trader 任务队列（非 broker 订单）
+    - gate: 手动触发启动门禁（别名 startup-gate）
+    - reconcile: 打印 Broker 对账快照 JSON（别名 snapshot-reconcile）
+    - rotatelogs: 手动轮换 trade/risk 日志（别名 rotate-logs）
+    - broker: Broker 会话子命令 status/connect/disconnect
+    - sync: 远端状态同步预留（stub，别名 pull-state，S2.1-b）
 
     qteasy Shell的命令支持参数解析，用户可以通过命令行参数来调整命令的行为，要查看所有命令的帮助，
     可以使用命令 "help" 或者 "?"，要查看某个命令的帮助，可以使用命令 "help <command>" 或者
     命令的-h参数，如<command -h>。
 
-    在Shell运行过程中按下 ctrl + c 进入状态选单，用户可以选择进入dashboard模式或者退出shell
+    在 Shell 运行过程中按下 Ctrl+C 进入模式选单：选项 1 进入 command 模式，选项 2 进入
+    dashboard 模式，选项 3 停止 trader 并退出 Shell；5 秒内无有效输入则自动恢复中断前的模式。
+    在模式选单等待期间再次按下 Ctrl+C 将立即按与选项 3 相同的正常关停路径退出 Shell，
+    不会重新进入选单或异常中断。
 
     """
     intro = 'Welcome to the trader shell interactive mode. Type help or ? to list commands.\n' \
@@ -349,10 +595,13 @@ class TraderShell(Cmd):
                                   'symbol like 000651 is accepted.'),
         'orders':     dict(prog='orders', description='Get account orders',
                            usage='usage: orders [SYMBOL [SYMBOL ...]] [-h] '
-                                 '[--status {filled,f,canceled,c,partial-filled,p}] '
+                                 '[--status {submitted,s,filled,f,canceled,c,partial-filled,p,rejected,r}] [--active] '
                                  '[--time {today,t,yesterday,y,3day,3,week,w,month,m,all,a}] '
                                  '[--type {buy,sell,b,s,all,a}] '
                                  '[--side {long,short,l,s,all,a}]'),
+        'cancel':     dict(prog='cancel', description='Cancel an active order',
+                           usage='cancel ORDER_ID [-h]',
+                           epilog='Cancel one submitted/partial-filled order by order id.'),
         'change':     dict(prog='change', description='Change account cash and positions',
                            usage='change [SYMBOL] [-h] [--amount AMOUNT] [--price PRICE] '
                                  '[--side {l,long,s,short}] [--cash CASH]',
@@ -375,9 +624,30 @@ class TraderShell(Cmd):
                                  '[--coverage -c COVERAGE] [--channel -ch CHANNEL]'),
         'run':        dict(prog='', description='Run strategies manually',
                            usage='run [STRATEGY [STRATEGY ...]] [-h] '
-                                 '[--task {process_result,pre_open,open_market,'
-                                 'close_market,post_close,refill}] '
+                                 f'[--task {{{",".join(DEBUG_RUN_TASK_CHOICES)}}}] '
                                  '[--args [ARGS [ARGS ...]]]'),
+        'artifacts':  dict(prog='artifacts', description='List live-trade artifact paths (implemented)',
+                           usage='artifacts [-h]'),
+        'liveconfig': dict(prog='liveconfig', description='Show LiveTradeConfig summary (implemented)',
+                           usage='liveconfig [-h] [--detail]'),
+        'tasks':      dict(prog='tasks', description='List Trader task queue entries (implemented)',
+                           usage='tasks [-h] [--status STATUS] [--name NAME]'),
+        'task':       dict(prog='task', description='Show or cancel a Trader queue task (implemented)',
+                           usage='task TASK_ID [-h] [--cancel]'),
+        'gate':       dict(prog='gate', description='Run startup gate manually for smoke/debug (implemented)',
+                           usage='gate [-h]'),
+        'reconcile':  dict(prog='reconcile',
+                           description='Print broker reconcile snapshot JSON (implemented)',
+                           usage='reconcile [-h]'),
+        'rotatelogs': dict(prog='rotatelogs',
+                           description='Rotate trade/risk logs under QT_TRADE_LOG_PATH (implemented)',
+                           usage='rotatelogs [-h] [--days DAYS]'),
+        'broker':     dict(prog='broker',
+                           description='Run broker session subcommands (implemented)',
+                           usage=f'broker {{{",".join(BROKER_SUBCOMMANDS)}}} [-h]'),
+        'sync':       dict(prog='sync',
+                           description='Pull broker remote state (stub, reserved for QMT S2.1-b)',
+                           usage='sync [-h]'),
     }
 
     command_arguments = {
@@ -416,9 +686,11 @@ class TraderShell(Cmd):
         'history':    [('symbol',)],
         'orders':     [('symbols',),
                        ('--status', '-s'),
+                       ('--active', '-a'),
                        ('--time', '-t'),
                        ('--type', '-y'),
                        ('--side', '-d')],
+        'cancel':     [('order_id',)],
         'change':     [('symbol',),
                        ('--amount', '-a'),
                        ('--price', '-p'),
@@ -438,6 +710,17 @@ class TraderShell(Cmd):
         'run':        [('strategy',),
                        ('--task', '-t'),
                        ('--args', '-a')],
+        'artifacts':  [],
+        'liveconfig': [('--detail', '-d')],
+        'tasks':      [('--status', '-s'),
+                       ('--name', '-n')],
+        'task':       [('task_id',),
+                       ('--cancel', '-c')],
+        'gate':       [],
+        'reconcile':  [],
+        'rotatelogs': [('--days', '-d')],
+        'broker':     [('action',)],
+        'sync':       [],
     }
 
     command_arg_properties = {
@@ -481,7 +764,7 @@ class TraderShell(Cmd):
                        {'action':  'store',
                         'type':    float,
                         'default': 0.0,  # default to market price
-                        'help':    'price to buy at'},
+                        'help':    'limit price to buy at; use 0 (default) for market order'},
                        {'action':  'store',
                         'default': 'long',
                         'choices': ['long', 'short'],
@@ -496,7 +779,7 @@ class TraderShell(Cmd):
                        {'action':  'store',
                         'type':    float,
                         'default': 0.0,  # default to market price
-                        'help':    'price to sell at'},
+                        'help':    'limit price to sell at; use 0 (default) for market order'},
                        {'action':  'store',
                         'default': 'long',
                         'choices': ['long', 'short'],
@@ -530,8 +813,11 @@ class TraderShell(Cmd):
                         'help':   'stock symbol to show orders for'},
                        {'action':  'store',
                         'default': 'all',
-                        'choices': ['filled', 'f', 'canceled', 'c', 'partial-filled', 'p'],
+                        'choices': ['submitted', 's', 'filled', 'f', 'canceled', 'c', 'partial-filled', 'p',
+                                    'rejected', 'r'],
                         'help':    'order status to show'},
+                       {'action': 'store_true',
+                        'help':   'show active orders only (submitted + partial-filled)'},
                        {'action':  'store',
                         'default': 'today',
                         'choices': ['today', 't', 'yesterday', 'y', '3day', '3', 'week', 'w',
@@ -545,6 +831,9 @@ class TraderShell(Cmd):
                         'default': 'all',
                         'choices': ['long', 'short', 'l', 's', 'all', 'a'],
                         'help':    'order side to show'}],
+        'cancel':     [{'action': 'store',
+                        'type':   int,
+                        'help':   'order id to cancel'}],
         'change':     [{'action':  'store',
                         'nargs':   '?',  # one or zero (default value) argument is allowed
                         'default': '',
@@ -602,12 +891,34 @@ class TraderShell(Cmd):
                         'help':   'strategies to run'},
                        {'action':  'store',
                         'default': '',
-                        'choices': ['process_result', 'pre_open',
-                                    'open_market', 'close_market', 'post_close', 'refill'],
-                        'help':    'task to run'},
+                        'choices': list(DEBUG_RUN_TASK_CHOICES),
+                        'help':    'task to run (DEBUG mode only)'},
                        {'action': 'append',  # TODO: for python version >= 3.8, use action='extend' instead
                         'nargs':  '*',
                         'help':   'arguments for the task to run'}],
+        'artifacts':  [],
+        'liveconfig': [{'action': 'store_true',
+                        'help':   'include extended live-trade fields beyond summary dict'}],
+        'tasks':      [{'action':  'store',
+                        'default': '',
+                        'help':    'filter by task status (e.g. queued, running, done)'},
+                       {'action':  'store',
+                        'default': '',
+                        'help':    'filter by task name (e.g. refill, run_strategy)'}],
+        'task':       [{'action':  'store',
+                        'help':    'task id to show or cancel'},
+                       {'action': 'store_true',
+                        'help':   'cancel Trader queue task (not broker order; use cancel ORDER_ID for orders)'}],
+        'gate':       [],
+        'reconcile':  [],
+        'rotatelogs': [{'action':  'store',
+                        'type':    int,
+                        'default': None,
+                        'help':    'keep days override; default from trade_log_keep_days'}],
+        'broker':     [{'action':  'store',
+                        'choices': list(BROKER_SUBCOMMANDS),
+                        'help':    'broker subcommand (Simulator connect is session flag only)'}],
+        'sync':       [],
     }
 
     def __init__(self, trader):
@@ -620,9 +931,71 @@ class TraderShell(Cmd):
         self._watched_price_string = ' == Realtime prices can be displayed here. ' \
                                'Use "watch" command to add stocks to watch list. =='  # watched prices string
 
+        # dashboard 模式下上一行是否为 ``\\r`` 状态行（打印普通日志前需清除以免残留）
+        self._dashboard_on_status_line: bool = False
+        self._watch_price_worker: Optional[Thread] = None
+
         self.argparsers = {}
 
         self.init_arg_parsers()
+
+    def _print_log_line(self, text: str) -> None:
+        """在 dashboard 中打印一行日志文本；若当前仍为状态行则先清除该行。
+
+        Parameters
+        ----------
+        text : str
+            已格式化的一行内容（不含末尾换行亦可）。
+
+        Returns
+        -------
+        None
+        """
+        if self._dashboard_on_status_line:
+            _clear_current_line()
+        rich.print(text)
+        self._dashboard_on_status_line = False
+
+    def _print_status_line(self, text: Text) -> None:
+        """在终端当前行输出状态 ``Text``，用空格填充至终端宽度并以 ``\\r`` 结尾。
+
+        Parameters
+        ----------
+        text : rich.text.Text
+            状态行内容（可含样式）。
+
+        Returns
+        -------
+        None
+        """
+        width = _terminal_width()
+        line = text.copy()
+        if len(line.plain) > width:
+            line.truncate(width, overflow='ellipsis')
+        pad_len = max(0, width - len(line.plain))
+        padded = line + (' ' * pad_len) if pad_len else line
+        rich.print(padded, end='\r')
+        self._dashboard_on_status_line = True
+
+    def _replay_dashboard_logs(self, rewind: int) -> None:
+        """排空消息队列并按当前 ``debug`` 设置回放系统日志尾部若干行。
+
+        ``send_message`` 会先写入系统日志再放入队列；此处排空队列不做打印，
+        仅回放日志尾部，避免与 ``read_sys_log`` 同一内容重复输出。
+
+        Parameters
+        ----------
+        rewind : int
+            系统日志回卷行数，与 ``dashboard -r`` 一致。
+
+        Returns
+        -------
+        None
+        """
+        _drain_message_queue(self.trader)
+        lines = self.trader.read_sys_log(row_count=rewind, include_debug=self.debug)
+        for raw in lines:
+            self._print_log_line(raw.rstrip('\n'))
 
     @property
     def trader(self):
@@ -643,6 +1016,18 @@ class TraderShell(Cmd):
     def toggle_debug(self):
         """ toggle debug value"""
         self.trader.debug = not self.trader.debug
+
+    def _maybe_refresh_watched_prices(self) -> None:
+        """在 dashboard 模式下异步刷新监视价格，避免重叠 worker 线程。"""
+        if not self.trader.is_market_open:
+            self.format_watched_prices()
+            return
+        worker = self._watch_price_worker
+        if worker is not None and worker.is_alive():
+            return
+        self._watch_price_worker = Thread(target=self.trader.update_watched_prices, daemon=True)
+        self._watch_price_worker.start()
+        self.format_watched_prices()
 
     def format_watched_prices(self):
         """ 根据watch list返回清单中股票的信息：代码、名称、当前价格、涨跌幅
@@ -685,6 +1070,7 @@ class TraderShell(Cmd):
                              *,
                              symbols: list[str] = None,
                              status: str = None,
+                             active_only: bool = False,
                              order_time: str = None,
                              order_type: str = None,
                              side: str = None,
@@ -742,13 +1128,19 @@ class TraderShell(Cmd):
         order_details = order_details[(order_details['submitted_time'] >= start) &
                                       (order_details['submitted_time'] <= end)]
 
-        # select orders by status arguments like 'filled', 'canceled', 'partial-filled'
-        if status in ['filled', 'f']:
+        # select orders by status arguments like 'submitted', 'filled', 'canceled', 'partial-filled'
+        if active_only:
+            order_details = order_details[order_details['status'].isin(['submitted', 'partial-filled'])]
+        elif status in ['submitted', 's']:
+            order_details = order_details[order_details['status'] == 'submitted']
+        elif status in ['filled', 'f']:
             order_details = order_details[order_details['status'] == 'filled']
         elif status in ['canceled', 'c']:
             order_details = order_details[order_details['status'] == 'canceled']
         elif status in ['partial-filled', 'p']:
             order_details = order_details[order_details['status'] == 'partial-filled']
+        elif status in ['rejected', 'r']:
+            order_details = order_details[order_details['status'] == 'rejected']
         else:  # default to show all statuses
             pass
 
@@ -842,6 +1234,11 @@ class TraderShell(Cmd):
             return None
 
         return args
+
+    def _print_json(self, payload: dict, *, indent: int = 2) -> None:
+        """将字典以 JSON 格式打印到 stdout（用户可见英文键值）。"""
+        import json
+        print(json.dumps(payload, indent=indent, ensure_ascii=False, default=str))
 
     def check_buy_sell_args(self, args, type) -> bool:
         """ 检查买卖参数是否合法
@@ -1036,29 +1433,16 @@ class TraderShell(Cmd):
     def _request_shutdown(self) -> None:
         """请求停止 Trader/Broker（幂等），供 CLI 退出路径复用。"""
         if not self._shutdown_requested:
-            print(f'canceling all unfinished orders')
-            print(f'cancelling all pending tasks: {self.trader.task_daily_schedule}')
-            self.trader.add_task('post_close')
-            print(f'stopping trader...')
-            self.trader.add_task('stop')
+            print('requesting trader runtime shutdown...')
+            self.trader.stop(wait=False, include_post_close=True)
             self._shutdown_requested = True
         self._status = 'stopped'
 
     def _wait_for_shutdown(self, timeout: float = 60.0) -> None:
         """等待 Trader 停机并收敛 Broker 在途订单线程。"""
-        start_time = time.time()
-        check_interval = 0.05
-        while self.trader.status != 'stopped' and (time.time() - start_time) < timeout:
-            time.sleep(check_interval)
-
-        if self.trader.status != 'stopped':
-            print('Warning: trader stop timeout reached, continuing shutdown.')
-            return
-
-        remaining = max(0.0, timeout - (time.time() - start_time))
-        broker_idle = self.trader.broker.wait_until_idle(timeout=remaining)
-        if not broker_idle:
-            print('Warning: broker still has in-flight tasks during shutdown timeout.')
+        self.trader.join(timeout=timeout)
+        if self.trader.is_alive():
+            print('Warning: trader runtime stop timeout reached, continuing shutdown.')
 
     def do_exit(self, arg):
         """usage: exit [-h]
@@ -1312,8 +1696,8 @@ class TraderShell(Cmd):
           --force, -f           force buy regardless of current prices (NOT IMPLEMENTED YET)
 
         the order will be submitted to broker and will be executed according to broker
-        rules, Currently only market price orders can be submitted, and the orders might
-        not be executed immediately if market is not open
+        rules. If --price/-p is provided with a positive value, a limit order is submitted.
+        If --price is omitted or set to 0, a market order is submitted using latest price.
 
         Examples:
         ---------
@@ -1327,6 +1711,7 @@ class TraderShell(Cmd):
         if not args:
             return False
 
+        user_set_limit_price = args.price != 0.0
         if not self.check_buy_sell_args(args, 'buy'):
             return False
 
@@ -1341,10 +1726,9 @@ class TraderShell(Cmd):
                 price=price,
                 position=position,
                 direction='buy',
-                order_type='market',
+                order_type='limit' if user_set_limit_price else 'market',
         )
         if trade_order:
-            self.trader.broker.order_queue.put(trade_order)
             order_id = trade_order['order_id']
             print(f'Order <{order_id}> has been submitted to broker: '
                   f'{trade_order["direction"]} {trade_order["qty"]:.1f} of {symbol} '
@@ -1357,7 +1741,11 @@ class TraderShell(Cmd):
                         f'rule_id={decision.rule_id!r}, reason={decision.reason!r}'
                 )
             else:
-                print('Order submission failed.')
+                reason = self.trader.last_submit_reject_reason
+                if reason:
+                    print(f'Order submission failed: {reason}')
+                else:
+                    print('Order submission failed.')
 
         if not self.trader.is_market_open:
             print(f'Market is not open, order might not be executed immediately')
@@ -1380,8 +1768,8 @@ class TraderShell(Cmd):
           --force, -f           force sell regardless of current prices (NOT IMPLEMENTED YET)
 
         the order will be submitted to broker and will be executed according to broker
-        rules, Currently only market price orders can be submitted, and the orders might
-        not be executed immediately if market is not open
+        rules. If --price/-p is provided with a positive value, a limit order is submitted.
+        If --price is omitted or set to 0, a market order is submitted using latest price.
 
         Examples:
         ---------
@@ -1395,6 +1783,7 @@ class TraderShell(Cmd):
         if not args:
             return False
 
+        user_set_limit_price = args.price != 0.0
         if not self.check_buy_sell_args(args, 'sell'):
             return False
 
@@ -1409,11 +1798,10 @@ class TraderShell(Cmd):
                 price=price,
                 position=position,
                 direction='sell',
-                order_type='market',
+                order_type='limit' if user_set_limit_price else 'market',
         )
 
         if trade_order:
-            self.trader.broker.order_queue.put(trade_order)
             order_id = trade_order['order_id']
             print(f'Order <{order_id}> has been submitted to broker: '
                   f'{trade_order["direction"]} {trade_order["qty"]:.1f} of {symbol} '
@@ -1429,7 +1817,11 @@ class TraderShell(Cmd):
                         f'rule_id={decision.rule_id!r}, reason={decision.reason!r}'
                 )
             else:
-                print('Order submission failed.')
+                reason = self.trader.last_submit_reject_reason
+                if reason:
+                    print(f'Order submission failed: {reason}')
+                else:
+                    print('Order submission failed.')
 
     def do_positions(self, arg):
         """usage: positions [-h]
@@ -1834,6 +2226,7 @@ class TraderShell(Cmd):
 
         symbols = [symbol for symbol_list in args.symbols for symbol in symbol_list] if args.symbols else []
         status = args.status
+        active_only = args.active
         order_time = args.time
         order_type = args.type
         side = args.side
@@ -1846,6 +2239,7 @@ class TraderShell(Cmd):
                 order_details=order_details,
                 symbols=symbols,
                 status=status,
+                active_only=active_only,
                 order_time=order_time,
                 order_type=order_type,
                 side=side,
@@ -1857,35 +2251,58 @@ class TraderShell(Cmd):
             symbols = order_details['symbol'].tolist()
             names = get_symbol_names(datasource=self.trader.datasource, symbols=symbols)
             order_details['name'] = names
-            # if NaT in order_details, then strftime will not work, will print out original form of order_details
-            if np.any(pd.isna(order_details.execution_time)) or np.any(pd.isna(order_details.submitted_time)):
-                print(order_details)
-            else:
-                rich.print(order_details.to_string(
-                        index=False,
-                        columns=['execution_time', 'symbol', 'position', 'direction', 'qty', 'price_quoted',
-                                 'submitted_time', 'status', 'price_filled', 'filled_qty', 'canceled_qty',
-                                 'delivery_status', 'name'],
-                        header=['time', 'symbol', 'pos', 'buy/sell', 'qty', 'price',
-                                'submitted', 'status', 'fill_price', 'fill_qty', 'canceled',
-                                'delivery', 'name'],
-                        formatters={'name':           '{:s}'.format,
-                                    'qty':            '{:,.2f}'.format,
-                                    'price_quoted':   '¥{:,.2f}'.format,
-                                    'price_filled':   '¥{:,.2f}'.format,
-                                    'filled_qty':     '{:,.2f}'.format,
-                                    'canceled_qty':   '{:,.2f}'.format,
-                                    'execution_time': lambda x: "{:%b%d %H:%M:%S}".format(pd.to_datetime(x)),
-                                    'submitted_time': lambda x: "{:%b%d %H:%M:%S}".format(pd.to_datetime(x))
-                                    },
-                        col_space={
-                            'price_quoted': 10,
-                            'price_filled': 10,
-                            'filled_qty':   10,
-                            'canceled_qty': 10,
-                        },
-                        justify='right',
-                ))
+            display_df = order_details.copy()
+            for col in ['price_filled', 'filled_qty', 'canceled_qty', 'delivery_status']:
+                display_df[col] = display_df[col].apply(lambda x: '--' if pd.isna(x) else x)
+            rich.print(display_df.to_string(
+                    index=False,
+                    columns=['execution_time', 'symbol', 'position', 'direction', 'qty', 'price_quoted',
+                             'submitted_time', 'status', 'price_filled', 'filled_qty', 'canceled_qty',
+                             'delivery_status', 'name'],
+                    header=['time', 'symbol', 'pos', 'buy/sell', 'qty', 'price',
+                            'submitted', 'status', 'fill_price', 'fill_qty', 'canceled',
+                            'delivery', 'name'],
+                    formatters={'name':           '{:s}'.format,
+                                'qty':            '{:,.2f}'.format,
+                                'price_quoted':   '¥{:,.2f}'.format,
+                                'price_filled':   lambda x: x if x == '--' else f'¥{float(x):,.2f}',
+                                'filled_qty':     lambda x: x if x == '--' else f'{float(x):,.2f}',
+                                'canceled_qty':   lambda x: x if x == '--' else f'{float(x):,.2f}',
+                                'execution_time': lambda x: '--' if pd.isna(x) else "{:%b%d %H:%M:%S}".format(
+                                        pd.to_datetime(x)),
+                                'submitted_time': lambda x: '--' if pd.isna(x) else "{:%b%d %H:%M:%S}".format(
+                                        pd.to_datetime(x))
+                                },
+                    col_space={
+                        'price_quoted': 10,
+                        'price_filled': 10,
+                        'filled_qty':   10,
+                        'canceled_qty': 10,
+                    },
+                    justify='right',
+            ))
+
+    def do_cancel(self, arg):
+        """usage: cancel ORDER_ID [-h]
+
+        Cancel one active order by order id.
+        """
+
+        args = self.parse_args('cancel', arg)
+        if not args:
+            return False
+
+        order_id = int(args.order_id)
+        try:
+            cancel_order(
+                    order_id=order_id,
+                    data_source=self.trader.datasource,
+                    account_id=self.trader.account_id,
+            )
+            print(f'Order {order_id} has been canceled.')
+        except Exception as e:
+            print(f'Order cancellation failed: {e}')
+            return False
 
     def do_change(self, arg):
         """usage: change [SYMBOL] [-h] [--amount AMOUNT] [--price PRICE] [--side {l,long,s,short}]
@@ -2025,12 +2442,12 @@ class TraderShell(Cmd):
         os.system('cls' if os.name == 'nt' else 'clear')
 
         self._status = 'dashboard'
+        self._dashboard_on_status_line = False
         print('\nWelcome to TraderShell! currently in dashboard mode, live status will be displayed here.\n'
-              'You can not input commands in this mode, if you want to enter interactive mode, please'
-              'press "Ctrl+C" to exit dashboard mode and select from prompted options.\n')
-        # read all system logs and display them on the screen
-        lines = self.trader.read_sys_log(row_count=args.rewind)
-        rich.print(''.join(lines))
+              'You can not input commands in this mode, if you want to enter interactive mode, please '
+              'press "Ctrl+C" to exit dashboard mode and select from prompted options.\n'
+              'While the mode menu is waiting, press Ctrl+C again to exit immediately with normal shutdown.\n')
+        self._replay_dashboard_logs(args.rewind)
         return True
 
     def do_strategies(self, arg: str):
@@ -2203,19 +2620,20 @@ class TraderShell(Cmd):
         return False
 
     def do_run(self, arg):
-        """usage: run [STRATEGY [STRATEGY ...]] [-h]
-                [--task {process_result,pre_open,post_close,refill}]
+        f"""usage: run [STRATEGY [STRATEGY ...]] [-h]
+                [--task {{{",".join(DEBUG_RUN_TASK_CHOICES)}}}]
                 [--args [ARGS [ARGS ...]]]
 
-        Run strategies or tasks manually. If run refill task, only one table can be refilled at a time.
+        Run strategies or tasks manually (DEBUG mode only).
+        If run refill task, only one table can be refilled at a time.
 
         positional arguments:
           strategy              strategies to run
 
         optional arguments:
           -h, --help            show this help message and exit
-          --task {process_result,pre_open,post_close,refill},
-          -t {process_result,pre_open,post_close,refill}
+          --task {{{",".join(DEBUG_RUN_TASK_CHOICES)}}},
+          -t {{{",".join(DEBUG_RUN_TASK_CHOICES)}}}
                                 task to run
           --args [ARGS [ARGS ...]], -a [ARGS [ARGS ...]]
                                 arguments for the task to run
@@ -2226,10 +2644,10 @@ class TraderShell(Cmd):
         (QTEASY): run stg1
         to run strategy "stg1" and "stg2":
         (QTEASY): run stg1 stg2
-        to run task "task1":
-        (QTEASY): run --task task1
-        to run task "task1" with arguments "arg1" and "arg2":
-        (QTEASY): run --task task1 --args arg1 arg2
+        to run task pre_open:
+        (QTEASY): run --task pre_open
+        to run refill with table argument:
+        (QTEASY): run --task refill --args stock_daily
 
         """
 
@@ -2273,7 +2691,7 @@ class TraderShell(Cmd):
             self.trader.status = current_trader_status
             self.trader.broker.status = current_broker_status
         else:  # run tasks
-            if task not in ['process_result', 'pre_open', 'post_close', 'refill']:
+            if task not in DEBUG_RUN_TASK_CHOICES:
                 print(f'Invalid task name: {task}, please input a valid task name.')
                 return False
             try:
@@ -2284,6 +2702,263 @@ class TraderShell(Cmd):
                 print(f'Error in running task: {e}')
                 print(traceback.format_exc())
                 return False
+
+    def do_artifacts(self, arg):
+        """usage: artifacts [-h]
+
+        List live-trade artifact paths for the current account (implemented).
+        Alias: ls-artifacts
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('artifacts', arg)
+        if not args:
+            return False
+
+        import qteasy as qt
+
+        try:
+            arts = qt.list_live_trade_artifacts(self.trader.account_id, self.trader.datasource)
+        except KeyError as exc:
+            print(f'Account not found: {exc}')
+            return False
+
+        for key in ('sys_log', 'trade_log', 'break_point', 'risk_log'):
+            print(f'{key}: {arts[key]}')
+        return None
+
+    def do_liveconfig(self, arg):
+        """usage: liveconfig [-h] [--detail]
+
+        Show read-only LiveTradeConfig summary derived from current trader config (implemented).
+        Alias: live-config
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          --detail, -d          include extended live-trade fields
+        """
+
+        args = self.parse_args('liveconfig', arg)
+        if not args:
+            return False
+
+        from qteasy.live_config import build_live_trade_config
+
+        cfg = build_live_trade_config(self.trader.get_config())
+        summary = dict(cfg.to_summary_dict())
+        if args.detail:
+            summary.update({
+                'live_trade_startup_gate_mode': cfg.live_trade_startup_gate_mode,
+                'live_trade_split_strategy_prepare': cfg.live_trade_split_strategy_prepare,
+                'live_trade_strategy_snapshot_max_age_seconds': cfg.live_trade_strategy_snapshot_max_age_seconds,
+                'live_trade_prepare_lead_seconds': cfg.live_trade_prepare_lead_seconds,
+                'live_trade_data_refill_channel': cfg.live_trade_data_refill_channel,
+                'live_trade_data_refill_batch_size': cfg.live_trade_data_refill_batch_size,
+                'live_trade_data_refill_batch_interval': cfg.live_trade_data_refill_batch_interval,
+            })
+        self._print_json(summary)
+        return None
+
+    def do_tasks(self, arg):
+        """usage: tasks [-h] [--status STATUS] [--name NAME]
+
+        List Trader task queue entries (implemented). Does not list broker orders.
+        For dead-letter details see TRACE events.
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          --status, -s STATUS   filter by task status
+          --name, -n NAME       filter by task name
+        """
+
+        args = self.parse_args('tasks', arg)
+        if not args:
+            return False
+
+        status = args.status or None
+        name = args.name or None
+        tasks = self.trader.list_tasks(status=status, name=name)
+        print(f'Trader tasks: {len(tasks)}')
+        for task_spec in tasks:
+            print(
+                f'  {task_spec.task_id}  name={task_spec.name}  status={task_spec.status}  '
+                f'retry={task_spec.retry_count}/{task_spec.max_retries}'
+            )
+        return None
+
+    def do_task(self, arg):
+        """usage: task TASK_ID [-h] [--cancel]
+
+        Show or cancel one Trader queue task (implemented). Use cancel ORDER_ID for broker orders.
+
+        positional arguments:
+          task_id               task id to show or cancel
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          --cancel, -c          cancel the queue task instead of showing details
+        """
+
+        args = self.parse_args('task', arg)
+        if not args:
+            return False
+
+        task_id = args.task_id
+        if not task_id:
+            print('Please provide a task id.')
+            return False
+
+        if args.cancel:
+            if self.trader.cancel_task(task_id):
+                print(f'Canceled Trader queue task: {task_id}')
+            else:
+                print(f'Task not found: {task_id}')
+            return None
+
+        task_spec = self.trader.get_task(task_id)
+        if task_spec is None:
+            print(f'Task not found: {task_id}')
+            return False
+
+        self._print_json({
+            'task_id': task_spec.task_id,
+            'name': task_spec.name,
+            'status': task_spec.status,
+            'args': list(task_spec.args),
+            'retry_count': task_spec.retry_count,
+            'max_retries': task_spec.max_retries,
+            'canceled': task_spec.canceled,
+            'reentry_policy': task_spec.reentry_policy,
+            'last_error': task_spec.last_error,
+        })
+        return None
+
+    def do_gate(self, arg):
+        """usage: gate [-h]
+
+        Manually run startup gate and print whether trading-side tasks are allowed (implemented).
+        Alias: startup-gate
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('gate', arg)
+        if not args:
+            return False
+
+        import qteasy as qt
+
+        allowed = self.trader.run_startup_gate()
+        mode = str(qt.QT_CONFIG.get('live_trade_startup_gate_mode', 'off'))
+        print(f'Startup gate result: allowed={allowed} (mode={mode})')
+        return None
+
+    def do_reconcile(self, arg):
+        """usage: reconcile [-h]
+
+        Print broker reconcile snapshot as JSON (implemented).
+        On Simulator, remote_* fields may be empty placeholders until QMT (S2.1) is connected.
+        Alias: snapshot-reconcile
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('reconcile', arg)
+        if not args:
+            return False
+
+        snapshot = self.trader.collect_broker_reconcile_snapshot()
+        self._print_json(snapshot)
+        return None
+
+    def do_rotatelogs(self, arg):
+        """usage: rotatelogs [-h] [--days DAYS]
+
+        Rotate trade/risk logs under current QT_TRADE_LOG_PATH (implemented).
+        Alias: rotate-logs
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          --days, -d DAYS       keep-days override; default from trade_log_keep_days
+        """
+
+        args = self.parse_args('rotatelogs', arg)
+        if not args:
+            return False
+
+        import qteasy as qt
+
+        if args.days is None:
+            keep_days = qt.QT_CONFIG.get('trade_log_keep_days', 3)
+        else:
+            keep_days = args.days
+
+        if keep_days is None or (isinstance(keep_days, int) and keep_days <= 0):
+            print('Rotation skipped (keep_days disabled)')
+            return None
+
+        log_path = qt.QT_TRADE_LOG_PATH
+        qt.rotate_trade_logs(days=args.days)
+        print(f'Trade log rotation completed (keep_days={keep_days}, path={log_path})')
+        return None
+
+    def do_broker(self, arg):
+        """usage: broker {status,connect,disconnect} [-h]
+
+        Run broker session subcommands (implemented).
+        On Simulator, connect/disconnect only toggles adapter session state.
+
+        positional arguments:
+          {status,connect,disconnect}
+                                broker subcommand
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('broker', arg)
+        if not args:
+            return False
+
+        if not args.action:
+            print('Please provide a broker subcommand: status, connect, or disconnect.')
+            return False
+
+        broker = self.trader.broker
+        action = args.action
+        if action == 'status':
+            print(
+                f'broker_name={broker.broker_name} status={broker.status} '
+                f'is_connected={broker.is_connected} is_registered={broker.is_registered}'
+            )
+        elif action == 'connect':
+            broker.connect()
+            print('Broker connected.')
+        elif action == 'disconnect':
+            broker.disconnect()
+            print('Broker disconnected.')
+        return None
+
+    def do_sync(self, arg):
+        """usage: sync [-h]
+
+        Pull broker remote state into local ledger (stub, reserved for QMT S2.1-b).
+        Alias: pull-state
+
+        optional arguments:
+          -h, --help            show this help message and exit
+        """
+
+        args = self.parse_args('sync', arg)
+        if not args:
+            return False
+
+        print('[NOT_IMPLEMENTED] sync_from_broker is reserved for QMT broker integration (S2.1-b).')
+        return False
 
     # ----- overridden methods -----
     def precmd(self, line: str) -> str:
@@ -2296,14 +2971,84 @@ class TraderShell(Cmd):
         line = line.strip()
         line = line.replace(',', ' ')
         line = ' '.join(line.split())
+        parts = line.split(' ', 1)
+        if parts and parts[0] in CLI_COMMAND_ALIASES:
+            alias_cmd = CLI_COMMAND_ALIASES[parts[0]]
+            line = alias_cmd + (' ' + parts[1] if len(parts) > 1 else '')
         return line
 
-    def run(self):
-        from threading import Thread
+    def _handle_mode_interrupt(self) -> bool:
+        """处理 Ctrl+C 模式选单；返回 ``False`` 时主循环应退出。
 
+        Returns
+        -------
+        bool
+            为 ``False`` 表示用户选择退出 Shell。
+        """
+        previous_mode = self._status
+        if self._dashboard_on_status_line:
+            _clear_current_line()
+            self._dashboard_on_status_line = False
+        try:
+            choice = _read_line_with_timeout(_mode_menu_prompt(), MODE_MENU_TIMEOUT)
+        except ModeMenuExitRequest:
+            print('Interrupted again; shutting down trader...\n')
+            return False
+        except KeyboardInterrupt:
+            print('Interrupted again; shutting down trader...\n')
+            return False
+        action = _parse_mode_menu_choice(choice)
+        if action == 'resume':
+            if choice is None:
+                print('No input received; resuming previous mode.\n')
+            else:
+                print('Invalid choice; resuming previous mode.\n')
+            self._status = previous_mode
+        elif action == 'command':
+            self._status = 'command'
+        elif action == 'dashboard':
+            self.do_dashboard('')
+        elif action == 'exit':
+            return False
+        return True
+
+    def _handle_runtime_error(self, exc: Exception) -> bool:
+        """处理主循环未捕获异常；返回 ``False`` 时 Shell 应退出。
+
+        Parameters
+        ----------
+        exc : Exception
+            主循环中捕获的异常。
+
+        Returns
+        -------
+        bool
+            为 ``False`` 表示用户选择退出 Shell。
+        """
+        if self._dashboard_on_status_line:
+            _clear_current_line()
+            self._dashboard_on_status_line = False
+        self._print_log_line(f'Unexpected Error: {exc}')
+        if self.trader.debug:
+            traceback.print_exc()
+        try:
+            choice = _read_line_with_timeout(_error_recovery_prompt(), ERROR_RECOVERY_TIMEOUT)
+        except ModeMenuExitRequest:
+            print('Interrupted again; shutting down trader...\n')
+            return False
+        except KeyboardInterrupt:
+            print('Interrupted again; shutting down trader...\n')
+            return False
+        if _parse_error_recovery_choice(choice) == 'exit':
+            return False
+        print('Returning to dashboard mode.\n')
+        self._status = 'dashboard'
+        self._dashboard_on_status_line = False
+        return True
+
+    def run(self):
         self.do_dashboard('')
-        Thread(target=self.trader.run).start()
-        Thread(target=self.trader.broker.run).start()
+        self.trader.start()
 
         live_price_refresh_interval = 0.05
         live_price_refresh_timer = 0
@@ -2317,21 +3062,20 @@ class TraderShell(Cmd):
                     break
                 if self.status == 'dashboard':
                     # check trader message queue and display messages
-                    text_width = int(shutil.get_terminal_size().columns)
+                    text_width = _terminal_width()
                     if not self._trader.message_queue.empty():
-                        message = self._trader.message_queue.get()
+                        msg = coerce_trader_message(self._trader.message_queue.get())
 
                         # adjust message length to terminal width
-                        message = self.trader.add_message_prefix(message, self.debug)
+                        message = self.trader.add_message_prefix(msg.text, msg.debug)
                         message = adjust_string_length(message, text_width - 2, format_tags=True)
-                        rich.print(message)
+                        self._print_log_line(message)
                     else:
                         # 如果没有消息，原位显示倒计时/实时价格
                         next_task = self.trader.next_task
                         count_down = self.trader.count_down_to_next_task
                         count_down_string = sec_to_duration(count_down, estimation=True)
-                        message = ''
-                        message = self.trader.add_message_prefix(message, self.debug)
+                        message = self.trader.add_message_prefix('', debug=False)
                         # print(f'next task: {next_task}')
                         next_task_string = next_task[1] if next_task else 'None'
                         message += f'{next_task_string}'
@@ -2341,20 +3085,12 @@ class TraderShell(Cmd):
                         else:
                             message.append(f' in {count_down_string}', style='bold red')
                         message = message + ' ' + self._watched_price_string
-                        message.truncate(text_width, overflow='ellipsis')
-                        # 倒计时信息覆盖原有信息
-                        rich.print(message, end='\r')
+                        self._print_status_line(message)
 
                     # check if live price refresh timer is up, if yes, refresh live prices
                     live_price_refresh_timer += live_price_refresh_interval
                     if live_price_refresh_timer > watched_price_refresh_interval:
-                        # 在一个新的进程中读取实时价格, 收盘后不获取
-                        if self.trader.is_market_open:
-                            from threading import Thread
-                            t = Thread(target=self.trader.update_watched_prices, daemon=True)
-                            t.start()
-
-                        self.format_watched_prices()
+                        self._maybe_refresh_watched_prices()
                         live_price_refresh_timer = 0
                 elif self.status == 'command':
                     # get user command input and do commands
@@ -2371,35 +3107,13 @@ class TraderShell(Cmd):
                     break
                 time.sleep(live_price_refresh_interval)
             except KeyboardInterrupt:
-                # ask user if he/she wants to: [1], command mode; [2], stop trader; [3 or other], resume dashboard mode
-                t = Timer(5, lambda: print(
-                        "\nNo input in 5 seconds, press Enter to continue current mode. "))
-                t.start()
-                option = input('\nCurrent mode interrupted, Input 1 or 2 or 3 for below options: \n'
-                               '[1], Enter command mode; \n'
-                               '[2], Enter dashboard mode. \n'
-                               '[3], Exit and stop the trader; \n'
-                               'please input your choice: ')
-                if option == '1':
-                    self._status = 'command'
-                elif option == '2':
-                    self.do_dashboard('')
-                elif option == '3':
-                    # self.do_bye('')
-                    t.cancel()
+                if not self._handle_mode_interrupt():
                     break
-                else:
-                    continue
-                t.cancel()
-                # TODO: 上面这种5秒定时的方式有问题，如果用户五秒后再次按下Ctrl+C，会导致Shell异常退出
                 continue
-            # looks like finally block is better than except block here
             except Exception as e:
-                self.stdout.write(f'Unexpected Error: {e}\n')
-                import traceback
-                traceback.print_exc()
-                break
-                # self.do_bye('')
+                if not self._handle_runtime_error(e):
+                    break
+                continue
 
         sys.stdout.write('Thank you for using qteasy!\n')
         self._request_shutdown()

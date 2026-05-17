@@ -1,5 +1,7 @@
 # 多因子选股策略
 
+参考来源：`docs/_joinquant_migration_source/Example_04_多因子选股.ipynb` 第一个 Markdown cell。
+
 本策略每隔1个月定时触发,根据Fama-French三因子模型对每只股票进行回归，得到其alpha值。
 假设Fama-French三因子模型可以完全解释市场，则alpha为负表明市场低估该股，因此应该买入。
 
@@ -221,7 +223,7 @@ shares = qt.filter_stock_codes(index='000300.SH', date='20190501')
 alpha = MultiFactors()  # 实例化策略
 op = qt.Operator(alpha, signal_type='PT')  # 创建Operator交易员对象，使用PT信号类型（仓位目标信号）
 op.op_type = 'stepwise'
-op.set_blender('1.0*s0', "close")  # 设置仓位调整公式，仓位目标为1.0*s0，即持仓百分比总和等于100%
+op.set_blender('1.0*s0')  # 设置仓位调整公式，仓位目标为1.0*s0，即持仓百分比总和等于100%
 op.run(mode=1,
        invest_start='20160405',  # 回测起始时间
        invest_end='20210201',  # 回测结束时间

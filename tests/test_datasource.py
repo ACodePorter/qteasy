@@ -1219,6 +1219,13 @@ class TestDataSource(unittest.TestCase):
                     'canceled_qty': [0, 0, 300, 0, 500],
                     'delivery_amount': [500, 1000, 0, 2000, 0],
                     'delivery_status': ['delivered', 'delivered', 'delivered', 'delivered', 'delivered'],
+                    'broker_result_id': [
+                        'ds-delete-table-1',
+                        'ds-delete-table-2',
+                        'ds-delete-table-3',
+                        'ds-delete-table-4',
+                        'ds-delete-table-5',
+                    ],
                 }
         )
 
@@ -1674,6 +1681,7 @@ class TestDataSource(unittest.TestCase):
             'canceled_qty': 0,
             'delivery_amount': 0.0,
             'delivery_status': 'ND',
+            'broker_result_id': 'ds-insert-read-single-1',
         }
         test_account_data = {
             'user_name': 'John Doe',
@@ -1757,6 +1765,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-1',
             },
             {
                 'order_id': 2,
@@ -1767,6 +1776,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-2',
             },
             {
                 'order_id': 3,
@@ -1777,6 +1787,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-3',
             },
             {
                 'order_id': 4,
@@ -1787,6 +1798,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-4',
             },
             {
                 'order_id': 5,
@@ -1797,6 +1809,7 @@ class TestDataSource(unittest.TestCase):
                 'canceled_qty': 0,
                 'delivery_amount': 0.0,
                 'delivery_status': 'ND',
+                'broker_result_id': 'ds-multi-result-5',
             },
 
         ]
@@ -2123,6 +2136,55 @@ class TestDataSource(unittest.TestCase):
             print(f'last id from {ds} after removed 1 data: {res}')
             self.assertIsInstance(res, int)
             self.assertEqual(res, 2)
+
+    def test_db_run_in_transaction_db_commit_and_rollback(self):
+        """测试 DB-only 事务 API 的提交与回滚语义。"""
+        print('\n[TestDataSource] db_run_in_transaction on db datasource')
+        ds = self.ds_db
+        table = 'sys_op_live_accounts'
+        if ds.table_data_exists(table):
+            ds.drop_table_data(table)
+
+        def _insert_one(account_name):
+            return ds.insert_sys_table_data(
+                    table,
+                    **{
+                        'user_name': account_name,
+                        'created_time': pd.to_datetime('2026-05-09 09:30:00'),
+                        'cash_amount': 100000.0,
+                        'available_cash': 100000.0,
+                        'total_invest': 100000.0,
+                    }
+            )
+
+        committed_id = ds.db_run_in_transaction(lambda: _insert_one('tx_commit_user'))
+        records_after_commit = ds.read_sys_table_data(table)
+        print(' committed_id:', committed_id)
+        print(' records after commit:\n', records_after_commit)
+        self.assertEqual(len(records_after_commit), 1)
+
+        with self.assertRaises(RuntimeError):
+            ds.db_run_in_transaction(lambda: (_insert_one('tx_rollback_user'), (_ for _ in ()).throw(
+                RuntimeError('raise to rollback')))[0])
+        records_after_rollback = ds.read_sys_table_data(table)
+        print(' records after rollback:\n', records_after_rollback)
+        self.assertEqual(len(records_after_rollback), 1)
+        self.assertEqual(records_after_rollback.iloc[0]['user_name'], 'tx_commit_user')
+
+    def test_db_run_in_transaction_file_noop(self):
+        """测试 file 数据源下事务 API 为 no-op 包装。"""
+        print('\n[TestDataSource] db_run_in_transaction on file datasource should be no-op')
+        for ds in [self.ds_csv, self.ds_hdf, self.ds_fth]:
+            table = 'sys_op_live_accounts'
+            if ds.table_data_exists(table):
+                ds.drop_table_data(table)
+
+            result = ds.db_run_in_transaction(lambda: 'file-noop-ok')
+            print(f' datasource {ds} noop result:', result)
+            self.assertEqual(result, 'file-noop-ok')
+
+            with self.assertRaises(RuntimeError):
+                ds.db_run_in_transaction(lambda: (_ for _ in ()).throw(RuntimeError('file-noop-error')))
 
 
 if __name__ == '__main__':

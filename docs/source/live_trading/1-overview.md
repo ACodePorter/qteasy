@@ -1,46 +1,136 @@
-# live_trading 模块总览
+# 模拟实盘模块总览
 
-`live_trading` 模块用于说明 qteasy 在模拟实盘（`mode=0`）下的核心能力与使用路径。  
-对于第一次进入 live 运行的用户，本页只解决三个问题：能做什么、有哪些新变化、下一步看哪里。
+> 本章帮您在进入模拟实盘之前建立整体地图：能做什么、和回测有何不同、关键术语是什么意思、下一步该读哪一章。
+
+亲爱的用户，若您已完成策略回测并想「按真实时钟」观察策略表现，本模块就是为您准备的。我们尽量用与回测**同一套**策略代码，在本地模拟下单与记日志，让您在对接真实券商之前先走通完整链路。
 
 ## 0. 适用场景
 
-- 你已经完成策略回测，准备进入模拟实盘阶段
-- 你需要快速建立“配置 -> 下单 -> 成交 -> 日志 -> 排错”的整体认知
-- 你计划后续扩展 broker 适配能力
+- 您已完成策略回测，准备进入**模拟实盘**阶段（尚未或暂不接入真实柜台）
+- 您希望快速建立「配置 → 下单 → 成交 → 日志 → 排错」的整体认知
+- 您计划日后扩展真实券商（如 QMT），需要稳定的文档入口
 
 ## 1. 这个模块解决什么问题
 
-- 统一解释 live 运行中“配置、下单、成交、日志、排错”的完整链路
-- 降低从回测切换到模拟实盘时的理解成本
-- 给后续扩展真实柜台适配（如 QMT）提供稳定文档入口
+- 统一解释模拟实盘里「配置、下单、成交、日志、排错」的完整链路
+- 降低从回测切换到 live 时的理解成本——避免「回测参数能跑、live 一启动就懵」
+- 为后续扩展真实柜台适配提供文档入口，而不必从零摸索
 
-## 2. S1.3 完成后的能力地图
+## 2. 与回测的关系
 
-- **配置可校验**：live 参数在运行前集中校验，错误更早暴露
-- **风控可插拔**：订单提交前可执行规则链评估
-- **拒单可审计**：拒因可通过 `rule_id` 和 `reason` 在日志中检索
-- **Broker 可扩展**：新增适配层接口，兼容 legacy 队列链路
-- **状态更一致**：`partial-filled -> filled` 的可见行为更准确
+qteasy 的设计目标是：**同一套策略逻辑**既用于回测，也用于模拟实盘。区别主要在「时间如何流逝」和「谁来做撮合」——而不是重写一套策略代码。下表帮助您在选型时快速对照；若您已熟悉回测，可重点看「模拟实盘」列里与 live 相关的入口与成交方式。
 
-## 3. 核心术语速览
+**各列含义**：**对比项**为维度；**回测**列描述历史验证模式；**模拟实盘（`mode=0`）** 列描述按真实时钟运行的 live 模式。
 
-- `LiveTradeConfig`：live 运行配置快照
-- `RiskDecision`：风控评估结果（是否放行 + 拒因）
-- `broker adapter`：`connect/submit/poll_fills` 等适配层接口
-- `risk_log`：风险拒绝与相关风控事件日志
-- `partial-filled`：订单部分成交状态
+**如何使用**：决定「现在该用哪种模式」时按行查；启动 live 时确认最后一行入口是否为 `mode=0` + `qt.run(op)`。
 
-## 4. 推荐阅读路径
+| 对比项 | 回测 | 模拟实盘（`mode=0`） |
+|--------|------|----------------------|
+| 时间 | 历史区间上快进 | **真实时间**按交易日历推进 |
+| 策略代码 | 同一 `Operator` / 策略 | **同一套**逻辑 |
+| 成交 | 按历史价模拟撮合 | 通常由 **模拟券商（simulator）** 按 live 价撮合 |
+| 典型入口 | `op.run_backtest()` / `qt.run(op, mode=1)` | `qt.run(op)` 且 `mode=0` |
 
-1. 先读 :doc:`2-configuration-and-run`，完成最小可运行配置  
-2. 再读 :doc:`../tutorials/8-live-trade-risk-and-broker-walkthrough`，按步骤走一遍  
-3. 遇到问题时查 :doc:`5-artifacts-and-troubleshooting`  
-4. 需要扩展 Broker 时读 :doc:`4-broker-adapter-and-integration`
+**Operator（交易员容器）**：您创建并持有策略的那个「交易员」对象；回测和 live 都用它，只是运行模式不同。您可以把它理解为：同一位交易员，在「历史考场」和「模拟实盘考场」里答同一套卷子。
 
-## 5. 相关索引
+启动 live 的常见一行代码：
 
-- API 视角清单：`references/1-simulation-overview.md`
-- CLI 功能清单：`references/5-simulate-operation-in-CLI.md`
-- TUI 功能清单：`references/6-simulate-operation-in-TUI.md`
-- 设计理念：`design/10-live-trading-s1.3-architecture.md`
+```python
+import qteasy as qt
+qt.configure(mode=0, ...)  # 0 表示 live / 模拟实盘
+qt.run(op)                 # op 为您的 Operator
+```
+
+## 3. 您将获得的 capability（能力地图）
+
+以下能力在近年版本中逐步完善，目的是让模拟实盘**可校验、可拦截、可审计、可扩展**：
+
+- **配置可校验**：live 相关参数在运行前集中检查，配置写错时更早报错，而不是跑到一半才崩溃。
+- **风控可插拔**：订单在「真正交给券商」之前，可在本地按规则拦截（像下单前的复核台）。
+- **拒单可审计**：被拒时可在日志里用规则编号和英文原因检索，便于复盘「为什么没成交」。
+- **券商接口可扩展**：统一 connect / submit / 轮询成交等接口，便于日后接入 QMT 等真实柜台。
+- **订单状态更清晰**：部分成交、全部成交等状态与累计成交量更一致，减少「界面显示和心里预期对不上」。
+
+## 4. 术语速查表
+
+模拟实盘文档会反复出现 Operator、Trader、Broker、风控、产物路径等词。本节是**全模块术语 hub**：按主题分组，供各章正文首次出现后回来查阅。您不必一次读完——遇到陌生词时用页内搜索即可。
+
+**各列含义**：**术语**为英文名或配置键；**说明**为在 qteasy live 链路中的职责；**类比**用投资/日常场景帮助记忆（类比与真实行为若有差异，以说明列为准）。
+
+**如何使用**：先确定您卡在「运行主体 / 配置 / 订单 / 运维」哪一类，打开对应小节；根据当前问题（如「拒单查哪」）在 **说明** 列找关键词，再跳转到 :doc:`3-risk-and-order-lifecycle` 或 :doc:`5-artifacts-and-troubleshooting` 等章节。
+
+**示例**：您在 Shell 里看到 `partial-filled` 不懂 → 打开 §4.3 找到该行 → 得知是「部分成交」→ 到 :doc:`3-risk-and-order-lifecycle` 看状态流转。
+
+### 4.1 运行主体
+
+live 运行时，**Operator** 仍持有策略，但由 **Trader** 按真实日程驱动；订单经 **Broker** 受理。本表覆盖从「策略容器」到「您交互界面」的主角色；不含具体配置键（见 §4.2）。
+
+| 术语 | 说明 | 类比 |
+|------|------|------|
+| **Operator** | 持有策略组、负责调度与信号合并的顶层容器 | 投资组合经理：决定何时跑哪些策略 |
+| **Trader** | live 模式下实际按日程运行策略、下单、写日志的进程主体 | 交易员席位：您进 Shell 对话的对象 |
+| **Broker（券商）** | 接收订单、返回受理结果与成交回报的适配对象 | 券商柜台：simulator 是「练习柜台」 |
+| **mode=0** | 配置项：表示 live / 模拟实盘（相对回测 mode=1 等） | 开关：0=按真实时钟跑 |
+| **CLI** | 命令行交互界面（Trader Shell） | 打字下指令的「交易员终端」 |
+| **TUI** | 图形化终端界面 | 带面板的全屏界面，与 CLI 二选一 |
+
+### 4.2 配置与数据
+
+启动 live 前，您通过 `qt.configure(...)` 写入的项会冻结为 **LiveTradeConfig**，并决定资产类型、行情从哪里来、数据如何补齐。本表是配置章 (:doc:`2-configuration-and-run`) 的术语索引。
+
+| 术语 | 说明 | 类比 |
+|------|------|------|
+| **LiveTradeConfig** | 启动前冻结的一份 live 配置快照，运行中不再被意外改掉 | 起飞前的检查单，签字后不再涂改 |
+| **asset_type** | 资产类型，如 `E`（股票）、`FD`（场内基金/ETF） | 告诉系统「这批标的按哪套规则交易」 |
+| **refill** | 从网络渠道补齐本地数据源缺失表/区间 | 给本地「数据仓库」补货 |
+| **live 行情频率** | 如 `live_price_acquire_freq='15MIN'`，多久拉一次实时价 | 盯盘刷新间隔 |
+| **simulator** | 默认模拟券商类型，用 live 价模拟成交 |  paper trading 柜台 |
+
+### 4.3 订单与风控
+
+从策略信号到成交，中间经过「本地风控 → 券商受理 → 异步成交」。本表是 :doc:`3-risk-and-order-lifecycle` 的核心词汇；**务必分清「风控拒单」与「柜台拒单」两行**。
+
+| 术语 | 说明 | 类比 |
+|------|------|------|
+| **OrderIntent（订单意图）** | 一笔打算下的单：标的、方向、数量、价格等 | 填好的委托单草稿 |
+| **AccountSnapshot（账户快照）** | 评估风控那一刻的现金、持仓、当日成交额等 | 下单瞬间的账户「定格照片」 |
+| **RiskManager（风控管理器）** | 按顺序执行多条规则，决定是否放行 | 复核台：任一规则不通过则拒单 |
+| **RiskDecision（风控决策）** | 放行或拒绝，及英文拒因、规则编号 | 复核结论条 |
+| **风控拒单** | 本地规则拦截：**不入**订单表，记 risk_log | 复核台打回，委托单还没递出柜台 |
+| **柜台受理拒单** | 券商返回不接受：订单表有 `rejected` 行，broker 号为空 | 柜台收单后退回 |
+| **partial-filled** | 部分成交：已成交数量小于委托数量 | 委托只成交了一部分 |
+| **filled** | 全部成交 | 委托数量已达成 |
+| **rejected** | 被拒（多指柜台受理拒绝） | 委托无效 |
+| **broker_order_id** | 券商侧委托编号，受理成功后回写本地 | 柜台回执号 |
+| **submit_with_ack** | 提交订单并**同步**得到是否受理的结果 | 递单后立即听柜台说「收/不收」 |
+| **poll_fills** | 轮询异步到达的成交回报 | 定期问柜台「有没有新成交」 |
+
+### 4.4 运维与可观测
+
+长跑 live 或排错时，您会接触日志路径、启动门禁、对账与 DEBUG。本表对应 :doc:`5-artifacts-and-troubleshooting`、:doc:`6-trader-snapshot-gate` 与 :doc:`8-cli-trader-capability-matrix`。
+
+| 术语 | 说明 | 类比 |
+|------|------|------|
+| **四键产物** | `sys_log`、`trade_log`、`break_point`、`risk_log` 四个固定路径 | 四个专用文件夹：系统日记、成交明细、断点存档、风控记录 |
+| **startup gate（启动门禁）** | 开盘/run 前检查：策略就绪、数据表、可选与远端账本比对 | 发车前安全检查 |
+| **策略快照（路线图 5-A）** | 策略运行前预先拉好数据，本步复用，减少重复 IO | 提前把「今日材料」备在案头 |
+| **reconcile（对账快照）** | 收盘等时点输出本地与远端账本差异摘要 JSON | 日终对账条 |
+| **DEBUG 模式** | Trader 调试开关，可手动 `run --task ...` | 维修模式：可单步触发任务 |
+
+## 5. 推荐阅读路径
+
+与模块首页目录一致：
+
+1. :doc:`2-configuration-and-run` — 完成最小可运行配置  
+2. :doc:`../tutorials/8-live-trade-risk-and-broker-walkthrough` — 跟着教程走一遍  
+3. :doc:`5-artifacts-and-troubleshooting` — 出问题时查产物与剧本  
+4. :doc:`4-broker-adapter-and-integration` — 需要扩展券商时再读  
+5. :doc:`8-cli-trader-capability-matrix` — CLI 命令对照；长跑对照 :doc:`6-trader-snapshot-gate` 与 :doc:`7-manual-smoke-live-grid-roadmap`
+
+## 6. 相关索引
+
+- API 视角清单：[references/1-simulation-overview.md](../references/1-simulation-overview.md)
+- CLI 功能清单：[references/5-simulate-operation-in-CLI.md](../references/5-simulate-operation-in-CLI.md)
+- TUI 功能清单：[references/6-simulate-operation-in-TUI.md](../references/6-simulate-operation-in-TUI.md)
+- 设计理念：[design/10-live-trading-s1.3-architecture.md](../design/10-live-trading-s1.3-architecture.md)
+- 版本变更：[RELEASE_HISTORY.md](../RELEASE_HISTORY.md)（2.4.x / 2.5.0 等）

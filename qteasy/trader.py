@@ -15,13 +15,16 @@ import logging
 import os
 import sys
 import time
+import threading
 from datetime import date, datetime
+from dataclasses import dataclass
+from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pandas as pd
 
-from typing import Union, Optional, Any
-from queue import Queue
+from typing import Union, Optional, Any, Dict, List
+from queue import Queue, Empty
 
 from rich.text import Text
 
@@ -40,15 +43,18 @@ from .trade_recording import (
     record_trade_order,
     get_or_create_position,
     read_trade_order,
+    update_trade_order,
 )
 
 from .trade_io import validate_trade_order
 from .risk import AccountSnapshot, OrderIntent, RiskDecision, RiskManager
 from .live_config import LiveTradeConfig, apply_live_trade_config_to_trader
+from .configure import QT_CONFIG
 
 from .trading_util import (
+    apply_schedule_catch_up_policy,
     cancel_order,
-    create_daily_task_schedule,
+    create_daily_task_plan,
     get_position_by_id,
     get_symbol_names,
     process_account_delivery,
@@ -101,6 +107,108 @@ ASSET_UNIT_TO_TABLE = {
     ('FT', '1min'):  'future_1min',
     ('FT', 'min'):   'future_1min',
 }
+
+TASK_DEFAULT_MAX_RETRIES = {
+    'acquire_live_price': 2,
+    'run_strategy': 1,
+    'process_result': 1,
+    'prepare_strategy_snapshot': 1,
+}
+
+TASK_DEFAULT_REENTRY_POLICIES = {
+    'acquire_live_price': 'drop',
+    'run_strategy': 'drop',
+    'process_result': 'queue',
+    'prepare_strategy_snapshot': 'drop',
+}
+
+
+@dataclass
+class TaskSpec:
+    """Trader 任务描述对象。"""
+
+    task_id: str
+    name: str
+    args: tuple = ()
+    max_retries: int = 0
+    retry_count: int = 0
+    status: str = 'queued'
+    canceled: bool = False
+    reentry_policy: str = 'queue'
+    last_error: str = ''
+
+    def as_legacy(self):
+        """返回历史兼容格式（str 或 (name, args)）。"""
+        if self.args:
+            return self.name, self.args
+        return self.name
+
+    def __eq__(self, other):
+        if isinstance(other, TaskSpec):
+            return (
+                self.task_id == other.task_id and
+                self.name == other.name and
+                self.args == other.args
+            )
+        if isinstance(other, str):
+            return self.as_legacy() == other
+        if isinstance(other, tuple):
+            return self.as_legacy() == other
+        return False
+
+
+@dataclass
+class TraderMessage:
+    """Trader 消息队列中的结构化消息。"""
+
+    text: str
+    debug: bool = False
+
+
+def coerce_trader_message(message: Union[str, Text, 'TraderMessage']) -> TraderMessage:
+    """将消息队列中的原始项统一转换为 ``TraderMessage``。
+
+    Parameters
+    ----------
+    message : str, Text, TraderMessage
+        队列中取出的消息，兼容历史 str / Text 格式。
+
+    Returns
+    -------
+    TraderMessage
+        结构化消息对象。
+    """
+    if isinstance(message, TraderMessage):
+        return message
+    return TraderMessage(text=str(message), debug=False)
+
+
+def drain_trader_message_queue(message_queue: Queue) -> List[TraderMessage]:
+    """排空 Trader 消息队列并返回全部 ``TraderMessage``。
+
+    Parameters
+    ----------
+    message_queue : Queue
+        Trader 实例的 ``message_queue``。
+
+    Returns
+    -------
+    list of TraderMessage
+        按出队顺序排列的消息列表。
+    """
+    messages: List[TraderMessage] = []
+    while True:
+        try:
+            messages.append(coerce_trader_message(message_queue.get_nowait()))
+        except Empty:
+            break
+    return messages
+
+
+def _is_debug_sys_log_line(line: str) -> bool:
+    """判断系统日志行是否为 DEBUG 级别或带 debug 前缀。"""
+    stripped = line.lstrip()
+    return stripped.startswith('DEBUG:') or '<DEBUG>' in line
 
 
 def _resolve_tables_for_refresh(asset_type_str: Union[str, list[str], tuple[str, ...]],
@@ -329,6 +437,18 @@ class Trader(object):
 
         self.task_queue = Queue()
         self.message_queue = Queue()
+        self._task_seq = 0
+        self._task_lock = threading.Lock()
+        self._task_registry: Dict[str, TaskSpec] = {}
+        self._dead_letter_tasks: List[TaskSpec] = []
+        self._async_executor: Optional[ThreadPoolExecutor] = None
+        self._runtime_trader_thread: Optional[threading.Thread] = None
+        self._runtime_broker_thread: Optional[threading.Thread] = None
+        self._runtime_shutdown_requested = False
+        # 阶段 5-A：prepare_strategy_snapshot 与 run_strategy 之间的快照标记 (trade_date, step_index, monotonic_ts)
+        self._strategy_run_marker: Optional[tuple[str, int, float]] = None
+        # 阶段 5-B：启动门禁是否允许 run_strategy 入队（block 模式下失败则为 False）
+        self._startup_gate_trading_allowed: bool = True
 
         self.task_daily_schedule = []
         self.time_zone = time_zone
@@ -386,6 +506,7 @@ class Trader(object):
         self.account = get_account(self.account_id, data_source=self._datasource)
         self.risk_manager = risk_manager
         self._last_risk_decision: Optional[RiskDecision] = None
+        self._last_submit_reject_reason: Optional[str] = None
 
         if live_config is not None:
             apply_live_trade_config_to_trader(self, live_config)
@@ -411,6 +532,11 @@ class Trader(object):
     def last_risk_decision(self) -> Optional[RiskDecision]:
         """返回最近一次 ``submit_trade_order`` 的风控决策。"""
         return self._last_risk_decision
+
+    @property
+    def last_submit_reject_reason(self) -> Optional[str]:
+        """返回最近一次 ``submit_trade_order`` 非风控拒绝原因。"""
+        return self._last_submit_reject_reason
 
     def _get_next_scheduled_task_and_countdown(self, current_time=None):
         """ 计算 task_daily_schedule 中下一个未到点任务及距其的秒数，供 next_task、count_down_to_next_task 使用。
@@ -775,12 +901,120 @@ class Trader(object):
         """
         self.broker.register(debug=debug, **kwargs)
 
+    def start(self) -> bool:
+        """ 启动 Trader 运行时线程与 Broker 线程。
+
+        Returns
+        -------
+        bool
+            True 表示本次调用触发了新的启动；False 表示运行时已在运行。
+        """
+
+        if self.is_alive():
+            self._trace_event(
+                category='runtime',
+                event='start_skipped_already_running',
+                trader_thread_alive=bool(self._runtime_trader_thread and self._runtime_trader_thread.is_alive()),
+                broker_thread_alive=bool(self._runtime_broker_thread and self._runtime_broker_thread.is_alive()),
+            )
+            return False
+
+        self._runtime_shutdown_requested = False
+        self._runtime_trader_thread = threading.Thread(
+            target=self.run,
+            daemon=True,
+            name=f'TraderMain-{self.account_id}',
+        )
+        self._runtime_broker_thread = threading.Thread(
+            target=self.broker.run,
+            daemon=True,
+            name=f'BrokerMain-{self.account_id}',
+        )
+        self._runtime_trader_thread.start()
+        self._runtime_broker_thread.start()
+        self._trace_event(
+            category='runtime',
+            event='started',
+            trader_thread=self._runtime_trader_thread.name,
+            broker_thread=self._runtime_broker_thread.name,
+        )
+        return True
+
+    def is_alive(self) -> bool:
+        """ 返回 Trader 运行时是否仍有活动线程。 """
+
+        trader_alive = bool(self._runtime_trader_thread and self._runtime_trader_thread.is_alive())
+        broker_alive = bool(self._runtime_broker_thread and self._runtime_broker_thread.is_alive())
+        return trader_alive or broker_alive
+
+    def join(self, timeout: Optional[float] = None) -> None:
+        """ 等待 Trader/Broker 运行时线程结束。
+
+        Parameters
+        ----------
+        timeout : float or None, optional
+            最长等待秒数；None 表示不限时。
+        """
+
+        start_ts = time.time()
+        trader_thread = self._runtime_trader_thread
+        broker_thread = self._runtime_broker_thread
+
+        if trader_thread is not None:
+            remaining = None if timeout is None else max(0.0, timeout - (time.time() - start_ts))
+            trader_thread.join(timeout=remaining)
+        if broker_thread is not None:
+            remaining = None if timeout is None else max(0.0, timeout - (time.time() - start_ts))
+            broker_thread.join(timeout=remaining)
+
+        if self.is_alive():
+            self._trace_event(category='runtime', event='join_timeout', timeout=timeout)
+        else:
+            self._trace_event(category='runtime', event='joined')
+
+    def stop(self, wait: bool = True, timeout: float = 60.0, include_post_close: bool = True) -> None:
+        """ 请求停止 Trader 运行时。
+
+        Parameters
+        ----------
+        wait : bool, optional
+            是否等待线程退出，默认 True。
+        timeout : float, optional
+            等待超时时间（秒），默认 60。
+        include_post_close : bool, optional
+            是否在停止前请求执行 post_close，默认 True。
+        """
+
+        if not self._runtime_shutdown_requested:
+            if include_post_close and self.status in ['running', 'sleeping', 'paused']:
+                self.add_task('post_close')
+
+            if self.is_alive():
+                self.add_task('stop')
+            else:
+                # 兜底：运行时线程不存在但状态未停止时，直接执行 stop 任务收敛状态。
+                if self.status != 'stopped':
+                    self._run_task('stop', run_in_main_thread=True)
+                else:
+                    self.broker.status = 'stopped'
+            self._runtime_shutdown_requested = True
+            self._trace_event(
+                category='runtime',
+                event='stop_requested',
+                wait=wait,
+                timeout=timeout,
+                include_post_close=include_post_close,
+            )
+
+        if wait:
+            self.join(timeout=timeout)
+
     def run(self) -> None:
         """ 交易系统的main loop：
 
         1，检查task_queue中是否有任务，如果有任务，则提取任务，根据当前status确定是否执行任务，如果可以执行，则执行任务，否则忽略任务
         2，如果当前是交易日，检查当前时间是否在task_daily_agenda中，如果在，则将任务添加到task_queue中
-        3，如果当前是交易日，检查broker的result_queue中是否有交易结果，如果有，则添加"process_result"任务到task_queue中
+        3，如果当前是交易日，通过 broker 公开 API 拉取交易结果并添加"process_result"任务到task_queue中
         """
 
         self._run_task('start')
@@ -790,10 +1024,6 @@ class Trader(object):
         current_date_time = self.get_current_tz_datetime()  # 产生当地时间
         current_date = current_date_time.date()
 
-        # 在try-block中开始主循环，以抓取KeyboardInterrupt
-        # TODO: 这里似乎应该重新思考trader和UI的关系，将trader和UI彻底分开：
-        #  1，抓取 KeyboardInterrupt 似乎应该是UI的任务，trader应该专注于交易任务
-        #  2，trader应该专注于交易任务，UI应该专注于交互任务，两者应该分开
         try:
             while self.status != 'stopped':
                 pre_date = current_date
@@ -804,32 +1034,95 @@ class Trader(object):
                 if not self.task_queue.empty():
                     # 如果任务队列不为空，执行任务
                     white_listed_tasks = self.TASK_WHITELIST[self.status]
-                    task = self.task_queue.get()
-                    if isinstance(task, tuple):
-                        self.send_message(f'tuple task: {task} is taken from task queue, task[0]: {task[0]}'
-                                          f'task[1]: {task[1]}', debug=True)
-                        task_name = task[0]
-                        args = task[1]
-                    else:
-                        task_name = task
-                        args = None
-                    self.send_message(f'task queue is not empty, taking next task from queue: {task_name}', debug=True)
+                    queue_size_before_get = self.task_queue.qsize()
+                    raw_task = self.task_queue.get()
+                    task_spec = self._normalize_task_spec(raw_task)
+                    task_name = task_spec.name
+                    args = task_spec.args
+                    self._trace_event(
+                        category='task_queue',
+                        event='task_dequeued',
+                        task=task_name,
+                        task_id=task_spec.task_id,
+                        args_count=len(args),
+                        queue_size_before_get=queue_size_before_get,
+                        queue_size_after_get=self.task_queue.qsize(),
+                        trader_status=self.status,
+                    )
+                    self.send_message(
+                        f'task queue is not empty, taking next task from queue: {task_name}({task_spec.task_id})',
+                        debug=True,
+                    )
+
+                    if task_spec.canceled:
+                        task_spec.status = 'canceled'
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_skipped_canceled',
+                            task=task_name,
+                            task_id=task_spec.task_id,
+                            skip_reason='canceled',
+                        )
+                        self.task_queue.task_done()
+                        continue
                     if task_name not in white_listed_tasks:
-                        self.send_message(f'task: {task} cannot be executed in current status: {self.status}',
+                        task_spec.status = 'rejected'
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_rejected_by_status',
+                            task=task_name,
+                            task_id=task_spec.task_id,
+                            trader_status=self.status,
+                            skip_reason='status_not_allowed',
+                        )
+                        self.send_message(f'task: {task_name} cannot be executed in current status: {self.status}',
                                           debug=True)
                         self.task_queue.task_done()
                         continue
                     try:
-                        if args:
-                            self._run_task(task_name, *args)
-                        else:
-                            self._run_task(task_name)
+                        task_spec.status = 'running'
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_execute_started',
+                            task=task_name,
+                            task_id=task_spec.task_id,
+                            args_count=len(args),
+                            trader_status=self.status,
+                        )
+                        self._run_task(task_name, *args, task_spec=task_spec)
+                        if task_spec.status == 'running':
+                            task_spec.status = 'done'
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_execute_finished',
+                            task=task_name,
+                            task_id=task_spec.task_id,
+                            trader_status=self.status,
+                        )
                     # error handling: (TODO: if there's connection problem, reconnect or hold the trader?)
                     except RuntimeError as e:
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_execute_failed',
+                            task=task_name,
+                            task_id=task_spec.task_id,
+                            error_type=type(e).__name__,
+                            error=str(e),
+                        )
+                        self._handle_task_failure(task_spec, e)
                         import traceback
                         self.send_message(f'Runtime Error occurred when executing task: {task_name}, error: {e}')
                         self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
                     except Exception as e:
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_execute_failed',
+                            task=task_name,
+                            task_id=task_spec.task_id,
+                            error_type=type(e).__name__,
+                            error=str(e),
+                        )
+                        self._handle_task_failure(task_spec, e)
                         import traceback
                         self.send_message(f'error occurred when executing task: {task_name}, error: {e}')
                         self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
@@ -846,30 +1139,38 @@ class Trader(object):
                 if current_date != pre_date:
                     self._initialize_schedule(current_time)
 
-                # 检查broker的result_queue中是否有交易结果，如果有，则添加"process_result"任务到task_queue中
-                # TODO: 不要在trader中操作broker的所有Queue，而应该调用broker的API来获取交易结果
-                if not self.broker.result_queue.empty():
-                    result = self.broker.result_queue.get()
+                # 通过 broker 公开 API 拉取交易结果并加入任务队列
+                while True:
+                    polled_results = self.broker.poll_fills(timeout=0.0)
+                    if not polled_results:
+                        break
+                    result = polled_results[0]
+                    order_id = result.get('order_id') if isinstance(result, dict) else 'N/A'
+                    self._trace_event(
+                        category='broker',
+                        event='result_received',
+                        order_id=order_id,
+                        result_type=type(result).__name__,
+                        trader_status=self.status,
+                    )
                     if self.broker.debug:
                         self.send_message(f'got new result from broker for order {result["order_id"]}, '
                                           f'adding process_result task to queue')
                     self.add_task('process_result', result)
-                    self.broker.result_queue.task_done()
-                # 检查broker的message_queue中是否有消息，如果有，则处理消息，通常情况将消息添加到消息队列中
-                # TODO: 不要在trader中操作broker的message Queue，应该调用broker的API来获取消息
-                if not self.broker.broker_messages.empty():
-                    message = self.broker.broker_messages.get()
+
+                # 通过 broker 公开 API 拉取消息并转发至 trader 消息队列
+                while True:
+                    polled_messages = self.broker.poll_messages(timeout=0.0)
+                    if not polled_messages:
+                        break
+                    message = polled_messages[0]
                     self.send_message(message)
-                    self.broker.broker_messages.task_done()
 
                 time.sleep(sleep_interval)
             else:
                 # process trader when trader is normally stopped
                 self.send_message(f'Trader is stopped.\n'
                                   f'{"=" * 20}\n')
-        except KeyboardInterrupt:
-            self.send_message('KeyboardInterrupt, stopping trader...')
-            self._run_task('stop')
         except Exception as e:
             self.send_message(f'error occurred when running trader, error: {e}')
             import traceback
@@ -1039,8 +1340,8 @@ class Trader(object):
         # 如果debug 但 not self.debug，不发送消息到消息队列
         if debug and (not self.debug):
             return
-        # 其他情况下，发送原始消息到消息队列
-        self.message_queue.put(message)
+        # 其他情况下，发送结构化消息到消息队列
+        self.message_queue.put(TraderMessage(text=str(message), debug=debug))
 
     def add_message_prefix(self, message: str, debug=False) -> str:
         """ 在消息前添加时间、状态等信息
@@ -1072,7 +1373,188 @@ class Trader(object):
 
         return message
 
-    def add_task(self, task, *args) -> None:
+    def _format_trace_message(self, category: str, event: str, **fields: Any) -> str:
+        """ 生成结构化调试消息文本。
+
+        Parameters
+        ----------
+        category : str
+            事件分类，如 task_queue / task_runner / broker。
+        event : str
+            事件名称，如 task_enqueued / task_execute_started。
+        **fields : Any
+            事件上下文键值对。
+
+        Returns
+        -------
+        str
+            可直接写入系统日志的结构化文本。
+        """
+
+        field_items = []
+        for key in sorted(fields.keys()):
+            value = str(fields[key]).replace('\n', '\\n')
+            field_items.append(f'{key}={value}')
+        field_part = ' '.join(field_items)
+        base = f'[TRACE] category={category} event={event}'
+        if field_part:
+            return f'{base} {field_part}'
+        return base
+
+    def _trace_event(self, category: str, event: str, **fields: Any) -> None:
+        """ 记录结构化调试事件。 """
+
+        self.send_message(
+            message=self._format_trace_message(category=category, event=event, **fields),
+            debug=True,
+        )
+
+    def _next_task_id(self) -> str:
+        """生成下一个任务ID。"""
+        with self._task_lock:
+            self._task_seq += 1
+            return f'task-{self._task_seq}'
+
+    def _resolve_task_max_retries(self, task_name: str, max_retries: Optional[int] = None) -> int:
+        """解析任务最大重试次数。"""
+        if max_retries is None:
+            return int(TASK_DEFAULT_MAX_RETRIES.get(task_name, 0))
+        return max(0, int(max_retries))
+
+    def _resolve_task_reentry_policy(self, task_name: str, reentry_policy: Optional[str] = None) -> str:
+        """解析任务重入策略。"""
+        policy = reentry_policy or TASK_DEFAULT_REENTRY_POLICIES.get(task_name, 'queue')
+        normalized_policy = str(policy).strip().lower()
+        if normalized_policy not in ['queue', 'drop', 'reject']:
+            raise ValueError(f'Invalid reentry policy: {reentry_policy} for task {task_name}')
+        if task_name == 'process_result' and normalized_policy == 'drop':
+            return 'queue'
+        return normalized_policy
+
+    def _new_task_spec(self,
+                       task_name: str,
+                       args: tuple = (),
+                       max_retries: Optional[int] = None,
+                       reentry_policy: Optional[str] = None) -> TaskSpec:
+        """构造并登记任务对象。"""
+        task_spec = TaskSpec(
+            task_id=self._next_task_id(),
+            name=task_name,
+            args=args,
+            max_retries=self._resolve_task_max_retries(task_name, max_retries=max_retries),
+            reentry_policy=self._resolve_task_reentry_policy(task_name, reentry_policy=reentry_policy),
+        )
+        self._task_registry[task_spec.task_id] = task_spec
+        return task_spec
+
+    def _find_reentry_skip_reason(self, task_spec: TaskSpec) -> str:
+        """根据重入策略判断任务是否应该被跳过。"""
+        if task_spec.name == 'process_result':
+            return ''
+        if task_spec.name == 'run_strategy':
+            gate_skip = self._startup_gate_run_strategy_skip_reason()
+            if gate_skip:
+                return gate_skip
+        if task_spec.reentry_policy == 'queue':
+            return ''
+        for existing_task in self._task_registry.values():
+            if existing_task.task_id == task_spec.task_id:
+                continue
+            if existing_task.name != task_spec.name:
+                continue
+            if existing_task.canceled:
+                continue
+            if existing_task.status == 'running':
+                return 'prev_running'
+            if existing_task.status == 'queued':
+                return 'already_queued'
+        return ''
+
+    def cancel_task(self, task_id: str) -> bool:
+        """取消一个已登记任务（协作式）。
+
+        Parameters
+        ----------
+        task_id : str
+            任务ID。
+
+        Returns
+        -------
+        bool
+            True 表示任务存在并已标记取消；False 表示任务不存在。
+        """
+        task_spec = self._task_registry.get(task_id)
+        if task_spec is None:
+            return False
+        task_spec.canceled = True
+        if task_spec.status == 'queued':
+            task_spec.status = 'canceled'
+        self._trace_event(
+            category='task_queue',
+            event='task_cancel_requested',
+            task_id=task_id,
+            task=task_spec.name,
+            status=task_spec.status,
+        )
+        return True
+
+    def cancel_tasks(self, name: Optional[str] = None, status: Optional[str] = 'queued') -> int:
+        """按条件批量取消任务。
+
+        Parameters
+        ----------
+        name : str or None, optional
+            任务名过滤；None 表示不过滤任务名。
+        status : str or None, optional
+            状态过滤；None 表示不过滤状态。
+
+        Returns
+        -------
+        int
+            成功标记取消的任务数量。
+        """
+        canceled_count = 0
+        for task_spec in self._task_registry.values():
+            if name is not None and task_spec.name != name:
+                continue
+            if status is not None and task_spec.status != status:
+                continue
+            if task_spec.canceled:
+                continue
+            if self.cancel_task(task_spec.task_id):
+                canceled_count += 1
+        self._trace_event(
+            category='task_queue',
+            event='task_batch_cancel_requested',
+            name=name if name is not None else 'ALL',
+            status=status if status is not None else 'ALL',
+            canceled_count=canceled_count,
+        )
+        return canceled_count
+
+    def get_task(self, task_id: str) -> Optional[TaskSpec]:
+        """按任务ID查询任务。"""
+        return self._task_registry.get(task_id)
+
+    def list_tasks(self, status: Optional[str] = None, name: Optional[str] = None) -> List[TaskSpec]:
+        """列出任务快照，可按状态和任务名过滤。"""
+        tasks = list(self._task_registry.values())
+        if status is not None:
+            tasks = [task for task in tasks if task.status == status]
+        if name is not None:
+            tasks = [task for task in tasks if task.name == name]
+        return list(tasks)
+
+    @property
+    def dead_letter_tasks(self) -> List[TaskSpec]:
+        """返回死信任务列表快照。"""
+        return list(self._dead_letter_tasks)
+
+    def add_task(self,
+                 task,
+                 *args,
+                 max_retries: Optional[int] = None,
+                 reentry_policy: Optional[str] = None) -> str:
         """ 添加任务到任务队列
 
         Parameters
@@ -1081,15 +1563,59 @@ class Trader(object):
             任务名称
         args: Any
             任务参数
+        max_retries: int, optional
+            覆盖默认重试次数，不给时按任务类型使用默认值
+        reentry_policy: str, optional
+            重入策略，支持 ``queue`` / ``drop`` / ``reject``，不给时按任务默认策略。
+
+        Returns
+        -------
+        str
+            新创建任务ID
         """
         if not isinstance(task, str):
             err = TypeError('task should be a str')
             raise err
 
-        if args:
-            task = (task, args)
-        self.send_message(f'adding task: {task}', debug=True)
-        self._add_task_to_queue(task)
+        queue_size_before = self.task_queue.qsize()
+        task_args = tuple(args) if args else ()
+        task_spec = self._new_task_spec(
+            task_name=task,
+            args=task_args,
+            max_retries=max_retries,
+            reentry_policy=reentry_policy,
+        )
+        skip_reason = self._find_reentry_skip_reason(task_spec=task_spec)
+        if skip_reason:
+            task_spec.status = 'rejected' if task_spec.reentry_policy == 'reject' else 'skipped'
+            task_spec.last_error = f'skip_reason={skip_reason}'
+            self._trace_event(
+                category='task_runner',
+                event='task_skipped_reentry',
+                task=task_spec.name,
+                task_id=task_spec.task_id,
+                reentry_policy=task_spec.reentry_policy,
+                skip_reason=skip_reason,
+                trader_status=self.status,
+            )
+            self.send_message(
+                f'task {task_spec.name} skipped, skip_reason={skip_reason}, '
+                f'reentry_policy={task_spec.reentry_policy}'
+            )
+            return task_spec.task_id
+        self._trace_event(
+            category='task_queue',
+            event='task_add_requested',
+            task=task_spec.name,
+            task_id=task_spec.task_id,
+            retry_limit=task_spec.max_retries,
+            reentry_policy=task_spec.reentry_policy,
+            queue_size_before=queue_size_before,
+            trader_status=self.status,
+        )
+        self.send_message(f'adding task: {task_spec.name}({task_spec.task_id})', debug=True)
+        self._add_task_to_queue(task_spec)
+        return task_spec.task_id
 
     def history_orders(self, with_trade_results=True) -> pd.DataFrame:
         """ 账户的历史订单详细信息
@@ -1555,13 +2081,15 @@ class Trader(object):
         else:
             return pd.DataFrame()
 
-    def read_sys_log(self, row_count: int = None) -> list:
+    def read_sys_log(self, row_count: int = None, include_debug: bool = True) -> list:
         """ 从系统log文件中读取文本信息，保存在一个列表中，如果指定row_count = N，则读取倒数N行
 
         Parameters
         ----------
         row_count: int, optional
-        如果给出row_count，则只读取倒数row_count行文本，如果为None，读取所有文本
+            如果给出row_count，则只读取倒数row_count行文本，如果为None，读取所有文本
+        include_debug: bool, optional, default True
+            为 False 时过滤 DEBUG 级别及带 ``<DEBUG>`` 前缀的日志行
 
         Returns
         -------
@@ -1581,6 +2109,9 @@ class Trader(object):
 
             if row_count > 0:
                 lines = lines[-row_count:]
+
+        if not include_debug:
+            lines = [line for line in lines if not _is_debug_sys_log_line(line)]
 
         return lines
 
@@ -1760,6 +2291,7 @@ class Trader(object):
             order_type = 'market'
 
         self._last_risk_decision = None
+        self._last_submit_reject_reason = None
         if self.risk_manager is not None:
             snap = self.get_account_snapshot()
             intent = OrderIntent(
@@ -1799,21 +2331,78 @@ class Trader(object):
         }
 
         order_id = record_trade_order(trade_order, data_source=self._datasource)
-        # 提交交易订单
-        if submit_order(order_id=order_id, data_source=self._datasource) is not None:
-            trade_order['order_id'] = order_id
-            saved = read_trade_order(order_id, data_source=self._datasource)
-            trade_order['status'] = saved['status']
-            st = saved.get('submitted_time')
-            if st is not None and not isinstance(st, str):
-                trade_order['submitted_time'] = pd.Timestamp(st).strftime('%Y-%m-%d %H:%M:%S')
-            else:
-                trade_order['submitted_time'] = st
-            validate_trade_order(trade_order, context='Trader.submit_trade_order')
+        # 提交前做本地最小校验，现金不足时不进入submitted
+        try:
+            if submit_order(order_id=order_id, data_source=self._datasource, mark_submitted=False) is None:
+                return {}
+        except Exception as e:
+            self._last_submit_reject_reason = str(e)
+            update_trade_order(
+                    order_id,
+                    data_source=self._datasource,
+                    status='rejected',
+                    raise_if_status_wrong=True,
+            )
+            self.send_message(
+                    f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
+                    debug=False,
+            )
+            return {}
 
-            return trade_order
+        # 由 broker 受理结果确认状态：accepted -> submitted, rejected -> rejected
+        try:
+            self._broker.connect()
+            ack = self._broker.submit_with_ack({**trade_order, 'order_id': order_id, 'status': 'submitted'})
+        except Exception as e:
+            self._last_submit_reject_reason = str(e)
+            update_trade_order(
+                    order_id,
+                    data_source=self._datasource,
+                    status='rejected',
+                    raise_if_status_wrong=True,
+            )
+            self.send_message(
+                    f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
+                    debug=False,
+            )
+            return {}
+        if not ack.get('accepted', False):
+            reject_reason = ack.get('reason') or 'Broker rejected order submission'
+            self._last_submit_reject_reason = str(reject_reason)
+            update_trade_order(
+                    order_id,
+                    data_source=self._datasource,
+                    status='rejected',
+                    raise_if_status_wrong=True,
+            )
+            self.send_message(
+                    f'<ORDER REJECTED {order_id}>: {self._last_submit_reject_reason}',
+                    debug=False,
+            )
+            return {}
+        broker_order_id = str(ack.get('broker_order_id', '') or '')
+        broker_name = getattr(self._broker, 'broker_name', '') or ''
 
-        return {}
+        update_trade_order(
+                order_id=order_id,
+                data_source=self._datasource,
+                status='submitted',
+                broker_order_id=broker_order_id or None,
+                broker_name=broker_name or None,
+        )
+        trade_order['order_id'] = order_id
+        saved = read_trade_order(order_id, data_source=self._datasource)
+        trade_order['status'] = saved['status']
+        st = saved.get('submitted_time')
+        if st is not None and not isinstance(st, str):
+            trade_order['submitted_time'] = pd.Timestamp(st).strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            trade_order['submitted_time'] = st
+        trade_order['broker_order_id'] = saved.get('broker_order_id', broker_order_id)
+        trade_order['broker_name'] = saved.get('broker_name', broker_name)
+        validate_trade_order(trade_order, context='Trader.submit_trade_order')
+
+        return trade_order
 
     def log_trade_result(self, full_trade_result) -> None:
         """ 根据返回的完整交易记录full_trade_result，生成交易记录
@@ -1838,10 +2427,6 @@ class Trader(object):
         filled_price = full_trade_result['price']
         trade_cost = full_trade_result['transaction_fee']
 
-        # TODO: 发现bug：
-        #  如果一个订单分批完成，第一个结果应返回状态partial-filled，第二个结果返回状态filled
-        #  但是在这里两个状态都会是partial-filled，需要查找原因并修改
-        # send message to indicate execution of order
         self.send_message(f'<ORDER EXECUTED {order_id}>: '
                           f'{d}-{pos} of {symbol}: {status} with {filled_qty} @ {filled_price}')
 
@@ -2125,6 +2710,7 @@ class Trader(object):
         self.status = 'sleeping'
         self.send_message('Checking trade day and initializing schedule...')
         self._initialize_schedule()
+        self.run_startup_gate()
 
         # 启动broker
         self.send_message(f'Trader is started, running with account_id: {self.account_id}\n'
@@ -2139,6 +2725,9 @@ class Trader(object):
         break_point_file_name = self.save_break_point()
         self.send_message(f'Break point saved to {break_point_file_name}')
         self.send_message('Stopping Trader, the broker will be stopped as well...')
+        if self._async_executor is not None:
+            self._async_executor.shutdown(wait=False, cancel_futures=True)
+            self._async_executor = None
         self._broker.status = 'stopped'
         broker_idle = self._broker.wait_until_idle(timeout=10.0)
         if not broker_idle:
@@ -2173,6 +2762,382 @@ class Trader(object):
         msg = Text(f'Trader is resumed to previous status({self.status})', style='bold red')
         self.send_message(message=msg)
 
+    def _live_trade_split_prepare_enabled(self) -> bool:
+        """是否启用「先 prepare_strategy_snapshot、再 run_strategy」的快照分工（阶段 5-A）。"""
+        return bool(QT_CONFIG.get('live_trade_split_strategy_prepare', False))
+
+    def _set_strategy_snapshot_marker(self, step_index: int) -> None:
+        """在成功完成市场数据准备后写入快照时间标记。"""
+        td = self.get_current_tz_datetime().strftime('%Y-%m-%d')
+        self._strategy_run_marker = (td, int(step_index), time.monotonic())
+
+    def _strategy_snapshot_skip_reason(self, step_index: int) -> str:
+        """split 模式下判断当前快照是否不可用；空串表示可执行 ``run_strategy``。"""
+        if not self._live_trade_split_prepare_enabled():
+            return ''
+        m = self._strategy_run_marker
+        today = self.get_current_tz_datetime().strftime('%Y-%m-%d')
+        if m is None:
+            return 'snapshot_missing'
+        td, idx, t0 = m
+        if td != today or int(idx) != int(step_index):
+            return 'snapshot_missing'
+        max_age = float(QT_CONFIG.get('live_trade_strategy_snapshot_max_age_seconds', 180.0))
+        if (time.monotonic() - t0) > max_age:
+            return 'snapshot_stale'
+        return ''
+
+    def _prepare_strategy_market_inputs(self, step_index: int) -> None:
+        """拉取/刷新策略步所需行情与历史数据包并填充 Operator 缓冲（同步 I/O）。
+
+        阶段 5-A：与 ``run_strategy`` 主链路拆分后可单独由 ``prepare_strategy_snapshot`` 调用。
+        """
+        operator = self._operator
+        today = self.get_current_tz_datetime().strftime('%Y-%m-%d')
+        t0 = time.monotonic()
+        max_run_freq = 'T'
+        group_timing = operator.group_timing_table.iloc[step_index].values
+        group_count = len(operator.groups)
+        groups_to_run = [operator.groups_by_index[i] for i in range(group_count) if group_timing[i]]
+
+        for group in groups_to_run:
+            for strategy in group.members:
+                freq = strategy.run_freq.upper()
+                if freq in TIME_FREQ_LEVELS and TIME_FREQ_LEVELS[freq] < TIME_FREQ_LEVELS[max_run_freq]:
+                    max_run_freq = freq
+        self.send_message(f'getting live price data for strategy run...', debug=True)
+        duration, unit, _ = parse_freq_string(max_run_freq, std_freq_only=False)
+        if (unit.lower() in ['min', '5min', '15min', '30min', 'h']) and self.is_trade_day:
+            self.refresh_datasource_price_data(unit=unit)
+
+        self.send_message(f'preparing data package...', debug=True)
+        data_packages = check_and_prepare_live_trade_data(
+                op=operator,
+                trade_date=today,
+                datasource=self._datasource,
+                shares=self.asset_pool,
+                live_prices=self.live_price,
+        )
+
+        self.send_message(f'read real time data and set operator data allocation', debug=True)
+        operator.prepare_data_buffer(
+                start_date=self.get_current_tz_datetime(),
+                end_date=self.get_current_tz_datetime(),
+                data_package=data_packages,
+        )
+        operator.create_data_windows()
+
+        self._update_live_price()
+        current_prices = self.live_price['price'].values
+        if self.operator.check_dynamic_data():
+            shares = self.asset_pool
+            own_amounts = self.account_positions['qty'].values
+            available_amounts = self.account_positions['available_qty'].values
+            own_cash = self.account_cash[0]
+            available_cash = self.account_cash[1]
+            share_count = len(shares)
+            operator._process_time_index = np.array([
+                pd.Timestamp(self.get_current_tz_datetime()).asm8
+            ], dtype=np.datetime64)
+            operator._process_data_sources = {
+                'own_cashes': np.array([own_cash], dtype=float),
+                'available_cashes': np.array([available_cash], dtype=float),
+                'own_amounts': np.asarray(own_amounts, dtype=float).reshape(1, share_count),
+                'available_amounts': np.asarray(available_amounts, dtype=float).reshape(1, share_count),
+                'trade_records': np.zeros((0, share_count), dtype=float),
+                'trade_costs': np.zeros((0, share_count), dtype=float),
+                'trade_prices': np.zeros((0, share_count), dtype=float),
+                'price_data': np.asarray(current_prices, dtype=float).reshape(1, share_count),
+            }
+
+        elapsed_ms = (time.monotonic() - t0) * 1000.0
+        self._trace_event(
+            category='live_strategy',
+            event='strategy_market_inputs_ready',
+            step_index=int(step_index),
+            trade_date=today,
+            duration_ms=round(elapsed_ms, 3),
+        )
+
+    def _prepare_strategy_snapshot(self, step_index: int) -> None:
+        """阶段 5-A：在 ``run_strategy`` 之前执行市场数据准备并打快照标记。"""
+        self._prepare_strategy_market_inputs(int(step_index))
+        self._set_strategy_snapshot_marker(int(step_index))
+
+    def collect_broker_reconcile_snapshot(self) -> Dict[str, Any]:
+        """采集启动门禁与冒烟共用的 Broker 对账快照。"""
+        tolerance = 0.05
+        snapshot: Dict[str, Any] = {
+            'failures': [],
+            'tolerance': tolerance,
+            'remote_cash': None,
+            'local_cash_total': None,
+            'cash_diff': None,
+            'remote_position_qty_total': None,
+            'local_position_qty_total': None,
+            'position_qty_diff': None,
+            'remote_orders_count': 0,
+        }
+        failures = snapshot['failures']
+        if not self._operator.is_ready(tell_me_why=False, raise_error=False):
+            failures.append('operator_not_ready')
+
+        atype = str(getattr(self, '_asset_type', 'E')).upper()
+        primary_hist = {'E': 'stock_daily', 'FD': 'fund_daily', 'IDX': 'index_daily'}.get(atype, 'stock_daily')
+        snapshot['primary_history_table'] = primary_hist
+        if primary_hist not in self._datasource.tables:
+            failures.append('schema_missing_primary_history_table')
+
+        if self.account is None:
+            failures.append('account_missing')
+
+        remote_cash = self._broker.get_remote_cash(account_id=self.account_id)
+        snapshot['remote_cash'] = remote_cash
+        if remote_cash is not None:
+            try:
+                acct = get_account(self.account_id, data_source=self._datasource)
+                local_total = float(acct['cash']) + float(acct.get('frozen_cash', 0.0) or 0.0)
+                snapshot['local_cash_total'] = local_total
+                cash_diff = float(remote_cash) - local_total
+                snapshot['cash_diff'] = cash_diff
+                if abs(cash_diff) > tolerance:
+                    failures.append('broker_cash_mismatch')
+            except Exception as exc:
+                failures.append(f'account_read_error:{type(exc).__name__}')
+
+        remote_positions = self._broker.get_remote_positions(account_id=self.account_id)
+        snapshot['remote_positions_count'] = len(remote_positions) if remote_positions else 0
+        if remote_positions:
+            try:
+                local_pos = get_account_positions(self.account_id, data_source=self._datasource)
+                remote_qty = sum(float(p.get('qty', p.get('quantity', 0)) or 0) for p in remote_positions)
+                local_qty = float(local_pos['qty'].sum()) if len(local_pos) else 0.0
+                snapshot['remote_position_qty_total'] = remote_qty
+                snapshot['local_position_qty_total'] = local_qty
+                pos_diff = remote_qty - local_qty
+                snapshot['position_qty_diff'] = pos_diff
+                if abs(pos_diff) > tolerance:
+                    failures.append('broker_position_mismatch')
+            except Exception as exc:
+                failures.append(f'position_read_error:{type(exc).__name__}')
+        try:
+            remote_orders = self._broker.get_remote_orders(account_id=self.account_id)
+            snapshot['remote_orders_count'] = len(remote_orders) if remote_orders else 0
+        except Exception as exc:
+            failures.append(f'remote_order_read_error:{type(exc).__name__}')
+        snapshot['is_ok'] = len(failures) == 0
+        return snapshot
+
+    def _emit_reconcile_checkpoint(self, checkpoint: str, block_on_failure: bool = False) -> bool:
+        """在关键生命周期节点输出统一的对账检查点 trace。"""
+        try:
+            snapshot = self.collect_broker_reconcile_snapshot()
+        except Exception as exc:
+            self._trace_event(
+                category='reconcile',
+                event='checkpoint_error',
+                checkpoint=checkpoint,
+                error_type=type(exc).__name__,
+                error=str(exc),
+            )
+            return False
+
+        failures = list(snapshot.get('failures', []))
+        if not failures:
+            self._trace_event(
+                category='reconcile',
+                event='checkpoint_passed',
+                checkpoint=checkpoint,
+                grade='pass',
+                reconcile_cash_diff=snapshot.get('cash_diff'),
+                reconcile_position_qty_diff=snapshot.get('position_qty_diff'),
+                remote_orders_count=snapshot.get('remote_orders_count', 0),
+            )
+            return True
+
+        self._trace_event(
+            category='reconcile',
+            event='checkpoint_failed' if block_on_failure else 'checkpoint_warn',
+            checkpoint=checkpoint,
+            grade='block_next_day' if block_on_failure else 'warn_only',
+            failures=','.join(failures),
+            reconcile_cash_diff=snapshot.get('cash_diff'),
+            reconcile_position_qty_diff=snapshot.get('position_qty_diff'),
+            remote_orders_count=snapshot.get('remote_orders_count', 0),
+        )
+        return False
+
+    def collect_pending_order_diagnostics(self) -> Dict[str, Any]:
+        """汇总本地在途订单与 Broker 远端订单差异（只读诊断）。"""
+        pending_statuses = {'submitted', 'partial-filled', 'created'}
+        diagnostics: Dict[str, Any] = {
+            'failures': [],
+            'local_pending_count': 0,
+            'remote_pending_count': 0,
+            'local_pending_without_broker_order_id': [],
+            'local_pending_missing_remote': [],
+            'remote_pending_not_in_local': [],
+            'is_ok': False,
+        }
+        failures = diagnostics['failures']
+
+        try:
+            local_orders = query_trade_orders(
+                    account_id=self.account_id,
+                    data_source=self._datasource,
+            )
+        except Exception as exc:
+            failures.append(f'local_pending_read_error:{type(exc).__name__}')
+            diagnostics['is_ok'] = False
+            return diagnostics
+
+        if local_orders is None or len(local_orders) == 0:
+            local_pending = pd.DataFrame(columns=['status', 'broker_order_id'])
+        else:
+            local_pending = local_orders.loc[local_orders['status'].isin(pending_statuses)].copy()
+        diagnostics['local_pending_count'] = int(len(local_pending))
+
+        local_broker_ids: set[str] = set()
+        local_pending_without_broker_order_id: list[int] = []
+        for order_id, row in local_pending.iterrows():
+            broker_order_id = row.get('broker_order_id')
+            status = str(row.get('status', ''))
+            if isinstance(broker_order_id, str) and broker_order_id.strip():
+                local_broker_ids.add(broker_order_id.strip())
+            elif status in ['submitted', 'partial-filled']:
+                local_pending_without_broker_order_id.append(int(order_id))
+        diagnostics['local_pending_without_broker_order_id'] = sorted(local_pending_without_broker_order_id)
+
+        remote_broker_ids: set[str] = set()
+        try:
+            remote_orders = self._broker.get_remote_orders(account_id=self.account_id) or []
+        except Exception as exc:
+            failures.append(f'remote_pending_read_error:{type(exc).__name__}')
+            remote_orders = []
+
+        for remote_order in remote_orders:
+            if not isinstance(remote_order, dict):
+                continue
+            remote_order_id = (
+                remote_order.get('broker_order_id')
+                or remote_order.get('order_id')
+                or remote_order.get('id')
+                or ''
+            )
+            if isinstance(remote_order_id, str) and remote_order_id.strip():
+                remote_broker_ids.add(remote_order_id.strip())
+        diagnostics['remote_pending_count'] = int(len(remote_broker_ids))
+
+        diagnostics['local_pending_missing_remote'] = sorted(local_broker_ids - remote_broker_ids)
+        diagnostics['remote_pending_not_in_local'] = sorted(remote_broker_ids - local_broker_ids)
+        diagnostics['is_ok'] = (
+            len(failures) == 0
+            and len(diagnostics['local_pending_without_broker_order_id']) == 0
+            and len(diagnostics['local_pending_missing_remote']) == 0
+            and len(diagnostics['remote_pending_not_in_local']) == 0
+        )
+        return diagnostics
+
+    def _diagnose_pending_orders(self) -> Dict[str, Any]:
+        """执行本地在途订单与 Broker 远端订单差异诊断并输出 trace。"""
+        diagnostics = self.collect_pending_order_diagnostics()
+        failures = diagnostics.get('failures', []) or []
+        local_missing = diagnostics.get('local_pending_missing_remote', []) or []
+        remote_orphans = diagnostics.get('remote_pending_not_in_local', []) or []
+        without_bid = diagnostics.get('local_pending_without_broker_order_id', []) or []
+
+        if diagnostics.get('is_ok', False):
+            self._trace_event(
+                category='reconcile',
+                event='pending_orders_diag_passed',
+                local_pending_count=diagnostics.get('local_pending_count', 0),
+                remote_pending_count=diagnostics.get('remote_pending_count', 0),
+            )
+            self.send_message('<PENDING DIAG OK>: local/remote pending orders are consistent.', debug=False)
+            return diagnostics
+
+        self._trace_event(
+            category='reconcile',
+            event='pending_orders_diag_warn',
+            failures=','.join(failures),
+            local_pending_count=diagnostics.get('local_pending_count', 0),
+            remote_pending_count=diagnostics.get('remote_pending_count', 0),
+            local_pending_without_broker_order_id=','.join(str(i) for i in without_bid),
+            local_pending_missing_remote=','.join(str(i) for i in local_missing),
+            remote_pending_not_in_local=','.join(str(i) for i in remote_orphans),
+        )
+        self.send_message(
+            '<PENDING DIAG WARN>: local/remote pending orders mismatch, check TRACE reconcile event.',
+            debug=False,
+        )
+        return diagnostics
+
+    def run_startup_gate(self) -> bool:
+        """阶段 5-B：启动前校验；更新 ``_startup_gate_trading_allowed`` 并返回是否允许交易侧任务。
+
+        Returns
+        -------
+        bool
+            与 ``_startup_gate_trading_allowed`` 一致；``warn`` 模式下即使检查失败也返回 True。
+        """
+        mode = str(QT_CONFIG.get('live_trade_startup_gate_mode', 'off')).lower().strip()
+        failures: list[str] = []
+        if mode == 'off':
+            self._startup_gate_trading_allowed = True
+            self._trace_event(category='startup_gate', event='gate_skipped', mode=mode)
+            return True
+
+        if not self.is_trade_day:
+            self._trace_event(category='startup_gate', event='gate_skipped_non_trade_day', mode=mode)
+            self._startup_gate_trading_allowed = True
+            return True
+
+        snapshot = self.collect_broker_reconcile_snapshot()
+        failures = list(snapshot.get('failures', []))
+
+        if failures and mode == 'warn':
+            self._trace_event(
+                category='startup_gate',
+                event='gate_warn',
+                mode=mode,
+                failures=','.join(failures),
+                reconcile_cash_diff=snapshot.get('cash_diff'),
+                reconcile_position_qty_diff=snapshot.get('position_qty_diff'),
+                remote_orders_count=snapshot.get('remote_orders_count', 0),
+            )
+            self._startup_gate_trading_allowed = True
+            return True
+        if failures and mode == 'block':
+            self._trace_event(
+                category='startup_gate',
+                event='gate_failed',
+                mode=mode,
+                failures=','.join(failures),
+                reconcile_cash_diff=snapshot.get('cash_diff'),
+                reconcile_position_qty_diff=snapshot.get('position_qty_diff'),
+                remote_orders_count=snapshot.get('remote_orders_count', 0),
+            )
+            self._startup_gate_trading_allowed = False
+            return False
+
+        self._trace_event(
+            category='startup_gate',
+            event='gate_passed',
+            mode=mode,
+            remote_orders_count=snapshot.get('remote_orders_count', 0),
+        )
+        self._startup_gate_trading_allowed = True
+        return True
+
+    def _startup_gate_run_strategy_skip_reason(self) -> str:
+        """若启动门禁禁止交易，则返回 ``gate_failed`` 供 ``add_task`` 跳过 ``run_strategy``。"""
+        mode = str(QT_CONFIG.get('live_trade_startup_gate_mode', 'off')).lower().strip()
+        if mode != 'block':
+            return ''
+        if getattr(self, '_startup_gate_trading_allowed', True):
+            return ''
+        return 'gate_failed'
+
     def _run_strategy(self, step_index) -> int:
         """ 运行交易策略
 
@@ -2203,69 +3168,26 @@ class Trader(object):
         available_cash = self.account_cash[1]
 
         today = self.get_current_tz_datetime().strftime('%Y-%m-%d')
+        split = self._live_trade_split_prepare_enabled()
+        if split:
+            snap_skip = self._strategy_snapshot_skip_reason(int(step_index))
+            if snap_skip:
+                self._trace_event(
+                    category='live_strategy',
+                    event='strategy_run_skipped',
+                    step_index=int(step_index),
+                    trade_date=today,
+                    skip_reason=snap_skip,
+                )
+                return 0
+        else:
+            self._prepare_strategy_market_inputs(int(step_index))
 
-        # 下载最小所需实时历史数据
-        max_run_freq = 'T'
         group_timing = operator.group_timing_table.iloc[step_index].values
         group_count = len(operator.groups)
         groups_to_run = [operator.groups_by_index[i] for i in range(group_count) if group_timing[i]]
 
-        for group in groups_to_run:
-            for strategy in group.members:
-                freq = strategy.run_freq.upper()
-                if freq in TIME_FREQ_LEVELS and TIME_FREQ_LEVELS[freq] < TIME_FREQ_LEVELS[max_run_freq]:
-                    max_run_freq = freq
-        # 解析strategy_run的运行频率，根据频率确定是否更新数据源中的数据
-        self.send_message(f'getting live price data for strategy run...', debug=True)
-        # # 将类似于'2H'或'15min'的时间频率转化为两个变量：duration和unit (duration=2, unit='H')/ (duration=15, unit='min')
-        duration, unit, _ = parse_freq_string(max_run_freq, std_freq_only=False)
-        if (unit.lower() in ['min', '5min', '15min', '30min', 'h']) and self.is_trade_day:
-            # 如果strategy_run的运行频率为分钟或小时，则调用fetch_realtime_price_data方法获取分钟级别的实时价格
-            self.refresh_datasource_price_data(unit=unit)
-        # TODO: 由于此时下载的是完整的K线数据，对应着DataType的ULC属性为False的情形，如果ULC为True，则需要继续下载不完整的K线
-        # 如果strategy_run的运行频率大于等于D，则不下载实时数据，使用datasource中的历史数据
-        else:
-            pass
-
-        # 从dataSource中读取最新数据,组装成data_package
-        self.send_message(f'preparing data package...', debug=True)
-        data_packages = check_and_prepare_live_trade_data(
-                op=operator,
-                trade_date=today,
-                datasource=self._datasource,
-                shares=self.asset_pool,
-                live_prices=self.live_price,
-        )
-
-        self.send_message(f'read real time data and set operator data allocation', debug=True)
-        operator.prepare_data_buffer(
-                start_date=self.get_current_tz_datetime(),
-                end_date=self.get_current_tz_datetime(),
-                data_package=data_packages,
-        )
-        operator.create_data_windows()
-
-        # 更新最新实时价格（供解析信号与 process data 注入使用）
-        self._update_live_price()
         current_prices = self.live_price['price'].values
-
-        # 如果策略需要用到交易过程数据，则向 Operator 注入当前账户/持仓视图，供 get_data('proc.xxx') 使用
-        if self.operator.check_dynamic_data():
-            share_count = len(shares)
-            # 实盘单次运行仅一个“步”，策略访问的 current_idx 为 0
-            operator._process_time_index = np.array([
-                pd.Timestamp(self.get_current_tz_datetime()).asm8
-            ], dtype=np.datetime64)
-            operator._process_data_sources = {
-                'own_cashes': np.array([own_cash], dtype=float),
-                'available_cashes': np.array([available_cash], dtype=float),
-                'own_amounts': np.asarray(own_amounts, dtype=float).reshape(1, share_count),
-                'available_amounts': np.asarray(available_amounts, dtype=float).reshape(1, share_count),
-                'trade_records': np.zeros((0, share_count), dtype=float),
-                'trade_costs': np.zeros((0, share_count), dtype=float),
-                'trade_prices': np.zeros((0, share_count), dtype=float),
-                'price_data': np.asarray(current_prices, dtype=float).reshape(1, share_count),
-            }
 
         # 开始运行交易策略，逐个生成交易信号
         submitted_qty = 0
@@ -2330,7 +3252,6 @@ class Trader(object):
 
                 if trade_order:
                     order_id = trade_order['order_id']
-                    self._broker.order_queue.put(trade_order)
                     # format the message depending on buy/sell orders
                     msg = Text(f'<NEW ORDER {order_id}>: <{name} - {sym}> ', style='bold')
                     if d == 'buy':  # red for buy
@@ -2362,6 +3283,13 @@ class Trader(object):
         None
         """
 
+        order_id = result.get('order_id') if isinstance(result, dict) else 'N/A'
+        self._trace_event(
+            category='trade_result',
+            event='process_started',
+            order_id=order_id,
+            result_type=type(result).__name__,
+        )
         self.send_message(f'running task process_result, got result: \n{result}', debug=True)
 
         try:
@@ -2370,6 +3298,13 @@ class Trader(object):
             result_id = trade_result['result_id']
 
         except Exception as e:
+            self._trace_event(
+                category='trade_result',
+                event='process_failed',
+                order_id=order_id,
+                error_type=type(e).__name__,
+                error=str(e),
+            )
             self.send_message(f'{e} Error occurred during processing trade result, result will be ignored')
             import traceback
             self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
@@ -2377,7 +3312,19 @@ class Trader(object):
 
         # 生成交易结果后，逐个检查交易结果并记录到trade_log文件并推送到信息队列（记录到system_log中）
         if result_id is None:
+            self._trace_event(
+                category='trade_result',
+                event='process_skipped_empty_result',
+                order_id=order_id,
+                skip_reason='empty_trade_result',
+            )
             return
+        self._trace_event(
+            category='trade_result',
+            event='process_succeeded',
+            order_id=order_id,
+            result_id=result_id,
+        )
         self.log_trade_result(full_trade_result=trade_result)
 
         # 执行交易结果的立即交割; 如果交割期为0，则立即交割结果，否则第二天开盘前集中交割
@@ -2391,7 +3338,21 @@ class Trader(object):
 
         # 记录交割结果到trade_log和system_log
         if deliver_result.get('delivery_status') != 'DL':
+            self._trace_event(
+                category='trade_result',
+                event='delivery_pending',
+                order_id=order_id,
+                result_id=result_id,
+                delivery_status=deliver_result.get('delivery_status'),
+            )
             return
+        self._trace_event(
+            category='trade_result',
+            event='delivery_completed',
+            order_id=order_id,
+            result_id=result_id,
+            delivery_status=deliver_result.get('delivery_status'),
+        )
         self.log_cash_delivery(delivery_result=deliver_result)
         self.log_qty_delivery(delivery_result=deliver_result)
 
@@ -2445,6 +3406,7 @@ class Trader(object):
 
         # 获取当日实时价格
         self._update_live_price()
+        self._emit_reconcile_checkpoint(checkpoint='pre_open', block_on_failure=False)
 
     def _post_close(self) -> None:
         """ 所有收盘后应该完成的任务
@@ -2468,7 +3430,11 @@ class Trader(object):
             self.send_message('unprocessed orders found, these orders will be canceled')
             for order in pending_orders:
                 order_id = order['order_id']
-                cancel_order(order_id, data_source=self._datasource)  # 生成订单取消记录，并记录到数据库
+                cancel_order(
+                        order_id,
+                        data_source=self._datasource,
+                        account_id=self.account_id,
+                )  # 生成订单取消记录，并记录到数据库
                 self.send_message(f'canceled unprocessed order: {order_id}')
         # 检查今日成交订单，确认是否有"部分成交"的订单，如果有，生成取消订单，取消尚未成交的部分
         partially_filled_orders = query_trade_orders(
@@ -2479,7 +3445,7 @@ class Trader(object):
         self.send_message(f'Looking for partial-filled orders... {len(partially_filled_orders)} found!')
         for order_id in partially_filled_orders.index:
             # 对于所有没有完全成交的订单，生成取消订单，取消剩余的部分
-            cancel_order(order_id=order_id, data_source=self._datasource)
+            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
             self.send_message(f'Canceled remaining qty of partial-filled order: {order_id}')
 
         # 检查未提交订单，确认是否有"created"的订单，如果有，生成取消订单
@@ -2492,7 +3458,7 @@ class Trader(object):
 
         for order_id in unsubmitted_orders.index:
             # 对于所有未成交的订单，生成取消订单
-            cancel_order(order_id=order_id, data_source=self._datasource)
+            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
             self.send_message(f'Canceled un-submitted order: {order_id}')
 
         # 检查未成交订单，确认是否有"submitted"的订单，如果有，生成取消订单
@@ -2505,8 +3471,10 @@ class Trader(object):
 
         for order_id in unfilled_orders.index:
             # 对于所有未成交的订单，生成取消订单
-            cancel_order(order_id=order_id, data_source=self._datasource)
+            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
             self.send_message(f'Canceled unfilled order: {order_id}')
+
+        self._emit_reconcile_checkpoint(checkpoint='post_close', block_on_failure=False)
 
     # def _change_date(self) -> None:
     #     """ 改变日期，在日期改变（午夜）前执行的操作，包括：
@@ -2592,7 +3560,43 @@ class Trader(object):
         )
 
     # ================ task operations =================
-    def _run_task(self, task, *args: Any, run_in_main_thread=False) -> None:
+    def _record_task_dead_letter(self, task_spec: TaskSpec, error: Exception) -> None:
+        """将任务记录到死信队列。"""
+        task_spec.status = 'failed'
+        task_spec.last_error = str(error)
+        self._dead_letter_tasks.append(task_spec)
+        self._trace_event(
+            category='task_runner',
+            event='task_dead_lettered',
+            task=task_spec.name,
+            task_id=task_spec.task_id,
+            retry_count=task_spec.retry_count,
+            max_retries=task_spec.max_retries,
+            error_type=type(error).__name__,
+            error=str(error),
+        )
+
+    def _handle_task_failure(self, task_spec: Optional[TaskSpec], error: Exception) -> None:
+        """处理任务失败：重试或转入死信。"""
+        if task_spec is None:
+            return
+        task_spec.last_error = str(error)
+        if task_spec.retry_count < task_spec.max_retries:
+            task_spec.retry_count += 1
+            task_spec.status = 'queued'
+            self._trace_event(
+                category='task_runner',
+                event='task_retry_scheduled',
+                task=task_spec.name,
+                task_id=task_spec.task_id,
+                retry_count=task_spec.retry_count,
+                max_retries=task_spec.max_retries,
+            )
+            self._add_task_to_queue(task_spec)
+            return
+        self._record_task_dead_letter(task_spec, error)
+
+    def _run_task(self, task, *args: Any, run_in_main_thread=False, task_spec: Optional[TaskSpec] = None) -> None:
         """ 运行任务，这个API不应该开放给用户使用，而是应该在trader的主循环中被调用
 
         Parameters
@@ -2611,7 +3615,9 @@ class Trader(object):
             'open_market':        self._market_open,
             'close_market':       self._market_close,
             'post_close':         self._post_close,
+            'diagnose_pending_orders': self._diagnose_pending_orders,
             'run_strategy':       self._run_strategy,
+            'prepare_strategy_snapshot': self._prepare_strategy_snapshot,
             'process_result':     self._process_result,
             'acquire_live_price': self._update_live_price,
             # 'change_date':        self._change_date,
@@ -2636,15 +3642,88 @@ class Trader(object):
 
         task_func = available_tasks[task]
 
-        async_tasks = ['acquire_live_price', 'run_strategy']
+        async_tasks = ['acquire_live_price']
+        if not self._live_trade_split_prepare_enabled():
+            async_tasks.append('run_strategy')
         if (not run_in_main_thread) and (task in async_tasks):
+            self._trace_event(
+                category='task_runner',
+                event='task_dispatch',
+                task=task,
+                mode='async',
+                args_count=len(args),
+            )
             self.send_message(f'will run async task: {task} with args: {args}', debug=True)
-            run_async_task(task_func, *args)
+
+            if self._async_executor is None:
+                self._async_executor = ThreadPoolExecutor(
+                    max_workers=1,
+                    thread_name_prefix=f'TraderAsync-{self.account_id}',
+                )
+
+            def _async_call():
+                if task_spec is not None:
+                    if task_spec.canceled:
+                        task_spec.status = 'canceled'
+                        self._trace_event(
+                            category='task_runner',
+                            event='task_canceled_before_async_run',
+                            task=task_spec.name,
+                            task_id=task_spec.task_id,
+                        )
+                        return
+                    task_spec.status = 'running'
+                run_sync_task(task_func, *args)
+                if task_spec is not None:
+                    task_spec.status = 'done'
+
+            future = self._async_executor.submit(_async_call)
+
+            def _on_done(done_future):
+                exc = done_future.exception()
+                if exc is None:
+                    return
+                self._trace_event(
+                    category='task_runner',
+                    event='async_task_failed',
+                    task=task,
+                    task_id=getattr(task_spec, 'task_id', 'N/A'),
+                    error_type=type(exc).__name__,
+                    error=str(exc),
+                )
+                self._handle_task_failure(task_spec, exc)
+
+            future.add_done_callback(_on_done)
         else:
+            self._trace_event(
+                category='task_runner',
+                event='task_dispatch',
+                task=task,
+                mode='sync',
+                args_count=len(args),
+            )
             self.send_message(f'running sync task: {task} with args: {args}', debug=True)
             run_sync_task(task_func, *args)
 
     # =============== internal methods =================
+
+    def _normalize_task_spec(self, task) -> TaskSpec:
+        """将旧式任务表示转换为 TaskSpec。"""
+        if isinstance(task, TaskSpec):
+            self._task_registry[task.task_id] = task
+            return task
+
+        if isinstance(task, tuple):
+            if len(task) != 2 or not isinstance(task[0], str):
+                raise ValueError(f'Invalid task tuple: {task}')
+            task_name = task[0]
+            task_args = task[1] if isinstance(task[1], tuple) else (task[1],)
+            return self._new_task_spec(task_name=task_name, args=task_args)
+
+        if isinstance(task, str):
+            return self._new_task_spec(task_name=task, args=())
+
+        raise TypeError(f'Unsupported task type: {type(task)}')
 
     def _add_task_to_queue(self, task) -> None:
         """ 添加任务到任务队列
@@ -2654,8 +3733,22 @@ class Trader(object):
         task: str
             任务名称
         """
-        self.send_message(f'putting task {task} into task queue', debug=True)
-        self.task_queue.put(task)
+        task_spec = self._normalize_task_spec(task)
+        queue_size_before = self.task_queue.qsize()
+        task_spec.status = 'queued'
+        self.send_message(f'putting task {task_spec.name}({task_spec.task_id}) into task queue', debug=True)
+        self.task_queue.put(task_spec)
+        self._trace_event(
+            category='task_queue',
+            event='task_enqueued',
+            task=task_spec.name,
+            task_id=task_spec.task_id,
+            retry_count=task_spec.retry_count,
+            max_retries=task_spec.max_retries,
+            queue_size_before=queue_size_before,
+            queue_size_after=self.task_queue.qsize(),
+            trader_status=self.status,
+        )
 
     def _add_task_from_schedule(self, current_time=None) -> None:
         """ 根据当前时间从任务日程中添加任务到任务队列，只有到时间时才添加任务。
@@ -2702,7 +3795,10 @@ class Trader(object):
         for task_time, _, task, task_tuple in expired_tasks:
             self.send_message(f'current time {current_time} >= task time {task_time}, '
                               f'adding task: {task} from agenda ({task_tuple})', debug=True)
-            self._add_task_to_queue(task)
+            if isinstance(task, tuple):
+                self.add_task(task[0], *task[1])
+            else:
+                self.add_task(task)
 
     def _initialize_schedule(self, current_time=None) -> None:
         """ 初始化交易日的任务日程, 在任务清单中添加以下任务：
@@ -2726,70 +3822,33 @@ class Trader(object):
             # 如果任务日程非空列表，直接返回
             self.send_message('task agenda is not empty, no need to initialize agenda', debug=True)
             return
-        self.task_daily_schedule = create_daily_task_schedule(
-                operator=self.operator,
-                is_trade_day=self.is_trade_day,
-                market_open_time_am=self.market_open_time_am,
-                market_close_time_am=self.market_close_time_am,
-                market_open_time_pm=self.market_open_time_pm,
-                market_close_time_pm=self.market_close_time_pm,
-                live_price_frequency=self.live_price_freq,
-                open_close_timing_offset=self.open_close_timing_offset,
-                daily_refill_tables=self.daily_refill_tables,
-                weekly_refill_tables=self.weekly_refill_tables,
-                monthly_refill_tables=self.monthly_refill_tables,
+        current_date = self.get_current_tz_datetime().date()
+        task_plan = create_daily_task_plan(
+            operator=self.operator,
+            is_trade_day=self.is_trade_day,
+            market_open_time_am=self.market_open_time_am,
+            market_close_time_am=self.market_close_time_am,
+            market_open_time_pm=self.market_open_time_pm,
+            market_close_time_pm=self.market_close_time_pm,
+            live_price_frequency=self.live_price_freq,
+            open_close_timing_offset=self.open_close_timing_offset,
+            daily_refill_tables=self.daily_refill_tables,
+            weekly_refill_tables=self.weekly_refill_tables,
+            monthly_refill_tables=self.monthly_refill_tables,
+            current_date=current_date,
         )
+        self.task_daily_schedule = [item.as_legacy_tuple() for item in task_plan]
         self.send_message(f'created complete daily schedule (to be further adjusted): {self.task_daily_schedule}',
                           debug=True)
-        # 根据当前时间删除过期的任务
-        moa = pd.to_datetime(self.market_open_time_am).time()
-        mca = pd.to_datetime(self.market_close_time_am).time()
-        moc = pd.to_datetime(self.market_open_time_pm).time()
-        mcc = pd.to_datetime(self.market_close_time_pm).time()
-        if current_time < moa:
-            # before market morning open, keep all tasks
-            self.send_message('before market morning open, keeping all tasks', debug=True)
-        elif moa < current_time < mca:
-            # market open time, remove all task before current time except pre_open
-            self.send_message('market open, removing all tasks before current time except pre_open and open_market',
-                              debug=True)
-            self.task_daily_schedule = [task for task in self.task_daily_schedule if
-                                        (pd.to_datetime(task[0]).time() >= current_time) or
-                                        (task[1] in ['pre_open',
-                                                     'open_market'])]
-        elif mca < current_time < moc:
-            # before market afternoon open, remove all task before current time except pre_open, open_market and sleep
-            self.send_message('before market afternoon open, removing all tasks before current time '
-                              'except pre_open, open_market and sleep', debug=True)
-            self.task_daily_schedule = [task for task in self.task_daily_schedule if
-                                        (pd.to_datetime(task[0]).time() >= current_time) or
-                                        (task[1] in ['pre_open',
-                                                     'open_market',
-                                                     'close_market'])]
-        elif moc < current_time < mcc:
-            # market afternoon open, remove all task before current time except pre_open, open_market, sleep, and wakeup
-            self.send_message('market afternoon open, removing all tasks before current time '
-                              'except pre_open, open_market, sleep and wakeup', debug=True)
-            self.task_daily_schedule = [task for task in self.task_daily_schedule if
-                                        (pd.to_datetime(task[0]).time() >= current_time) or
-                                        (task[1] in ['pre_open',
-                                                     'open_market',
-                                                     'close_market'])]
-        elif mcc < current_time:
-            # after market close, remove all tasks before current time except pre_open and post_close
-            self.send_message('market closed, removing all tasks before current time except '
-                              'pre_open and post_close',
-                              debug=True)
-            # previously considered to add refill), but looks like it is not the best practice,
-            # because this will result in multiple refill tasks if the user restart the trader
-            # for many times after 16:00, this might not be the ideal case,
-            self.task_daily_schedule = [task for task in self.task_daily_schedule if
-                                        (pd.to_datetime(task[0]).time() >= current_time) or
-                                        (task[1] in ['pre_open',
-                                                     'post_close', ])]
-        else:
-            err = ValueError(f'Invalid current time: {current_time}')
-            raise err
+        # 根据当前时间删除过期任务，保留关键节点以支持盘中启动追赶
+        self.task_daily_schedule = apply_schedule_catch_up_policy(
+            task_schedule=self.task_daily_schedule,
+            current_time=current_time,
+            market_open_time_am=self.market_open_time_am,
+            market_close_time_am=self.market_close_time_am,
+            market_open_time_pm=self.market_open_time_pm,
+            market_close_time_pm=self.market_close_time_pm,
+        )
 
         self.send_message(f'adjusted daily schedule: {self.task_daily_schedule}', debug=True)
 
@@ -2855,7 +3914,7 @@ class Trader(object):
 
     TASK_WHITELIST = {
         'stopped':  ['start'],
-        'running':  ['stop', 'sleep', 'pause', 'run_strategy', 'process_result', 'pre_open',
+        'running':  ['stop', 'sleep', 'pause', 'prepare_strategy_snapshot', 'run_strategy', 'process_result', 'pre_open',
                      'open_market', 'close_market', 'acquire_live_price'],
         'sleeping': ['wakeup', 'stop', 'pause', 'pre_open', 'close_market',
                      'process_result',  # 如果交易结果已经产生，哪怕处理时Trader已经处于sleeping状态，也应该处理完所有结果

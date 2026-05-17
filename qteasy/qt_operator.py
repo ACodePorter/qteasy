@@ -1749,6 +1749,23 @@ class Operator:
 
         return
 
+    @staticmethod
+    def _build_schedule_time_kwargs_from_config(config: Mapping[str, Any]) -> dict:
+        """从配置字典构建交易时段参数，统一供 ``prepare_running_schedule()`` 使用。"""
+
+        from qteasy.trading_util import build_operator_schedule_time_kwargs
+
+        return build_operator_schedule_time_kwargs(
+            market_open_time_am=config['market_open_time_am'],
+            market_close_time_am=config['market_close_time_am'],
+            market_open_time_pm=config['market_open_time_pm'],
+            market_close_time_pm=config['market_close_time_pm'],
+            include_start_am=True,
+            include_end_am=True,
+            include_start_pm=True,
+            include_end_pm=True,
+        )
+
     def get_signal_count(self, steps=None) -> int:
         """ 获取当前运行时间表中所有策略组生成的交易信号数量
 
@@ -2069,10 +2086,13 @@ class Operator:
 
         live_cfg = build_live_trade_config(config)
 
+        import qteasy as qt
+        ds = datasource if datasource is not None else qt.QT_DATA_SOURCE
+        from qteasy.trade_recording import get_or_create_position, resolve_live_trade_account_id, update_position
+
         init_holdings = config['live_trade_init_holdings']
-        account_id = config['live_trade_account_id']
+        account_id = resolve_live_trade_account_id(config, data_source=ds)
         # if init_holdings is not None then add holdings to account
-        from qteasy.trade_recording import get_or_create_position, update_position
         if init_holdings is not None:
             if not isinstance(init_holdings, dict):
                 err = ValueError(f'init_holdings must be a dict, got {type(init_holdings)} instead.')
@@ -2082,11 +2102,11 @@ class Operator:
                         account_id=account_id,
                         symbol=symbol,
                         position_type='long' if amount > 0 else 'short',
-                        data_source=datasource,
+                        data_source=ds,
                 )
                 update_position(
                         position_id=pos_id,
-                        data_source=datasource,
+                        data_source=ds,
                         **{
                             'qty_change':           abs(amount),
                             'available_qty_change': abs(amount),
@@ -2114,9 +2134,10 @@ class Operator:
                 "probabilities":   (0.5, 0.45, 0.05),  # originally: (0.9, 0.08, 0.02)
             }
 
-        from qteasy.broker import get_broker
+        from qteasy.broker import BrokerFacade, get_broker
         from qteasy.trader import Trader
         broker = get_broker(broker_type, broker_params)
+        broker = BrokerFacade(broker)
 
         cost_params = np.array(
                 list(parse_trade_cost_params(config, asset_type=config.get('asset_type')).values()),
@@ -2139,7 +2160,7 @@ class Operator:
                 operator=self,
                 account_id=account_id,
                 broker=broker,
-                datasource=datasource,
+                datasource=ds,
                 asset_pool=live_asset_pool,
                 asset_type=config['asset_type'],
                 time_zone=config['time_zone'],
@@ -2179,7 +2200,7 @@ class Operator:
         refill_missing_datasource_data(
                 operator=self,
                 trader=trader,
-                datasource=datasource,
+                datasource=ds,
         )
 
         ui_type = live_cfg.live_trade_ui_type
@@ -2224,9 +2245,11 @@ class Operator:
         # 创建回测交易所需的各种参数和辅助参数，包括现金投入和交割所需数据表
         start_date, end_date = parse_backtest_start_end_dates(config=config)  # 回测开始和结束日期
         # 在生成交易信号之前准备运行计划及历史数据
+        schedule_time_kwargs = self._build_schedule_time_kwargs_from_config(config)
         self.prepare_running_schedule(
                 start_date=start_date,
                 end_date=end_date,
+                **schedule_time_kwargs,
         )
         # 现金投入和交割数据表
         invest_cash_plan = parse_backtest_cash_plan(config)
@@ -2438,11 +2461,12 @@ class Operator:
         # 准备优化数据
         # 生成优化交易运行计划
         # debug
+        schedule_time_kwargs = self._build_schedule_time_kwargs_from_config(config)
         print(f'Preparing optimization data from {opti_start} to {opti_end}...')
         self.prepare_running_schedule(
                 start_date=opti_start,
                 end_date=opti_end,
-                # TODO: 在这里应该引用config中的market_open_time等等属性，用于生成trade_time_index的时间点
+                **schedule_time_kwargs,
         )
 
         # debug
@@ -2488,7 +2512,7 @@ class Operator:
         self.prepare_running_schedule(
                 start_date=test_start,
                 end_date=test_end,
-                # TODO: 在这里应该引用config中的market_open_time等等属性，用于生成trade_time_index的时间点
+                **schedule_time_kwargs,
         )
         print(f'preparing data buffer...')
         self.prepare_data_buffer(

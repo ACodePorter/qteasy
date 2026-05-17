@@ -17,6 +17,8 @@ from threading import Thread
 from rich.text import Text
 from textual.screen import ModalScreen
 
+from qteasy.trader import coerce_trader_message
+
 from textual import (
     work,
     on,
@@ -547,8 +549,7 @@ class TraderApp(App):
         this event loop should be running in a separate thread.
 
         """
-        Thread(target=self.trader.run).start()
-        Thread(target=self.trader.broker.run).start()
+        self.trader.start()
 
         system_log = self.query_one(SysLog)
         display = self.query_one(DisplayPanel)
@@ -581,19 +582,14 @@ class TraderApp(App):
 
             # check the message queue of the trader
             if not self.trader.message_queue.empty():
-                msg = self.trader.message_queue.get()
-                system_log.write_with_timestamp(msg)
+                msg = coerce_trader_message(self.trader.message_queue.get())
+                system_log.write_with_timestamp(msg.text)
 
-                if any(words in msg for words in ['RAN STRATEGY', 'RESULT', 'DELIVERY']):
+                if any(words in msg.text for words in ['RAN STRATEGY', 'RESULT', 'DELIVERY']):
                     # if ran strategy or got result from broker, refresh UI
                     self.refresh_order()
                     self.refresh_holdings()
                     self.refresh_trade_log()
-
-            # check the message queue of the broker
-            if not self.trader.broker.broker_messages.empty():
-                msg = self.trader.broker.broker_messages.get()
-                system_log.write_with_timestamp(msg)
 
             if self.trader.status not in ['running', 'paused']:
                 info_refresh_interval = 600  # every 1 minutes
@@ -931,8 +927,8 @@ class TraderApp(App):
         """Actions to perform before exiting the app.
         """
         # stop the trader, broker and the trader event loop
-        self.trader._run_task('stop')
-        time.sleep(0.1)
+        self.trader.stop(wait=False, include_post_close=True)
+        self.trader.join(timeout=5.0)
 
         self.status = 'stopped'
 
@@ -984,7 +980,6 @@ class TraderApp(App):
                 order_type='market',
         )
         if trade_order:
-            self.trader.broker.order_queue.put(trade_order)
             order_id = trade_order['order_id']
             syslog.write_with_timestamp(
                     f'Order <{order_id}> has been submitted to broker: '
@@ -999,7 +994,11 @@ class TraderApp(App):
                         f'rule_id={decision.rule_id!r}, reason={decision.reason!r}'
                 )
             else:
-                syslog.write_with_timestamp('Order submission failed.')
+                reason = self.trader.last_submit_reject_reason
+                if reason:
+                    syslog.write_with_timestamp(f'Order submission failed: {reason}')
+                else:
+                    syslog.write_with_timestamp('Order submission failed.')
 
         if not self.trader.is_market_open:
             syslog.write_with_timestamp(

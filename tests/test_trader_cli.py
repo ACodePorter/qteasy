@@ -6,25 +6,66 @@
 # Created:  2024-03-04
 # Desc:
 #   Unittest for trader CLI.
-#   使用专用测试 DataSource（非 QT_DATA_SOURCE），测试结束后清理测试数据。
+#   使用专用测试 DataSource（非 QT_DATA_SOURCE），
+#   测试结束后清理表数据。
+#   Build 1 CLI 覆盖矩阵（PR 附件）见 TestTraderCLIBuild1Coverage。
 # ======================================
 
+import json
+import logging
 import os
+import shutil
+import tempfile
 import unittest
 import time
 import io
 from contextlib import redirect_stdout
+from unittest.mock import patch, MagicMock
 import pandas as pd
+from rich.text import Text
 
+import qteasy as qt
 from qteasy import DataSource, Operator
 from qteasy.trader import Trader
-from qteasy.trader_cli import TraderShell
-from qteasy.trading_util import process_account_delivery, process_trade_result, submit_order, update_position
+from qteasy.trader import TraderMessage, coerce_trader_message
+from qteasy.trader_cli import (
+    TraderShell,
+    DEBUG_RUN_TASK_CHOICES,
+    CLI_COMMAND_ALIASES,
+    BROKER_SUBCOMMANDS,
+    ModeMenuExitRequest,
+    _filter_sys_log_lines,
+    _drain_message_queue,
+    _accept_mode_menu_char,
+    _parse_mode_menu_choice,
+    _parse_error_recovery_choice,
+    _read_line_with_timeout,
+    _read_line_with_timeout_unix,
+)
+from qteasy.trading_util import (
+    process_account_delivery,
+    process_trade_result,
+    submit_order,
+    update_position,
+    list_live_trade_artifacts,
+    sys_log_file_path_name,
+    trade_log_file_path_name,
+    break_point_file_path_name,
+    risk_log_file_path_name,
+)
 from qteasy.trade_recording import new_account, read_trade_order_detail, save_parsed_trade_orders
 from qteasy.trade_recording import get_or_create_position, get_position_by_id, get_account
 from qteasy.trade_recording import query_trade_orders
 from qteasy.broker import SimulatorBroker
 from qteasy.risk import MaxOrderQtyRule, RiskManager
+
+
+def _detach_live_logger_handlers() -> None:
+    """拆掉全局 ``live`` Logger 已有 Handler，防止跨用例重复挂载 ``FileHandler`` 导致单行双写。"""
+    live = logging.getLogger('live')
+    for h in list(live.handlers):
+        live.removeHandler(h)
+        h.close()
 
 
 def _get_cli_test_data_dir():
@@ -93,7 +134,7 @@ class TestTraderCLI(unittest.TestCase):
         # 创建一个操作员
         operator = Operator(strategies=['macd', 'dma'], op_type='step')
         # 创建一个经纪商
-        broker = SimulatorBroker()
+        broker = SimulatorBroker(reject_submit_probability=0.0)
 
         test_ds.reconnect()
 
@@ -267,6 +308,17 @@ class TestTraderCLI(unittest.TestCase):
         print(f'testing run command with wrong arguments and returns False')
         self.assertFalse(tss.do_exit('wrong_argument'))
 
+    def test_request_shutdown_calls_trader_runtime_stop(self):
+        """测试 shell 退出路径调用 Trader.stop(wait=False)。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] _request_shutdown runtime stop call')
+        with patch.object(tss.trader, 'stop') as mock_stop:
+            tss._shutdown_requested = False
+            tss._request_shutdown()
+        print(' stop call args:', mock_stop.call_args)
+        mock_stop.assert_called_once_with(wait=False, include_post_close=True)
+        self.assertEqual(tss.status, 'stopped')
+
     def test_command_pool(self):
         """ test pool command"""
         tss = self.tss
@@ -339,7 +391,7 @@ class TestTraderCLI(unittest.TestCase):
         self.assertEqual(order['symbol'], '000001.SZ')
         self.assertEqual(order['direction'], 'buy')
         self.assertEqual(order['qty'], 100)
-        self.assertEqual(order['order_type'], 'market')
+        self.assertEqual(order['order_type'], 'limit')
         self.assertEqual(order['price'], 10.0)
         self.assertIsNone(tss.do_buy('100 000001.SZ -p 30 -s long'))
         order = read_trade_order_detail(order_id=2, data_source=tss.trader.datasource)
@@ -348,7 +400,7 @@ class TestTraderCLI(unittest.TestCase):
         self.assertEqual(order['symbol'], '000001.SZ')
         self.assertEqual(order['direction'], 'buy')
         self.assertEqual(order['qty'], 100)
-        self.assertEqual(order['order_type'], 'market')
+        self.assertEqual(order['order_type'], 'limit')
         self.assertEqual(order['price'], 30.0)
         print(f'testing buy command with no price given and use live price')
         print('trader live price is:', tss.trader.live_price)
@@ -399,7 +451,7 @@ class TestTraderCLI(unittest.TestCase):
         self.assertEqual(order['symbol'], '000001.SZ')
         self.assertEqual(order['direction'], 'sell')
         self.assertEqual(order['qty'], 100)
-        self.assertEqual(order['order_type'], 'market')
+        self.assertEqual(order['order_type'], 'limit')
         self.assertEqual(order['price'], 10.0)
         self.assertIsNone(tss.do_sell('100 000001.SZ -p 30 -s long'))
         order = read_trade_order_detail(order_id=2, data_source=tss.trader.datasource)
@@ -408,7 +460,7 @@ class TestTraderCLI(unittest.TestCase):
         self.assertEqual(order['symbol'], '000001.SZ')
         self.assertEqual(order['direction'], 'sell')
         self.assertEqual(order['qty'], 100)
-        self.assertEqual(order['order_type'], 'market')
+        self.assertEqual(order['order_type'], 'limit')
         self.assertEqual(order['price'], 30.0)
         print(f'testing sell command with no price given and use live price')
         print('trader live price is:', tss.trader.live_price)
@@ -802,6 +854,150 @@ class TestTraderCLI(unittest.TestCase):
         self.assertFalse(tss.do_orders('000001 -w wrong_optional_argument'))
         self.assertFalse(tss.do_orders('000001 -t wrong_optional_argument'))
 
+    def test_command_orders_supports_submitted_active_and_nat_format(self):
+        """orders 支持 submitted/active 过滤，且 NaT 时统一格式输出。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] orders --status submitted / --active / NaT format')
+
+        parsed_signals_batch = (
+            ['000001.SZ'],
+            ['long'],
+            ['buy'],
+            [100],
+            [10.0],
+        )
+        order_ids = save_parsed_trade_orders(
+                account_id=1,
+                symbols=parsed_signals_batch[0],
+                positions=parsed_signals_batch[1],
+                directions=parsed_signals_batch[2],
+                quantities=parsed_signals_batch[3],
+                prices=parsed_signals_batch[4],
+                data_source=tss.trader.datasource,
+        )
+        print(' order_ids:', order_ids)
+        submit_order(order_ids[0], tss.trader.datasource)
+
+        self.assertIsNone(tss.do_orders('--status submitted'))
+        self.assertIsNone(tss.do_orders('--active'))
+
+        fake_df = tss.trader.history_orders().copy()
+        fake_df.loc[fake_df.index[0], 'execution_time'] = pd.NaT
+        capture = io.StringIO()
+        with patch.object(tss.trader, 'history_orders', return_value=fake_df):
+            with redirect_stdout(capture):
+                self.assertIsNone(tss.do_orders(''))
+        out = capture.getvalue()
+        print(' orders output with NaT:\n', out)
+        self.assertIn('--', out)
+
+    def test_command_cancel_success_and_failure(self):
+        """cancel 命令成功与失败路径。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] cancel command success/failure')
+
+        order_ids = save_parsed_trade_orders(
+                account_id=1,
+                symbols=['000001.SZ'],
+                positions=['long'],
+                directions=['buy'],
+                quantities=[100],
+                prices=[10.0],
+                data_source=tss.trader.datasource,
+        )
+        order_id = order_ids[0]
+        submit_order(order_id, tss.trader.datasource)
+        detail_before = read_trade_order_detail(order_id=order_id, data_source=tss.trader.datasource)
+        print(' before cancel:', detail_before)
+        self.assertEqual(detail_before['status'], 'submitted')
+
+        self.assertIsNone(tss.do_cancel(str(order_id)))
+        detail_after = read_trade_order_detail(order_id=order_id, data_source=tss.trader.datasource)
+        print(' after cancel:', detail_after)
+        self.assertEqual(detail_after['status'], 'canceled')
+
+        self.assertFalse(tss.do_cancel(str(order_id)))
+        self.assertFalse(tss.do_cancel('999999'))
+
+    def test_command_cancel_rejects_other_account_order(self):
+        """cancel 命令不能撤销其它账户订单。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] cancel should reject other-account order')
+        account_id_2 = new_account(user_name='test_user2', cash_amount=100000, data_source=tss.trader.datasource)
+        print(' created account_id_2:', account_id_2)
+        get_or_create_position(
+                account_id=account_id_2,
+                symbol='000001.SZ',
+                position_type='long',
+                data_source=tss.trader.datasource,
+        )
+        order_ids = save_parsed_trade_orders(
+                account_id=account_id_2,
+                symbols=['000001.SZ'],
+                positions=['long'],
+                directions=['buy'],
+                quantities=[100],
+                prices=[10.0],
+                data_source=tss.trader.datasource,
+        )
+        order_id = int(order_ids[0])
+        submit_order(order_id, tss.trader.datasource)
+        detail_before = read_trade_order_detail(order_id=order_id, data_source=tss.trader.datasource)
+        print(' detail_before:', detail_before)
+        self.assertEqual(detail_before['status'], 'submitted')
+        self.assertEqual(detail_before['account_id'], account_id_2)
+
+        cancel_ok = tss.do_cancel(str(order_id))
+        detail_after = read_trade_order_detail(order_id=order_id, data_source=tss.trader.datasource)
+        print(' cancel_ok:', cancel_ok)
+        print(' detail_after:', detail_after)
+        self.assertFalse(cancel_ok)
+        self.assertEqual(detail_after['status'], 'submitted')
+
+    def test_submit_rejected_order_status_is_rejected(self):
+        """Broker 拒单后，订单状态应落为 rejected。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] rejected submit should persist order status as rejected')
+        before_orders = query_trade_orders(account_id=1, data_source=tss.trader.datasource)
+        before_ids = set(before_orders.index.tolist())
+        print(' before_ids:', sorted(before_ids))
+        tss.trader.live_price = pd.Series({'000001.SZ': 10.0})
+        tss.trader.broker._reject_submit_probability = 1.0
+        try:
+            self.assertIsNone(tss.do_buy('100 000001.SZ'))
+        finally:
+            tss.trader.broker._reject_submit_probability = 0.0
+        after_orders = query_trade_orders(account_id=1, data_source=tss.trader.datasource)
+        after_ids = set(after_orders.index.tolist())
+        new_ids = sorted(after_ids - before_ids)
+        print(' after_ids:', sorted(after_ids))
+        print(' new_ids:', new_ids)
+        self.assertTrue(new_ids)
+        rejected_order_id = int(new_ids[-1])
+        rejected_detail = read_trade_order_detail(order_id=rejected_order_id, data_source=tss.trader.datasource)
+        print(' rejected_detail:', rejected_detail)
+        self.assertEqual(rejected_detail['status'], 'rejected')
+
+    def test_command_buy_order_type_market_vs_limit(self):
+        """buy 命令应按是否显式 -p 区分 market/limit。"""
+        tss = self.tss
+        print('\n[TestTraderCLI] buy order_type should split by explicit price argument')
+        tss.trader.live_price = pd.Series({'000001.SZ': 10.0})
+
+        before_orders = query_trade_orders(account_id=1, data_source=tss.trader.datasource)
+        before_ids = set(before_orders.index.tolist())
+        print(' before_ids:', sorted(before_ids))
+
+        self.assertIsNone(tss.do_buy('100 000001.SZ -p 11.2'))
+        self.assertIsNone(tss.do_buy('100 000001.SZ'))
+
+        after_orders = query_trade_orders(account_id=1, data_source=tss.trader.datasource)
+        new_orders = after_orders.loc[~after_orders.index.isin(before_ids)].sort_index()
+        print(' new_orders:\n', new_orders[['order_type', 'price', 'status']])
+        self.assertEqual(len(new_orders), 2)
+        self.assertEqual(new_orders.iloc[0]['order_type'], 'limit')
+        self.assertEqual(new_orders.iloc[1]['order_type'], 'market')
+
     def test_command_change(self):
         """ test change command"""
         tss = self.tss
@@ -1032,7 +1228,24 @@ class TestTraderCLI(unittest.TestCase):
         self.assertIsNone(tss.do_run('dma'))
         self.assertIsNone(tss.do_run('macd'))
         self.assertIsNone(tss.do_run('dma macd'))
-        self.assertIsNone(tss.do_run('--task pre_open'))
+        print('testing run task pre_open with patched _run_task to avoid external data channel dependency')
+        with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
+            self.assertIsNone(tss.do_run('--task pre_open'))
+            mock_run_task.assert_called_with('pre_open', run_in_main_thread=True)
+        print('testing run task diagnose_pending_orders with patched _run_task')
+        with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
+            self.assertIsNone(tss.do_run('--task diagnose_pending_orders'))
+            mock_run_task.assert_called_with('diagnose_pending_orders', run_in_main_thread=True)
+        print('testing run task open_market / close_market with patched _run_task')
+        with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
+            self.assertIsNone(tss.do_run('--task open_market'))
+            mock_run_task.assert_called_with('open_market', run_in_main_thread=True)
+        with patch.object(tss.trader, '_run_task', return_value=None) as mock_run_task:
+            self.assertIsNone(tss.do_run('--task close_market'))
+            mock_run_task.assert_called_with('close_market', run_in_main_thread=True)
+        print('DEBUG_RUN_TASK_CHOICES:', DEBUG_RUN_TASK_CHOICES)
+        self.assertIn('open_market', DEBUG_RUN_TASK_CHOICES)
+        self.assertIn('close_market', DEBUG_RUN_TASK_CHOICES)
 
         print(f'testing getting help and returns False')
         self.assertFalse(tss.do_run('-h'))
@@ -1040,7 +1253,720 @@ class TestTraderCLI(unittest.TestCase):
         print(f'testing run command with wrong arguments and returns False')
         self.assertFalse(tss.do_run(''))
         self.assertFalse(tss.do_run('wrong_argument'))
-        self.assertFalse(tss.do_run('-- wrong task'))
+        self.assertFalse(tss.do_run('--task not_a_valid_task'))
+
+    def test_command_artifacts(self):
+        """test artifacts command and ls-artifacts alias"""
+        tss = self.tss
+        ds = self.ts.datasource
+        aid = self.ts.account_id
+
+        print('\n[TestCommandArtifacts] help returns False')
+        self.assertFalse(tss.do_artifacts('-h'))
+
+        print('[TestCommandArtifacts] artifacts paths vs helpers')
+        expected = list_live_trade_artifacts(aid, data_source=ds)
+        print(' expected artifacts:', expected)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_artifacts(''))
+        out = buf.getvalue()
+        print(' cli output:', out)
+        self.assertIn('sys_log:', out)
+        self.assertIn('trade_log:', out)
+        self.assertIn('break_point:', out)
+        self.assertIn('risk_log:', out)
+        self.assertIn('.risk.log', out)
+        self.assertIn(sys_log_file_path_name(aid, ds), out)
+        self.assertIn(trade_log_file_path_name(aid, ds), out)
+        self.assertIn(break_point_file_path_name(aid, ds), out)
+        self.assertIn(risk_log_file_path_name(aid, ds), out)
+
+        print('[TestCommandArtifacts] ls-artifacts alias via precmd')
+        self.assertEqual(tss.precmd('ls-artifacts'), 'artifacts')
+
+    def test_command_liveconfig(self):
+        """test liveconfig command and live-config alias"""
+        tss = self.tss
+
+        print('\n[TestCommandLiveconfig] help returns False')
+        self.assertFalse(tss.do_liveconfig('-h'))
+
+        print('[TestCommandLiveconfig] summary JSON keys')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_liveconfig(''))
+        summary = json.loads(buf.getvalue())
+        print(' summary:', summary)
+        self.assertIn('broker_type', summary)
+        self.assertIn('asset_pool', summary)
+        self.assertIn('live_trade_account_id', summary)
+        self.assertEqual(summary['broker_type'], 'simulator')
+
+        print('[TestCommandLiveconfig] live-config alias via precmd')
+        self.assertEqual(tss.precmd('live-config --detail'), 'liveconfig --detail')
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_liveconfig('--detail'))
+        detail = json.loads(buf.getvalue())
+        print(' detail keys:', sorted(detail.keys()))
+        self.assertIn('live_trade_startup_gate_mode', detail)
+
+    def test_command_tasks(self):
+        """test tasks list and task show/cancel"""
+        tss = self.tss
+
+        print('\n[TestCommandTasks] empty queue')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_tasks(''))
+        out = buf.getvalue()
+        print(' tasks output:', out)
+        self.assertIn('Trader tasks: 0', out)
+
+        print('[TestCommandTasks] add task then list/show/cancel')
+        task_id = tss.trader.add_task('refill', 'stock_daily')
+        print(' task_id:', task_id)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_tasks(''))
+        out = buf.getvalue()
+        print(' tasks after add:', out)
+        self.assertIn('Trader tasks: 1', out)
+        self.assertIn(task_id, out)
+        self.assertIn('name=refill', out)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_task(task_id))
+        task_json = json.loads(buf.getvalue())
+        print(' task detail:', task_json)
+        self.assertEqual(task_json['task_id'], task_id)
+        self.assertEqual(task_json['name'], 'refill')
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_task(f'--cancel {task_id}'))
+        cancel_out = buf.getvalue()
+        print(' cancel output:', cancel_out)
+        self.assertIn(f'Canceled Trader queue task: {task_id}', cancel_out)
+
+        self.assertFalse(tss.do_task('missing-task-id'))
+
+    def test_command_gate(self):
+        """test gate command and startup-gate alias"""
+        tss = self.tss
+
+        print('\n[TestCommandGate] help returns False')
+        self.assertFalse(tss.do_gate('-h'))
+
+        print('[TestCommandGate] patched run_startup_gate True/False')
+        with patch.object(tss.trader, 'run_startup_gate', return_value=True):
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                self.assertIsNone(tss.do_gate(''))
+            out = buf.getvalue()
+            print(' gate allowed output:', out)
+            self.assertIn('allowed=True', out)
+
+        with patch.object(tss.trader, 'run_startup_gate', return_value=False):
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                self.assertIsNone(tss.do_gate(''))
+            out = buf.getvalue()
+            print(' gate blocked output:', out)
+            self.assertIn('allowed=False', out)
+
+        print('[TestCommandGate] startup-gate alias via precmd')
+        self.assertEqual(tss.precmd('startup-gate'), 'gate')
+
+    def test_command_reconcile(self):
+        """test reconcile command prints broker snapshot JSON"""
+        tss = self.tss
+
+        print('\n[TestCommandReconcile] help returns False')
+        self.assertFalse(tss.do_reconcile('-h'))
+
+        print('[TestCommandReconcile] snapshot on SimulatorBroker')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_reconcile(''))
+        snapshot = json.loads(buf.getvalue())
+        print(' reconcile snapshot:', snapshot)
+        self.assertIn('is_ok', snapshot)
+        self.assertIn('failures', snapshot)
+        self.assertIn('remote_orders_count', snapshot)
+        self.assertIsInstance(snapshot['is_ok'], bool)
+        self.assertIsInstance(snapshot['failures'], list)
+
+        print('[TestCommandReconcile] snapshot-reconcile alias via precmd')
+        self.assertEqual(tss.precmd('snapshot-reconcile'), 'reconcile')
+
+    def test_cli_command_aliases_defined(self):
+        """Build 1 CLI 覆盖矩阵：别名与 DEBUG 任务白名单常量存在"""
+        print('\n[TestCliCoverage] CLI_COMMAND_ALIASES:', CLI_COMMAND_ALIASES)
+        self.assertEqual(CLI_COMMAND_ALIASES.get('ls-artifacts'), 'artifacts')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('live-config'), 'liveconfig')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('startup-gate'), 'gate')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('snapshot-reconcile'), 'reconcile')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('rotate-logs'), 'rotatelogs')
+        self.assertEqual(CLI_COMMAND_ALIASES.get('pull-state'), 'sync')
+        self.assertEqual(len(DEBUG_RUN_TASK_CHOICES), 7)
+
+    def test_command_rotatelogs(self):
+        """test rotatelogs command and rotate-logs alias"""
+        tss = self.tss
+
+        print('\n[TestCommandRotatelogs] help returns False')
+        self.assertFalse(tss.do_rotatelogs('-h'))
+
+        print('[TestCommandRotatelogs] rotate-logs alias via precmd')
+        self.assertEqual(tss.precmd('rotate-logs --days 30'), 'rotatelogs --days 30')
+
+        tmp_dir = tempfile.mkdtemp()
+        original_path = qt.QT_TRADE_LOG_PATH
+        try:
+            old_path = os.path.join(tmp_dir, 'old_account.risk.log')
+            recent_path = os.path.join(tmp_dir, 'recent_account.risk.log')
+            with open(old_path, 'w', encoding='utf-8') as f:
+                f.write('old-risk\n')
+            with open(recent_path, 'w', encoding='utf-8') as f:
+                f.write('recent-risk\n')
+            old_time = time.time() - 40 * 24 * 3600
+            recent_time = time.time() - 2 * 24 * 3600
+            os.utime(old_path, (old_time, old_time))
+            os.utime(recent_path, (recent_time, recent_time))
+
+            print(' tmp_dir:', tmp_dir)
+            print(' files before rotation:', sorted(os.listdir(tmp_dir)))
+            qt.QT_TRADE_LOG_PATH = tmp_dir
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                self.assertIsNone(tss.do_rotatelogs('--days 30'))
+            out = buf.getvalue()
+            print(' rotatelogs output:', out)
+            print(' files after rotation:', sorted(os.listdir(tmp_dir)))
+            self.assertIn('Trade log rotation completed', out)
+            self.assertIn(tmp_dir, out)
+            self.assertFalse(os.path.exists(old_path))
+            self.assertTrue(os.path.exists(recent_path))
+        finally:
+            qt.QT_TRADE_LOG_PATH = original_path
+            if os.path.isdir(tmp_dir):
+                shutil.rmtree(tmp_dir, ignore_errors=True)
+
+    def test_command_broker(self):
+        """test broker status/connect/disconnect subcommands"""
+        tss = self.tss
+        broker = tss.trader.broker
+
+        print('\n[TestCommandBroker] help returns False')
+        self.assertFalse(tss.do_broker('-h'))
+
+        print('[TestCommandBroker] status before connect')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_broker('status'))
+        status_out = buf.getvalue()
+        print(' status output:', status_out)
+        self.assertIn('is_connected=False', status_out)
+
+        print('[TestCommandBroker] connect then status')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_broker('connect'))
+        self.assertIn('Broker connected.', buf.getvalue())
+        self.assertTrue(broker.is_connected)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_broker('status'))
+        status_out = buf.getvalue()
+        print(' status after connect:', status_out)
+        self.assertIn('is_connected=True', status_out)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertIsNone(tss.do_broker('disconnect'))
+        self.assertIn('Broker disconnected.', buf.getvalue())
+        self.assertFalse(broker.is_connected)
+
+        print(' BROKER_SUBCOMMANDS:', BROKER_SUBCOMMANDS)
+        self.assertFalse(tss.do_broker(''))
+
+    def test_command_sync_stub(self):
+        """test sync stub and pull-state alias"""
+        tss = self.tss
+
+        print('\n[TestCommandSyncStub] help returns False')
+        self.assertFalse(tss.do_sync('-h'))
+
+        print('[TestCommandSyncStub] NOT_IMPLEMENTED message')
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            self.assertFalse(tss.do_sync(''))
+        out = buf.getvalue()
+        print(' sync output:', out)
+        self.assertIn('[NOT_IMPLEMENTED]', out)
+        self.assertIn('S2.1-b', out)
+
+        print('[TestCommandSyncStub] pull-state alias via precmd')
+        self.assertEqual(tss.precmd('pull-state'), 'sync')
+
+
+class TestTraderCLIBuild1Coverage(unittest.TestCase):
+    """Build 1 CLI 覆盖矩阵（PR 交付物）：Trader/Broker 公有能力与 CLI 命令对照。"""
+
+    def test_coverage_matrix_rows(self):
+        """核对矩阵关键行：Build1 新增命令已在 TraderShell 注册。"""
+        print('\n[TestTraderCLIBuild1Coverage] TraderShell command registration')
+        shell = TraderShell.__dict__
+        build1_commands = (
+            'do_artifacts',
+            'do_liveconfig',
+            'do_tasks',
+            'do_task',
+            'do_gate',
+            'do_reconcile',
+        )
+        for cmd in build1_commands:
+            print(' registered:', cmd, cmd in shell)
+            self.assertIn(cmd, shell)
+
+
+class TestTraderCLIBuild2Coverage(unittest.TestCase):
+    """Build 2 CLI 覆盖矩阵：P2/P3 命令已在 TraderShell 注册。"""
+
+    def test_coverage_matrix_rows(self):
+        """核对 Build2 新增命令注册。"""
+        print('\n[TestTraderCLIBuild2Coverage] TraderShell command registration')
+        shell = TraderShell.__dict__
+        build2_commands = (
+            'do_rotatelogs',
+            'do_broker',
+            'do_sync',
+        )
+        for cmd in build2_commands:
+            print(' registered:', cmd, cmd in shell)
+            self.assertIn(cmd, shell)
+
+
+class TestTraderCLIDashboardHelpers(unittest.TestCase):
+    """CLI dashboard 辅助函数：日志过滤、消息队列排空与消息 coercion。"""
+
+    def test_filter_sys_log_lines_excludes_debug(self):
+        print('\n[TestTraderCLIDashboardHelpers] _filter_sys_log_lines')
+        lines = [
+            'INFO: normal line\n',
+            'DEBUG: debug line\n',
+            '<DEBUG><Jan01 10:00:00>running: trace\n',
+        ]
+        filtered = _filter_sys_log_lines(lines, include_debug=False)
+        print(' filtered:', filtered)
+        self.assertEqual(len(filtered), 1)
+        self.assertIn('normal line', filtered[0])
+
+    def test_filter_sys_log_lines_include_debug_returns_copy(self):
+        print('\n[TestTraderCLIDashboardHelpers] _filter_sys_log_lines include_debug=True')
+        lines = ['INFO: a\n', 'DEBUG: b\n']
+        result = _filter_sys_log_lines(lines, include_debug=True)
+        print(' result:', result)
+        self.assertEqual(result, lines)
+        self.assertIsNot(result, lines)
+
+    def test_drain_message_queue_returns_trader_messages(self):
+        print('\n[TestTraderCLIDashboardHelpers] _drain_message_queue')
+        from queue import Queue
+
+        from qteasy.trader import drain_trader_message_queue
+
+        queue = Queue()
+        queue.put(TraderMessage(text='first', debug=False))
+        queue.put('legacy-string')
+        queue.put(TraderMessage(text='third', debug=True))
+
+        drained = drain_trader_message_queue(queue)
+        print(' drained:', drained)
+        self.assertEqual(len(drained), 3)
+        self.assertIsInstance(drained[0], TraderMessage)
+        self.assertEqual(drained[0].text, 'first')
+        self.assertFalse(drained[0].debug)
+        self.assertEqual(drained[1].text, 'legacy-string')
+        self.assertFalse(drained[1].debug)
+        self.assertTrue(drained[2].debug)
+        self.assertTrue(queue.empty())
+
+    def test_coerce_trader_message_backward_compatible(self):
+        print('\n[TestTraderCLIDashboardHelpers] coerce_trader_message')
+        original = TraderMessage(text='structured', debug=True)
+        coerced = coerce_trader_message(original)
+        print(' coerced from TraderMessage:', coerced)
+        self.assertIs(coerced, original)
+
+        from_str = coerce_trader_message('plain text')
+        print(' coerced from str:', from_str)
+        self.assertIsInstance(from_str, TraderMessage)
+        self.assertEqual(from_str.text, 'plain text')
+        self.assertFalse(from_str.debug)
+
+    def test_drain_message_queue_on_trader_instance(self):
+        print('\n[TestTraderCLIDashboardHelpers] _drain_message_queue trader instance')
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            _detach_live_logger_handlers()
+            trader.init_system_logger()
+            trader.send_message('queued', debug=False)
+            drained = _drain_message_queue(trader)
+            print(' drained:', drained)
+            self.assertEqual(len(drained), 1)
+            self.assertEqual(drained[0].text, 'queued')
+            self.assertTrue(trader.message_queue.empty())
+        finally:
+            clear_tables(test_ds)
+
+
+class TestTraderCLIDashboardDisplay(unittest.TestCase):
+    """TraderShell dashboard 显示：日志回放、状态行与普通行切换。"""
+
+    def test_replay_dashboard_logs_drains_queue_and_filters_debug(self):
+        """排空队列不重复打印；``include_debug=False`` 时系统日志回放不含 DEBUG 行。"""
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIDashboardDisplay] replay drains queue and filters debug')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            _detach_live_logger_handlers()
+            trader.init_system_logger()
+            log_path = sys_log_file_path_name(trader.account_id, test_ds)
+            # 与同目录下固定 account_id=1 的其它用例隔离：重写种子行后再追加 send_message 的日志
+            with open(log_path, 'w', encoding='utf-8') as f:
+                f.write('INFO: cli_dashboard_extra_info_line\n')
+                f.write('DEBUG: cli_dashboard_extra_debug_line\n')
+            trader.send_message('cli_dashboard_queue_line', debug=False)
+            trader.send_message('cli_dashboard_debug_logged_only', debug=True)
+            print(' replay 前队列非空(仅非 debug send_message):', not trader.message_queue.empty())
+            self.assertFalse(trader.message_queue.empty())
+            shell = TraderShell(trader)
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                shell._replay_dashboard_logs(50)
+            out = buf.getvalue()
+            print(' captured stdout:\n', out)
+            self.assertTrue(trader.message_queue.empty())
+            self.assertEqual(out.count('cli_dashboard_queue_line'), 1)
+            self.assertEqual(out.count('cli_dashboard_extra_info_line'), 1)
+            self.assertEqual(out.count('cli_dashboard_extra_debug_line'), 0)
+            self.assertEqual(out.count('cli_dashboard_debug_logged_only'), 0)
+        finally:
+            clear_tables(test_ds)
+
+    def test_print_status_line_pads_to_width(self):
+        """状态行按终端宽度用空格填充并以 ``\\r`` 结尾。"""
+        tss = TraderShell.__new__(TraderShell)
+        tss._dashboard_on_status_line = False
+        print('\n[TestTraderCLIDashboardDisplay] status line padding')
+        with patch('qteasy.trader_cli._terminal_width', return_value=18):
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                tss._print_status_line(Text('xyz'))
+        raw = buf.getvalue()
+        print(' raw repr:', repr(raw))
+        self.assertTrue(tss._dashboard_on_status_line)
+        self.assertTrue(raw.endswith('\r'), msg=f'expected carriage return ending, got {raw!r}')
+        if '\x1b' not in raw:
+            self.assertEqual(len(raw.rstrip('\r')), 18)
+
+    def test_print_log_line_clears_status_flag(self):
+        """``_print_log_line`` 在状态行之后打印时清除状态并复位标志。"""
+        tss = TraderShell.__new__(TraderShell)
+        tss._dashboard_on_status_line = True
+        print('\n[TestTraderCLIDashboardDisplay] log line clears status flag')
+        with patch('qteasy.trader_cli._clear_current_line') as mock_clear:
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                tss._print_log_line('log_after_status')
+        mock_clear.assert_called_once()
+        self.assertFalse(tss._dashboard_on_status_line)
+        self.assertIn('log_after_status', buf.getvalue())
+
+    def test_do_dashboard_no_duplicate_on_reentry(self):
+        """单次回放不因「队列一次 + 日志一次」重复；再次回放日志尾部仍可含同一条入库消息。"""
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIDashboardDisplay] no duplicate queue on reentry')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            _detach_live_logger_handlers()
+            trader.init_system_logger()
+            log_path = sys_log_file_path_name(trader.account_id, test_ds)
+            with open(log_path, 'w', encoding='utf-8') as f:
+                f.write('INFO: cli_dashboard_reentry_log\n')
+            trader.send_message('cli_dashboard_reentry_queue', debug=False)
+            shell = TraderShell(trader)
+            with patch('os.system'):
+                buf1 = io.StringIO()
+                with redirect_stdout(buf1):
+                    shell.do_dashboard('-r 20')
+            out1 = buf1.getvalue()
+            print(' first do_dashboard output sample:', out1[:400])
+            self.assertEqual(out1.count('cli_dashboard_reentry_queue'), 1)
+            self.assertTrue(trader.message_queue.empty())
+            buf2 = io.StringIO()
+            with redirect_stdout(buf2):
+                shell._replay_dashboard_logs(20)
+            out2 = buf2.getvalue()
+            print(' second replay output sample:', out2[:400])
+            self.assertEqual(out2.count('cli_dashboard_reentry_queue'), 1)
+            self.assertIn('cli_dashboard_reentry_log', out2)
+        finally:
+            clear_tables(test_ds)
+
+
+class TestTraderCLIModeMenu(unittest.TestCase):
+    """TraderShell Ctrl+C 模式选单：解析、超时读取与中断处理。"""
+
+    def test_parse_mode_menu_choice(self):
+        print('\n[TestTraderCLIModeMenu] _parse_mode_menu_choice')
+        self.assertEqual(_parse_mode_menu_choice('1'), 'command')
+        self.assertEqual(_parse_mode_menu_choice('2'), 'dashboard')
+        self.assertEqual(_parse_mode_menu_choice('3'), 'exit')
+        self.assertEqual(_parse_mode_menu_choice(None), 'resume')
+        self.assertEqual(_parse_mode_menu_choice(''), 'resume')
+        self.assertEqual(_parse_mode_menu_choice('9'), 'resume')
+        print(' choices: 1->command, 2->dashboard, 3->exit, None/empty/9->resume')
+
+    def test_read_line_with_timeout_non_tty_returns_none(self):
+        print('\n[TestTraderCLIModeMenu] _read_line_with_timeout non-TTY')
+        mock_in = io.StringIO()
+        mock_out = io.StringIO()
+        with patch('qteasy.trader_cli._is_tty_stream', return_value=False):
+            result = _read_line_with_timeout('prompt> ', timeout=1.0,
+                                             input_stream=mock_in, output_stream=mock_out)
+        print(' result:', result, ' output:', repr(mock_out.getvalue()))
+        self.assertIsNone(result)
+        self.assertEqual(mock_out.getvalue(), '')
+
+    def test_read_line_with_timeout_unix_returns_line(self):
+        print('\n[TestTraderCLIModeMenu] _read_line_with_timeout_unix line')
+        mock_in = MagicMock()
+        mock_in.fileno.return_value = 0
+        mock_in.read.side_effect = ['1']
+        mock_out = io.StringIO()
+        sentinel_attrs = object()
+        with patch('termios.tcgetattr', return_value=sentinel_attrs), \
+                patch('termios.tcsetattr') as mock_tcsetattr, \
+                patch('tty.setcbreak'), \
+                patch('select.select', return_value=([mock_in], [], [])):
+            result = _read_line_with_timeout_unix(1.0, mock_in, mock_out)
+        print(' result:', result, ' output:', repr(mock_out.getvalue()))
+        self.assertEqual(result, '1')
+        self.assertIn('1\n', mock_out.getvalue())
+        mock_tcsetattr.assert_called()
+
+    def test_read_line_with_timeout_unix_timeout(self):
+        print('\n[TestTraderCLIModeMenu] _read_line_with_timeout_unix timeout')
+        mock_in = MagicMock()
+        mock_in.fileno.return_value = 0
+        mock_out = io.StringIO()
+        sentinel_attrs = object()
+        with patch('termios.tcgetattr', return_value=sentinel_attrs), \
+                patch('termios.tcsetattr'), \
+                patch('tty.setcbreak'), \
+                patch('select.select', return_value=([], [], [])):
+            result = _read_line_with_timeout_unix(0.1, mock_in, mock_out)
+        print(' result:', result, ' output:', repr(mock_out.getvalue()))
+        self.assertIsNone(result)
+        self.assertEqual(mock_out.getvalue(), '\n')
+
+    def test_accept_mode_menu_char_single_key(self):
+        print('\n[TestTraderCLIModeMenu] _accept_mode_menu_char')
+        parts: list = []
+        self.assertEqual(_accept_mode_menu_char('1', parts), '1')
+        self.assertEqual(parts, [])
+        parts = []
+        self.assertEqual(_accept_mode_menu_char('2', parts), '2')
+        parts = []
+        self.assertIsNone(_accept_mode_menu_char('x', parts))
+        self.assertEqual(parts, [])
+        parts = []
+        self.assertIsNone(_accept_mode_menu_char('\n', parts))
+        self.assertEqual(parts, [])
+        parts = ['1']
+        self.assertEqual(_accept_mode_menu_char('\n', parts), '1')
+        self.assertEqual(parts, [])
+        parts = ['9']
+        self.assertIsNone(_accept_mode_menu_char('\n', parts))
+        self.assertEqual(parts, [])
+        print(' accept: digits immediate; x/empty Enter ignored; buffered Enter for 1/9 cleared')
+
+    def test_handle_mode_interrupt_resume(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt resume on timeout')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            buf = io.StringIO()
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value=None):
+                with redirect_stdout(buf):
+                    keep_running = shell._handle_mode_interrupt()
+            out = buf.getvalue()
+            print(' keep_running:', keep_running, ' status:', shell._status, ' stdout sample:', out[:120])
+            self.assertTrue(keep_running)
+            self.assertEqual(shell._status, 'dashboard')
+            self.assertIn('No input received; resuming previous mode.', out)
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_mode_interrupt_command(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt command choice')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value='1'):
+                keep_running = shell._handle_mode_interrupt()
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertTrue(keep_running)
+            self.assertEqual(shell._status, 'command')
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_mode_interrupt_dashboard(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt dashboard choice')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value='2'):
+                keep_running = shell._handle_mode_interrupt()
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertTrue(keep_running)
+            self.assertEqual(shell._status, 'dashboard')
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_mode_interrupt_exit(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt exit choice')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value='3'):
+                keep_running = shell._handle_mode_interrupt()
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertFalse(keep_running)
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_mode_interrupt_second_ctrl_c_exits(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIModeMenu] _handle_mode_interrupt second Ctrl+C (ModeMenuExitRequest)')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+
+            def _raise_exit(*_args, **_kwargs):
+                raise ModeMenuExitRequest
+
+            buf = io.StringIO()
+            with patch('qteasy.trader_cli._read_line_with_timeout', side_effect=_raise_exit):
+                with redirect_stdout(buf):
+                    keep_running = shell._handle_mode_interrupt()
+            out = buf.getvalue()
+            print(' keep_running:', keep_running, ' stdout:', repr(out))
+            self.assertFalse(keep_running)
+            self.assertIn('Interrupted again; shutting down trader...', out)
+        finally:
+            clear_tables(test_ds)
+
+
+class TestTraderCLIPhase4(unittest.TestCase):
+    """Trader CLI Phase 4：监视价 debounce 与运行时错误恢复。"""
+
+    def test_maybe_refresh_watched_prices_skips_alive_worker(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIPhase4] _maybe_refresh_watched_prices skips alive worker')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            trader.is_market_open = True
+            mock_worker = MagicMock()
+            mock_worker.is_alive.return_value = True
+            with patch('qteasy.trader_cli.Thread') as mock_thread_cls:
+                mock_thread_cls.return_value = mock_worker
+                with patch.object(shell, 'format_watched_prices'):
+                    shell._maybe_refresh_watched_prices()
+                    first_thread_calls = mock_thread_cls.call_count
+                    first_start_calls = mock_worker.start.call_count
+                    shell._maybe_refresh_watched_prices()
+                    second_thread_calls = mock_thread_cls.call_count
+                    second_start_calls = mock_worker.start.call_count
+            print(' thread calls:', first_thread_calls, '->', second_thread_calls)
+            print(' start calls:', first_start_calls, '->', second_start_calls)
+            self.assertEqual(first_thread_calls, 1)
+            self.assertEqual(second_thread_calls, 1)
+            self.assertEqual(first_start_calls, 1)
+            self.assertEqual(second_start_calls, 1)
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_runtime_error_default_dashboard(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIPhase4] _handle_runtime_error default dashboard on timeout')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'command'
+            buf = io.StringIO()
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value=None):
+                with redirect_stdout(buf):
+                    keep_running = shell._handle_runtime_error(RuntimeError('test failure'))
+            out = buf.getvalue()
+            print(' keep_running:', keep_running, ' status:', shell._status, ' stdout sample:', out[:160])
+            self.assertTrue(keep_running)
+            self.assertEqual(shell._status, 'dashboard')
+            self.assertIn('Returning to dashboard mode.', out)
+            self.assertIn('Unexpected Error: test failure', out)
+        finally:
+            clear_tables(test_ds)
+
+    def test_handle_runtime_error_exit_on_3(self):
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIPhase4] _handle_runtime_error exit on choice 3')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            shell = TraderShell(trader)
+            shell._status = 'dashboard'
+            with patch('qteasy.trader_cli._read_line_with_timeout', return_value='3'):
+                keep_running = shell._handle_runtime_error(ValueError('fatal'))
+            print(' keep_running:', keep_running, ' status:', shell._status)
+            self.assertFalse(keep_running)
+        finally:
+            clear_tables(test_ds)
+
+    def test_parse_error_recovery_choice(self):
+        print('\n[TestTraderCLIPhase4] _parse_error_recovery_choice')
+        self.assertEqual(_parse_error_recovery_choice('3'), 'exit')
+        self.assertEqual(_parse_error_recovery_choice('1'), 'dashboard')
+        self.assertEqual(_parse_error_recovery_choice(None), 'dashboard')
+        self.assertEqual(_parse_error_recovery_choice(''), 'dashboard')
+        print(' choices: 3->exit, 1/None/empty->dashboard')
 
 
 if __name__ == '__main__':

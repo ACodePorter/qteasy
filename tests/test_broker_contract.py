@@ -11,8 +11,17 @@
 import unittest
 import threading
 import time
+from unittest.mock import patch
 
-from qteasy.broker import Broker, SimpleBroker, SimulatorBroker
+from qteasy.broker import (
+    Broker,
+    BrokerFacade,
+    SimpleBroker,
+    SimulatorBroker,
+    get_broker,
+    register_broker_factory,
+    unregister_broker_factory,
+)
 from qteasy.trade_io import validate_raw_trade_result
 
 
@@ -102,15 +111,62 @@ class TestBrokerContract(unittest.TestCase):
 
     def test_adapter_methods_exist_on_simulator_and_simple(self):
         print('\n[TestBrokerContract] 检查 Simulator/Simple 新接口存在性')
-        for broker in [SimulatorBroker(), SimpleBroker()]:
+        for broker in [SimulatorBroker(reject_submit_probability=0.0), SimpleBroker()]:
             for method_name in [
-                'connect', 'disconnect', 'submit', 'cancel', 'poll_fills',
+                'connect', 'disconnect', 'submit', 'submit_with_ack', 'cancel', 'poll_fills', 'poll_messages',
                 'get_remote_orders', 'get_remote_positions', 'get_remote_cash', 'drain_order_queue',
             ]:
                 print(f' broker={broker.broker_name}, method={method_name}')
                 self.assertTrue(callable(getattr(broker, method_name)))
             self.assertIsNone(broker.connect())
             self.assertIsNone(broker.disconnect())
+
+    def test_simulator_submit_with_ack_random_reject_branch(self):
+        print('\n[TestBrokerContract] SimulatorBroker submit_with_ack 随机拒单分支（patch）')
+        broker = SimulatorBroker(reject_submit_probability=0.1)
+        broker.connect()
+        fixed_reason = 'Order rejected: simulated test fixture reason.'
+        with patch('qteasy.broker.random.random', return_value=0.05):
+            with patch('qteasy.broker.random.choice', return_value=fixed_reason):
+                ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertFalse(ack['accepted'])
+        self.assertEqual(ack['broker_order_id'], '')
+        self.assertEqual(ack['reason_code'], 'SimulatedBrokerReject')
+        self.assertEqual(ack['reason'], fixed_reason)
+        self.assertEqual(ack['order_id'], self.order['order_id'])
+
+    def test_simulator_submit_with_ack_accepts_when_roll_above_threshold(self):
+        print('\n[TestBrokerContract] SimulatorBroker 随机拒单未触发时受理成功')
+        broker = SimulatorBroker(reject_submit_probability=0.1)
+        broker.connect()
+        with patch('qteasy.broker.random.random', return_value=0.99):
+            ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertTrue(ack['accepted'])
+        self.assertNotEqual(ack['broker_order_id'], '')
+        self.assertEqual(ack['reason'], '')
+        self.assertEqual(ack['reason_code'], '')
+
+    def test_simulator_reject_probability_one_uses_reason_pool(self):
+        print('\n[TestBrokerContract] 随机拒单理由取自预置英文池（概率=1）')
+        from qteasy.broker import _SIMULATOR_SUBMIT_REJECT_REASONS
+        broker = SimulatorBroker(reject_submit_probability=1.0)
+        broker.connect()
+        with patch('qteasy.broker.random.random', return_value=0.0):
+            ack = broker.submit_with_ack(self.order)
+        print(' ack reason:', ack.get('reason'))
+        self.assertFalse(ack['accepted'])
+        self.assertIn(ack['reason'], _SIMULATOR_SUBMIT_REJECT_REASONS)
+
+    def test_simulator_reject_probability_zero_skips_random_reject(self):
+        print('\n[TestBrokerContract] reject_submit_probability=0 跳过随机拒单')
+        broker = SimulatorBroker(reject_submit_probability=0.0)
+        broker.connect()
+        with patch('qteasy.broker.random.random', return_value=0.01):
+            ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertTrue(ack['accepted'])
 
     def test_submit_returns_non_empty_broker_order_id(self):
         print('\n[TestBrokerContract] submit 返回非空 broker_order_id')
@@ -162,6 +218,30 @@ class TestBrokerContract(unittest.TestCase):
         self.assertEqual(fills_round_1[0]['price'], self.order['price'])
         self.assertEqual(fills_round_2[0]['price'], self.order['price'])
 
+    def test_submit_with_ack_returns_structured_accept_result(self):
+        print('\n[TestBrokerContract] submit_with_ack 返回结构化 accept 回报')
+        broker = MinimalBrokerForContractTest()
+        broker.connect()
+        ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertIsInstance(ack, dict)
+        self.assertTrue(ack['accepted'])
+        self.assertEqual(ack['order_id'], self.order['order_id'])
+        self.assertTrue(isinstance(ack['broker_order_id'], str) and ack['broker_order_id'])
+        self.assertEqual(ack['reason'], '')
+
+    def test_submit_with_ack_returns_structured_reject_result(self):
+        print('\n[TestBrokerContract] submit_with_ack 返回结构化 reject 回报')
+        broker = MinimalBrokerForContractTest()
+        ack = broker.submit_with_ack(self.order)
+        print(' ack:', ack)
+        self.assertIsInstance(ack, dict)
+        self.assertFalse(ack['accepted'])
+        self.assertEqual(ack['order_id'], self.order['order_id'])
+        self.assertEqual(ack['broker_order_id'], '')
+        self.assertTrue(isinstance(ack['reason'], str) and ack['reason'])
+        self.assertEqual(ack['reason_code'], 'RuntimeError')
+
     def test_legacy_queue_get_result_unchanged(self):
         print('\n[TestBrokerContract] legacy _get_result -> result_queue 路径')
         broker = LegacyMinimalBroker()
@@ -197,23 +277,68 @@ class TestBrokerContract(unittest.TestCase):
         print(' error:', message)
         self.assertIn('not connected', message)
 
-    def test_poll_fills_when_not_connected_raises_runtime_error(self):
-        print('\n[TestBrokerContract] 未 connect 调用 poll_fills')
+    def test_enqueue_order_pushes_into_queue_with_validated_order(self):
+        print('\n[TestBrokerContract] enqueue_order 入队并返回 order_id')
         broker = MinimalBrokerForContractTest()
-        with self.assertRaises(RuntimeError) as cm:
-            broker.poll_fills()
-        message = str(cm.exception)
-        print(' error:', message)
-        self.assertIn('not connected', message)
+        order_id = broker.enqueue_order(self.order)
+        queued = broker.order_queue.get_nowait()
+        broker.order_queue.task_done()
+        print(' returned order_id:', order_id)
+        print(' queued order keys:', sorted(queued.keys()))
+        self.assertEqual(order_id, self.order['order_id'])
+        self.assertEqual(queued['order_id'], self.order['order_id'])
+
+    def test_poll_fills_when_not_connected_returns_empty_for_legacy_path(self):
+        print('\n[TestBrokerContract] 未 connect 调用 poll_fills（legacy 空队列）')
+        broker = MinimalBrokerForContractTest()
+        fills = broker.poll_fills()
+        print(' fills:', fills)
+        self.assertEqual(fills, [])
+
+    def test_poll_fills_reads_legacy_result_queue_without_connect(self):
+        print('\n[TestBrokerContract] poll_fills 兼容 legacy result_queue 未 connect 路径')
+        broker = MinimalBrokerForContractTest()
+        raw_result = {
+            'order_id': 777001,
+            'filled_qty': 10.0,
+            'price': 12.3,
+            'transaction_fee': 0.5,
+            'execution_time': '2026-05-11 09:31:00',
+            'canceled_qty': 0.0,
+            'delivery_amount': 0.0,
+            'delivery_status': 'ND',
+        }
+        broker.result_queue.put(raw_result)
+        fills = broker.poll_fills()
+        print(' fills:', fills)
+        self.assertEqual(len(fills), 1)
+        self.assertEqual(fills[0]['order_id'], raw_result['order_id'])
+        self.assertTrue(broker.result_queue.empty())
+
+    def test_poll_messages_returns_and_drains_one_message(self):
+        print('\n[TestBrokerContract] poll_messages 返回并消费 broker_messages')
+        broker = MinimalBrokerForContractTest()
+        broker.send_message('hello from broker')
+        polled_messages = broker.poll_messages()
+        print(' polled_messages:', polled_messages)
+        self.assertEqual(len(polled_messages), 1)
+        self.assertIn('hello from broker', polled_messages[0])
+        self.assertEqual(broker.poll_messages(), [])
 
     def test_connect_disconnect_idempotent(self):
         print('\n[TestBrokerContract] connect/disconnect 幂等')
         broker = MinimalBrokerForContractTest()
+        self.assertFalse(broker.is_connected)
         broker.connect()
+        self.assertTrue(broker.is_connected)
         broker.connect()
+        self.assertTrue(broker.is_connected)
         broker.disconnect()
+        self.assertFalse(broker.is_connected)
         broker.disconnect()
+        self.assertFalse(broker.is_connected)
         broker.connect()
+        self.assertTrue(broker.is_connected)
         broker_order_id = broker.submit(self.order)
         print(' broker_order_id after reconnect:', broker_order_id)
         self.assertTrue(broker_order_id.startswith('MinimalBroker:'))
@@ -293,6 +418,77 @@ class TestBrokerContract(unittest.TestCase):
         broker.status = 'stopped'
         broker_thread.join(timeout=1.0)
 
+
+class TestBrokerRemoteReconcileContract(unittest.TestCase):
+    """Broker 远端现金/持仓钩子契约（阶段 5-B L3 可选路径）。"""
+
+    def test_minimal_broker_remote_cash_and_positions_are_unimplemented(self) -> None:
+        print('\n[TestBrokerRemoteReconcileContract] default remote hooks')
+        broker = MinimalBrokerForContractTest()
+        cash = broker.get_remote_cash(account_id=1)
+        pos = broker.get_remote_positions(account_id=1)
+        print(' remote_cash:', cash, ' remote_positions:', pos)
+        self.assertIsNone(cash)
+        self.assertEqual(pos, [])
+
+
+class TestBrokerFacadeAndRegistry(unittest.TestCase):
+    """BrokerFacade 委托行为与注册表扩展回归。"""
+
+    def setUp(self) -> None:
+        self.order = {
+            'order_id': 9001,
+            'pos_id': 1,
+            'direction': 'buy',
+            'order_type': 'limit',
+            'qty': 10.0,
+            'price': 11.0,
+            'status': 'submitted',
+            'submitted_time': '2026-05-14 09:30:00',
+            'symbol': '000001.SH',
+            'position': 'long',
+        }
+
+    def test_broker_facade_delegates_contract_methods(self):
+        print('\n[TestBrokerFacadeAndRegistry] facade 委托 submit/poll/status')
+        inner = MinimalBrokerForContractTest()
+        facade = BrokerFacade(inner)
+        facade.connect()
+        broker_order_id = facade.submit(self.order)
+        fills_round_1 = facade.poll_fills()
+        fills_round_2 = facade.poll_fills()
+        print(' broker_order_id:', broker_order_id)
+        print(' fills round1/round2:', fills_round_1, fills_round_2)
+        self.assertTrue(broker_order_id.startswith('MinimalBroker:'))
+        self.assertEqual(len(fills_round_1), 1)
+        self.assertEqual(len(fills_round_2), 1)
+        self.assertEqual(fills_round_1[0]['status'], 'partial-filled')
+        self.assertEqual(fills_round_2[0]['status'], 'filled')
+        facade.status = 'paused'
+        print(' inner status after facade set:', inner.status)
+        self.assertEqual(inner.status, 'paused')
+
+    def test_register_broker_factory_then_get_broker(self):
+        print('\n[TestBrokerFacadeAndRegistry] register_broker_factory 可扩展 get_broker')
+        broker_name = 'contract_test_custom_broker'
+
+        def _factory(**kwargs):
+            _ = kwargs
+            b = MinimalBrokerForContractTest()
+            b.broker_name = 'ContractCustomBroker'
+            return b
+
+        print(' register broker name:', broker_name)
+        register_broker_factory(broker_name, _factory)
+        try:
+            broker = get_broker(broker_name, params={})
+            print(' broker type/name:', type(broker).__name__, broker.broker_name)
+            self.assertIsInstance(broker, MinimalBrokerForContractTest)
+            self.assertEqual(broker.broker_name, 'ContractCustomBroker')
+        finally:
+            removed = unregister_broker_factory(broker_name)
+            print(' unregister removed:', removed)
+            self.assertTrue(removed)
 
 if __name__ == '__main__':
     unittest.main()

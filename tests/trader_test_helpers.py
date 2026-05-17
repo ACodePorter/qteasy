@@ -143,7 +143,7 @@ def create_trader_with_account(
         update_position(position_id=3, data_source=test_ds, qty_change=300, available_qty_change=300)
         update_position(position_id=4, data_source=test_ds, qty_change=200, available_qty_change=100)
     operator = create_operator()
-    broker = SimulatorBroker()
+    broker = SimulatorBroker(reject_submit_probability=0.0)
     trader = Trader(
         account_id=account_id,
         operator=operator,
@@ -235,7 +235,7 @@ def create_trader_with_orders_and_results(
         trader.log_qty_delivery(dr)
         trader.log_cash_delivery(dr)
         time.sleep(stoppage)
-    cancel_order(8, test_ds, delivery_config)
+    cancel_order(8, test_ds, delivery_config, account_id=account_id)
     process_account_delivery(account_id=account_id, data_source=test_ds)
     trader.init_trade_log_file()
     trader.init_system_logger()

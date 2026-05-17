@@ -13,6 +13,8 @@
 import unittest
 import time
 import warnings
+from concurrent.futures import ThreadPoolExecutor
+from unittest.mock import patch
 
 import pandas as pd
 
@@ -20,6 +22,7 @@ from qteasy.database import DataSource
 from qteasy.data_channels import (
     EASTMONEY_API_MAP, TUSHARE_API_MAP, AKSHARE_API_MAP,
     _get_fetch_table_func,
+    _hist_dnld_thread_pool_max_workers,
     fetch_batched_table_data,
     fetch_real_time_klines,
     fetch_real_time_quotes,
@@ -453,6 +456,24 @@ class TestChannels(unittest.TestCase):
                           {'end': '20210110', 'start': '20210101', 'ts_code': '000006.SH'},
                           {'end': '20210110', 'start': '20210101', 'ts_code': '000007.SH'}])
 
+        table = 'index_weight'
+        print(f'\n[TestChannels] test_table_arg_parsing: {table} (composite + index + 7d chunks)')
+        args = parse_data_fetch_args(table=table,
+                                     channel='tushare',
+                                     symbols='000001.SH',
+                                     start_date='20210101',
+                                     end_date='20210110',
+                                     list_arg_filter=None,
+                                     reversed_par_seq=False,
+                                     )
+        args = list(args)
+        print(f'index_weight args (expect index + start/end per 7d chunk): {args}')
+        expected_iw = [
+            {'index': '000001.SH', 'start': '20210101', 'end': '20210108'},
+            {'index': '000001.SH', 'start': '20210108', 'end': '20210110'},
+        ]
+        self.assertEqual(args, expected_iw)
+
         table = 'shibor'  # parse ['shibor', '', '', '', '', 'Y', '365'] type of args
         print(f'testing parsing args for table: {table}')
         # parse the filling args and pick the first filling arg value from the range
@@ -758,6 +779,105 @@ class TestChannels(unittest.TestCase):
         #     else:
         #         print(f'not a trade day, no real time k-line data acquired!')
         #         self.assertTrue(res.empty)
+
+
+class TestHistDnldParallelWorkers(unittest.TestCase):
+    """hist_dnld_parallel 与实时 K 线 / 批量表下载的 ThreadPoolExecutor 接线（不访问外网）。"""
+
+    def setUp(self) -> None:
+        import qteasy as qt
+        self._saved_hist_dnld_parallel = int(qt.QT_CONFIG['hist_dnld_parallel'])
+
+    def tearDown(self) -> None:
+        import qteasy as qt
+        qt.configure(hist_dnld_parallel=self._saved_hist_dnld_parallel)
+
+    def test_hist_dnld_thread_pool_max_workers_mapping(self) -> None:
+        print('\n[TestHistDnldParallelWorkers] _hist_dnld_thread_pool_max_workers 与 QT_CONFIG')
+        import qteasy as qt
+        qt.configure(hist_dnld_parallel=0)
+        w0 = _hist_dnld_thread_pool_max_workers(None)
+        print(' hist_dnld_parallel=0 -> max_workers', w0)
+        self.assertEqual(w0, 1)
+        qt.configure(hist_dnld_parallel=1)
+        w1 = _hist_dnld_thread_pool_max_workers(None)
+        print(' hist_dnld_parallel=1 -> max_workers', w1)
+        self.assertEqual(w1, 1)
+        qt.configure(hist_dnld_parallel=7)
+        w7 = _hist_dnld_thread_pool_max_workers(None)
+        print(' hist_dnld_parallel=7 -> max_workers', w7)
+        self.assertEqual(w7, 7)
+        w_explicit = _hist_dnld_thread_pool_max_workers(3)
+        print(' process_count=3 -> max_workers', w_explicit)
+        self.assertEqual(w_explicit, 3)
+        w_zero_explicit = _hist_dnld_thread_pool_max_workers(0)
+        print(' process_count=0 -> max_workers', w_zero_explicit)
+        self.assertEqual(w_zero_explicit, 1)
+
+    def test_fetch_real_time_klines_parallel_uses_hist_dnld_parallel(self) -> None:
+        print('\n[TestHistDnldParallelWorkers] fetch_real_time_klines ThreadPoolExecutor max_workers')
+        import qteasy as qt
+
+        def fake_kline(**kwargs):
+            idx = pd.DatetimeIndex([pd.Timestamp('2020-01-02 10:00:00')], name='trade_time')
+            return pd.DataFrame(
+                {
+                    'open': [9.0],
+                    'close': [10.0],
+                    'high': [11.0],
+                    'low': [8.0],
+                    'vol': [100.0],
+                    'amount': [1000.0],
+                },
+                index=idx,
+            )
+
+        qt.configure(hist_dnld_parallel=4)
+        with patch('qteasy.data_channels._get_realtime_kline_func', return_value=fake_kline):
+            with patch('qteasy.data_channels.ThreadPoolExecutor', wraps=ThreadPoolExecutor) as wrapped_tpe:
+                out = fetch_real_time_klines(
+                    channel='eastmoney',
+                    qt_codes=['000001.SZ', '000002.SZ'],
+                    freq='d',
+                    verbose=False,
+                    parallel=True,
+                )
+                ca = wrapped_tpe.call_args
+                mw = ca.kwargs.get('max_workers') if ca and ca.kwargs else None
+                if mw is None and ca and ca.args:
+                    mw = ca.args[0]
+                print(' ThreadPoolExecutor max_workers:', mw, 'rows:', len(out))
+                self.assertEqual(mw, 4)
+                self.assertIsInstance(out, pd.DataFrame)
+                self.assertEqual(len(out), 2)
+
+    def test_fetch_batched_table_data_parallel_uses_hist_dnld_when_process_count_none(self) -> None:
+        print('\n[TestHistDnldParallelWorkers] fetch_batched_table_data ThreadPoolExecutor max_workers')
+        import qteasy as qt
+
+        qt.configure(hist_dnld_parallel=3)
+
+        def fake_fetch(table, **kwargs):
+            return pd.DataFrame({'x': [1]})
+
+        with patch('qteasy.data_channels._get_fetch_table_func', return_value=fake_fetch):
+            with patch('qteasy.data_channels.ThreadPoolExecutor', wraps=ThreadPoolExecutor) as wrapped_tpe:
+                rows = list(
+                    fetch_batched_table_data(
+                        table='stock_basic',
+                        channel='tushare',
+                        arg_list=[{'a': 1}, {'b': 2}],
+                        parallel=True,
+                        process_count=None,
+                    )
+                )
+                ca = wrapped_tpe.call_args
+                mw = ca.kwargs.get('max_workers') if ca and ca.kwargs else None
+                if mw is None and ca and ca.args:
+                    mw = ca.args[0]
+                print(' max_workers:', mw, 'yielded chunks:', len(rows))
+                self.assertEqual(mw, 3)
+                self.assertEqual(len(rows), 2)
 
 
 if __name__ == '__main__':

@@ -96,6 +96,41 @@ class TestLog(unittest.TestCase):
                 shutil.rmtree(tmp_dir, ignore_errors=True)
                 print(' cleaned tmp_dir:', tmp_dir)
 
+    def test_rotate_trade_logs_removes_expired_risk_logs(self):
+        """risk 审计日志按 mtime 与 keep_days 一致清理。"""
+        print('\n[TestRotateRiskLogs] risk 日志按 mtime 轮换')
+
+        tmp_dir = tempfile.mkdtemp()
+        original_path = qt.QT_TRADE_LOG_PATH
+        try:
+            old_path = os.path.join(tmp_dir, 'alpha_account.risk.log')
+            recent_path = os.path.join(tmp_dir, 'beta_account.risk.log')
+            with open(old_path, 'w', encoding='utf-8') as f:
+                f.write('old-risk\n')
+            with open(recent_path, 'w', encoding='utf-8') as f:
+                f.write('recent-risk\n')
+
+            old_time = time.time() - 40 * 24 * 3600
+            recent_time = time.time() - 2 * 24 * 3600
+            os.utime(old_path, (old_time, old_time))
+            os.utime(recent_path, (recent_time, recent_time))
+
+            print(' tmp_dir:', tmp_dir)
+            print(' files before rotation:', sorted(os.listdir(tmp_dir)))
+
+            qt.QT_TRADE_LOG_PATH = tmp_dir
+            qt.rotate_trade_logs(days=30)
+
+            remaining = sorted(os.listdir(tmp_dir))
+            print(' files after rotation:', remaining)
+            self.assertFalse(os.path.exists(old_path))
+            self.assertTrue(os.path.exists(recent_path))
+        finally:
+            qt.QT_TRADE_LOG_PATH = original_path
+            if os.path.isdir(tmp_dir):
+                shutil.rmtree(tmp_dir, ignore_errors=True)
+                print(' cleaned tmp_dir:', tmp_dir)
+
 
 if __name__ == '__main__':
     unittest.main()

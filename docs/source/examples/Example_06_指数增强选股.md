@@ -1,5 +1,7 @@
 # 指数增强选股策略
 
+参考来源：`docs/_joinquant_migration_source/Example_06_指数增强选股.ipynb` 第一个 Markdown cell。
+
 本策略以0.8为初始权重跟踪指数标的沪深300中权重大于0.35%的成份股.
 个股所占的百分比为(0.8*成份股权重)*100%.然后根据个股是否:
 1.连续上涨5天 2.连续下跌5天
@@ -17,36 +19,36 @@
 ```python
 import qteasy as qt
 import numpy as np
+from qteasy import Parameter, StgData
 
 
 class IndexEnhancement(qt.GeneralStg):
 
-    def __init__(self, pars: tuple = (0.35, 0.8, 5)):
+    def __init__(self):
         super().__init__(
-                pars=pars,
-                par_count=2,
-                par_types=['float', 'float', 'int'],  # 参数1:沪深300指数权重阈值，低于它的股票不被选中，参数2: 初始权重，参数3: 连续涨跌天数，作为强弱势判断阈值
-                par_range=[(0.01, 0.99), (0.51, 0.99), (2, 20)],
+                pars=[
+                    Parameter((0.01, 0.99), name='weight_threshold', par_type='float', value=0.35),
+                    Parameter((0.51, 0.99), name='init_weight', par_type='float', value=0.8),
+                    Parameter((2, 20), name='price_days', par_type='int', value=5),
+                ],
                 name='IndexEnhancement',
                 description='跟踪HS300指数选股，并根据连续上涨/下跌趋势判断强弱势以增强权重',
-                strategy_run_timing='close',  # 在周期结束（收盘）时运行
-                run_freq='d',  # 每天执行一次选股
-                strategy_data_types='wt-000300.SH, close',  # 利用HS300权重设定选股权重, 根据收盘价判断强弱势
-                data_freq='d',  # 数据频率（包括股票数据和参考数据）
-                window_length=20,
-                use_latest_data_cycle=True,
-                reference_data_types='',  # 不需要使用参考数据
+                data_types=[
+                    StgData('wt_idx|000300.SH', freq='m', asset_type='E', window_length=2),
+                    StgData('close', freq='d', asset_type='E', window_length=40),
+                ],
         )
 
-    def realize(self, h, r=None, t=None, pars=None):
-        weight_threshold, init_weight, price_days = self.par_values
+    def realize(self):
+        weight_threshold, init_weight, price_days = self.get_pars('weight_threshold', 'init_weight', 'price_days')
         # 读取投资组合的权重wt和最近price_days天的收盘价
-        wt = h[:, -1, 0]  # 当前所有股票的权重值
-        pre_close = h[:, -price_days - 1:-1, 1]
-        close = h[:, -price_days:, 1]  # 当前所有股票的最新连续收盘价
+        wt = self.get_data('wt_idx|000300.SH_E_m')[-1]
+        close_windows = self.get_data('close_E_d')
+        pre_close = close_windows[-price_days - 1:-1]
+        close = close_windows[-price_days:]  # 当前所有股票的最新连续收盘价
 
         # 计算连续price_days天的收益
-        stock_returns = pre_close - close  # 连续p天的收益
+        stock_returns = close - pre_close
 
         # 设置初始选股权重为0.8
         weights = init_weight * np.ones_like(wt)
@@ -83,8 +85,8 @@ print(len(shares), shares[:10])
 alpha = IndexEnhancement()
 op = qt.Operator(alpha, signal_type='PT')
 op.op_type = 'stepwise'
-op.set_blender('1.0*s0', "close")
-op.run(mode=1,
+op.set_blender('1.0*s0')
+res = qt.run(op, mode=1,
        invest_start='20210101',
        invest_end='20221231',
        invest_cash_amounts=[1000000],

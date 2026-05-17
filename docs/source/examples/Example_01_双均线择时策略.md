@@ -1,5 +1,7 @@
 # 双均线择时策略
 
+参考来源：`docs/_joinquant_migration_source/Example_01_双均线择时策略.ipynb` 第一个 Markdown cell。
+
 本策略根据交易目标的其日K线数据建立简单移动平均线的双均线交易模型，
 交易策略如下：
 

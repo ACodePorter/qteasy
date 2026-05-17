@@ -113,15 +113,15 @@ from qteasy._arg_validators import (
 
 
 # qteasy版本信息
-__version__ = '2.4.5'
+__version__ = '2.5.0'
 version_info = Namespace(
         major=2,
-        minor=4,
-        patch=5,
-        short=(2, 4),
-        full=(2, 4, 5),
-        string='2.4.5',
-        tuple=('2', '4', '5'),
+        minor=5,
+        patch=0,
+        short=(2, 5),
+        full=(2, 5, 0),
+        string='2.5.0',
+        tuple=('2', '5', '0'),
         releaselevel='beta',
 )
 
@@ -243,12 +243,13 @@ def _refresh_log_paths() -> None:
 
 
 def _rotate_trade_logs(base_path: str, keep_days: int) -> list[str]:
-    """根据保留天数删除指定目录下的旧 trade_log / trade_summary / value_curve CSV。
+    """根据保留天数删除指定目录下的旧 trade/risk 日志文件。
 
     优先从文件名中解析创建时间，格式参考 qt_operator 中的生成逻辑：
     trade_log_{operator_name}_%Y%m%d_%H%M%S.csv
     trade_summary_{operator_name}_%Y%m%d_%H%M%S.csv
     value_curve_{operator_name}_%Y%m%d_%H%M%S.csv
+    风控日志通常使用 ``*.risk.log`` 命名（一般不含时间戳）。
     若解析失败，则退回使用文件修改时间近似作为创建时间。
     """
     from qteasy import QT_CONFIG  # 局部导入以避免循环引用
@@ -266,20 +267,24 @@ def _rotate_trade_logs(base_path: str, keep_days: int) -> list[str]:
         full_path = os.path.join(base_path, name)
         if not os.path.isfile(full_path):
             continue
-        if not (name.startswith('trade_log_') or name.startswith('trade_summary_') or name.startswith('value_curve_')):
-            continue
-        if not name.endswith('.csv'):
+        is_trade_csv = (
+            name.endswith('.csv')
+            and (name.startswith('trade_log_') or name.startswith('trade_summary_') or name.startswith('value_curve_'))
+        )
+        is_risk_log = name.endswith('.risk.log')
+        if not (is_trade_csv or is_risk_log):
             continue
 
         created_time: Optional[datetime] = None
 
         try:
-            # 解析文件名中的时间戳部分：{prefix}_{operator_name}_%Y%m%d_%H%M%S.csv
-            stem = name[:-4]  # 去除 .csv
-            parts = stem.split('_')
-            if len(parts) >= 3:
-                date_str, time_str = parts[-2], parts[-1]
-                created_time = datetime.strptime(f'{date_str}_{time_str}', '%Y%m%d_%H%M%S')
+            if is_trade_csv:
+                # 解析文件名中的时间戳部分：{prefix}_{operator_name}_%Y%m%d_%H%M%S.csv
+                stem = name[:-4]  # 去除 .csv
+                parts = stem.split('_')
+                if len(parts) >= 3:
+                    date_str, time_str = parts[-2], parts[-1]
+                    created_time = datetime.strptime(f'{date_str}_{time_str}', '%Y%m%d_%H%M%S')
         except Exception:
             created_time = None
 
@@ -322,7 +327,7 @@ def _auto_rotate_trade_logs() -> None:
 
 
 def rotate_trade_logs(days: Optional[int] = None) -> None:
-    """手动触发 trade_log / trade_summary / value_curve 轮换删除。
+    """手动触发 trade_log / trade_summary / value_curve / risk_log 轮换删除。
 
     自动轮换仅在进程加载本模块时执行一次（见 ``_auto_rotate_trade_logs``），
     本函数用于按需再次清理。全局配置 ``trade_log_keep_days`` 默认保留 3 天，

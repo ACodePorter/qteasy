@@ -16,7 +16,7 @@ import warnings
 
 from tqdm import tqdm
 from os import path
-from typing import Union
+from typing import Union, Callable, Any
 
 from functools import lru_cache
 
@@ -250,6 +250,7 @@ class DataSource:
             self.__password__ = None
 
         self._allow_drop_table = allow_drop_table
+        self._active_tx = None
 
     @property
     def tables(self) -> list:
@@ -748,10 +749,15 @@ class DataSource:
         result: any
             执行sql语句的结果
         """
-        conn, cursor = self._db_open_connection()
+        use_existing_tx = self._active_tx is not None
+        if use_existing_tx:
+            conn, cursor = self._active_tx
+        else:
+            conn, cursor = self._db_open_connection()
         try:
             rows_affected = cursor.execute(sql, data)
-            conn.commit()
+            if not use_existing_tx:
+                conn.commit()
             if fetch_and_return:
                 result = cursor.fetchall()
                 if return_cursor:
@@ -760,12 +766,13 @@ class DataSource:
                     return result
             return rows_affected
         except Exception as e:
-            if rollback:
+            if rollback and not use_existing_tx:
                 conn.rollback()
             err = RuntimeError(f'{e}, error in executing sql: {sql}')
             raise err
         finally:
-            self._db_close_connection(conn, cursor)
+            if not use_existing_tx:
+                self._db_close_connection(conn, cursor)
 
     def _db_execute_many(self, sql, data, rollback=False) -> any:
         """从mysql连接池获取一个新的连接，执行包含多条数据的sql语句，返回执行的结果并关闭连接
@@ -783,17 +790,67 @@ class DataSource:
         -------
         rows_affected: int: 执行sql语句的结果
         """
-        conn, cursor = self._db_open_connection()
+        use_existing_tx = self._active_tx is not None
+        if use_existing_tx:
+            conn, cursor = self._active_tx
+        else:
+            conn, cursor = self._db_open_connection()
         try:
             rows_affected = cursor.executemany(sql, data)
-            conn.commit()
+            if not use_existing_tx:
+                conn.commit()
             return rows_affected
         except Exception as e:
-            if rollback:
+            if rollback and not use_existing_tx:
                 conn.rollback()
             err = RuntimeError(f'{e}, error in executing sql: {sql}')
             raise err
         finally:
+            if not use_existing_tx:
+                self._db_close_connection(conn, cursor)
+
+    def db_run_in_transaction(self, action: Callable[..., Any], *args, **kwargs) -> Any:
+        """在 DataSource 上执行最小事务封装（DB 真事务，file 为 no-op）。
+
+        Parameters
+        ----------
+        action: Callable[..., Any]
+            需要在事务中执行的可调用对象
+        *args:
+            传递给 ``action`` 的位置参数
+        **kwargs:
+            传递给 ``action`` 的关键字参数
+
+        Returns
+        -------
+        Any
+            ``action`` 的返回值
+        """
+        if not callable(action):
+            err = TypeError(f'action should be callable, got {type(action)} instead')
+            raise err
+
+        # 对 file/csv/hdf/fth 提供 no-op 包装，保持接口统一但不承诺原子性
+        if self.source_type != 'db':
+            return action(*args, **kwargs)
+
+        # 支持嵌套调用：若已有外层事务，直接复用外层事务上下文
+        if self._active_tx is not None:
+            return action(*args, **kwargs)
+
+        conn, cursor = self._db_open_connection()
+        if conn is None or cursor is None:
+            raise RuntimeError('failed to open db connection for transaction')
+        self._active_tx = (conn, cursor)
+        try:
+            result = action(*args, **kwargs)
+            conn.commit()
+            return result
+        except Exception:
+            conn.rollback()
+            raise
+        finally:
+            self._active_tx = None
             self._db_close_connection(conn, cursor)
 
     def _read_database(self, db_table, share_like_pk=None, shares=None, date_like_pk=None, start=None, end=None):
@@ -1930,8 +1987,10 @@ class DataSource:
         if res_df.empty:
             return res_df
 
-        # 筛选数据
+        # 筛选数据（物理表若尚未包含某列，视为无匹配行，避免 KeyError）
         for k, v in kwargs.items():
+            if k not in res_df.columns:
+                return pd.DataFrame()
             res_df = res_df.loc[res_df[k] == v]
 
         return res_df.sort_index()

@@ -13,7 +13,7 @@
 import os
 import pandas as pd
 import numpy as np
-from typing import Union, Dict
+from typing import Any, Mapping, Union, Dict
 
 from qteasy.database import DataSource
 
@@ -125,7 +125,74 @@ def get_account(account_id, user_name=None, data_source=None) -> dict:
         account = data_source.read_sys_table_data('sys_op_live_accounts', user_name=user_name)
         if account.empty:
             raise KeyError(f'Account (user_name={user_name}) not found!')
-        return account.to_dict(orient='records')[0]
+        record = account.to_dict(orient='records')[0]
+        # 文件型等数据源上 DataFrame 主键可能在 index 中，to_dict 行不含 account_id
+        if 'account_id' not in record and len(account.index) == 1:
+            record = {**record, 'account_id': int(account.index[0])}
+        return record
+
+
+def resolve_live_trade_account_id(config: Mapping[str, Any], data_source=None) -> int:
+    """根据实盘配置解析账户主键 ``account_id``。
+
+    优先使用 ``config['live_trade_account_id']``；若为 ``None``，则使用非空的
+    ``config['live_trade_account_name']`` 查找已有账户，不存在时按 ``live_trade_init_cash`` 新建。
+
+    Parameters
+    ----------
+    config : Mapping[str, Any]
+        含 ``live_trade_account_id``、``live_trade_account_name``、``live_trade_init_cash`` 等键的配置映射。
+    data_source : DataSource, optional
+        数据源；为 ``None`` 时使用 ``QT_DATA_SOURCE``。
+
+    Returns
+    -------
+    int
+        账户 ID。
+
+    Raises
+    ------
+    TypeError
+        ``live_trade_account_id`` 已给出但类型不是 ``int``。
+    ValueError
+        无法从配置得到合法账户（缺少 id/name 或新建时初始资金非正）；用户可见信息为英文。
+    """
+    import qteasy as qt
+
+    if data_source is None:
+        data_source = qt.QT_DATA_SOURCE
+    if not isinstance(data_source, qt.DataSource):
+        raise TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
+
+    raw_id = config.get('live_trade_account_id')
+    if isinstance(raw_id, int):
+        return int(raw_id)
+    if raw_id is not None:
+        raise TypeError(
+            f'live_trade_account_id must be int or None, got {type(raw_id).__name__} instead.'
+        )
+
+    acc_name = config.get('live_trade_account_name')
+    if isinstance(acc_name, str):
+        acc_name = acc_name.strip()
+    else:
+        acc_name = ''
+    if not acc_name:
+        raise ValueError(
+            'live_trade_account_id is not set. Provide live_trade_account_id (int) or '
+            'live_trade_account_name (str) to select or create a live trading account.'
+        )
+
+    try:
+        row = get_account(0, user_name=acc_name, data_source=data_source)
+    except KeyError:
+        cash = float(config.get('live_trade_init_cash', 0) or 0.0)
+        if cash <= 0:
+            raise ValueError(
+                'live_trade_init_cash must be positive when creating a new account with live_trade_account_name.'
+            ) from None
+        return new_account(user_name=acc_name, cash_amount=cash, data_source=data_source)
+    return int(row['account_id'])
 
 
 def update_account(account_id, data_source=None, **account_data) -> None:
@@ -157,7 +224,7 @@ def update_account(account_id, data_source=None, **account_data) -> None:
     data_source.update_sys_table_data('sys_op_live_accounts', record_id=account_id, **account_data)
 
 
-def update_account_balance(account_id, data_source=None, **cash_change) -> None:
+def update_account_balance(account_id, data_source=None, transaction=False, **cash_change) -> None:
     """ 更新账户的资金总额和可用资金, 为了避免误操作，仅允许修改现金总额、可用现金和总投资额，其他字段不可修改
 
     Parameters
@@ -184,6 +251,15 @@ def update_account_balance(account_id, data_source=None, **cash_change) -> None:
         data_source = qt.QT_DATA_SOURCE
     if not isinstance(data_source, qt.DataSource):
         raise TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: update_account_balance(
+                        account_id=account_id,
+                        data_source=data_source,
+                        transaction=False,
+                        **cash_change,
+                )
+        )
 
     account_data = data_source.read_sys_table_record('sys_op_live_accounts', record_id=account_id)
     if account_data == {}:
@@ -539,7 +615,7 @@ def get_or_create_position(account_id: int, symbol: str, position_type: str, dat
     return position.index[0]
 
 
-def update_position(position_id, data_source=None, **position_data):
+def update_position(position_id, data_source=None, transaction=False, **position_data):
     """ 更新账户的持仓，包括持仓的数量和可用数量，account_id, position和symbol不可修改
 
     Parameters
@@ -565,6 +641,15 @@ def update_position(position_id, data_source=None, **position_data):
     if not isinstance(data_source, qt.DataSource):
         err = TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
         raise err
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: update_position(
+                        position_id=position_id,
+                        data_source=data_source,
+                        transaction=False,
+                        **position_data,
+                )
+        )
 
     if not isinstance(position_id, (int, np.int64)):
         err = TypeError(f'position_id must be an int, got {type(position_id)} instead')
@@ -866,7 +951,29 @@ def record_trade_order(order, data_source=None):
     if err is not None:
         raise err
 
-    return data_source.insert_sys_table_data('sys_op_trade_orders', **order)
+    broker_order_id = order.get('broker_order_id', None)
+    broker_name = order.get('broker_name', None)
+    if broker_order_id in ['', None]:
+        broker_order_id = None
+    elif not isinstance(broker_order_id, str):
+        raise TypeError(f'signal["broker_order_id"] must be a str or None, got {type(broker_order_id)} instead')
+    if broker_name in ['', None]:
+        broker_name = None
+    elif not isinstance(broker_name, str):
+        raise TypeError(f'signal["broker_name"] must be a str or None, got {type(broker_name)} instead')
+
+    order_payload = {
+        'pos_id': order['pos_id'],
+        'direction': order['direction'],
+        'order_type': order['order_type'],
+        'qty': order['qty'],
+        'price': order['price'],
+        'submitted_time': order.get('submitted_time', None),
+        'status': order['status'],
+        'broker_order_id': broker_order_id,
+        'broker_name': broker_name,
+    }
+    return data_source.insert_sys_table_data('sys_op_trade_orders', **order_payload)
 
 
 def read_trade_order(order_id, data_source=None) -> dict:
@@ -898,15 +1005,22 @@ def read_trade_order(order_id, data_source=None) -> dict:
     return data_source.read_sys_table_record('sys_op_trade_orders', record_id=order_id)
 
 
-def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_if_status_wrong=False):
+def update_trade_order(order_id,
+                       data_source=None,
+                       status=None,
+                       qty=None,
+                       broker_order_id=None,
+                       broker_name=None,
+                       raise_if_status_wrong=False,
+                       transaction=False):
     """ 更新数据库中trade_signal的状态或其他信，这里只操作trade_signal，不处理交易结果
 
     trade_order的所有字段中，可以更新字段只有status和qty(qty只能在submit的时候更改，一旦submit之后就不能再更改。
     status的更新遵循下列规律：
-    1. 如果status为 'created'，则可以更新为 'submitted', 同时设置'submitted_time';
-    2. 如果status为 'submitted'，则可以更新为 'canceled', 'partial-filled' 或 'filled';
-    3. 如果status为 'partial-filled'，则可以更新为 'canceled' 或 'filled';
-    4. 如果status为 'canceled' 或 'filled'，则不可以再更新.
+    1. 如果status为 'created'，则可以更新为 'submitted' 或 'rejected'；
+    2. 如果status为 'submitted'，则可以更新为 'canceled', 'partial-filled', 'filled' 或 'rejected'；
+    3. 如果status为 'partial-filled'，则可以更新为 'canceled' 或 'filled'；
+    4. 如果status为 'canceled'/'filled'/'rejected'，则不可以再更新。
 
     Parameters
     ----------
@@ -918,6 +1032,10 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         交易信号的状态, 默认为None, 表示不更新状态
     qty: float, optional
         交易信号的数量, 默认为None, 表示不更新数量
+    broker_order_id: str, optional
+        券商委托号，通常在订单受理成功后回写，默认为None
+    broker_name: str, optional
+        券商名称，通常在订单受理成功后回写，默认为None
     raise_if_status_wrong: bool, default False
         如果status不符合规则，则抛出RuntimeError, 默认为False, 表示不抛出异常
 
@@ -935,7 +1053,7 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         如果status不符合规则，则抛出RuntimeError
     """
 
-    if status is None:
+    if status is None and broker_order_id is None and broker_name is None:
         return None
 
     import qteasy as qt
@@ -947,11 +1065,30 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
     if status is not None:
         if not isinstance(status, str):
             err = TypeError(f'status must be a str, got {type(status)} instead')
-        if status not in ['created', 'submitted', 'canceled', 'partial-filled', 'filled']:
-            err = RuntimeError(f'status ({status}) not in [created, submitted, canceled, partial-filled, filled]!')
+        if status not in ['created', 'submitted', 'canceled', 'partial-filled', 'filled', 'rejected']:
+            err = RuntimeError(
+                    f'status ({status}) not in [created, submitted, canceled, partial-filled, filled, rejected]!'
+            )
+    if broker_order_id is not None and not isinstance(broker_order_id, str):
+        err = TypeError(f'broker_order_id must be a str, got {type(broker_order_id)} instead')
+    if broker_name is not None and not isinstance(broker_name, str):
+        err = TypeError(f'broker_name must be a str, got {type(broker_name)} instead')
 
     if err is not None:
         raise err
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: update_trade_order(
+                        order_id=order_id,
+                        data_source=data_source,
+                        status=status,
+                        qty=qty,
+                        broker_order_id=broker_order_id,
+                        broker_name=broker_name,
+                        raise_if_status_wrong=raise_if_status_wrong,
+                        transaction=False,
+                )
+        )
 
     trade_signal = data_source.read_sys_table_record('sys_op_trade_orders', record_id=order_id)
 
@@ -960,7 +1097,15 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         err = RuntimeError(f'Trade signal (order_id = {order_id}) not found!')
         raise err
 
-    # 如果trade_signal的状态为 'created'，则可以更新为 'submitted'
+    update_fields = {}
+    if qty is not None and status is not None:
+        update_fields['qty'] = qty
+    if broker_order_id is not None:
+        update_fields['broker_order_id'] = broker_order_id
+    if broker_name is not None:
+        update_fields['broker_name'] = broker_name
+
+    # 如果trade_signal的状态为 'created'，则可以更新为 'submitted' 或 'rejected'
     if trade_signal['status'] == 'created' and status == 'submitted':
         if qty is not None:
             assert isinstance(qty, (float, int, np.float64, np.int64)), f'qty must be a float, got {type(qty)} instead'
@@ -968,26 +1113,44 @@ def update_trade_order(order_id, data_source=None, status=None, qty=None, raise_
         else:
             qty = trade_signal['qty']
         submit_time = pd.to_datetime('today').strftime('%Y-%m-%d %H:%M:%S')
+        update_fields['submitted_time'] = submit_time
+        update_fields['status'] = status
+        update_fields['qty'] = qty
         return data_source.update_sys_table_data(
                 'sys_op_trade_orders',
                 record_id=order_id,
-                submitted_time=submit_time,
-                status=status,
-                qty=qty,
+                **update_fields,
         )
-    # 如果trade_signal的状态为 'submitted'，则可以更新为 'canceled', 'partial-filled' 或 'filled'
-    if trade_signal['status'] == 'submitted' and status in ['canceled', 'partial-filled', 'filled']:
+    if trade_signal['status'] == 'created' and status == 'rejected':
+        update_fields['status'] = status
         return data_source.update_sys_table_data(
                 'sys_op_trade_orders',
-                order_id,
-                status=status
+                record_id=order_id,
+                **update_fields,
+        )
+    # 如果trade_signal的状态为 'submitted'，则可以更新为 'canceled', 'partial-filled', 'filled' 或 'rejected'
+    if trade_signal['status'] == 'submitted' and status in ['canceled', 'partial-filled', 'filled', 'rejected']:
+        update_fields['status'] = status
+        return data_source.update_sys_table_data(
+                'sys_op_trade_orders',
+                record_id=order_id,
+                **update_fields
         )
     # 如果trade_signal的状态为 'partial-filled'，则可以更新为 'canceled' 或 'filled'
     if trade_signal['status'] == 'partial-filled' and status in ['canceled', 'filled']:
+        update_fields['status'] = status
         return data_source.update_sys_table_data(
                 'sys_op_trade_orders',
-                order_id,
-                status=status
+                record_id=order_id,
+                **update_fields
+        )
+
+    # status 不变，仅更新broker字段（例如补写broker_order_id / broker_name）
+    if status is None and any(k in update_fields for k in ['broker_order_id', 'broker_name']):
+        return data_source.update_sys_table_data(
+                'sys_op_trade_orders',
+                record_id=order_id,
+                **update_fields,
         )
 
     if raise_if_status_wrong:
@@ -1018,7 +1181,7 @@ def query_trade_orders(account_id,
         交易方向, 默认为None, 表示不限制, 'buy' 表示买入, 'sell' 表示卖出
     order_type: str, optional, {'market', 'limit', 'stop', 'stop_limit'}
         交易类型, 默认为None, 表示不限制, 'market' 表示市价单, 'limit' 表示限价单, 'stop' 表示止损单, 'stop_limit' 表示止损限价单
-    status: str, optional, {'created', 'submitted', 'canceled', 'partial-filled', 'filled'}
+    status: str, optional, {'created', 'submitted', 'canceled', 'partial-filled', 'filled', 'rejected'}
         交易信号状态
     data_source: str, optional
         数据源的名称, 默认为None, 表示使用默认的数据源
@@ -1186,7 +1349,7 @@ def save_parsed_trade_orders(account_id: int,
 
 
 # 5 foundational functions for trade result
-def write_trade_result(trade_result, data_source=None):
+def write_trade_result(trade_result, data_source=None, transaction=False):
     """ 将交易结果写入数据库, 并返回交易结果的id
 
     Parameters
@@ -1205,6 +1368,8 @@ def write_trade_result(trade_result, data_source=None):
     if not isinstance(trade_result, dict):
         err = TypeError('trade_results must be a dict')
         raise err
+    if 'broker_result_id' not in trade_result:
+        trade_result['broker_result_id'] = ''
 
     if not isinstance(trade_result['order_id'], (int, np.int64)):
         err = TypeError(f'order_id of trade_result must be an int, got {type(trade_result["order_id"])} instead')
@@ -1234,6 +1399,10 @@ def write_trade_result(trade_result, data_source=None):
     if not isinstance(trade_result['delivery_status'], str):
         err = TypeError(f'delivery_status of trade_result must be a str, '
                         f'got {type(trade_result["delivery_status"])} instead')
+        raise err
+    if not isinstance(trade_result['broker_result_id'], str):
+        err = TypeError(f'broker_result_id of trade_result must be a str, '
+                        f'got {type(trade_result["broker_result_id"])} instead')
         raise err
     if not isinstance(trade_result['delivery_amount'], (int, float, np.int64, np.float64)):
         err = TypeError(f'delivery_amount of trade_result must be a number, got '
@@ -1267,12 +1436,20 @@ def write_trade_result(trade_result, data_source=None):
     if not isinstance(data_source, qt.DataSource):
         err = TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
         raise err
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: write_trade_result(
+                        trade_result=trade_result,
+                        data_source=data_source,
+                        transaction=False,
+                )
+        )
 
     result_id = data_source.insert_sys_table_data('sys_op_trade_results', **trade_result)
     return result_id
 
 
-def update_trade_result(result_id, delivery_status, data_source=None):
+def update_trade_result(result_id, delivery_status, data_source=None, transaction=False):
     """ 更新交易结果的delivery_status
 
     Parameters
@@ -1300,6 +1477,15 @@ def update_trade_result(result_id, delivery_status, data_source=None):
     if not isinstance(data_source, qt.DataSource):
         err = TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
         raise err
+    if transaction:
+        return data_source.db_run_in_transaction(
+                lambda: update_trade_result(
+                        result_id=result_id,
+                        delivery_status=delivery_status,
+                        data_source=data_source,
+                        transaction=False,
+                )
+        )
 
     data_source.update_sys_table_data(
             'sys_op_trade_results',
@@ -1398,11 +1584,38 @@ def read_trade_results_by_order_id(order_id, data_source=None):
         )
     if trade_results.empty:
         return pd.DataFrame(columns=['order_id', 'filled_qty', 'price', 'transaction_fee', 'execution_time',
-                                     'canceled_qty', 'delivery_amount', 'delivery_status'])
+                                     'canceled_qty', 'delivery_amount', 'delivery_status', 'broker_result_id'])
     if isinstance(order_id, list):
         trade_results = trade_results[trade_results['order_id'].isin(order_id)]
 
     return trade_results
+
+
+def read_trade_result_by_broker_result_id(broker_result_id, data_source=None) -> dict:
+    """根据 broker_result_id 读取单条交易结果。"""
+    if not isinstance(broker_result_id, str):
+        err = TypeError(f'broker_result_id must be a str, got {type(broker_result_id)} instead')
+        raise err
+
+    import qteasy as qt
+    if data_source is None:
+        data_source = qt.QT_DATA_SOURCE
+    if not isinstance(data_source, qt.DataSource):
+        err = TypeError(f'data_source must be a DataSource instance, got {type(data_source)} instead')
+        raise err
+
+    if broker_result_id == '':
+        return {}
+    trade_results = data_source.read_sys_table_data(
+            'sys_op_trade_results',
+            **{'broker_result_id': broker_result_id},
+    )
+    if trade_results.empty:
+        return {}
+    first_id = int(trade_results.index[0])
+    first_result = trade_results.iloc[0].to_dict()
+    first_result['result_id'] = first_id
+    return first_result
 
 
 def read_trade_results_by_delivery_status(delivery_status, data_source=None) -> pd.DataFrame:

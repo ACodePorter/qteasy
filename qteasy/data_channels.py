@@ -16,13 +16,15 @@ import pandas as pd
 import time
 import logging
 
-from typing import Generator, Union, Any
+from typing import Generator, Union, Any, Optional
 from functools import lru_cache
 
 from concurrent.futures import (
     ThreadPoolExecutor,
     as_completed,
 )
+
+from ._arg_validators import QT_CONFIG
 
 from .utilfuncs import (
     str_to_list,
@@ -346,6 +348,29 @@ def parse_data_fetch_args(table, channel, symbols, start_date, end_date, list_ar
     return kwargs
 
 
+def _hist_dnld_thread_pool_max_workers(process_count: Optional[int] = None) -> int:
+    """解析 ``ThreadPoolExecutor.max_workers``：来自 ``hist_dnld_parallel`` 或显式 ``process_count``。
+
+    ``hist_dnld_parallel`` 为 0 时按单线程处理，映射为 1（``max_workers`` 不得为 0）。
+    显式传入的 ``process_count`` 若小于 1，同样规范为 1，避免构造线程池失败。
+
+    Parameters
+    ----------
+    process_count : int, optional
+        若为 ``None``，使用全局 ``QT_CONFIG['hist_dnld_parallel']``；否则使用该正整数意图值。
+
+    Returns
+    -------
+    int
+        至少为 1 的 worker 数量。
+    """
+    if process_count is None:
+        n = int(QT_CONFIG['hist_dnld_parallel'])
+    else:
+        n = int(process_count)
+    return max(1, n)
+
+
 def fetch_batched_table_data(
         *,
         table: str,
@@ -373,7 +398,9 @@ def fetch_batched_table_data(
     parallel: bool, default True
         是否并行下载数据
     process_count: int, default None
-        并行下载数据时，使用的进程数, 默认为None，表示使用cpu_count()个进程
+        并行下载时的 ``ThreadPoolExecutor.max_workers``。为 ``None`` 时使用全局配置
+        ``hist_dnld_parallel``（与 ``fetch_real_time_klines`` 等多标的并行拉取共用语义）；
+        为 0 或与配置 0 一样时按单线程映射为 1。
     logger: logger
         用于记录下载数据的日志
     download_batch_size: int
@@ -408,7 +435,8 @@ def fetch_batched_table_data(
 
     else:  # parallel
         # 使用ThreadPoolExecutor循环下载数据
-        with ThreadPoolExecutor(max_workers=process_count) as worker:
+        max_workers = _hist_dnld_thread_pool_max_workers(process_count)
+        with ThreadPoolExecutor(max_workers=max_workers) as worker:
             # 在parallel模式下，下载线程的提交和返回是分开进行的，为了实现分批下载，必须分批提交，提交一批
             # 数据后，等待结果返回，再提交下一批，因此，需要将arg_list分段，提交完一个batch之后，返回结果，
             # 再暂停，暂停后再继续提交
@@ -468,7 +496,8 @@ def fetch_real_time_klines(
         - '5min':
         - '1min':
     parallel: bool, optional, default True
-        是否并行获取数据，默认True
+        是否并行获取数据，默认 True。为 True 时并行度为全局 ``hist_dnld_parallel``
+        （``ThreadPoolExecutor.max_workers``，0 按单线程计为 1）；为 False 时逐标的串行请求。
     time_zone: str, optional
         时区，默认local即系统当地时区，可以指定特定的时区以获取不同时区市场的实时价格
     verbose: bool, optional, default False
@@ -507,10 +536,11 @@ def fetch_real_time_klines(
     current_time = get_current_timezone_datetime(time_zone)
     today =current_time.strftime('%Y%m%d')
 
-    # 使用ProcessPoolExecutor, as_completed加速数据获取，当parallel=False时，不使用多进程
+    # 使用 ThreadPoolExecutor + as_completed 加速数据获取；并行度见 hist_dnld_parallel
     if parallel:
         try:
-            with ThreadPoolExecutor(max_workers=10) as executor:
+            max_workers = _hist_dnld_thread_pool_max_workers(None)
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
                 futures = {
                     executor.submit(fetch_realtime_kline, qt_code=symbol, date=today, freq=freq): symbol
                     for symbol
@@ -533,6 +563,7 @@ def fetch_real_time_klines(
                     else:
                         if df.empty:
                             continue
+                        df = df.copy()
                         df['ts_code'] = symbol
                         # 根据当前时间确定哪个是matured kline，而不是直接取最后一个，因为最后一个可能是不完整的
                         if matured_kline_only:
@@ -558,6 +589,7 @@ def fetch_real_time_klines(
             df = fetch_realtime_kline(qt_code=symbol, date=today, freq=freq)
             if df.empty:
                 continue
+            df = df.copy()
             df['ts_code'] = symbol
             # 根据当前时间确定哪个是matured kline，而不是直接取最后一个，因为最后一个可能是不完整的
             if matured_kline_only:
@@ -1453,7 +1485,7 @@ TUSHARE_API_MAP = {
         ['index_dailybasic', 'trade_date', 'trade_date', '20040102', '', '', ''],
 
     'index_weight':
-        ['composite', 'trade_date', 'datetime', '20050408', '', '', ''],
+        ['composite', 'index', 'table_index', 'index_basic', 'SH,CSI,SZ', 'Y', '7'],
 
     'income':
         ['income', 'ts_code', 'table_index', 'stock_basic', '', 'Y', ''],

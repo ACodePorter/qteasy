@@ -11,6 +11,7 @@
 # ======================================
 
 import unittest
+from unittest import mock
 
 import qteasy as qt
 import pandas as pd
@@ -472,12 +473,18 @@ class TestTradeRecording(unittest.TestCase):
         record_trade_order(test_signal, data_source=self.test_ds)
         signal = read_trade_order(1, data_source=self.test_ds)
         self.assertIsInstance(signal, dict)
+        print('\n[TestTradeRecording] 初始订单读取，检查 broker 字段默认值')
+        print(' order-1 raw:', signal)
         self.assertEqual(signal['pos_id'], 1)
         self.assertEqual(signal['direction'], 'buy')
         self.assertEqual(signal['order_type'], 'market')
         self.assertEqual(signal['qty'], 300)
         self.assertEqual(signal['price'], 10.0)
         self.assertEqual(signal['status'], 'created')
+        self.assertIn('broker_order_id', signal)
+        self.assertIn('broker_name', signal)
+        self.assertTrue(signal['broker_order_id'] in [None, ''] or pd.isna(signal['broker_order_id']))
+        self.assertTrue(signal['broker_name'] in [None, ''] or pd.isna(signal['broker_name']))
         signal = read_trade_order(2, data_source=self.test_ds)
         self.assertIsInstance(signal, dict)
         self.assertEqual(signal['pos_id'], 2)
@@ -568,14 +575,29 @@ class TestTradeRecording(unittest.TestCase):
         self.assertEqual(signal['price'], 10.0)
         self.assertEqual(signal['status'], 'created')
         update_trade_order(2, data_source=self.test_ds, status='submitted')
+        update_trade_order(
+                2,
+                data_source=self.test_ds,
+                broker_order_id='SIM-ORDER-0002',
+                broker_name='simulator',
+        )
         signal = read_trade_order(2, data_source=self.test_ds)
         self.assertIsInstance(signal, dict)
+        print(' order-2 after submit + broker mapping:', signal)
         self.assertEqual(signal['pos_id'], 2)
         self.assertEqual(signal['direction'], 'buy')
         self.assertEqual(signal['order_type'], 'market')
         self.assertEqual(signal['qty'], 200)
         self.assertEqual(signal['price'], 10.0)
         self.assertEqual(signal['status'], 'submitted')
+        self.assertEqual(signal['broker_order_id'], 'SIM-ORDER-0002')
+        self.assertEqual(signal['broker_name'], 'simulator')
+        print(' test submitted -> rejected transition')
+        updated = update_trade_order(2, data_source=self.test_ds, status='rejected', raise_if_status_wrong=True)
+        signal = read_trade_order(2, data_source=self.test_ds)
+        print(' updated order_id:', updated)
+        print(' order after submitted->rejected:', signal)
+        self.assertEqual(signal['status'], 'rejected')
 
         # test read trade signal details
         signal = read_trade_order_detail(1, data_source=self.test_ds)
@@ -597,7 +619,7 @@ class TestTradeRecording(unittest.TestCase):
         self.assertEqual(signal['order_type'], 'market')
         self.assertEqual(signal['qty'], 200)
         self.assertEqual(signal['price'], 10.0)
-        self.assertEqual(signal['status'], 'submitted')
+        self.assertEqual(signal['status'], 'rejected')
         signal = read_trade_order_detail(3, data_source=self.test_ds)
         self.assertIsInstance(signal, dict)
         self.assertEqual(signal['pos_id'], 3)
@@ -2485,6 +2507,208 @@ class TestTradingUtilFuncs(unittest.TestCase):
         self.assertEqual(order_after_2['status'], 'filled')
         self.assertEqual(full_2['order_status'], 'filled')
         self.assertAlmostEqual(filled_total, 500.0, places=6)
+
+    def test_process_trade_result_idempotent_with_broker_result_id(self):
+        """测试相同 broker_result_id 的重复回报不会重复入账。"""
+        print('\n[TestTradingUtilFuncs] idempotent process_trade_result with duplicate broker_result_id')
+        for table in ['sys_op_live_accounts', 'sys_op_positions', 'sys_op_trade_orders', 'sys_op_trade_results']:
+            if self.test_ds.table_data_exists(table):
+                self.test_ds.drop_table_data(table)
+
+        new_account(user_name='test_user_idempotent', cash_amount=100000, data_source=self.test_ds)
+        order_id = save_parsed_trade_orders(
+                account_id=1,
+                symbols=['000001.SZ'],
+                positions=['long'],
+                directions=['buy'],
+                quantities=[100],
+                prices=[20.0],
+                data_source=self.test_ds,
+        )[0]
+        submit_order(order_id, data_source=self.test_ds)
+        raw_trade_result = {
+            'order_id':          int(order_id),
+            'filled_qty':        100.0,
+            'price':             20.0,
+            'transaction_fee':   3.0,
+            'canceled_qty':      0.0,
+            'broker_result_id':  'fill-dup-001',
+        }
+        print(' first raw_trade_result:', raw_trade_result)
+        full_1 = process_trade_result(raw_trade_result.copy(), data_source=self.test_ds)
+        own_cash_1, avail_cash_1, _ = get_account_cash_availabilities(1, data_source=self.test_ds)
+        result_rows_1 = read_trade_results_by_order_id(order_id, data_source=self.test_ds)
+        print(' first result:', full_1)
+        print(' first cashes:', own_cash_1, avail_cash_1)
+        print(' first result rows count:', len(result_rows_1))
+        self.assertEqual(len(result_rows_1), 1)
+
+        full_2 = process_trade_result(raw_trade_result.copy(), data_source=self.test_ds)
+        own_cash_2, avail_cash_2, _ = get_account_cash_availabilities(1, data_source=self.test_ds)
+        result_rows_2 = read_trade_results_by_order_id(order_id, data_source=self.test_ds)
+        print(' second result:', full_2)
+        print(' second cashes:', own_cash_2, avail_cash_2)
+        print(' second result rows count:', len(result_rows_2))
+        self.assertEqual(len(result_rows_2), 1)
+        self.assertEqual(full_1['result_id'], full_2['result_id'])
+        self.assertAlmostEqual(own_cash_1, own_cash_2, places=6)
+        self.assertAlmostEqual(avail_cash_1, avail_cash_2, places=6)
+
+    def test_process_trade_result_out_of_order_fills_converges(self):
+        """测试同一订单分笔成交乱序到达后最终状态与顺序处理一致。"""
+        print('\n[TestTradingUtilFuncs] out-of-order fills converge to same final state')
+        for table in ['sys_op_live_accounts', 'sys_op_positions', 'sys_op_trade_orders', 'sys_op_trade_results']:
+            if self.test_ds.table_data_exists(table):
+                self.test_ds.drop_table_data(table)
+
+        account_ids = [
+            new_account(user_name='test_user_ordered', cash_amount=100000, data_source=self.test_ds),
+            new_account(user_name='test_user_reversed', cash_amount=100000, data_source=self.test_ds),
+        ]
+        order_ids = []
+        for account_id in account_ids:
+            order_id = save_parsed_trade_orders(
+                    account_id=account_id,
+                    symbols=['000001.SZ'],
+                    positions=['long'],
+                    directions=['buy'],
+                    quantities=[500],
+                    prices=[20.0],
+                    data_source=self.test_ds,
+            )[0]
+            submit_order(order_id, data_source=self.test_ds)
+            order_ids.append(order_id)
+
+        ordered_fills = [
+            {
+                'order_id':          int(order_ids[0]),
+                'filled_qty':        300.0,
+                'price':             20.0,
+                'transaction_fee':   5.0,
+                'canceled_qty':      0.0,
+                'broker_result_id':  'order-a-fill-1',
+            },
+            {
+                'order_id':          int(order_ids[0]),
+                'filled_qty':        200.0,
+                'price':             21.0,
+                'transaction_fee':   3.0,
+                'canceled_qty':      0.0,
+                'broker_result_id':  'order-a-fill-2',
+            },
+        ]
+        reversed_fills = [
+            {
+                'order_id':          int(order_ids[1]),
+                'filled_qty':        200.0,
+                'price':             21.0,
+                'transaction_fee':   3.0,
+                'canceled_qty':      0.0,
+                'broker_result_id':  'order-b-fill-2',
+            },
+            {
+                'order_id':          int(order_ids[1]),
+                'filled_qty':        300.0,
+                'price':             20.0,
+                'transaction_fee':   5.0,
+                'canceled_qty':      0.0,
+                'broker_result_id':  'order-b-fill-1',
+            },
+        ]
+        for raw in ordered_fills:
+            process_trade_result(raw.copy(), data_source=self.test_ds)
+        for raw in reversed_fills:
+            process_trade_result(raw.copy(), data_source=self.test_ds)
+
+        ordered_cash = get_account_cash_availabilities(account_ids[0], data_source=self.test_ds)
+        reversed_cash = get_account_cash_availabilities(account_ids[1], data_source=self.test_ds)
+        ordered_symbol, ordered_qty, ordered_avail, ordered_cost = get_account_position_availabilities(
+                account_ids[0], '000001.SZ', data_source=self.test_ds)
+        reversed_symbol, reversed_qty, reversed_avail, reversed_cost = get_account_position_availabilities(
+                account_ids[1], '000001.SZ', data_source=self.test_ds)
+        ordered_order = read_trade_order_detail(order_ids[0], data_source=self.test_ds)
+        reversed_order = read_trade_order_detail(order_ids[1], data_source=self.test_ds)
+        ordered_result = read_trade_results_by_order_id(order_ids[0], data_source=self.test_ds)
+        reversed_result = read_trade_results_by_order_id(order_ids[1], data_source=self.test_ds)
+
+        print(' ordered_cash:', ordered_cash)
+        print(' reversed_cash:', reversed_cash)
+        print(' ordered position:', ordered_symbol, ordered_qty, ordered_avail, ordered_cost)
+        print(' reversed position:', reversed_symbol, reversed_qty, reversed_avail, reversed_cost)
+        print(' ordered order status:', ordered_order['status'])
+        print(' reversed order status:', reversed_order['status'])
+        print(' ordered fills total:', float(ordered_result['filled_qty'].sum()))
+        print(' reversed fills total:', float(reversed_result['filled_qty'].sum()))
+        self.assertEqual(ordered_order['status'], 'filled')
+        self.assertEqual(reversed_order['status'], 'filled')
+        self.assertAlmostEqual(float(ordered_result['filled_qty'].sum()), 500.0, places=6)
+        self.assertAlmostEqual(float(reversed_result['filled_qty'].sum()), 500.0, places=6)
+        self.assertAlmostEqual(ordered_cash[0], reversed_cash[0], places=6)
+        self.assertAlmostEqual(ordered_cash[1], reversed_cash[1], places=6)
+        self.assertAlmostEqual(float(ordered_qty[0]), float(reversed_qty[0]), places=6)
+        self.assertAlmostEqual(float(ordered_avail[0]), float(reversed_avail[0]), places=6)
+        self.assertAlmostEqual(float(ordered_cost[0]), float(reversed_cost[0]), places=6)
+
+    def test_process_trade_result_db_atomic_rollback(self):
+        """测试 DB 场景下 process_trade_result 中途异常会整体回滚。"""
+        print('\n[TestTradingUtilFuncs] process_trade_result rollback without half-commit on db datasource')
+        from qteasy import QT_CONFIG
+        test_ds_db = DataSource(
+                'db',
+                host=QT_CONFIG['test_db_host'],
+                port=QT_CONFIG['test_db_port'],
+                user=QT_CONFIG['test_db_user'],
+                password=QT_CONFIG['test_db_password'],
+                db_name=QT_CONFIG['test_db_name'],
+                allow_drop_table=True,
+        )
+        for table in ['sys_op_live_accounts', 'sys_op_positions', 'sys_op_trade_orders', 'sys_op_trade_results']:
+            if test_ds_db.table_data_exists(table):
+                test_ds_db.drop_table_data(table)
+
+        new_account(user_name='test_user_atomic_db', cash_amount=100000, data_source=test_ds_db)
+        order_id = save_parsed_trade_orders(
+                account_id=1,
+                symbols=['000001.SZ'],
+                positions=['long'],
+                directions=['buy'],
+                quantities=[100],
+                prices=[20.0],
+                data_source=test_ds_db,
+        )[0]
+        submit_order(order_id, data_source=test_ds_db)
+        raw_trade_result = {
+            'order_id':          int(order_id),
+            'filled_qty':        100.0,
+            'price':             20.0,
+            'transaction_fee':   2.0,
+            'canceled_qty':      0.0,
+            'broker_result_id':  'fill-atomic-001',
+        }
+        print(' raw_trade_result to rollback:', raw_trade_result)
+        before_cash = get_account_cash_availabilities(1, data_source=test_ds_db)
+        before_position = get_position_by_id(1, data_source=test_ds_db)
+        before_order = read_trade_order_detail(order_id, data_source=test_ds_db)
+        print(' before cash:', before_cash)
+        print(' before position:', before_position)
+        print(' before order:', before_order)
+        with mock.patch('qteasy.trading_util.update_position', side_effect=RuntimeError('phase3.5 rollback test')):
+            with self.assertRaises(RuntimeError):
+                process_trade_result(raw_trade_result.copy(), data_source=test_ds_db)
+        after_cash = get_account_cash_availabilities(1, data_source=test_ds_db)
+        after_position = get_position_by_id(1, data_source=test_ds_db)
+        after_order = read_trade_order_detail(order_id, data_source=test_ds_db)
+        results = read_trade_results_by_order_id(order_id, data_source=test_ds_db)
+        print(' after cash:', after_cash)
+        print(' after position:', after_position)
+        print(' after order:', after_order)
+        print(' results after rollback:', results)
+        self.assertEqual(len(results), 0)
+        self.assertAlmostEqual(before_cash[0], after_cash[0], places=6)
+        self.assertAlmostEqual(before_cash[1], after_cash[1], places=6)
+        self.assertAlmostEqual(before_position['qty'], after_position['qty'], places=6)
+        self.assertAlmostEqual(before_position['available_qty'], after_position['available_qty'], places=6)
+        self.assertEqual(before_order['status'], after_order['status'])
 
     # test top level functions related to signal generation and submission
     def test_parse_signal(self):

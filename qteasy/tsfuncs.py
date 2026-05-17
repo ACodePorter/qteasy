@@ -3024,7 +3024,7 @@ def composite(index: str = None,
 
     Examples
     --------
-    >>> composite(index_code='399300.SZ', start='20180901', end='20180930')
+    >>> composite(index='399300.SZ', start='20180901', end='20180930')
     output:
             index_code   con_code trade_date  weight
         0    399300.SZ  000001.SZ   20180903  0.8656

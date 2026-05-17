@@ -485,6 +485,29 @@ class TestOperatorPrepareRunningSchedule(unittest.TestCase):
         self.assertIsInstance(timing_table.index, pd.DatetimeIndex)
 
 
+class TestOperatorScheduleConfigMapping(unittest.TestCase):
+    """阶段3：Operator 调度参数映射单测。"""
+
+    def test_build_schedule_time_kwargs_from_config(self):
+        print('\n[TestOperatorScheduleConfigMapping] verify config -> schedule kwargs mapping')
+        config = {
+            'market_open_time_am':  '09:31:00',
+            'market_close_time_am': '11:29:00',
+            'market_open_time_pm':  '13:01:00',
+            'market_close_time_pm': '14:59:00',
+        }
+        kwargs = Operator._build_schedule_time_kwargs_from_config(config)
+        print(' mapped kwargs:', kwargs)
+        self.assertEqual(kwargs['start_am'], '09:31:00')
+        self.assertEqual(kwargs['end_am'], '11:29:00')
+        self.assertEqual(kwargs['start_pm'], '13:01:00')
+        self.assertEqual(kwargs['end_pm'], '14:59:00')
+        self.assertTrue(kwargs['include_start_am'])
+        self.assertTrue(kwargs['include_end_am'])
+        self.assertTrue(kwargs['include_start_pm'])
+        self.assertTrue(kwargs['include_end_pm'])
+
+
 class TestCheckAndPrepareBacktestData(unittest.TestCase):
     """check_and_prepare_backtest_data 函数的单元测试类，测试从DataSource获取
     回测数据包（即包含Operator所有数据类型所需数据的字典）

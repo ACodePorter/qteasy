@@ -24,7 +24,13 @@ from qteasy.trade_io import (
     validate_raw_trade_result,
     validate_trade_order,
 )
-from qteasy.trade_recording import new_account, get_or_create_position, record_trade_order, read_trade_order
+from qteasy.trade_recording import (
+    new_account,
+    get_or_create_position,
+    record_trade_order,
+    read_trade_order,
+    read_trade_order_detail,
+)
 
 from tests.trader_test_helpers import clear_tables, create_trader_with_account
 
@@ -335,6 +341,70 @@ class TestTradeIOIntegrationSubmitOrder(unittest.TestCase):
         self.assertEqual(row['status'], 'submitted')
         self.assertEqual(res['status'], 'submitted')
         self.assertIsNotNone(res['submitted_time'])
+
+    def test_submit_trade_order_rejects_over_budget_buy(self):
+        print('\n[TestTradeIOIntegrationSubmitOrder] reject over-budget buy before submitted')
+        called = {'submit_with_ack': 0}
+        original_submit_with_ack = self.trader.broker.submit_with_ack
+
+        def _count_submit_with_ack(order):
+            called['submit_with_ack'] += 1
+            return original_submit_with_ack(order)
+
+        self.trader.broker.submit_with_ack = _count_submit_with_ack
+        try:
+            res = self.trader.submit_trade_order(
+                symbol='000001.SZ',
+                position='long',
+                direction='buy',
+                order_type='limit',
+                qty=1_000_000,
+                price=1_000.0,
+            )
+        finally:
+            self.trader.broker.submit_with_ack = original_submit_with_ack
+        print(' reject result:', res, ' reject_reason:', self.trader.last_submit_reject_reason)
+        print(' submit_with_ack call count:', called['submit_with_ack'])
+        self.assertEqual(res, {})
+        self.assertIsNotNone(self.trader.last_submit_reject_reason)
+        self.assertEqual(called['submit_with_ack'], 0)
+        orders = self.trader.history_orders(with_trade_results=False)
+        print(' latest orders tail:\n', orders.tail(3))
+        self.assertFalse(orders.empty)
+        self.assertEqual(orders.iloc[-1]['status'], 'rejected')
+
+    def test_submit_trade_order_marks_rejected_when_broker_rejects(self):
+        print('\n[TestTradeIOIntegrationSubmitOrder] broker reject -> order status rejected')
+        original_submit_with_ack = self.trader.broker.submit_with_ack
+
+        def _reject_ack(order):
+            print(' mocked reject order_id:', order.get('order_id'))
+            return {
+                'accepted': False,
+                'order_id': int(order.get('order_id')),
+                'broker_order_id': '',
+                'reason': 'mock broker reject for testing',
+                'reason_code': 'MockReject',
+            }
+
+        self.trader.broker.submit_with_ack = _reject_ack
+        try:
+            res = self.trader.submit_trade_order(
+                symbol='000001.SZ',
+                position='long',
+                direction='buy',
+                order_type='limit',
+                qty=10,
+                price=50.0,
+            )
+        finally:
+            self.trader.broker.submit_with_ack = original_submit_with_ack
+        print(' broker reject result:', res, ' reject_reason:', self.trader.last_submit_reject_reason)
+        self.assertEqual(res, {})
+        orders = self.trader.history_orders(with_trade_results=False)
+        print(' latest orders tail:\n', orders.tail(3))
+        self.assertFalse(orders.empty)
+        self.assertEqual(orders.iloc[-1]['status'], 'rejected')
 
 
 class TestTradeIOIntegrationBrokerGetResult(unittest.TestCase):
