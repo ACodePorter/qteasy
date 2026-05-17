@@ -1,83 +1,145 @@
 # 风控与订单生命周期
 
-本页说明两条主线：
+> 本章帮您弄清两件事：订单为什么有时「没出去」；出去之后为什么有时一直「部分成交」。重点区分**风控拒单**与**柜台拒单**——这是 live 排错最常见的坑。
 
-- 风控如何影响订单是否进入执行链路
-- 订单在提交后如何从未成交走向部分成交或完成
+亲爱的用户，模拟实盘里「没成交」并不总意味着策略没信号。可能是本地风控拦下了，也可能是模拟券商不收单。我们把两条路径分开讲，您就不会误把风控拒单当成「券商坏了」。
 
 ## 0. 适用场景
 
-- 你已经可以运行 live，但需要判断“未成交/拒单/撤单”到底发生了什么
-- 你想把界面提示、日志记录和订单状态串成同一条可解释链路
+- 您已能运行 live，但需要判断「未成交 / 拒单 / 撤单」到底发生了什么  
+- 您想把界面提示、日志与订单状态串成**同一条**可解释链路  
 
-## 1. 风控评估链路
+## 1. 核心概念：两条「拒单」路径
 
-在 live 下单前，系统会基于订单意图与账户快照进行评估，产出 `RiskDecision`。
+很多用户第一次遇到拒单，会以为「都是券商拒的」。在 qteasy 里，请先分清：
 
-- 若放行：继续进入建单、校验、提交流程
-- 若拒绝：不会写入订单表，也不会进入 Broker 执行队列
+```text
+                    ┌─ 风控拒单：复核台打回，委托单未入库、未递柜台
+策略信号 → 订单意图 ─┤
+                    └─ 柜台受理拒单：已入库，券商同步回复「不收」，status=rejected
+                              ↓（若受理成功）
+                         异步成交回报 → partial-filled → filled
+```
 
-可简化理解为：
+在 live 子系统中，订单从策略信号到最终成交须经过 **RiskManager（可选）→ 本地建单 → Broker 受理 → 成交回报** 几站。下表归纳三种结局——排错时请先对号入座「类型」列，再按「优先查哪里」打开对应日志。
 
-`OrderIntent -> RiskDecision -> (allow -> submit) / (reject -> stop)`
+**各列含义**：**类型**为路径名称；**您会看到什么**为界面/返回值特征；**订单表有记录吗**指本地 `sys_op_trade_orders` 是否新增行；**优先查哪里**为建议的第一份证据。
 
-## 2. 拒单语义与可见性
+**如何使用**：CLI 出现英文 `Order rejected by risk rule` → 选「风控拒单」行 → 查 `risk_log`；订单列表里有 `rejected` 且无 broker 号 → 选「柜台受理拒单」行。
 
-S1.3 之后，拒单可见性增强。须区分 **风控拒单** 与 **柜台受理拒单**（后者在订单表有 `rejected` 行且 `broker_order_id` 通常为空）；完整对照见 :doc:`6-trader-snapshot-gate`。
+| 类型 | 您会看到什么 | 订单表有记录吗 | 优先查哪里 |
+|------|--------------|----------------|------------|
+| **风控拒单** | CLI 英文拒因；提交结果为空 `{}` | **没有**新行 | `risk_log`、`<RISK REJECTED>` |
+| **柜台受理拒单** | 有订单行，`status=rejected`，broker 号为空 | **有** | 订单表、trace |
+| **受理成功** | `submitted` 等，随后可能有成交 | 有，且通常有 `broker_order_id` | 订单表、trade_log |
 
-- CLI/TUI 会显示英文拒因摘要（`rule_id` + `reason`）
-- 风控拒单写入 `risk_log`（`<RISK REJECTED>`），**不**写入 `sys_op_trade_orders`
-- 柜台受理拒单在订单表留痕，broker 字段为空
-- 风控路径下提交接口返回空 `{}` 表示未进入 Broker 队列
+完整对照表见 :doc:`6-trader-snapshot-gate`。
 
-示例（用户可见文案）：
+**RiskManager（风控管理器）** 像下单前的**复核台**：按您组装的规则链（白名单、单笔上限、交易时段等）依次检查 **OrderIntent（订单意图）** 与 **AccountSnapshot（账户快照）**；任一规则不通过则产出 **RiskDecision（风控决策）**——拒绝，并带英文 `reason` 与 `rule_id`。
+
+若放行，qteasy 才继续建单、校验，并交给 **Broker（券商）** 的 `submit_with_ack` 听柜台是否受理。
+
+## 2. 风控如何工作（用户视角）
+
+在 live 下单前，若您为 Trader 配置了 `RiskManager`：
+
+1. qteasy 根据当前账本组装账户快照  
+2. 把「这一笔打算下的单」交给规则链评估  
+3. **拒绝**：不写订单表、不进券商队列；英文拒因写入系统日志与 `risk_log`  
+4. **放行**：与未配风控时一样，继续提交  
+
+若您**没有**传入 `RiskManager`，则跳过本地规则链，直接进入建单与提交——行为与旧版更接近。
+
+### 2.1 规则示例（便于理解阈值）
+
+**RiskManager** 在 Trader 提交订单**之前**评估规则链——像复核台按 checklist 逐项打勾。下表列举常见规则类型及用户可见结果，帮助您理解 `rule_id` 与拒因；**不是**内置规则全量列表（规则由您在 Python 中组装）。
+
+**各列含义**：**场景**为业务情境；**您设定的规则**为规则语义；**会发生什么**为 live 中的表现。
+
+**如何使用**：对照 `risk_log` 或 CLI 英文拒因中的 `rule_id`（如 `MAX_ORDER_QTY`）反查类似场景，再调整阈值或白名单。
+
+**示例**：拒因含 `MAX_ORDER_QTY` → 对应「单笔数量」行 → 减小委托数量或提高规则上限。
+
+| 场景 | 您设定的规则 | 会发生什么 |
+|------|--------------|------------|
+| 白名单 | 只允许 `000001.SZ` | 对 `000300.SZ` 下单 → **拒绝**，日志说明不在名单 |
+| 单笔数量 | 最多 500 股 | 要买 501 股 → **拒绝**；500 股且其他通过 → **放行** |
+| 交易时段 | 仅 9:30–11:30、13:00–15:00 | 午休下单 → **拒绝** |
+| 日成交额 | 当日累计 + 本笔超上限 | **拒绝**；未超 → **放行** |
+
+组装方式：在创建 Trader 前用 Python 构造 `RiskManager([规则1, 规则2, ...])` 并传入；不传则关闭本地规则链。详见 :doc:`2-configuration-and-run` 与教程。
+
+### 2.2 用户可见英文拒因示例
+
+CLI/TUI 会显示类似：
 
 ```text
 Order rejected by risk rule [MAX_ORDER_QTY]: order quantity exceeds limit
 ```
 
+含义：**风控规则 MAX_ORDER_QTY** 认为数量超限。请到 `risk_log` 搜 `<RISK REJECTED>` 核对细节。
+
 ## 3. 订单状态生命周期
 
-典型状态流转：
+受理成功后，订单在 live 中会经历典型状态（您可在 CLI `orders` 或日志里看到）：
 
-`submitted -> partial-filled -> filled`
+```text
+submitted → partial-filled → filled
+```
 
-也可能出现：
+也可能：
 
-`submitted -> canceled`
+```text
+submitted → canceled
+```
 
-建议把“状态不符合预期”的问题拆成两类：
+受理成功后，订单在 live 中会经历若干**状态**（CLI `orders` 或日志可见）。这些状态描述「委托在券商侧进行到哪一步」，与风控拒单（根本没有 submitted）不同。下表覆盖最常见状态；完整枚举以运行中实际输出为准。
 
-- **未提交类**：通常是风控拒绝或提交前校验失败
-- **已提交未完成类**：通常要看成交回报是否持续到达
+**各列含义**：**状态**为英文状态名；**含义**为投资语义；**您该关注什么**为排查或确认时的检查点。
 
-## 4. 分批成交状态的用户侧变化
+**如何使用**：长期停在某一状态 → 查该行「您该关注什么」→ 必要时到 :doc:`5-artifacts-and-troubleshooting` 剧本 D/E。
 
-optional backlog B1 修复后，分批成交状态判定更贴近实际累计成交量。  
-当累计成交量达到目标数量时，状态应由 `partial-filled` 进入 `filled`。
+| 状态 | 含义 | 您该关注什么 |
+|------|------|--------------|
+| **submitted** | 柜台已收单，尚未全部成交 | 是否有 `broker_order_id` |
+| **partial-filled** | 部分成交，累计量 < 委托量 | 累计成交量是否在增加 |
+| **filled** | 累计成交量达到委托量 | 持仓与现金是否已更新 |
+| **canceled** | 已撤单 | 收盘或手动撤单后的终态 |
+| **rejected** | 柜台受理阶段拒绝 | broker 号通常为空；**不是**风控拒单 |
 
-## 5. 收盘后处理（用户视角）
+**排查思路**：  
+- 「根本没有 submitted」→ 先查风控与提交前校验（§1 表）  
+- 「一直是 partial-filled」→ 查成交回报是否在持续到达（§4）
 
-收盘后系统会处理未完成订单，相关逻辑通过 Broker 统一 API 协调。  
-这使得撤单与队列排空职责边界更清晰，行为也更稳定可预期。
+## 4. 分批成交与全部成交
 
-## 6. 遇到异常时先看什么
+当一笔大单分多笔成交时，状态会先停在 **partial-filled**，像「委托只成交了一部分」。  
+当**累计成交量达到委托数量**时，qteasy 会将状态更新为 **filled**。若您看到长期 partial-filled，请对照成交回报与目标数量——有时只是行情或模拟撮合尚未凑满整单。
 
-1. CLI/TUI 即时反馈  
-2. `risk_log` 中的拒绝记录  
-3. 订单与成交记录中的状态序列
+## 5. 收盘后未成交订单
+
+收盘后，qteasy 会通过 Broker 统一接口处理尚未完成的订单（如撤单、队列排空）。  
+对您而言：收盘后请关注 `post_close` 相关日志与 `reconcile` 对账输出，确认在途单是否已按规则收尾，而不必记忆内部 API 名称。
+
+## 6. 遇到异常时建议顺序
+
+1. CLI/TUI **即时英文提示**（先记下 `rule_id` 或订单号）  
+2. **`risk_log`**：是否有 `<RISK REJECTED>`（风控路径）  
+3. **订单与成交记录**：状态序列、`broker_order_id` 是否回写  
+
+更系统的决策树见 :doc:`5-artifacts-and-troubleshooting` §3。
 
 ## 7. 快速判定清单
 
-- [ ] 这笔订单是否进入了提交链路（有无提交记录）  
-- [ ] 若未提交，是否能定位到 `rule_id` / `reason`  
-- [ ] 若已提交，是否存在对应回报记录  
-- [ ] 当前状态是否与累计成交量一致  
+- [ ] 这笔单是否进入提交链路（订单表或日志里能否找到）  
+- [ ] 若未提交：能否在 `risk_log` 或界面找到 `rule_id` / `reason`  
+- [ ] 若已提交：是否有对应成交回报、状态是否与累计量一致  
+- [ ] 拒单类型是否分清：风控（无订单行）vs 柜台（`rejected` 行）  
 
 ## 8. 相关跳转
 
-- 配置启动：:doc:`2-configuration-and-run`
-- 排错手册：:doc:`5-artifacts-and-troubleshooting`
-- 拒单与门禁细节：:doc:`6-trader-snapshot-gate`
-- CLI 命令：:doc:`8-cli-trader-capability-matrix`
-- 双路径教程：`tutorials/8-live-trade-risk-and-broker-walkthrough.md`
+- 配置启动：:doc:`2-configuration-and-run`  
+- 排错手册：:doc:`5-artifacts-and-troubleshooting`  
+- 拒单与门禁细节：:doc:`6-trader-snapshot-gate`  
+- CLI 命令：:doc:`8-cli-trader-capability-matrix`  
+- 双路径教程：[tutorials/8-live-trade-risk-and-broker-walkthrough.md](../tutorials/8-live-trade-risk-and-broker-walkthrough.md)  

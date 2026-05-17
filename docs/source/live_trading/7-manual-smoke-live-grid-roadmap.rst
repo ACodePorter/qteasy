@@ -1,36 +1,37 @@
-模拟实盘手动冒烟方案（live_grid_multi × 路线图阶段 0～5-C / 阶段 11）
-==========================================================================
+模拟实盘手工冒烟方案（live_grid_multi）
+==========================================
 
-本文档供 **下一交易日** 使用 **新测试账户、从零持仓** 做一次集中手工验证；策略基线采用仓库示例
-``examples/live_grid_multi.py``（5 分钟 VS + 多标的网格）。路线图权威表述见
-``.cursor/plans/trader架构升级路线图_0650f0d5.plan.md``（仓库或 Cursor 计划目录中的同名文件）。
+亲爱的用户，本章是一份**手工验收清单**：在真实交易日（或您方便的时间段），用仓库示例 ``examples/live_grid_multi.py`` 跑一遍模拟实盘，逐项打勾，确认 qteasy 行为与文档一致。
+
+> **冒烟测试是什么？**  
+> 像新船下水前的试航——不必覆盖所有策略，而是用**固定示例 + 固定检查项**快速发现「能不能用、日志能不能看懂」。本手册侧重 **真实 ``qt.run`` + 人眼验收**；非交易时段也可用仓库内无头脚本做架构回归（见下文）。
+
+策略基线：``examples/live_grid_multi.py``（5 分钟 VS + 多标的网格）。  
+维护者若需对照内部路线图，可参考仓库 ``.cursor/plans/trader架构升级路线图_0650f0d5.plan.md``（可选，非阅读必需）。
 
 与无头脚本的关系
 ----------------
 
-- 仓库 ``tests/notebook_trader_headless_script.py`` 提供 **十一阶段** 无头冒烟（含 **阶段 9：5-A/5-B**、
-  **阶段 10：4-C**、**阶段 11：5-C**），
-  可在 Notebook 中分 cell 调用；**本手册**侧重 **真实 ``qt.run`` + 示例策略 + 人眼验收**。
-- **阶段 11** 对应 ``stage11_phase5_c_smoke``（订单映射、risk 轮换、在途单诊断、post_close 检查点）；
-  手工 live 与无头可 **二选一** 或 **组合**（例如交易日 live + 非交易日无头回归）。
-- 建议节奏：**交易日盘中/收盘后** 按本手册走 live；**非交易时段或回放日** 用无头脚本做架构回归。
+- ``tests/notebook_trader_headless_script.py`` 提供分阶段无头冒烟（含 5-A/5-B、5-C 等），可在 Notebook 分 cell 调用。  
+- **本手册**侧重：您亲自启动 live、看 CLI/日志、打勾。  
+- 建议节奏：**交易日**按本手册；**休市**用无头脚本补回归。  
 
 一、环境与前置条件
 ------------------
 
-1. **解释器**：``/opt/anaconda3/envs/py39/bin/python``；工作目录为 qteasy 仓库根（与 ``examples/live_grid_multi.py`` 中 ``sys.path`` 一致）。
-2. **新账户、无持仓**：
+1. **Python**：推荐 ``/opt/anaconda3/envs/py39/bin/python``。若您通过 pip 安装 qteasy，工作目录可以是任意包含 ``examples/live_grid_multi.py`` 的路径（不必克隆全仓库，但需能访问示例脚本）。
+2. **新账户、无持仓**（避免旧订单干扰）：
 
-   - 使用 ``get_qt_argparser`` 的 ``-n/--new_account <用户名>`` 创建新账户；或
-   - 使用已有 ``account_id`` 且 ``--restart`` 清空该账户交易记录（示例脚本内 ``delete_account(..., keep_account_id=True)``），
-     并确认 ``sys_op_positions`` 无持仓后再启动。
-3. **数据**：子日频策略需已具备 ``stock_1min``（或示例中启用的 refill 表）覆盖测试区间；首次运行可接受较长 refill。
-4. **日志**：确认 ``qteasy.cfg`` / ``qt.configure`` 下 ``sys_log_file_path``、``trade_log_file_path`` 可写，便于阶段 0/5 验收。
+   - ``-n/--new_account <用户名>`` 创建新账户；或  
+   - 已有 ``account_id`` 且 ``--restart`` 清空记录，并确认无持仓后再启。  
 
-二、启动命令模板（与示例对齐）
-------------------------------
+3. **数据**：分钟策略需本地有 ``stock_1min`` 等表；首次 refill 可能较久，属正常。  
+4. **日志**：``sys_log_file_path``、``trade_log_file_path`` 可写（用 ``artifacts`` 核对）。  
 
-在仓库根目录执行（按你的账户与 UI 调整）::
+二、启动命令模板
+----------------
+
+在含示例的目录执行（按您的账户调整）::
 
    /opt/anaconda3/envs/py39/bin/python examples/live_grid_multi.py \\
        -a <ACCOUNT_ID> -n <NEW_USER_NAME_OR_OMIT> \\
@@ -39,234 +40,149 @@
 
 说明：
 
-- **无持仓冷启动**：建议新建 ``-n`` 账户 **或** ``--restart`` 后人工确认持仓为空。
-- 示例内 ``asset_pool``、``par_values``、``run_freq='5min'`` 与 ``live_trade_*`` 配置可按冒烟范围微调；**不要**在不明环境下放大 ``trade_batch`` 以免资金压力。
-- **5-C CLI 冒烟** 建议在 ``--debug`` 下进入 Trader Shell，以便 ``run --task diagnose_pending_orders`` 等 DEBUG 任务可用。
+- **冷启动**：新建 ``-n`` 或 ``--restart`` 后确认持仓为空。  
+- 勿在不明环境放大 ``trade_batch``，以免资金压力。  
+- **5-C 相关 CLI** 建议加 ``--debug``，以便 ``run --task diagnose_pending_orders``。  
 
-三、路线图阶段与手工验收（逐项打勾）
-------------------------------------
+三、分阶段验收（逐项打勾）
+--------------------------
 
-下列「阶段」对应路线图 **0 / 1 / 2 / 3 / 3.5 / 4-A / 4-B / 5-A / 5-B / 5-C（阶段 11）**；每项均给出 **操作建议** 与 **验收标准**。
+下列阶段对应内部路线图 0～5-C / 阶段 11；每项含 **本阶段在验证什么**、操作与验收。
 
 阶段 0：基线、状态机与可观测性
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **操作**：启动后观察 CLI/TUI 或日志中 ``Trader`` 状态迁移（``stopped`` → ``sleeping``/``running`` 等）、任务入队/出队、Broker 侧日志。
-- **验收**：
+**验证什么**：Trader 能正常启动、状态迁移合理、日志能还原「启动 → 日程 → 关键任务」顺序。
 
-  - 状态机与白名单任务语义与文档一致，无未解释死锁；
-  - 至少能通过日志还原一次「启动 → 日程生成 → 关键任务」的时间顺序（原则 6、7）。
+- **操作**：观察 CLI/日志中状态（``stopped`` → ``sleeping``/``running`` 等）与任务入队。  
+- **验收**：无未解释死锁；能还原一次完整启动时间线。  
 
-阶段 1：运行时生命周期（headless 友好）
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+阶段 1：规范退出
+~~~~~~~~~~~~~~~~
 
-- **操作**：使用 **显式** ``stop``/退出流程结束会话（勿强杀后无说明）；若用 Notebook，可配合无头脚本的 ``shutdown_session`` 理解停止序列。
-- **验收**：进程退出后无僵尸线程；断点/日志无异常截断；与「UI 仅调运行时 API」一致（不在本手册展开 UI 细节）。
+**验证什么**：正常 stop/退出后资源释放，断点与日志无异常截断。
 
-阶段 2：任务管理、受控并发、重试/死信
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- **操作**：用 Shell 正常退出，勿强杀进程。  
+- **验收**：无僵尸线程；日志完整。  
 
-- **操作**：在 **非交易时段** 或可控窗口内，观察 ``acquire_live_price``、``run_strategy``、``process_result`` 的调度；刻意快速重复投递（若 UI 支持）或依赖日程自然重入。
-- **验收**：
+阶段 2：任务调度与 SKIP
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-  - 主循环与异步任务边界可理解；异常任务有重试/死信或明确日志（原则 4）；
-  - 若触发 **SKIP**，日志/消息中含 ``skip_reason=...`` 可统计分桶（与阶段 4-B 衔接）。
+**验证什么**：异步拉价与策略任务边界清晰；跳过任务时日志含可读的 ``skip_reason``。
+
+- **操作**：观察 ``acquire_live_price``、``run_strategy`` 等调度。  
+- **验收**：异常/跳过可解释、可统计。  
 
 阶段 3：日程与 catch-up
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **操作**：对比 **同一配置、同一交易日** 两次生成的关键任务时刻（或对比无头脚本 ``schedule_size`` / ``next_task``）；若有 **盘中启动**，对照路线图「catch-up」预期。
-- **验收**：日程输出可复现；错过窗口后的补跑/不补跑行为与文档或配置一致（原则 1）。
+**验证什么**：同一配置下日程可复现；盘中启动的「补跑」行为与文档一致。
 
-阶段 3.5：成交入账幂等与原子性
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- **操作**：对比同日两次关键任务时刻，或盘中启动一次。  
+- **验收**：日程输出可复现。  
 
-- **操作**：完成至少一笔 **模拟成交** 后，在 **隔离环境** 或备份库上重复回放同一成交结果（若你有自定义脚本）；日常冒烟以「成交前后账户/持仓/订单状态一致、无重复扣款」为主。
-- **验收**：重复/乱序路径下台帐最终一致；无「半提交」导致的现金与持仓矛盾（原则 2）。
+阶段 3.5：成交入账一致性
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-阶段 4-A：Broker 公开 API、主循环不直掏队列
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**验证什么**：成交后现金/持仓/订单一致，无重复扣款。
 
-- **操作**：正常跑满半个交易日；关注是否仍有 **弃用路径** 直接依赖 ``broker.result_queue`` 的报错（若版本已收口，应无此类栈）。
-- **验收**：成交回报经 ``poll_fills``/等价路径消费；Trader 主循环与示例路径可稳定运行整日（与路线图「4-A/4-B 已整日验证」一致）。
+- **操作**：至少一笔模拟成交后核对账本。  
+- **验收**：无「半提交」矛盾。  
 
-阶段 4-B：任务重入与 SKIP_REASON 分桶
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+阶段 4-A：成交回报路径
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **操作**：在日志中检索 ``skip_reason=``（如 ``prev_running``、``already_queued``、``gate_failed``、``snapshot_missing``、``snapshot_stale``）。
-- **验收**：SKIP 原因可人工归类；与运维分桶字段一致（原则 4、路线图 4-B）。
+**验证什么**：成交经 ``poll_fills`` 等公开路径消费，整日 sim 可稳定运行。
 
-阶段 5-A：主链路 snapshot（prepare_strategy_snapshot）
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- **操作**：跑满半个交易日或整日。  
+- **验收**：无内部队列类报错栈。  
 
-- **操作**（建议分两步）：
+阶段 4-B：SKIP 原因分桶
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-  1. ``qt.configure(live_trade_split_strategy_prepare=False)``：基线行为，确认 ``run_strategy`` 前仍有一次完整数据准备（与旧版一致）。
-  2. ``live_trade_split_strategy_prepare=True``，并设置合理的 ``live_trade_prepare_lead_seconds``、
-     ``live_trade_strategy_snapshot_max_age_seconds``；**须在 ``qt.run``/创建 Trader 之前** 写入配置，
-     以便日程插入 ``prepare_strategy_snapshot``。
-- **验收**：
+**验证什么**：日志中 ``skip_reason=`` 可人工归类（如 ``gate_failed``、``snapshot_stale``）。
 
-  - 日程或日志中可见 **每个** ``run_strategy`` 步前有 ``prepare_strategy_snapshot``（或同刻排序先 prepare）；
-  - 未出现大量无解释的 ``snapshot_stale``/``snapshot_missing``；若出现，核对 **前置任务频率 ≥ 策略步频** 与 ``max_age``。
+- **操作**：检索 ``skip_reason=``。  
+- **验收**：字段齐全、含义可懂。  
 
-阶段 5-B：启动门禁（startup gate）
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+阶段 5-A：策略快照
+~~~~~~~~~~~~~~~~~~
 
-- **操作**（建议分档）：
+**验证什么**：开启 split 后，prepare 在 run 之前；快照过期时跳过有日志。
 
-  1. ``live_trade_startup_gate_mode='warn'``：人为制造轻微不一致（如仅测试环境改 Broker 返回值），确认 **仅告警、不阻断**。
-  2. ``live_trade_startup_gate_mode='block'``：确认严重失败时 **首笔** ``run_strategy`` 不入队或 ``skip_reason=gate_failed``，且系统日志/trace 可解释。
-  3. Shell 中手动：``gate``（或 ``startup-gate``）复验 ``run_startup_gate`` 输出。
-- **验收**：门禁结果可观测；``block`` 不误杀正常交易日（先 ``warn`` 灰度）。
+- **操作**：先 ``live_trade_split_strategy_prepare=False`` 作基线；再 ``True`` 并设 ``live_trade_prepare_lead_seconds``、``live_trade_strategy_snapshot_max_age_seconds``（须在 ``qt.run`` 前 configure）。  
+- **验收**：日程/日志见 prepare；``snapshot_stale`` 可解释。  
 
-阶段 11 / 5-C：账本映射、日志轮换、在途单诊断
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+阶段 5-B：启动门禁
+~~~~~~~~~~~~~~~~~~
 
-对齐 ``stage11_phase5_c_smoke`` 四项验收；可在 **DEBUG Shell** 或 Notebook 无头脚本中执行。
+**验证什么**：``warn`` 只告警；``block`` 在严重失败时阻断策略入队。
 
-1. **订单受理映射**
+- **操作**：分档试 ``warn`` / ``block``；Shell 执行 ``gate``。  
+- **验收**：``block`` 不误杀正常交易日（先 ``warn`` 灰度）。  
 
-   - **操作**：完成一笔模拟成交；另造一笔 **柜台受理拒单**（测试环境可 patch ``submit_with_ack``）。
-     若有 ``RiskManager``，另造一笔 **风控拒单**（超限下单）。
-   - **验收**：受理成功订单 ``broker_order_id``/``broker_name`` 非空；受理拒单 ``rejected`` 且 broker 字段空；
-     风控拒单 **无** ``sys_op_trade_orders`` 新行，``*.risk.log`` 含 ``<RISK REJECTED>``。
-   - **CLI**：``orders`` 查看状态；``artifacts`` 确认 ``risk_log`` 路径。
+阶段 11 / 5-C：映射、轮换、诊断、对账
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-2. **产物与 risk 轮换**
+**验证什么**：券商号回写、risk 日志轮换、在途单诊断、收盘对账 JSON。
 
-   - **操作**：``artifacts`` 确认四键目录可写；在隔离目录或测试环境执行 ``rotatelogs --days 30``（或 ``qt.rotate_trade_logs(days=30)``）。
-   - **验收**：超期 ``*.risk.log`` 被清理，近期文件保留；输出含 ``Trade log rotation completed``。
+1. **订单映射** — 成功单有 ``broker_order_id``；柜台拒单 ``rejected`` 且 broker 空；风控拒单无新订单行、``risk_log`` 有 ``<RISK REJECTED>``。  
+2. **产物与轮换** — ``artifacts`` 四键可写；``rotatelogs --days 30`` 清理超期 ``*.risk.log``。  
+3. **在途单诊断** — DEBUG：``run --task diagnose_pending_orders``，字段齐全。  
+4. **post_close** — ``reconcile`` JSON 含 ``is_ok``、``failures`` 等。  
 
-3. **在途单只读诊断**
+四、与 live_grid_multi 相关的补充
+---------------------------------
 
-   - **操作**：DEBUG 模式下 ``run --task diagnose_pending_orders``；或调用 ``collect_pending_order_diagnostics()``。
-   - **验收**：输出含 ``local_pending_count``、``remote_pending_count``、
-     ``local_pending_without_broker_order_id``、``local_pending_missing_remote``、``remote_pending_not_in_local``；
-     Simulator 上远端差异可为空/可解释。
+- **多标的 VS + multi_pars**：各标的网格参数首日初始化合理。  
+- **子日频 refill**：冒烟日可先缩小 refill 表，仅保留 ``stock_1min`` 等最小集。  
+- **验收**：无持仓起步下首日行为与示例逻辑一致；无 NaN 价误成交。  
 
-4. **post_close 检查点**
-
-   - **操作**：收盘后观察 trace 中 ``reconcile`` / ``checkpoint_passed`` 或 ``checkpoint_warn``；Shell 中 ``reconcile`` 打印 JSON。
-   - **验收**：含 ``is_ok``、``failures``、``cash_diff``（若远端非空）等字段；与 :doc:`6-trader-snapshot-gate` 拒单语义一致。
-
-四、与示例策略强相关的补充检查（live_grid_multi）
---------------------------------------------------
-
-- **多标的 VS + multi_pars**：确认各标的 ``base_grid`` 在首日初始化后写入符合预期；成交与持仓按标的维度变化。
-- **子日频数据**：若开启示例中大段 ``live_trade_daily_refill_tables``，关注 refill 批次与耗时；冒烟日可先 **关闭** 大表 refill 以缩短路径，仅保留 ``stock_1min`` 等最小集合。
-- **验收**：无持仓起步下，首日大额「初始化买单」符合示例逻辑且资金/费用合理；无 NaN 价格误成交（项目既有 NaN 约定）。
-
-五、Notebook 集中冒烟（可选）
+五、Notebook 无头冒烟（可选）
 -----------------------------
 
-在 Notebook 中（已 ``import qteasy as qt``）::
+休市时在 Notebook 中可调用 ``tests/notebook_trader_headless_script.py`` 各 ``stage*`` 函数；详见脚本内注释。与手工 live **可二选一或组合**。
 
-    from tests.notebook_trader_headless_script import (
-        create_headless_notebook_session,
-        stage1_preflight_tests,
-        stage2_opening_baseline,
-        stage3_intraday_runtime,
-        stage4_phase35_checks,
-        stage5_stage0to3_regression,
-        stage6_closing_reconcile,
-        stage7_exception_and_rollback_probe,
-        stage9_phase5_ab_smoke,
-        stage10_phase4_c_smoke,
-        stage11_phase5_c_smoke,
-        stage8_conclusion,
-        shutdown_session,
-    )
+六、当日收工简表
+----------------
 
-    # 可选：在 start 前注入 5-A/5-B 配置（shutdown_session 会恢复这些键）
-    overrides = {
-        'live_trade_split_strategy_prepare': True,
-        'live_trade_prepare_lead_seconds': 60,
-        'live_trade_startup_gate_mode': 'warn',
-    }
-    session = create_headless_notebook_session(
-        use_real_time=True,
-        use_isolated_datasource=False,
-        account_id=<你的测试账户ID>,
-        live_trade_smoke_overrides=overrides,
-    )
-    # 依次执行 stage1 … stage7、stage9、stage10、stage11、stage8，最后：
-    shutdown_session(session)
+手工冒烟结束时，可用下表快速勾选「今天测到哪一步」。各行对应上文第三部分的阶段编号；**您执行的动作摘要**请按实际填写，**打勾标准**来自该阶段验收说明。本表范围覆盖路线图 0～5-C / 阶段 11，不含 Broker/QMT 接入（见 :doc:`4-broker-adapter-and-integration`）。
 
-六、当日收工清单（简表）
------------------------
+**各列含义**：**阶段**为路线图编号；**您执行的动作摘要**由您记录；**打勾标准**为通过该阶段的最小条件。
+
+**如何使用**：冒烟过程中完成某阶段后，在「动作摘要」列写一句（如「warn 模式下 gate 通过」），达标则在心中或副本上打勾；未达标则记入 §七记录模板的「结论」列。
 
 .. list-table::
    :header-rows: 1
    :widths: 12 28 40
 
-   * - 路线图阶段
-     - 你执行的动作摘要
-     - 验收（满足则打勾）
+   * - 阶段
+     - 动作摘要
+     - 打勾标准
    * - 0
-     - 看日志/状态机
-     - 可还原关键路径；无神秘阻塞
+     - 看状态/日志
+     - 启动链路可还原
    * - 1
-     - 规范 stop/退出
-     - 资源释放正常
-   * - 2
-     - 观察任务与 SKIP
-     - 异步边界清晰；``skip_reason`` 可统计
-   * - 3
-     - 核对日程/catch-up
-     - 同配置可复现
-   * - 3.5
-     - 成交与重复回放（可选）
-     - 台帐一致、无半提交
-   * - 4-A
-     - 整日 sim 路径
-     - 无直掏内部队列类错误
-   * - 4-B
-     - 检索 skip_reason
-     - 分桶字段齐全
-   * - 5-A
-     - split 开/关对比
-     - prepare 与 run 顺序正确；stale 可解释
-   * - 5-B
-     - warn / block 分档；CLI ``gate``
-     - 告警可懂；block 不误杀
+     - 规范退出
+     - 资源正常释放
+   * - 2～4-B
+     - 调度与 SKIP
+     - skip_reason 可懂
+   * - 5-A/B
+     - 快照与门禁
+     - stale/gate 可解释
    * - 11 / 5-C
-     - 映射 / rotatelogs / diagnose / reconcile
-     - 见上文「阶段 11」四节；stage11 或 CLI 等价通过
+     - 映射/轮换/诊断/对账
+     - 见上文四节
 
-七、交易日/非交易日记录模板（5-C）
---------------------------------
+七、记录模板（建议填写）
+------------------------
 
-建议每次冒烟后填写以下模板，便于回归对照与异常分级：
+每次冒烟后记录：版本号、核心 ``live_trade_*`` 配置、``gate`` 结果、拒单抽检、``reconcile`` 摘要、结论（通过/待查/阻塞）。便于下一交易日对照。
 
-.. list-table::
-   :header-rows: 1
-   :widths: 20 40 40
+相关文档
+--------
 
-   * - 记录项
-     - 交易日（开市）建议
-     - 非交易日（休市）建议
-   * - 版本与环境
-     - 记录 ``git commit``、``py39``、核心配置键（``live_trade_*``、``trade_log_keep_days``）
-     - 同左；并注明是否走 ``use_real_time=False`` 回放
-   * - 启动门禁
-     - 记录 ``run_startup_gate`` / CLI ``gate`` 结果（``warn`` / ``block``）与 ``failures``
-     - 记录非交易日跳过（``gate_skipped_non_trade_day``）与日志关键字
-   * - 订单受理映射
-     - 抽样 ``broker_order_id`` / ``broker_name``；受理拒单为空且 ``rejected``
-     - 无头 ``stage11`` 或 patch 各一笔受理成功/拒单
-   * - 拒单语义抽检
-     - 风控拒单：无订单行 + ``risk_log``；柜台拒单：有 ``rejected`` 行 + 空 broker 字段
-     - 同左；对照 :doc:`6-trader-snapshot-gate` 表格
-   * - 对账与恢复诊断
-     - 收盘 ``reconcile`` JSON；``run --task diagnose_pending_orders``（DEBUG）
-     - ``reconcile`` 远端占位预期；无头 ``stage11`` pending 字段齐全
-   * - 日志轮换
-     - ``rotatelogs --days N`` 或观察 ``trade_log``/``*.risk.log`` 体积
-     - 隔离目录执行 ``rotatelogs`` 验证 risk 清理
-   * - Broker 会话
-     - ``broker status`` / ``connect`` / ``disconnect``（Simulator 为会话标志）
-     - 同左；``sync`` 仍为 stub（``[NOT_IMPLEMENTED]``）
-   * - 结论
-     - 通过 / 待查 / 阻塞；若阻塞，附 top1 错误与回滚点
-     - 通过 / 待查 / 阻塞；附下一交易日跟进动作
+- 快照/门禁语义：:doc:`6-trader-snapshot-gate`  
+- 产物与排错：:doc:`5-artifacts-and-troubleshooting`  
+- CLI：:doc:`8-cli-trader-capability-matrix`  

@@ -1,86 +1,106 @@
-Trader 主链路快照与启动门禁（阶段 5-A / 5-B / 5-C）
+策略快照、启动门禁与长期可观测（5-A / 5-B / 5-C）
 ======================================================
 
-本页记录 **阶段 5-A（策略前市场数据准备与 ``run_strategy`` 分工）**、**阶段 5-B（启动门禁）**
-与 **阶段 5-C（账本/日志/恢复可观测性）** 的语义、相关配置键及合入后建议在 **下一交易日** 人工观察的要点。
+亲爱的用户，本章介绍三项**进阶**能力：策略运行前的**数据快照**、开盘前的**启动门禁**、以及长跑时的**对账与日志**。若您尚未跑通基础 live，请先阅读 :doc:`2-configuration-and-run`。
 
-阶段边界（5-A / 5-B / 5-C）
----------------------------
+> **本章解决什么问题**  
+> 分钟级策略若在每一步都重复拉数据，既慢又容易缺行情；开盘前若配置或数据未就绪就下单，风险大。我们把这些检查做成可配置机制，并在日志里留痕，便于您复盘。
 
-- **5-A**：在 ``live_trade_split_strategy_prepare=True`` 时，将策略运行前的重 I/O（数据刷新、
-  ``prepare_data_buffer``、实时价等）前移到 ``prepare_strategy_snapshot``，供后续 ``run_strategy`` 复用快照。
-- **5-B**：``run_startup_gate`` 在启动/当日日程生成后校验 Operator 就绪、主历史表与（可选）Broker 远端账本；
-  ``block`` 模式下失败可阻止 ``run_strategy`` 入队。
-- **5-C**：本地订单与 ``broker_order_id`` 映射、``*.risk.log`` 与 trade 日志轮换、``reconcile`` 检查点 trace、
-  在途单只读诊断。**不含**自动改单/补偿流程，**不含**真实 QMT 远端查询（见 S2.1）。
+内部代号对照（维护者/冒烟文档会用到）
+--------------------------------------
 
-5-A：``prepare_strategy_snapshot`` 与快照复用
-----------------------------------------------
+在 qteasy live 演进中，**5-A / 5-B / 5-C** 分别指策略快照、启动门禁与长期可观测三类能力。冒烟文档与维护者笔记会使用代号；作为用户，您只需记住右侧「用户向名称」即可。下表建立代号与日常说法的对应关系——阅读本章后文时，可将「5-B」理解为「启动门禁」。
 
-- 配置 ``live_trade_split_strategy_prepare=True`` 时，``create_daily_task_plan`` 会在每个
-  ``run_strategy`` 计划时刻之前插入 ``prepare_strategy_snapshot``（提前量由
-  ``live_trade_prepare_lead_seconds`` 控制，``0`` 表示与 ``run_strategy`` 同时刻入队，排序仍保证先 prepare）。
-- ``prepare_strategy_snapshot`` 内同步执行原 ``run_strategy`` 前的重 I/O：子日频数据源刷新、
-  ``check_and_prepare_live_trade_data``、``prepare_data_buffer`` / ``create_data_windows``、
-  ``_update_live_price`` 及过程数据注入；完成后写入内存标记（交易日 + ``step_index`` + 单调时钟）。
-- 随后 ``run_strategy`` 若判定快照在 ``live_trade_strategy_snapshot_max_age_seconds`` 内且
-  ``step_index`` 一致，则**不再**重复上述拉取；否则记 ``snapshot_missing`` / ``snapshot_stale`` 并跳过本步策略执行。
-- 在 split 开启时，``run_strategy`` 与 ``prepare_strategy_snapshot`` 均在 **主线程同步** 执行
- （与 ``acquire_live_price`` 的异步线程池分离），避免 ``Operator`` 跨线程无锁访问。
+**各列含义**：**代号**为内部阶段编号；**用户向名称**为文档推荐叫法；**一句话**为该能力在 live 链路中的位置。
 
-5-B：``run_startup_gate`` 与 ``run_strategy`` 入队
---------------------------------------------------
+**如何使用**：看到正文出现 ``5-A`` 等代号时查本表；配置键名称见 :doc:`2-configuration-and-run` §4「策略快照」「启动门禁」行。
 
-- ``live_trade_startup_gate_mode``：``off`` 关闭；``warn`` 失败仅记录 trace，仍允许交易；
-  ``block`` 失败则 ``run_startup_gate`` 返回 ``False``，且 ``add_task('run_strategy', …)`` 会以
-  ``skip_reason=gate_failed`` 拒绝入队。
-- ``Trader._start`` 在生成当日日程后调用 ``run_startup_gate()``（非交易日快速跳过）。
-- 门禁分层（可观测失败码拼入 trace ``failures``）：
+.. list-table::
+   :header-rows: 1
+   :widths: 12 38 50
 
-  - L1：``Operator.is_ready``、账户存在；
-  - L2：主历史表是否在数据源表清单中（按 ``asset_type`` 映射 ``stock_daily`` / ``fund_daily`` / ``index_daily``）；
-  - L3（可选）：若 ``Broker.get_remote_cash`` / ``get_remote_positions`` 返回非空，则与本地账本比对；
-    未实现远端 API 的券商返回占位 ``None``/空列表时不做此项硬断言。
+   * - 代号
+     - 用户向名称
+     - 一句话
+   * - **5-A**
+     - 策略快照
+     - 策略运行前预先拉好数据，本步复用，减少重复 IO
+   * - **5-B**
+     - 启动门禁
+     - 开盘/run 前检查就绪状态，失败可告警或阻断
+   * - **5-C**
+     - 长期可观测
+     - 订单与券商号映射、risk 日志轮换、对账与在途单诊断
 
-与 **下一交易日** 基于 ``examples/live_grid_multi.py`` 的 **全阶段手工冒烟清单**（路线图 0～5-C / 阶段 11）见同目录文档
-:doc:`7-manual-smoke-live-grid-roadmap`；本页覆盖 5-A/5-B/5-C 技术语义与配置要点。
+5-A：策略快照（prepare_strategy_snapshot）
+------------------------------------------
 
-5-C：账本/日志/恢复（长期运行可观测）
--------------------------------------
+**您可以把它理解为**：每次策略要「上考场」前，先把试卷和材料在案头摆好；真正答题时不再临时跑去打印室。
 
-本次在 5-A/5-B 基础上补充了三类长期运行能力，便于排障与审计：
+- 当 ``live_trade_split_strategy_prepare=True`` 时，qteasy 会在每个 ``run_strategy`` 计划时刻**之前**插入 ``prepare_strategy_snapshot`` 任务（提前量由 ``live_trade_prepare_lead_seconds`` 控制；``0`` 表示同刻入队，但排序仍保证先 prepare）。
+- ``prepare_strategy_snapshot`` 内完成原先 ``run_strategy`` 前的重活：子日频数据刷新、准备数据缓冲、更新 live 价、注入过程数据等；完成后在内存留下「快照有效」标记（交易日 + 步序号 + 时间）。
+- 随后 ``run_strategy`` 若发现快照仍在 ``live_trade_strategy_snapshot_max_age_seconds`` 内且步序号一致，则**不再重复**上述拉取；否则记 ``snapshot_missing`` / ``snapshot_stale`` 并**跳过本步策略**（避免用过期数据算信号）。
+- 开启 split 时，``prepare_strategy_snapshot`` 与 ``run_strategy`` 在**主线程同步**执行（与异步拉 live 价的任务分离），避免多线程同时碰 Operator。
 
-- **订单受理映射（新增列）**：``sys_op_trade_orders`` 增加可空 ``broker_order_id`` 与 ``broker_name``。
-  在 ``submit_with_ack`` 返回 ``accepted=True`` 后立即回写；若受理拒单，字段保持空值且状态为 ``rejected``。
-- **日志轮换覆盖扩展**：``rotate_trade_logs()`` 现在除 ``trade_log`` / ``trade_summary`` /
-  ``value_curve`` 外，也会清理超期 ``*.risk.log``（按 ``trade_log_keep_days``，优先文件名时间戳，失败退回 ``mtime``）。
-- **恢复诊断与检查点 trace**：
+**与真实行为的差异**：快照在内存中，进程重启后需重新 prepare；不是磁盘上的永久缓存。
 
-  - ``pre_open`` / ``post_close`` 结束后会输出 ``reconcile`` 分类检查点 trace（``checkpoint_passed`` /
-    ``checkpoint_warn``，含 ``cash_diff`` / ``position_qty_diff`` / ``remote_orders_count``）；
-  - 新增只读诊断任务 ``diagnose_pending_orders``，用于输出「本地在途单 vs Broker 远端在途单」差异摘要。
+5-B：启动门禁（run_startup_gate）
+----------------------------------
 
-说明：5-C **不**启用自动改单/自动补偿；真实 QMT ``get_remote_*`` 真数据属于 **S2.1**，Simulator 上远端字段多为占位。
+**您可以把它理解为**：发车前的**安全检查**——策略是否就绪、必要数据表是否在、（可选）本地账本是否与券商端一致。
 
-风控拒单 vs 柜台拒单
---------------------
+- ``live_trade_startup_gate_mode``：
 
-两类「拒单」语义不同，排障时须区分：
+  - ``off`` — 关闭门禁  
+  - ``warn`` — 失败只记日志/trace，**仍允许**交易（建议灰度先用）  
+  - ``block`` — 失败则拒绝 ``run_strategy`` 入队（``skip_reason=gate_failed``）
+
+- Trader 在生成当日日程后会调用门禁（非交易日快速跳过）。
+- 检查分层（失败码会写入 trace ``failures``）：
+
+  - **L1**：Operator 是否就绪、账户是否存在  
+  - **L2**：主历史表是否在数据源中（按 ``asset_type`` 映射日频表等）  
+  - **L3**（可选）：若 Broker 返回非空远端现金/持仓，则与本地比对；未实现远端 API 时不硬比  
+
+手工冒烟全清单见 :doc:`7-manual-smoke-live-grid-roadmap`。
+
+5-C：账本、日志与恢复可观测
+----------------------------
+
+在 5-A/5-B 之上，便于**长跑排障与审计**（**不含**自动改单/补偿；真实 QMT 远端查询属后续版本）：
+
+- **订单 ↔ 券商号映射**：受理成功后回写 ``broker_order_id`` / ``broker_name``；受理拒单则 ``rejected`` 且 broker 字段空。
+- **日志轮换扩展**：``rotate_trade_logs`` 除 trade CSV 外也清理超期 ``*.risk.log``（规则见 :doc:`5-artifacts-and-troubleshooting`）。
+- **对账与诊断 trace**：
+
+  - ``pre_open`` / ``post_close`` 后输出 ``reconcile`` 检查点（``checkpoint_passed`` / ``checkpoint_warn`` 等）  
+  - DEBUG 任务 ``diagnose_pending_orders``：只读对比本地与远端在途单差异  
+
+给新手的结论：两种「拒单」
+--------------------------
+
+在 live 订单链路中，「被拒」可能发生在 **RiskManager 复核台**（风控）或 **Broker 受理**（柜台）两个站点，证据位置完全不同。:doc:`3-risk-and-order-lifecycle` 已从流程角度说明；下表从**订单表与 broker_order_id** 角度给出对照，供排错时快速对号入座。
+
+**各列含义**：**路径**为拒单/成功类型；**本地订单表**是否新增行；**broker_order_id** 是否回写；**审计**建议优先打开的文件或表。
+
+**如何使用**：CLI 有 risk 英文拒因且无新订单 → 第一行；订单列表出现 ``rejected`` 且 broker 号空 → 第二行；有 broker 号 → 第三行，再查成交状态。
+
+**示例**：``risk_log`` 含 ``<RISK REJECTED>`` 且 ``orders`` 无对应新单 → 风控拒单，勿去查券商 connect。
 
 .. list-table::
    :header-rows: 1
    :widths: 22 28 18 32
 
    * - 路径
-     - 本地 ``sys_op_trade_orders``
-     - ``broker_order_id``
+     - 本地订单表
+     - broker_order_id
      - 审计
-   * - **风控拒单**（``RiskManager`` 前置）
-     - **不入库**（``submit_trade_order`` 返回空 ``{}``）
+   * - **风控拒单**
+     - **不入库**
      - —
-     - ``*.risk.log`` + ``<RISK REJECTED>`` 消息
-   * - **柜台受理拒单**（``submit_with_ack accepted=False``）
-     - 有行，``status=rejected``
+     - ``*.risk.log`` + ``<RISK REJECTED>``
+   * - **柜台受理拒单**
+     - 有行，``rejected``
      - **空**
      - 订单表 + trace
    * - **受理成功**
@@ -88,42 +108,39 @@ Trader 主链路快照与启动门禁（阶段 5-A / 5-B / 5-C）
      - **回写**
      - 订单表 + trace
 
-``diagnose_pending_orders`` 的主要输出字段
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diagnose_pending_orders 输出字段（简要）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- ``local_pending_count``：本地在途订单数（``created`` / ``submitted`` / ``partial-filled``）。
-- ``remote_pending_count``：远端在途订单数（按 ``broker_order_id`` 或远端订单 ID 统计）。
-- ``local_pending_without_broker_order_id``：本地 ``submitted``/``partial-filled`` 但缺少 ``broker_order_id`` 的订单 ID 列表。
-- ``local_pending_missing_remote``：本地有 ``broker_order_id`` 但远端不存在的委托号列表。
-- ``remote_pending_not_in_local``：远端存在但本地未发现映射的委托号列表。
+- ``local_pending_count`` — 本地在途单数  
+- ``remote_pending_count`` — 远端在途单数（simulator 常为空）  
+- ``local_pending_without_broker_order_id`` — 已提交但缺券商号的本地单  
+- ``local_pending_missing_remote`` — 本地有券商号但远端不存在  
+- ``remote_pending_not_in_local`` — 远端有、本地未映射  
 
-``rotate_trade_logs`` 与 ``*.risk.log``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-- 扫描目录为模块级 **`QT_TRADE_LOG_PATH`**；通过 ``qt.configure(trade_log_file_path=...)`` 热修改后会随
-  ``_refresh_log_paths()`` 更新（与 ``list_live_trade_artifacts`` 一致）。
-- 匹配 ``trade_log_*.csv``、``trade_summary_*.csv``、``value_curve_*.csv`` 与 ``*.risk.log``。
-- CSV 类文件优先从文件名解析 ``%Y%m%d_%H%M%S``；``*.risk.log`` 通常无时间戳，退回 **mtime** 判断。
-- 无头验收参考 ``tests/notebook_trader_headless_script.py`` 中 ``stage11_phase5_c_smoke`` 的 risk 轮换段。
-
-CLI 与 DEBUG 任务（运维 / 冒烟）
---------------------------------
-
-Trader Shell（``--ui cli``）可用命令（用户可见英文 help）：
-
-- ``gate`` / ``startup-gate`` — 手动 ``run_startup_gate()``
-- ``reconcile`` / ``snapshot-reconcile`` — ``collect_broker_reconcile_snapshot()`` JSON
-- ``run --task diagnose_pending_orders`` — 在 **DEBUG** 模式下触发在途单诊断
-- ``artifacts`` / ``ls-artifacts`` — 四键产物路径（``sys_log`` / ``trade_log`` / ``break_point`` / ``risk_log``）
-- ``rotatelogs`` / ``rotate-logs`` — 手动 ``qt.rotate_trade_logs(days=...)``（使用当前 ``QT_TRADE_LOG_PATH``）
-- ``broker status|connect|disconnect`` — Broker 会话状态（Simulator 上 connect 仅为适配层标志）
-- ``sync`` / ``pull-state`` — **stub**，预留 S2.1-b ``sync_from_broker``
-
-下一交易日验证建议
+CLI 与 DEBUG（运维）
 --------------------
 
-- **5-A**：关注 ``live_strategy`` trace 中 ``strategy_market_inputs_ready`` 与 ``strategy_run_skipped`` 比例；
-  子日频策略确认 ``acquire_live_price`` 频率不低于策略步频，避免 ``snapshot_stale`` 过高。
-- **5-B**：先用 ``warn`` 灰度，核对 ``startup_gate`` trace 中 ``gate_warn`` / ``gate_failed`` 与
-  ``failures`` 字段；CLI 可执行 ``gate`` 复验；确认无误后再切 ``block``。
-- **5-C**：收盘后核对 ``reconcile`` trace、``diagnose_pending_orders`` 字段；必要时 ``rotatelogs --days N`` 验证 risk 日志清理。
+Trader Shell（``--ui cli``）常用命令（help 为英文）：
+
+- ``gate`` / ``startup-gate`` — 手动跑启动门禁  
+- ``reconcile`` / ``snapshot-reconcile`` — 对账 JSON  
+- ``run --task diagnose_pending_orders`` — 在途单诊断（需 **DEBUG**）  
+- ``artifacts`` / ``ls-artifacts`` — 四键产物路径  
+- ``rotatelogs`` / ``rotate-logs`` — 手动日志轮换  
+- ``broker status|connect|disconnect`` — 券商会话（simulator 为标志位）  
+- ``sync`` / ``pull-state`` — **预留**，尚未实现真实远端同步  
+
+下一交易日观察建议
+------------------
+
+- **5-A**：trace 里 ``strategy_run_skipped`` 是否过多；live 价频率是否不低于策略步频。  
+- **5-B**：先用 ``warn``，核对 ``gate_warn`` / ``gate_failed``；CLI ``gate`` 复验后再试 ``block``。  
+- **5-C**：收盘 ``reconcile``、``diagnose_pending_orders``；必要时 ``rotatelogs --days N`` 验证 risk 清理。  
+
+相关文档
+--------
+
+- 配置：:doc:`2-configuration-and-run`  
+- 排错：:doc:`5-artifacts-and-troubleshooting`  
+- 冒烟：:doc:`7-manual-smoke-live-grid-roadmap`  
+- CLI：:doc:`8-cli-trader-capability-matrix`  

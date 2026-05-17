@@ -1,163 +1,197 @@
 # 产物清单与排错
 
-本页提供 live 运行时最常用的排错路径与运维建议，对齐 S1.3 P5 产物 API 与 Trader 路线图 5-C 可观测能力。
+> 本章是模拟实盘的「急救手册」：日志在哪、先查哪个文件、常见故障按什么顺序排查。
+
+亲爱的用户，live 运行会在磁盘上留下几类固定「产物」。把它们当成四个专用文件夹，出问题时按图索骥，比在海量输出里盲找高效得多。
 
 ## 0. 适用场景
 
-- 你已经在 live 模式运行，但遇到“提交失败 / 拒单 / 状态异常 / 在途单对不齐”等问题
-- 你希望按固定顺序快速定位问题来源，减少盲目排查
-- 你需要核对磁盘产物路径、日志轮换与 `broker_order_id` 映射
+- 您已在 live 模式运行，遇到提交失败、拒单、状态异常、在途单对不齐  
+- 您希望按**固定顺序**定位问题，减少反复重启  
+- 您需要核对日志路径、轮换策略与 `broker_order_id` 是否回写  
 
-## 1. 关键产物与用途（四键 API）
+## 1. 核心概念：四键产物
 
-系统为每个 live 账户枚举 **固定四键** 磁盘产物路径（文件可不存在，路径仍有效）：
+qteasy 为每个 live 账户提供 **四个固定键名** 的路径（文件可以尚不存在，路径仍然有效）。在 live 子系统的可观测性设计中，这四类产物分别对应「系统怎么跑、成交明细、异常恢复、风控审计」——排错时请先判断问题属于哪一类，再打开对应文件，而不是在一个日志里全文搜索。
 
-| 键名 | 典型用途 |
-|------|----------|
-| `sys_log` | 系统运行、任务调度、trace 事件 |
-| `trade_log` | 交易明细 CSV |
-| `break_point` | 断点恢复文件（注意键名为 `break_point`，非 `breakpoint`） |
-| `risk_log` | 风控拒单审计（`*.risk.log`） |
+**各列含义**：**键名**为 `list_live_trade_artifacts` / CLI `artifacts` 返回的 dict 键；**是什么**为文件类型；**什么时候该打开它**为典型触发场景。
 
-**API**（推荐）：
+**如何使用**：按 :doc:`3-risk-and-order-lifecycle` 判断拒单类型 → 风控查 `risk_log`，成交查 `trade_log`；启动/门禁/trace 查 `sys_log`。
+
+| 键名 | 是什么 | 什么时候该打开它 |
+|------|--------|------------------|
+| `sys_log` | 系统运行日志 | 任务调度、启动门禁、trace、一般报错 |
+| `trade_log` | 交易明细 CSV | 成交、费用、持仓变化明细 |
+| `break_point` | 断点恢复文件（键名是 `break_point`） | 异常退出后想恢复 Trader 状态 |
+| `risk_log` | 风控拒单审计（`*.risk.log`） | **怀疑风控拒单**时优先 |
+
+**示例（API 与 CLI）**：
 
 ```python
 import qteasy as qt
-
 arts = qt.list_live_trade_artifacts(account_id=1, data_source=qt.QT_DATA_SOURCE)
 print(arts['sys_log'], arts['trade_log'], arts['break_point'], arts['risk_log'])
+# 若 CLI 提示 risk 拒单，可单独打开：
+print(arts['risk_log'])
 ```
 
-**CLI**（Trader Shell）：`artifacts` 或别名 `ls-artifacts`。
+在 Trader Shell 也可输入 `artifacts`（别名 `ls-artifacts`）获得相同四键路径。
 
-路径解析规则：
+**路径规则（简要）**：
 
-- 相对路径相对于 `QT_ROOT_PATH`；绝对路径与 `~/...` 家目录经 `_resolve_path` 解析
-- `sys_log_file_path` / `trade_log_file_path` 支持运行时热修改（`qt.configure(...)` 后刷新 `QT_SYS_LOG_PATH` / `QT_TRADE_LOG_PATH`）
-
-建议把四类产物分别用于四类问题：
-
-- 运行是否正常：优先看 `sys_log`
-- 下单为何被拒（风控）：优先看 `risk_log` 与 `<RISK REJECTED>` 消息
-- 柜台受理/成交：优先看 `trade_log` 与订单表
-- 恢复与断点：看 `break_point`
+- 相对路径相对于 qteasy 根目录；绝对路径与 `~/...` 家目录均支持  
+- `sys_log_file_path` / `trade_log_file_path` 可在运行中用 `qt.configure(...)` 修改并立即生效  
 
 ## 2. 日志轮换
 
-**API**：`qt.rotate_trade_logs(days=None)` — `days` 为 `None` 时使用全局 `trade_log_keep_days`（默认 3）。
+长期 live 会积累 CSV 与 risk 日志。qteasy 按 **`trade_log_keep_days`**（默认 3 天）清理过期文件。
 
-**CLI**：`rotatelogs` 或别名 `rotate-logs`；可选 `--days N`。
+- **API**：`qt.rotate_trade_logs(days=None)`  
+- **CLI**：`rotatelogs`（别名 `rotate-logs`），可选 `--days N`  
 
-清理范围（目录为当前 `QT_TRADE_LOG_PATH`）：
+清理范围（在当前交易日志目录下）：
 
-- `trade_log_*.csv` / `trade_summary_*.csv` / `value_curve_*.csv`（优先文件名时间戳，失败退回 mtime）
-- `*.risk.log`（通常无时间戳，按 mtime 判断）
+- `trade_log_*.csv` / `trade_summary_*.csv` / `value_curve_*.csv`  
+- `*.risk.log`  
 
-进程加载 `qteasy` 时会按 `trade_log_keep_days` **自动轮换一次**；运维可手动再次调用上述 API/CLI。
+每次新 Python 进程导入 qteasy 时会**自动轮换一次**；您也可在运维时手动执行上述命令。
 
-## 3. 建议排错顺序
+## 3. 建议排错顺序（决策树）
 
-1. 先看即时界面反馈（CLI/TUI）
-2. 再看 `sys_log` 的错误、trace 与 `reconcile` / `startup_gate` 事件
-3. 若是 **风控** 拒单，检查 `risk_log` 的 `rule_id` / `reason`（通常 **无** 新订单表行）
-4. 若是 **柜台受理** 拒单，查订单表 `status=rejected` 且 `broker_order_id` 为空
-5. 在途单不一致时，使用只读诊断（见 §4 剧本 F）
-6. 最后对照订单与成交记录确认状态是否符合预期
+请按顺序自问，避免跳步：
 
-如果是“看起来没报错但行为不对”，建议再补一步：
+**Step 1 — 界面上有没有英文拒因？**  
+- 有，且像 `Order rejected by risk rule [...]` → 走 **风控路径**（Step 3）  
+- 有 `Order submission failed` 等 → 走 **提交/连接路径**（Step 4）  
+- 没有明显报错但行为不对 → Step 6  
 
-7. 回看本次运行配置快照（`liveconfig` / `live-config` CLI，或 `build_live_trade_config`）
+**Step 2 — 打开 `artifacts`，确认四个路径可写、文件是否在增长**
+
+**Step 3 — 风控拒单**  
+- 查 `risk_log` 中 `<RISK REJECTED>` 与 `rule_id`  
+- **不应**出现新的订单表行（与柜台拒单不同）  
+
+**Step 4 — 柜台受理 / 连接**  
+- `broker status`：`is_connected` 是否为真（simulator 上表示适配层可受理）  
+- 订单表：是否有 `rejected` 且 broker 号为空（柜台拒单）  
+
+**Step 5 — 在途单不一致**  
+- DEBUG 模式下：`run --task diagnose_pending_orders`  
+- 或 Shell：`reconcile` 看 JSON  
+
+**Step 6 — 配置是否如我所想**  
+- `liveconfig --detail` 核对快照  
+
+**Step 7 — 对照 trade_log 与订单状态序列**，以日志**最终状态**为准  
 
 ## 4. 高频故障剧本
 
+每节统一：**现象 → 先查什么 → 常见原因 → 下一步**。
+
 ### A. 订单被风控拒绝
 
-- 现象：CLI 显示英文拒因；`submit_trade_order` 返回空 `{}`
-- 排查：`risk_log` 含 `<RISK REJECTED>`；**不应**出现新的 `sys_op_trade_orders` 行
-- 处理：调整规则阈值或订单参数，复测同一场景
+- **现象**：CLI 英文拒因；提交结果为空 `{}`  
+- **先查**：`risk_log` 含 `<RISK REJECTED>`；订单表**无**新行  
+- **常见原因**：超单笔上限、不在白名单、非交易时段等  
+- **下一步**：调整规则或订单参数，同场景复测；详见 :doc:`3-risk-and-order-lifecycle`  
 
 ### B. 提交失败（非风控）
 
-- 现象：未产生有效提交记录，或本地校验失败
-- 排查：连接状态（CLI `broker status`）、契约字段、现金/持仓校验
-- 处理：先修复连接/字段问题，再重试并对照 `sys_log`
+- **现象**：无有效提交记录，或本地校验报错  
+- **先查**：`broker status`、现金/持仓是否够、`sys_log` 错误栈  
+- **常见原因**：未 connect、字段不合法、资源不足  
+- **下一步**：修复连接或字段后重试  
 
 ### C. 柜台受理拒单
 
-- 现象：订单表有行，`status=rejected`，`broker_order_id` / `broker_name` **为空**
-- 排查：`submit_with_ack` 返回 `accepted=False` 与 `reason`；trace 事件
-- 处理：与 **风控拒单** 区分（见 :doc:`6-trader-snapshot-gate`）
+- **现象**：订单表有行，`status=rejected`，`broker_order_id` 为空  
+- **先查**：trace、受理返回的 `reason`  
+- **常见原因**：模拟券商规则不接受该委托（与风控无关）  
+- **下一步**：对照 :doc:`6-trader-snapshot-gate` 拒单表，勿与风控混淆  
 
-### D. 状态理解偏差
+### D. 长期 partial-filled
 
-- 现象：订单长期 `partial-filled`
-- 排查：确认累计成交量与目标量关系
-- 处理：结合 `poll_fills` 回报判断是否应转为 `filled`
+- **现象**：订单一直是部分成交  
+- **先查**：累计成交量 vs 委托数量  
+- **常见原因**：回报尚未凑满；或行情导致分批成交慢  
+- **下一步**：结合成交回报判断是否应变为 `filled`  
 
-### E. 收盘后订单处理疑问
+### E. 收盘后状态不确定
 
-- 现象：收盘后订单状态变化不确定
-- 排查：查看 `post_close` reconcile 检查点 trace 与撤单记录
-- 处理：按收盘处理策略核对最终状态
+- **现象**：收盘后不知在途单如何处理  
+- **先查**：`post_close` 相关 trace、`reconcile` JSON  
+- **下一步**：核对撤单与最终状态  
 
 ### F. broker_order_id / 在途单异常
 
-| 现象 | 排查 | 处理 |
-|------|------|------|
-| 风控拒单 | `risk_log` 有 `<RISK REJECTED>`，无新订单行 | 调规则；详见 :doc:`6-trader-snapshot-gate` |
-| 柜台受理拒单 | 订单行 `rejected`，broker 字段空 | trace / broker `reason` |
-| 受理成功无 broker id | `submitted` 但 `broker_order_id` 空 | 查 `submit_with_ack` 与 Trader 回写 |
-| 在途单不一致 | `collect_pending_order_diagnostics()` 或 DEBUG 下 `run --task diagnose_pending_orders` | 只读诊断；Simulator 远端常为空 |
+当本地订单状态、券商委托号或在途单列表「对不上」时，现象多样但都可归入下表几类。本表位于 live **5-C 可观测**范畴，与 :doc:`6-trader-snapshot-gate` 诊断字段一致；simulator 上远端列常为空，属正常。
 
-CLI 辅助：`reconcile` / `snapshot-reconcile` 打印对账 JSON；`gate` 手动触发启动门禁。
+**各列含义**：**现象**为您观察到的矛盾；**先查**为第一证据来源；**下一步**为建议动作（只读诊断为主，不自动改单）。
+
+**如何使用**：匹配「现象」行 → 执行「先查」→ 若仍不明，DEBUG 下 `run --task diagnose_pending_orders`。
+
+| 现象 | 先查 | 下一步 |
+|------|------|--------|
+| 风控拒单 | `risk_log`，无新订单行 | 调规则 |
+| 柜台拒单 | 订单 `rejected`，broker 空 | trace / reason |
+| 已 submitted 但无 broker id | 受理 ACK 与回写 | :doc:`4-broker-adapter-and-integration` |
+| 本地与远端在途不一致 | DEBUG：`run --task diagnose_pending_orders` | 只读诊断；simulator 远端常为空 |
+
+CLI 辅助：`reconcile`、`gate`。
 
 ### G. 界面与日志不一致
 
-- 现象：CLI/TUI 提示与日志感知不一致
-- 排查：按时间顺序对齐界面反馈和日志条目
-- 处理：以日志中的最终状态为准，复核同一订单 ID 的全链路记录
+- **现象**：CLI 提示与事后查日志感觉矛盾  
+- **先查**：按**时间顺序**对齐同一订单 ID 的全链路记录  
+- **下一步**：以日志**最终状态**为准复盘  
 
 ## 5. 运维建议
 
-- 定期检查 `QT_TRADE_LOG_PATH` 容量；按需 `rotatelogs --days N`
-- 保留至少一段可复盘窗口，便于问题复现
-- 对关键运行日保存配置快照（`liveconfig --detail`）与日志头信息
-- 冒烟与回归清单见 :doc:`7-manual-smoke-live-grid-roadmap`
+- 定期看交易日志目录占用；必要时 `rotatelogs --days N`  
+- 关键运行日保存 `liveconfig --detail` 输出截图或文本  
+- 长跑或发版前对照 :doc:`7-manual-smoke-live-grid-roadmap`  
 
 ## 6. 快速检查清单
 
-- 账户是否正确
-- 配置是否生效（`liveconfig`）
-- 风控是否拒绝（`risk_log`）
-- broker 是否连通（`broker status`，`is_connected`）
-- 受理后是否回写 `broker_order_id`（成功路径）
-- 回报是否满足契约
-- 日志是否完整可读（四键路径 `artifacts`）
+- [ ] 账户正确  
+- [ ] 配置生效（`liveconfig`）  
+- [ ] 风控是否拒绝（`risk_log`）  
+- [ ] 券商是否可受理（`broker status`）  
+- [ ] 受理成功是否回写 `broker_order_id`  
+- [ ] 四键路径可读（`artifacts`）  
 
-## 7. 常用英文提示样例
+## 7. 常用英文提示与中文含义
 
 ```text
 Order rejected by risk rule [MAX_ORDER_QTY]: order quantity exceeds limit
 ```
 
+**含义**：本地风控规则 **MAX_ORDER_QTY** 拒绝——数量超限。查 `risk_log`，不是券商拒单。
+
 ```text
 <RISK REJECTED> rule_id='MAX_ORDER_QTY' reason='...' symbol='000001.SZ' ...
 ```
+
+**含义**：同上，结构化风控日志行，便于搜索。
 
 ```text
 Order submission failed.
 ```
 
+**含义**：提交链路失败（非风控通过后的柜台拒单），查连接与 `sys_log`。
+
 ```text
 [NOT_IMPLEMENTED] sync_from_broker is reserved for QMT broker integration (S2.1-b).
 ```
 
+**含义**：`sync` 命令尚未实现真实远端同步，属预期提示，不是运行故障。
+
 ## 8. 相关跳转
 
-- 启动与配置：:doc:`2-configuration-and-run`
-- 生命周期：:doc:`3-risk-and-order-lifecycle`
-- 快照/门禁/拒单语义：:doc:`6-trader-snapshot-gate`
-- 手工冒烟：:doc:`7-manual-smoke-live-grid-roadmap`
-- CLI 命令对照：:doc:`8-cli-trader-capability-matrix`
-- Broker 适配：:doc:`4-broker-adapter-and-integration`
-- 实操教程：`tutorials/8-live-trade-risk-and-broker-walkthrough.md`
+- 启动与配置：:doc:`2-configuration-and-run`  
+- 生命周期：:doc:`3-risk-and-order-lifecycle`  
+- 快照/门禁/拒单：:doc:`6-trader-snapshot-gate`  
+- 手工冒烟：:doc:`7-manual-smoke-live-grid-roadmap`  
+- CLI 对照：:doc:`8-cli-trader-capability-matrix`  
+- Broker：:doc:`4-broker-adapter-and-integration`  
+- 实操教程：[tutorials/8-live-trade-risk-and-broker-walkthrough.md](../tutorials/8-live-trade-risk-and-broker-walkthrough.md)  
