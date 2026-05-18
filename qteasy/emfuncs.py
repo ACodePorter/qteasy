@@ -13,6 +13,7 @@
 
 import json
 import logging
+import sys
 import time
 import datetime
 import pandas as pd
@@ -255,6 +256,9 @@ def _get_k_history(code: str, beg: str = '16000101', end: str = '20500101',
                 headers=EastmoneyHeaders,
         )
     except (requests.RequestException, json.JSONDecodeError, UnicodeDecodeError) as exc:
+        if hasattr(sys.stderr, 'isatty') and sys.stderr.isatty():
+            sys.stderr.write('\r\033[K')
+            sys.stderr.flush()
         logger.warning('Eastmoney k-line HTTP request failed: %s', exc)
         return pd.DataFrame()
     data = json_response.get('data')

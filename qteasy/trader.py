@@ -211,6 +211,54 @@ def _is_debug_sys_log_line(line: str) -> bool:
     return stripped.startswith('DEBUG:') or '<DEBUG>' in line
 
 
+def _live_logger_name(account_id: int) -> str:
+    """返回按账户隔离的系统日志 Logger 名称，避免全局 ``live`` 重复挂载 Handler。"""
+    return f'live.{account_id}'
+
+
+def reset_live_logger_handlers(account_id: Optional[int] = None) -> None:
+    """移除并关闭 live 相关 Logger 上的全部 Handler。
+
+    Parameters
+    ----------
+    account_id : int, optional
+        若给出，仅清理 ``live.{account_id}``；否则同时清理遗留的全局 ``live``。
+    """
+    names: List[str] = []
+    if account_id is not None:
+        names.append(_live_logger_name(account_id))
+    names.append('live')
+    for name in names:
+        logger = logging.getLogger(name)
+        for handler in list(logger.handlers):
+            logger.removeHandler(handler)
+            handler.close()
+
+
+def dataframe_log_preview(df: pd.DataFrame, head: int = 3) -> str:
+    """生成用于 DEBUG 系统日志的 DataFrame 摘要（前几行 + 总行数）。
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        待摘要的数据表。
+    head : int, optional
+        预览行数，默认 3。
+
+    Returns
+    -------
+    str
+        多行文本，不含整表 ``to_string()``。
+    """
+    if df is None or df.empty:
+        return '(empty DataFrame)'
+    row_count = len(df)
+    preview_text = df.head(head).to_string()
+    if row_count > head:
+        return f'{preview_text}\n... ({row_count} rows total)'
+    return f'{preview_text}\n({row_count} rows total)'
+
+
 def _resolve_tables_for_refresh(asset_type_str: Union[str, list[str], tuple[str, ...]],
                                 unit: str) -> list[str]:
     """根据资产类型与频率解析实时刷新目标数据表列表。"""
@@ -1920,10 +1968,14 @@ class Trader(object):
                 matured_kline_scope='all',  # 实盘刷新需要累计写入截至当前时刻的全部成熟K线
         )
         # 将real_time_data写入DataSource
-        self.send_message(message=f'got real time data from channel {self.live_price_channel}:\n'
-                                  f'{real_time_data.to_string()}\n'
-                                  f'writing data to datasource tables: {tables_to_update}, '
-                                  f'datasource: {self.datasource}...', debug=True)
+        preview = dataframe_log_preview(real_time_data, head=3)
+        self.send_message(
+                message=f'got real time data from channel {self.live_price_channel}:\n'
+                        f'{preview}\n'
+                        f'writing data to datasource tables: {tables_to_update}, '
+                        f'datasource: {self.datasource}...',
+                debug=True,
+        )
 
         for table_to_update in tables_to_update:
             rows_written = self._datasource.update_table_data(
@@ -1940,29 +1992,29 @@ class Trader(object):
     # ============= functions related to trade config and logging ====================
 
     def new_sys_logger(self) -> logging.Logger:
-        """ 返回一个系统logger
+        """返回按账户隔离、且仅挂载单个 FileHandler 的系统 logger。
 
         Returns
         -------
-        logger: logging.Logger
-            系统信息logger
+        logging.Logger
+            系统信息 logger。
         """
-
+        log_path = sys_log_file_path_name(self.account_id, self.datasource)
+        logger_live = logging.getLogger(_live_logger_name(self.account_id))
+        reset_live_logger_handlers(self.account_id)
         live_handler = logging.FileHandler(
-                filename=sys_log_file_path_name(self.account_id, self.datasource),
+                filename=log_path,
                 mode='a',
                 encoding='utf-8',
                 delay=False,
         )
-        logger_live = logging.getLogger('live')
         logger_live.addHandler(live_handler)
         logger_live.setLevel(logging.DEBUG)
         logger_live.propagate = False
-
         return logger_live
 
     def init_system_logger(self) -> None:
-        """ 检查系统logger属性是否已经设置，或者log文件存在，如果没有，则初始化系统logger属性
+        """检查系统 logger 是否已就绪；必要时创建且保证不重复挂载 Handler。
 
         Returns
         -------
@@ -1971,6 +2023,21 @@ class Trader(object):
         if not self.sys_log_file_exists:
             self.live_sys_logger = None
         if self.live_sys_logger is None:
+            self.live_sys_logger = self.new_sys_logger()
+            return
+        logger_live = self.live_sys_logger
+        log_path = os.path.normpath(
+                sys_log_file_path_name(self.account_id, self.datasource),
+        )
+        file_handlers = [
+            h for h in logger_live.handlers
+            if isinstance(h, logging.FileHandler)
+        ]
+        if len(file_handlers) != 1:
+            self.live_sys_logger = self.new_sys_logger()
+            return
+        existing_path = os.path.normpath(getattr(file_handlers[0], 'baseFilename', '') or '')
+        if existing_path != log_path:
             self.live_sys_logger = self.new_sys_logger()
 
     def clear_sys_log(self) -> str:
