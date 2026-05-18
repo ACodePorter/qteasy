@@ -21,9 +21,22 @@ import pandas as pd
 import numpy as np
 
 from qteasy import DataSource, Operator, BaseStrategy
-from qteasy.trade_recording import new_account, get_or_create_position, update_position, save_parsed_trade_orders
+from qteasy.trade_recording import (
+    new_account,
+    get_or_create_position,
+    update_position,
+    save_parsed_trade_orders,
+    read_trade_order_detail,
+    read_trade_results_by_order_id,
+)
 from qteasy.trade_recording import read_trade_order, read_trade_order_detail
-from qteasy.trading_util import submit_order, process_trade_result, cancel_order, process_account_delivery
+from qteasy.trading_util import (
+    submit_order,
+    process_trade_result,
+    cancel_order,
+    reject_unsubmitted_order,
+    process_account_delivery,
+)
 from qteasy.trading_util import deliver_trade_result
 from qteasy.trading_util import sys_log_file_path_name, trade_log_file_path_name, break_point_file_path_name
 from qteasy.trader import Trader
@@ -2011,6 +2024,75 @@ class TestTraderTasksIndividual(unittest.TestCase):
         print(' order detail after post_close:', order_detail)
         self.assertTrue(self.trader.broker.order_queue.empty())
         self.assertEqual(order_detail['status'], 'canceled')
+
+    def test_post_close_rejects_stale_created_orders(self):
+        print('\n[TestTraderTasksIndividual] post_close rejects stale created orders')
+        self.trader._run_task('start')
+        order_ids = save_parsed_trade_orders(
+                account_id=self.trader.account_id,
+                symbols=['000001.SZ'],
+                positions=['long'],
+                directions=['buy'],
+                quantities=[100.0],
+                prices=[10.0],
+                data_source=self.test_ds,
+        )
+        order_id = int(order_ids[0])
+        before = read_trade_order_detail(order_id, data_source=self.test_ds)
+        print(' order before post_close:', before)
+        self.assertEqual(before['status'], 'created')
+
+        self.trader._run_task('post_close')
+
+        after = read_trade_order_detail(order_id, data_source=self.test_ds)
+        results = read_trade_results_by_order_id(order_id=order_id, data_source=self.test_ds)
+        print(' order after post_close:', after)
+        print(' trade_results:', results)
+        self.assertEqual(after['status'], 'rejected')
+        self.assertTrue(results.empty)
+
+    def test_post_close_no_error_when_only_created_stale(self):
+        print('\n[TestTraderTasksIndividual] post_close completes with only created orders')
+        self.trader._run_task('start')
+        order_ids = save_parsed_trade_orders(
+                account_id=self.trader.account_id,
+                symbols=['000002.SZ', '000003.SZ'],
+                positions=['long', 'long'],
+                directions=['buy', 'sell'],
+                quantities=[50.0, 30.0],
+                prices=[11.0, 12.0],
+                data_source=self.test_ds,
+        )
+        print(' created order ids:', order_ids)
+        self.trader._run_task('post_close')
+        for order_id in order_ids:
+            detail = read_trade_order_detail(int(order_id), data_source=self.test_ds)
+            print(' finalized order:', detail['order_id'], detail['status'])
+            self.assertEqual(detail['status'], 'rejected')
+
+    def test_reject_unsubmitted_order_idempotent(self):
+        print('\n[TestTraderTasksIndividual] reject_unsubmitted_order idempotent')
+        order_ids = save_parsed_trade_orders(
+                account_id=self.trader.account_id,
+                symbols=['000001.SZ'],
+                positions=['long'],
+                directions=['buy'],
+                quantities=[10.0],
+                prices=[9.5],
+                data_source=self.test_ds,
+        )
+        order_id = int(order_ids[0])
+        reject_unsubmitted_order(order_id, data_source=self.test_ds, account_id=self.trader.account_id)
+        detail = read_trade_order_detail(order_id, data_source=self.test_ds)
+        print(' after first reject:', detail['status'])
+        self.assertEqual(detail['status'], 'rejected')
+        returned = reject_unsubmitted_order(order_id, data_source=self.test_ds, account_id=self.trader.account_id)
+        print(' idempotent return:', returned)
+        self.assertEqual(returned, order_id)
+        self.assertEqual(
+                read_trade_order_detail(order_id, data_source=self.test_ds)['status'],
+                'rejected',
+        )
 
     def test_task_run_strategy_step_index_zero(self):
         # Ensure run schedule and group_timing_table exist (is_trade_day=True)

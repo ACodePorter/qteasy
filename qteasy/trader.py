@@ -44,6 +44,7 @@ from .trade_recording import (
     record_trade_order,
     get_or_create_position,
     read_trade_order,
+    read_trade_order_detail,
     update_trade_order,
 )
 
@@ -55,6 +56,7 @@ from .configure import QT_CONFIG
 from .trading_util import (
     apply_schedule_catch_up_policy,
     cancel_order,
+    reject_unsubmitted_order,
     create_daily_task_plan,
     get_position_by_id,
     get_symbol_names,
@@ -3554,10 +3556,65 @@ class Trader(object):
         self._update_live_price()
         self._emit_reconcile_checkpoint(checkpoint='pre_open', block_on_failure=False)
 
+    def _finalize_order_at_close(self, order_id: int, *, context: str) -> None:
+        """按订单当前状态在收盘后收尾：``created`` 拒单，``submitted``/``partial-filled`` 撤单。
+
+        单笔失败仅记日志，不阻断 ``post_close`` 其余步骤。
+
+        Parameters
+        ----------
+        order_id : int
+            本地订单 id。
+        context : str
+            调用场景描述，用于用户可见英文日志。
+
+        Returns
+        -------
+        None
+        """
+        try:
+            order_detail = read_trade_order_detail(order_id=int(order_id), data_source=self._datasource)
+            order_status = order_detail['status']
+            if order_status == 'created':
+                reject_unsubmitted_order(
+                        order_id=int(order_id),
+                        data_source=self._datasource,
+                        account_id=self.account_id,
+                )
+                self.send_message(
+                        f'Voided stale created order {order_id} at market close ({context})',
+                )
+            elif order_status in ['submitted', 'partial-filled']:
+                cancel_order(
+                        order_id=int(order_id),
+                        data_source=self._datasource,
+                        account_id=self.account_id,
+                )
+                self.send_message(
+                        f'Canceled order {order_id} at market close ({context})',
+                )
+            elif order_status in ['rejected', 'filled', 'canceled']:
+                self.send_message(
+                        f'Skipped order {order_id} already terminal ({order_status}) at market close',
+                        debug=True,
+                )
+            else:
+                self.send_message(
+                        f'Skipped order {order_id} with unexpected status {order_status} at market close',
+                        debug=True,
+                )
+        except Exception as e:
+            self.send_message(
+                    f'Failed to finalize order {order_id} at market close ({context}): {e}',
+                    debug=False,
+            )
+            import traceback
+            self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
+
     def _post_close(self) -> None:
         """ 所有收盘后应该完成的任务
 
-        1，处理当日未完成的交易信号，生成取消订单，并记录订单取消结果
+        1，处理当日未完成的交易信号：``created`` 置 ``rejected``，已报单部分撤单
         2，处理当日已成交的订单结果的交割，记录交割结果
         3，生成消息发送到消息队列
         """
@@ -3567,21 +3624,14 @@ class Trader(object):
             self.send_message('market is still open, post_close can not be executed during open time!', debug=True)
             return
 
-        # 检查broker中是否有尚未处理的legacy队列订单，统一通过Broker API排空后取消
+        # 检查broker中是否有尚未处理的legacy队列订单，按 DB 状态收尾
         pending_orders = self.broker.drain_order_queue()
-        # TODO: 已经submitted的订单如果已经有了成交结果，只是尚未记录的，则不应该取消，
-        #   此处应该检查broker的result_queue，如果有结果，则推迟执行post_close，直到
-        #   result_queue中的结果全部处理完毕，或者超过一定时间
         if pending_orders:
-            self.send_message('unprocessed orders found, these orders will be canceled')
+            self.send_message('unprocessed orders found in broker queue, finalizing by order status')
             for order in pending_orders:
-                order_id = order['order_id']
-                cancel_order(
-                        order_id,
-                        data_source=self._datasource,
-                        account_id=self.account_id,
-                )  # 生成订单取消记录，并记录到数据库
-                self.send_message(f'canceled unprocessed order: {order_id}')
+                order_id = int(order['order_id'])
+                self._finalize_order_at_close(order_id, context='broker queue drain')
+
         # 检查今日成交订单，确认是否有"部分成交"的订单，如果有，生成取消订单，取消尚未成交的部分
         partially_filled_orders = query_trade_orders(
                 account_id=self.account_id,
@@ -3590,11 +3640,9 @@ class Trader(object):
         )
         self.send_message(f'Looking for partial-filled orders... {len(partially_filled_orders)} found!')
         for order_id in partially_filled_orders.index:
-            # 对于所有没有完全成交的订单，生成取消订单，取消剩余的部分
-            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
-            self.send_message(f'Canceled remaining qty of partial-filled order: {order_id}')
+            self._finalize_order_at_close(int(order_id), context='partial-filled cleanup')
 
-        # 检查未提交订单，确认是否有"created"的订单，如果有，生成取消订单
+        # 检查未提交订单（created）：收盘视同未受理，置 rejected，不写 cancel trade_result
         unsubmitted_orders = query_trade_orders(
                 account_id=self.account_id,
                 status='created',
@@ -3603,9 +3651,7 @@ class Trader(object):
         self.send_message(f'Looking for Un-submitted orders... {len(unsubmitted_orders)} found!')
 
         for order_id in unsubmitted_orders.index:
-            # 对于所有未成交的订单，生成取消订单
-            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
-            self.send_message(f'Canceled un-submitted order: {order_id}')
+            self._finalize_order_at_close(int(order_id), context='stale created cleanup')
 
         # 检查未成交订单，确认是否有"submitted"的订单，如果有，生成取消订单
         unfilled_orders = query_trade_orders(
@@ -3616,9 +3662,7 @@ class Trader(object):
         self.send_message(f'Looking for Unfilled orders...{len(unfilled_orders)} found!')
 
         for order_id in unfilled_orders.index:
-            # 对于所有未成交的订单，生成取消订单
-            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
-            self.send_message(f'Canceled unfilled order: {order_id}')
+            self._finalize_order_at_close(int(order_id), context='submitted cleanup')
 
         self._emit_reconcile_checkpoint(checkpoint='post_close', block_on_failure=False)
 
