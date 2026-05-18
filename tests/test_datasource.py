@@ -46,10 +46,53 @@ from qteasy.utilfuncs import (
     freq_dither,
 )
 
+# sys_op_trade_orders 含 broker_order_id / broker_name（S1.3+），插入测试数据须带齐列
+_TRADE_ORDER_INSERT_COLUMNS = [
+    'pos_id',
+    'direction',
+    'order_type',
+    'qty',
+    'price',
+    'submitted_time',
+    'status',
+    'broker_order_id',
+    'broker_name',
+]
+
+
+def _trade_order_test_row(**fields) -> dict:
+    """组装符合 ``sys_op_trade_orders`` 全列的测试行 dict（键序与表列一致）。"""
+    merged = {
+        'broker_order_id': '',
+        'broker_name': '',
+        **fields,
+    }
+    return {col: merged[col] for col in _TRADE_ORDER_INSERT_COLUMNS}
+
 
 # noinspection SqlDialectInspection,PyTypeChecker
 class TestDataSource(unittest.TestCase):
     """test local historical f`~`ile database management methods"""
+
+    def _assert_sys_table_record_matches(self, table: str, data: dict, res: dict) -> None:
+        """断言 insert 数据与 read_sys_table_record 读回内容一致（按列名比对）。"""
+        if table == 'sys_op_trade_orders':
+            for key, origin in data.items():
+                read = res[key]
+                print(f'{key}: origin: {origin}->{type(origin)}, read: {read}->{type(read)}')
+                if isinstance(origin, pd.Timestamp):
+                    self.assertEqual(origin, pd.to_datetime(read))
+                elif origin == '' and (read == '' or read is None or pd.isna(read)):
+                    continue
+                else:
+                    self.assertEqual(origin, read)
+            return
+        for origin, read in zip(data.values(), res.values()):
+            print(f'origin: {origin}->{type(origin)}, read: {read}->{type(read)}')
+            if isinstance(origin, pd.Timestamp):
+                self.assertEqual(origin, pd.to_datetime(read))
+            else:
+                self.assertEqual(origin, read)
 
     def setUp(self):
         """ execute before each test"""
@@ -1206,6 +1249,8 @@ class TestDataSource(unittest.TestCase):
                     'price': [10, 20, 30, 40, 50],
                     'submitted_time': ['2023-11-12', '2023-11-12', '2023-11-12', '2023-11-12', '2023-11-12'],
                     'status': ['partial-filled', 'filled', 'canceled', 'filled', 'canceled'],
+                    'broker_order_id': ['', '', '', '', ''],
+                    'broker_name': ['', '', '', '', ''],
                 }
         )
         test_results_df = pd.DataFrame(
@@ -1663,15 +1708,15 @@ class TestDataSource(unittest.TestCase):
 
     def test_insert_read_sys_table_data(self):
         # 测试正常情况下写入及读取表的数据
-        test_order_data = {
-                    'pos_id': 1,
-                    'direction': 'buy',
-                    'order_type': 'limit',
-                    'qty': 100,
-                    'price': 10.0,
-                    'submitted_time': pd.to_datetime('20230220'),
-                    'status': 'submitted',
-        }
+        test_order_data = _trade_order_test_row(
+                pos_id=1,
+                direction='buy',
+                order_type='limit',
+                qty=100,
+                price=10.0,
+                submitted_time=pd.to_datetime('20230220'),
+                status='submitted',
+        )
         test_result_data = {
             'order_id': 1,
             'filled_qty': 100,
@@ -1698,62 +1743,62 @@ class TestDataSource(unittest.TestCase):
             'available_qty': 100.,
             'cost': 10.0,
         }
-        test_shuffled_signal_data = {
-            'pos_id': 1,
-            'qty': 300,
-            'status': 'filled',
-            'order_type': 'market',
-            'price': 15.0,
-            'direction': 'sell',
-            'submitted_time': pd.to_datetime('20230223'),
-        }  # test if shuffled data can be inserted into database
+        test_shuffled_signal_data = _trade_order_test_row(
+                pos_id=1,
+                qty=300,
+                status='filled',
+                order_type='market',
+                price=15.0,
+                direction='sell',
+                submitted_time=pd.to_datetime('20230223'),
+        )  # test if shuffled data can be inserted into database
         # 生成五条不同的模拟信号数据
         test_multiple_signal_data = [
-            {
-                'pos_id': 1,
-                'direction': 'buy',
-                'order_type': 'limit',
-                'qty': 100,
-                'price': 10.0,
-                'submitted_time': pd.to_datetime('20230220'),
-                'status': 'submitted',
-            },
-            {
-                'pos_id': 2,
-                'direction': 'buy',
-                'order_type': 'limit',
-                'qty': 200,
-                'price': 10.0,
-                'submitted_time': pd.to_datetime('20230220'),
-                'status': 'submitted',
-            },
-            {
-                'pos_id': 3,
-                'direction': 'buy',
-                'order_type': 'limit',
-                'qty': 300,
-                'price': 10.0,
-                'submitted_time': pd.to_datetime('20230220'),
-                'status': 'submitted',
-            },
-            {
-                'pos_id': 4,
-                'direction': 'buy',
-                'order_type': 'limit',
-                'qty': 400,
-                'price': 10.0,
-                'submitted_time': pd.to_datetime('20230220'),
-                'status': 'submitted',
-            },
-            {
-                'pos_id': 5,
-                'direction': 'buy',
-                'order_type': 'limit',
-                'qty': 500,
-                'price': 10.0,
-                'submitted_time': pd.to_datetime('20230220'),
-                'status': 'submitted',
-            },
+            _trade_order_test_row(
+                    pos_id=1,
+                    direction='buy',
+                    order_type='limit',
+                    qty=100,
+                    price=10.0,
+                    submitted_time=pd.to_datetime('20230220'),
+                    status='submitted',
+            ),
+            _trade_order_test_row(
+                    pos_id=2,
+                    direction='buy',
+                    order_type='limit',
+                    qty=200,
+                    price=10.0,
+                    submitted_time=pd.to_datetime('20230220'),
+                    status='submitted',
+            ),
+            _trade_order_test_row(
+                    pos_id=3,
+                    direction='buy',
+                    order_type='limit',
+                    qty=300,
+                    price=10.0,
+                    submitted_time=pd.to_datetime('20230220'),
+                    status='submitted',
+            ),
+            _trade_order_test_row(
+                    pos_id=4,
+                    direction='buy',
+                    order_type='limit',
+                    qty=400,
+                    price=10.0,
+                    submitted_time=pd.to_datetime('20230220'),
+                    status='submitted',
+            ),
+            _trade_order_test_row(
+                    pos_id=5,
+                    direction='buy',
+                    order_type='limit',
+                    qty=500,
+                    price=10.0,
+                    submitted_time=pd.to_datetime('20230220'),
+                    status='submitted',
+            ),
         ]
         test_multiple_result_data = [
             {
@@ -1953,12 +1998,7 @@ class TestDataSource(unittest.TestCase):
                 print(f'following data are read from table {table}\n'
                       f'{res}\n')
                 self.assertNotEqual(res, {})
-                for origin, read in zip(data.values(), res.values()):
-                    print(f'origin: {origin}->{type(origin)}, read: {read}->{type(read)}')
-                    if isinstance(origin, pd.Timestamp):
-                        self.assertEqual(origin, pd.to_datetime(read))
-                    else:
-                        self.assertEqual(origin, read)
+                self._assert_sys_table_record_matches(table, data, res)
                 if ds.table_data_exists(table):
                     ds.drop_table_data(table)
                 print(f'write and read shuffled data')
@@ -2036,12 +2076,7 @@ class TestDataSource(unittest.TestCase):
                       f'{res}\n')
 
                 self.assertIsNotNone(res)
-                for origin, read in zip(datas[id_to_read].values(), res.values()):
-                    print(f'origin: {origin}->{type(origin)}, read: {read}->{type(read)}')
-                    if isinstance(origin, pd.Timestamp):
-                        self.assertEqual(origin, pd.to_datetime(read))
-                    else:
-                        self.assertEqual(origin, read)
+                self._assert_sys_table_record_matches(table, datas[id_to_read], res)
 
                 # 测试传入无效的id时是否返回None
                 res = ds.read_sys_table_record(table, record_id=100)
@@ -2076,8 +2111,10 @@ class TestDataSource(unittest.TestCase):
                     if bk_v[0] in kwu.keys():
                         self.assertEqual(ak_v[1], kwu[bk_v[0]])
                     else:
-                        if isinstance(bk_v[0], pd.Timestamp):
+                        if isinstance(bk_v[1], pd.Timestamp):
                             self.assertEqual(bk_v[1], pd.to_datetime(ak_v[1]))
+                        elif pd.isna(bk_v[1]) and pd.isna(ak_v[1]):
+                            continue
                         else:
                             self.assertEqual(bk_v[1], ak_v[1])
 
@@ -2101,30 +2138,30 @@ class TestDataSource(unittest.TestCase):
             self.assertEqual(res, 0)
 
             # insert one piece of data and then last id should be 1
-            ds.insert_sys_table_data('sys_op_trade_orders', **{
-                'pos_id': 1,
-                'direction': 'buy',
-                'order_type': 'limit',
-                'qty': 100,
-                'price': 10.0,
-                'submitted_time': pd.to_datetime('20230220'),
-                'status': 'submitted',
-            })
+            ds.insert_sys_table_data('sys_op_trade_orders', **_trade_order_test_row(
+                    pos_id=1,
+                    direction='buy',
+                    order_type='limit',
+                    qty=100,
+                    price=10.0,
+                    submitted_time=pd.to_datetime('20230220'),
+                    status='submitted',
+            ))
             res = ds.get_sys_table_last_id('sys_op_trade_orders')
             print(f'last id from {ds} after written 1 data: {res}')
             self.assertIsInstance(res, int)
             self.assertEqual(res, 1)
 
             # insert another piece of data and then last id should be 2
-            ds.insert_sys_table_data('sys_op_trade_orders', **{
-                'pos_id': 2,
-                'direction': 'buy',
-                'order_type': 'limit',
-                'qty': 200,
-                'price': 10.0,
-                'submitted_time': pd.to_datetime('20230220'),
-                'status': 'submitted',
-            })
+            ds.insert_sys_table_data('sys_op_trade_orders', **_trade_order_test_row(
+                    pos_id=2,
+                    direction='buy',
+                    order_type='limit',
+                    qty=200,
+                    price=10.0,
+                    submitted_time=pd.to_datetime('20230220'),
+                    status='submitted',
+            ))
             res = ds.get_sys_table_last_id('sys_op_trade_orders')
             print(f'last id from {ds} after written 2 data: {res}')
             self.assertIsInstance(res, int)

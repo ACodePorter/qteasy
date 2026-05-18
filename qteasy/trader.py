@@ -13,6 +13,7 @@
 
 import logging
 import os
+import re
 import sys
 import time
 import threading
@@ -43,6 +44,7 @@ from .trade_recording import (
     record_trade_order,
     get_or_create_position,
     read_trade_order,
+    read_trade_order_detail,
     update_trade_order,
 )
 
@@ -54,6 +56,7 @@ from .configure import QT_CONFIG
 from .trading_util import (
     apply_schedule_catch_up_policy,
     cancel_order,
+    reject_unsubmitted_order,
     create_daily_task_plan,
     get_position_by_id,
     get_symbol_names,
@@ -209,6 +212,130 @@ def _is_debug_sys_log_line(line: str) -> bool:
     """判断系统日志行是否为 DEBUG 级别或带 debug 前缀。"""
     stripped = line.lstrip()
     return stripped.startswith('DEBUG:') or '<DEBUG>' in line
+
+
+# 实盘 ``add_message_prefix`` 时间戳：<May18 14:55:10> 或带时区后缀 <May18 14:55:10(CST)>
+_SYS_LOG_TIMESTAMP_RE = re.compile(
+        r'<[A-Za-z]{3}\d{1,2} \d{2}:\d{2}:\d{2}(?:\([^)]+\))?>',
+)
+_LOG_LEVEL_PREFIXES = ('DEBUG:', 'INFO:', 'WARNING:', 'ERROR:', 'CRITICAL:')
+
+
+def _strip_sys_log_level_prefix(line: str) -> str:
+    """去掉 logging 默认级别前缀（若存在）。"""
+    stripped = line.lstrip()
+    for level in _LOG_LEVEL_PREFIXES:
+        if stripped.startswith(level):
+            return stripped[len(level):].lstrip()
+    return stripped
+
+
+def _is_sys_log_record_start(line: str) -> bool:
+    """判断物理行是否为一条新系统日志记录的起始行。"""
+    stripped = line.lstrip()
+    if not stripped:
+        return False
+    for level in _LOG_LEVEL_PREFIXES:
+        if stripped.startswith(level):
+            return True
+    body = stripped
+    if body.startswith('<DEBUG>'):
+        body = body[len('<DEBUG>'):]
+    return _SYS_LOG_TIMESTAMP_RE.match(body) is not None
+
+
+def _sys_log_record_has_timestamp_header(line: str) -> bool:
+    """判断记录首行是否带实盘时间戳前缀（其后续物理行视为同一条续行）。"""
+    body = _strip_sys_log_level_prefix(line)
+    if body.startswith('<DEBUG>'):
+        body = body[len('<DEBUG>'):]
+    return _SYS_LOG_TIMESTAMP_RE.match(body) is not None
+
+
+def group_sys_log_physical_lines(lines: List[str]) -> List[str]:
+    """将文件中的物理行合并为逻辑日志条目。
+
+    ``send_message`` 写入的多行消息仅首行带时间戳与 ``<DEBUG>`` 前缀，
+    续行在回放或过滤时应与首行同属一条记录。
+
+    Parameters
+    ----------
+    lines : list of str
+        ``readlines()`` 得到的物理行列表。
+
+    Returns
+    -------
+    list of str
+        合并后的逻辑条目，每条可含换行符。
+    """
+    records: List[str] = []
+    current: List[str] = []
+
+    def flush() -> None:
+        nonlocal current
+        if current:
+            records.append(''.join(current))
+            current = []
+
+    for line in lines:
+        if _is_sys_log_record_start(line):
+            flush()
+            current = [line]
+        elif current and _sys_log_record_has_timestamp_header(current[0]):
+            current.append(line)
+        else:
+            flush()
+            current = [line]
+    flush()
+    return records
+
+
+def _live_logger_name(account_id: int) -> str:
+    """返回按账户隔离的系统日志 Logger 名称，避免全局 ``live`` 重复挂载 Handler。"""
+    return f'live.{account_id}'
+
+
+def reset_live_logger_handlers(account_id: Optional[int] = None) -> None:
+    """移除并关闭 live 相关 Logger 上的全部 Handler。
+
+    Parameters
+    ----------
+    account_id : int, optional
+        若给出，仅清理 ``live.{account_id}``；否则同时清理遗留的全局 ``live``。
+    """
+    names: List[str] = []
+    if account_id is not None:
+        names.append(_live_logger_name(account_id))
+    names.append('live')
+    for name in names:
+        logger = logging.getLogger(name)
+        for handler in list(logger.handlers):
+            logger.removeHandler(handler)
+            handler.close()
+
+
+def dataframe_log_preview(df: pd.DataFrame, head: int = 3) -> str:
+    """生成用于 DEBUG 系统日志的 DataFrame 摘要（前几行 + 总行数）。
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        待摘要的数据表。
+    head : int, optional
+        预览行数，默认 3。
+
+    Returns
+    -------
+    str
+        多行文本，不含整表 ``to_string()``。
+    """
+    if df is None or df.empty:
+        return '(empty DataFrame)'
+    row_count = len(df)
+    preview_text = df.head(head).to_string()
+    if row_count > head:
+        return f'{preview_text}\n... ({row_count} rows total)'
+    return f'{preview_text}\n({row_count} rows total)'
 
 
 def _resolve_tables_for_refresh(asset_type_str: Union[str, list[str], tuple[str, ...]],
@@ -1920,10 +2047,14 @@ class Trader(object):
                 matured_kline_scope='all',  # 实盘刷新需要累计写入截至当前时刻的全部成熟K线
         )
         # 将real_time_data写入DataSource
-        self.send_message(message=f'got real time data from channel {self.live_price_channel}:\n'
-                                  f'{real_time_data.to_string()}\n'
-                                  f'writing data to datasource tables: {tables_to_update}, '
-                                  f'datasource: {self.datasource}...', debug=True)
+        preview = dataframe_log_preview(real_time_data, head=3)
+        self.send_message(
+                message=f'got real time data from channel {self.live_price_channel}:\n'
+                        f'{preview}\n'
+                        f'writing data to datasource tables: {tables_to_update}, '
+                        f'datasource: {self.datasource}...',
+                debug=True,
+        )
 
         for table_to_update in tables_to_update:
             rows_written = self._datasource.update_table_data(
@@ -1940,29 +2071,29 @@ class Trader(object):
     # ============= functions related to trade config and logging ====================
 
     def new_sys_logger(self) -> logging.Logger:
-        """ 返回一个系统logger
+        """返回按账户隔离、且仅挂载单个 FileHandler 的系统 logger。
 
         Returns
         -------
-        logger: logging.Logger
-            系统信息logger
+        logging.Logger
+            系统信息 logger。
         """
-
+        log_path = sys_log_file_path_name(self.account_id, self.datasource)
+        logger_live = logging.getLogger(_live_logger_name(self.account_id))
+        reset_live_logger_handlers(self.account_id)
         live_handler = logging.FileHandler(
-                filename=sys_log_file_path_name(self.account_id, self.datasource),
+                filename=log_path,
                 mode='a',
                 encoding='utf-8',
                 delay=False,
         )
-        logger_live = logging.getLogger('live')
         logger_live.addHandler(live_handler)
         logger_live.setLevel(logging.DEBUG)
         logger_live.propagate = False
-
         return logger_live
 
     def init_system_logger(self) -> None:
-        """ 检查系统logger属性是否已经设置，或者log文件存在，如果没有，则初始化系统logger属性
+        """检查系统 logger 是否已就绪；必要时创建且保证不重复挂载 Handler。
 
         Returns
         -------
@@ -1971,6 +2102,21 @@ class Trader(object):
         if not self.sys_log_file_exists:
             self.live_sys_logger = None
         if self.live_sys_logger is None:
+            self.live_sys_logger = self.new_sys_logger()
+            return
+        logger_live = self.live_sys_logger
+        log_path = os.path.normpath(
+                sys_log_file_path_name(self.account_id, self.datasource),
+        )
+        file_handlers = [
+            h for h in logger_live.handlers
+            if isinstance(h, logging.FileHandler)
+        ]
+        if len(file_handlers) != 1:
+            self.live_sys_logger = self.new_sys_logger()
+            return
+        existing_path = os.path.normpath(getattr(file_handlers[0], 'baseFilename', '') or '')
+        if existing_path != log_path:
             self.live_sys_logger = self.new_sys_logger()
 
     def clear_sys_log(self) -> str:
@@ -2109,6 +2255,8 @@ class Trader(object):
 
             if row_count > 0:
                 lines = lines[-row_count:]
+
+        lines = group_sys_log_physical_lines(lines)
 
         if not include_debug:
             lines = [line for line in lines if not _is_debug_sys_log_line(line)]
@@ -3408,10 +3556,65 @@ class Trader(object):
         self._update_live_price()
         self._emit_reconcile_checkpoint(checkpoint='pre_open', block_on_failure=False)
 
+    def _finalize_order_at_close(self, order_id: int, *, context: str) -> None:
+        """按订单当前状态在收盘后收尾：``created`` 拒单，``submitted``/``partial-filled`` 撤单。
+
+        单笔失败仅记日志，不阻断 ``post_close`` 其余步骤。
+
+        Parameters
+        ----------
+        order_id : int
+            本地订单 id。
+        context : str
+            调用场景描述，用于用户可见英文日志。
+
+        Returns
+        -------
+        None
+        """
+        try:
+            order_detail = read_trade_order_detail(order_id=int(order_id), data_source=self._datasource)
+            order_status = order_detail['status']
+            if order_status == 'created':
+                reject_unsubmitted_order(
+                        order_id=int(order_id),
+                        data_source=self._datasource,
+                        account_id=self.account_id,
+                )
+                self.send_message(
+                        f'Voided stale created order {order_id} at market close ({context})',
+                )
+            elif order_status in ['submitted', 'partial-filled']:
+                cancel_order(
+                        order_id=int(order_id),
+                        data_source=self._datasource,
+                        account_id=self.account_id,
+                )
+                self.send_message(
+                        f'Canceled order {order_id} at market close ({context})',
+                )
+            elif order_status in ['rejected', 'filled', 'canceled']:
+                self.send_message(
+                        f'Skipped order {order_id} already terminal ({order_status}) at market close',
+                        debug=True,
+                )
+            else:
+                self.send_message(
+                        f'Skipped order {order_id} with unexpected status {order_status} at market close',
+                        debug=True,
+                )
+        except Exception as e:
+            self.send_message(
+                    f'Failed to finalize order {order_id} at market close ({context}): {e}',
+                    debug=False,
+            )
+            import traceback
+            self.send_message(f'Traceback: \n{traceback.format_exc()}', debug=True)
+
     def _post_close(self) -> None:
         """ 所有收盘后应该完成的任务
 
-        1，处理当日未完成的交易信号，生成取消订单，并记录订单取消结果
+        1，处理当日未完成的交易信号：``created`` 置 ``rejected``，已报单部分撤单
         2，处理当日已成交的订单结果的交割，记录交割结果
         3，生成消息发送到消息队列
         """
@@ -3421,21 +3624,14 @@ class Trader(object):
             self.send_message('market is still open, post_close can not be executed during open time!', debug=True)
             return
 
-        # 检查broker中是否有尚未处理的legacy队列订单，统一通过Broker API排空后取消
+        # 检查broker中是否有尚未处理的legacy队列订单，按 DB 状态收尾
         pending_orders = self.broker.drain_order_queue()
-        # TODO: 已经submitted的订单如果已经有了成交结果，只是尚未记录的，则不应该取消，
-        #   此处应该检查broker的result_queue，如果有结果，则推迟执行post_close，直到
-        #   result_queue中的结果全部处理完毕，或者超过一定时间
         if pending_orders:
-            self.send_message('unprocessed orders found, these orders will be canceled')
+            self.send_message('unprocessed orders found in broker queue, finalizing by order status')
             for order in pending_orders:
-                order_id = order['order_id']
-                cancel_order(
-                        order_id,
-                        data_source=self._datasource,
-                        account_id=self.account_id,
-                )  # 生成订单取消记录，并记录到数据库
-                self.send_message(f'canceled unprocessed order: {order_id}')
+                order_id = int(order['order_id'])
+                self._finalize_order_at_close(order_id, context='broker queue drain')
+
         # 检查今日成交订单，确认是否有"部分成交"的订单，如果有，生成取消订单，取消尚未成交的部分
         partially_filled_orders = query_trade_orders(
                 account_id=self.account_id,
@@ -3444,11 +3640,9 @@ class Trader(object):
         )
         self.send_message(f'Looking for partial-filled orders... {len(partially_filled_orders)} found!')
         for order_id in partially_filled_orders.index:
-            # 对于所有没有完全成交的订单，生成取消订单，取消剩余的部分
-            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
-            self.send_message(f'Canceled remaining qty of partial-filled order: {order_id}')
+            self._finalize_order_at_close(int(order_id), context='partial-filled cleanup')
 
-        # 检查未提交订单，确认是否有"created"的订单，如果有，生成取消订单
+        # 检查未提交订单（created）：收盘视同未受理，置 rejected，不写 cancel trade_result
         unsubmitted_orders = query_trade_orders(
                 account_id=self.account_id,
                 status='created',
@@ -3457,9 +3651,7 @@ class Trader(object):
         self.send_message(f'Looking for Un-submitted orders... {len(unsubmitted_orders)} found!')
 
         for order_id in unsubmitted_orders.index:
-            # 对于所有未成交的订单，生成取消订单
-            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
-            self.send_message(f'Canceled un-submitted order: {order_id}')
+            self._finalize_order_at_close(int(order_id), context='stale created cleanup')
 
         # 检查未成交订单，确认是否有"submitted"的订单，如果有，生成取消订单
         unfilled_orders = query_trade_orders(
@@ -3470,9 +3662,7 @@ class Trader(object):
         self.send_message(f'Looking for Unfilled orders...{len(unfilled_orders)} found!')
 
         for order_id in unfilled_orders.index:
-            # 对于所有未成交的订单，生成取消订单
-            cancel_order(order_id=order_id, data_source=self._datasource, account_id=self.account_id)
-            self.send_message(f'Canceled unfilled order: {order_id}')
+            self._finalize_order_at_close(int(order_id), context='submitted cleanup')
 
         self._emit_reconcile_checkpoint(checkpoint='post_close', block_on_failure=False)
 

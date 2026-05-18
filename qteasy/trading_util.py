@@ -1180,6 +1180,60 @@ def submit_order(order_id, data_source, mark_submitted: bool = True):
     return order_id
 
 
+def reject_unsubmitted_order(order_id: int,
+                             data_source=None,
+                             account_id: Optional[int] = None) -> int:
+    """将未提交（``created``）的订单置为 ``rejected``，用于收盘收尾。
+
+    仅适用于从未进入 ``submitted`` 的本地订单；不写入 ``trade_result``。
+    对已处于 ``rejected`` / ``filled`` / ``canceled`` 的订单幂等返回。
+
+    Parameters
+    ----------
+    order_id : int
+        交易订单 id。
+    data_source : DataSource, optional
+        数据源；默认使用全局 ``QT_DATA_SOURCE``。
+    account_id : int, optional
+        若给出，则仅允许处理该账户下的订单。
+
+    Returns
+    -------
+    int
+        订单 id。
+
+    Raises
+    ------
+    ValueError
+        订单不属于给定账户，或状态为 ``submitted`` / ``partial-filled``（应使用 ``cancel_order``）。
+    RuntimeError
+        状态不符合拒单规则且无法更新时抛出。
+    """
+    order_details = read_trade_order_detail(order_id=order_id, data_source=data_source)
+    order_status = order_details['status']
+    if account_id is not None and int(order_details['account_id']) != int(account_id):
+        raise ValueError(
+                f'Order {order_id} does not belong to account {account_id}, '
+                f'it belongs to account {order_details["account_id"]}',
+        )
+    if order_status in ['rejected', 'filled', 'canceled']:
+        return int(order_id)
+    if order_status == 'created':
+        update_trade_order(
+                order_id=order_id,
+                data_source=data_source,
+                status='rejected',
+                raise_if_status_wrong=True,
+        )
+        return int(order_id)
+    if order_status in ['submitted', 'partial-filled']:
+        raise ValueError(
+                f'Order {order_id} has status {order_status}; '
+                f'use cancel_order instead of reject_unsubmitted_order',
+        )
+    raise RuntimeError(f'order status wrong: {order_status} cannot be rejected as unsubmitted')
+
+
 def cancel_order(order_id, data_source=None, config=None, account_id: int = None) -> int:
     """ 取消交易订单
 

@@ -26,9 +26,16 @@ import pandas as pd
 
 from typing import List, Optional
 from cmd import Cmd
+from rich.console import Console
 from rich.text import Text
 
-from qteasy.trader import TraderMessage, coerce_trader_message, drain_trader_message_queue
+from qteasy.trader import (
+    TraderMessage,
+    coerce_trader_message,
+    drain_trader_message_queue,
+    group_sys_log_physical_lines,
+    _is_debug_sys_log_line,
+)
 from qteasy.trading_util import get_symbol_names, cancel_order
 
 from qteasy.utilfuncs import (
@@ -81,6 +88,27 @@ def _clear_current_line(stream=sys.stdout) -> None:
         stream.flush()
 
 
+def _truncate_text_to_cell_width(text: Text, max_width: int) -> Text:
+    """按终端显示列宽截断 Rich Text（中文等宽字符占双列）。
+
+    Parameters
+    ----------
+    text : rich.text.Text
+        待截断文本。
+    max_width : int
+        最大显示列宽。
+
+    Returns
+    -------
+    rich.text.Text
+        截断后的副本。
+    """
+    line = text.copy()
+    while line.cell_len > max_width and len(line.plain) > 0:
+        line.truncate(len(line.plain) - 1, overflow='crop')
+    return line
+
+
 def _filter_sys_log_lines(lines: List[str], include_debug: bool = True) -> List[str]:
     """过滤系统日志行，可选排除 DEBUG 级别内容。
 
@@ -96,12 +124,10 @@ def _filter_sys_log_lines(lines: List[str], include_debug: bool = True) -> List[
     list of str
         过滤后的日志行。
     """
+    grouped = group_sys_log_physical_lines(lines)
     if include_debug:
-        return list(lines)
-    return [
-        line for line in lines
-        if not line.lstrip().startswith('DEBUG:') and '<DEBUG>' not in line
-    ]
+        return grouped
+    return [line for line in grouped if not _is_debug_sys_log_line(line)]
 
 
 def _drain_message_queue(trader) -> List[TraderMessage]:
@@ -933,6 +959,7 @@ class TraderShell(Cmd):
 
         # dashboard 模式下上一行是否为 ``\\r`` 状态行（打印普通日志前需清除以免残留）
         self._dashboard_on_status_line: bool = False
+        self._last_status_plain: Optional[str] = None
         self._watch_price_worker: Optional[Thread] = None
 
         self.argparsers = {}
@@ -955,6 +982,7 @@ class TraderShell(Cmd):
             _clear_current_line()
         rich.print(text)
         self._dashboard_on_status_line = False
+        self._last_status_plain = None
 
     def _print_status_line(self, text: Text) -> None:
         """在终端当前行输出状态 ``Text``，用空格填充至终端宽度并以 ``\\r`` 结尾。
@@ -968,13 +996,17 @@ class TraderShell(Cmd):
         -------
         None
         """
+        status_plain = text.plain
+        if status_plain == self._last_status_plain:
+            return
+        self._last_status_plain = status_plain
+
         width = _terminal_width()
-        line = text.copy()
-        if len(line.plain) > width:
-            line.truncate(width, overflow='ellipsis')
-        pad_len = max(0, width - len(line.plain))
+        line = _truncate_text_to_cell_width(text, width)
+        pad_len = max(0, width - line.cell_len)
         padded = line + (' ' * pad_len) if pad_len else line
-        rich.print(padded, end='\r')
+        console = Console(file=sys.stdout, width=width, soft_wrap=False, force_terminal=True)
+        console.print(padded, end='\r', highlight=False)
         self._dashboard_on_status_line = True
 
     def _replay_dashboard_logs(self, rewind: int) -> None:
@@ -2443,6 +2475,7 @@ class TraderShell(Cmd):
 
         self._status = 'dashboard'
         self._dashboard_on_status_line = False
+        self._last_status_plain = None
         print('\nWelcome to TraderShell! currently in dashboard mode, live status will be displayed here.\n'
               'You can not input commands in this mode, if you want to enter interactive mode, please '
               'press "Ctrl+C" to exit dashboard mode and select from prompted options.\n'
@@ -3044,6 +3077,7 @@ class TraderShell(Cmd):
         print('Returning to dashboard mode.\n')
         self._status = 'dashboard'
         self._dashboard_on_status_line = False
+        self._last_status_plain = None
         return True
 
     def run(self):
@@ -3068,7 +3102,12 @@ class TraderShell(Cmd):
 
                         # adjust message length to terminal width
                         message = self.trader.add_message_prefix(msg.text, msg.debug)
-                        message = adjust_string_length(message, text_width - 2, format_tags=True)
+                        message = adjust_string_length(
+                                message,
+                                text_width - 2,
+                                format_tags=True,
+                                hans_aware=True,
+                        )
                         self._print_log_line(message)
                     else:
                         # 如果没有消息，原位显示倒计时/实时价格

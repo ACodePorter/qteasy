@@ -14,6 +14,7 @@
 import json
 import logging
 import os
+from typing import Optional
 import shutil
 import tempfile
 import unittest
@@ -27,7 +28,14 @@ from rich.text import Text
 import qteasy as qt
 from qteasy import DataSource, Operator
 from qteasy.trader import Trader
-from qteasy.trader import TraderMessage, coerce_trader_message
+from qteasy.trader import (
+    TraderMessage,
+    coerce_trader_message,
+    _live_logger_name,
+    reset_live_logger_handlers,
+    dataframe_log_preview,
+    group_sys_log_physical_lines,
+)
 from qteasy.trader_cli import (
     TraderShell,
     DEBUG_RUN_TASK_CHOICES,
@@ -60,12 +68,11 @@ from qteasy.broker import SimulatorBroker
 from qteasy.risk import MaxOrderQtyRule, RiskManager
 
 
-def _detach_live_logger_handlers() -> None:
-    """拆掉全局 ``live`` Logger 已有 Handler，防止跨用例重复挂载 ``FileHandler`` 导致单行双写。"""
-    live = logging.getLogger('live')
-    for h in list(live.handlers):
-        live.removeHandler(h)
-        h.close()
+def _detach_live_logger_handlers(account_id: Optional[int] = None) -> None:
+    """拆掉 live 相关 Logger 的 Handler，防止跨用例重复挂载导致单行双写。"""
+    from qteasy.trader import reset_live_logger_handlers
+
+    reset_live_logger_handlers(account_id)
 
 
 def _get_cli_test_data_dir():
@@ -1575,6 +1582,38 @@ class TestTraderCLIDashboardHelpers(unittest.TestCase):
         self.assertEqual(result, lines)
         self.assertIsNot(result, lines)
 
+    def test_group_sys_log_physical_lines_merges_multiline_debug(self):
+        print('\n[TestTraderCLIDashboardHelpers] group_sys_log_physical_lines multiline')
+        lines = [
+            '<DEBUG><May18 14:55:10>running: generated trade signals:\n',
+            'symbols: []\n',
+            'positions: []\n',
+            '<May18 14:55:10>running: <RAN STRATEGY>: done.\n',
+        ]
+        grouped = group_sys_log_physical_lines(lines)
+        print(' grouped count:', len(grouped))
+        print(' grouped[0]:', repr(grouped[0]))
+        print(' grouped[1]:', repr(grouped[1]))
+        self.assertEqual(len(grouped), 2)
+        self.assertIn('symbols: []', grouped[0])
+        self.assertIn('positions: []', grouped[0])
+        self.assertIn('<RAN STRATEGY>', grouped[1])
+
+    def test_filter_sys_log_lines_excludes_multiline_debug_record(self):
+        print('\n[TestTraderCLIDashboardHelpers] _filter_sys_log_lines multiline debug')
+        lines = [
+            'INFO: normal line\n',
+            '<DEBUG><May18 14:55:10>running: generated trade signals:\n',
+            'symbols: []\n',
+            '<May18 14:55:10>running: done.\n',
+        ]
+        filtered = _filter_sys_log_lines(lines, include_debug=False)
+        print(' filtered:', filtered)
+        self.assertEqual(len(filtered), 2)
+        self.assertIn('normal line', filtered[0])
+        self.assertIn('done.', filtered[1])
+        self.assertNotIn('symbols: []', ''.join(filtered))
+
     def test_drain_message_queue_returns_trader_messages(self):
         print('\n[TestTraderCLIDashboardHelpers] _drain_message_queue')
         from queue import Queue
@@ -1667,6 +1706,7 @@ class TestTraderCLIDashboardDisplay(unittest.TestCase):
         """状态行按终端宽度用空格填充并以 ``\\r`` 结尾。"""
         tss = TraderShell.__new__(TraderShell)
         tss._dashboard_on_status_line = False
+        tss._last_status_plain = None
         print('\n[TestTraderCLIDashboardDisplay] status line padding')
         with patch('qteasy.trader_cli._terminal_width', return_value=18):
             buf = io.StringIO()
@@ -1723,6 +1763,79 @@ class TestTraderCLIDashboardDisplay(unittest.TestCase):
             self.assertIn('cli_dashboard_reentry_log', out2)
         finally:
             clear_tables(test_ds)
+
+    def test_new_sys_logger_idempotent_single_log_line(self):
+        """连续 ``init_system_logger`` 仅保留一个 Handler；``send_message`` 在日志中只写一行。"""
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIDashboardDisplay] new_sys_logger idempotent')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            _detach_live_logger_handlers(trader.account_id)
+            trader.init_system_logger()
+            trader.init_system_logger()
+            logger_name = _live_logger_name(trader.account_id)
+            handler_count = len(logging.getLogger(logger_name).handlers)
+            print(' handler_count after double init:', handler_count)
+            self.assertEqual(handler_count, 1)
+
+            log_path = sys_log_file_path_name(trader.account_id, test_ds)
+            with open(log_path, 'w', encoding='utf-8') as f:
+                f.write('')
+            trader.send_message('cli_dashboard_marker_once', debug=False)
+            with open(log_path, 'r', encoding='utf-8') as f:
+                log_body = f.read()
+            marker_count = log_body.count('cli_dashboard_marker_once')
+            print(' marker_count in log:', marker_count)
+            self.assertEqual(marker_count, 1)
+        finally:
+            clear_tables(test_ds)
+
+    def test_print_status_line_cjk_single_physical_line(self):
+        """窄终端 + 中文监视价时，状态行物理上仅一行（末尾 ``\\r``）。"""
+        tss = TraderShell.__new__(TraderShell)
+        tss._dashboard_on_status_line = False
+        tss._last_status_plain = None
+        print('\n[TestTraderCLIDashboardDisplay] CJK status single line')
+        status = Text('<May18 09:45:00>running: acquire_live_price in about 5 sec')
+        status.append(
+                ' =600036招商银行/37.51/-0.37% =601398工商银行/7.23/-0.14% 1格力电器/40.24/-0.10%',
+        )
+        with patch('qteasy.trader_cli._terminal_width', return_value=40):
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                tss._print_status_line(status)
+        raw = buf.getvalue()
+        print(' raw repr:', repr(raw))
+        newline_count = raw.rstrip('\r').count('\n')
+        print(' newline_count (excl trailing cr):', newline_count)
+        self.assertEqual(newline_count, 0)
+        self.assertTrue(raw.endswith('\r'))
+
+    def test_dashboard_status_skip_unchanged_plain(self):
+        """相同 ``plain`` 的连续状态行不重复写入 stdout。"""
+        tss = TraderShell.__new__(TraderShell)
+        tss._dashboard_on_status_line = False
+        tss._last_status_plain = None
+        print('\n[TestTraderCLIDashboardDisplay] status debounce')
+        with patch('qteasy.trader_cli._terminal_width', return_value=80):
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                tss._print_status_line(Text('same status plain'))
+                tss._print_status_line(Text('same status plain'))
+        raw = buf.getvalue()
+        print(' write count via repr segments:', raw.count('same status plain'))
+        self.assertEqual(raw.count('same status plain'), 1)
+
+    def test_dataframe_log_preview_head_and_row_count(self):
+        """``dataframe_log_preview`` 仅含 head 与总行数，不含整表。"""
+        print('\n[TestTraderCLIDashboardDisplay] dataframe_log_preview')
+        df = pd.DataFrame({'a': range(10)})
+        preview = dataframe_log_preview(df, head=3)
+        print(' preview:\n', preview)
+        self.assertIn('rows total', preview)
+        self.assertNotIn('\n4 ', preview)
+        self.assertNotIn('\n9 ', preview)
 
 
 class TestTraderCLIModeMenu(unittest.TestCase):
