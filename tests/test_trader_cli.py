@@ -34,6 +34,7 @@ from qteasy.trader import (
     _live_logger_name,
     reset_live_logger_handlers,
     dataframe_log_preview,
+    group_sys_log_physical_lines,
 )
 from qteasy.trader_cli import (
     TraderShell,
@@ -1580,6 +1581,38 @@ class TestTraderCLIDashboardHelpers(unittest.TestCase):
         print(' result:', result)
         self.assertEqual(result, lines)
         self.assertIsNot(result, lines)
+
+    def test_group_sys_log_physical_lines_merges_multiline_debug(self):
+        print('\n[TestTraderCLIDashboardHelpers] group_sys_log_physical_lines multiline')
+        lines = [
+            '<DEBUG><May18 14:55:10>running: generated trade signals:\n',
+            'symbols: []\n',
+            'positions: []\n',
+            '<May18 14:55:10>running: <RAN STRATEGY>: done.\n',
+        ]
+        grouped = group_sys_log_physical_lines(lines)
+        print(' grouped count:', len(grouped))
+        print(' grouped[0]:', repr(grouped[0]))
+        print(' grouped[1]:', repr(grouped[1]))
+        self.assertEqual(len(grouped), 2)
+        self.assertIn('symbols: []', grouped[0])
+        self.assertIn('positions: []', grouped[0])
+        self.assertIn('<RAN STRATEGY>', grouped[1])
+
+    def test_filter_sys_log_lines_excludes_multiline_debug_record(self):
+        print('\n[TestTraderCLIDashboardHelpers] _filter_sys_log_lines multiline debug')
+        lines = [
+            'INFO: normal line\n',
+            '<DEBUG><May18 14:55:10>running: generated trade signals:\n',
+            'symbols: []\n',
+            '<May18 14:55:10>running: done.\n',
+        ]
+        filtered = _filter_sys_log_lines(lines, include_debug=False)
+        print(' filtered:', filtered)
+        self.assertEqual(len(filtered), 2)
+        self.assertIn('normal line', filtered[0])
+        self.assertIn('done.', filtered[1])
+        self.assertNotIn('symbols: []', ''.join(filtered))
 
     def test_drain_message_queue_returns_trader_messages(self):
         print('\n[TestTraderCLIDashboardHelpers] _drain_message_queue')

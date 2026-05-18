@@ -13,6 +13,7 @@
 
 import logging
 import os
+import re
 import sys
 import time
 import threading
@@ -209,6 +210,82 @@ def _is_debug_sys_log_line(line: str) -> bool:
     """判断系统日志行是否为 DEBUG 级别或带 debug 前缀。"""
     stripped = line.lstrip()
     return stripped.startswith('DEBUG:') or '<DEBUG>' in line
+
+
+# 实盘 ``add_message_prefix`` 时间戳：<May18 14:55:10> 或带时区后缀 <May18 14:55:10(CST)>
+_SYS_LOG_TIMESTAMP_RE = re.compile(
+        r'<[A-Za-z]{3}\d{1,2} \d{2}:\d{2}:\d{2}(?:\([^)]+\))?>',
+)
+_LOG_LEVEL_PREFIXES = ('DEBUG:', 'INFO:', 'WARNING:', 'ERROR:', 'CRITICAL:')
+
+
+def _strip_sys_log_level_prefix(line: str) -> str:
+    """去掉 logging 默认级别前缀（若存在）。"""
+    stripped = line.lstrip()
+    for level in _LOG_LEVEL_PREFIXES:
+        if stripped.startswith(level):
+            return stripped[len(level):].lstrip()
+    return stripped
+
+
+def _is_sys_log_record_start(line: str) -> bool:
+    """判断物理行是否为一条新系统日志记录的起始行。"""
+    stripped = line.lstrip()
+    if not stripped:
+        return False
+    for level in _LOG_LEVEL_PREFIXES:
+        if stripped.startswith(level):
+            return True
+    body = stripped
+    if body.startswith('<DEBUG>'):
+        body = body[len('<DEBUG>'):]
+    return _SYS_LOG_TIMESTAMP_RE.match(body) is not None
+
+
+def _sys_log_record_has_timestamp_header(line: str) -> bool:
+    """判断记录首行是否带实盘时间戳前缀（其后续物理行视为同一条续行）。"""
+    body = _strip_sys_log_level_prefix(line)
+    if body.startswith('<DEBUG>'):
+        body = body[len('<DEBUG>'):]
+    return _SYS_LOG_TIMESTAMP_RE.match(body) is not None
+
+
+def group_sys_log_physical_lines(lines: List[str]) -> List[str]:
+    """将文件中的物理行合并为逻辑日志条目。
+
+    ``send_message`` 写入的多行消息仅首行带时间戳与 ``<DEBUG>`` 前缀，
+    续行在回放或过滤时应与首行同属一条记录。
+
+    Parameters
+    ----------
+    lines : list of str
+        ``readlines()`` 得到的物理行列表。
+
+    Returns
+    -------
+    list of str
+        合并后的逻辑条目，每条可含换行符。
+    """
+    records: List[str] = []
+    current: List[str] = []
+
+    def flush() -> None:
+        nonlocal current
+        if current:
+            records.append(''.join(current))
+            current = []
+
+    for line in lines:
+        if _is_sys_log_record_start(line):
+            flush()
+            current = [line]
+        elif current and _sys_log_record_has_timestamp_header(current[0]):
+            current.append(line)
+        else:
+            flush()
+            current = [line]
+    flush()
+    return records
 
 
 def _live_logger_name(account_id: int) -> str:
@@ -2176,6 +2253,8 @@ class Trader(object):
 
             if row_count > 0:
                 lines = lines[-row_count:]
+
+        lines = group_sys_log_physical_lines(lines)
 
         if not include_debug:
             lines = [line for line in lines if not _is_debug_sys_log_line(line)]

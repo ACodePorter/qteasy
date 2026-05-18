@@ -29,7 +29,13 @@ from cmd import Cmd
 from rich.console import Console
 from rich.text import Text
 
-from qteasy.trader import TraderMessage, coerce_trader_message, drain_trader_message_queue
+from qteasy.trader import (
+    TraderMessage,
+    coerce_trader_message,
+    drain_trader_message_queue,
+    group_sys_log_physical_lines,
+    _is_debug_sys_log_line,
+)
 from qteasy.trading_util import get_symbol_names, cancel_order
 
 from qteasy.utilfuncs import (
@@ -118,12 +124,10 @@ def _filter_sys_log_lines(lines: List[str], include_debug: bool = True) -> List[
     list of str
         过滤后的日志行。
     """
+    grouped = group_sys_log_physical_lines(lines)
     if include_debug:
-        return list(lines)
-    return [
-        line for line in lines
-        if not line.lstrip().startswith('DEBUG:') and '<DEBUG>' not in line
-    ]
+        return grouped
+    return [line for line in grouped if not _is_debug_sys_log_line(line)]
 
 
 def _drain_message_queue(trader) -> List[TraderMessage]:

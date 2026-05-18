@@ -2414,6 +2414,30 @@ class TestTraderInfoAndMessages(unittest.TestCase):
         if os.path.exists(path):
             os.remove(path)
 
+    def test_read_sys_log_exclude_debug_multiline_record(self):
+        print('\n[TestTraderInfoAndMessages] read_sys_log multiline debug grouped')
+        from qteasy.trading_util import sys_log_file_path_name
+
+        path = sys_log_file_path_name(self.trader.account_id, self.trader.datasource)
+        if os.path.exists(path):
+            os.remove(path)
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write('INFO: normal line\n')
+            f.write('<DEBUG><May18 14:55:10>running: generated trade signals:\n')
+            f.write('symbols: []\n')
+            f.write('positions: []\n')
+            f.write('<May18 14:55:10>running: strategy done.\n')
+
+        filtered_lines = self.trader.read_sys_log(include_debug=False)
+        print(' filtered_lines:', filtered_lines)
+        self.assertEqual(len(filtered_lines), 2)
+        self.assertIn('normal line', filtered_lines[0])
+        self.assertIn('strategy done.', filtered_lines[1])
+        combined = ''.join(filtered_lines)
+        self.assertNotIn('symbols: []', combined)
+        if os.path.exists(path):
+            os.remove(path)
+
 
 class TestTraderBoundaries(unittest.TestCase):
     """Boundary and edge cases: empty account, cost_params None, read_sys_log row_count edge, etc."""
