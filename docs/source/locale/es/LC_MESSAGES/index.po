@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-14 21:02+0800\n"
+"POT-Creation-Date: 2026-05-20 20:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -109,9 +109,8 @@ msgid "创建日期: 2019, July, 16"
 msgstr "Creado: 16 de julio de 2019"
 
 #: ../../source/index.rst:25
-#, fuzzy
-msgid "最新版本: `2.4.0`"
-msgstr "Última versión: `1.4.11`"
+msgid "最新版本: `2.5.1` — :doc:`发布历史 <RELEASE_HISTORY>`"
+msgstr ""
 
 #: ../../source/index.rst:26
 msgid "License: BSD 3-Clause"
@@ -324,4 +323,7 @@ msgstr ""
 #~ msgstr ""
 #~ "Optimice los parámetros de la estrategia"
 #~ " con múltiples algoritmos de optimización."
+
+#~ msgid "最新版本: `2.4.0`"
+#~ msgstr "Última versión: `1.4.11`"
 

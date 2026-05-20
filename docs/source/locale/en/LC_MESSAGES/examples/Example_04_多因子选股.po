@@ -8,16 +8,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: en\n"
+"POT-Creation-Date: 2026-05-20 20:30+0800\n"
+"PO-Revision-Date: 2026-05-20 20:46+0800\n"
+"Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.15.0\n"
+"X-Generator: Poedit 3.9\n"
 
 #: ../../source/examples/Example_04_多因子选股.md:1
 msgid "多因子选股策略"
@@ -25,63 +26,94 @@ msgstr "Multi-factor Stock Selection"
 
 #: ../../source/examples/Example_04_多因子选股.md:3
 msgid ""
-"本策略每隔1个月定时触发,根据Fama-French三因子模型对每只股票进行回归，得到其alpha值。 假设Fama-"
-"French三因子模型可以完全解释市场，则alpha为负表明市场低估该股，因此应该买入。"
+"参考来源：`docs/_joinquant_migration_source/Example_04_多因子选"
+"股.ipynb` 第一个 Markdown cell。"
 msgstr ""
+"Reference source: `docs/_joinquant_migration_source/"
+"Example_04_Multifactor Stock Selection.ipynb` First Markdown cell."
 
-#: ../../source/examples/Example_04_多因子选股.md:6
-msgid "策略思路："
+#: ../../source/examples/Example_04_多因子选股.md:5
+msgid ""
+"本策略每隔1个月定时触发,根据Fama-French三因子模型对每只股票进行回"
+"归，得到其alpha值。 假设Fama-French三因子模型可以完全解释市场，则"
+"alpha为负表明市场低估该股，因此应该买入。"
 msgstr ""
+"This strategy is triggered monthly, performing regression analysis "
+"on each stock using the Fama-French three-factor model to obtain "
+"its alpha value. Assuming the Fama-French three-factor model can "
+"fully explain the market, a negative alpha indicates that the "
+"market undervalues the stock, thus warranting a buy."
 
 #: ../../source/examples/Example_04_多因子选股.md:8
-msgid ""
-"计算市场收益率、个股的账面市值比和市值,并对后两个进行了分类, 根据分类得到的组合分别计算其市值加权收益率、SMB和HML.  "
-"对各个股票进行回归(假设无风险收益率等于0)得到alpha值."
-msgstr ""
+msgid "策略思路："
+msgstr "Strategy and Approach:"
 
-#: ../../source/examples/Example_04_多因子选股.md:12
-msgid "选取alpha值小于0并为最小的10只股票进入标的池，平掉不在标的池的股票并等权买入在标的池的股票"
+#: ../../source/examples/Example_04_多因子选股.md:10
+msgid ""
+"计算市场收益率、个股的账面市值比和市值,并对后两个进行了分类, 根据分"
+"类得到的组合分别计算其市值加权收益率、SMB和HML.  对各个股票进行回归"
+"(假设无风险收益率等于0)得到alpha值."
 msgstr ""
+"The market return, book-to-market ratio, and market capitalization "
+"of individual stocks were calculated, and the latter two were "
+"categorized. Based on the categorized portfolios, their market "
+"capitalization-weighted return, SMB, and HML were calculated. "
+"Regression was performed on each stock (assuming a risk-free rate "
+"of return of 0) to obtain the alpha value."
 
 #: ../../source/examples/Example_04_多因子选股.md:14
-msgid "回测数据:SHSE.000300的成份股"
+msgid ""
+"选取alpha值小于0并为最小的10只股票进入标的池，平掉不在标的池的股票"
+"并等权买入在标的池的股票"
 msgstr ""
+"The 10 stocks with the lowest alpha values (less than 0) are "
+"selected for inclusion in the target pool. Stocks not in the "
+"target pool are removed, and the remaining stocks in the target "
+"pool are purchased with equal weighting."
 
 #: ../../source/examples/Example_04_多因子选股.md:16
+msgid "回测数据:SHSE.000300的成份股"
+msgstr "Backtesting data: SHSE.000300 constituent stocks"
+
+#: ../../source/examples/Example_04_多因子选股.md:18
 msgid "回测时间为:2019-05-01 到 2022-05-01"
-msgstr ""
+msgstr "The backtesting period was from May 1, 2019 to May 1, 2022."
 
-#: ../../source/examples/Example_04_多因子选股.md:19
+#: ../../source/examples/Example_04_多因子选股.md:21
 msgid "定义策略"
-msgstr ""
+msgstr "Define strategy"
 
-#: ../../source/examples/Example_04_多因子选股.md:129
+#: ../../source/examples/Example_04_多因子选股.md:126
 msgid "运行策略"
-msgstr ""
+msgstr "Operational strategy"
 
-#: ../../source/examples/Example_04_多因子选股.md:131
+#: ../../source/examples/Example_04_多因子选股.md:128
 msgid "设置回测参数，运行策略"
-msgstr ""
+msgstr "Set backtesting parameters and run the strategy."
 
-#: ../../source/examples/Example_04_多因子选股.md:151
-#: ../../source/examples/Example_04_多因子选股.md:245
+#: ../../source/examples/Example_04_多因子选股.md:146
+#: ../../source/examples/Example_04_多因子选股.md:240
 msgid "运行结果如下："
-msgstr ""
+msgstr "The results are as follows:"
 
-#: ../../source/examples/Example_04_多因子选股.md:222
+#: ../../source/examples/Example_04_多因子选股.md:217
 msgid "![png](img/output_4_3.png)"
-msgstr ""
+msgstr "![png](img/output_4_3.png)"
 
-#: ../../source/examples/Example_04_多因子选股.md:222
-#: ../../source/examples/Example_04_多因子选股.md:311
+#: ../../source/examples/Example_04_多因子选股.md:217
+#: ../../source/examples/Example_04_多因子选股.md:306
 msgid "png"
-msgstr ""
+msgstr "png"
 
-#: ../../source/examples/Example_04_多因子选股.md:225
-msgid "设置另外的回测区间从2016-04-05到2021-02-01，运行策略，可以看到在不同的区间下该策略都是有效的"
+#: ../../source/examples/Example_04_多因子选股.md:220
+msgid ""
+"设置另外的回测区间从2016-04-05到2021-02-01，运行策略，可以看到在不"
+"同的区间下该策略都是有效的"
 msgstr ""
+"Set up another backtesting period from April 5, 2016 to February "
+"1, 2021, and run the strategy. You can see that the strategy is "
+"effective in different periods."
 
-#: ../../source/examples/Example_04_多因子选股.md:311
+#: ../../source/examples/Example_04_多因子选股.md:306
 msgid "![png](img/output_4_4.png)"
-msgstr ""
-
+msgstr "![png](img/output_4_4.png)"

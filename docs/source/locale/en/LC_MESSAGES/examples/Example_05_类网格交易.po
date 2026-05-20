@@ -8,57 +8,91 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: en\n"
+"POT-Creation-Date: 2026-05-20 20:30+0800\n"
+"PO-Revision-Date: 2026-05-20 20:44+0800\n"
+"Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Source-Language: zh_CN\n"
 "Generated-By: Babel 2.15.0\n"
+"X-Generator: Poedit 3.9\n"
 
 #: ../../source/examples/Example_05_类网格交易.md:1
 msgid "类网格交易策略"
 msgstr "Psuedo-Grid Trading Strategy"
 
 #: ../../source/examples/Example_05_类网格交易.md:3
-msgid "本策略首先计算过去300个价格数据的均值和标准差 (天数是一个可调参数)"
+msgid ""
+"参考来源：`docs/_joinquant_migration_source/Example_05_类网格交"
+"易.ipynb` 第一个 Markdown cell。"
 msgstr ""
-
-#: ../../source/examples/Example_05_类网格交易.md:4
-msgid "并根据均值加减1和2个标准差得到网格的区间分界线,（加减标准差的倍数是可调参数)"
-msgstr ""
+"Reference source: `docs/_joinquant_migration_source/Example_05_Class "
+"Grid Trading.ipynb` First Markdown cell."
 
 #: ../../source/examples/Example_05_类网格交易.md:5
-msgid "并分别配以0.3和0.5的仓位权重 (仓位权重是可调参数）"
+msgid "本策略首先计算过去300个价格数据的均值和标准差 (天数是一个可调参数)"
 msgstr ""
+"This strategy first calculates the mean and standard deviation of the "
+"past 300 price data points (the number of days is an adjustable "
+"parameter)."
 
 #: ../../source/examples/Example_05_类网格交易.md:6
 msgid ""
-"然后根据价格所在的区间来配置仓位(+/-40为上下界,无实际意义): "
-"(-40,-3],(-3,-2],(-2,2],(2,3],(3,40](具体价格等于均值+数字倍标准差) [-0.5, -0.3, 0.0, "
-"0.3, 0.5] (资金比例,此处负号表示开空仓，回测时设置为允许持有空头仓位)"
+"并根据均值加减1和2个标准差得到网格的区间分界线,（加减标准差的倍数是可调"
+"参数)"
 msgstr ""
+"The grid interval boundaries are obtained by adding or subtracting 1 "
+"and 2 standard deviations from the mean (the multiplier for adding or "
+"subtracting standard deviations is an adjustable parameter)."
 
-#: ../../source/examples/Example_05_类网格交易.md:10
-msgid "回测数据为:HS300指数的1min数据 回测时间为:2022-03-01 09:30:00到2022-07-31 15:00:00"
+#: ../../source/examples/Example_05_类网格交易.md:7
+msgid "并分别配以0.3和0.5的仓位权重 (仓位权重是可调参数）"
 msgstr ""
+"They are assigned position weights of 0.3 and 0.5 respectively "
+"(position weights are adjustable parameters)."
 
-#: ../../source/examples/Example_05_类网格交易.md:18
+#: ../../source/examples/Example_05_类网格交易.md:8
+msgid ""
+"然后根据价格所在的区间来配置仓位(+/-40为上下界,无实际意义): (-40,-3],"
+"(-3,-2],(-2,2],(2,3],(3,40](具体价格等于均值+数字倍标准差) [-0.5, -0.3, "
+"0.0, 0.3, 0.5] (资金比例,此处负号表示开空仓，回测时设置为允许持有空头仓"
+"位)"
+msgstr ""
+"Then, configure the position size based on the price range (+/-40 is "
+"the upper and lower bound, which has no practical significance): "
+"(-40,-3],(-3,-2],(-2,2],(2,3],(3,40] (the specific price is equal to "
+"the mean plus a multiple of the standard deviation) [-0.5, -0.3, 0.0, "
+"0.3, 0.5] (capital ratio; the negative sign here indicates opening a "
+"short position, and it is set to allow holding short positions during "
+"backtesting)."
+
+#: ../../source/examples/Example_05_类网格交易.md:12
+msgid ""
+"回测数据为:HS300指数的1min数据 回测时间为:2022-03-01 09:30:00到"
+"2022-07-31 15:00:00"
+msgstr ""
+"The backtesting data consists of 1-minute data points for the HS300 "
+"index. The backtesting period is from 09:30:00 on March 1, 2022 to "
+"15:00:00 on July 31, 2022."
+
+#: ../../source/examples/Example_05_类网格交易.md:20
 msgid "定义交易策略"
-msgstr ""
+msgstr "Define trading strategy"
 
-#: ../../source/examples/Example_05_类网格交易.md:68
+#: ../../source/examples/Example_05_类网格交易.md:65
 msgid "设定交易员对象，并且设置交易配置，实施交易回测"
 msgstr ""
+"Define the trader object, configure the trading settings, and perform "
+"trading backtesting."
 
-#: ../../source/examples/Example_05_类网格交易.md:136
+#: ../../source/examples/Example_05_类网格交易.md:133
 msgid "![png](img/output_3_1.png)"
-msgstr ""
+msgstr "![png](img/output_3_1.png)"
 
-#: ../../source/examples/Example_05_类网格交易.md:136
+#: ../../source/examples/Example_05_类网格交易.md:133
 msgid "png"
-msgstr ""
-
+msgstr "png"

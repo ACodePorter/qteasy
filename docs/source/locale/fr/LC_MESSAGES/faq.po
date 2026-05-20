@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-14 21:02+0800\n"
+"POT-Creation-Date: 2026-05-20 20:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -74,7 +74,9 @@ msgid "如何升级qteasy到最新版本"
 msgstr ""
 
 #: ../../source/faq.md:47
-msgid "在使用qteasy时，我们可能需要升级到最新版本。升级qteasy到最新版本的方法如下："
+msgid ""
+"在使用qteasy时，我们可能需要升级到最新版本。升级前建议查阅 [发布历史](RELEASE_HISTORY.md) "
+"了解各版本的用户可见变更。升级 qteasy 到最新版本的方法如下："
 msgstr ""
 
 #: ../../source/faq.md:52
@@ -412,5 +414,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "[从tushare下载数据受频率限制失败](从tushare下载数据时提示下载频率过高而失败)"
+#~ msgstr ""
+
+#~ msgid "在使用qteasy时，我们可能需要升级到最新版本。升级qteasy到最新版本的方法如下："
 #~ msgstr ""
 

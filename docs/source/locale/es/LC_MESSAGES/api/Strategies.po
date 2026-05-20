@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-14 21:02+0800\n"
+"POT-Creation-Date: 2026-05-20 20:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -163,6 +163,14 @@ msgid ""
 "RuleIterator策略类的特殊功能是可以对同一套交易规则，将不同的参数应用到投资组合中的不同股票上。 "
 "例如，用户可以设计一个均线交叉策略，并将其应用到投资组合中的所有股票上，同时可以为每只股票 "
 "设定不同的均线周期参数。关于Strategy类的更详细说明，请参见qteasy的文档。"
+msgstr ""
+
+#: of qteasy.strategy.RuleIterator:7
+msgid ""
+"**多标的且每股参数不同**：须通过 ``update_par_values({股票代码: (p1, p2, ...), ...})`` 传入与 "
+"``share_names`` 一致的股票代码键；若仅用位置元组初始化，多标的时全体共享一套运行时参数（见 用户文档《三种策略基类》中 "
+"RuleIterator 一节）。字典中可用键名 ``default`` 为未单独列出的标的 提供同一套默认初值；不支持 ``others`` "
+"等其它保留键名。"
 msgstr ""
 
 #: ../../source/api/Strategies.rst:37

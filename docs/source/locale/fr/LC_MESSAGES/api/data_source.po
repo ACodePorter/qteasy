@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-14 21:02+0800\n"
+"POT-Creation-Date: 2026-05-20 20:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -70,14 +70,45 @@ msgstr ""
 msgid "获取是否允许删除数据表"
 msgstr ""
 
-#: of qteasy.database.DataSource.delete_sys_table_data:1
-msgid "删除系统数据表中的某些记录，被删除的记录的ID使用列表或tuple传入"
+#: of qteasy.database.DataSource.db_run_in_transaction:1
+msgid "在 DataSource 上执行最小事务封装（DB 真事务，file 为 no-op）。"
 msgstr ""
 
 #: ../../source/api/data_source.rst of
 #: qteasy.database.DataSource.get_table_data_coverage
 #: qteasy.database.DataSource.write_table_data
 msgid "参数"
+msgstr ""
+
+#: of qteasy.database.DataSource.db_run_in_transaction:3
+msgid "需要在事务中执行的可调用对象"
+msgstr ""
+
+#: of qteasy.database.DataSource.db_run_in_transaction:5
+msgid "传递给 ``action`` 的位置参数"
+msgstr ""
+
+#: of qteasy.database.DataSource.db_run_in_transaction:6
+msgid "传递给 ``action`` 的关键字参数"
+msgstr ""
+
+#: ../../source/api/data_source.rst of
+#: qteasy.database.DataSource.write_table_data
+msgid "返回"
+msgstr ""
+
+#: of qteasy.database.DataSource.db_run_in_transaction:8
+msgid "``action`` 的返回值"
+msgstr ""
+
+#: ../../source/api/data_source.rst of
+#: qteasy.database.DataSource.get_table_data_coverage
+#: qteasy.database.DataSource.write_table_data
+msgid "返回类型"
+msgstr ""
+
+#: of qteasy.database.DataSource.delete_sys_table_data:1
+msgid "删除系统数据表中的某些记录，被删除的记录的ID使用列表或tuple传入"
 msgstr ""
 
 #: of qteasy.database.DataSource.delete_sys_table_data:3
@@ -88,19 +119,8 @@ msgstr ""
 msgid "需要删除的记录的ID列表"
 msgstr ""
 
-#: ../../source/api/data_source.rst of
-#: qteasy.database.DataSource.write_table_data
-msgid "返回"
-msgstr ""
-
 #: of qteasy.database.DataSource.delete_sys_table_data:8
 msgid "删除的记录数量"
-msgstr ""
-
-#: ../../source/api/data_source.rst of
-#: qteasy.database.DataSource.get_table_data_coverage
-#: qteasy.database.DataSource.write_table_data
-msgid "返回类型"
 msgstr ""
 
 #: of qteasy.database.DataSource.drop_empty_tables:1

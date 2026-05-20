@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-14 21:02+0800\n"
+"POT-Creation-Date: 2026-05-20 20:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -79,26 +79,68 @@ msgid "收盘后处理行为通过统一 Broker API 协调"
 msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:24
-msgid "示例（用户可见反馈）："
+msgid "2.1 手工下单的订单类型语义（buy/sell）"
 msgstr ""
 
-#: ../../source/references/5-simulate-operation-in-CLI.md:30
-msgid "3. 快速问题分流（CLI 视角）"
+#: ../../source/references/5-simulate-operation-in-CLI.md:26
+msgid "`buy/sell ... -p 正数`：按**限价单**提交（`order_type='limit'`）"
 msgstr ""
 
-#: ../../source/references/5-simulate-operation-in-CLI.md:32
-msgid "下单后没有订单记录：优先检查风控拒单提示"
+#: ../../source/references/5-simulate-operation-in-CLI.md:27
+msgid ""
+"`buy/sell ...`（不带 `-p`）或 `-p 0`：按**市价单**提交（`order_type='market'`），CLI "
+"会在下单前使用最新实时价补齐价格字段"
 msgstr ""
 
-#: ../../source/references/5-simulate-operation-in-CLI.md:33
-msgid "有订单但无成交：检查 broker 回报与行情条件"
+#: ../../source/references/5-simulate-operation-in-CLI.md:29
+msgid "在 `SimulatorBroker` 中，撮合判定的关键差异如下："
 msgstr ""
 
-#: ../../source/references/5-simulate-operation-in-CLI.md:34
-msgid "状态长时间不变：检查回报是否持续到达"
+#: ../../source/references/5-simulate-operation-in-CLI.md
+msgid "订单类型"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md
+msgid "主要成交条件（简化）"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md
+msgid "`limit` 限价单"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md
+msgid "卖单：实时价 `>=` 挂卖价（含偏差）；买单：实时价 `<=` 挂买价（含偏差）"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md
+msgid "`market` 市价单"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md
+msgid "实时涨跌幅位于非涨跌停区间时优先按市价撮合；若接近涨跌停，成交概率显著下降"
 msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:36
+msgid "示例（用户可见反馈）："
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md:42
+msgid "3. 快速问题分流（CLI 视角）"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md:44
+msgid "下单后没有订单记录：优先检查风控拒单提示"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md:45
+msgid "有订单但无成交：检查 broker 回报与行情条件"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md:46
+msgid "状态长时间不变：检查回报是否持续到达"
+msgstr ""
+
+#: ../../source/references/5-simulate-operation-in-CLI.md:48
 msgid "4. 命令-文档映射"
 msgstr ""
 
@@ -142,19 +184,19 @@ msgstr ""
 msgid "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
 msgstr ""
 
-#: ../../source/references/5-simulate-operation-in-CLI.md:45
+#: ../../source/references/5-simulate-operation-in-CLI.md:57
 msgid "5. 跳转导航"
 msgstr ""
 
-#: ../../source/references/5-simulate-operation-in-CLI.md:47
+#: ../../source/references/5-simulate-operation-in-CLI.md:59
 msgid "机制说明：`live_trading/3-risk-and-order-lifecycle.md`"
 msgstr ""
 
-#: ../../source/references/5-simulate-operation-in-CLI.md:48
+#: ../../source/references/5-simulate-operation-in-CLI.md:60
 msgid "排错手册：`live_trading/5-artifacts-and-troubleshooting.md`"
 msgstr ""
 
-#: ../../source/references/5-simulate-operation-in-CLI.md:49
+#: ../../source/references/5-simulate-operation-in-CLI.md:61
 msgid "API 参考：`api/api_reference.rst`"
 msgstr ""
 
