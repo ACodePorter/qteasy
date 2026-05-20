@@ -9,3294 +9,2035 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: de\n"
+"PO-Revision-Date: 2026-05-20 21:00+0800\n"
+"Last-Translator: \n"
 "Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.15.0\n"
+"X-Generator: Poedit 3.9\n"
 
 #: ../../source/RELEASE_HISTORY.md:1
 msgid "发布历史"
-msgstr ""
+msgstr "Publikationsgeschichte"
 
 #: ../../source/RELEASE_HISTORY.md:3
 msgid ""
-"本页记录 qteasy 各版本的**用户可见**变更。升级前可查阅对应版本；2.0 大版本请参阅 [2.0 "
-"迁移指南](qteasy_2_migration_guide.md)。"
+"本页记录 qteasy 各版本的**用户可见**变更。升级前可查阅对应版本；2.0 大版本请参"
+"阅 [2.0 迁移指南](qteasy_2_migration_guide.md)。"
 msgstr ""
+"Diese Seite dokumentiert die für den Benutzer sichtbaren Änderungen jeder "
+"qteasy-Version. Sie können die entsprechende Version vor dem Upgrade "
+"überprüfen; Informationen zur Hauptversion 2.0 finden Sie im [2.0 Migration "
+"Guide](qteasy_2_migration_guide.md)."
 
 #: ../../source/RELEASE_HISTORY.md:5
 msgid "2.5.1 (2026-05-18)"
-msgstr ""
+msgstr "2.5.1 (2026-05-18)"
 
 #: ../../source/RELEASE_HISTORY.md:7
 msgid ""
-"**Trader Shell dashboard**   "
-"修复启动阶段系统日志在文件与屏幕上**成对重复**显示的问题。`acquire_live_price` "
-"等任务的倒计时与监视列表行情改为在终端**单行原位刷新**，不再出现多行残留、刷屏。"
+"**Trader Shell dashboard**   修复启动阶段系统日志在文件与屏幕上**成对重复**显示"
+"的问题。`acquire_live_price` 等任务的倒计时与监视列表行情改为在终端**单行原位刷"
+"新**，不再出现多行残留、刷屏。"
 msgstr ""
+"**Trader Shell Dashboard** Das Problem, dass Systemprotokolle beim Start "
+"**paarweise und wiederholt** in der Datei und auf dem Bildschirm angezeigt "
+"wurden, wurde behoben. Die Countdown- und Überwachungslistendaten für Aufgaben "
+"wie `acquire_live_price` werden nun direkt im Terminal als einzelne Zeile "
+"aktualisiert. Dadurch wird das Problem mehrerer verbleibender Zeilen oder einer "
+"Bildschirmaktualisierung behoben."
 
 #: ../../source/RELEASE_HISTORY.md:9
 msgid ""
-"**系统日志（DEBUG）**   实盘刷新并写入实时行情数据时，DEBUG 级别系统日志仅输出数据表**前 3 "
-"行**与**总行数**摘要，不再写入整表内容，便于查阅且减少日志体积。非 DEBUG 模式下用户可见提示不变。"
+"**系统日志（DEBUG）**   实盘刷新并写入实时行情数据时，DEBUG 级别系统日志仅输出数"
+"据表**前 3 行**与**总行数**摘要，不再写入整表内容，便于查阅且减少日志体积。非 "
+"DEBUG 模式下用户可见提示不变。"
 msgstr ""
+"**Systemprotokoll (DEBUG)** Beim Aktualisieren und Schreiben von Echtzeit-"
+"Marktdaten gibt das Systemprotokoll im DEBUG-Modus nur die **ersten 3 Zeilen** "
+"und eine **Zusammenfassung der Gesamtzeilenanzahl** der Datentabelle aus, "
+"anstatt den gesamten Tabelleninhalt zu schreiben. Dies erleichtert die Ansicht "
+"und reduziert die Protokollgröße. Die für den Benutzer sichtbaren Meldungen "
+"bleiben im normalen Modus unverändert."
 
 #: ../../source/RELEASE_HISTORY.md:11
 msgid ""
-"**Dashboard 历史日志回放**   进入 dashboard "
-"时回放的多行系统日志（如策略信号明细）按**整条消息**显示或过滤，续行不再被误当作独立日志行单独出现在屏幕上。"
+"**Dashboard 历史日志回放**   进入 dashboard 时回放的多行系统日志（如策略信号明"
+"细）按**整条消息**显示或过滤，续行不再被误当作独立日志行单独出现在屏幕上。"
 msgstr ""
+"**Wiedergabe des historischen Dashboard-Protokolls** Beim Aufrufen des "
+"Dashboards werden mehrere Zeilen von Systemprotokollen (z. B. Details zu "
+"Richtliniensignalen) als **gesamte Nachricht** angezeigt oder gefiltert, und "
+"Fortsetzungszeilen werden nicht mehr fälschlicherweise als unabhängige "
+"Protokollzeilen auf dem Bildschirm angezeigt."
 
 #: ../../source/RELEASE_HISTORY.md:13
 msgid ""
-"**收盘 `post_close` 与 `created` 订单**   修复收盘任务对仍为 `created` 的订单误用撤单逻辑导致 "
-"`post_close` 失败的问题。收盘后此类未报单订单将置为 **`rejected`**（视同未受理）；已报单的 `submitted` /"
-" `partial-filled` 仍按原规则撤单为 **`canceled`**。"
+"**收盘 `post_close` 与 `created` 订单**   修复收盘任务对仍为 `created` 的订单误"
+"用撤单逻辑导致 `post_close` 失败的问题。收盘后此类未报单订单将置为 "
+"**`rejected`**（视同未受理）；已报单的 `submitted` / `partial-filled` 仍按原规则"
+"撤单为 **`canceled`**。"
 msgstr ""
+"**Schließung von Aufträgen (post_close) und erstellte Aufträge** Dieses Update "
+"behebt ein Problem, bei dem die Schließungsaufgabe die Stornierungslogik für "
+"Aufträge im Status „Erstellt“ falsch anwandte, was zu einem Fehler in "
+"„post_close“ führte. Nach Börsenschluss werden diese nicht übermittelten "
+"Aufträge als „abgelehnt“ (als nicht verarbeitet) markiert; übermittelte "
+"„submitted“-/„teilweise ausgeführte“-Aufträge werden weiterhin gemäß den "
+"ursprünglichen Regeln storniert und als „storniert“ markiert."
 
 #: ../../source/RELEASE_HISTORY.md:16
 msgid "2.5.0 (2026-05-17)"
-msgstr ""
+msgstr "Version 2.5.0 (17. Mai 2026)"
 
 #: ../../source/RELEASE_HISTORY.md:18
 msgid ""
-"**实盘 Trader 运行稳定性**   "
-"实盘核心运行器完成架构升级，更适合长时间无人值守运行：启停与退出路径统一，命令行/图形界面不再各自拼装后台线程，按 **Ctrl+C** "
-"退出时与主循环解耦，关停更可预期。任务可排队、可取消，失败可重试并在系统日志中追溯；成交入账在数据库侧整笔提交或回滚，避免半写入导致账本不一致；同一笔券商回报重复处理不会重复改账。开盘前可按配置运行**启动检查**（`live_trade_startup_gate_mode`），未通过时可阻止策略自动下单；在策略准备拆分模式下，策略运行前使用时点快照，快照缺失或过旧时会跳过当次策略并在日志中给出可理解的跳过原因，而不是静默失败。"
+"**实盘 Trader 运行稳定性**   实盘核心运行器完成架构升级，更适合长时间无人值守运"
+"行：启停与退出路径统一，命令行/图形界面不再各自拼装后台线程，按 **Ctrl+C** 退出"
+"时与主循环解耦，关停更可预期。任务可排队、可取消，失败可重试并在系统日志中追溯；"
+"成交入账在数据库侧整笔提交或回滚，避免半写入导致账本不一致；同一笔券商回报重复处"
+"理不会重复改账。开盘前可按配置运行**启动检查**"
+"（`live_trade_startup_gate_mode`），未通过时可阻止策略自动下单；在策略准备拆分模"
+"式下，策略运行前使用时点快照，快照缺失或过旧时会跳过当次策略并在日志中给出可理解"
+"的跳过原因，而不是静默失败。"
 msgstr ""
+"**Stabilität des Live-Trading-Systems** Die Live-Trading-Laufzeitumgebung wurde "
+"architektonisch überarbeitet und eignet sich nun besser für den langfristigen, "
+"unbeaufsichtigten Betrieb: Start-, Herunterfahr- und Beendigungspfade sind "
+"vereinheitlicht; Kommandozeile und grafische Benutzeroberfläche laufen nicht "
+"mehr in separaten Hintergrundthreads; das Beenden per **Strg+C** ist vom "
+"Hauptprozess entkoppelt, wodurch das Herunterfahren besser vorhersehbar wird. "
+"Aufgaben können in eine Warteschlange gestellt und abgebrochen werden; Fehler "
+"können wiederholt und im Systemprotokoll nachverfolgt werden; Trades werden "
+"vollständig auf Datenbankseite bestätigt oder zurückgesetzt, wodurch "
+"Inkonsistenzen durch Teilschreibvorgänge vermieden werden; die doppelte "
+"Verarbeitung desselben Brokerberichts führt nicht zu doppelten Kontoänderungen. "
+"Vor Marktöffnung kann gemäß Konfiguration eine **Startprüfung** "
+"(`live_trade_startup_gate_mode`) durchgeführt werden; bei einem Fehlschlag wird "
+"die automatische Orderplatzierung durch die Strategie verhindert; im "
+"Strategievorbereitungs-Split-Modus wird vor der Strategieausführung eine "
+"Momentaufnahme verwendet. Falls der Snapshot fehlt oder zu alt ist, wird die "
+"aktuelle Strategie übersprungen, und im Protokoll wird ein nachvollziehbarer "
+"Grund für das Überspringen angegeben, anstatt eines stillen Fehlers."
 
 #: ../../source/RELEASE_HISTORY.md:20
 msgid ""
-"**券商受理、对账与恢复诊断**   "
-"柜台受理成功后，本地订单可关联券商委托号，便于对账与排障。模拟盘支持可配置的受理随机拒单（默认一定比例，便于验证拒单路径；示例与测试可设为 0 "
-"以保持结果确定）。开盘、收盘后会在日志中输出对账检查点摘要（现金、持仓、在途单计数等），便于检索。在 **DEBUG** 模式下，可通过 `run"
-" --task diagnose_pending_orders` 或在 Shell "
-"中等价方式做在途单只读诊断（本地与柜台差异摘要），**不包含**自动改单或自动补偿。周期性自动对账任务与差异自动修复仍属后续演进项。"
+"**券商受理、对账与恢复诊断**   柜台受理成功后，本地订单可关联券商委托号，便于对"
+"账与排障。模拟盘支持可配置的受理随机拒单（默认一定比例，便于验证拒单路径；示例与"
+"测试可设为 0 以保持结果确定）。开盘、收盘后会在日志中输出对账检查点摘要（现金、"
+"持仓、在途单计数等），便于检索。在 **DEBUG** 模式下，可通过 `run --task "
+"diagnose_pending_orders` 或在 Shell 中等价方式做在途单只读诊断（本地与柜台差异摘"
+"要），**不包含**自动改单或自动补偿。周期性自动对账任务与差异自动修复仍属后续演进"
+"项。"
 msgstr ""
+"**Annahme, Abstimmung und Fehlerbehebung durch Broker** Nach erfolgreicher "
+"Annahme eines Auftrags können lokale Aufträge der Auftragsnummer des Brokers "
+"zugeordnet werden, um die Abstimmung und Fehlerbehebung zu vereinfachen. Das "
+"Demokonto unterstützt die konfigurierbare, zufällige Ablehnung von Aufträgen "
+"(standardmäßig ist ein bestimmter Prozentsatz festgelegt, um die Überprüfung "
+"der Ablehnungspfade zu erleichtern; Beispiele und Tests können auf 0 gesetzt "
+"werden, um konsistente Ergebnisse zu gewährleisten). Zusammenfassungen der "
+"Abstimmungs-Checkpoints (Bargeld, Bestände, Anzahl ausstehender Aufträge usw.) "
+"werden nach Marktöffnung und -schluss im Protokoll ausgegeben und sind so "
+"leicht abrufbar. Im **DEBUG**-Modus können schreibgeschützte Diagnosen "
+"ausstehender Aufträge (Zusammenfassungen der lokalen und der "
+"Gegenauftragsdifferenzen) über `run --task diagnose_pending_orders` oder in der "
+"Shell durchgeführt werden, **ausgenommen** automatische Auftragsänderungen oder "
+"-kompensationen. Periodische automatische Abstimmungsaufgaben und die "
+"automatische Differenzkorrektur sind noch in der Entwicklung."
 
 #: ../../source/RELEASE_HISTORY.md:22
 msgid ""
-"**Trader Shell：运维命令与 dashboard**   在 Trader 提示符下无需退出即可查看实盘产物路径、有效 live "
-"配置摘要、任务队列与取消排队任务、手动运行启动检查、打印对账快照 JSON、轮换过期交易/风控日志、查看券商连接状态等；`run --task` "
-"支持按帮助说明运行开盘/收盘/诊断等任务；`sync` / `pull-state` 预留给后续 QMT 集成，当前会给出明确提示。启动后默认进入"
-" **dashboard**，单行刷新下一任务倒计时、监视列表行情与系统消息；按 **Ctrl+C** 打开选单：**1** 命令模式、**2**"
-" dashboard、**3** 退出；数字键无需按 Enter，5 秒无输入自动恢复中断前模式，选单等待期间再按 **Ctrl+C** 与选 "
-"**3** 相同并正常退出。修复从命令模式回到 dashboard 时日志重复、状态行残留、关闭 debug "
-"时仍显示调试日志等问题；主循环发生意外错误时可选择回到 dashboard 继续观察或退出关停。"
+"**Trader Shell：运维命令与 dashboard**   在 Trader 提示符下无需退出即可查看实盘"
+"产物路径、有效 live 配置摘要、任务队列与取消排队任务、手动运行启动检查、打印对账"
+"快照 JSON、轮换过期交易/风控日志、查看券商连接状态等；`run --task` 支持按帮助说"
+"明运行开盘/收盘/诊断等任务；`sync` / `pull-state` 预留给后续 QMT 集成，当前会给"
+"出明确提示。启动后默认进入 **dashboard**，单行刷新下一任务倒计时、监视列表行情与"
+"系统消息；按 **Ctrl+C** 打开选单：**1** 命令模式、**2** dashboard、**3** 退出；"
+"数字键无需按 Enter，5 秒无输入自动恢复中断前模式，选单等待期间再按 **Ctrl+C** 与"
+"选 **3** 相同并正常退出。修复从命令模式回到 dashboard 时日志重复、状态行残留、关"
+"闭 debug 时仍显示调试日志等问题；主循环发生意外错误时可选择回到 dashboard 继续观"
+"察或退出关停。"
 msgstr ""
+"**Trader Shell: Bedienungs- und Wartungsbefehle sowie Dashboard** Ohne die "
+"Trader-Eingabeaufforderung zu verlassen, können Sie den Live-"
+"Handelsausgabepfad, eine Zusammenfassung der gültigen Live-Konfiguration, die "
+"Aufgabenwarteschlange und nicht in der Warteschlange befindliche Aufgaben "
+"einsehen, Startprüfungen manuell ausführen, einen JSON-Snapshot des Abgleichs "
+"drucken, abgelaufene Transaktions-/Risikokontrollprotokolle rotieren und den "
+"Broker-Verbindungsstatus anzeigen usw. Mit `run --task` können Sie Öffnungs-, "
+"Schließungs- und Diagnoseaufgaben gemäß den Hilfeanweisungen ausführen. `sync` "
+"und `pull-state` sind für die zukünftige QMT-Integration reserviert und werden "
+"vorerst deutlich angezeigt. Nach dem Start wird standardmäßig das **Dashboard** "
+"angezeigt, das den Countdown zur nächsten Aufgabe, die Überwachungsliste und "
+"Systemmeldungen in einer einzigen Zeile aktualisiert. Drücken Sie **Strg+C**, "
+"um das Menü zu öffnen: **1** Befehlsmodus, **2** Dashboard, **3** Beenden. Sie "
+"müssen die Eingabetaste nicht drücken. Nach 5 Sekunden ohne Eingabe wird "
+"automatisch der vorherige Modus fortgesetzt. Durch erneutes Drücken von "
+"**Strg+C** während der Wartezeit im Menü wird die Option **3** ausgewählt und "
+"das Programm normal beendet. Es wurden Probleme wie doppelte Protokolleinträge "
+"beim Zurückkehren zum Dashboard aus dem Befehlsmodus, verbleibende Statuszeilen "
+"und weiterhin angezeigte Debug-Protokolle bei deaktiviertem Debugging behoben. "
+"Tritt in der Hauptschleife ein unerwarteter Fehler auf, können Sie entweder zum "
+"Dashboard zurückkehren, um die Beobachtung fortzusetzen, oder das Programm "
+"beenden und herunterfahren."
 
 #: ../../source/RELEASE_HISTORY.md:24
 msgid ""
 "**日志与产物维护**   按 `trade_log_keep_days` 轮换交易日志时，会一并清理超龄的 "
-"`*.risk.log`。系统日志中的结构化运行记录便于还原任务执行、跳过原因与对账检查点，排障时不必仅靠零散英文提示拼凑上下文。"
+"`*.risk.log`。系统日志中的结构化运行记录便于还原任务执行、跳过原因与对账检查点，"
+"排障时不必仅靠零散英文提示拼凑上下文。"
 msgstr ""
+"**Protokoll- und Produktpflege** Bei der Rotation des Transaktionsprotokolls um "
+"`trade_log_keep_days` werden auch abgelaufene `*.risk.log`-Einträge bereinigt. "
+"Die strukturierten Laufzeitdatensätze in den Systemprotokollen erleichtern die "
+"Rekonstruktion der Aufgabenausführung, der Gründe für das Überspringen von "
+"Aufgaben und der Abgleichs-Checkpoints. Dadurch entfällt die Notwendigkeit, den "
+"Kontext bei der Fehlersuche aus fragmentierten englischen Eingabeaufforderungen "
+"zusammenzusetzen."
 
 #: ../../source/RELEASE_HISTORY.md:26
 msgid ""
-"**模拟/实盘文档**   扩充 `live_trading` 系列：配置与运行、券商接入、快照与启动门禁、产物与排障、手工冒烟清单，并新增 "
-"CLI 能力矩阵（已实现 vs 预留）；补充 dashboard / 命令模式与 Ctrl+C "
-"选单说明（§7.1）；区分本地风控拒单与柜台受理拒单，便于按清单做冒烟测试与问题定位。"
+"**模拟/实盘文档**   扩充 `live_trading` 系列：配置与运行、券商接入、快照与启动门"
+"禁、产物与排障、手工冒烟清单，并新增 CLI 能力矩阵（已实现 vs 预留）；补充 "
+"dashboard / 命令模式与 Ctrl+C 选单说明（§7.1）；区分本地风控拒单与柜台受理拒单，"
+"便于按清单做冒烟测试与问题定位。"
 msgstr ""
+"**Dokumentation zum simulierten/Live-Handel** Erweitert die `live_trading`-"
+"Serie: Konfiguration und Betrieb, Brokerzugriff, Snapshots und "
+"Zugriffskontrolle beim Start, Artefakte und Fehlerbehebung, Checkliste für "
+"manuelle Funktionstests und fügt eine CLI-Funktionsmatrix hinzu (implementiert "
+"vs. reserviert); ergänzt die Anweisungen für den Dashboard-/Befehlsmodus und "
+"das Ctrl+C-Menü (§7.1); unterscheidet zwischen Ablehnungen der lokalen "
+"Risikokontrolle und Ablehnungen der Gegenwertannahme, um Funktionstests und die "
+"Lokalisierung von Problemen anhand der Checkliste zu erleichtern."
 
 #: ../../source/RELEASE_HISTORY.md:29
 msgid "2.4.5 (2026-05-13)"
-msgstr ""
+msgstr "2.4.5 (13.05.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:31
 msgid ""
-"**RuleIterator 分标的参数**   在 `realize()` 中用 `get_pars` / `get_data` 读取、用 "
-"`update_par_values` 写入时，`multi_pars` 与普通参数保持同步，分标的与统一参数可用同一套 API 更新。"
+"**RuleIterator 分标的参数**   在 `realize()` 中用 `get_pars` / `get_data` 读取、"
+"用 `update_par_values` 写入时，`multi_pars` 与普通参数保持同步，分标的与统一参数"
+"可用同一套 API 更新。"
 msgstr ""
+"**RuleIterator-Parameter** Beim Lesen mit `get_pars` / `get_data` und Schreiben "
+"mit `update_par_values` in `realize()` bleibt `multi_pars` mit den regulären "
+"Parametern synchronisiert, und der Parameter und der einheitliche Parameter "
+"können mit derselben API aktualisiert werden."
 
 #: ../../source/RELEASE_HISTORY.md:33
 msgid ""
-"**示例与文档**   `examples/live_grid.py`、`examples/live_grid_multi.py` 统一采用 "
-"`get_pars` / `update_par_values` "
-"写法；策略基类文档明确：分标的参数须用**字典**（键为代码），元组表示全池共用一组参数，兜底键为 **`default`**（非 "
+"**示例与文档**   `examples/live_grid.py`、`examples/live_grid_multi.py` 统一采"
+"用 `get_pars` / `update_par_values` 写法；策略基类文档明确：分标的参数须用**字典"
+"**（键为代码），元组表示全池共用一组参数，兜底键为 **`default`**（非 "
 "`others`）。"
 msgstr ""
+"**Beispiele und Dokumentation** Die Dateien `examples/live_grid.py` und "
+"`examples/live_grid_multi.py` verwenden einheitlich die Syntax `get_pars` / "
+"`update_par_values`. Die Dokumentation der Strategiebasisklasse legt eindeutig "
+"fest, dass die Parameter für die Unterklassen **Dictionaries** (mit Codes als "
+"Schlüsseln) sein müssen, Tupel einen Satz von Parametern repräsentieren, die "
+"vom gesamten Pool gemeinsam genutzt werden, und der Sammelschlüssel "
+"**`default`** ist (nicht `others`)."
 
 #: ../../source/RELEASE_HISTORY.md:35
 msgid ""
-"**Trader CLI 策略列表**   简要列表模式下，带 `multi_pars` 的策略会提示运行 **`strategies -d`**"
-" 查看完整分标的参数。"
+"**Trader CLI 策略列表**   简要列表模式下，带 `multi_pars` 的策略会提示运行 "
+"**`strategies -d`** 查看完整分标的参数。"
 msgstr ""
+"**Trader CLI Strategieliste** Im Kurzlistenmodus werden Sie bei Strategien mit "
+"`multi_pars` aufgefordert, **`strategies -d`** auszuführen, um die "
+"vollständigen Parsing-Parameter anzuzeigen."
 
 #: ../../source/RELEASE_HISTORY.md:38
 msgid "2.4.4 (2026-05-08)"
-msgstr ""
+msgstr "2.4.4 (2026-05-08)"
 
 #: ../../source/RELEASE_HISTORY.md:40
 msgid ""
-"**东方财富行情与盘中任务**   修复 2.4.3 回归：东方财富 HTTPS "
-"行情请求在部分环境下失败、盘中追赶任务入队格式错误导致主循环报错、实时 K 线日期解析异常等问题，恢复自选价与盘中启动后的正常调度。"
+"**东方财富行情与盘中任务**   修复 2.4.3 回归：东方财富 HTTPS 行情请求在部分环境"
+"下失败、盘中追赶任务入队格式错误导致主循环报错、实时 K 线日期解析异常等问题，恢"
+"复自选价与盘中启动后的正常调度。"
 msgstr ""
+"**Eastmoney Marktdaten und Intraday-Aufgaben** In Version 2.4.3 wurden folgende "
+"Probleme behoben: Eastmoney HTTPS-Marktdatenanfragen schlugen in einigen "
+"Umgebungen fehl, das Format der Intraday-Aufgabenwarteschlange war fehlerhaft, "
+"was zum Absturz der Hauptschleife führte, und die Echtzeit-Datenanalyse der K-"
+"Linie war fehlerhaft. Die normale Planung der Watchlist-Preise und des Intraday-"
+"Starts wurde wiederhergestellt."
 
 #: ../../source/RELEASE_HISTORY.md:42
-msgid "**示例脚本**   修正 `live_grid_multi` 示例中的配置与用法，避免执行时不必要的 refill 干扰。"
+msgid ""
+"**示例脚本**   修正 `live_grid_multi` 示例中的配置与用法，避免执行时不必要的 "
+"refill 干扰。"
 msgstr ""
+"**Beispielskript** Die Konfiguration und Verwendung im Beispiel "
+"`live_grid_multi` wurde korrigiert, um unnötige Nachladeinterferenzen während "
+"der Ausführung zu vermeiden."
 
 #: ../../source/RELEASE_HISTORY.md:45
 msgid "2.4.3 (2026-05-06)"
-msgstr ""
+msgstr "2.4.3 (2026-05-06)"
 
 #: ../../source/RELEASE_HISTORY.md:47
-msgid "**实盘终端界面**   修复 System / Info 页在刷新持仓与环境摘要时界面不更新或崩溃的问题。"
+msgid ""
+"**实盘终端界面**   修复 System / Info 页在刷新持仓与环境摘要时界面不更新或崩溃的"
+"问题。"
 msgstr ""
+"**Live-Handelsterminal-Oberfläche** Es wurde ein Problem behoben, bei dem die "
+"System-/Infoseite beim Aktualisieren der Bestands- und Umfeldübersicht nicht "
+"aktualisiert wurde oder abstürzte."
 
 #: ../../source/RELEASE_HISTORY.md:49
-msgid "**分标的参数提示**   当分标的参数字典被误写成单元素元组（常见尾逗号笔误）时，错误信息更清晰，便于自行纠正。"
+msgid ""
+"**分标的参数提示**   当分标的参数字典被误写成单元素元组（常见尾逗号笔误）时，错"
+"误信息更清晰，便于自行纠正。"
 msgstr ""
+"**Parameterhinweise für Indizes** Wenn das Parameterwörterbuch für einen Index "
+"irrtümlicherweise als einelementiges Tupel geschrieben wird (ein häufiger "
+"Tippfehler mit einem nachfolgenden Komma), ist die Fehlermeldung klarer und "
+"leichter zu korrigieren."
 
 #: ../../source/RELEASE_HISTORY.md:51
 msgid "**实盘示例**   修正若干 live trade 官方示例中的用法问题。"
 msgstr ""
+"**Beispiele für Live-Handel** Mehrere Anwendungsprobleme in den offiziellen "
+"Live-Handelsbeispielen wurden behoben."
 
 #: ../../source/RELEASE_HISTORY.md:54
 msgid "2.4.2 (2026-04-19)"
-msgstr ""
+msgstr "2.4.2 (2026-04-19)"
 
 #: ../../source/RELEASE_HISTORY.md:56
-msgid "**异步回放与持仓同步**   模拟券商异步回放时，脚本可可靠等待队列订单与在途成交处理完毕，避免仅凭队列是否为空判断完成而导致持仓滞后、重复下单。"
+msgid ""
+"**异步回放与持仓同步**   模拟券商异步回放时，脚本可可靠等待队列订单与在途成交处"
+"理完毕，避免仅凭队列是否为空判断完成而导致持仓滞后、重复下单。"
 msgstr ""
+"**Asynchrone Wiedergabe und Positionssynchronisierung** Bei der Simulation der "
+"asynchronen Wiedergabe durch ein Brokerhaus kann das Skript zuverlässig auf die "
+"Verarbeitung von in der Warteschlange befindlichen Aufträgen und Transaktionen "
+"im Transit warten. Dadurch werden Positionsverzögerungen und doppelte Aufträge "
+"vermieden, die dadurch entstehen, dass die Fertigstellung ausschließlich anhand "
+"der Frage beurteilt wird, ob die Warteschlange leer ist."
 
 #: ../../source/RELEASE_HISTORY.md:58
-msgid "**实盘数据源刷新**   分钟/小时级实时 K 线按资产类型写入对应数据表，不再一律写入股票表，基金/指数/期货等 live 数据落表正确。"
+msgid ""
+"**实盘数据源刷新**   分钟/小时级实时 K 线按资产类型写入对应数据表，不再一律写入"
+"股票表，基金/指数/期货等 live 数据落表正确。"
 msgstr ""
+"**Aktualisierung der Echtzeit-Datenquelle** Minuten-/stündliche Echtzeit-"
+"Candlestick-Charts werden nun nach Anlageklasse in die entsprechenden "
+"Datentabellen geschrieben, anstatt einheitlich in die Aktientabelle. Live-Daten "
+"für Fonds, Indizes, Futures usw. werden jetzt korrekt in den Tabellen angezeigt."
 
 #: ../../source/RELEASE_HISTORY.md:60
-msgid "**分钟策略数据链路**   修复实盘分钟级策略可能拿不到足够日内数据的一连串问题，盘中信号生成更稳定。"
+msgid ""
+"**分钟策略数据链路**   修复实盘分钟级策略可能拿不到足够日内数据的一连串问题，盘"
+"中信号生成更稳定。"
 msgstr ""
+"**Verknüpfung von Strategiedaten auf Minutenebene** Es wurden eine Reihe von "
+"Problemen behoben, bei denen Live-Strategien auf Minutenebene möglicherweise "
+"nicht genügend Intraday-Daten erhielten, was zu einer stabileren Intraday-"
+"Signalgenerierung führte."
 
 #: ../../source/RELEASE_HISTORY.md:63
 msgid "2.4.1 (2026-04-18)"
-msgstr ""
+msgstr "2.4.1 (2026-04-18)"
 
 #: ../../source/RELEASE_HISTORY.md:65
 msgid ""
-"**盘中启动 Trader**   修复交易时段内启动 Trader 时，逾期的开盘/收盘类任务可能被逆序重放、状态机卡在 sleeping "
-"的问题；逾期任务现按时间顺序入队，盘中启动可正确追到当前市场状态并继续运行策略与行情任务。"
+"**盘中启动 Trader**   修复交易时段内启动 Trader 时，逾期的开盘/收盘类任务可能被"
+"逆序重放、状态机卡在 sleeping 的问题；逾期任务现按时间顺序入队，盘中启动可正确追"
+"到当前市场状态并继续运行策略与行情任务。"
 msgstr ""
+"**Einführung des Intraday-Traders** Es wurde ein Problem behoben, bei dem "
+"überfällige Öffnungs-/Schließungsaufgaben in umgekehrter Reihenfolge wiederholt "
+"werden konnten und die Zustandsmaschine beim Starten des Traders während der "
+"Handelszeiten im Schlafmodus hängen blieb; überfällige Aufgaben werden nun in "
+"chronologischer Reihenfolge in die Warteschlange gestellt, und ein Start "
+"während des Intraday-Handels stellt sicher, dass der aktuelle Marktstatus "
+"korrekt erfasst wird und die Strategie- und Marktdatenaufgaben weiterhin "
+"ausgeführt werden."
 
 #: ../../source/RELEASE_HISTORY.md:68
 msgid "2.4.0 (2026-04-14)"
-msgstr ""
+msgstr "Version 2.4.0 (14.04.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:70
 msgid ""
-"**模拟/实盘基础架构（S1.3）**   提供可配置、可测试的 live 基础：`LiveTradeConfig` 校验运行时配置；可插拔 "
-"`RiskManager` 在提交前拦截不安全订单并给出原因；券商适配骨架（连接/下单/撤单/轮询成交）为后续 QMT "
-"等接入做准备。产物清单（日志/断点/风控日志）与 CLI/TUI 订单生命周期展示更清晰。"
+"**模拟/实盘基础架构（S1.3）**   提供可配置、可测试的 live 基础："
+"`LiveTradeConfig` 校验运行时配置；可插拔 `RiskManager` 在提交前拦截不安全订单并"
+"给出原因；券商适配骨架（连接/下单/撤单/轮询成交）为后续 QMT 等接入做准备。产物清"
+"单（日志/断点/风控日志）与 CLI/TUI 订单生命周期展示更清晰。"
 msgstr ""
+"Die **Simulierte/Live-Handelsinfrastruktur (S1.3)** bietet eine konfigurierbare "
+"und testbare Grundlage für den Live-Handel: `LiveTradeConfig` validiert "
+"Laufzeitkonfigurationen; ein austauschbarer `RiskManager` fängt unsichere "
+"Aufträge vor der Übermittlung ab und liefert die Gründe; und ein Broker-"
+"Anpassungsgerüst (Verbindung/Auftragserteilung/Stornierung/Abfrage zur "
+"Ausführung) bereitet die zukünftige Integration mit QMT und anderen Plattformen "
+"vor. Die Artefaktliste (Protokolle/Haltepunkte/Risikokontrollprotokolle) und "
+"die Anzeige des Auftragslebenszyklus in der CLI/TUI sind übersichtlicher."
 
 #: ../../source/RELEASE_HISTORY.md:72
 msgid ""
-"**文档**   新增独立 live_trading 文档系列（概览、配置运行、风控与订单、券商适配、排障）；教程含股票与 ETF "
-"双路径模拟示例及 S1.3 设计说明；首页与 API 交叉链接便于找到 live 指引。"
+"**文档**   新增独立 live_trading 文档系列（概览、配置运行、风控与订单、券商适"
+"配、排障）；教程含股票与 ETF 双路径模拟示例及 S1.3 设计说明；首页与 API 交叉链接"
+"便于找到 live 指引。"
 msgstr ""
+"**Dokumentation** Eine neue, unabhängige Dokumentationsreihe für den Live-"
+"Handel wurde hinzugefügt (Übersicht, Konfiguration und Betrieb, Risikokontrolle "
+"und Aufträge, Broker-Anpassung, Fehlerbehebung); die Tutorials enthalten Dual-"
+"Path-Simulationsbeispiele für Aktien und ETFs sowie S1.3-Designspezifikationen; "
+"Querverweise zwischen der Homepage und der API erleichtern das Auffinden von "
+"Live-Anleitungen."
 
 #: ../../source/RELEASE_HISTORY.md:75
 msgid "2.3.1 (2026-04-11)"
-msgstr ""
+msgstr "2.3.1 (2026-04-11)"
 
 #: ../../source/RELEASE_HISTORY.md:77
 msgid ""
-"**交易日志保留**   默认 `trade_log_keep_days` 改为 **3**（原 0）：每次新 Python 进程导入 "
-"qteasy 时，会在 `trade_log_file_path` 下清理超龄 CSV；设为 `None` 或 **0 及以下** "
-"可关闭自动删除。文档已与「启动时清理、非每次回测前清理」的行为对齐。"
+"**交易日志保留**   默认 `trade_log_keep_days` 改为 **3**（原 0）：每次新 Python "
+"进程导入 qteasy 时，会在 `trade_log_file_path` 下清理超龄 CSV；设为 `None` 或 "
+"**0 及以下** 可关闭自动删除。文档已与「启动时清理、非每次回测前清理」的行为对"
+"齐。"
 msgstr ""
+"**Aufbewahrung von Handelsprotokollen** Die Standardeinstellung "
+"`trade_log_keep_days` wurde auf **3** geändert (ursprünglich 0): Bei jedem "
+"Import von qteasy durch einen neuen Python-Prozess werden abgelaufene CSV-"
+"Dateien unter `trade_log_file_path` gelöscht. Die Einstellung auf `None` oder "
+"**0 oder kleiner** deaktiviert die automatische Löschung. Die Dokumentation "
+"entspricht nun dem Verhalten „Bereinigung beim Start, nicht vor jedem Backtest“."
 
 #: ../../source/RELEASE_HISTORY.md:79
 msgid ""
-"**实盘与回测一致性**   实盘下单生成现已计入佣金；滑点处理与回测侧优化对齐；资产类型 **FD**（ETF/场内基金）不再在 live "
-"模式入口被拒；正 **VS** 信号在 live 下与回测一致，小单量不足最小成交单位时不再被静默丢弃。"
+"**实盘与回测一致性**   实盘下单生成现已计入佣金；滑点处理与回测侧优化对齐；资产"
+"类型 **FD**（ETF/场内基金）不再在 live 模式入口被拒；正 **VS** 信号在 live 下与"
+"回测一致，小单量不足最小成交单位时不再被静默丢弃。"
 msgstr ""
+"**Konsistenz zwischen Live-Trading und Backtesting** Die Generierung von Live-"
+"Trading-Aufträgen beinhaltet nun die Kommission; die Slippage-Behandlung ist an "
+"die Backtesting-Optimierungen angepasst; **FD**-Anlagetypen (ETF/Exchange "
+"Traded Fund) werden beim Einstiegspunkt im Live-Modus nicht mehr abgelehnt; "
+"positive **VS**-Signale stimmen im Live-Modus mit dem Backtesting überein, und "
+"kleine Aufträge unterhalb der Mindesthandelseinheit werden nicht mehr "
+"stillschweigend verworfen."
 
 #: ../../source/RELEASE_HISTORY.md:81
-msgid "**数据补齐 API**   仅在显式传入数据类型名时才做类型推断；仅传表名与 `asset_types`（如盘前 refill）不再报错。"
+msgid ""
+"**数据补齐 API**   仅在显式传入数据类型名时才做类型推断；仅传表名与 "
+"`asset_types`（如盘前 refill）不再报错。"
 msgstr ""
+"Die **Data Completion API** führt nur dann eine Typinferenz durch, wenn der "
+"Datentypname explizit angegeben wird; die Angabe von nur dem Tabellennamen und "
+"`asset_types` (z. B. Pre-Market Refill) führt nicht mehr zu einem Fehler."
 
 #: ../../source/RELEASE_HISTORY.md:84
 msgid "2.3.0 (2026-04-08)"
-msgstr ""
+msgstr "Version 2.3.0 (08.04.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:86
 msgid ""
-"**文档与教程**   教程结构重组，学习路径更清晰；HistoryPanel "
-"与包级用法从研究探索延伸到回测工作流；示例刷新，常见端到端路径更易跟做。"
+"**文档与教程**   教程结构重组，学习路径更清晰；HistoryPanel 与包级用法从研究探索"
+"延伸到回测工作流；示例刷新，常见端到端路径更易跟做。"
 msgstr ""
+"**Dokumente und Tutorials** Die Tutorialstruktur wurde für einen klareren "
+"Lernpfad neu organisiert; die Verwendung von HistoryPanel und Methoden auf "
+"Paketebene wurde von Forschung und Erkundung auf Backtesting-Workflows "
+"erweitert; Beispiele wurden aktualisiert, wodurch gängige End-to-End-Pfade "
+"leichter nachvollziehbar sind."
 
 #: ../../source/RELEASE_HISTORY.md:88
-msgid "**HistoryPanel 高亮**   可用与标的、日期对齐的二维布尔掩码驱动高亮，多标的视图下同一逻辑条件可一致强调，无需逐序列手工接线。"
+msgid ""
+"**HistoryPanel 高亮**   可用与标的、日期对齐的二维布尔掩码驱动高亮，多标的视图下"
+"同一逻辑条件可一致强调，无需逐序列手工接线。"
 msgstr ""
+"Die Hervorhebung im Verlaufspanel kann über eine zweidimensionale boolesche "
+"Maske gesteuert werden, die auf Ziel und Datum ausgerichtet ist. Dieselbe "
+"logische Bedingung kann in Ansichten mit mehreren Zielen konsistent "
+"hervorgehoben werden, ohne dass eine manuelle Verknüpfung für jede Sequenz "
+"erforderlich ist."
 
 #: ../../source/RELEASE_HISTORY.md:91
 msgid "2.2.9 (2026-03-31)"
-msgstr ""
+msgstr "2.2.9 (2026-03-31)"
 
 #: ../../source/RELEASE_HISTORY.md:93
 msgid ""
-"**HistoryPanel 研究算子**   新增累计收益 `cum_return()`、归一化 `normalize()`（支持掩码）、组合 "
-"`portfolio()`（等权/加权/分组及可选基准）、K 线指标 `kline.*(inplace=)`、一键预设 "
-"`research_preset()` 与分页 `plot()`、列级 DSL `assign()`、截面/时序 `rank()` 与 "
-"`zscore(method='cs'|'ts')`、显式 `align_to()` / `resample()` 避免静默错位。详见 "
-"[HistoryPanel API](api/HistoryPanel.rst) 与教程 [2.5-historypanel-data-"
-"analysis](tutorials/2.5-historypanel-data-analysis.md)。"
+"**HistoryPanel 研究算子**   新增累计收益 `cum_return()`、归一化 `normalize()`"
+"（支持掩码）、组合 `portfolio()`（等权/加权/分组及可选基准）、K 线指标 "
+"`kline.*(inplace=)`、一键预设 `research_preset()` 与分页 `plot()`、列级 DSL "
+"`assign()`、截面/时序 `rank()` 与 `zscore(method='cs'|'ts')`、显式 "
+"`align_to()` / `resample()` 避免静默错位。详见 [HistoryPanel API](api/"
+"HistoryPanel.rst) 与教程 [2.5-historypanel-data-analysis](tutorials/2.5-"
+"historypanel-data-analysis.md)。"
 msgstr ""
+"**HistoryPanel-Forschungsoperatoren** Zu den neuen Funktionen gehören "
+"kumulierte Renditen `cum_return()`, Normalisierung `normalize()` (mit "
+"Maskenunterstützung), Portfolio `portfolio()` (gleichgewichtet/gewichtet/"
+"gruppiert und optionaler Benchmark), Candlestick-Chart-Indikator "
+"`kline.*(inplace=)`, Ein-Klick-Voreinstellungen `research_preset()` und "
+"Paginierung `plot()`, spaltenbasierte DSL `assign()`, Querschnitts-/Zeitreihen-"
+"Ranking `rank()` und `zscore(method='cs'|'ts')` sowie explizites `align_to()` / "
+"`resample()`, um unbemerkte Fehlausrichtungen zu vermeiden. Weitere "
+"Informationen finden Sie in der [HistoryPanel-API](api/HistoryPanel.rst) und im "
+"Tutorial [2.5-historypanel-data-analysis](tutorials/2.5-historypanel-data-"
+"analysis.md)."
 
 #: ../../source/RELEASE_HISTORY.md:95
-msgid "**运算符语义**   算术运算符返回新面板而非原地修改；`copy(deep=True)` 默认为深拷贝，`deep=False` 共享底层数据。"
+msgid ""
+"**运算符语义**   算术运算符返回新面板而非原地修改；`copy(deep=True)` 默认为深拷"
+"贝，`deep=False` 共享底层数据。"
 msgstr ""
+"**Operatorsemantik** Arithmetische Operatoren geben ein neues Panel zurück, "
+"anstatt die Originaldaten zu verändern; `copy(deep=True)` erstellt "
+"standardmäßig eine tiefe Kopie, `deep=False` teilt die zugrunde liegenden Daten."
 
 #: ../../source/RELEASE_HISTORY.md:98
 msgid "2.2.8 (2026-03-30)"
-msgstr ""
+msgstr "2.2.8 (30.03.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:100
 msgid ""
-"**HistoryPanel 研究与索引（破坏性）**   方括号索引返回带标签子面板；支持 `subpanel` / "
-"`to_numpy`、列赋值、`where()` 掩码、只读 htype 属性（如 `panel.close`）、比较得 bool 数组以便链式 "
-"`where`、`loc` 时间轴选取。文档与教程说明与 pandas 的差异及使用边界。"
+"**HistoryPanel 研究与索引（破坏性）**   方括号索引返回带标签子面板；支持 "
+"`subpanel` / `to_numpy`、列赋值、`where()` 掩码、只读 htype 属性（如 "
+"`panel.close`）、比较得 bool 数组以便链式 `where`、`loc` 时间轴选取。文档与教程"
+"说明与 pandas 的差异及使用边界。"
 msgstr ""
+"**HistoryPanel-Recherche und -Indexierung (destruktiv)** Indizes in eckigen "
+"Klammern geben beschriftete Unterpanels zurück; unterstützt werden `subpanel` / "
+"`to_numpy`, Spaltenzuweisung, `where()`-Masken, schreibgeschützte htype-"
+"Attribute (wie `panel.close`), Vergleiche mit booleschen Arrays für verkettete "
+"`where`-Abfragen und die Zeitleistenauswahl mit `loc`. Dokumentation und "
+"Tutorials erläutern die Unterschiede zu pandas und deren Anwendungsbereiche."
 
 #: ../../source/RELEASE_HISTORY.md:103
 msgid "2.2.7 (2026-03-26)"
-msgstr ""
+msgstr "2.2.7 (2026-03-26)"
 
 #: ../../source/RELEASE_HISTORY.md:105
 msgid ""
-"**交互图高亮（Q06）**   `hp.plot(..., highlight=...)` 在 Plotly "
-"交互折线/蜡烛图上可用；双标的叠加时高亮标记随当前主标的切换。"
+"**交互图高亮（Q06）**   `hp.plot(..., highlight=...)` 在 Plotly 交互折线/蜡烛图"
+"上可用；双标的叠加时高亮标记随当前主标的切换。"
 msgstr ""
+"**Interaktive Diagrammhervorhebung (Q06)** `hp.plot(..., highlight=...)` ist in "
+"interaktiven Linien-/Kerzendiagrammen von Plotly verfügbar; wenn zwei "
+"Beschriftungen übereinandergelegt werden, wechselt die Hervorhebungsmarkierung "
+"mit der aktuellen primären Beschriftung."
 
 #: ../../source/RELEASE_HISTORY.md:108
 msgid "2.2.6 (2026-03-25)"
-msgstr ""
+msgstr "2.2.6 (2026-03-25)"
 
 #: ../../source/RELEASE_HISTORY.md:110
-msgid "**双标的交互图样式**   主/次序列除透明度外区分线宽；FigureWidget 与 HTML 点击切换主标的时样式保持同步。"
+msgid ""
+"**双标的交互图样式**   主/次序列除透明度外区分线宽；FigureWidget 与 HTML 点击切"
+"换主标的时样式保持同步。"
 msgstr ""
+"**Interaktives Diagramm mit zwei Beschriftungen** Die Haupt- und "
+"Nebenbeschriftung werden durch die Linienbreite unterschieden, außer bei "
+"Transparenz; der Stil des FigureWidget und des HTML bleibt beim Umschalten der "
+"Hauptbeschriftung synchronisiert."
 
 #: ../../source/RELEASE_HISTORY.md:113
 msgid "2.2.5 (2026-03-23)"
-msgstr ""
+msgstr "2.2.5 (2026-03-23)"
 
 #: ../../source/RELEASE_HISTORY.md:115
 msgid ""
-"**交互图十字线**   Plotly 交互图点击任意 K 线可在主图显示实心十字线（bar 中点）；平移/缩放时指示器同步，bar "
-"滚出视口时自动隐藏。"
+"**交互图十字线**   Plotly 交互图点击任意 K 线可在主图显示实心十字线（bar 中"
+"点）；平移/缩放时指示器同步，bar 滚出视口时自动隐藏。"
 msgstr ""
+"**Interaktives Fadenkreuz im Chart** In den interaktiven Charts von Plotly wird "
+"durch Klicken auf eine beliebige Kerze ein ausgefülltes Fadenkreuz (in der "
+"Mitte des Balkens) im Hauptchart angezeigt; der Indikator synchronisiert sich "
+"mit dem Verschieben/Zoomen und wird automatisch ausgeblendet, wenn der Balken "
+"aus dem Sichtfeld scrollt."
 
 #: ../../source/RELEASE_HISTORY.md:118
 msgid "2.2.4 (2026-03-22)"
-msgstr ""
+msgstr "2.2.4 (2026-03-22)"
 
 #: ../../source/RELEASE_HISTORY.md:120
 msgid ""
-"**复权 OHLC 蜡烛图（Q01）**   修复 `plot()` 无法识别 `open|b` "
-"等复权列名导致蜡烛图错误的问题；同时存在裸名与复权列时，蜡烛图优先裸名 OHLC，与既有价格列约定一致。"
+"**复权 OHLC 蜡烛图（Q01）**   修复 `plot()` 无法识别 `open|b` 等复权列名导致蜡烛"
+"图错误的问题；同时存在裸名与复权列时，蜡烛图优先裸名 OHLC，与既有价格列约定一"
+"致。"
 msgstr ""
+"**Wiederhergestelltes OHLC-Candlestick-Chart (Q01)** Es wurde das Problem "
+"behoben, bei dem `plot()` wiederhergestellte Spaltennamen wie `open|b` nicht "
+"erkennen konnte, was zu Fehlern im Candlestick-Chart führte; wenn sowohl "
+"Rohdaten- als auch wiederhergestellte Spalten vorhanden sind, priorisiert das "
+"Candlestick-Chart den Rohdatennamen OHLC, in Übereinstimmung mit der "
+"bestehenden Konvention für Preisspalten."
 
 #: ../../source/RELEASE_HISTORY.md:122
 msgid ""
-"**交互图 X 轴**   HTML 嵌入图保留 Q03 的 X 轴 clamp 与最小可见 bar 宽度；FigureWidget 多行图监听主"
-" X 轴并同步写入各 `xaxis*`，平移越界不再留下半屏空白。"
+"**交互图 X 轴**   HTML 嵌入图保留 Q03 的 X 轴 clamp 与最小可见 bar 宽度；"
+"FigureWidget 多行图监听主 X 轴并同步写入各 `xaxis*`，平移越界不再留下半屏空白。"
 msgstr ""
+"**Interaktive Diagramme mit X-Achse** HTML-eingebettete Diagramme behalten die "
+"X-Achsen-Begrenzung und die minimale sichtbare Balkenbreite des Q03 bei; "
+"FigureWidget-Mehrliniendiagramme überwachen die Haupt-X-Achse und schreiben "
+"synchron in jede `xaxis*`, und Verschiebungen, die über die Grenze hinausgehen, "
+"hinterlassen keinen halben Bildschirm leeren Raum mehr."
 
 #: ../../source/RELEASE_HISTORY.md:125
 msgid "2.2.3 (2026-03-22)"
-msgstr ""
+msgstr "2.2.3 (2026-03-22)"
 
 #: ../../source/RELEASE_HISTORY.md:127
 msgid ""
-"**静/交互图一致性（P1）**   仅在有蜡烛面板时显示 OHLC 摘要头：静态图固定末 bar，交互图默认同理且点击 bar "
-"更新（英文标签）；Matplotlib 与 Plotly 共用逻辑主题，图例 inset 于左上以省横向空间。"
+"**静/交互图一致性（P1）**   仅在有蜡烛面板时显示 OHLC 摘要头：静态图固定末 bar，"
+"交互图默认同理且点击 bar 更新（英文标签）；Matplotlib 与 Plotly 共用逻辑主题，图"
+"例 inset 于左上以省横向空间。"
 msgstr ""
+"**Konsistenz statischer/interaktiver Diagramme (P1)** Die OHLC-"
+"Zusammenfassungsüberschrift wird nur angezeigt, wenn ein Candlestick-Panel "
+"vorhanden ist: Statische Diagramme haben einen festen letzten Balken, "
+"interaktive Diagramme sind standardmäßig ähnlich und werden aktualisiert, wenn "
+"auf den Balken geklickt wird (englische Beschriftungen); Matplotlib und Plotly "
+"teilen ein gemeinsames logisches Thema, und die Legende ist oben links "
+"eingerückt, um horizontalen Platz zu sparen."
 
 #: ../../source/RELEASE_HISTORY.md:129
 msgid ""
 "**`plotly_backend_app`**   `interactive=True` 时可指定 `auto`（默认，先试 "
 "FigureWidget 再 HTML）、`FigureWidget` 或 `html`。"
 msgstr ""
+"Wenn `plotly_backend_app` auf `interactive=True` gesetzt ist, können Sie `auto` "
+"(Standardeinstellung, versuchen Sie zuerst FigureWidget, dann HTML), "
+"`FigureWidget` oder `html` angeben."
 
 #: ../../source/RELEASE_HISTORY.md:132
 msgid "2.2.2 (2026-03-20)"
-msgstr ""
+msgstr "2.2.2 (2026-03-20)"
 
 #: ../../source/RELEASE_HISTORY.md:134
 msgid ""
-"**DataSource 兼容性**   缺少可选文件后端（如 `tables`/`pyarrow`）时不再失败；回退 `csv` "
-"时保证数据目录可用；`hdf5` 作为 `hdf` 别名；回退警告更易诊断。"
+"**DataSource 兼容性**   缺少可选文件后端（如 `tables`/`pyarrow`）时不再失败；回"
+"退 `csv` 时保证数据目录可用；`hdf5` 作为 `hdf` 别名；回退警告更易诊断。"
 msgstr ""
+"**Datenquellenkompatibilität** Tritt nicht mehr auf, wenn ein optionales Datei-"
+"Backend (wie z. B. `tables`/`pyarrow`) verwendet wird; gewährleistet die "
+"Verfügbarkeit des Datenverzeichnisses beim Rollback auf `csv`; `hdf5` wird als "
+"Alias für `hdf` verwendet; Rollback-Warnungen sind leichter zu diagnostizieren."
 
 #: ../../source/RELEASE_HISTORY.md:137
 msgid "2.2.1 (2026-03-19)"
-msgstr ""
+msgstr "2.2.1 (2026-03-19)"
 
 #: ../../source/RELEASE_HISTORY.md:139
-msgid "**回测 NaN 价格**   修复价格为 NaN（停牌等）时污染信号解析与成交结果的问题；NaN 价位不再产生虚假成交或费用。"
+msgid ""
+"**回测 NaN 价格**   修复价格为 NaN（停牌等）时污染信号解析与成交结果的问题；NaN "
+"价位不再产生虚假成交或费用。"
 msgstr ""
+"**Backtesting NaN-Preis** Das Problem, dass die Signalanalyse und die "
+"Transaktionsergebnisse verfälscht wurden, wenn der Preis NaN war (z. B. "
+"aufgrund von Aussetzung), wurde behoben; NaN-Preisniveaus führen nicht mehr zu "
+"falschen Transaktionen oder Gebühren."
 
 #: ../../source/RELEASE_HISTORY.md:142
 msgid "2.2.0 (2026-03-17)"
-msgstr ""
+msgstr "Version 2.2.0 (17.03.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:144
-msgid "**数据可视化**   新图表流水线可从历史数据自动生成蜡烛、成交量、MACD、折线等组合图，多指标多标的同屏对比无需额外代码。"
+msgid ""
+"**数据可视化**   新图表流水线可从历史数据自动生成蜡烛、成交量、MACD、折线等组合"
+"图，多指标多标的同屏对比无需额外代码。"
 msgstr ""
+"**Datenvisualisierung** Die neue Chart-Pipeline kann automatisch kombinierte "
+"Charts wie Candlestick-Charts, Volumen-Charts, MACD-Charts und Linien-Charts "
+"aus historischen Daten generieren. Mehrere Indikatoren und Zielwerte lassen "
+"sich ohne zusätzlichen Code auf demselben Bildschirm vergleichen."
 
 #: ../../source/RELEASE_HISTORY.md:146
-msgid "**交互 K 线**   Notebook 内支持缩放、平移、悬停查看 OHLCV 与指标，探索价格行为更直观。"
+msgid ""
+"**交互 K 线**   Notebook 内支持缩放、平移、悬停查看 OHLCV 与指标，探索价格行为更"
+"直观。"
 msgstr ""
+"**Interaktive Candlestick-Charts** Das Notebook unterstützt Zoomen, Verschieben "
+"und Hovern zur Anzeige von OHLCV und Indikatoren, wodurch das Kursverhalten "
+"intuitiver erkundet werden kann."
 
 #: ../../source/RELEASE_HISTORY.md:148
-msgid "**`qt.candle` 升级**   底层接入新可视化管线，API 保持兼容；Renko 不再支持，旧交互 widget 视为遗留。"
+msgid ""
+"**`qt.candle` 升级**   底层接入新可视化管线，API 保持兼容；Renko 不再支持，旧交"
+"互 widget 视为遗留。"
 msgstr ""
+"**qt.candle-Upgrade:** Die zugrundeliegende Schicht integriert eine neue "
+"Visualisierungspipeline unter Beibehaltung der API-Kompatibilität; Renko wird "
+"nicht mehr unterstützt, und alte interaktive Widgets gelten als veraltet."
 
 #: ../../source/RELEASE_HISTORY.md:150
-msgid "**日志与交易文件**   系统/交易日志与净值曲线 CSV 路径更可预期，旧文件按配置自动清理以节省磁盘。"
+msgid ""
+"**日志与交易文件**   系统/交易日志与净值曲线 CSV 路径更可预期，旧文件按配置自动"
+"清理以节省磁盘。"
 msgstr ""
+"**Protokolle und Transaktionsdateien** Die Pfade der System-/"
+"Transaktionsprotokolle und der Nettovermögenswertkurve im CSV-Format sind "
+"besser vorhersehbar, und alte Dateien werden gemäß der Konfiguration "
+"automatisch gelöscht, um Speicherplatz zu sparen."
 
 #: ../../source/RELEASE_HISTORY.md:152
-msgid "**回测精度与时间网格**   PT/PS/VS 与日内时间网格执行更贴近真实交易节奏，组合调仓与日内调度更易理解。"
+msgid ""
+"**回测精度与时间网格**   PT/PS/VS 与日内时间网格执行更贴近真实交易节奏，组合调仓"
+"与日内调度更易理解。"
 msgstr ""
+"**Genauigkeit des Backtests und Zeitraster** Die Ausführung von PT/PS/VS und "
+"des Intraday-Zeitrasters spiegelt den Rhythmus des realen Handels genauer "
+"wider, wodurch Portfolioanpassungen und die Intraday-Planung leichter "
+"verständlich werden."
 
 #: ../../source/RELEASE_HISTORY.md:155
 msgid "2.1.4 (2026-03-10)"
-msgstr ""
+msgstr "2.1.4 (2026-03-10)"
 
 #: ../../source/RELEASE_HISTORY.md:157
-msgid "**回测评价**   修正回测报告中 `oper_count` 表；大规模回测评价不再触发 pandas 性能警告，输出与原先一致。"
+msgid ""
+"**回测评价**   修正回测报告中 `oper_count` 表；大规模回测评价不再触发 pandas 性"
+"能警告，输出与原先一致。"
 msgstr ""
+"**Backtesting-Evaluierung** Die `oper_count`-Tabelle im Backtesting-Bericht "
+"wurde korrigiert; groß angelegte Backtesting-Evaluierungen lösen keine pandas-"
+"Leistungswarnungen mehr aus, und die Ausgabe bleibt mit dem Original konsistent."
 
 #: ../../source/RELEASE_HISTORY.md:159
 msgid ""
-"**数据类型与历史取数**   修正若干内置类型定义；`get_history_data` 对 `(dtype, freq, "
-"asset_type)` 组合解析更稳健，同名多定义安全合并，避免空数据或重复列错误。"
+"**数据类型与历史取数**   修正若干内置类型定义；`get_history_data` 对 `(dtype, "
+"freq, asset_type)` 组合解析更稳健，同名多定义安全合并，避免空数据或重复列错误。"
 msgstr ""
+"**Datentypen und Abruf historischer Daten** Mehrere integrierte Typdefinitionen "
+"wurden korrigiert; `get_history_data` bietet nun eine robustere Analyse von "
+"`(dtype, freq, asset_type)`-Kombinationen, führt mehrere Definitionen mit "
+"demselben Namen sicher zusammen und vermeidet Fehler wie leere Daten oder "
+"doppelte Spalten."
 
 #: ../../source/RELEASE_HISTORY.md:162
 msgid "2.1.3 (2026-03-09)"
-msgstr ""
+msgstr "2.1.3 (09.03.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:164
-msgid "**生成文件名**   交易日志、系统日志、数据导出等文件名符合 Windows / Linux / macOS 要求，跨平台路径更省心。"
+msgid ""
+"**生成文件名**   交易日志、系统日志、数据导出等文件名符合 Windows / Linux / "
+"macOS 要求，跨平台路径更省心。"
 msgstr ""
+"**Generierte Dateinamen** Die Dateinamen für Transaktionsprotokolle, "
+"Systemprotokolle, Datenexporte usw. entsprechen den Anforderungen von Windows / "
+"Linux / macOS, wodurch plattformübergreifende Pfade bequemer werden."
 
 #: ../../source/RELEASE_HISTORY.md:166
 msgid ""
-"**净值曲线**   `trade_log=True` 时完整净值曲线另存为 "
-"`value_curve_{name}_{datetime}.csv`，与 trade_log / trade_summary 同目录并按 "
-"`trade_log_keep_days` 轮换。"
+"**净值曲线**   `trade_log=True` 时完整净值曲线另存为 `value_curve_{name}"
+"_{datetime}.csv`，与 trade_log / trade_summary 同目录并按 `trade_log_keep_days` "
+"轮换。"
 msgstr ""
+"**Nettovermögenswertkurve** Wenn `trade_log=True`, wird die vollständige "
+"Nettovermögenswertkurve als `value_curve_{name}_{datetime}.csv` im selben "
+"Verzeichnis wie trade_log / trade_summary gespeichert und durch "
+"`trade_log_keep_days` rotiert."
 
 #: ../../source/RELEASE_HISTORY.md:168
-msgid "**回测结果与报告**   回测结果补充价格信息，报告展示更清晰，结果分析更省力。"
+msgid ""
+"**回测结果与报告**   回测结果补充价格信息，报告展示更清晰，结果分析更省力。"
 msgstr ""
+"**Backtesting-Ergebnisse und Berichte** Die Backtesting-Ergebnisse enthalten "
+"ergänzende Preisinformationen, wodurch die Berichtsdarstellung übersichtlicher "
+"und die Ergebnisanalyse einfacher wird."
 
 #: ../../source/RELEASE_HISTORY.md:171
 msgid "2.1.2 (2026-03-08)"
-msgstr ""
+msgstr "2.1.2 (08.03.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:173
-msgid "**回测成交价**   逗号分隔资产池字符串正确处理；成交价列与全池对齐，后复权或部分标的缺数据时回测仍可运行。"
+msgid ""
+"**回测成交价**   逗号分隔资产池字符串正确处理；成交价列与全池对齐，后复权或部分"
+"标的缺数据时回测仍可运行。"
 msgstr ""
+"**Backtesting Transaktionspreis:** Durch Kommas getrennte Asset-Pool-"
+"Zeichenfolgen werden korrekt verarbeitet; die Spalte mit dem Transaktionspreis "
+"ist auf den gesamten Pool ausgerichtet, und Backtests können auch dann "
+"durchgeführt werden, wenn sie um Aktiensplits bereinigt werden oder wenn bei "
+"einigen Assets Daten fehlen."
 
 #: ../../source/RELEASE_HISTORY.md:175
 msgid ""
-"**历史取数**   无效类型名抛出 `ValueError` 并列出未匹配项（提示 `qt.define()`）；弃用参数 `htypes` "
-"仅在显式传入时覆盖 `htype_names`。"
+"**历史取数**   无效类型名抛出 `ValueError` 并列出未匹配项（提示 "
+"`qt.define()`）；弃用参数 `htypes` 仅在显式传入时覆盖 `htype_names`。"
 msgstr ""
+"**Abruf historischer Daten** Ungültige Typnamen führen zu einem `ValueError` "
+"und listen nicht übereinstimmende Elemente auf (Hinweis: `qt.define()`); der "
+"veraltete Parameter `htypes` überschreibt `htype_names` nur, wenn er explizit "
+"übergeben wird."
 
 #: ../../source/RELEASE_HISTORY.md:177
-msgid "**回测结果图标题**   图表标题含 Operator 名称与回测时间，便于与 trade_log / trade_summary 文件对应。"
+msgid ""
+"**回测结果图标题**   图表标题含 Operator 名称与回测时间，便于与 trade_log / "
+"trade_summary 文件对应。"
 msgstr ""
+"**Titel der Backtesting-Ergebnisdiagramme** Die Diagrammtitel enthalten den "
+"Namen des Betreibers und den Zeitpunkt des Backtests, um ein einfaches "
+"Auffinden der trade_log- / trade_summary-Dateien zu ermöglichen."
 
 #: ../../source/RELEASE_HISTORY.md:179
 msgid "**错误信息**   修正 DataType 缺列提示中的拼写错误。"
 msgstr ""
+"**Fehlermeldung** Ein Rechtschreibfehler in der Meldung über die fehlende "
+"Spalte „Datentyp“ wurde korrigiert."
 
 #: ../../source/RELEASE_HISTORY.md:182
 msgid "2.1.1 (2026-03-07)"
-msgstr ""
+msgstr "2.1.1 (2026-03-07)"
 
 #: ../../source/RELEASE_HISTORY.md:184
 msgid ""
-"**回测报告手续费**   修复日频评价下报告「Total operation fee」恒为 0：`total_fee` 现与 trade_log"
-" 逐笔费用之和一致。"
+"**回测报告手续费**   修复日频评价下报告「Total operation fee」恒为 0："
+"`total_fee` 现与 trade_log 逐笔费用之和一致。"
 msgstr ""
+"**Gebühren im Backtesting-Bericht** Das Problem, bei dem die \"Gesamtgebühr\" "
+"im täglichen Auswertungsbericht immer 0 war, wurde behoben: `total_fee` "
+"entspricht nun der Summe der Gebühren für jeden einzelnen Trade im Trade-Log."
 
 #: ../../source/RELEASE_HISTORY.md:186
 msgid ""
-"**交易日志轮换**   新增配置 `trade_log_keep_days`，按保留天数自动删除过期 `trade_log_*.csv` 与 "
-"`trade_summary_*.csv`，避免日志目录无限增长。"
+"**交易日志轮换**   新增配置 `trade_log_keep_days`，按保留天数自动删除过期 "
+"`trade_log_*.csv` 与 `trade_summary_*.csv`，避免日志目录无限增长。"
 msgstr ""
+"**Transaktionsprotokollrotation** Eine neue Konfiguration `trade_log_keep_days` "
+"wurde hinzugefügt, um abgelaufene `trade_log_*.csv`- und `trade_summary_*.csv`-"
+"Dateien automatisch zu löschen, basierend auf der Anzahl der Tage, in denen sie "
+"aufbewahrt werden. Dadurch wird verhindert, dass das Protokollverzeichnis "
+"unbegrenzt anwächst."
 
 #: ../../source/RELEASE_HISTORY.md:189
 msgid "2.1.0 (2026-03-06)"
-msgstr ""
+msgstr "Version 2.1.0 (06.03.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:191
 msgid ""
-"**过程数据 API**   策略可在 `realize()` 中通过 "
-"`get_data('proc.own_cash')`、`get_data('proc.trade_records')` "
-"等访问运行时现金、持仓、成交等，无需在 `data_types` 中声明；回测与 live 注入一致，严格无前视。"
+"**过程数据 API**   策略可在 `realize()` 中通过 `get_data('proc.own_cash')`、"
+"`get_data('proc.trade_records')` 等访问运行时现金、持仓、成交等，无需在 "
+"`data_types` 中声明；回测与 live 注入一致，严格无前视。"
 msgstr ""
+"Die **Process Data API**-Strategie ermöglicht den Zugriff auf Laufzeit-Cash, "
+"Bestände und Transaktionen innerhalb von `realize()` über Methoden wie "
+"`get_data('proc.own_cash')` und `get_data('proc.trade_records')`, ohne dass "
+"eine Deklaration in `data_types` erforderlich ist. Backtesting ist konsistent "
+"mit Live-Injection, strikt ohne Look-Ahead."
 
 #: ../../source/RELEASE_HISTORY.md:193
-msgid "**动态回测路径**   策略源码使用 `proc.*` 时自动走逐步回测；否则仍用批量信号 + 向量化回测，无需手动声明。"
+msgid ""
+"**动态回测路径**   策略源码使用 `proc.*` 时自动走逐步回测；否则仍用批量信号 + 向"
+"量化回测，无需手动声明。"
 msgstr ""
+"**Dynamischer Backtesting-Pfad** Der Strategie-Quellcode führt automatisch "
+"schrittweises Backtesting durch, wenn `proc.*` verwendet wird; andernfalls "
+"verwendet er weiterhin Batch-Signale + vektorisiertes Backtesting, ohne dass "
+"eine manuelle Deklaration erforderlich ist."
 
 #: ../../source/RELEASE_HISTORY.md:195
-msgid "**实盘过程数据**   动态数据策略在 Trader 中同样可用 `get_data('proc.xxx')`，与回测 API 一致。"
+msgid ""
+"**实盘过程数据**   动态数据策略在 Trader 中同样可用 `get_data('proc.xxx')`，与回"
+"测 API 一致。"
 msgstr ""
+"**Live-Handelsprozessdaten** Die dynamische Datenstrategie kann auch in Trader "
+"mit `get_data('proc.xxx')` verwendet werden, analog zur Backtesting-API."
 
 #: ../../source/RELEASE_HISTORY.md:197
 msgid ""
-"**移除旧式 op_* 类型**   `op_cashes` 等 `op_*` DataType 已删除，请改用过程数据 API，详见 [2.0 "
-"迁移指南](qteasy_2_migration_guide.md)。"
+"**移除旧式 op_* 类型**   `op_cashes` 等 `op_*` DataType 已删除，请改用过程数据 "
+"API，详见 [2.0 迁移指南](qteasy_2_migration_guide.md)。"
 msgstr ""
+"**Entfernung veralteter op_*-Datentypen** Die Datentypen `op_cashes` und andere "
+"`op_*`-Datentypen wurden entfernt. Bitte verwenden Sie stattdessen die "
+"prozedurale Daten-API. Weitere Informationen finden Sie im [2.0 Migration Guide]"
+"(qteasy_2_migration_guide.md)."
 
 #: ../../source/RELEASE_HISTORY.md:199
-msgid "**pandas 频率别名**   兼容 pandas 2.2 前后频率别名（如 `M/ME`、`H/h`），减少跨版本 freq 不匹配警告。"
+msgid ""
+"**pandas 频率别名**   兼容 pandas 2.2 前后频率别名（如 `M/ME`、`H/h`），减少跨版"
+"本 freq 不匹配警告。"
 msgstr ""
+"**Pandas-Frequenzaliase** Kompatibel mit Frequenzaliasen vor und nach Pandas "
+"2.2 (z. B. `M/ME`, `H/h`), wodurch versionsübergreifende Warnungen wegen "
+"Frequenzabweichungen reduziert werden."
 
 #: ../../source/RELEASE_HISTORY.md:202
 msgid "2.0.1 (2026-03-05)"
-msgstr ""
+msgstr "2.0.1 (05.03.2026)"
 
 #: ../../source/RELEASE_HISTORY.md:204
 msgid "**文档**   补充整体架构与设计说明。"
-msgstr ""
+msgstr "**Dokument** zur Ergänzung der Gesamtarchitektur- und Designbeschreibung."
 
 #: ../../source/RELEASE_HISTORY.md:206
 msgid "**回测评价频率**   评价表与权益曲线统一按日频计算，与策略运行频率无关。"
 msgstr ""
+"**Häufigkeit der Backtesting-Auswertung** Die Auswertungstabelle und die Equity-"
+"Kurve werden täglich berechnet, unabhängig von der Betriebsfrequenz der "
+"Strategie."
 
 #: ../../source/RELEASE_HISTORY.md:208
-msgid "**配置清理**   移除已无意义的 `price_priority_OHLC`、`price_priority_quote`。"
+msgid ""
+"**配置清理**   移除已无意义的 `price_priority_OHLC`、`price_priority_quote`。"
 msgstr ""
+"**Konfigurationsbereinigung** Entfernen Sie `price_priority_OHLC` und "
+"`price_priority_quote`, da diese nicht mehr aussagekräftig sind."
 
 #: ../../source/RELEASE_HISTORY.md:210
-msgid "**回测成交价与调度**   修复部分场景成交价获取失败；小时/分钟回测默认运行时间表不再包含开盘时刻；成交价与评价价复权方式统一。"
+msgid ""
+"**回测成交价与调度**   修复部分场景成交价获取失败；小时/分钟回测默认运行时间表不"
+"再包含开盘时刻；成交价与评价价复权方式统一。"
 msgstr ""
+"**Backtesting von Transaktionspreisen und Terminplanung** Das Problem, dass in "
+"einigen Szenarien kein Transaktionspreis ermittelt werden konnte, wurde "
+"behoben; der standardmäßige Zeitplan für stündliche/minütliche Backtests "
+"enthält nicht mehr die Öffnungszeit; die Anpassungsmethode für "
+"Transaktionspreis und Bewertungspreis wurde vereinheitlicht."
 
 #: ../../source/RELEASE_HISTORY.md:212
-msgid "**PT / PS / VS 语义**   PT 在 T+0 现金交割下尽量复用同步卖出现金调仓；PS/VS 保持朴素订单语义，资源不足则放弃该笔。"
+msgid ""
+"**PT / PS / VS 语义**   PT 在 T+0 现金交割下尽量复用同步卖出现金调仓；PS/VS 保持"
+"朴素订单语义，资源不足则放弃该笔。"
 msgstr ""
+"**PT / PS / VS Semantik** PT nutzt die synchrone Cash-Repositionierung so oft "
+"wie möglich bei T+0 Cash-Settlement; PS/VS behält die grundlegende "
+"Ordersemantik bei und bricht die Order ab, wenn die Ressourcen nicht ausreichen."
 
 #: ../../source/RELEASE_HISTORY.md:215
 msgid "2.0.0 (2026-02-27)"
-msgstr ""
+msgstr "Version 2.0.0 (2026-02-27)"
 
 #: ../../source/RELEASE_HISTORY.md:217
 msgid ""
-"**2.0 主版本**   架构与 API 重大升级，提供更灵活的多策略、多频率、多窗口与优化能力。**升级前请阅读** [2.0 "
-"迁移指南](qteasy_2_migration_guide.md)。"
+"**2.0 主版本**   架构与 API 重大升级，提供更灵活的多策略、多频率、多窗口与优化能"
+"力。**升级前请阅读** [2.0 迁移指南](qteasy_2_migration_guide.md)。"
 msgstr ""
+"**Die Hauptversion 2.0** bietet ein umfassendes Upgrade der Architektur und API "
+"mit flexibleren Funktionen für verschiedene Strategien, Frequenzen, Fenster und "
+"Optimierungen. **Bitte lesen Sie vor dem Upgrade den [Migrationsleitfaden 2.0]"
+"(qteasy_2_migration_guide.md).**"
 
 #: ../../source/RELEASE_HISTORY.md:219
 msgid ""
-"**Operator / Strategy / Group**   引入 `Parameter` 与 "
-"`Group`：参数可按标的分别设置；策略分组可各自设定运行频率、时机与信号混合；运行时间表更细粒度；Tracing 可写入 trade "
-"log；优化算法与评价指标更丰富。"
+"**Operator / Strategy / Group**   引入 `Parameter` 与 `Group`：参数可按标的分别"
+"设置；策略分组可各自设定运行频率、时机与信号混合；运行时间表更细粒度；Tracing 可"
+"写入 trade log；优化算法与评价指标更丰富。"
 msgstr ""
+"**Operator / Strategie / Gruppe** führt `Parameter` und `Gruppe` ein: Parameter "
+"können für jedes Ziel separat festgelegt werden; Strategiegruppen können "
+"jeweils mit eigener Laufzeit, eigenem Timing und eigener Signalmischung "
+"konfiguriert werden; der Laufzeitplan ist detaillierter; Tracing kann in das "
+"Handelsprotokoll geschrieben werden; und die Optimierungsalgorithmen und "
+"Bewertungsmetriken sind umfangreicher."
 
 #: ../../source/RELEASE_HISTORY.md:221
 msgid "**DataType**   支持资产类型 `ANY`；`StgData` 简化策略数据声明。"
 msgstr ""
+"**DataType** unterstützt Asset-Typen `ANY`; `StgData` vereinfacht die "
+"Strategiedaten-Deklaration."
 
 #: ../../source/RELEASE_HISTORY.md:223
 msgid ""
-"**移除配置项**   "
-"`maximize_cash_usage`、`benchmark_asset_type`、`benchmark_dtype` "
-"已移除，逻辑由执行流与 `benchmark_asset` 推断，迁移见指南。"
+"**移除配置项**   `maximize_cash_usage`、`benchmark_asset_type`、"
+"`benchmark_dtype` 已移除，逻辑由执行流与 `benchmark_asset` 推断，迁移见指南。"
 msgstr ""
+"**Entfernung der Konfigurationselemente:** Die Optionen `maximize_cash_usage`, "
+"`benchmark_asset_type` und `benchmark_dtype` wurden entfernt. Die Logik wird "
+"aus dem Ausführungsablauf und `benchmark_asset` abgeleitet. Weitere "
+"Informationen zur Migration finden Sie im Leitfaden."
 
 #: ../../source/RELEASE_HISTORY.md:226
 msgid "1.4.11 (2026-02-14)"
-msgstr ""
+msgstr "Version 1.4.11 (14. Februar 2026)"
 
 #: ../../source/RELEASE_HISTORY.md:228
 msgid ""
-"**2.0 弃用预告**   对将在 2.0 移除或变更的 API 发出 "
-"FutureWarning，便于提前迁移：`get_history_data(htypes=...)` → `htype_names` 与后缀（如"
-" `close:b`）；`print_trade_log` / `print_backtest_log` → "
-"`trade_log`；`get_table_map()` → `get_table_master()`；broker `random` → "
-"`simulator`；Trader `info(verbose=...)` → `detail`；以及 "
-"`Operator.op_type`、`op_data_freq`、`get_share_idx()` 等变更提示。"
+"**2.0 弃用预告**   对将在 2.0 移除或变更的 API 发出 FutureWarning，便于提前迁"
+"移：`get_history_data(htypes=...)` → `htype_names` 与后缀（如 `close:b`）；"
+"`print_trade_log` / `print_backtest_log` → `trade_log`；`get_table_map()` → "
+"`get_table_master()`；broker `random` → `simulator`；Trader `info(verbose=...)` "
+"→ `detail`；以及 `Operator.op_type`、`op_data_freq`、`get_share_idx()` 等变更提"
+"示。"
 msgstr ""
+"**2.0 Hinweise zu veralteten Funktionen** Für APIs, die in Version 2.0 entfernt "
+"oder geändert werden, werden FutureWarnings ausgegeben, um eine frühzeitige "
+"Migration zu ermöglichen: `get_history_data(htypes=...)` → `htype_names` und "
+"Suffixe (z. B. `close:b`); `print_trade_log` / `print_backtest_log` → "
+"`trade_log`; `get_table_map()` → `get_table_master()`; broker `random` → "
+"`simulator`; Trader `info(verbose=...)` → `detail`; sowie Änderungen an "
+"`Operator.op_type`, `op_data_freq`, `get_share_idx()` usw."
 
 #: ../../source/RELEASE_HISTORY.md:231
 msgid "1.4.10 (2025-12-19)"
-msgstr ""
+msgstr "1.4.10 (2025-12-19)"
 
 #: ../../source/RELEASE_HISTORY.md:233
 msgid "**优化性能**   修复部分系统上优化算法 2 多进程运行时性能偏低的问题。"
 msgstr ""
+"**Leistungsoptimierung** Das Problem der geringen Leistung von Algorithmus 2 "
+"bei der Ausführung in mehreren Prozessen auf einigen Systemen wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:236
 msgid "1.4.9 (2025-03-11)"
-msgstr ""
+msgstr "Version 1.4.9 (2025-03-11)"
 
 #: ../../source/RELEASE_HISTORY.md:238
 msgid ""
-"**Trader 日志与成交**   修复 live 模式日志重复；几乎同时两笔同标的成交写入冲突；偶发错误时间戳行情导致策略 "
-"NaN；周一早盘数据窗口不足；周频 refill 改为每周五晚间自动补齐。"
+"**Trader 日志与成交**   修复 live 模式日志重复；几乎同时两笔同标的成交写入冲突；"
+"偶发错误时间戳行情导致策略 NaN；周一早盘数据窗口不足；周频 refill 改为每周五晚间"
+"自动补齐。"
 msgstr ""
+"**Händlerprotokolle und Transaktionen** Doppelte Protokolle im Live-Modus "
+"behoben; widersprüchliche Schreibvorgänge von zwei Transaktionen mit demselben "
+"Basiswert nahezu gleichzeitig; gelegentlich fehlerhafte Marktdaten mit "
+"Zeitstempel, die zu NaN in der Strategie führten; unzureichendes Datenfenster "
+"am Montagmorgen; wöchentliche Aktualisierung erfolgt nun automatisch jeden "
+"Freitagabend."
 
 #: ../../source/RELEASE_HISTORY.md:241
 msgid "1.4.8 (2025-03-01)"
-msgstr ""
+msgstr "1.4.8 (2025-03-01)"
 
 #: ../../source/RELEASE_HISTORY.md:243
 msgid ""
-"**Trader CLI refill**   新增 `refill` 命令及 `run --task refill`，可在 Shell "
-"内手动补齐数据源表。"
+"**Trader CLI refill**   新增 `refill` 命令及 `run --task refill`，可在 Shell 内"
+"手动补齐数据源表。"
 msgstr ""
+"**Trader CLI-Auffüllung** Mit dem neuen Befehl `refill` und dem Befehl `run --"
+"task refill` können Datenquellentabellen in der Shell manuell vervollständigt "
+"werden."
 
 #: ../../source/RELEASE_HISTORY.md:245
 msgid "**自动 refill**   修复 live 模式自动数据源补齐失败的问题。"
 msgstr ""
+"**Automatische Nachfüllung** Es wurde ein Problem behoben, bei dem die "
+"automatische Vervollständigung der Datenquelle im Live-Modus fehlschlug."
 
 #: ../../source/RELEASE_HISTORY.md:248
 msgid "1.4.7 (2025-02-26)"
-msgstr ""
+msgstr "1.4.7 (2025-02-26)"
 
 #: ../../source/RELEASE_HISTORY.md:250
 msgid ""
-"**live refill 配置**   新增 "
-"`live_trade_daily_refill_tables`、`live_trade_weekly_refill_tables`、`live_trade_monthly_refill_tables`，可指定"
-" live 模式下按日/周/月补齐的表。"
+"**live refill 配置**   新增 `live_trade_daily_refill_tables`、"
+"`live_trade_weekly_refill_tables`、`live_trade_monthly_refill_tables`，可指定 "
+"live 模式下按日/周/月补齐的表。"
 msgstr ""
+"**Live-Nachfüllkonfiguration** Es wurden `live_trade_daily_refill_tables`, "
+"`live_trade_weekly_refill_tables` und `live_trade_monthly_refill_tables` "
+"hinzugefügt, mit denen die Tabellen angegeben werden können, die im Live-Modus "
+"täglich/wöchentlich/monatlich befüllt werden sollen."
 
 #: ../../source/RELEASE_HISTORY.md:252
 msgid ""
-"**稳定性**   修复交易模式下配置偶被覆盖、`DataSource.all_basic_tables` 返回不正确、CLI "
-"`schedule` 无法打印当前任务等问题。"
+"**稳定性**   修复交易模式下配置偶被覆盖、`DataSource.all_basic_tables` 返回不正"
+"确、CLI `schedule` 无法打印当前任务等问题。"
 msgstr ""
+"**Stabilität** Es wurden Probleme behoben, wie z. B. das Überschreiben der "
+"Konfiguration im Transaktionsmodus, das Zurückgeben falscher Werte durch "
+"`DataSource.all_basic_tables` und das Fehlschlagen der Ausgabe des aktuellen "
+"Tasks durch `CLI` mit `schedule`."
 
 #: ../../source/RELEASE_HISTORY.md:255
 msgid "1.4.6 (2025-02-19)"
-msgstr ""
+msgstr "1.4.6 (2025-02-19)"
 
 #: ../../source/RELEASE_HISTORY.md:257
-msgid "**refill_data_source**   当前渠道不可用的表会跳过并警告；修复重复下载写入重复数据的问题。"
+msgid ""
+"**refill_data_source**   当前渠道不可用的表会跳过并警告；修复重复下载写入重复数"
+"据的问题。"
 msgstr ""
+"**refill_data_source** Tabellen, die im aktuellen Kanal nicht verfügbar sind, "
+"werden übersprungen und eine Warnung wird ausgegeben; dies behebt das Problem "
+"von doppelten Downloads, die doppelte Daten schreiben."
 
 #: ../../source/RELEASE_HISTORY.md:260
 msgid "1.4.5 (2025-02-18)"
-msgstr ""
+msgstr "1.4.5 (2025-02-18)"
 
 #: ../../source/RELEASE_HISTORY.md:262
 msgid "**live K 线存储**   修复 live 模式下 K 线偶发写入错误。"
 msgstr ""
+"**Live-Candlestick-Speicherung** Ein gelegentlicher Schreibfehler beim "
+"Speichern von Candlesticks im Live-Modus wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:264
 msgid "**基金行情**   东方财富渠道支持基金分钟与日 K 取价 API。"
 msgstr ""
+"**Fondskurse** Der Eastmoney-Kanal unterstützt eine API für minutengenaue und "
+"tägliche K-Line-Preisberechnungen von Fonds."
 
 #: ../../source/RELEASE_HISTORY.md:267
 msgid "1.4.4 (2025-02-12)"
-msgstr ""
+msgstr "1.4.4 (2025-02-12)"
 
 #: ../../source/RELEASE_HISTORY.md:269
-msgid "**模拟券商与 Trader**   修复部分场景无法获取实时价；历史数据 index 与开盘时刻对齐问题；东方财富渠道格式与稳定性改进。"
+msgid ""
+"**模拟券商与 Trader**   修复部分场景无法获取实时价；历史数据 index 与开盘时刻对"
+"齐问题；东方财富渠道格式与稳定性改进。"
 msgstr ""
+"**Simulierte Brokerage- und Händlerumgebung:** Probleme bei der Echtzeit-"
+"Preisabfrage in einigen Szenarien wurden behoben; die Abstimmung zwischen "
+"historischem Datenindex und Öffnungszeit wurde verbessert; außerdem wurden "
+"Formatierung und Stabilität der Eastmoney-Handelsplattform optimiert."
 
 #: ../../source/RELEASE_HISTORY.md:272
 msgid "1.4.3 (2025-02-11)"
-msgstr ""
+msgstr "1.4.3 (2025-02-11)"
 
 #: ../../source/RELEASE_HISTORY.md:274
-msgid "**live 行情渠道**   修复 Trader 偶从错误渠道取 live 价、无法写入数据源的问题。"
+msgid ""
+"**live 行情渠道**   修复 Trader 偶从错误渠道取 live 价、无法写入数据源的问题。"
 msgstr ""
+"**Live-Marktdatenkanäle** Es wurde ein Problem behoben, bei dem Trader "
+"gelegentlich Live-Preise aus dem falschen Kanal abrief und diese nicht in die "
+"Datenquelle schrieb."
 
 #: ../../source/RELEASE_HISTORY.md:276
 msgid "**refill_data_source**   新增可选参数控制是否下载依赖表。"
 msgstr ""
+"**refill_data_source** Optionaler Parameter hinzugefügt, um zu steuern, ob die "
+"Abhängigkeitstabelle heruntergeladen werden soll."
 
 #: ../../source/RELEASE_HISTORY.md:279
 msgid "1.4.2 (2025-02-07)"
-msgstr ""
+msgstr "1.4.2 (2025-02-07)"
 
 #: ../../source/RELEASE_HISTORY.md:281
-msgid "**依赖**   `dbutil`、`pymysql` 改为必选依赖；缺少可选依赖时的警告展示修正。"
+msgid ""
+"**依赖**   `dbutil`、`pymysql` 改为必选依赖；缺少可选依赖时的警告展示修正。"
 msgstr ""
+"**Abhängigkeiten** `dbutil` und `pymysql` sind nun erforderliche "
+"Abhängigkeiten; Warnungen wegen fehlender optionaler Abhängigkeiten wurden "
+"behoben."
 
 #: ../../source/RELEASE_HISTORY.md:284
 msgid "1.4.1 (2025-02-06)"
-msgstr ""
+msgstr "1.4.1 (2025-02-06)"
 
 #: ../../source/RELEASE_HISTORY.md:286
-msgid "**数据质量**   修复后复权价偶发获取错误、带参 DataType kwargs 错误、实时 K 线索引无有效交易时间等问题。"
+msgid ""
+"**数据质量**   修复后复权价偶发获取错误、带参 DataType kwargs 错误、实时 K 线索"
+"引无有效交易时间等问题。"
 msgstr ""
+"**Datenqualität** Es wurden Probleme behoben, wie z. B. gelegentliche Fehler "
+"beim Abrufen bereinigter Preise, Fehler in DataType kwargs mit Parametern und "
+"das Fehlen einer gültigen Handelszeit für Echtzeit-Candlestick-Indizes."
 
 #: ../../source/RELEASE_HISTORY.md:288
 msgid "**refill_data_source**   `channel` 与 `data_source` 可选并增加校验。"
 msgstr ""
+"**refill_data_source** `channel` und `data_source` sind optional und erfordern "
+"eine zusätzliche Validierung."
 
 #: ../../source/RELEASE_HISTORY.md:291
 msgid "1.4.0 (2025-02-05)"
-msgstr ""
+msgstr "Version 1.4.0 (05.02.2025)"
 
 #: ../../source/RELEASE_HISTORY.md:293
-msgid "**DataType 体系**   新 DataType 类简化本地数据取用；名称可用 `|` 参数（如 `close|b` 后复权收盘）。"
+msgid ""
+"**DataType 体系**   新 DataType 类简化本地数据取用；名称可用 `|` 参数（如 "
+"`close|b` 后复权收盘）。"
 msgstr ""
+"**DataType-System** Die neue DataType-Klasse vereinfacht den lokalen "
+"Datenabruf; Namen können den Parameter `|` verwenden (z. B. `close|b` gefolgt "
+"vom angepassten Schlusskurs)."
 
 #: ../../source/RELEASE_HISTORY.md:295
-msgid "**数据渠道**   新 `data_channel` 模块，支持多在线源；更多预定义数据表与实时价 API。"
+msgid ""
+"**数据渠道**   新 `data_channel` 模块，支持多在线源；更多预定义数据表与实时价 "
+"API。"
 msgstr ""
+"**Datenkanäle** Das neue Modul `data_channel` unterstützt mehrere Online-"
+"Quellen, mehr vordefinierte Datentabellen und Echtzeit-Preis-APIs."
 
 #: ../../source/RELEASE_HISTORY.md:297
-msgid "**弃用**   旧 `adj` 参数、`wt_000300.SH` 成份写法仍兼容但建议改用新 dtype 语法，详见文档。"
+msgid ""
+"**弃用**   旧 `adj` 参数、`wt_000300.SH` 成份写法仍兼容但建议改用新 dtype 语法，"
+"详见文档。"
 msgstr ""
+"**Veraltet** Der alte `adj`-Parameter und die `wt_000300.SH`-Syntax sind "
+"weiterhin kompatibel, es wird jedoch empfohlen, die neue dtype-Syntax zu "
+"verwenden. Weitere Informationen finden Sie in der Dokumentation."
 
 #: ../../source/RELEASE_HISTORY.md:300
 msgid "1.3.12 (2024-12-18)"
-msgstr ""
+msgstr "Version 1.3.12 (18.12.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:302
 msgid ""
-"**Trader TUI/CLI 日志**   RESULT DELIVERY 数量显示截断至 2～3 位小数；系统日志面板增加时间戳；TUI "
-"系统信息面板展示环境信息。"
+"**Trader TUI/CLI 日志**   RESULT DELIVERY 数量显示截断至 2～3 位小数；系统日志面"
+"板增加时间戳；TUI 系统信息面板展示环境信息。"
 msgstr ""
+"**Trader TUI/CLI-Protokolle** Die Anzeige der Ergebnislieferungsmenge wird auf "
+"2-3 Dezimalstellen gekürzt; dem Systemprotokollfeld wird ein Zeitstempel "
+"hinzugefügt; im TUI-Systeminformationsfeld werden Umgebungsinformationen "
+"angezeigt."
 
 #: ../../source/RELEASE_HISTORY.md:305
 msgid "1.3.11 (2024-11-03)"
-msgstr ""
+msgstr "Version 1.3.11 (2024-11-03)"
 
 #: ../../source/RELEASE_HISTORY.md:307
 msgid "**启动配置**   修复纯数字字符串在启动配置文件中解析不正确的问题。"
 msgstr ""
+"**Startkonfiguration** Es wurde ein Problem behoben, bei dem rein numerische "
+"Zeichenketten in der Startkonfigurationsdatei nicht korrekt analysiert wurden."
 
 #: ../../source/RELEASE_HISTORY.md:310
 msgid "1.3.10 (2024-09-03)"
-msgstr ""
+msgstr "Version 1.3.10 (2024-09-03)"
 
 #: ../../source/RELEASE_HISTORY.md:312
 msgid ""
-"**依赖与字体**   更新 database 中弃用 pandas 语法与版本要求；新增按操作系统配置 K "
-"线图中文字体（`ZH_font_name_MAC/WIN/LINUX`）。"
+"**依赖与字体**   更新 database 中弃用 pandas 语法与版本要求；新增按操作系统配置 "
+"K 线图中文字体（`ZH_font_name_MAC/WIN/LINUX`）。"
 msgstr ""
+"**Abhängigkeiten und Schriftarten** Die Datenbank wurde aktualisiert, um die "
+"Syntax- und Versionsanforderungen von pandas zu entfernen; die Konfiguration "
+"chinesischer Schriftarten für Candlestick-Charts wurde basierend auf dem "
+"Betriebssystem hinzugefügt (`ZH_font_name_MAC/WIN/LINUX`)."
 
 #: ../../source/RELEASE_HISTORY.md:314
 msgid ""
 "**启动配置 API**   新增 `get_start_up_settings()`、`start_up_config`；修正 live "
 "trader 帮助信息。"
 msgstr ""
+"**Startup-Konfigurations-API** Die Funktionen `get_start_up_settings()` und "
+"`start_up_config` wurden hinzugefügt; die Hilfeinformationen für Live Trader "
+"wurden korrigiert."
 
 #: ../../source/RELEASE_HISTORY.md:317
 msgid "1.3.9 (2024-09-01)"
-msgstr ""
+msgstr "Version 1.3.9 (2024-09-01)"
 
 #: ../../source/RELEASE_HISTORY.md:319
 msgid ""
-"**启动配置**   `update_start_up_setting()` 对 qt "
-"配置键做合法性校验；`start_up_settings()` 输出与返回值改进；写文件时保留说明头。"
+"**启动配置**   `update_start_up_setting()` 对 qt 配置键做合法性校验；"
+"`start_up_settings()` 输出与返回值改进；写文件时保留说明头。"
 msgstr ""
+"**Startkonfiguration** `update_start_up_setting()` führt Gültigkeitsprüfungen "
+"an Qt-Konfigurationsschlüsseln durch; Verbesserungen bei Ausgabe und "
+"Rückgabewert von `start_up_settings()`; behält den Beschreibungsheader beim "
+"Schreiben in eine Datei bei."
 
 #: ../../source/RELEASE_HISTORY.md:322
 msgid "1.3.8 (2024-09-01)"
-msgstr ""
+msgstr "Version 1.3.8 (2024-09-01)"
 
 #: ../../source/RELEASE_HISTORY.md:324
 msgid ""
-"**启动配置文件**   新增 "
-"`start_up_settings()`、`update_start_up_setting()`、`remove_start_up_setting()`"
-" 读写启动配置。"
+"**启动配置文件**   新增 `start_up_settings()`、`update_start_up_setting()`、"
+"`remove_start_up_setting()` 读写启动配置。"
 msgstr ""
+"**Startkonfigurationsdateien** Es wurden Lese-/Schreib-"
+"Startkonfigurationsfunktionen `start_up_settings()`, "
+"`update_start_up_setting()` und `remove_start_up_setting()` hinzugefügt."
 
 #: ../../source/RELEASE_HISTORY.md:326
 msgid "**TUI 下单**   修复 TUI 买卖单输入错误处理。"
 msgstr ""
+"**TUI-Auftragserteilung** Die Fehlerbehandlung für die Eingabe von Kauf- und "
+"Verkaufsaufträgen in TUI wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:329
 msgid "1.3.7 (2024-08-31)"
-msgstr ""
+msgstr "Version 1.3.7 (2024-08-31)"
 
 #: ../../source/RELEASE_HISTORY.md:331
 msgid "**TUI 交易**   支持快捷键手动买卖、撤单；新增交易日志表格。"
 msgstr ""
+"**TUI Trading** unterstützt den manuellen Kauf, Verkauf und die Stornierung von "
+"Aufträgen über Tastenkombinationen; eine neue Handelsprotokolltabelle wurde "
+"hinzugefügt."
 
 #: ../../source/RELEASE_HISTORY.md:334
 msgid "1.3.6 (2024-08-25)"
-msgstr ""
+msgstr "Version 1.3.6 (2024-08-25)"
 
 #: ../../source/RELEASE_HISTORY.md:336
 msgid "**CLI orders**   `orders` 正确筛选标的；`--time all/a` 生效。"
 msgstr ""
+"**CLI-Befehle** `orders` filtert die Ziele korrekt; `--time all/a` wird wirksam."
 
 #: ../../source/RELEASE_HISTORY.md:338
 msgid "**CLI summary**   新增 `summary`，以可读方式展示指定时段交易操作。"
 msgstr ""
+"**CLI-Zusammenfassung** Die Funktion `summary` wurde hinzugefügt, um "
+"Transaktionsvorgänge für einen bestimmten Zeitraum in einem lesbaren Format "
+"anzuzeigen."
 
 #: ../../source/RELEASE_HISTORY.md:341
 msgid "1.3.5 (2024-08-22)"
-msgstr ""
+msgstr "Version 1.3.5 (2024-08-22)"
 
 #: ../../source/RELEASE_HISTORY.md:343
 msgid "**Trader 状态持久化**   退出时保存最近运行状态，再次进入可恢复。"
 msgstr ""
+"**Trader-Statuspersistenz** Speichert beim Beenden den zuletzt ausgeführten "
+"Status und kann beim erneuten Betreten wiederhergestellt werden."
 
 #: ../../source/RELEASE_HISTORY.md:345
 msgid "**delete_account()**   删除账户时一并清理交易日志、记录与断点文件。"
 msgstr ""
+"**delete_account()** Löscht beim Löschen eines Kontos das "
+"Transaktionsprotokoll, die Datensätze und die Haltepunktdateien."
 
 #: ../../source/RELEASE_HISTORY.md:348
 msgid "1.3.4 (2024-08-17)"
-msgstr ""
+msgstr "1.3.4 (2024-08-17)"
 
 #: ../../source/RELEASE_HISTORY.md:350
 msgid "**模拟券商**   无 live 价时增加重试再撤单，降低填单失败率。"
 msgstr ""
+"**Demo-Brokerage** bietet eine Wiederholungs- und Stornierungsoption, wenn kein "
+"Live-Preis verfügbar ist, wodurch die Fehlerrate der Orders reduziert wird."
 
 #: ../../source/RELEASE_HISTORY.md:352
 msgid "**网格示例**   修正示例中 NaN 价格写入策略参数的问题。"
 msgstr ""
+"**Grid-Beispiel** Das Problem, dass im Beispiel NaN-Preise in die "
+"Strategieparameter geschrieben wurden, wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:355
 msgid "1.3.3 (2024-08-16)"
-msgstr ""
+msgstr "1.3.3 (2024-08-16)"
 
 #: ../../source/RELEASE_HISTORY.md:357
 msgid "**零价买入**   修复 live 无价时可能以 0 价买入的问题。"
 msgstr ""
+"**Kaufen zum Preis von Null** Es wurde ein Fehler behoben, durch den Live zum "
+"Preis von Null gekauft werden konnte, obwohl kein Preis angegeben war."
 
 #: ../../source/RELEASE_HISTORY.md:359
 msgid "**pandas 2.2**   频率别名兼容，避免 FutureWarning。"
 msgstr ""
+"**Pandas 2.2** Frequenzalias-Kompatibilität, Vermeidung von FutureWarning."
 
 #: ../../source/RELEASE_HISTORY.md:362
 msgid "1.3.2 (2024-08-13)"
-msgstr ""
+msgstr "1.3.2 (2024-08-13)"
 
 #: ../../source/RELEASE_HISTORY.md:364
 msgid "**Windows K 线字体**   修正 Windows 下蜡烛图中文字体名。"
 msgstr ""
+"**Windows K-line Font** Korrigiert den chinesischen Schriftartnamen für "
+"Candlestick-Charts unter Windows."
 
 #: ../../source/RELEASE_HISTORY.md:367
 msgid "1.3.1 (2024-08-13)"
-msgstr ""
+msgstr "1.3.1 (2024-08-13)"
 
 #: ../../source/RELEASE_HISTORY.md:369
 msgid "**CLI debug**   新增 `debug` 命令切换调试模式。"
 msgstr ""
+"**CLI-Debugging** Ein neuer `debug`-Befehl wurde hinzugefügt, um den Debug-"
+"Modus zu aktivieren."
 
 #: ../../source/RELEASE_HISTORY.md:371
 msgid "**自选价**   改进 CLI 监控价显示与修复展示失败；Windows 字体名再次修正。"
 msgstr ""
+"**Benutzerdefinierter Preis** Verbesserte CLI-Überwachungspreisanzeige und "
+"Behebung eines Anzeigefehlers; Windows-Schriftartennamen wurden erneut "
+"korrigiert."
 
 #: ../../source/RELEASE_HISTORY.md:374
 msgid "1.3.0 (2024-08-09)"
-msgstr ""
+msgstr "Version 1.3.0 (2024-08-09)"
 
 #: ../../source/RELEASE_HISTORY.md:376
 msgid "**示例运行**   `-r` 清除订单时可指定账户，而非清空全部账户。"
 msgstr ""
+"**Beispielausführung** Mit der Option `-r` können Sie beim Ausgleich von "
+"Aufträgen ein bestimmtes Konto angeben, anstatt alle Konten auszugleichen."
 
 #: ../../source/RELEASE_HISTORY.md:378
 msgid ""
-"**交割与日志**   卖出现金交割记录更清晰；修复 trade log 现金/持仓记录错误、买入交割异常、空数据提取及 CLI `CHANGE`"
-" 若干边界问题。"
+"**交割与日志**   卖出现金交割记录更清晰；修复 trade log 现金/持仓记录错误、买入"
+"交割异常、空数据提取及 CLI `CHANGE` 若干边界问题。"
 msgstr ""
+"**Abrechnung und Protokolle** Die Abrechnungsdatensätze für Verkäufe sind jetzt "
+"übersichtlicher; Fehler in den Handelsprotokollen (Bargeld-/"
+"Positionsdatensätze), anormale Kaufabrechnungen, leere Datenextraktion und "
+"mehrere Grenzprobleme mit CLI `CHANGE` wurden behoben."
 
 #: ../../source/RELEASE_HISTORY.md:381
 msgid "1.2.15 (2024-07-28)"
-msgstr ""
+msgstr "1.2.15 (2024-07-28)"
 
 #: ../../source/RELEASE_HISTORY.md:383
 msgid "**内置策略**   新增 `ATR`、`OBV` 内置策略及文档。"
 msgstr ""
+"**Integrierte Strategien** Es wurden integrierte Strategien und Dokumentationen "
+"für `ATR` und `OBV` hinzugefügt."
 
 #: ../../source/RELEASE_HISTORY.md:386
 msgid "1.2.14 (2024-07-12)"
-msgstr ""
+msgstr "1.2.14 (2024-07-12)"
 
 #: ../../source/RELEASE_HISTORY.md:388
 msgid "**内置策略**   更新 AD、ADOSC，修正实现并补充 docstring。"
 msgstr ""
+"**Integrierte Strategien** AD und ADOSC aktualisieren, Implementierung "
+"korrigieren und Docstring ergänzen."
 
 #: ../../source/RELEASE_HISTORY.md:391
 msgid "1.2.13 (2024-06-19)"
-msgstr ""
+msgstr "1.2.13 (2024-06-19)"
 
 #: ../../source/RELEASE_HISTORY.md:393
 msgid ""
-"**内置策略查询**   `built_ins()` 恒返回 id→类型 dict，错误 id 时模糊匹配；`built_in_list()` /"
-" `built_in_strategies()` 行为对齐；新增 `built_in_doc()` 返回策略 docstring。"
+"**内置策略查询**   `built_ins()` 恒返回 id→类型 dict，错误 id 时模糊匹配；"
+"`built_in_list()` / `built_in_strategies()` 行为对齐；新增 `built_in_doc()` 返回"
+"策略 docstring。"
 msgstr ""
+"**Integrierte Strategieabfrage:** `built_ins()` gibt immer ein ID → Typ-"
+"Dictionary zurück, mit Fuzzy-Matching für falsche IDs; `built_in_list()` / "
+"`built_in_strategies()` bieten Verhaltensausrichtung; ein neues "
+"`built_in_doc()` gibt einen Strategie-Docstring zurück."
 
 #: ../../source/RELEASE_HISTORY.md:396
 msgid "1.2.12 (2024-06-12)"
-msgstr ""
+msgstr "1.2.12 (2024-06-12)"
 
 #: ../../source/RELEASE_HISTORY.md:398
 msgid "**T+0 卖现**   卖股所得现金可立即计入可用现金。"
 msgstr ""
+"**T+0 Barverkauf** Der Barerlös aus dem Aktienverkauf kann sofort dem "
+"verfügbaren Bargeld gutgeschrieben werden."
 
 #: ../../source/RELEASE_HISTORY.md:400
-msgid "**撤单与表信息**   未成交订单日终正确撤销；Windows 下获取表信息失败问题修复。"
+msgid ""
+"**撤单与表信息**   未成交订单日终正确撤销；Windows 下获取表信息失败问题修复。"
 msgstr ""
+"**Auftragsstornierung und Tischinformationen** Nicht ausgeführte Bestellungen "
+"werden nun am Ende des Tages korrekt storniert; das Problem, dass "
+"Tischinformationen unter Windows nicht abgerufen werden konnten, wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:403
 msgid "1.2.11 (2024-06-09)"
-msgstr ""
+msgstr "1.2.11 (09.06.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:405
 msgid "**数据源**   MySQL 连接失败时回退默认数据源类型。"
 msgstr ""
+"**Datenquelle** Der Standarddatenquellentyp, auf den zurückgegriffen wird, wenn "
+"eine MySQL-Verbindung fehlschlägt."
 
 #: ../../source/RELEASE_HISTORY.md:407
 msgid "**TUI 自选**   修复 watch list 管理 bug。"
 msgstr ""
+"**TUI-Benutzerauswahl** Ein Fehler in der Watchlist-Verwaltung wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:410
 msgid "1.2.10 (2024-06-07)"
-msgstr ""
+msgstr "1.2.10 (2024-06-07)"
 
 #: ../../source/RELEASE_HISTORY.md:412
-msgid "**TUI 自选**   Ctrl+A 添加、Ctrl+R 移除自选；添加/退出确认对话框；界面微调。"
+msgid ""
+"**TUI 自选**   Ctrl+A 添加、Ctrl+R 移除自选；添加/退出确认对话框；界面微调。"
 msgstr ""
+"**TUI Benutzerdefinierte Auswahl** Strg+A zum Hinzufügen, Strg+R zum Entfernen "
+"aus der benutzerdefinierten Auswahl; Bestätigungsdialogfeld zum Hinzufügen/"
+"Beenden; Kleinere Anpassungen der Benutzeroberfläche."
 
 #: ../../source/RELEASE_HISTORY.md:415
 msgid "1.2.9 (2024-06-03)"
-msgstr ""
+msgstr "1.2.9 (2024-06-03)"
 
 #: ../../source/RELEASE_HISTORY.md:417
 msgid "**live 入门**   补充 live 初始化帮助与 docstring。"
 msgstr ""
+"**Live-Einstieg** Zusätzliche Hilfe und Dokumentation zur Live-Initialisierung."
 
 #: ../../source/RELEASE_HISTORY.md:420
 msgid "1.2.8 (2024-06-02)"
-msgstr ""
+msgstr "1.2.8 (2024-06-02)"
 
 #: ../../source/RELEASE_HISTORY.md:422
 msgid "**UI 选择**   命令行 `-u` 须显式指定 `tui` 或 `cli`。"
 msgstr ""
+"**UI-Auswahl** In der Befehlszeile `-u` muss entweder `tui` oder `cli` explizit "
+"angegeben werden."
 
 #: ../../source/RELEASE_HISTORY.md:424
-msgid "**账户配置**   `live_trade_account` 重命名为 `live_trade_account_name`，帮助信息更完整。"
+msgid ""
+"**账户配置**   `live_trade_account` 重命名为 `live_trade_account_name`，帮助信息"
+"更完整。"
 msgstr ""
+"**Kontokonfiguration** Benennen Sie `live_trade_account` in "
+"`live_trade_account_name` um, um ausführlichere Hilfeinformationen zu erhalten."
 
 #: ../../source/RELEASE_HISTORY.md:426
 msgid "**qt.candle**   未安装 TA-Lib 时仍可生成 K 线。"
 msgstr ""
+"**qt.candle** kann auch ohne installierte TA-Lib weiterhin Candlestick-Charts "
+"generieren."
 
 #: ../../source/RELEASE_HISTORY.md:429
 msgid "1.2.7 (2024-05-30)"
-msgstr ""
+msgstr "1.2.7 (2024-05-30)"
 
 #: ../../source/RELEASE_HISTORY.md:431
 msgid "**数据 refill**   修复交易日历缺失时 refill 失败的问题。"
 msgstr ""
+"**Datenaktualisierung** Behebt ein Problem, bei dem die Aktualisierung "
+"fehlschlägt, wenn der Transaktionskalender fehlt."
 
 #: ../../source/RELEASE_HISTORY.md:434
 msgid "1.2.6 (2024-05-07)"
-msgstr ""
+msgstr "1.2.6 (2024-05-07)"
 
 #: ../../source/RELEASE_HISTORY.md:436
 msgid "**系统表**   修复部分场景无法读取系统表最后 record id 的问题。"
 msgstr ""
+"**Systemtabellen** Es wurde ein Problem behoben, bei dem die letzte Datensatz-"
+"ID der Systemtabelle in einigen Szenarien nicht gelesen werden konnte."
 
 #: ../../source/RELEASE_HISTORY.md:439
 msgid "1.2.5 (2024-05-06)"
-msgstr ""
+msgstr "1.2.5 (06.05.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:441
 msgid "**HistoryPanel**   修复递归 import 问题。"
-msgstr ""
+msgstr "**HistoryPanel** behebt ein Problem mit rekursivem Import."
 
 #: ../../source/RELEASE_HISTORY.md:444
 msgid "1.2.4 (2024-05-05)"
-msgstr ""
+msgstr "1.2.4 (2024-05-05)"
 
 #: ../../source/RELEASE_HISTORY.md:446
 msgid "**内置策略**   修复 MACDEXT、WILLR、AROONOSC、SLPHT 等策略 bug。"
 msgstr ""
+"**Integrierte Strategien** Fehler in Strategien wie MACDEXT, WILLR, AROONOSC "
+"und SLPHT wurden behoben."
 
 #: ../../source/RELEASE_HISTORY.md:449
 msgid "1.2.3 (2024-04-30)"
-msgstr ""
+msgstr "1.2.3 (2024-04-30)"
 
 #: ../../source/RELEASE_HISTORY.md:451
 msgid "**版本显示**   修正 `__version__` 显示错误（曾显示 1.2.1）。"
 msgstr ""
+"**Versionsanzeige** Der Fehler bei der Anzeige von `__version__` (zuvor wurde "
+"1.2.1 angezeigt) wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:453
 msgid "**下载进度**   tushare refill 进度条信息修正。"
 msgstr ""
+"**Downloadfortschritt** Die Fortschrittsanzeige für tushare refill wurde "
+"korrigiert."
 
 #: ../../source/RELEASE_HISTORY.md:456
 msgid "1.2.2 (2024-04-29)"
-msgstr ""
+msgstr "1.2.2 (2024-04-29)"
 
 #: ../../source/RELEASE_HISTORY.md:458
-msgid "**性能**   未安装 TA-Lib 时偶发极慢问题修复；RuleIterator 策略 escaped failure 修复。"
+msgid ""
+"**性能**   未安装 TA-Lib 时偶发极慢问题修复；RuleIterator 策略 escaped failure "
+"修复。"
 msgstr ""
+"**Performance** Ein gelegentlich auftretendes, extrem langsames Problem wurde "
+"behoben, wenn TA-Lib nicht installiert war; der Fehler, der durch die "
+"RuleIterator-Richtlinie verursacht wurde, wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:460
 msgid "**live 账户**   `qt.live_trade_accounts()` 可查看全部 live 账户。"
 msgstr ""
+"**Live-Konten** Mit `qt.live_trade_accounts()` können Sie alle Live-Konten "
+"anzeigen."
 
 #: ../../source/RELEASE_HISTORY.md:463
 msgid "1.2.1 (2024-04-25)"
-msgstr ""
+msgstr "1.2.1 (2024-04-25)"
 
 #: ../../source/RELEASE_HISTORY.md:465
 msgid "**打包**   修正 1.2.0 样式文件未打入包的问题。"
 msgstr ""
+"**Paketierung** Das Problem, dass Stildateien in Version 1.2.0 nicht im Paket "
+"enthalten waren, wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:467
 msgid "**live 账户 API**   新增 `live_trade_accounts()` 返回各账户详情。"
 msgstr ""
+"Die **Live Accounts API** beinhaltet nun die Funktion `live_trade_accounts()`, "
+"die Details zu jedem Konto zurückgibt."
 
 #: ../../source/RELEASE_HISTORY.md:469
 msgid "**CLI**   修正 trade info 格式；live 相关配置帮助改进。"
 msgstr ""
+"**CLI** Das Format der Handelsinformationen wurde korrigiert; die "
+"Konfigurationen im Zusammenhang mit Live-Aktivitäten wurden verbessert."
 
 #: ../../source/RELEASE_HISTORY.md:472
 msgid "1.2.0 (2024-04-25)"
-msgstr ""
+msgstr "Version 1.2.0 (2024-04-25)"
 
 #: ../../source/RELEASE_HISTORY.md:474
 msgid ""
-"**Trader TUI**   新增终端 UI，与 Trader Shell "
-"二选一（`live_trade_ui_type`）；内置亮/暗主题；展示账户、持仓、订单与日志；Ctrl+P / Ctrl+R 暂停恢复。"
+"**Trader TUI**   新增终端 UI，与 Trader Shell 二选一（`live_trade_ui_type`）；内"
+"置亮/暗主题；展示账户、持仓、订单与日志；Ctrl+P / Ctrl+R 暂停恢复。"
 msgstr ""
+"**Trader TUI** fügt eine neue Terminal-Benutzeroberfläche hinzu, die eine "
+"Auswahl zwischen Trader Shell (`live_trade_ui_type`) bietet; beinhaltet "
+"integrierte helle/dunkle Designs; zeigt Konten, Positionen, Aufträge und "
+"Protokolle an; und ermöglicht das Pausieren und Fortsetzen mit Strg+P / Strg+R."
 
 #: ../../source/RELEASE_HISTORY.md:477
 msgid "1.1.11 (2024-04-20)"
-msgstr ""
+msgstr "1.1.11 (2024-04-20)"
 
 #: ../../source/RELEASE_HISTORY.md:479
 msgid "**refill_data_source**   支持可调批次大小与间隔的分批下载。"
 msgstr ""
+"**refill_data_source** unterstützt Batch-Downloads mit einstellbarer Batchgröße "
+"und einstellbarem Intervall."
 
 #: ../../source/RELEASE_HISTORY.md:481
 msgid "**配置错误提示**   配置键非法值时错误信息更友好。"
 msgstr ""
+"**Fehlermeldungen bei der Konfiguration** Die Fehlermeldungen sind jetzt "
+"benutzerfreundlicher, wenn Schlüssel mit ungültigen Werten konfiguriert werden."
 
 #: ../../source/RELEASE_HISTORY.md:484
 msgid "1.1.10 (2024-04-19)"
-msgstr ""
+msgstr "1.1.10 (2024-04-19)"
 
 #: ../../source/RELEASE_HISTORY.md:486
 msgid "**tushare 重试**   修复 tushare 自动重试相关配置不生效的问题。"
 msgstr ""
+"**tushare Wiederholung** Es wurde ein Problem behoben, bei dem die "
+"automatischen Wiederholungskonfigurationen von tushare nicht funktionierten."
 
 #: ../../source/RELEASE_HISTORY.md:489
 msgid "1.1.9 (2024-04-09)"
-msgstr ""
+msgstr "Version 1.1.9 (2024-04-09)"
 
 #: ../../source/RELEASE_HISTORY.md:491
 msgid "**分钟数据**   修复本地分钟数据提取偶发错误；兼容性改进。"
 msgstr ""
+"**Minutendaten** Gelegentliche Fehler bei der lokalen Minutendatenextraktion "
+"wurden behoben; die Kompatibilität wurde verbessert."
 
 #: ../../source/RELEASE_HISTORY.md:494
 msgid "1.1.8 (2024-04-05)"
-msgstr ""
+msgstr "1.1.8 (05.04.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:496
 msgid ""
-"**Python 3.9–3.12**   扩展支持；兼容 pandas 2.2.1、numpy 1.26.4、numba 0.59.1；修复 "
-"3.10+ 策略优化失败；若干错误信息改进。"
+"**Python 3.9–3.12**   扩展支持；兼容 pandas 2.2.1、numpy 1.26.4、numba 0.59.1；"
+"修复 3.10+ 策略优化失败；若干错误信息改进。"
 msgstr ""
+"**Python 3.9–3.12** Erweiterte Unterstützung; kompatibel mit pandas 2.2.1, "
+"numpy 1.26.4 und numba 0.59.1; Fehler bei der Strategieoptimierung in 3.10+ "
+"behoben; mehrere Fehlermeldungen verbessert."
 
 #: ../../source/RELEASE_HISTORY.md:499
 msgid "1.1.7 (2024-04-03)"
-msgstr ""
+msgstr "1.1.7 (2024-04-03)"
 
 #: ../../source/RELEASE_HISTORY.md:501
 msgid "**Python 版本**   官方支持 Python 3.9～3.12 安装运行。"
 msgstr ""
+"**Python-Version** Unterstützt offiziell Python 3.9 bis 3.12 für Installation "
+"und Betrieb."
 
 #: ../../source/RELEASE_HISTORY.md:504
 msgid "1.1.4 (2024-03-30)"
-msgstr ""
+msgstr "1.1.4 (2024-03-30)"
 
 #: ../../source/RELEASE_HISTORY.md:506
 msgid ""
-"**依赖冲突**   调整 numba/numpy 版本约束；首次加载警告略改进；修复 pandas > 2.0 兼容问题；优化算法 2 在部分 "
-"numpy/numba 组合下的性能警告。"
+"**依赖冲突**   调整 numba/numpy 版本约束；首次加载警告略改进；修复 pandas > 2.0 "
+"兼容问题；优化算法 2 在部分 numpy/numba 组合下的性能警告。"
 msgstr ""
+"**Abhängigkeitskonflikte** Angepasste Versionsbeschränkungen für numba/numpy; "
+"Warnungen beim ersten Laden leicht verbessert; Kompatibilitätsprobleme mit "
+"pandas > 2.0 behoben; Leistungswarnungen für Algorithmus 2 unter bestimmten "
+"numpy/numba-Kombinationen optimiert."
 
 #: ../../source/RELEASE_HISTORY.md:509
 msgid "1.1.3 (2024-03-25)"
-msgstr ""
+msgstr "1.1.3 (2024-03-25)"
 
 #: ../../source/RELEASE_HISTORY.md:511
 msgid ""
-"**回测结果**   回测返回 dict 新增 `trade_log`、`trade_records`、`full_histories` "
-"键，便于直接访问。"
+"**回测结果**   回测返回 dict 新增 `trade_log`、`trade_records`、"
+"`full_histories` 键，便于直接访问。"
 msgstr ""
+"**Backtest-Ergebnisse** Der Backtest lieferte ein Wörterbuch mit den "
+"zusätzlichen Schlüsseln `trade_log`, `trade_records` und `full_histories` für "
+"einen einfachen Zugriff."
 
 #: ../../source/RELEASE_HISTORY.md:514
 msgid "1.1.2 (2024-03-18)"
-msgstr ""
+msgstr "1.1.2 (2024-03-18)"
 
 #: ../../source/RELEASE_HISTORY.md:516
 msgid "**CLI dashboard**   `dashboard --rewind` 可查看历史保存日志。"
 msgstr ""
+"Über das CLI-Dashboard `dashboard --rewind` können Sie gespeicherte Protokolle "
+"anzeigen."
 
 #: ../../source/RELEASE_HISTORY.md:518
 msgid "**CLI buy/sell**   提交结果打印更明确。"
 msgstr ""
+"Die Ergebnisse der CLI-Kauf-/Verkaufsaufträge werden übersichtlicher "
+"dargestellt."
 
 #: ../../source/RELEASE_HISTORY.md:521
 msgid "1.1.1 (2024-03-16)"
-msgstr ""
+msgstr "1.1.1 (2024-03-16)"
 
 #: ../../source/RELEASE_HISTORY.md:523
-msgid "**live 系统日志**   不同 live 实例写入不同系统日志文件；支持从 live / 系统日志文件读信息。"
+msgid ""
+"**live 系统日志**   不同 live 实例写入不同系统日志文件；支持从 live / 系统日志文"
+"件读信息。"
 msgstr ""
+"**Live-Systemprotokolle** Verschiedene Live-Instanzen schreiben in "
+"unterschiedliche Systemprotokolldateien; Informationen können aus den Live-/"
+"Systemprotokolldateien gelesen werden."
 
 #: ../../source/RELEASE_HISTORY.md:526
 msgid "1.1.0 (2024-03-08)"
-msgstr ""
+msgstr "Version 1.1.0 (08.03.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:528
 msgid ""
-"**Trader Shell 参数解析**   全命令支持 `--parameter` / `-p` 风格及 "
-"`-h`/`--help`；错误提示与用法说明改进。`watch` 支持 `-r` 移除、`-c` 清空；`buy`/`sell` 用 `-p` "
-"价格、`-s` 方向；`info`/`overview` 增加 `--system`；`orders` 增加 "
-"status/time/side/type 过滤；`config` 支持 `-s` 设置与 `-l` 层级；`strategies` 支持 "
-"`--set-par`；`run` 支持 `--args` 传任务参数。"
+"**Trader Shell 参数解析**   全命令支持 `--parameter` / `-p` 风格及 `-h`/`--"
+"help`；错误提示与用法说明改进。`watch` 支持 `-r` 移除、`-c` 清空；`buy`/`sell` "
+"用 `-p` 价格、`-s` 方向；`info`/`overview` 增加 `--system`；`orders` 增加 "
+"status/time/side/type 过滤；`config` 支持 `-s` 设置与 `-l` 层级；`strategies` 支"
+"持 `--set-par`；`run` 支持 `--args` 传任务参数。"
 msgstr ""
+"**Trader Shell Parameteranalyse** Vollständige Befehlsunterstützung für `--"
+"parameter` / `-p` und `-h` / `--help`; verbesserte Fehlermeldungen und "
+"Nutzungshinweise. `watch` unterstützt jetzt `-r` zum Entfernen und `-c` zum "
+"Löschen; `buy` / `sell` verwendet `-p` für den Preis und `-s` für die Richtung; "
+"`info` / `overview` bietet jetzt `--system`; `orders` bietet Filteroptionen für "
+"Status, Zeit, Seite und Typ; `config` unterstützt `-s` für Einstellungen und `-"
+"l` für die Hierarchie; `strategies` unterstützt `--set-par`; `run` unterstützt "
+"`--args` zum Übergeben von Aufgabenparametern."
 
 #: ../../source/RELEASE_HISTORY.md:531
 msgid "1.0.27 (2024-03-05)"
-msgstr ""
+msgstr "1.0.27 (05.03.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:533
-msgid "**数据库读取**   移除通过 pandas SQL 读库路径，避免高版本 pandas 要求 sqlalchemy 的 UserWarning。"
+msgid ""
+"**数据库读取**   移除通过 pandas SQL 读库路径，避免高版本 pandas 要求 "
+"sqlalchemy 的 UserWarning。"
 msgstr ""
+"**Datenbanklesevorgänge** Entfernen Sie den pandas SQL-Lesepfad, um die von "
+"SQLAlchemy ausgegebene UserWarning-Meldung zu vermeiden, die von höheren "
+"Versionen von pandas benötigt wird."
 
 #: ../../source/RELEASE_HISTORY.md:536
 msgid "1.0.26 (2024-02-29)"
-msgstr ""
+msgstr "1.0.26 (2024-02-29)"
 
 #: ../../source/RELEASE_HISTORY.md:538
 msgid "**live 日志**   live 交易日志写入系统日志文件，以账户号为前缀区分。"
 msgstr ""
+"**Live-Protokolle** Live-Transaktionsprotokolle werden in die "
+"Systemprotokolldatei geschrieben und sind anhand der Kontonummer zu "
+"unterscheiden."
 
 #: ../../source/RELEASE_HISTORY.md:541
 msgid "1.0.25 (2024-02-28)"
-msgstr ""
+msgstr "1.0.25 (2024-02-28)"
 
 #: ../../source/RELEASE_HISTORY.md:543
 msgid ""
-"**live trade_log 文件**   live 模式保存 trade log 文件至 `trade_log_file_path`；若干 "
-"live bug 修复与错误信息打印。"
+"**live trade_log 文件**   live 模式保存 trade log 文件至 `trade_log_file_path`；"
+"若干 live bug 修复与错误信息打印。"
 msgstr ""
+"**Live-Handelsprotokolldatei** Speichert die Handelsprotokolldatei im Live-"
+"Modus unter `trade_log_file_path`; beinhaltet mehrere Live-Bugfixes und die "
+"Ausgabe von Fehlermeldungen."
 
 #: ../../source/RELEASE_HISTORY.md:546
 msgid "1.0.24 (2024-02-18)"
-msgstr ""
+msgstr "Version 1.0.24 (18. Februar 2024)"
 
 #: ../../source/RELEASE_HISTORY.md:548
-msgid "**broker 回归**   修复 1.0.18 以来 broker 合并不完整导致 live 下单失败的问题。"
+msgid ""
+"**broker 回归**   修复 1.0.18 以来 broker 合并不完整导致 live 下单失败的问题。"
 msgstr ""
+"**Broker-Rückgaben** Ein Problem, das seit Version 1.0.18 auftrat und bei dem "
+"eine unvollständige Broker-Zusammenführung zu Fehlern bei Live-Aufträgen "
+"führte, wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:551
 msgid "1.0.23 (2024-02-15)"
-msgstr ""
+msgstr "1.0.23 (2024-02-15)"
 
 #: ../../source/RELEASE_HISTORY.md:553
 msgid "**filter_stocks / candle**   修复类型转换错误导致筛选与 K 线失败的问题。"
 msgstr ""
+"**filter_stocks / candle** Es wurde ein Problem behoben, bei dem ein "
+"Typkonvertierungsfehler dazu führte, dass Filterung und Candlestick-Charts "
+"fehlschlugen."
 
 #: ../../source/RELEASE_HISTORY.md:556
 msgid "1.0.22 (2024-02-14)"
-msgstr ""
+msgstr "1.0.22 (2024-02-14)"
 
 #: ../../source/RELEASE_HISTORY.md:558
 msgid ""
-"**get_config / candle**   修正 list 日期解析错误；进度条文本截断至屏宽；`get_stock_info()` "
-"无需全部基础表即可运行。"
+"**get_config / candle**   修正 list 日期解析错误；进度条文本截断至屏宽；"
+"`get_stock_info()` 无需全部基础表即可运行。"
 msgstr ""
+"**get_config / candle** Ein Fehler bei der Datumsanalyse in der Liste wurde "
+"behoben; der Text der Fortschrittsanzeige wurde auf die Bildschirmbreite "
+"gekürzt; `get_stock_info()` kann nun ohne alle zugrunde liegenden Tabellen "
+"ausgeführt werden."
 
 #: ../../source/RELEASE_HISTORY.md:561
 msgid "1.0.21 (2024-02-11)"
-msgstr ""
+msgstr "1.0.21 (2024-02-11)"
 
 #: ../../source/RELEASE_HISTORY.md:563
 msgid "**稳定性**   若干 bug 修复。"
-msgstr ""
+msgstr "**Stabilität** Mehrere Fehler wurden behoben."
 
 #: ../../source/RELEASE_HISTORY.md:566
 msgid "1.0.20 (2024-02-08)"
-msgstr ""
+msgstr "1.0.20 (08.02.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:568
-msgid "**免 TA-Lib 指标**   修正 EMA、MACD、TRIX、DEMA 在无 ta-lib 时的实现，结果与 talib 版略有差异但可用。"
+msgid ""
+"**免 TA-Lib 指标**   修正 EMA、MACD、TRIX、DEMA 在无 ta-lib 时的实现，结果与 "
+"talib 版略有差异但可用。"
 msgstr ""
+"**TA-Lib-freie Indikatoren** Die Implementierung von EMA, MACD, TRIX und DEMA "
+"wurde ohne TA-Lib korrigiert. Die Ergebnisse weichen geringfügig von der TA-Lib-"
+"Version ab, sind aber weiterhin nutzbar."
 
 #: ../../source/RELEASE_HISTORY.md:571
 msgid "1.0.19 (2024-02-07)"
-msgstr ""
+msgstr "Version 1.0.19 (07.02.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:573
-msgid "**免 TA-Lib**   RSI、MA、BBANDS 不再依赖 ta-lib，无 ta-lib 也可画 K 线；降低初学者依赖门槛。"
+msgid ""
+"**免 TA-Lib**   RSI、MA、BBANDS 不再依赖 ta-lib，无 ta-lib 也可画 K 线；降低初学"
+"者依赖门槛。"
 msgstr ""
+"**TA-Lib-frei** RSI, MA und BBANDS sind nicht mehr von ta-lib abhängig, und "
+"Candlestick-Charts können ohne ta-lib gezeichnet werden; dies senkt die "
+"Abhängigkeitsschwelle für Anfänger."
 
 #: ../../source/RELEASE_HISTORY.md:576
 msgid "1.0.18 (2024-02-05)"
-msgstr ""
+msgstr "1.0.18 (05.02.2024)"
 
 #: ../../source/RELEASE_HISTORY.md:578
 msgid ""
-"**Trader Shell 消息**   订单成交展示含股数与现金变化；INFO/OVERVIEW 默认不再打印系统信息；numpy "
-"版本要求更新。"
+"**Trader Shell 消息**   订单成交展示含股数与现金变化；INFO/OVERVIEW 默认不再打印"
+"系统信息；numpy 版本要求更新。"
 msgstr ""
+"**Trader Shell Messages** Die Anzeige der Auftragsabwicklung umfasst Änderungen "
+"der Aktienanzahl und des Bargelds; INFO/OVERVIEW gibt Systeminformationen nicht "
+"mehr standardmäßig aus; NumPy-Versionsaktualisierung erforderlich."
 
 #: ../../source/RELEASE_HISTORY.md:581
 msgid "1.0.17 (2024-01-29)"
-msgstr ""
+msgstr "1.0.17 (2024-01-29)"
 
 #: ../../source/RELEASE_HISTORY.md:583
 msgid "**CLI run**   可在主线程运行策略便于调试。"
 msgstr ""
+"Mit **CLI run** können Sie Strategien im Hauptthread ausführen, um das Debuggen "
+"zu vereinfachen."
 
 #: ../../source/RELEASE_HISTORY.md:585
 msgid "**live 行情**   修复运行频率低于 1 小时时 live 价获取失败。"
 msgstr ""
+"**Live-Kursinformationen** Es wurde ein Problem behoben, bei dem der Abruf von "
+"Live-Kursen fehlschlug, wenn die Abfragefrequenz weniger als 1 Stunde betrug."
 
 #: ../../source/RELEASE_HISTORY.md:588
 msgid "1.0.16 (2024-01-27)"
-msgstr ""
+msgstr "1.0.16 (2024-01-27)"
 
 #: ../../source/RELEASE_HISTORY.md:590
 msgid "**信号无法下单提示**   live 模式现金/持仓不足无法转订单时会提示。"
 msgstr ""
+"**Fehler bei der Auftragserteilung – keine Benachrichtigung** Diese Meldung "
+"erscheint, wenn Sie im Live-Modus aufgrund unzureichender Liquidität/Position "
+"keinen Auftrag aufgeben können."
 
 #: ../../source/RELEASE_HISTORY.md:592
 msgid ""
-"**成交与成本**   修复重复处理成交导致可用量/现金错误、成本计算错误、history "
-"命令多标的成本错误；修复非交易日意外填数据（#85）等问题。"
+"**成交与成本**   修复重复处理成交导致可用量/现金错误、成本计算错误、history 命令"
+"多标的成本错误；修复非交易日意外填数据（#85）等问题。"
 msgstr ""
+"**Transaktionen und Kosten** Es wurden Probleme behoben, wie z. B. Fehler bei "
+"der verfügbaren Menge/dem verfügbaren Bargeld aufgrund doppelter "
+"Transaktionsverarbeitung, Fehler bei der Kostenberechnung und Kostenfehler für "
+"mehrere Ziele im Verlaufsbefehl; außerdem wurden Probleme wie unerwartete "
+"Dateneingaben an Nicht-Handelstagen behoben (#85)."
 
 #: ../../source/RELEASE_HISTORY.md:595
 msgid "1.0.15 (2023-12-29)"
-msgstr ""
+msgstr "Version 1.0.15 (2023-12-29)"
 
 #: ../../source/RELEASE_HISTORY.md:597
-msgid "**指数与 ETF live**   支持监控指数/ETF live 价；live 交易目标支持 ETF 与指数。"
+msgid ""
+"**指数与 ETF live**   支持监控指数/ETF live 价；live 交易目标支持 ETF 与指数。"
 msgstr ""
+"**Index & ETF Live** Unterstützt die Überwachung von Live-Index-/ETF-Kursen; "
+"Live-Handelsziele werden sowohl für ETFs als auch für Indizes unterstützt."
 
 #: ../../source/RELEASE_HISTORY.md:600
 msgid "1.0.14 (2023-12-22)"
-msgstr ""
+msgstr "Version 1.0.14 (2023-12-22)"
 
 #: ../../source/RELEASE_HISTORY.md:602
 msgid "**依赖**   移除可选 sqlalchemy；broker 增加最大重试后停止执行。"
 msgstr ""
+"**Abhängigkeiten** Optionales SQLAlchemy entfernen; maximale "
+"Wiederholungsversuche vor dem Abbruch der Ausführung auf dem Broker erhöhen."
 
 #: ../../source/RELEASE_HISTORY.md:605
 msgid "1.0.13 (2023-12-21)"
-msgstr ""
+msgstr "Version 1.0.13 (2023-12-21)"
 
 #: ../../source/RELEASE_HISTORY.md:607
-msgid "**Trader Shell**   命令模式上下键翻阅历史；新增 `buy`/`sell` 手动下单；live 价后台线程获取。"
+msgid ""
+"**Trader Shell**   命令模式上下键翻阅历史；新增 `buy`/`sell` 手动下单；live 价后"
+"台线程获取。"
 msgstr ""
+"**Trader Shell** Befehlsmodus: Verwenden Sie die Pfeiltasten nach oben und "
+"unten, um durch die Historie zu navigieren; Fügen Sie manuelle Kauf-/"
+"Verkaufsaufträge hinzu; Der Live-Preis wird über einen Hintergrundthread "
+"abgerufen."
 
 #: ../../source/RELEASE_HISTORY.md:609
 msgid "**Simulator Broker**   按 live 价返回模拟成交；修复订单互相阻塞。"
 msgstr ""
+"**Simulator Broker** Gibt simulierte Trades zum Live-Preis zurück; behebt "
+"Probleme mit der Orderblockierung."
 
 #: ../../source/RELEASE_HISTORY.md:612
 msgid "1.0.12 (2023-12-07)"
-msgstr ""
+msgstr "1.0.12 (07.12.2023)"
 
 #: ../../source/RELEASE_HISTORY.md:614
-msgid "**视觉与 live 价**   界面效果改进；live 价后台线程避免主循环卡顿；非本地时区也可显示 live 价；监控刷新间隔可配置。"
+msgid ""
+"**视觉与 live 价**   界面效果改进；live 价后台线程避免主循环卡顿；非本地时区也可"
+"显示 live 价；监控刷新间隔可配置。"
 msgstr ""
+"**Visuelle und Live-Preis-Verbesserungen** der Benutzeroberfläche; ein "
+"Hintergrundthread für den Live-Preis verhindert Verzögerungen in der "
+"Hauptschleife; der Live-Preis kann auch in anderen Zeitzonen angezeigt werden; "
+"das Aktualisierungsintervall der Überwachung ist konfigurierbar."
 
 #: ../../source/RELEASE_HISTORY.md:617
 msgid "1.0.11 (2023-12-03)"
-msgstr ""
+msgstr "1.0.11 (03.12.2023)"
 
 #: ../../source/RELEASE_HISTORY.md:619
 msgid "**Shell 参数风格**   支持 `--parameter` / `-p` 新风格（旧风格将弃用）。"
 msgstr ""
+"**Shell-Parameterstile** Die neuen Stile `--parameter` / `-p` werden "
+"unterstützt (die alten Stile werden nicht mehr unterstützt)."
 
 #: ../../source/RELEASE_HISTORY.md:621
-msgid "**live 配置**   可配置 broker 参数与时区；ta-lib 改为可选，部分内置策略无 ta-lib 仍可用。"
+msgid ""
+"**live 配置**   可配置 broker 参数与时区；ta-lib 改为可选，部分内置策略无 ta-"
+"lib 仍可用。"
 msgstr ""
+"**Live-Konfiguration** ermöglicht die Konfiguration von Brokerparametern und "
+"der Zeitzone; ta-lib ist jetzt optional, aber einige integrierte Strategien "
+"sind auch ohne ta-lib weiterhin verfügbar."
 
 #: ../../source/RELEASE_HISTORY.md:624
 msgid "1.0.10 (2023-11-25)"
-msgstr ""
+msgstr "1.0.10 (2023-11-25)"
 
 #: ../../source/RELEASE_HISTORY.md:626
 msgid "**reference 数据**   修正 1.0.9 遗留的 reference None 错误。"
 msgstr ""
+"**Referenzdaten** Der Fehler \"reference None\", ein Überbleibsel aus Version "
+"1.0.9, wurde behoben."
 
 #: ../../source/RELEASE_HISTORY.md:628
 msgid "**backtest_price_adj**   默认值改为 `none`。"
 msgstr ""
+"Der Standardwert von **backtest_price_adj** sollte auf `none` geändert werden."
 
 #: ../../source/RELEASE_HISTORY.md:631
 msgid "1.0.9 (2023-11-24)"
-msgstr ""
+msgstr "Version 1.0.9 (2023-11-24)"
 
 #: ../../source/RELEASE_HISTORY.md:633
 msgid "**reference 数据**   修正 reference 生成与注入策略的逻辑。"
 msgstr ""
+"**Referenzdaten** Die Logik der Referenzgenerierung und der Einfügestrategie "
+"wurde korrigiert."
 
 #: ../../source/RELEASE_HISTORY.md:635
 msgid "**文档**   文档改进。"
-msgstr ""
+msgstr "**Dokumentation** Verbesserungen der Dokumentation."
 
 #: ../../source/RELEASE_HISTORY.md:638
 msgid "1.0.8 (2023-11-22)"
-msgstr ""
+msgstr "Version 1.0.8 (2023-11-22)"
 
 #: ../../source/RELEASE_HISTORY.md:640
 msgid ""
 "**Trader Shell**   依赖 `rich` 的消息着色；文档发布至 Read the Docs；新增 "
 "`qteasy.__version__`。"
 msgstr ""
+"**Trader Shell** verwendet nun `rich` für die farbliche Darstellung von "
+"Meldungen; die Dokumentation wurde auf Read the Docs veröffentlicht; "
+"`qteasy.__version__` wurde hinzugefügt."
 
 #: ../../source/RELEASE_HISTORY.md:643
 msgid "1.0.7 (2023-11-11)"
-msgstr ""
+msgstr "Version 1.0.7 (11.11.2023)"
 
 #: ../../source/RELEASE_HISTORY.md:645
 msgid "**Strategy**   新增 `use_latest_data_cycle` 控制是否用最新价生成信号。"
 msgstr ""
+"**Die Strategie** fügt `use_latest_data_cycle` hinzu, um zu steuern, ob der "
+"aktuellste Preis zur Generierung von Signalen verwendet werden soll."
 
 #: ../../source/RELEASE_HISTORY.md:647
-msgid "**Shell watch**   新增 `watch` 实时监控价；Shell 显示股票名称；东方财富 live 价渠道。"
+msgid ""
+"**Shell watch**   新增 `watch` 实时监控价；Shell 显示股票名称；东方财富 live 价"
+"渠道。"
 msgstr ""
+"**Shell Watch** Die Funktion „Watch“ wurde für die Echtzeit-Preisüberwachung "
+"hinzugefügt; Shell zeigt Aktiennamen an; Eastmoney Live-Preiskanal."
 
 #: ../../source/RELEASE_HISTORY.md:650
 msgid "1.0.6 (2023-10-19)"
-msgstr ""
+msgstr "Version 1.0.6 (19.10.2023)"
 
 #: ../../source/RELEASE_HISTORY.md:652
 msgid "**Shell config**   新增 `config` 命令。"
-msgstr ""
+msgstr "**Shell-Konfiguration** Fügt den Befehl `config` hinzu."
 
 #: ../../source/RELEASE_HISTORY.md:654
 msgid "**FUND**   支持 FUND 作为投资类型。"
-msgstr ""
+msgstr "**FONDS** unterstützt FUND als Anlageform."
 
 #: ../../source/RELEASE_HISTORY.md:657
 msgid "1.0.0 (2023-09-19)"
-msgstr ""
+msgstr "Version 1.0.0 (19.09.2023)"
 
 #: ../../source/RELEASE_HISTORY.md:659
 msgid "**首次 PyPI 发布**   qteasy 首个可在 PyPI 安装使用的正式版本。"
 msgstr ""
-
-#~ msgid ""
-#~ "Published `Qteasy` Docs to "
-#~ "https://qteasy.readthedocs.io/zh/latest/, added more "
-#~ "supportive documents including api reference,"
-#~ " examples, tutorials, etc."
-#~ msgstr ""
-
-#~ msgid "RELEASE HISTORY"
-#~ msgstr ""
-
-#~ msgid "Unreleased"
-#~ msgstr ""
-
-#~ msgid "(none)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Live trading (S1.3 complete)**   Added "
-#~ "a configurable, testable live-trading "
-#~ "foundation: `LiveTradeConfig` for validated "
-#~ "runtime configuration; a pluggable "
-#~ "`RiskManager` that can reject unsafe "
-#~ "orders before submission with clear "
-#~ "reasons; and broker-side adapter "
-#~ "skeleton APIs (`connect/submit/cancel/poll_fills`) "
-#~ "to prepare for future integrations (e.g."
-#~ " QMT).   Improved observability and "
-#~ "recovery for live runs: clearer "
-#~ "artifacts inventory (logs/breakpoints/risk logs) "
-#~ "and more consistent order lifecycle "
-#~ "behaviors in CLI/TUI."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Documentation**   Added a dedicated live-"
-#~ "trading documentation module "
-#~ "(`docs/source/live_trading/`) covering overview, "
-#~ "configuration/run, risk and order lifecycle,"
-#~ " broker adapter integration, and "
-#~ "troubleshooting.   Added a hands-on "
-#~ "tutorial with dual simulator paths "
-#~ "(`asset_type='E'` and `asset_type='FD'`) and a"
-#~ " design note explaining S1.3 architecture"
-#~ " decisions and compatibility boundaries.   "
-#~ "Refined simulation references (overview/CLI/TUI),"
-#~ " API cross-links, and home-page "
-#~ "navigation so users can reach live-"
-#~ "trading guidance with a clearer path."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Configuration**   Default ``trade_log_keep_days`` "
-#~ "is now **3** (was 0): on each "
-#~ "fresh Python process that imports "
-#~ "qteasy, CSV trade reports older than "
-#~ "the retention window under "
-#~ "``trade_log_file_path`` are removed once at"
-#~ " startup. Set ``trade_log_keep_days`` to "
-#~ "``None`` or **0 or below** to "
-#~ "disable automatic deletion. Documentation for"
-#~ " rotation timing has been aligned "
-#~ "with this behavior (cleanup is not "
-#~ "run immediately before each new backtest"
-#~ " CSV write)."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Bug fixes**   Fixed issue #257: "
-#~ "Commission fees are now taken into "
-#~ "consideration in live trade order "
-#~ "generation, the way slippage involved in"
-#~ " the operation result of backtest is"
-#~ " now optimized Now asset type \"FD\""
-#~ " will no longer raise in live "
-#~ "trade mode Positive VS signals are "
-#~ "now treated in live trade mode the"
-#~ " same way as in backtest mode, "
-#~ "orders will no longer be silently "
-#~ "omitted when order quantity is less "
-#~ "than MOQ after commission."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Data refill API**   Fixed "
-#~ "`refill_data_source` so optional dtype "
-#~ "inference runs only when data-type "
-#~ "names are supplied; calling it with "
-#~ "tables and `asset_types` alone (as in"
-#~ " pre-open refill) no longer raises"
-#~ " an error."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Documentation and tutorials**   Reorganized "
-#~ "the tutorial layout for clearer learning"
-#~ " paths; expanded HistoryPanel- and "
-#~ "package-level guidance from research-style"
-#~ " exploration to backtesting workflows; "
-#~ "refreshed examples so common end-to-"
-#~ "end paths are easier to follow."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel plot highlights**   Highlight "
-#~ "conditions can be driven by two-"
-#~ "dimensional boolean masks aligned with "
-#~ "shares and dates, so multi-symbol "
-#~ "views can emphasize the same logical "
-#~ "condition consistently without ad hoc "
-#~ "per-series wiring."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel research operators (returns, "
-#~ "portfolios, presets, and alignment)**   Added"
-#~ " `cum_return()` and `normalize()` for "
-#~ "research-grade cumulative returns and "
-#~ "base-1 normalization with mask-aware "
-#~ "behavior; `portfolio()` to build "
-#~ "equal/weighted portfolios, group-based "
-#~ "portfolios, and optional benchmarks on "
-#~ "top of HP price columns; "
-#~ "`kline.*(inplace=)` to optionally append "
-#~ "technical-indicator columns without copying; "
-#~ "`research_preset()` and paged `plot()` for "
-#~ "one-line OHLCV+indicator presets and "
-#~ "multi-share pagination; `assign()` for "
-#~ "column-level DSL; cross-sectional vs "
-#~ "time-series `rank()` / "
-#~ "`zscore(method='cs'|'ts')`; and explicit "
-#~ "`align_to()` / `resample()` to avoid "
-#~ "silent misalignment. See [HistoryPanel "
-#~ "API](api/HistoryPanel.rst) and tutorial [2.5"
-#~ "-historypanel-data-analysis](tutorials/2.5-historypanel-"
-#~ "data-analysis.md) for examples and "
-#~ "behavior details."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel operator semantics and copy()**"
-#~ "   `HistoryPanel` arithmetic operators now "
-#~ "return a new panel instead of "
-#~ "mutating in place; in-place operators"
-#~ " (`+=`, etc.) remain explicit. "
-#~ "`HistoryPanel.copy(deep=True)` now performs a "
-#~ "deep copy by default; `deep=False` keeps"
-#~ " shared underlying data."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel (research-oriented workflow)** "
-#~ "— Bracket indexing returns a labeled "
-#~ "sub-panel (breaking); `subpanel` / "
-#~ "`to_numpy`, in-place columns via "
-#~ "`__setitem__`, `where()` masks, read-only "
-#~ "htype attributes (e.g. `panel.close`), "
-#~ "comparisons yielding bool ndarrays for "
-#~ "`where` chaining, and `loc` for time-"
-#~ "axis selection. Docstrings, [HistoryPanel "
-#~ "API](api/HistoryPanel.rst), and tutorial [2.5"
-#~ "-historypanel-data-analysis](tutorials/2.5-historypanel-"
-#~ "data-analysis.md) describe behavior and "
-#~ "limits (vs pandas)."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel interactive highlight (Q06)**   "
-#~ "`hp.plot(..., highlight=...)` now works on "
-#~ "interactive Plotly charts for both line"
-#~ " and candlestick panels. In two-"
-#~ "symbol overlay mode, the highlight "
-#~ "marker is shown only for the "
-#~ "current primary share and switches "
-#~ "together with the primary/secondary focus "
-#~ "when you click."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel interactive plot polish**   For"
-#~ " two-symbol overlay on interactive "
-#~ "Plotly charts, primary vs secondary "
-#~ "series now differ not only in "
-#~ "opacity but also in line width. "
-#~ "FigureWidget and HTML click-to-focus "
-#~ "updates keep these styles in sync "
-#~ "when you switch which share is "
-#~ "primary."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel interactive plot visual "
-#~ "improvement** Added a reusable selected-"
-#~ "bar crosshair indicator to interactive "
-#~ "Plotly charts: clicking any bar shows"
-#~ " a solid crosshair in the main "
-#~ "price panel at the bar midpoint. "
-#~ "The indicator stays synced during "
-#~ "pan/zoom and hides when the selected "
-#~ "bar scrolls out of view."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel charts with adjusted OHLC "
-#~ "columns (Q01)**   Fixed a bug in "
-#~ "`HistoryPanel.plot()` where adjusted price "
-#~ "column names (e.g. `open|b`, `high|b`, "
-#~ "`low|b`, `close|b`) are not recognized, "
-#~ "now candlestick charts are rendered "
-#~ "correctly for back-/forward-adjusted panels."
-#~ " When both raw and adjusted OHLC "
-#~ "are present, the raw (unsuffixed) family"
-#~ " is used for the candlestick, "
-#~ "matching existing price-column resolution "
-#~ "conventions."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Interactive chart x-axis zoom/pan (HTML "
-#~ "and FigureWidget)**   HTML-embedded charts "
-#~ "apply the same x-axis clamp and "
-#~ "minimum visible bar width as before "
-#~ "(Q03). FigureWidget multi-row charts now"
-#~ " listen on Plotly’s **master** shared "
-#~ "x-axis and write the normalized range"
-#~ " to **all** `xaxis*` entries, so "
-#~ "panning past the data edge no "
-#~ "longer leaves a persistent blank "
-#~ "half-view."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**HistoryPanel static vs interactive chart "
-#~ "parity (P1)**   OHLC summary headers are"
-#~ " shown only when a candlestick panel"
-#~ " is present: static charts use a "
-#~ "dedicated top row for the **last** "
-#~ "bar; interactive charts default the same"
-#~ " and update the header when you "
-#~ "click a bar (labels in English). "
-#~ "Matplotlib and Plotly now share one "
-#~ "logical theme with small adapter layers"
-#~ " for font sizes and candlestick "
-#~ "colors so the two backends look "
-#~ "closer; the Plotly legend is inset "
-#~ "at the upper-left (paper coordinates)"
-#~ " to save horizontal space."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**`plotly_backend_app` on `HistoryPanel.plot()`**   "
-#~ "With `interactive=True`, pass "
-#~ "`plotly_backend_app='auto'` (default: try "
-#~ "FigureWidget, fall back to HTML), "
-#~ "`'FigureWidget'` (force widget or raise), "
-#~ "or `'html'` (force HTML wrapper or "
-#~ "raise)."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**DataSource robustness and compatibility** "
-#~ "Fixed a bug where `DataSource` could "
-#~ "fail when optional file backends (e.g."
-#~ " `tables`/`pyarrow`) were missing; fallback "
-#~ "to `csv` now guarantees the data "
-#~ "directory is available, added `hdf5` "
-#~ "alias for `hdf`, and improved fallback"
-#~ " warnings for clearer diagnosis."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**NaN-price safe in Backtest** Fixed "
-#~ "a problem that NaN prices will no"
-#~ " longer pullut signal parsing and "
-#~ "trade result calculation in Backtest "
-#~ "result."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Data visualization and charts**   Introduced"
-#~ " a new charting pipeline that "
-#~ "automatically builds candlestick, volume, MACD"
-#~ " and line charts from your historical"
-#~ " data, so you can mix multiple "
-#~ "indicators and compare several symbols "
-#~ "in one view without extra code."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Interactive K‑line experience**   Added "
-#~ "interactive charts that support zooming, "
-#~ "panning and hovering to inspect OHLCV"
-#~ " and key indicators directly in the"
-#~ " notebook, making it much easier to"
-#~ " explore price action and drill into"
-#~ " specific bars."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**`qt.candle` behavior update**   Updated "
-#~ "`qt.candle` to use the new visualization"
-#~ " pipeline under the hood while "
-#~ "keeping the existing API, so your "
-#~ "existing scripts continue to work but"
-#~ " immediately benefit from the new "
-#~ "static and interactive charts; Renko "
-#~ "plots are no longer supported and "
-#~ "the old interactive widget is now "
-#~ "considered legacy."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Logging and trade file maintenance**   "
-#~ "Improved how log and trade report "
-#~ "files are stored and rotated, so "
-#~ "system and trade logs, as well as"
-#~ " value‑curve CSV files, are kept in"
-#~ " predictable locations and old files "
-#~ "are cleaned up automatically to save "
-#~ "disk space."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Backtest accuracy and time handling**   "
-#~ "Refined how different signal types and"
-#~ " intraday time grids are executed in"
-#~ " backtests, so portfolio rebalancing and"
-#~ " intraday schedules better match real‑world"
-#~ " trading behavior and are easier to"
-#~ " reason about."
-#~ msgstr ""
-
-#~ msgid "**Evaluation fixes**"
-#~ msgstr ""
-
-#~ msgid "Corrected the `oper_count` DataFrame in backtest."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Large backtests no longer trigger pandas"
-#~ " `PerformanceWarning` in evaluation; the "
-#~ "aggregation and concatenation logic has "
-#~ "been refactored to be more efficient "
-#~ "while keeping the same outputs."
-#~ msgstr ""
-
-#~ msgid "**Data type definitions and get_history_data**"
-#~ msgstr ""
-
-#~ msgid "Fixed a few misdefined built-in data types."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved the resolution logic in "
-#~ "`DataType` / `get_history_data` for "
-#~ "`(dtype_name, freq, asset_type)` combinations: "
-#~ "multiple definitions for the same "
-#~ "logical name are merged safely instead"
-#~ " of causing empty data or "
-#~ "duplicate-column errors."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Filenames**   Internal filename generation "
-#~ "has been updated so that all "
-#~ "generated file names (e.g. trade logs,"
-#~ " system logs, data exports) comply "
-#~ "with Windows, Linux, and macOS "
-#~ "requirements. You no longer need to "
-#~ "worry about invalid characters or path"
-#~ " issues when using qteasy on "
-#~ "different operating systems."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**value_curve file when trade_log=True**   "
-#~ "When `trade_log=True`, the full value "
-#~ "curve is also saved as a CSV "
-#~ "file (`value_curve_{name}_{datetime}.csv`) in the"
-#~ " same directory as trade_log and "
-#~ "trade_summary, and is rotated with them"
-#~ " according to `trade_log_keep_days`, so you"
-#~ " can keep or archive it with "
-#~ "your other backtest logs."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Backtest result and reports**   Optimized"
-#~ " backtest reports and added price "
-#~ "information into backtest results in "
-#~ "complete values, made backtest result "
-#~ "analysis much easier."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Backtest trade prices**   Asset pool "
-#~ "passed as a comma-separated string "
-#~ "is now handled correctly; trade price"
-#~ " columns are aligned to the full "
-#~ "pool so backtests work with back-"
-#~ "adjusted prices or missing data for "
-#~ "some symbols."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**get_history_data**   Invalid type names now"
-#~ " raise a `ValueError` listing unmatched "
-#~ "names (and suggest `qt.define()` / "
-#~ "DATA_TYPE_MAP) instead of being silently "
-#~ "skipped; deprecated `htypes` only overrides"
-#~ " `htype_names` when given explicitly."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Visualization chart titles**   Backtest "
-#~ "result charts now show a title "
-#~ "with the Operator name and backtest "
-#~ "date-time, so you can match charts"
-#~ " to the corresponding trade_log and "
-#~ "trade_summary files."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Error messages**   Fixed typo and "
-#~ "clarified message when a requested "
-#~ "column is missing in DataType "
-#~ "(\"columu\" → \"column\")."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed backtest report \"Total operation "
-#~ "fee\" always showing zero when daily "
-#~ "evaluation uses `evaluate_price_data`. Fees "
-#~ "were aggregated by date but then "
-#~ "reindexed against the daily index that"
-#~ " carries a time-of-day (e.g. "
-#~ "15:00), so the index mismatch produced"
-#~ " all NaNs and the subsequent "
-#~ "fillna(0) zeroed the fee column. "
-#~ "Alignment is now done on normalized "
-#~ "dates so that `backtest_result['total_fee']` "
-#~ "matches the sum of per-trade fees"
-#~ " in trade_log."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added automatic rotation for trade_log "
-#~ "and trade_summary files: old `trade_log_*.csv`"
-#~ " and `trade_summary_*.csv` files are "
-#~ "removed according to the configured "
-#~ "retention period to avoid unbounded "
-#~ "growth of the log directory, a new"
-#~ " configure key `trade_log_keep_days` is now"
-#~ " added to configure trade log "
-#~ "rotation behavior."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Process data (proc.\\*) API**: Strategies"
-#~ " can access runtime state (cash, "
-#~ "positions, trade records, etc.) via "
-#~ "`get_data('proc.own_cash')`, `get_data('proc.trade_records', "
-#~ "lag=0)` and other `proc.*` fields in "
-#~ "`realize()` without declaring them in "
-#~ "`data_types`. Process data is injected "
-#~ "by Backtester (backtest) and Trader "
-#~ "(live) and respects no-look-ahead: "
-#~ "at step k the strategy sees only"
-#~ " results from steps 0..k-1 for trade"
-#~ " data."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Dynamic backtest path selection**: If "
-#~ "any strategy uses `proc.*` in its "
-#~ "`realize()` source, backtest automatically "
-#~ "uses the stepwise path "
-#~ "(`_backtest_dynamic_operator`); otherwise the static"
-#~ " path (batch signals + vectorized "
-#~ "backtest) is used. Detection is via "
-#~ "`_strategies_use_proc_data()` so no declaration "
-#~ "is required."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Live trading process data**: When "
-#~ "`operator.check_dynamic_data()` is True, Trader "
-#~ "injects current account/position and price "
-#~ "views into the operator so that "
-#~ "`get_data('proc.xxx')` works in live mode "
-#~ "with the same API as in backtest."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Removed legacy dynamic data types**: "
-#~ "`TRADE_OPERATION_DATA_TYPES` and all `op_*` "
-#~ "DataTypes (e.g. `op_cashes`, `op_trade_volumes`) "
-#~ "have been removed from `qteasy.datatypes`. "
-#~ "Creating `DataType('op_cashes')` etc. now "
-#~ "raises `KeyError`. Process data must be"
-#~ " accessed only via `get_data('proc.xxx')`. "
-#~ "`Operator.prepare_dynamic_data_buffer` is now a "
-#~ "no-op; `all_dynamic_dtypes` always returns "
-#~ "an empty dict."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Tests**: Added `tests/test_process_data_api.py` "
-#~ "for process data API, branch selection,"
-#~ " static/dynamic equivalence, no-look-ahead,"
-#~ " and dynamic strategy correctness. "
-#~ "`TestDependentData` in operator tests was "
-#~ "refactored to use `proc.*` instead of"
-#~ " old `op_*` types."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Docs**: Design doc `docs/source/design/09"
-#~ "-process-data-and-dynamic-backtest.md`; "
-#~ "process data section in `03-data-in-"
-#~ "strategies.md`; branch selection note in "
-#~ "`06-backtest-live-optimization.md`."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Pandas frequency alias compatibility**: "
-#~ "Fixed `pandas_freq_alias_version_conversion()` so "
-#~ "that it normalizes both legacy (<2.2)"
-#~ " and new (>=2.2) pandas frequency "
-#~ "aliases (e.g. `M/ME`, `H/h`, `MIN/min`, "
-#~ "`5MIN/5min`), avoiding mis-matched freq "
-#~ "errors and warnings across different "
-#~ "pandas versions."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved documentation and docstrings, adding"
-#~ " more explanations about the overall "
-#~ "design and architecture of qteasy."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed the post-backtest performance "
-#~ "evaluation so that all evaluation tables"
-#~ " and plotted equity curves are "
-#~ "consistently computed on daily frequency, "
-#~ "independent of the strategy running "
-#~ "frequency."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Removed configuration keys `price_priority_OHLC` "
-#~ "and `price_priority_quote`, which are no "
-#~ "longer meaningful under the new pricing"
-#~ " architecture."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed issues where trade prices could"
-#~ " sometimes not be correctly fetched "
-#~ "during backtests."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed incorrect inclusion of market "
-#~ "opening time in strategy running "
-#~ "schedules for high-frequency backtests "
-#~ "such as hourly and minute-level "
-#~ "runs."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Unified the adjustment method for "
-#~ "trading prices and evaluation prices so"
-#~ " that both now use the same "
-#~ "adjustment convention."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Refined the semantics and execution "
-#~ "behavior of PT / PS / VS "
-#~ "signals: for PT signals, the backtest"
-#~ " matching engine now reuses cash "
-#~ "obtained from same-step sells as "
-#~ "much as possible to reach the "
-#~ "target portfolio; for PS and VS "
-#~ "signals, the engine keeps naive order"
-#~ " semantics and drops orders that "
-#~ "cannot be filled due to resource "
-#~ "limits."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Major update: qteasy 2.0 will be "
-#~ "released with significant changes in the"
-#~ " architecture and APIs, aiming to "
-#~ "provide a more powerful and flexible "
-#~ "framework for quantitative trading. Users "
-#~ "are advised to check the migration "
-#~ "guide in the documentation to smoothly"
-#~ " upgrade to 2.0."
-#~ msgstr ""
-
-#~ msgid "Key changes in 2.0 include:"
-#~ msgstr ""
-
-#~ msgid "Major improvements in `Operator` / `Strategy` class:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Introduced `Parameter` class to represent "
-#~ "strategy parameters, and `Operator` can "
-#~ "now specify the parameters it needs "
-#~ "with Parameter instances, and users can"
-#~ " set the parameters with more "
-#~ "flexible ways, including setting parameters"
-#~ " with different values for different "
-#~ "symbols."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Introduced `Group` class to represent "
-#~ "strategy groups, and `Operator` now "
-#~ "groups strategies into different groups, "
-#~ "and each group can have its own"
-#~ " running frequency and running timing "
-#~ "and blender, thus strategies can be "
-#~ "run with more flexible and powerful "
-#~ "ways."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "An improved operator running schedule is"
-#~ " introduced in 2.0, now all "
-#~ "strategies are running at a more "
-#~ "granular level allowing more flexible "
-#~ "running timing and more accurate "
-#~ "backtesting results, and the running "
-#~ "schedule is determined per strategy "
-#~ "group, allowing different groups of "
-#~ "strategies to be run with different "
-#~ "frequencies and timings."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved how strategies utilizes historical"
-#~ " data, now strategies are able to "
-#~ "utilize data with different frequencies "
-#~ "and window lengths in the same "
-#~ "run, and the data are extracted "
-#~ "and allocated to strategies in a "
-#~ "more efficient way."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved efficiency of strategy backtesting"
-#~ " and optimization, now the backtesting "
-#~ "and optimization process is more "
-#~ "efficient with better utilization of "
-#~ "system resources, and the performance is"
-#~ " improved significantly especially when "
-#~ "running with multiprocessing."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Introduced Tracing mode in `Operator` to"
-#~ " allow users to trace backtest "
-#~ "results of each strategy group in "
-#~ "more detail by defining tracing points"
-#~ " in strategy realization, tracing results"
-#~ " will be saved in trade logs."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Simplified definition of strategy realization,"
-#~ " now users can acquire historical "
-#~ "data and parameters with simpler APIs"
-#~ " with user-defined names in more "
-#~ "intuitive ways."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Introduced more strategy optimization "
-#~ "algorithms, and users can set up "
-#~ "different optimization algorithms for "
-#~ "different strategy groups, and the "
-#~ "optimization process is more efficient "
-#~ "and more powerful with better "
-#~ "utilization of system resources."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved backtest / optimization result "
-#~ "evaluation processes with more comprehensive"
-#~ " evaluation metrics and more intuitive "
-#~ "result presentation."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`DataType` class now supports asset type"
-#~ " \"ANY\" to represent any type of "
-#~ "asset, and strategy can specify the "
-#~ "asset type of its target symbols "
-#~ "with \"ANY\" to be compatible with "
-#~ "all types of assets."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Introduced `StgData` class in strategy "
-#~ "definition as syntax suger for users "
-#~ "to specify window length and other "
-#~ "related properties of Data used in "
-#~ "strategy"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "**Removed configuration keys**: "
-#~ "`maximize_cash_usage`, `benchmark_asset_type`, "
-#~ "`benchmark_dtype`. Logic is now inferred "
-#~ "from execution flow and `benchmark_asset`. "
-#~ "See [qteasy_2_migration_guide](qteasy_2_migration_guide.md) "
-#~ "for migration."
-#~ msgstr ""
-
-#~ msgid "Other bug fixes and improvements"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added FutureWarning for APIs that will"
-#~ " be removed or changed in qteasy "
-#~ "2.0. Users are advised to migrate "
-#~ "to the recommended alternatives so as"
-#~ " to upgrade smoothly to 2.0."
-#~ msgstr ""
-
-#~ msgid "Affected APIs:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`get_history_data(htypes=..., adj=...)`: use "
-#~ "`htype_names` and htype suffixes (e.g. "
-#~ "`close:b`) instead."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Config keys `print_trade_log` / "
-#~ "`print_backtest_log`: use `trade_log` instead."
-#~ msgstr ""
-
-#~ msgid "`get_table_map()`: use `get_table_master()` instead."
-#~ msgstr ""
-
-#~ msgid "Broker name `random`: use `simulator` instead."
-#~ msgstr ""
-
-#~ msgid "Trader method `info(verbose=...)`: use `detail` instead."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`Operator.op_type`: run mode will be "
-#~ "determined per strategy group in 2.0."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`Operator.op_data_freq`: use strategy-level "
-#~ "data type and frequency information in"
-#~ " 2.0."
-#~ msgstr ""
-
-#~ msgid "`Operator.get_share_idx()`: will be removed in 2.0."
-#~ msgstr ""
-
-#~ msgid "Bug fixes:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that will lead to "
-#~ "low performance in optimization algorithm "
-#~ "2 when running with multiprocessing in"
-#~ " some systems"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed problem in trader logger that "
-#~ "causes duplicated logs in live trade "
-#~ "mode"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug in trader: when two"
-#~ " trade results are generated at "
-#~ "nearly the same time for the same"
-#~ " position, the results will be "
-#~ "wrongly recorded in the database due "
-#~ "to data recording conflicts"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug in trader that very"
-#~ " occasionally price data with wrong "
-#~ "timestamp will be returned and may "
-#~ "cause NaN values output from strategies"
-#~ " for some symbols."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that strategy will not"
-#~ " get enough extracted data to run "
-#~ "in live trade mode in some cases"
-#~ " on Monday morning due to not "
-#~ "mis-calculation of date offset due to"
-#~ " weekends."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Corrected automatic datasource refill timing"
-#~ " for weekly data refilling, now it"
-#~ " will refill data every Friday "
-#~ "evening"
-#~ msgstr ""
-
-#~ msgid "New features:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added a new CLI command in trader"
-#~ " CLI: `refill`, to manually refill "
-#~ "datasource tables in trader CLI"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Allowed users to manually refill "
-#~ "datasource table with trader CLI command"
-#~ " `run` with parameter `--task refill` "
-#~ "Bug fixes:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that will lead to "
-#~ "failure of automatic datasource refilling "
-#~ "in trader"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added configuration settings: "
-#~ "`live_trade_daily_refill_tables`, "
-#~ "`live_trade_weekly_refill_tables`, "
-#~ "`live_trade_monthly_refill_tables`, to allow users"
-#~ " to set up tables to be "
-#~ "refilled in live trade mode Fixed "
-#~ "bugs:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Sometimes the configure settings might "
-#~ "be overwritten unexpectedly in trading "
-#~ "mode"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`DataSource.all_basic_tables` will not return "
-#~ "correct tables in some cases"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "CLI command `schedule` fails to print"
-#~ " out current scheduled tasks in "
-#~ "trader shell"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved function `qt.refill_data_source()`, now "
-#~ "it will skip the tables that are"
-#~ " not available from current channel "
-#~ "and provide a warning message"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that will sometimes "
-#~ "result in duplicated data being refilled"
-#~ " from channels while running "
-#~ "`qt.refill_data_source()`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that may cause "
-#~ "incorrect k-line data being stored in"
-#~ " the datasource when running in live"
-#~ " trade mode"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added APIs to get minute level and"
-#~ " daily candle bar price data for "
-#~ "funds from channel 'eastmoney'"
-#~ msgstr ""
-
-#~ msgid "Fixed bugs:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Simulator broker and Trader module in"
-#~ " live trade mode might fail to "
-#~ "fetch real time price data in some"
-#~ " cases"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Sometimes the historical data extracted "
-#~ "from datasource are not re-indexed "
-#~ "to exactly matching the stock market "
-#~ "open time."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Corrected the data formats and errors"
-#~ " downloaded from channel `eastmoney`, "
-#~ "improved error handling and stability"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug: Trader might fail to"
-#~ " acquire live prices from correct "
-#~ "channel and may fail to save the"
-#~ " prices to datasource due to channel"
-#~ " updates"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved `refill_data_source()`: added an "
-#~ "optional parameter: `refill_dependent_tabes: bool"
-#~ " = True`, to give user control "
-#~ "if dependent tables are downloaded"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added `dbutil` as mandatory dependency, "
-#~ "and moved `pymysql` also as mandatory,"
-#~ " removed optional dependencies as database"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug: warnings showing missing"
-#~ " of some dependencies are not "
-#~ "properly displayed."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "sometimes the back-adjusted prices are"
-#~ " not properly get from data source"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "sometimes data types with parameters "
-#~ "will not set correct parameter into "
-#~ "the kwargs, and will cause problem"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "sometimes the realtime kline data will"
-#~ " have no valid trade time in "
-#~ "index"
-#~ msgstr ""
-
-#~ msgid "Improvement:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved function refill_data_source, made "
-#~ "parameters \"channel\" and \"data_source\" "
-#~ "optional and provided type and validity"
-#~ " check"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "A new DataType class has been "
-#~ "introduced, making it much easier and"
-#~ " more flexible to utilize historical "
-#~ "data stored in local datasources"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now datatypes can be defined with "
-#~ "parameters followed by a \"|\" in "
-#~ "its name, like \"close|b\" represents "
-#~ "\"back adjusted close price\"."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "A new data_channel module has been "
-#~ "defined for qteasy, allowing users to"
-#~ " download data from different online "
-#~ "sources"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "More data tables are defined to "
-#~ "store more types of financial historical"
-#~ " data."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Enhanced real-time price data "
-#~ "acquisition APIs, allowing real-time "
-#~ "data been downloaded from different "
-#~ "sources"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "More introduction to above new features"
-#~ " can be found in qteasy documents."
-#~ msgstr ""
-
-#~ msgid "Deprecated"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The old way of extracting adjusted "
-#~ "price data with parameter \"adj\" is "
-#~ "deprecated, although still supported, now "
-#~ "adjusted prices can be acquired with "
-#~ "datatypes with parameter like \"close|b\" "
-#~ "or \"open|f\""
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The old way of getting composition "
-#~ "data, \"wt_000300.SH\" is deprecated and "
-#~ "replaced by datatype with parameter: "
-#~ "\"wt_idx|%\" where % is any index "
-#~ "code"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "More introductions to the new datatypes"
-#~ " can be found in qteasy documents."
-#~ msgstr ""
-
-#~ msgid "Improved Log information and print outs in trader TUI and CLI:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "excessive digits of amount changes are"
-#~ " now truncated to 2 or 3 digits"
-#~ " in trader CLI for RESULT DELIVERY"
-#~ msgstr ""
-
-#~ msgid "added timestamp before all system logs on the system log pane"
-#~ msgstr ""
-
-#~ msgid "added system environment information in TUI system info panel"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "fixed a bug: pure digit strings "
-#~ "are not properly parsed from start "
-#~ "up configuration file"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "removed deprecated pandas syntax from "
-#~ "database.py and updated version requirements"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "added qt level configure keys for "
-#~ "Chinese font names in candle chart "
-#~ "for different Operating systems respectively:"
-#~ msgstr ""
-
-#~ msgid "`ZH_font_name_MAC` / `ZH_font_name_WIN` / `ZH_font_name_LINUX`"
-#~ msgstr ""
-
-#~ msgid "added qt function and attributes:"
-#~ msgstr ""
-
-#~ msgid "`get_start_up_settings()`"
-#~ msgstr ""
-
-#~ msgid "`start_up_config`"
-#~ msgstr ""
-
-#~ msgid "corrected help messages for live trader users"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added setting key validation in "
-#~ "`qt.update_start_up_setting()` to prevent from "
-#~ "invalid values if the key is in"
-#~ " qt_config_kwargs"
-#~ msgstr ""
-
-#~ msgid "improved print outs and return values of `qt.start_up_settings()`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "improved the way the start up "
-#~ "setting file is written to always "
-#~ "keep intro messages"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added new features: now qteasy has "
-#~ "multiple functions to access and modify"
-#~ " start up setting file:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added new function `qt.start_up_settings()`, "
-#~ "to access and print contents of "
-#~ "start up settings file"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added new function `qt.update_start_up_setting()`,"
-#~ " to modify start up settings file"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added new function `qt.remove_start_up_setting()`,"
-#~ " to remove settings from the file"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed bugs in trader TUI buy and"
-#~ " sell orders, added error handling "
-#~ "for wrong inputs"
-#~ msgstr ""
-
-#~ msgid "Added features in trader TUI:"
-#~ msgstr ""
-
-#~ msgid "Added commands and short-cuts to manually place buy and sell orders"
-#~ msgstr ""
-
-#~ msgid "Added commands and short-cuts to cancel submitted orders"
-#~ msgstr ""
-
-#~ msgid "Added a new data table to display trade logs"
-#~ msgstr ""
-
-#~ msgid "Fixed bugs in command `orders` in trader CLI:"
-#~ msgstr ""
-
-#~ msgid "now `orders` command selects symbols correctly"
-#~ msgstr ""
-
-#~ msgid "now parameter `--time` works with value 'all' or 'a'"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added new command `summary` that "
-#~ "displays trading operations in given "
-#~ "period in human readable way"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added new feature: now trader will "
-#~ "save the latest operation status on "
-#~ "the dist while exit, and will "
-#~ "restore the status when re-enter"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved delete_account() function, now it "
-#~ "will delete all account related files,"
-#~ " including trade logs, trade records, "
-#~ "and trader break points"
-#~ msgstr ""
-
-#~ msgid "Other bug fixes and optimizations in trader"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved Live trade broker, added retry"
-#~ " count before canceling submitted orders"
-#~ " when live price is not available,"
-#~ " reduced chance of order filling "
-#~ "failure"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Corrected a mistake in grid trading "
-#~ "example files, nan prices are now "
-#~ "not written to strategy parameters"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that will cause buying"
-#~ " stock with 0 price when live "
-#~ "prices are not available"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added freq alias support for pandas "
-#~ "version >= 2.2.0, to prevent from "
-#~ "FutureWarning raised by pandas"
-#~ msgstr ""
-
-#~ msgid "Corrected Font name in candle chart in Windows environment"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added trader CLI command `debug`, to "
-#~ "set or toggle debug mode while "
-#~ "trader is running"
-#~ msgstr ""
-
-#~ msgid "Fixed and improved watched prices in trader CLI"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that may lead to "
-#~ "failure displaying watched prices in "
-#~ "trader CLI"
-#~ msgstr ""
-
-#~ msgid "Corrected a font name issue in candle chart in Windows environment"
-#~ msgstr ""
-
-#~ msgid "New Feature:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Running example strategy files with "
-#~ "parameter -r can now remove orders "
-#~ "only for designated account, instead of"
-#~ " all accounts"
-#~ msgstr ""
-
-#~ msgid "Improvements and bug fixes:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved live trade log, Now delivery"
-#~ " records for selling stocks are also"
-#~ " displayed in a new line"
-#~ msgstr ""
-
-#~ msgid "Now delivery records are clearer shown"
-#~ msgstr ""
-
-#~ msgid "Fixed a bug that may cause wrong stock or cash change in trade logs"
-#~ msgstr ""
-
-#~ msgid "Fixed a bug that causes buying results not being delivered properly"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that sometimes empty "
-#~ "data will be extracted even with "
-#~ "valid data id from system datasource "
-#~ "tables"
-#~ msgstr ""
-
-#~ msgid "Fixed a few bugs that will lead to error in CLI command `CHANGE`:"
-#~ msgstr ""
-
-#~ msgid "Prevented from acquiring latest price when only cash is to be changed"
-#~ msgstr ""
-
-#~ msgid "Ensured symbol be given when changing quantity of a stock"
-#~ msgstr ""
-
-#~ msgid "Added new built-in strategies: `ATR` and `OBV`, with docstrings"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Updated Built-in Strategy AD and "
-#~ "ADOSC, corrected mistakes, added docstring "
-#~ "and optimized realization"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Changed function qt.built_ins(), now it "
-#~ "always return a dict of id and "
-#~ "type of built-in strategies, and "
-#~ "if incorrect strategy id is given "
-#~ "as argument, it returns all fuzzy "
-#~ "matched strategy ids"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Changed function qt.built_in_list() and "
-#~ "qt.built_in_strategies(), now they return list"
-#~ " of strategy ids and strategy types,"
-#~ " respectively; and return fuzzy matched "
-#~ "strategy ids for incorrect strategy id"
-#~ " given as argument"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added new function qt.built_in_doc(), to "
-#~ "return the docstring of a built-in"
-#~ " strategy"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug, now cash gained by"
-#~ " selling stocks can be delivered "
-#~ "immediately to update available cash "
-#~ "amount."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug, now unfilled orders "
-#~ "can be correctly canceled after each "
-#~ "trading day"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that might lead to "
-#~ "failure of getting table information in"
-#~ " Windows environment"
-#~ msgstr ""
-
-#~ msgid "Fall back to default data source type if mysql connection fails"
-#~ msgstr ""
-
-#~ msgid "Fixed a bug in tui watch list management"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now symbols can be added to or "
-#~ "removed from the watch list in the"
-#~ " live trader TUI, with two added "
-#~ "short cuts: ctrl+a to add and "
-#~ "ctrl+r to remove"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Dialogs are now added to the live"
-#~ " trader TUI to accept user inputs "
-#~ "for adding symbols to the watch "
-#~ "list, as well confirming to quit "
-#~ "the App"
-#~ msgstr ""
-
-#~ msgid "Slightly adjusted the appearance of live trader TUI"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added more help information and "
-#~ "docstrings for user to initialize live"
-#~ " trades"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Changed argument \"-u\" in qt_argparser, "
-#~ "now either \"tui\" or \"cli\" should "
-#~ "be specified to choose ui type"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "qt parameter \"live_trade_account\" is now "
-#~ "renamed to \"live_trade_account_name\", and "
-#~ "more help info is provided to "
-#~ "guide users to set up live trade"
-#~ " accounts in live trade mode"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug in qt.candle() that "
-#~ "will fail to create candle charts "
-#~ "when TA-lib is not installed"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug in database that may"
-#~ " cause data refill failure when trade"
-#~ " calendar is not available in some"
-#~ " cases"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug in data source that"
-#~ " causes failure of getting the last"
-#~ " record id from system tables in "
-#~ "some cases"
-#~ msgstr ""
-
-#~ msgid "Fixed a bug in HistoryPanel that causes recursive importing"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed bugs in built-in strategies: "
-#~ "`MACDEXT`, `WILLR`, `AROONOSC`, and `SLPHT`"
-#~ msgstr ""
-
-#~ msgid "Updated test cases for built-in strategies"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Corrected a mistake in version 1.2,2:"
-#~ " '1.2.1' will be displayed when "
-#~ "running `qteasy.__version__`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bad information displayed with"
-#~ " progress bar while downloading data "
-#~ "from tushare with refill datasource"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that causes abnormally "
-#~ "low speed in some cases if TA-"
-#~ "LIB is not installed"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that causes escaped "
-#~ "failure in some cases when strategy "
-#~ "is based on RuleIterator"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now it is possible to view all "
-#~ "live accounts with `qt.live_trade_accounts()`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Corrected a build mistake in version "
-#~ "1.2.0, which caused style files not "
-#~ "being included in the package"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added new qt level function: "
-#~ "`live_trade_accounts()` to get detailed "
-#~ "information of all accounts for live "
-#~ "trading"
-#~ msgstr ""
-
-#~ msgid "Corrected a mistake in trader CLI of wrong formatting of trade info"
-#~ msgstr ""
-
-#~ msgid "Improved help information for live trade related configurations"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "New feature added: Now qteasy has "
-#~ "a new Terminal UI for live "
-#~ "trading, thus users can choose from "
-#~ "one of the two UIs for live "
-#~ "trading: the Trader Shell or the "
-#~ "TUI"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "A new configure key "
-#~ "`qt.config['live_trade_ui_type']` is added to "
-#~ "allow users to choose between the "
-#~ "two UIs for live trading"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The new TUI has built in light "
-#~ "mode and dark mode themes, and is"
-#~ " more user-friendly for users who "
-#~ "are not familiar with command line "
-#~ "interfaces"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The new TUI displays live status "
-#~ "of the account, on hand stocks, "
-#~ "historical order, and live operation "
-#~ "logs"
-#~ msgstr ""
-
-#~ msgid "Use Ctrl=P and Ctrl+R to pause and resume the live trading process"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved function `refill_data_source`, allowed "
-#~ "data being downloaded in batches that"
-#~ " are adjust-able in size and "
-#~ "intervals in between"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved error messages raised by qt "
-#~ "when wrong values are set to "
-#~ "configuration keys, providing better guidance"
-#~ " for users"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that causes not taking"
-#~ " effect the configuration that are "
-#~ "related to automatic retries in data "
-#~ "acquiring from tushare"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that might cause error"
-#~ " extracting minute level data from "
-#~ "local data source"
-#~ msgstr ""
-
-#~ msgid "Improved compatibilities"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved compatibility for higher versions "
-#~ "of `python` from 3.9 up to 3.12"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved compatibility for higher versions "
-#~ "of `pandas` (v2.2.1), `numpy` (1.26.4), "
-#~ "and `numba` (v0.59.1)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that will cause "
-#~ "failure of strategy optimizations in "
-#~ "python 3.10 and above"
-#~ msgstr ""
-
-#~ msgid "Corrected and improved a few error messages"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now qteasy can be installed in "
-#~ "higher versions of `python` from 3.9 "
-#~ "up to 3.12"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Updated version restrictions on dependencies,"
-#~ " to solve the version conflicts "
-#~ "between `numba` and `numpy`."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Slightly improved warning information when "
-#~ "loading qteasy for the first time."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a few bugs that will cause"
-#~ " compatibility issue with `pandas` > "
-#~ "2.0"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added performance warnings for strategy "
-#~ "optimization method 2 when some `numpy`"
-#~ " and `numba` versions will cause "
-#~ "performance degrade in multiprocessing"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "now trade_log, trade_records, full_histories "
-#~ "are added to the results returned "
-#~ "from backtest run, and can be "
-#~ "accessed by `res['trade_log']`, "
-#~ "`res['trade_records']`, and `res['full_histories']`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "New parameter `--rewind` is now added"
-#~ " to command `dashboard`, to allow "
-#~ "users to view previously saved logs "
-#~ "when switched to dashboard mode."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added more information print-outs for"
-#~ " command `buy` and `sell`, to show"
-#~ " if orders are submitted successfully."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "corrected system log for live trade, "
-#~ "now different live trade instances will"
-#~ " log to different files"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "added capability of reading info from"
-#~ " live trade log files and system "
-#~ "log files"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "New feature: The QTEASY shell is "
-#~ "now parsing command arguments in a "
-#~ "better and more intuitive way:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now all commands support `--parameter` /"
-#~ " `-p` style parameters, same way as"
-#~ " all other CLI tools"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "All commands now support `--help` and"
-#~ " `-h` to show help messages, are "
-#~ "now fully documented in the shell "
-#~ "help message"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "All commands now have better error "
-#~ "handling and usage messages when wrong"
-#~ " arguments are given"
-#~ msgstr ""
-
-#~ msgid "All commands are now thoroughly tested and debugged"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Arguments of some commands are now "
-#~ "re-designed and re-organized to be"
-#~ " more intuitive and easier to use:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`watch` command now supports `--remove` "
-#~ "/ `-r` to remove symbols from "
-#~ "watch list, and `--clear` / `-c` "
-#~ "to clear the list"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`buy` and `sell` commands now uses "
-#~ "`--price` / `-p` to specify price, "
-#~ "and `--side` / `-s` to specify "
-#~ "position side"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`info` and `overview` commands now "
-#~ "support new argument `--system` to show"
-#~ " system info, and `verbose` will be"
-#~ " replaced by `detail` in future "
-#~ "versions"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`history` command now accepts explicit "
-#~ "argument `all` to show all history"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`orders` command now accepts order "
-#~ "filter arguments with optional tags "
-#~ "`--status`, `--time`, `--side`, and `--type`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`config` command now support `--set` /"
-#~ " `-s` to set configurations, and set"
-#~ " view levels with count of `--level`"
-#~ " / `-l`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`strategies` command now supports `--set-"
-#~ "par` to set strategy optimizable "
-#~ "parameters, and to be implemented: "
-#~ "possible to set blenders with "
-#~ "`--blender` and `--timing`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`run` command now supports running tasks"
-#~ " with arguments given with optional "
-#~ "flag `--args` / `-a`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`orders` command now works with new "
-#~ "optional arguments for time, type, side"
-#~ " and status in more logical way"
-#~ msgstr ""
-
-#~ msgid "1.0.27 (2024-3-5)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Removed dependency on pandas to load "
-#~ "dataframes from database, which will "
-#~ "arouse UserWarnings in higher versions "
-#~ "of pandas, requesting users to install"
-#~ " sqlalchemy"
-#~ msgstr ""
-
-#~ msgid "1.0.26 (2024-2-29)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now live trade logs are kept in"
-#~ " system log files, live logs are "
-#~ "saved in the same file, with "
-#~ "different account number as prefix"
-#~ msgstr ""
-
-#~ msgid "Fixed bugs"
-#~ msgstr ""
-
-#~ msgid "1.0.25 (2024-2-28)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now trade logs are saved in a "
-#~ "file in live trade mode, the file"
-#~ " is saved in the same directory "
-#~ "as set in `qt.config['trade_log_file_path']`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a few bugs in live trade "
-#~ "mode, and added information print-outs"
-#~ " on errors"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Corrected a mistake introduced since "
-#~ "version 1.0.18, with wrongly merged "
-#~ "incomplete and untested features in "
-#~ "broker. this bug will cause failure "
-#~ "of execution orders in live trade "
-#~ "mode."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug that will cause wrong"
-#~ " type conversion when filtering stocks "
-#~ "with `qt.filter_stocks()` and creating candle"
-#~ " charts with `qt.candle()`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a mistake in qt.get_config and "
-#~ "qt.candle() that interprets wrong list "
-#~ "dates in basic data"
-#~ msgstr ""
-
-#~ msgid "Improved progress bar: trim the text to screen width"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Allows qt.get_stock_info() to run without "
-#~ "all basic tables being downloaded"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed mistakes in ta-lib compatible "
-#~ "functions `EMA()`, `MACD()`, `TRIX()`, and "
-#~ "`DEMA()`, now they can be used "
-#~ "without `ta-lib` installed, although the"
-#~ " results are slightly different from "
-#~ "their talib versions"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Removed dependency on `ta-lib` package"
-#~ " for ta functions `RSI()`, `MA()`, "
-#~ "and `BBANDS()`, thus candle charts can"
-#~ " be created without `ta-lib` "
-#~ "installed"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Updated dependencies, made package more "
-#~ "use-able for beginners with no "
-#~ "`ta-lib` and only basic `tushare` "
-#~ "credits"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved Trader Shell live messages: now"
-#~ " order execution results are better "
-#~ "displayed with more info regarding "
-#~ "change of stock qty and cash "
-#~ "amounts"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Command INFO and OVERVIEW in trader "
-#~ "shell now will not print out "
-#~ "system information in default."
-#~ msgstr ""
-
-#~ msgid "Updated version requirements for numpy"
-#~ msgstr ""
-
-#~ msgid "Bug fixes"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "improved trader shell command \"run\", "
-#~ "now it can run a strategy in "
-#~ "main thread, making it easier to "
-#~ "debug"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "fixed a bug that will cause error"
-#~ " acquiring live price in live trade"
-#~ " mode if running freq is lower "
-#~ "than 1 hour"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Added feature: if a valid trade "
-#~ "signal can not be converted to an"
-#~ " order due to lack of available "
-#~ "cash/stock, a message will be posted "
-#~ "in live mode"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a bug in live trade mode "
-#~ "that will cause trade results being "
-#~ "processed and delivered for more than"
-#~ " one time, thus leads to wrong "
-#~ "available qty or available cash recorded"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a mistake that will cause "
-#~ "wrong cost being calculated during live"
-#~ " trade"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed a mistake in live trade "
-#~ "shell with command history, that wrong"
-#~ " stock cost is calculated when "
-#~ "history of multiple stocks are listed"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Fixed bug in issue #85 where data"
-#~ " are extracted and filled unexpectedly "
-#~ "in non-trading days"
-#~ msgstr ""
-
-#~ msgid "Fixed other bugs"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now live prices of Index and ETFs"
-#~ " can also be watched in live "
-#~ "running mode"
-#~ msgstr ""
-
-#~ msgid "ETF and Index are now supported in live trading mode as trading targets"
-#~ msgstr ""
-
-#~ msgid "Removed optional dependency sqlalchemy"
-#~ msgstr ""
-
-#~ msgid "Added retry in broker to stop order execution after max retries"
-#~ msgstr ""
-
-#~ msgid "Improvements in Trader Shell"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Now users can scroll to previous "
-#~ "commands with up and down keys in"
-#~ " Command mode"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Created new command `buy` / `sell` "
-#~ "to allow users to manually submit "
-#~ "orders to broker"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Optimized shell tasks and let live "
-#~ "price acquisition to run in background"
-#~ " threads"
-#~ msgstr ""
-
-#~ msgid "In Broker:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Optimized behavior of Simulator Broker, "
-#~ "to return execution result according to"
-#~ " live prices"
-#~ msgstr ""
-
-#~ msgid "Fixed bugs: order execution will not block each other"
-#~ msgstr ""
-
-#~ msgid "improved visual effects"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "now live prices are acquired in "
-#~ "background threads, not causing lags in"
-#~ " the main loop"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "mistake corrections that allow live "
-#~ "prices to be displayed when time "
-#~ "zone is not local"
-#~ msgstr ""
-
-#~ msgid "watched price refresh interval is now configurable"
-#~ msgstr ""
-
-#~ msgid "*in next release:*"
-#~ msgstr ""
-
-#~ msgid "two new commands will be added to Shell: `buy` and `sell`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Implemented \"--parameter\" / \"-p\" "
-#~ "style parameter in Trader Shell, the "
-#~ "old style will be deprecated in "
-#~ "later versions"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Allowed users to set up live trade"
-#~ " broker parameters with QT configurations"
-#~ msgstr ""
-
-#~ msgid "Allowed users to set up live trade running time zone"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Made dependency ta-lib as optional, "
-#~ "kept a few critical built in "
-#~ "strategies usable without `ta-lib`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Corrected a mistake left out in "
-#~ "version 1.0.9, which caused error when"
-#~ " reference data is None in strategy"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Changed default value of qteasy "
-#~ "parameter `backtest_price_adj` to `none`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Corrected a mistake in reference data"
-#~ " generation and allocation to strategies,"
-#~ " making reference data available to "
-#~ "strategies"
-#~ msgstr ""
-
-#~ msgid "Improved documentations"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved trader shell visual effects, "
-#~ "added color coding for different types"
-#~ " of messages, with dependency on "
-#~ "`rich` package"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Published `Qteasy` Docs to "
-#~ "https://qteasy.readthedocs.io/zh-cn/latest/, added "
-#~ "more supportive documents including api "
-#~ "reference, examples, tutorials, etc."
-#~ msgstr ""
-
-#~ msgid "Added parameter `qteasy.__version__`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Improved Strategy class, added "
-#~ "Strategy.use_latest_data_cycle property to allow "
-#~ "use the latest prices to create "
-#~ "trade signals"
-#~ msgstr ""
-
-#~ msgid "now stock names are displayed in qt shell"
-#~ msgstr ""
-
-#~ msgid "Added shell command `watch`, to watch stock price in realtime"
-#~ msgstr ""
-
-#~ msgid "Implemented live price acquiring channel eastmoney"
-#~ msgstr ""
-
-#~ msgid "Improvements in text display effects and bug fixes"
-#~ msgstr ""
-
-#~ msgid "Added shell command `config`"
-#~ msgstr ""
-
-#~ msgid "Supported using FUND as investment type"
-#~ msgstr ""
-
-#~ msgid "First release of working version on PyPI."
-#~ msgstr ""
-
+"**Erste PyPI-Veröffentlichung** qteasy ist die erste offizielle Version, die "
+"auf PyPI installiert und verwendet werden kann."

@@ -9,90 +9,105 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: de\n"
+"PO-Revision-Date: 2026-05-20 21:07+0800\n"
+"Last-Translator: \n"
 "Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.15.0\n"
+"X-Generator: Poedit 3.9\n"
 
 #: ../../source/examples/Example_06_指数增强选股.md:1
 msgid "指数增强选股策略"
-msgstr ""
+msgstr "Indexgestützte Aktienauswahlstrategie"
 
 #: ../../source/examples/Example_06_指数增强选股.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_06_指数增强选股.ipynb` 第一个 "
-"Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_06_指数增强选"
+"股.ipynb` 第一个 Markdown cell。"
 msgstr ""
+"Referenzquelle: `docs/_joinquant_migration_source/Example_06_index-"
+"enhanced stock selection.ipynb` Erste Markdown-Zelle."
 
 #: ../../source/examples/Example_06_指数增强选股.md:5
 msgid ""
-"本策略以0.8为初始权重跟踪指数标的沪深300中权重大于0.35%的成份股. "
-"个股所占的百分比为(0.8*成份股权重)*100%.然后根据个股是否: 1.连续上涨5天 2.连续下跌5天 "
-"来判定个股是否为强势股/弱势股,并对其把权重由0.8调至1.0或0.6"
+"本策略以0.8为初始权重跟踪指数标的沪深300中权重大于0.35%的成份股. 个"
+"股所占的百分比为(0.8*成份股权重)*100%.然后根据个股是否: 1.连续上涨5"
+"天 2.连续下跌5天 来判定个股是否为强势股/弱势股,并对其把权重由0.8调至"
+"1.0或0.6"
 msgstr ""
+"Diese Strategie bildet die im CSI 300 enthaltenen Aktien mit einer "
+"Gewichtung von über 0,35 % anhand einer anfänglichen Gewichtung von "
+"0,8 ab. Der prozentuale Anteil jeder einzelnen Aktie wird wie folgt "
+"berechnet: (0,8 * Gewichtung der enthaltenen Aktie) * 100 %. "
+"Anschließend wird, je nachdem, ob eine Aktie 1. fünf Tage in Folge "
+"gestiegen oder 2. fünf Tage in Folge gefallen ist, entschieden, ob "
+"es sich um eine starke oder schwache Aktie handelt. Ihre Gewichtung "
+"wird entsprechend von 0,8 auf 1,0 oder 0,6 angepasst."
 
 #: ../../source/examples/Example_06_指数增强选股.md:10
 msgid "策略运行频率：每日运行 策略运行时间：每日收盘前"
 msgstr ""
+"Häufigkeit der Strategieausführung: Täglich; Zeitpunkt der "
+"Strategieausführung: Vor Börsenschluss jeden Tag."
 
 #: ../../source/examples/Example_06_指数增强选股.md:13
 msgid "回测时间为:2021-01-01到2022-12-31"
 msgstr ""
+"Der Backtesting-Zeitraum erstreckte sich vom 1. Januar 2021 bis zum "
+"31. Dezember 2022."
 
 #: ../../source/examples/Example_06_指数增强选股.md:15
 msgid "1. 策略代码"
-msgstr ""
+msgstr "1. Strategiekodex"
 
 #: ../../source/examples/Example_06_指数增强选股.md:17
 msgid "创建自定义交易策略："
-msgstr ""
+msgstr "Erstellen Sie individuelle Handelsstrategien:"
 
 #: ../../source/examples/Example_06_指数增强选股.md:72
 msgid "2. 策略回测"
-msgstr ""
+msgstr "2. Strategie-Backtesting"
 
 #: ../../source/examples/Example_06_指数增强选股.md:74
 msgid "回测参数："
-msgstr ""
+msgstr "Backtesting-Parameter:"
 
 #: ../../source/examples/Example_06_指数增强选股.md:75
 msgid "回测时间：2021-01-01到2022-12-31"
-msgstr ""
+msgstr "Backtesting-Zeitraum: 1. Januar 2021 bis 31. Dezember 2022"
 
 #: ../../source/examples/Example_06_指数增强选股.md:76
 msgid "资产类型：股票"
-msgstr ""
+msgstr "Anlageart: Aktien"
 
 #: ../../source/examples/Example_06_指数增强选股.md:77
 msgid "资产池：沪深300成份股"
-msgstr ""
+msgstr "Vermögenspool: Aktien des CSI 300"
 
 #: ../../source/examples/Example_06_指数增强选股.md:78
 msgid "初始资金：100万"
-msgstr ""
+msgstr "Anfangskapital: 1 Million"
 
 #: ../../source/examples/Example_06_指数增强选股.md:79
 msgid "买入批量：100股"
-msgstr ""
+msgstr "Kaufmenge: 100 Aktien"
 
 #: ../../source/examples/Example_06_指数增强选股.md:80
 msgid "卖出批量：1股"
-msgstr ""
+msgstr "Verkaufsmenge: 1 Stück"
 
 #: ../../source/examples/Example_06_指数增强选股.md:103
 msgid "回测结果"
-msgstr ""
+msgstr "Backtesting-Ergebnisse"
 
 #: ../../source/examples/Example_06_指数增强选股.md:176
 msgid "![png](img/output_4_1_3.png)"
-msgstr ""
+msgstr "![png](img/output_4_1_3.png)"
 
 #: ../../source/examples/Example_06_指数增强选股.md:176
 msgid "png"
-msgstr ""
-
+msgstr "png"
