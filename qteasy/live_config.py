@@ -19,7 +19,9 @@ from qteasy.configure import ConfigDict
 from qteasy.utilfuncs import str_to_list
 
 # 与 _arg_validators 中 live_trade / live_price 相关校验语义对齐
-_ALLOWED_LIVE_TRADE_BROKER_TYPES = frozenset({'simulator', 'simple', 'manual', 'random'})
+_ALLOWED_LIVE_TRADE_BROKER_TYPES = frozenset({
+    'simulator', 'simple', 'manual', 'random', 'xtquant',
+})
 _ALLOWED_LIVE_PRICE_CHANNELS = frozenset({'eastmoney', 'tushare', 'akshare'})
 _ALLOWED_REFILL_CHANNELS = frozenset({'eastmoney', 'tushare', 'akshare'})
 _ALLOWED_LIVE_PRICE_FREQ = frozenset({'H', '30MIN', '15MIN', '5MIN', '1MIN', 'TICK'})

@@ -2,6 +2,17 @@
 
 本页记录 qteasy 各版本的**用户可见**变更。升级前可查阅对应版本；2.0 大版本请参阅 [2.0 迁移指南](qteasy_2_migration_guide.md)。
 
+## 未发布（草案：xtQuant / MiniQMT 合作 S0）
+
+> **说明**：以下为 `qt_2.5_dev` 上 PR-0a / PR-0b 与契约文档的 **RELEASE 草案**，版本号与发布日由维护者在合并发布时确定（预计 PATCH，如 2.5.2）。正式条目发布前请勿对外引用为已发布版本。
+
+- **券商成交回报（Broker）**  
+  `transaction()` 现支持 **4 元组或 5 元组** 回报：第 5 项为可选 `broker_order_id`（真实柜台委托号）。内置 `SimulatorBroker` / `SimpleBroker` 仍使用 4 元组，行为与 2.5.1 兼容。修复分段成交时本笔成交量误当作订单总量校验的问题，避免多笔成交回报校验失败。5 元组中的委托号可写入 `raw_trade_result['broker_order_id']`，供实盘对账与撤单映射。
+- **实盘配置**  
+  `live_trade_broker_type` 与 `qt.configure(...)` 现允许取值 **`xtquant`**。仅表示配置合法；实际使用须安装并注册扩展包（如 `qteasy-xtquant` 的 `register()`），未注册时 `get_broker('xtquant')` 可能仍回落为模拟券商。
+- **文档**  
+  新增英文契约 [XtQuant / MiniQMT Broker Adapter Contract v1](live_trading/4a-xtquant-broker-adapter-contract-v1.md)，说明 `submit_with_ack`、`poll_fills` 与 5 元组语义及禁止对 QMT 双重下单；**不**包含 fork 中 Trader 大段改动或 MySQL-only 数据策略。
+
 ## 2.5.1 (2026-05-18)
 
 - **Trader Shell dashboard**  
