@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md:1
 msgid "`DataTables`——基本面数据和宏观经济数据"
-msgstr "DataTables — Fundamental and Macroeconomic Data"
+msgstr "DataTables – Fundamentale und makroökonomische Daten"
 
 #: ../../source/manage_data/3. data_tables_50.md:3
 msgid ""
@@ -44,7 +44,8 @@ msgstr "Shanghai Interbank Offered Rate (SHIBOR): `shibor`"
 #: data_tables_50.md:42 data_tables_50.md:59 data_tables_50.md:80
 msgid "数据表用途: `reference`, 资产类型: `none`, 数据频率: `d`"
 msgstr ""
-"Data table purpose: `reference`, Asset type: `none`, Data frequency: `d`"
+"Zweck der Datentabelle: „Referenz“, Asset-Typ: „Keine“, Datenhäufigkeit: "
+"„d“."
 
 #: ../../source/manage_data/3. data_tables_50.md:10
 msgid ""
@@ -276,7 +277,7 @@ msgstr "center_rate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "民间借贷服务中心利率"
-msgstr "Interest rates at private lending service centers"
+msgstr "Zinssätze bei privaten Kreditdienstleistungszentren"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "micro_rate"
@@ -292,7 +293,7 @@ msgstr "cm_rate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "民间资本管理公司融资价格"
-msgstr "Financing prices for private capital management companies"
+msgstr "Finanzierungspreise für private Kapitalverwaltungsgesellschaften"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "sdb_rate"
@@ -308,7 +309,7 @@ msgstr "om_rate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "其他市场主体利率"
-msgstr "Other market participants' interest rates"
+msgstr "Zinssätze anderer Marktteilnehmer"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "aa_rate"
@@ -316,7 +317,8 @@ msgstr "aa_rate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "农村互助会互助金费率"
-msgstr "Rural Mutual Aid Association Mutual Aid Fund Rate"
+msgstr ""
+"Satz für den Fonds für gegenseitige Hilfe der Rural Mutual Aid Association"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m1_rate"
@@ -360,7 +362,7 @@ msgstr "m12_rate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "温州地区民间借贷分期限利率（一年期）"
-msgstr "Interest rates for private lending in Wenzhou (one-year term)"
+msgstr "Zinssätze für Privatkredite in Wenzhou (einjährige Laufzeit)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "12"
@@ -372,7 +374,7 @@ msgstr "long_rate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "温州地区民间借贷分期限利率（长期）"
-msgstr "Interest rates for private lending in Wenzhou (long term)"
+msgstr "Zinssätze für Privatkredite in Wenzhou (langfristig)"
 
 #: ../../source/manage_data/3. data_tables_50.md:79
 msgid "广州民间借贷指数: `gz_index`"
@@ -409,7 +411,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "小额贷市场平均利率（三月期）"
-msgstr "Average interest rate in the microloan market (3-month term)"
+msgstr "Durchschnittlicher Zinssatz am Mikrokreditmarkt (3-Monats-Laufzeit)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "小额贷市场平均利率（六月期）"
@@ -422,7 +424,7 @@ msgstr "Durchschnittlicher Zinssatz am Mikrokreditmarkt (Laufzeit ein Jahr)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "小额贷市场平均利率（长期）"
-msgstr "Average interest rate in the microloan market (long term)"
+msgstr "Durchschnittlicher Zinssatz auf dem Mikrokreditmarkt (langfristig)"
 
 #: ../../source/manage_data/3. data_tables_50.md:94
 msgid "中国宏观经济数据"
@@ -435,7 +437,8 @@ msgstr "Annual GDP data: `cn_gdp`"
 #: ../../source/manage_data/3. data_tables_50.md:97
 msgid "数据表用途: `reference`, 资产类型: `none`, 数据频率: `q`"
 msgstr ""
-"Data table purpose: `reference`, Asset type: `none`, Data frequency: `q`"
+"Zweck der Datentabelle: „Referenz“, Asset-Typ: „Keine“, Datenhäufigkeit: "
+"„q“."
 
 #: ../../source/manage_data/3. data_tables_50.md:99
 msgid ""
@@ -472,7 +475,7 @@ msgstr "gdp"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "GDP累计值（亿元）"
-msgstr "Cumulative GDP (in 100 million yuan)"
+msgstr "Kumuliertes BIP (in 100 Millionen Yuan)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "gdp_yoy"
@@ -488,7 +491,7 @@ msgstr "pi"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "第一产业累计值（亿元）"
-msgstr "Cumulative value of primary industry (100 million yuan)"
+msgstr "Kumulierter Wert der Primärindustrie (100 Millionen Yuan)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pi_yoy"
@@ -496,7 +499,7 @@ msgstr "pi_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "第一产业同比增速（%）"
-msgstr "Year-on-year growth rate of primary industry (%)"
+msgstr "Wachstumsrate der Primärindustrie im Jahresvergleich (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "si"
@@ -512,7 +515,7 @@ msgstr "si_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "第二产业同比增速（%）"
-msgstr "Year-on-year growth rate of secondary industry (%)"
+msgstr "Jahreswachstumsrate der Sekundärindustrie (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ti"
@@ -520,7 +523,7 @@ msgstr "ti"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "第三产业累计值（亿元）"
-msgstr "Cumulative value of the tertiary industry (100 million yuan)"
+msgstr "Kumulierter Wert der tertiären Industrie (100 Millionen Yuan)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ti_yoy"
@@ -528,7 +531,7 @@ msgstr "ti_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "第三产业同比增速（%）"
-msgstr "Year-on-year growth rate of the tertiary industry (%)"
+msgstr "Jahreswachstumsrate der tertiären Industrie (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md:115
 msgid "居民消费价格指数月度数据: `cn_cpi`"
@@ -538,7 +541,8 @@ msgstr "Consumer Price Index (CPI) Monthly Data: `cn_cpi`"
 #: data_tables_50.md:180 data_tables_50.md:200 data_tables_50.md:212
 msgid "数据表用途: `reference`, 资产类型: `none`, 数据频率: `m`"
 msgstr ""
-"Data table purpose: `reference`, Asset type: `none`, Data frequency: `m`"
+"Zweck der Datentabelle: „Referenz“, Asset-Typ: „Keine“, Datenhäufigkeit: "
+"„m“."
 
 #: ../../source/manage_data/3. data_tables_50.md:118
 msgid ""
@@ -654,7 +658,7 @@ msgstr "cnt_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "农村环比（%）"
-msgstr "Rural areas month-on-month change (%)"
+msgstr "Ländliche Gebiete monatliche Veränderung (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "cnt_accu"
@@ -698,7 +702,7 @@ msgstr "ppi_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：全部工业品：当月同比"
-msgstr "PPI: Total Industrial Products: Year-on-Year Change"
+msgstr "PPI: Industrieprodukte insgesamt: Veränderung gegenüber dem Vorjahr"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ppi_mp_yoy"
@@ -706,7 +710,7 @@ msgstr "ppi_mp_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生产资料：当月同比"
-msgstr "PPI: Production Materials: Year-on-Year Comparison"
+msgstr "PPI: Produktionsmaterialien: Jahresvergleich"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ppi_mp_qm_yoy"
@@ -723,7 +727,7 @@ msgstr "ppi_mp_rm_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生产资料：原料业：当月同比"
-msgstr "PPI: Means of Production: Raw Materials: Year-on-Year Change"
+msgstr "PPI: Produktionsmittel: Rohstoffe: Veränderung gegenüber dem Vorjahr"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ppi_mp_p_yoy"
@@ -741,7 +745,7 @@ msgstr "ppi_cg_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：当月同比"
-msgstr "PPI: Consumer Goods: Year-on-Year Comparison"
+msgstr "PPI: Konsumgüter: Jahresvergleich"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ppi_cg_f_yoy"
@@ -749,7 +753,7 @@ msgstr "ppi_cg_f_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：食品类：当月同比"
-msgstr "PPI: Consumer Goods: Food: Year-on-Year Comparison"
+msgstr "PPI: Konsumgüter: Lebensmittel: Jahresvergleich"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ppi_cg_c_yoy"
@@ -757,7 +761,7 @@ msgstr "ppi_cg_c_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：衣着类：当月同比"
-msgstr "PPI: Consumer Goods: Clothing: Year-on-Year Comparison"
+msgstr "PPI: Konsumgüter: Bekleidung: Jahresvergleich"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ppi_cg_adu_yoy"
@@ -775,7 +779,7 @@ msgstr "ppi_cg_dcg_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：耐用消费品类：当月同比"
-msgstr "PPI: Consumer Goods: Durable Goods: Year-on-Year Change"
+msgstr "PPI: Konsumgüter: Gebrauchsgüter: Veränderung gegenüber dem Vorjahr"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ppi_mom"
@@ -783,7 +787,7 @@ msgstr "ppi_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：全部工业品：环比"
-msgstr "PPI: All Industrial Products: Month-on-Month Change"
+msgstr "PPI: Alle Industrieprodukte: Veränderung gegenüber dem Vormonat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "ppi_mp_mom"
@@ -791,7 +795,7 @@ msgstr "ppi_mp_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生产资料：环比"
-msgstr "PPI: Production Materials: Month-on-Month"
+msgstr "PPI: Produktionsmaterialien: Monat für Monat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "13"
@@ -803,7 +807,7 @@ msgstr "ppi_mp_qm_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生产资料：采掘业：环比"
-msgstr "PPI: Means of Production: Mining Industry: Month-on-Month"
+msgstr "PPI: Produktionsmittel: Bergbauindustrie: Monat für Monat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "14"
@@ -815,7 +819,7 @@ msgstr "ppi_mp_rm_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生产资料：原料业：环比"
-msgstr "PPI: Means of Production: Raw Materials: Month-on-Month"
+msgstr "PPI: Produktionsmittel: Rohstoffe: Monat für Monat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "15"
@@ -851,7 +855,7 @@ msgstr "ppi_cg_f_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：食品类：环比"
-msgstr "PPI: Consumer Goods: Food: Month-on-Month Change"
+msgstr "PPI: Konsumgüter: Lebensmittel: Veränderung gegenüber dem Vormonat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "18"
@@ -863,7 +867,7 @@ msgstr "ppi_cg_c_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：衣着类：环比"
-msgstr "PPI: Consumer Goods: Clothing: Month-on-Month Change"
+msgstr "PPI: Konsumgüter: Bekleidung: Veränderung gegenüber dem Vormonat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "19"
@@ -889,7 +893,7 @@ msgstr "ppi_cg_dcg_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：耐用消费品类：环比"
-msgstr "PPI: Consumer Goods: Durable Goods: Month-on-Month Change"
+msgstr "PPI: Konsumgüter: Gebrauchsgüter: Veränderung gegenüber dem Vormonat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "21"
@@ -901,7 +905,8 @@ msgstr "ppi_accu"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：全部工业品：累计同比"
-msgstr "PPI: All Industrial Products: Cumulative Year-on-Year Growth"
+msgstr ""
+"PPI: Alle Industrieprodukte: Kumuliertes Wachstum gegenüber dem Vorjahr"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "22"
@@ -913,7 +918,7 @@ msgstr "ppi_mp_accu"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生产资料：累计同比"
-msgstr "PPI: Means of Production: Cumulative Year-on-Year Growth"
+msgstr "PPI: Produktionsmittel: Kumuliertes jährliches Wachstum"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "23"
@@ -964,7 +969,7 @@ msgstr "ppi_cg_accu"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：累计同比"
-msgstr "PPI: Consumer Goods: Cumulative Year-on-Year Growth"
+msgstr "PPI: Konsumgüter: Kumuliertes Wachstum gegenüber dem Vorjahr"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "27"
@@ -976,7 +981,8 @@ msgstr "ppi_cg_f_accu"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：食品类：累计同比"
-msgstr "PPI: Consumer Goods: Food: Cumulative Year-on-Year Growth"
+msgstr ""
+"PPI: Konsumgüter: Lebensmittel: Kumuliertes Wachstum gegenüber dem Vorjahr"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "28"
@@ -1139,7 +1145,7 @@ msgstr "inc_month"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "社融增量当月值（亿元）"
-msgstr "Monthly increase in social financing (in RMB 100 million)"
+msgstr "Monatliche Erhöhung der Sozialfinanzierung (in RMB 100 Millionen)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "inc_cumval"
@@ -1156,7 +1162,7 @@ msgstr "stk_endval"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "社融存量期末值（万亿元）"
-msgstr "Ending value of total social financing (trillion yuan)"
+msgstr "Endwert der gesamten Sozialfinanzierung (Billionen Yuan)"
 
 #: ../../source/manage_data/3. data_tables_50.md:211
 msgid "采购经理人指数月度数据: `cn_pmi`"
@@ -1199,7 +1205,7 @@ msgstr "pmi010100"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:企业规模/大型企业"
-msgstr "Manufacturing PMI: Firm Size/Large Enterprises"
+msgstr "PMI für das verarbeitende Gewerbe: Unternehmensgröße/Großunternehmen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010200"
@@ -1207,7 +1213,7 @@ msgstr "pmi010200"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:企业规模/中型企业"
-msgstr "Manufacturing PMI: Firm Size/Medium-sized Enterprises"
+msgstr "PMI für das verarbeitende Gewerbe: Firmengröße/mittlere Unternehmen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010300"
@@ -1215,7 +1221,7 @@ msgstr "pmi010300"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:企业规模/小型企业"
-msgstr "Manufacturing PMI: Firm Size/Small Businesses"
+msgstr "PMI für das verarbeitende Gewerbe: Unternehmensgröße/Kleinunternehmen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010400"
@@ -1223,7 +1229,7 @@ msgstr "pmi010400"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/生产指数"
-msgstr "Manufacturing PMI: Component Index / Production Index"
+msgstr "Fertigungs-PMI: Komponentenindex / Produktionsindex"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010401"
@@ -1261,7 +1267,9 @@ msgstr "pmi010500"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/新订单指数"
-msgstr "Manufacturing PMI: Component Index / New Orders Index"
+msgstr ""
+"PMI für das verarbeitende Gewerbe: Komponentenindex / Index für neue "
+"Aufträge"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010501"
@@ -1376,7 +1384,8 @@ msgstr "pmi010800"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/从业人员指数"
-msgstr "Manufacturing PMI: Component Index/Employment Index"
+msgstr ""
+"PMI für das verarbeitende Gewerbe: Komponentenindex/Beschäftigungsindex"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010801"
@@ -1414,7 +1423,7 @@ msgstr "pmi010900"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:其他/新出口订单"
-msgstr "Manufacturing PMI: Other/New Export Orders"
+msgstr "PMI für das verarbeitende Gewerbe: Sonstige/neue Exportaufträge"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi011000"
@@ -1430,7 +1439,7 @@ msgstr "pmi011100"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:其他/采购量"
-msgstr "Manufacturing PMI: Other/Purchasing Volume"
+msgstr "PMI für das verarbeitende Gewerbe: Sonstiges/Einkaufsvolumen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi011200"
@@ -1438,7 +1447,9 @@ msgstr "pmi011200"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:其他/主要原材料购进价格"
-msgstr "Manufacturing PMI: Other/Major Raw Material Purchase Prices"
+msgstr ""
+"PMI für das verarbeitende Gewerbe: Einkaufspreise für andere/wichtige "
+"Rohstoffe"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi011300"
@@ -1446,7 +1457,7 @@ msgstr "pmi011300"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:其他/出厂价格"
-msgstr "Manufacturing PMI: Other/Ex-factory Prices"
+msgstr "PMI für das verarbeitende Gewerbe: Sonstige/Ab-Werk-Preise"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi011400"
@@ -1454,7 +1465,7 @@ msgstr "pmi011400"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:其他/产成品库存"
-msgstr "Manufacturing PMI: Other/Finished Goods Inventory"
+msgstr "Fertigungs-PMI: Sonstiger/Fertigwarenbestand"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "31"
@@ -1466,7 +1477,9 @@ msgstr "pmi011500"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:其他/在手订单"
-msgstr "Manufacturing PMI: Other/Orders on Hand"
+msgstr ""
+"Einkaufsmanagerindex für das verarbeitende Gewerbe: "
+"Sonstiges/Auftragsbestand"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "32"
@@ -1492,7 +1505,7 @@ msgstr "pmi011700"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:分行业/装备制造业"
-msgstr "Manufacturing PMI: By Sector/Equipment Manufacturing"
+msgstr "PMI für das verarbeitende Gewerbe: Nach Sektor/Geräteherstellung"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "34"
@@ -1504,7 +1517,7 @@ msgstr "pmi011800"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:分行业/高技术制造业"
-msgstr "Manufacturing PMI: By Sector/High-Tech Manufacturing"
+msgstr "PMI für das verarbeitende Gewerbe: Nach Sektor/High-Tech-Fertigung"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "35"
@@ -1530,7 +1543,7 @@ msgstr "pmi012000"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:分行业/消费品制造业"
-msgstr "Manufacturing PMI: By Sector/Consumer Goods Manufacturing"
+msgstr "PMI für das verarbeitende Gewerbe: Nach Sektor/Konsumgüterherstellung"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "37"
@@ -1542,7 +1555,7 @@ msgstr "pmi020100"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:商务活动"
-msgstr "Non-manufacturing PMI: Business Activity"
+msgstr "PMI für nicht verarbeitendes Gewerbe: Geschäftstätigkeit"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "38"
@@ -1568,7 +1581,9 @@ msgstr "pmi020102"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:商务活动:分行业/服务业业"
-msgstr "Non-Manufacturing PMI: Business Activity: By Sector/Services"
+msgstr ""
+"PMI für nicht verarbeitendes Gewerbe: Geschäftstätigkeit: Nach "
+"Sektor/Dienstleistungen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "40"
@@ -1580,7 +1595,7 @@ msgstr "pmi020200"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:新订单指数"
-msgstr "Non-manufacturing PMI: New Orders Index"
+msgstr "PMI für das nicht verarbeitende Gewerbe: Index für neue Aufträge"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "41"
@@ -1606,7 +1621,9 @@ msgstr "pmi020202"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:新订单指数:分行业/服务业"
-msgstr "Non-Manufacturing PMI: New Orders Index: By Sector/Services"
+msgstr ""
+"PMI für nicht verarbeitendes Gewerbe: Index für neue Aufträge: Nach "
+"Sektor/Dienstleistungen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "43"
@@ -1618,7 +1635,7 @@ msgstr "pmi020300"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:投入品价格指数"
-msgstr "Non-Manufacturing PMI: Input Price Index"
+msgstr "PMI für das nicht verarbeitende Gewerbe: Input-Preisindex"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "44"
@@ -1644,7 +1661,9 @@ msgstr "pmi020302"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:投入品价格指数:分行业/服务业"
-msgstr "Non-Manufacturing PMI: Input Price Index: By Sector/Services"
+msgstr ""
+"PMI für nicht verarbeitendes Gewerbe: Input-Preisindex: Nach "
+"Sektor/Dienstleistungen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "46"
@@ -1656,7 +1675,7 @@ msgstr "pmi020400"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:销售价格指数"
-msgstr "Non-manufacturing PMI: Sales Price Index"
+msgstr "PMI für das nicht verarbeitende Gewerbe: Verkaufspreisindex"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "47"
@@ -1682,7 +1701,9 @@ msgstr "pmi020402"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:销售价格指数:分行业/服务业"
-msgstr "Non-Manufacturing PMI: Sales Price Index: By Sector/Services"
+msgstr ""
+"PMI für nicht verarbeitendes Gewerbe: Verkaufspreisindex: Nach "
+"Sektor/Dienstleistungen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "49"
@@ -1694,7 +1715,7 @@ msgstr "pmi020500"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:从业人员指数"
-msgstr "Non-manufacturing PMI: Employment Index"
+msgstr "PMI für das nicht verarbeitende Gewerbe: Beschäftigungsindex"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "50"
@@ -1734,7 +1755,9 @@ msgstr "pmi020600"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:业务活动预期指数"
-msgstr "Non-manufacturing PMI: Business Activity Expectations Index"
+msgstr ""
+"PMI für das nicht verarbeitende Gewerbe: Index der "
+"Geschäftsaktivitätserwartungen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "53"
@@ -1774,7 +1797,7 @@ msgstr "pmi020700"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:新出口订单"
-msgstr "Non-manufacturing PMI: New export orders"
+msgstr "PMI für das nicht verarbeitende Gewerbe: Neue Exportaufträge"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "56"
@@ -1786,7 +1809,8 @@ msgstr "pmi020800"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:在手订单"
-msgstr "Non-manufacturing PMI: Orders on Hand"
+msgstr ""
+"Einkaufsmanagerindex für nicht verarbeitendes Gewerbe: Auftragsbestand"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "57"
@@ -1810,7 +1834,7 @@ msgstr "pmi021000"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:供应商配送时间"
-msgstr "Non-Manufacturing PMI: Supplier Delivery Time"
+msgstr "Nicht-verarbeitendes PMI: Lieferzeit des Lieferanten"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "59"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../../source/design/06-backtest-live-optimization.md:3
 msgid "1. 统一入口"
-msgstr "1. Unified entry point"
+msgstr "1. Einheitlicher Einstiegspunkt"
 
 #: ../../source/design/06-backtest-live-optimization.md:5
 msgid "用户通过 **qt.run(op, mode=..., **kwargs)** 触发运行。内部会："
@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../../source/design/06-backtest-live-optimization.md:10
 msgid "**mode** 决定走哪条分支："
-msgstr "**mode** determines which branch to take:"
+msgstr "**Modus** bestimmt, welcher Zweig genommen werden soll:"
 
 #: ../../source/design/06-backtest-live-optimization.md:12
 msgid "**mode=0**：实盘模式，进入 Trader 流程（定时触发、获取实时数据、生成信号、下单并记录）。"
@@ -90,7 +90,7 @@ msgstr ""
 
 #: ../../source/design/06-backtest-live-optimization.md:19
 msgid "2. 配置（config）的作用"
-msgstr "2. The role of the configuration (config)"
+msgstr "2. Die Rolle der Konfiguration (config)"
 
 #: ../../source/design/06-backtest-live-optimization.md:21
 msgid "**config** 包含资产池、回测区间、成本参数、资金计划等，回测/实盘/优化共用同一套配置结构。例如："
@@ -101,15 +101,15 @@ msgstr ""
 
 #: ../../source/design/06-backtest-live-optimization.md:23
 msgid "资产池、资产类型、回测起止日；"
-msgstr "Asset pool, asset types, and the backtest start/end dates;"
+msgstr "Asset-Pool, Asset-Typen und die Start-/Enddaten des Backtests;"
 
 #: ../../source/design/06-backtest-live-optimization.md:24
 msgid "交易成本（费率、最低费用等）；"
-msgstr "Trading costs (fee rates, minimum fees, etc.);"
+msgstr "Handelskosten (Gebührensätze, Mindestgebühren usw.);"
 
 #: ../../source/design/06-backtest-live-optimization.md:25
 msgid "资金投入计划（invest_cash_amounts 等）；"
-msgstr "Capital allocation plan (invest_cash_amounts, etc.);"
+msgstr "Kapitalallokationsplan (invest_cash_amounts usw.);"
 
 #: ../../source/design/06-backtest-live-optimization.md:26
 msgid "实盘相关（账户、Broker 类型等，mode=0 时使用）。"
@@ -129,7 +129,7 @@ msgstr ""
 
 #: ../../source/design/06-backtest-live-optimization.md:30
 msgid "3. 回测模式（mode=1）"
-msgstr "3. Backtest mode (mode=1)"
+msgstr "3. Backtest-Modus (Modus=1)"
 
 #: ../../source/design/06-backtest-live-optimization.md:32
 msgid ""
@@ -202,7 +202,7 @@ msgstr ""
 
 #: ../../source/design/06-backtest-live-optimization.md:39
 msgid "4. 实盘模式（mode=0）"
-msgstr "4. Live trading mode (mode=0)"
+msgstr "4. Live-Handelsmodus (Modus=0)"
 
 #: ../../source/design/06-backtest-live-optimization.md:41
 msgid ""
@@ -235,7 +235,7 @@ msgstr ""
 
 #: ../../source/design/06-backtest-live-optimization.md:46
 msgid "5. 优化模式（mode=2）"
-msgstr "5. Optimization mode (mode=2)"
+msgstr "5. Optimierungsmodus (Modus=2)"
 
 #: ../../source/design/06-backtest-live-optimization.md:48
 msgid "**Optimizer** 根据策略的 **Parameter** 定义确定参数空间（如网格、随机采样、遗传算法等）。"
@@ -266,7 +266,7 @@ msgstr ""
 
 #: ../../source/design/06-backtest-live-optimization.md:53
 msgid "6. 小结"
-msgstr "6. Summary"
+msgstr "6. Zusammenfassung"
 
 #: ../../source/design/06-backtest-live-optimization.md:55
 msgid ""

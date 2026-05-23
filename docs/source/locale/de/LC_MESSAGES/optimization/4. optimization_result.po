@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/optimization/4. optimization_result.md:1
 msgid "优化结果的结构与读取"
-msgstr "Optimization Result Structure and Access"
+msgstr "Struktur und Zugriff auf Optimierungsergebnisse"
 
 #: ../../source/optimization/4. optimization_result.md:3
 msgid "返回值说明"
-msgstr "Return Value Overview"
+msgstr "Übersicht über den Rückgabewert"
 
 #: ../../source/optimization/4. optimization_result.md:5
 msgid ""
@@ -42,25 +42,25 @@ msgstr ""
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "字段/属性"
-msgstr "Field / Attribute"
+msgstr "Feld/Attribut"
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "每组参数"
-msgstr "Parameter set"
+msgstr "Parametersatz"
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "各次评估的参数组合（如 short_period、long_period）。"
 msgstr ""
-"Parameter combination for each evaluation (e.g., ``short_period``, "
-"``long_period``)."
+"Parameterkombination für jede Auswertung (z. B. „`short_period``, "
+"``long_period`“)."
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "回测指标"
-msgstr "Backtest metrics"
+msgstr "Backtest-Metriken"
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "该组参数对应的夏普、回撤、收益等。"
@@ -68,15 +68,15 @@ msgstr "Sharpe Ratio, Drawdown, Return usw. für diesen Parametersatz."
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "目标函数值"
-msgstr "Objective value"
+msgstr "Objektiver Wert"
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "用于排序的目标值（如夏普）。"
-msgstr "Objective used for ranking (e.g., Sharpe ratio)."
+msgstr "Für das Ranking verwendetes Ziel (z. B. Sharpe Ratio)."
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "排序方式"
-msgstr "Sorting"
+msgstr "Sortierung"
 
 #: ../../source/optimization/4. optimization_result.md
 msgid "通常按目标函数降序（越大越优）或升序（如回撤越小越优）。"
@@ -92,7 +92,7 @@ msgstr ""
 
 #: ../../source/optimization/4. optimization_result.md:18
 msgid "如何读取最优参数"
-msgstr "How to Read the Best Parameters"
+msgstr "So lesen Sie die besten Parameter"
 
 #: ../../source/optimization/4. optimization_result.md:20
 msgid ""
@@ -105,7 +105,7 @@ msgstr ""
 
 #: ../../source/optimization/4. optimization_result.md:22
 msgid "如何读取 Top-K 结果"
-msgstr "How to Read Top-K Results"
+msgstr "So lesen Sie Top-K-Ergebnisse"
 
 #: ../../source/optimization/4. optimization_result.md:24
 msgid ""

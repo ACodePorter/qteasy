@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/api/data_source.rst:2
 msgid "历史数据的存储——DataSource对象"
-msgstr "Managing Historical Data - DataSource Object"
+msgstr "Verwalten historischer Daten – DataSource-Objekt"
 
 #: ../../source/api/data_source.rst:4
 msgid ""
@@ -62,7 +62,7 @@ msgstr ""
 #: of qteasy.database.DataSource:10
 #: qteasy.database.DataSource.get_table_data_coverage:15
 msgid "示例"
-msgstr "Example"
+msgstr "Beispiel"
 
 #: of qteasy.database.DataSource:11
 msgid "下面示例展示 DataSource 类名（稳定输出）；实际使用时需要结合你的本地数据目录或数据库连接参数："
@@ -73,7 +73,7 @@ msgstr ""
 
 #: of qteasy.DataSource.all_basic_tables:1
 msgid "获取所有基础数据表的清单"
-msgstr "Get the list of all base data tables"
+msgstr "Rufen Sie die Liste aller Basisdatentabellen ab"
 
 #: of qteasy.DataSource.all_data_tables:1
 msgid "获取所有历史数据表（不包括调整表）的清单"
@@ -83,15 +83,15 @@ msgstr ""
 
 #: of qteasy.DataSource.all_sys_tables:1
 msgid "获取所有系统数据表的清单"
-msgstr "Get the list of all system data tables"
+msgstr "Rufen Sie die Liste aller Systemdatentabellen ab"
 
 #: of qteasy.DataSource.all_tables:1
 msgid "获取所有数据表的清单"
-msgstr "Get the list of all data tables"
+msgstr "Rufen Sie die Liste aller Datentabellen ab"
 
 #: of qteasy.DataSource.allow_drop_table:1
 msgid "获取是否允许删除数据表"
-msgstr "Get whether deleting data tables is allowed"
+msgstr "Ermitteln Sie, ob das Löschen von Datentabellen zulässig ist"
 
 #: of qteasy.database.DataSource.db_run_in_transaction:1
 msgid "在 DataSource 上执行最小事务封装（DB 真事务，file 为 no-op）。"
@@ -103,34 +103,34 @@ msgstr ""
 #: qteasy.database.DataSource.get_table_data_coverage
 #: qteasy.database.DataSource.write_table_data
 msgid "参数"
-msgstr "Parameters"
+msgstr "Parameter"
 
 #: of qteasy.database.DataSource.db_run_in_transaction:3
 msgid "需要在事务中执行的可调用对象"
-msgstr "Callable to run inside the transaction"
+msgstr "Zur Ausführung innerhalb der Transaktion aufrufbar"
 
 #: of qteasy.database.DataSource.db_run_in_transaction:5
 msgid "传递给 ``action`` 的位置参数"
-msgstr "Positional arguments passed to ``action``"
+msgstr "An „`action`“ übergebene Positionsargumente"
 
 #: of qteasy.database.DataSource.db_run_in_transaction:6
 msgid "传递给 ``action`` 的关键字参数"
-msgstr "Keyword arguments passed to ``action``"
+msgstr "An „`action`“ übergebene Schlüsselwortargumente"
 
 #: ../../source/api/data_source.rst of
 #: qteasy.database.DataSource.write_table_data
 msgid "返回"
-msgstr "Back"
+msgstr "Zurück"
 
 #: of qteasy.database.DataSource.db_run_in_transaction:8
 msgid "``action`` 的返回值"
-msgstr "Return value of ``action``"
+msgstr "Rückgabewert von „`action`“."
 
 #: ../../source/api/data_source.rst of
 #: qteasy.database.DataSource.get_table_data_coverage
 #: qteasy.database.DataSource.write_table_data
 msgid "返回类型"
-msgstr "Return type"
+msgstr "Rückgabetyp"
 
 #: of qteasy.database.DataSource.delete_sys_table_data:1
 msgid "删除系统数据表中的某些记录，被删除的记录的ID使用列表或tuple传入"
@@ -140,15 +140,15 @@ msgstr ""
 
 #: of qteasy.database.DataSource.delete_sys_table_data:3
 msgid "需要删除数据的表名"
-msgstr "The name of the table whose data needs to be deleted"
+msgstr "Der Name der Tabelle, deren Daten gelöscht werden müssen"
 
 #: of qteasy.database.DataSource.delete_sys_table_data:5
 msgid "需要删除的记录的ID列表"
-msgstr "List of IDs of records to delete"
+msgstr "Liste der IDs der zu löschenden Datensätze"
 
 #: of qteasy.database.DataSource.delete_sys_table_data:8
 msgid "删除的记录数量"
-msgstr "Number of records deleted"
+msgstr "Anzahl der gelöschten Datensätze"
 
 #: of qteasy.database.DataSource.drop_empty_tables:1
 msgid "从datasource中删除所有空表，即行数为0的表"
@@ -158,7 +158,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.drop_empty_tables:3
 msgid "删除的表数量"
-msgstr "Number of tables deleted"
+msgstr "Anzahl der gelöschten Tabellen"
 
 #: of qteasy.database.DataSource.drop_table_data:1
 msgid "删除本地存储的数据表(操作不可撤销，谨慎使用) 如果数据源设置了allow_drop_table为False，则无法删除数据表并报错"
@@ -170,11 +170,11 @@ msgstr ""
 
 #: of qteasy.database.DataSource.drop_table_data:4
 msgid "本地数据表的名称"
-msgstr "Name of the local data table"
+msgstr "Name der lokalen Datentabelle"
 
 #: ../../source/api/data_source.rst
 msgid "抛出"
-msgstr "Throw"
+msgstr "Werfen"
 
 #: of qteasy.database.DataSource.drop_table_data:9
 msgid "当数据源设置了allow_drop_table为False时，无法删除数据表并报错:"
@@ -209,7 +209,7 @@ msgstr ""
 #: qteasy.database.DataSource.get_table_info:7
 #: qteasy.database.DataSource.read_table_data:5
 msgid "数据表名称"
-msgstr "Table name"
+msgstr "Tabellenname"
 
 #: of qteasy.database.DataSource.export_table_data:10
 msgid "导出的文件名，如果不指定，则默认使用数据表名称作为文件名"
@@ -226,12 +226,14 @@ msgstr ""
 
 #: of qteasy.database.DataSource.export_table_data:14
 msgid "ts_code筛选条件，为空时给出所有记录"
-msgstr "ts_code filter condition; if empty, all records are returned"
+msgstr ""
+"ts_code-Filterbedingung; wenn leer, werden alle Datensätze zurückgegeben"
 
 #: of qteasy.database.DataSource.export_table_data:16
 #: qteasy.database.DataSource.read_table_data:9
 msgid "YYYYMMDD格式日期，为空时不筛选"
-msgstr "Date in YYYYMMDD format; if empty, no filtering is applied"
+msgstr ""
+"Datum im Format JJJJMMTT; Wenn es leer ist, wird keine Filterung angewendet"
 
 #: of qteasy.database.DataSource.export_table_data:18
 #: qteasy.database.DataSource.read_table_data:11
@@ -242,7 +244,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.export_table_data:21
 msgid "**file_path_name** -- 导出的文件的完整路径"
-msgstr "**file_path_name** -- Full path of the exported file"
+msgstr "**Dateipfadname** – Vollständiger Pfad der exportierten Datei"
 
 #: of qteasy.database.DataSource.get_all_basic_table_data:1
 msgid "一个快速获取所有basic数据表的函数，通常情况缓存处理以加快速度 如果设置refresh_cache为True，则清空缓存并重新下载数据"
@@ -254,15 +256,16 @@ msgstr ""
 
 #: of qteasy.database.DataSource.get_all_basic_table_data:4
 msgid "如果为True，则清空缓存并重新下载数据"
-msgstr "If True, clear the cache and re-download the data."
+msgstr ""
+"Wenn True, leeren Sie den Cache und laden Sie die Daten erneut herunter."
 
 #: of qteasy.database.DataSource.get_all_basic_table_data:6
 msgid "如果为True，则在数据表为空时抛出ValueError"
-msgstr "If True, raise ValueError when the data table is empty."
+msgstr "Wenn True, wird ValueError ausgelöst, wenn die Datentabelle leer ist."
 
 #: of qteasy.database.DataSource.get_data_table_size:1
 msgid "获取数据表占用磁盘空间的大小"
-msgstr "Get the amount of disk space used by the data table."
+msgstr "Rufen Sie den von der Datentabelle verwendeten Speicherplatz ab."
 
 #: of qteasy.database.DataSource.get_data_table_size:5
 msgid "True时显示容易阅读的形式，如1.5MB而不是1590868， False时返回字节数"
@@ -272,7 +275,9 @@ msgstr ""
 
 #: of qteasy.database.DataSource.get_data_table_size:7
 msgid "True时以字符串形式返回结果，便于打印"
-msgstr "When True, return the result as a string for easier printing"
+msgstr ""
+"Wenn True, wird das Ergebnis zum einfacheren Drucken als Zeichenfolge "
+"zurückgegeben"
 
 #: of qteasy.database.DataSource.get_data_table_size:10
 msgid "**tuple (size, rows)**"
@@ -280,7 +285,7 @@ msgstr "**tuple (size, rows)**"
 
 #: of qteasy.database.DataSource.get_sys_table_last_id:1
 msgid "从已有的table中获取最后一个id"
-msgstr "Get the last ID from an existing table"
+msgstr "Holen Sie sich die letzte ID aus einer vorhandenen Tabelle"
 
 #: of qteasy.database.DataSource.get_sys_table_last_id:6
 msgid "**last_id**"
@@ -295,11 +300,11 @@ msgstr ""
 
 #: of qteasy.database.DataSource.get_table_data_coverage:3
 msgid "数据表的名称"
-msgstr "Name of the data table"
+msgstr "Name der Datentabelle"
 
 #: of qteasy.database.DataSource.get_table_data_coverage:5
 msgid "需要去重并返回的数据列"
-msgstr "Data columns that need to be deduplicated and returned"
+msgstr "Datenspalten, die dedupliziert und zurückgegeben werden müssen"
 
 #: of qteasy.database.DataSource.get_table_data_coverage:7
 msgid ""
@@ -321,7 +326,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.get_table_info:2
 msgid "以及数据下载方法"
-msgstr "and the data download method"
+msgstr "und die Datendownload-Methode"
 
 #: of qteasy.database.DataSource.get_table_info:5
 msgid "Parameters:"
@@ -347,7 +352,7 @@ msgstr "print_info: bool, Default: True"
 
 #: of qteasy.database.DataSource.get_table_info:11
 msgid "是否打印输出所有结果"
-msgstr "Whether to print all results."
+msgstr "Ob alle Ergebnisse gedruckt werden sollen."
 
 #: of qteasy.database.DataSource.get_table_info:12
 msgid "human: bool, Default: True"
@@ -355,7 +360,8 @@ msgstr "human: bool, Default: True"
 
 #: of qteasy.database.DataSource.get_table_info:13
 msgid "是否给出容易阅读的字符串形式"
-msgstr "Whether to provide an easy-to-read string representation."
+msgstr ""
+"Ob eine leicht lesbare Zeichenfolgendarstellung bereitgestellt werden soll."
 
 #: of qteasy.database.DataSource.get_table_info
 msgid "returns"
@@ -398,7 +404,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.insert_sys_table_data:1
 msgid "插入系统操作表的数据"
-msgstr "Insert data into the system operations table."
+msgstr "Fügen Sie Daten in die Systembetriebstabelle ein."
 
 #: of qteasy.database.DataSource.insert_sys_table_data:3
 msgid ""
@@ -414,7 +420,7 @@ msgstr ""
 #: of qteasy.database.DataSource.insert_sys_table_data:8
 #: qteasy.database.DataSource.update_sys_table_data:7
 msgid "需要更新的数据表名称"
-msgstr "Name of the table to update"
+msgstr "Name der zu aktualisierenden Tabelle"
 
 #: of qteasy.database.DataSource.insert_sys_table_data:10
 msgid "需要更新或插入的数据，数据的key必须与数据库表的字段相同，否则会抛出异常"
@@ -425,7 +431,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.insert_sys_table_data:13
 msgid "**record_id** -- 更新的记录ID"
-msgstr "**record_id** -- ID of the record to update"
+msgstr "**record_id** – ID des zu aktualisierenden Datensatzes"
 
 #: of qteasy.database.DataSource.insert_sys_table_data:16
 msgid "当给出的字段不完整或者有不可用的字段时:"
@@ -435,7 +441,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.none_sys_tables:1
 msgid "获取所有非系统数据表的清单"
-msgstr "Get a list of all non-system tables"
+msgstr "Rufen Sie eine Liste aller Nicht-Systemtabellen ab"
 
 #: of qteasy.database.DataSource.overview:1
 msgid "以表格形式列出所有数据表的当前数据状态"
@@ -450,11 +456,11 @@ msgstr ""
 
 #: of qteasy.database.DataSource.overview:5
 msgid "是否打印数据表总揽"
-msgstr "Whether to print a table overview"
+msgstr "Ob eine Tabellenübersicht gedruckt werden soll"
 
 #: of qteasy.database.DataSource.overview:7
 msgid "是否包含系统表"
-msgstr "Whether to include system tables"
+msgstr "Ob Systemtabellen einbezogen werden sollen"
 
 #: of qteasy.database.DataSource.read_cached_table_data:1
 msgid "缓存数据表数据以缩短读取速度，这个函数用于加快本地提取数据时加速"
@@ -493,7 +499,7 @@ msgstr ""
 #: of qteasy.database.DataSource.read_sys_table_data:5
 #: qteasy.database.DataSource.read_sys_table_record:6
 msgid "需要读取的数据表名称"
-msgstr "Name of the data table to read."
+msgstr "Name der zu lesenden Datentabelle."
 
 #: of qteasy.database.DataSource.read_sys_table_data:7
 msgid "筛选数据的条件，包括用作筛选条件的字典如: {account_id = 123}"
@@ -525,7 +531,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.read_sys_table_record:8
 msgid "需要读取的数据的id"
-msgstr "ID of the data to read."
+msgstr "ID der zu lesenden Daten."
 
 #: of qteasy.database.DataSource.read_sys_table_record:10
 msgid "筛选数据的条件，包括用作筛选条件的字典如: account_id = 123"
@@ -575,7 +581,8 @@ msgstr ""
 
 #: of qteasy.database.DataSource.reconnect:2
 msgid "如果可行的话，重新连接数据库"
-msgstr "Reconnect to the database if possible."
+msgstr ""
+"Stellen Sie nach Möglichkeit erneut eine Verbindung zur Datenbank her."
 
 #: of qteasy.database.DataSource.reconnect:4
 msgid "* **True** (*连接成功*) * **False** (*连接失败*)"
@@ -585,11 +592,11 @@ msgstr ""
 
 #: of qteasy.database.DataSource.reconnect:4
 msgid "**True** (*连接成功*)"
-msgstr "**True** (*Connection successful*)"
+msgstr "**True** (*Verbindung erfolgreich*)"
 
 #: of qteasy.database.DataSource.reconnect:5
 msgid "**False** (*连接失败*)"
-msgstr "**False** (*connection failed*)"
+msgstr "**Falsch** (*Verbindung fehlgeschlagen*)"
 
 #: of qteasy.database.DataSource.table_data_exists:1
 msgid "逻辑层函数，判断数据表是否存在"
@@ -601,7 +608,7 @@ msgstr "**bool**"
 
 #: of qteasy.DataSource.tables:1
 msgid "所有已经建立的tables的清单"
-msgstr "A list of all tables that have already been created"
+msgstr "Eine Liste aller bereits erstellten Tabellen"
 
 #: of qteasy.database.DataSource.update_sys_table_data:1
 msgid "更新系统操作表的数据，根据指定的id更新数据，更新的内容由kwargs给出。"
@@ -622,7 +629,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.update_sys_table_data:9
 msgid "需要更新的数据的id"
-msgstr "The id of the data that needs to be updated"
+msgstr "Die ID der Daten, die aktualisiert werden müssen"
 
 #: of qteasy.database.DataSource.update_sys_table_data:11
 msgid "需要更新的数据，包括需要更新的字段如: account_id = 123"
@@ -632,15 +639,15 @@ msgstr ""
 
 #: of qteasy.database.DataSource.update_sys_table_data:14
 msgid "**id** -- 更新的记录ID"
-msgstr "**id** -- ID of the record to update"
+msgstr "**id** – ID des zu aktualisierenden Datensatzes"
 
 #: of qteasy.database.DataSource.update_sys_table_data:17
 msgid "当给出的id不存在或为None时:"
-msgstr "When the given id does not exist or is None:"
+msgstr "Wenn die angegebene ID nicht existiert oder None ist:"
 
 #: of qteasy.database.DataSource.update_sys_table_data:18
 msgid "当给出的字段不存在时:"
-msgstr "When the provided field does not exist:"
+msgstr "Wenn das bereitgestellte Feld nicht vorhanden ist:"
 
 #: of qteasy.database.DataSource.update_table_data:1
 msgid "检查输入的df，去掉不符合要求的列或行后，将数据合并到table中，包括以下步骤："
@@ -665,7 +672,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.update_table_data:8
 msgid "数据表名，必须是database中定义的数据表"
-msgstr "Table name; must be a table defined in database."
+msgstr "Tabellenname; muss eine in der Datenbank definierte Tabelle sein."
 
 #: of qteasy.database.DataSource.update_table_data:10
 msgid ""
@@ -709,7 +716,7 @@ msgstr ""
 
 #: of qteasy.database.DataSource.write_table_data:8
 msgid "本地数据表名，"
-msgstr "Local table name,"
+msgstr "Lokaler Tabellenname,"
 
 #: of qteasy.database.DataSource.write_table_data:10
 msgid ""
@@ -727,7 +734,7 @@ msgstr "**int**"
 
 #: of qteasy.database.DataSource.write_table_data:19
 msgid "备注"
-msgstr "Note"
+msgstr "Notiz"
 
 #: of qteasy.database.DataSource.write_table_data:20
 msgid "注意！！不应直接使用该函数将数据写入本地数据库，因为写入的数据不会被检查 请使用update_table_data()来更新或写入数据到本地"

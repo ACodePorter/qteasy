@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -261,8 +261,8 @@ msgstr ""
 #: ../../source/tutorials/5-first-self-defined-strategy.md:56
 msgid "因此，在`qteasy`的设计中，一个交易策略包括下面四个核心要素："
 msgstr ""
-"Therefore, in the design of `qteasy`, a trading strategy includes the "
-"following four core elements:"
+"Daher umfasst eine Handelsstrategie im Design von „qteasy“ die folgenden "
+"vier Kernelemente:"
 
 #: ../../source/tutorials/5-first-self-defined-strategy.md:58
 msgid "策略以及策略组的运行时机"
@@ -282,7 +282,7 @@ msgstr ""
 
 #: ../../source/tutorials/5-first-self-defined-strategy.md:62
 msgid "策略的可调参数和历史数据"
-msgstr "A strategy’s tunable parameters and historical data"
+msgstr "Die einstellbaren Parameter und historischen Daten einer Strategie"
 
 #: ../../source/tutorials/5-first-self-defined-strategy.md:64
 msgid ""

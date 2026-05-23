@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:1
 msgid "用 HistoryPanel 研究事件型因子"
-msgstr "Studying event-driven factors with HistoryPanel"
+msgstr "Untersuchung ereignisgesteuerter Faktoren mit HistoryPanel"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:3
 msgid "事件型因子：K线形态信号 -> 事件窗口 mask -> CAGR 与可视化解释"
@@ -67,7 +67,8 @@ msgstr ""
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:15
 msgid "以个股为主，同时加入 `000300.SH` 作为 benchmark"
 msgstr ""
-"Focus on individual stocks, and also include `000300.SH` as the benchmark"
+"Konzentrieren Sie sich auf einzelne Aktien und beziehen Sie auch „000300.SH“"
+" als Benchmark ein"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:16
 msgid "事件窗口 \\(K=5\\)（最近 5 天内发生过就算“有效”）"
@@ -83,7 +84,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:22
 msgid "先看最小可跑证明：我们只做两件事："
-msgstr "First, the minimal runnable proof: we only do two things:"
+msgstr "Zuerst der minimal ausführbare Beweis: Wir machen nur zwei Dinge:"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:24
 msgid "计算形态信号；"
@@ -157,7 +158,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:59
 msgid "0.5 先贴最终效果（我们最后会得到什么）"
-msgstr "0.5 First, show the final result (what we’ll end up with)"
+msgstr "0.5 Zeigen Sie zunächst das Endergebnis (was am Ende herauskommt)"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:61
 msgid "按本文做完，你会得到三类输出："
@@ -191,28 +192,31 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:69
 msgid "1. 目标（我们这篇文章要完成什么）"
-msgstr "1. Goal (what this article aims to accomplish)"
+msgstr "1. Ziel (was dieser Artikel erreichen soll)"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:71
 msgid "获取多 shares 的 OHLC 面板，并加入 `000300.SH` 作为 benchmark"
 msgstr ""
-"Fetch an OHLC panel for multiple shares, and add `000300.SH` as the "
-"benchmark"
+"Rufen Sie ein OHLC-Panel für mehrere Freigaben ab und fügen Sie „000300.SH“ "
+"als Benchmark hinzu"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:72
 msgid "用 `candle_pattern` 得到形态信号矩阵（time x shares）"
 msgstr ""
-"Use `candle_pattern` to obtain a pattern-signal matrix (time x shares)"
+"Verwenden Sie „candle_pattern“, um eine Muster-Signal-Matrix (Zeit x "
+"Anteile) zu erhalten."
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:73
 msgid "把事件信号窗口化（K=5），得到 `(M,L)` 的事件条件"
-msgstr "Window the event signals (K=5) to obtain event conditions of `(M,L)`"
+msgstr ""
+"Fenstern Sie die Ereignissignale (K=5), um die Ereignisbedingungen „(M,L)“ "
+"zu erhalten"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:74
 msgid "用 `where()` 规整为研究 mask，并构建 long/short 两组组合曲线"
 msgstr ""
-"Use `where()` to normalize it into a research mask, and build long/short "
-"portfolio curves"
+"Verwenden Sie „where()“, um es in eine Research-Maske zu normalisieren und "
+"Long/Short-Portfoliokurven zu erstellen"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:75
 msgid "用 `cum_return` 推导 CAGR 摘要表"
@@ -221,8 +225,8 @@ msgstr "Use `cum_return` to derive a CAGR summary table"
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:76
 msgid "用 `plot(highlight=...)` 在 K 线上高亮事件点，做到可解释闭环"
 msgstr ""
-"Use `plot(highlight=...)` to highlight event points on the candlestick "
-"chart, closing the interpretability loop"
+"Verwenden Sie „plot(highlight=...)“, um Ereignispunkte im Candlestick-"
+"Diagramm hervorzuheben und so die Interpretierbarkeitsschleife zu schließen"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:77
 msgid "文末给出“单函数可跑”的完整代码"
@@ -238,7 +242,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:83
 msgid "2.1 本节要解决什么"
-msgstr "2.1 What this section aims to solve"
+msgstr "2.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:85
 msgid ""
@@ -265,17 +269,17 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:93
 msgid "2.3 可运行代码 + 预期效果"
-msgstr "2.3 Runnable code + expected results"
+msgstr "2.3 Ausführbarer Code + erwartete Ergebnisse"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:125
 msgid "3. 形态因子提取：`candle_pattern` 得到事件信号矩阵"
 msgstr ""
-"3. Candlestick pattern factor extraction: `candle_pattern` produces an "
-"event-signal matrix"
+"3. Extraktion des Candlestick-Musterfaktors: „candle_pattern“ erzeugt eine "
+"Ereignis-Signal-Matrix"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:127
 msgid "3.1 本节要解决什么"
-msgstr "3.1 What this section aims to solve"
+msgstr "3.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:129
 msgid ""
@@ -292,8 +296,8 @@ msgstr "3.2 Minimum necessary principles"
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:134
 msgid "`signals = hp.candle_pattern(name='cdlhammer', as_panel=False)` 的返回是："
 msgstr ""
-"The return value of `signals = hp.candle_pattern(name='cdlhammer', "
-"as_panel=False)` is:"
+"Der Rückgabewert von „signals = hp.candle_pattern(name='cdlhammer', "
+"as_panel=False)“ ist:"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:136
 msgid "`DataFrame`（index=时间，columns=shares）"
@@ -327,7 +331,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:144
 msgid "3.3 可运行代码 + 预期效果"
-msgstr "3.3 Runnable code + expected result"
+msgstr "3.3 Ausführbarer Code + erwartetes Ergebnis"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:157
 msgid "4. 事件窗口化（K=5）：不是“今天发生就选”，而是“最近 5 天发生过就选”"
@@ -337,7 +341,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:159
 msgid "4.1 本节要解决什么"
-msgstr "4.1 What this section aims to solve"
+msgstr "4.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:161
 msgid "这是本文最关键的一节：   把稀疏的事件信号变成更贴近实战的“窗口内有效”条件。"
@@ -367,7 +371,8 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:171
 msgid "`events_ml[i, t] = True` 表示 share i 在 t 日发生了事件"
-msgstr "`events_ml[i, t] = True` means share i had the event on day t"
+msgstr ""
+"„events_ml[i, t] = True“ bedeutet, dass ich das Ereignis am Tag t hatte"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:172
 msgid "`window_ml[i, t] = any(events_ml[i, t-K+1 : t+1])`"
@@ -376,8 +381,8 @@ msgstr "`window_ml[i, t] = any(events_ml[i, t-K+1 : t+1])`"
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:174
 msgid "最终得到的 `window_ml` 仍然是 `(M, L)` 的 bool，就可以直接喂给 `hp.where(window_ml)`。"
 msgstr ""
-"The resulting `window_ml` is still a `(M, L)` boolean array, so you can feed"
-" it directly into `hp.where(window_ml)`."
+"Das resultierende „window_ml“ ist immer noch ein boolesches „(M, L)“-Array, "
+"sodass Sie es direkt in „hp.where(window_ml)“ einspeisen können."
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:176
 msgid "你可以把这个“窗口化”理解成一句非常直觉的研究口径："
@@ -417,12 +422,12 @@ msgstr ""
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:224
 msgid "5. `portfolio + benchmark + cum_return + CAGR`：把事件窗口筛选变成可比较的结果"
 msgstr ""
-"5. `portfolio + benchmark + cum_return + CAGR`: turning event-window "
-"filtering into comparable results"
+"5. „Portfolio + Benchmark + Cum_Return + CAGR“: Ereignisfensterfilterung in "
+"vergleichbare Ergebnisse umwandeln"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:226
 msgid "5.1 本节要解决什么"
-msgstr "5.1 What this section aims to solve"
+msgstr "5.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:228
 msgid ""
@@ -436,7 +441,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:232
 msgid "5.2 最小必要原理"
-msgstr "5.2 The minimum necessary principles"
+msgstr "5.2 Die minimal notwendigen Grundsätze"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:234
 msgid "这里仍然使用研究向的 `portfolio` 聚合，不做交易执行。   然后用 `cum_return` 取末值推导 CAGR（等效年化）。"
@@ -465,7 +470,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:305
 msgid "6.1 本节要解决什么"
-msgstr "6.1 What this section aims to solve"
+msgstr "6.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:307
 msgid ""
@@ -479,7 +484,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:310
 msgid "6.2 最小必要原理"
-msgstr "6.2 The principle of minimum necessity"
+msgstr "6.2 Das Prinzip der Mindestnotwendigkeit"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:312
 msgid ""
@@ -493,7 +498,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:315
 msgid "6.3 可运行代码 + 预期效果"
-msgstr "6.3 Runnable code + expected results"
+msgstr "6.3 Ausführbarer Code + erwartete Ergebnisse"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:331
 msgid ""
@@ -512,7 +517,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:336
 msgid "7. 完整代码（单函数可跑版本）"
-msgstr "7. Full code (single-function runnable version)"
+msgstr "7. Vollständiger Code (ausführbare Einzelfunktionsversion)"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:338
 msgid "下面给出一段“单函数可跑”的完整版本，方便你复制进 Notebook 一键运行。它覆盖："
@@ -527,12 +532,13 @@ msgstr "`candle_pattern` extracts the event signals;"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:341
 msgid "K=5 窗口化（最近 5 天 any）；"
-msgstr "K=5 windowing (any in the last 5 days);"
+msgstr "K=5 Fensterung (alle in den letzten 5 Tagen);"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:342
 msgid "`where -> portfolio -> cum_return -> CAGR` 的研究闭环；"
 msgstr ""
-"The research closed loop of `where -> portfolio -> cum_return -> CAGR`; "
+"Der geschlossene Forschungskreislauf von „wo -> Portfolio -> cum_return -> "
+"CAGR“;"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:343
 msgid "单股 K 线高亮事件点（可复盘解释）。"
@@ -542,7 +548,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:523
 msgid "8. 小结与边界"
-msgstr "8. Summary and boundaries"
+msgstr "8. Zusammenfassung und Grenzen"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:525
 msgid "到这里，我们已经把事件型因子研究跑通了：   形态信号 -> 窗口化 -> 横向筛选 -> 组合曲线 -> CAGR -> K线高亮解释。"
@@ -592,7 +598,7 @@ msgstr "§0"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "最小可跑：算 signals + 画出基础图"
-msgstr "Minimal runnable: compute signals + plot the basic chart"
+msgstr "Minimal ausführbar: Signale berechnen + Basisdiagramm zeichnen"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "`img/3.3_pf_compare.png`"
@@ -604,7 +610,8 @@ msgstr "§0.5 or §5"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "事件窗口篮子 vs benchmark 的组合曲线"
-msgstr "Composite curve of the event-window basket vs. the benchmark"
+msgstr ""
+"Zusammengesetzte Kurve des Ereignisfensterkorbs im Vergleich zur Benchmark"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "`img/3.3_highlight_pattern.png`"

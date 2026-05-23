@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-22 01:06+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -24,8 +24,8 @@ msgstr "Optimierung von Handelsstrategien"
 
 #: ../../source/references/5-optimize-strategy.md:3
 msgid "本文介绍如何优化交易策略。"
-msgstr "This article describes how to optimize trading strategies."
+msgstr "Dieser Artikel beschreibt, wie man Handelsstrategien optimiert."
 
 #: ../../source/references/5-optimize-strategy.md:5
 msgid "未完待续"
-msgstr "Fortsetzung folgt"
+msgstr "To be completed"

@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md:1
 msgid "优化算法的区别与使用情境"
-msgstr "Optimization Algorithms: Differences and Use Cases"
+msgstr "Optimierungsalgorithmen: Unterschiede und Anwendungsfälle"
 
 #: ../../source/optimization/3. optimization_algorithms.md:3
 msgid "为何需要了解不同算法"
-msgstr "Why Learn About Different Algorithms"
+msgstr "Warum sich über verschiedene Algorithmen informieren?"
 
 #: ../../source/optimization/3. optimization_algorithms.md:5
 msgid ""
@@ -43,27 +43,27 @@ msgstr "Vergleich von Optimierungsalgorithmen (mit Unterschieden aufgeführt)"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "算法"
-msgstr "Algorithm"
+msgstr "Algorithmus"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "原理简述"
-msgstr "Brief Principle"
+msgstr "Kurzes Prinzip"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "优点与局限"
-msgstr "Pros and Limitations"
+msgstr "Vorteile und Einschränkungen"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "适用参数规模"
-msgstr "Typical Parameter Scale"
+msgstr "Typische Parameterskala"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "连续/离散/混合"
-msgstr "Continuous / Discrete / Mixed"
+msgstr "Kontinuierlich / Diskret / Gemischt"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "典型计算成本"
-msgstr "Typical Compute Cost"
+msgstr "Typische Rechenkosten"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "grid"
@@ -71,23 +71,23 @@ msgstr "grid"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "在网格点上穷举或遍历"
-msgstr "Exhaustive search or traversal on grid points"
+msgstr "Umfassende Suche oder Durchquerung von Gitterpunkten"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "实现简单、结果可复现；维数高时不可行"
-msgstr "Simple and reproducible; impractical in high dimensions"
+msgstr "Einfach und reproduzierbar; in großen Dimensionen unpraktisch"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "小（2～3 维）"
-msgstr "Small (2–3 dimensions)"
+msgstr "Klein (2–3 Dimensionen)"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "离散为主"
-msgstr "Mostly discrete"
+msgstr "Größtenteils diskret"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "随点数线性增长"
-msgstr "Grows linearly with grid size"
+msgstr "Wächst linear mit der Rastergröße"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "montecarlo"
@@ -95,7 +95,7 @@ msgstr "montecarlo"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "随机采样参数组合"
-msgstr "Random sampling of parameter combinations"
+msgstr "Zufällige Auswahl von Parameterkombinationen"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "实现简单、易并行；需较多样本才稳定"
@@ -105,15 +105,15 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "中、大"
-msgstr "Medium to large"
+msgstr "Mittel bis groß"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "均可"
-msgstr "All supported"
+msgstr "Alle unterstützt"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由 sample_count 决定"
-msgstr "Determined by ``sample_count``"
+msgstr "Bestimmt durch „`sample_count`“."
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "GA"
@@ -121,7 +121,7 @@ msgstr "GA"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "遗传、交叉、变异"
-msgstr "Selection, crossover, mutation"
+msgstr "Selektion, Crossover, Mutation"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "适合非凸、多峰；调参敏感"
@@ -130,7 +130,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由代数与种群规模决定"
-msgstr "Determined by generations and population size"
+msgstr "Bestimmt durch Generationen und Bevölkerungsgröße"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "SA"
@@ -142,7 +142,7 @@ msgstr "Simuliertes Glühen; akzeptiert wahrscheinlich schlechtere Lösungen"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "可跳出局部最优；收敛较慢"
-msgstr "Can escape local optima; slower convergence"
+msgstr "Kann lokalen Optima entkommen; langsamere Konvergenz"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "中"
@@ -150,7 +150,7 @@ msgstr "Medium"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由迭代次数决定"
-msgstr "Determined by iteration count"
+msgstr "Wird durch die Anzahl der Iterationen bestimmt"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "PSO"
@@ -158,19 +158,21 @@ msgstr "PSO"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "粒子群位置与速度更新"
-msgstr "Particle swarm position and velocity updates"
+msgstr ""
+"Aktualisierungen der Position und Geschwindigkeit des Partikelschwarms"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "连续空间表现好；离散需编码"
-msgstr "Strong in continuous spaces; discrete params need encoding"
+msgstr ""
+"Stark in durchgehenden Räumen; Diskrete Parameter müssen kodiert werden"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "连续为主"
-msgstr "Mostly continuous"
+msgstr "Meist kontinuierlich"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由粒子数与迭代决定"
-msgstr "Determined by particle count and iterations"
+msgstr "Bestimmt durch Partikelanzahl und Iterationen"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "bayesian"
@@ -178,38 +180,39 @@ msgstr "bayesian"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "代理模型+采集函数"
-msgstr "Surrogate model + acquisition function"
+msgstr "Ersatzmodell + Erfassungsfunktion"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "样本少时效率高；高维成本高"
-msgstr "Efficient with few samples; costly in high dimensions"
+msgstr "Effizient mit wenigen Proben; teuer in großen Dimensionen"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "小、中"
-msgstr "Small to medium"
+msgstr "Klein bis mittel"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由迭代与模型拟合决定"
-msgstr "Determined by iterations and model fitting"
+msgstr "Bestimmt durch Iterationen und Modellanpassung"
 
 #: ../../source/optimization/3. optimization_algorithms.md:18
 msgid "使用情境与选择建议"
-msgstr "Use Cases and Selection Advice"
+msgstr "Anwendungsfälle und Auswahlberatung"
 
 #: ../../source/optimization/3. optimization_algorithms.md:20
 msgid "**参数少、离散**：优先 grid 或小规模 montecarlo。"
 msgstr ""
-"**Few discrete parameters**: Prefer ``grid`` or small-scale ``montecarlo``."
+"**Wenige diskrete Parameter**: Bevorzugen Sie „`grid`` or small-scale "
+"``montecarlo`“."
 
 #: ../../source/optimization/3. optimization_algorithms.md:21
 msgid "**参数多、需少步数**：考虑 bayesian 或 GA/PSO。"
 msgstr ""
-"**Many parameters, few evaluation steps**: Consider ``bayesian`` or "
-"``GA``/``PSO``."
+"**Viele Parameter, wenige Auswertungsschritte**: Betrachten Sie „`bayesian``"
+" or ``GA``/``PSO`“."
 
 #: ../../source/optimization/3. optimization_algorithms.md:22
 msgid "**连续空间、多峰**：PSO、GA 或 SA。"
-msgstr "**Continuous, multi-modal space**: ``PSO``, ``GA``, or ``SA``."
+msgstr "**Kontinuierlicher, multimodaler Raum**: ``PSO``, ``GA``, or ``SA``."
 
 #: ../../source/optimization/3. optimization_algorithms.md:23
 msgid ""
@@ -222,7 +225,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md:25
 msgid "简要对比表"
-msgstr "Quick Comparison Table"
+msgstr "Schnelle Vergleichstabelle"
 
 #: ../../source/optimization/3. optimization_algorithms.md:27
 msgid ""

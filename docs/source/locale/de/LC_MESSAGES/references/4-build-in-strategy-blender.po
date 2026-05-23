@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-26 09:45+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -1415,7 +1415,7 @@ msgstr "You can see:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:295
 msgid "多重策略以及策略组合"
-msgstr "Multiple strategies and strategy combinations"
+msgstr "Mehrere Strategien und Strategiekombinationen"
 
 #: ../../source/references/4-build-in-strategy-blender.md:297
 msgid ""
@@ -1595,7 +1595,7 @@ msgstr "`sum()`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "支持的函数参见后表"
-msgstr "Functions supported are listed in the table below"
+msgstr "Die unterstützten Funktionen sind in der folgenden Tabelle aufgeführt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "括号"
@@ -1624,7 +1624,7 @@ msgstr ""
 
 #: ../../source/references/4-build-in-strategy-blender.md:330
 msgid "使用四则运算符定义blender表达式"
-msgstr "Defining blender expression using arithmetic operators"
+msgstr "Blender-Ausdruck mithilfe arithmetischer Operatoren definieren"
 
 #: ../../source/references/4-build-in-strategy-blender.md:332
 msgid "`'s0 + s1 + s2'`"
@@ -1642,7 +1642,7 @@ msgstr ""
 
 #: ../../source/references/4-build-in-strategy-blender.md:336
 msgid "使用逻辑运算符定义blender表达式："
-msgstr "Defining blender expression using logical operators:"
+msgstr "Blender-Ausdruck mithilfe logischer Operatoren definieren:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:338
 msgid "`'s0 and s1 and s2'`"
@@ -2057,7 +2057,8 @@ msgstr ""
 
 #: ../../source/references/4-build-in-strategy-blender.md:389
 msgid "以下方法可以被用来设置或获取策略的`blender`"
-msgstr "blender can be set or retrieved using the following methods"
+msgstr ""
+"Mixer kann mit den folgenden Methoden eingestellt oder abgerufen werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md:391
 msgid "`operator.set_blender(blender=None, price_type=None)`"
@@ -2084,7 +2085,8 @@ msgstr "Examples of blender usage"
 
 #: ../../source/references/4-build-in-strategy-blender.md:400
 msgid "下面使用一个例子来演示`blender`的工作方式："
-msgstr "Here is an example to demonstrate how blender works:"
+msgstr ""
+"Hier ist ein Beispiel, um die Funktionsweise des Mixers zu demonstrieren:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:469
 msgid "![png](img/output_10_1.png)"

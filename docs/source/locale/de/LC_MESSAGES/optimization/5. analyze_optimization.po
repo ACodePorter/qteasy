@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/optimization/5. analyze_optimization.md:1
 msgid "优化结果的分析与使用"
-msgstr "Analyzing and Using Optimization Results"
+msgstr "Optimierungsergebnisse analysieren und nutzen"
 
 #: ../../source/optimization/5. analyze_optimization.md:3
 msgid "结果分析"
-msgstr "Result Analysis"
+msgstr "Ergebnisanalyse"
 
 #: ../../source/optimization/5. analyze_optimization.md:5
 msgid "从结果表中按**夏普**、**回撤**等列排序，比较不同参数组的稳定性与收益风险比。"
@@ -41,7 +41,7 @@ msgstr ""
 
 #: ../../source/optimization/5. analyze_optimization.md:8
 msgid "目标函数与约束（罗列并简短解释）"
-msgstr "Objectives and Constraints (with Brief Explanations)"
+msgstr "Ziele und Einschränkungen (mit kurzen Erläuterungen)"
 
 #: ../../source/optimization/5. analyze_optimization.md:10
 msgid "**优化目标**：当前支持的如夏普最大化、回撤最小化、收益最大化等，以配置项或 API 为准。"
@@ -59,7 +59,7 @@ msgstr ""
 
 #: ../../source/optimization/5. analyze_optimization.md:13
 msgid "将最优参数写回策略"
-msgstr "Apply Best Parameters to the Strategy"
+msgstr "Wenden Sie die besten Parameter auf die Strategie an"
 
 #: ../../source/optimization/5. analyze_optimization.md:15
 msgid ""
@@ -73,7 +73,7 @@ msgstr ""
 
 #: ../../source/optimization/5. analyze_optimization.md:17
 msgid "注意事项"
-msgstr "Caveats"
+msgstr "Vorbehalte"
 
 #: ../../source/optimization/5. analyze_optimization.md:19
 msgid "**过拟合**：在样本内优化得到的参数可能在样本外表现变差，建议做样本外验证或滚动优化。"
@@ -91,5 +91,5 @@ msgstr ""
 #: ../../source/optimization/5. analyze_optimization.md:21
 msgid "**计算时间**：opti_sample_count 或迭代次数越大，耗时越长；可在精度与时间之间权衡。"
 msgstr ""
-"**Compute time**: Larger ``opti_sample_count`` or iteration counts take "
-"longer; balance accuracy against runtime."
+"**Rechenzeit**: Größere ``opti_sample_count``- oder Iterationszahlen dauern "
+"länger; Balance zwischen Genauigkeit und Laufzeit."

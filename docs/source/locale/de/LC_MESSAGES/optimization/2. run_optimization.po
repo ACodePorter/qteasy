@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/optimization/2. run_optimization.md:1
 msgid "如何运行策略优化"
-msgstr "How to Run Strategy Optimization"
+msgstr "So führen Sie eine Strategieoptimierung durch"
 
 #: ../../source/optimization/2. run_optimization.md:3
 msgid "入口与常用 kwargs"
-msgstr "Entry Point and Common kwargs"
+msgstr "Einstiegspunkt und gemeinsame Kwargs"
 
 #: ../../source/optimization/2. run_optimization.md:5
 msgid ""
@@ -49,15 +49,15 @@ msgstr ""
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "算法名"
-msgstr "Algorithm"
+msgstr "Algorithmus"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "适用场景"
-msgstr "Typical Use Case"
+msgstr "Typischer Anwendungsfall"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "grid"
@@ -65,7 +65,7 @@ msgstr "grid"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "网格搜索"
-msgstr "Grid search"
+msgstr "Rastersuche"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "参数少、离散空间，穷举或粗网格。"
@@ -77,11 +77,11 @@ msgstr "montecarlo"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "蒙特卡洛随机采样"
-msgstr "Monte Carlo random sampling"
+msgstr "Monte-Carlo-Zufallsstichprobe"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "参数较多时随机抽样评估。"
-msgstr "Random sampling when there are many parameters."
+msgstr "Zufallsstichprobe bei vielen Parametern."
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "GA"
@@ -89,11 +89,11 @@ msgstr "GA"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "遗传算法"
-msgstr "Genetic algorithm"
+msgstr "Genetischer Algorithmus"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "中高维、连续/离散混合。"
-msgstr "Medium-to-high dimensions; continuous/discrete mixed spaces."
+msgstr "Mittlere bis hohe Abmessungen; kontinuierliche/diskrete Mischräume."
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "SA"
@@ -101,11 +101,12 @@ msgstr "SA"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "模拟退火"
-msgstr "Simulated annealing"
+msgstr "Simuliertes Glühen"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "中维、易陷入局部最优时。"
-msgstr "Medium dimensions; helpful when local optima are a concern."
+msgstr ""
+"Mittlere Abmessungen; hilfreich, wenn lokale Optima ein Problem darstellen."
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "PSO"
@@ -113,11 +114,11 @@ msgstr "PSO"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "粒子群优化"
-msgstr "Particle swarm optimization"
+msgstr "Partikelschwarmoptimierung"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "连续空间、多峰。"
-msgstr "Continuous space with multiple peaks."
+msgstr "Kontinuierlicher Raum mit mehreren Gipfeln."
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "bayesian"
@@ -125,11 +126,12 @@ msgstr "bayesian"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "贝叶斯优化"
-msgstr "Bayesian optimization"
+msgstr "Bayesianische Optimierung"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "样本昂贵、需少步数寻优。"
-msgstr "Expensive evaluations; need good results in few steps."
+msgstr ""
+"Teure Bewertungen; Sie benötigen gute Ergebnisse in wenigen Schritten."
 
 #: ../../source/optimization/2. run_optimization.md:20
 msgid "优化运行参数完整列表（罗列并简短解释）"
@@ -142,7 +144,7 @@ msgstr "Parameter"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "类型/可选值"
-msgstr "Type / Values"
+msgstr "Typ/Werte"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "opti_method"
@@ -155,8 +157,8 @@ msgstr "str"
 #: ../../source/optimization/2. run_optimization.md
 msgid "优化算法：grid、montecarlo、GA、SA、PSO、bayesian 等。"
 msgstr ""
-"Optimization algorithm: ``grid``, ``montecarlo``, ``GA``, ``SA``, ``PSO``, "
-"``bayesian``, etc."
+"Optimierungsalgorithmus: „`grid``, ``montecarlo``, ``GA``, ``SA``, ``PSO``, "
+"``bayesian`“ usw."
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "opti_sample_count"
@@ -178,11 +180,11 @@ msgstr "opti_output_count"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "保留的最优结果数量（Top-K）。"
-msgstr "Number of best results to keep (Top-K)."
+msgstr "Anzahl der besten Ergebnisse, die beibehalten werden sollen (Top-K)."
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "目标函数相关"
-msgstr "Objective function"
+msgstr "Zielfunktion"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "—"
@@ -195,7 +197,7 @@ msgstr ""
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "约束相关"
-msgstr "Constraints"
+msgstr "Einschränkungen"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "若有约束（如最大回撤上限），以配置为准。"
@@ -206,12 +208,12 @@ msgstr ""
 #: ../../source/optimization/2. run_optimization.md:30
 msgid "回测区间、asset_pool 等与 mode=1 相同的参数在 mode=2 时同样生效。"
 msgstr ""
-"Backtest date range, ``asset_pool``, and other arguments shared with "
-"``mode=1`` also apply in ``mode=2``."
+"Backtest-Datumsbereich: „`asset_pool``, and other arguments shared with "
+"``mode=1`` also apply in ``mode=2`“."
 
 #: ../../source/optimization/2. run_optimization.md:32
 msgid "参数空间"
-msgstr "Parameter Space"
+msgstr "Parameterraum"
 
 #: ../../source/optimization/2. run_optimization.md:34
 msgid ""
@@ -223,11 +225,11 @@ msgstr ""
 
 #: ../../source/optimization/2. run_optimization.md:36
 msgid "最小可运行示例"
-msgstr "Minimal Runnable Example"
+msgstr "Minimales lauffähiges Beispiel"
 
 #: ../../source/optimization/2. run_optimization.md:47
 msgid "配置要点"
-msgstr "Configuration Highlights"
+msgstr "Konfigurations-Highlights"
 
 #: ../../source/optimization/2. run_optimization.md:49
 msgid "**回测区间、资产池**：与 mode=1 一致，决定每次参数评估的回测环境。"

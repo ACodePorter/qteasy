@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -40,7 +40,7 @@ msgstr ""
 
 #: ../../source/design/08-design-rationale-and-advantages.md:5
 msgid "1. 为何不做全时间轴向量化"
-msgstr "1. Why Not Vectorize Across the Entire Timeline"
+msgstr "1. Warum nicht über die gesamte Zeitachse vektorisieren?"
 
 #: ../../source/design/08-design-rationale-and-advantages.md:7
 msgid "1.1 未来函数风险"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: ../../source/design/08-design-rationale-and-advantages.md:11
 msgid "1.2 状态与规则无法表达"
-msgstr "1.2 States and Rules Cannot Be Expressed"
+msgstr "1.2 Zustände und Regeln können nicht ausgedrückt werden"
 
 #: ../../source/design/08-design-rationale-and-advantages.md:13
 msgid "若在时间维上完全向量化，则难以正确实现："
@@ -100,7 +100,7 @@ msgstr ""
 
 #: ../../source/design/08-design-rationale-and-advantages.md:20
 msgid "2. 事件驱动的替代与取舍"
-msgstr "2. Event-Driven Alternatives and Trade-offs"
+msgstr "2. Ereignisgesteuerte Alternativen und Kompromisse"
 
 #: ../../source/design/08-design-rationale-and-advantages.md:22
 msgid ""
@@ -119,11 +119,11 @@ msgstr ""
 
 #: ../../source/design/08-design-rationale-and-advantages.md:24
 msgid "3. qteasy 的做法：向量化 + 数据隔离"
-msgstr "3. qteasy’s Approach: Vectorization + Data Isolation"
+msgstr "3. qteasys Ansatz: Vektorisierung + Datenisolierung"
 
 #: ../../source/design/08-design-rationale-and-advantages.md:26
 msgid "3.1 回测主体向量化"
-msgstr "3.1 Vectorization of the Backtesting Core"
+msgstr "3.1 Vektorisierung des Backtesting-Kerns"
 
 #: ../../source/design/08-design-rationale-and-advantages.md:28
 msgid ""
@@ -183,7 +183,7 @@ msgstr ""
 
 #: ../../source/design/08-design-rationale-and-advantages.md:37
 msgid "3.3 use_latest_data_cycle（ulc）的含义与影响"
-msgstr "3.3 The meaning and impact of use_latest_data_cycle (ulc)"
+msgstr "3.3 Die Bedeutung und Auswirkung von use_latest_data_cycle (ulc)"
 
 #: ../../source/design/08-design-rationale-and-advantages.md:39
 msgid "**use_latest_data_cycle** 控制数据窗口是否包含**当根 K 线**："
@@ -215,7 +215,7 @@ msgstr ""
 
 #: ../../source/design/08-design-rationale-and-advantages.md:46
 msgid "4. 独特优势小结"
-msgstr "4. Summary of unique advantages"
+msgstr "4. Zusammenfassung der einzigartigen Vorteile"
 
 #: ../../source/design/08-design-rationale-and-advantages.md:48
 msgid "**高速 + 防未来函数**：在保证“每步仅用当时可见数据”的前提下，实现向量化 + Numba 的快速回测，兼顾速度与回测可信度。"
@@ -246,7 +246,7 @@ msgstr ""
 
 #: ../../source/design/08-design-rationale-and-advantages.md:52
 msgid "5. 代码依据摘要"
-msgstr "5. Code Basis Summary"
+msgstr "5. Zusammenfassung der Codebasis"
 
 #: ../../source/design/08-design-rationale-and-advantages.md:54
 msgid ""

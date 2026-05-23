@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -275,8 +275,8 @@ msgstr "HistoryPanel 与 `get_history_data`"
 #: ../../source/references/2-get-history-data.md:242
 msgid "在 qteasy 2.x 中，`qt.get_history_data()` 的推荐用法是直接返回 `HistoryPanel`："
 msgstr ""
-"In qteasy 2.x, `qt.get_history_data()` is recommended to return a "
-"`HistoryPanel` directly:"
+"In qteasy 2.x wird `qt.get_history_data()` empfohlen, um ein `HistoryPanel` "
+"direkt zurückzugeben:"
 
 #: ../../source/references/2-get-history-data.md:256
 msgid "`HistoryPanel` 是一个三维数据容器，维度含义为："
@@ -288,13 +288,13 @@ msgstr "**Achse 0 (Aktien)**: Instrumentenliste, z.B. Aktien- oder Indexcodes"
 
 #: ../../source/references/2-get-history-data.md:259
 msgid "**axis 1（hdates）**：时间轴，每一行对应一个时间点（如交易日或分钟）；"
-msgstr "**axis 1 (hdates)**: time axis — one row per timestamp"
+msgstr "**Achse 1 (hdates)**: Zeitachse – eine Zeile pro Zeitstempel"
 
 #: ../../source/references/2-get-history-data.md:260
 msgid "**axis 2（htypes）**：历史数据类型，例如 `open`、`high`、`low`、`close`、`vol` 等。"
 msgstr ""
-"**axis 2 (htypes)**: history data types such as `open`, `high`, `low`, "
-"`close`, `vol`"
+"**Achse 2 (htypes)**: Verlaufsdatentypen wie „open“, „high“, „low“, „close“,"
+" „vol“."
 
 #: ../../source/references/2-get-history-data.md:262
 msgid ""
@@ -345,8 +345,8 @@ msgid ""
 "当你已有 `DataFrame` 或字典形式的数据时，可以使用 `qt.dataframe_to_hp()` 将其适配为 "
 "HistoryPanel，再复用同一套 API。"
 msgstr ""
-"Adapt existing `DataFrame` or dict data with `qt.dataframe_to_hp()` and "
-"reuse the same API."
+"Passen Sie vorhandene „DataFrame“ an oder diktieren Sie Daten mit "
+"„qt.dataframe_to_hp()“ und verwenden Sie dieselbe API wieder."
 
 #: ../../source/references/2-get-history-data.md:274
 msgid "从 HistoryPanel 到可视化"
@@ -362,7 +362,7 @@ msgstr ""
 
 #: ../../source/references/2-get-history-data.md:296
 msgid "HistoryPanel.plot 交互式可视化（Plotly）"
-msgstr "HistoryPanel.plot Interactive Visualization (Plotly)"
+msgstr "HistoryPanel.plot Interaktive Visualisierung (Plotly)"
 
 #: ../../source/references/2-get-history-data.md:298
 msgid ""
@@ -382,11 +382,11 @@ msgstr "Dependencies and Installation"
 
 #: ../../source/references/2-get-history-data.md:302
 msgid "**基础交互（Plotly Figure）**："
-msgstr "**Basic interactivity (Plotly Figure)**:"
+msgstr "**Grundlegende Interaktivität (Plotly Abbildung)**:"
 
 #: ../../source/references/2-get-history-data.md:308
 msgid "**Notebook 更完整交互（FigureWidget + 回调）**："
-msgstr "**Full notebook interactivity (FigureWidget + callbacks)**:"
+msgstr "**Vollständige Notebook-Interaktivität (FigureWidget + Rückrufe)**:"
 
 #: ../../source/references/2-get-history-data.md:314
 msgid ""
@@ -418,17 +418,18 @@ msgid ""
 "`plotly_backend_app='FigureWidget'`：强制使用 FigureWidget；若当前不是 Notebook "
 "或缺少依赖会直接报错（英文提示）。"
 msgstr ""
-"`plotly_backend_app='FigureWidget'`: force FigureWidget; error if not in "
-"notebook or deps missing."
+"`plotly_backend_app='FigureWidget'`: Force FigureWidget; Fehler, wenn nicht "
+"im Notebook oder Deps fehlen."
 
 #: ../../source/references/2-get-history-data.md:322
 msgid "`plotly_backend_app='html'`：强制使用 HTML 包装；若当前不是 Notebook 也会直接报错（英文提示）。"
 msgstr ""
-"`plotly_backend_app='html'`: force HTML wrapper; error if not in notebook."
+"`plotly_backend_app='html'`: HTML-Wrapper erzwingen; Fehler, wenn nicht im "
+"Notizbuch."
 
 #: ../../source/references/2-get-history-data.md:324
 msgid "关键交互能力（用户视角）"
-msgstr "Key Interactive Features (User View)"
+msgstr "Wichtige interaktive Funktionen (Benutzeransicht)"
 
 #: ../../source/references/2-get-history-data.md:326
 msgid ""
@@ -467,19 +468,19 @@ msgstr ""
 
 #: ../../source/references/2-get-history-data.md:331
 msgid "示例：最常用的两种交互调用"
-msgstr "Examples: Two Common Interactive Calls"
+msgstr "Beispiele: Zwei häufige interaktive Anrufe"
 
 #: ../../source/references/2-get-history-data.md:333
 msgid "**示例 1：单标的交互式 K 线**"
-msgstr "**Example 1: single-instrument interactive candlestick**"
+msgstr "**Beispiel 1: Interaktiver Candlestick für ein einzelnes Instrument**"
 
 #: ../../source/references/2-get-history-data.md:339
 msgid "**示例 2：两标的 overlay + 高亮**"
-msgstr "**Example 2: two-instrument overlay + highlight**"
+msgstr "**Beispiel 2: Zwei-Instrumenten-Overlay + Hervorhebung**"
 
 #: ../../source/references/2-get-history-data.md:356
 msgid "可视化层严格遵循“**有什么画什么**”原则："
-msgstr "Visualization follows “**plot what exists**”:"
+msgstr "Die Visualisierung folgt „**plotieren, was existiert**“:"
 
 #: ../../source/references/2-get-history-data.md:358
 msgid "只使用 HistoryPanel 中**已经存在**的列，不在绘图层计算新的指标；"
@@ -535,7 +536,7 @@ msgstr "Line chart"
 
 #: ../../source/references/2-get-history-data.md
 msgid "其它任意一维序列（如 `close`、`pe` 等）"
-msgstr "Any 1-D series (e.g. `close`, `pe`)"
+msgstr "Jede 1-D-Reihe (z. B. „close“, „pe“)"
 
 #: ../../source/references/2-get-history-data.md:370
 msgid ""
@@ -554,8 +555,8 @@ msgstr "Relationship between `qt.candle` and HistoryPanel"
 #: ../../source/references/2-get-history-data.md:377
 msgid "`qt.candle()` 是更高层的快捷入口，用于“一行代码画出某个标的的 K 线图”， 其内部逻辑可以概括为："
 msgstr ""
-"`qt.candle()` is a high-level shortcut to plot one instrument’s candlestick "
-"in one line:"
+"„qt.candle()“ ist eine allgemeine Abkürzung, um die Kerze eines Instruments "
+"in einer Zeile darzustellen:"
 
 #: ../../source/references/2-get-history-data.md:380
 msgid "解析 `stock`、`start`、`end` 等参数，从本地数据源取数；"
@@ -563,7 +564,7 @@ msgstr "Parse `stock`, `start`, `end`, fetch from local DataSource"
 
 #: ../../source/references/2-get-history-data.md:381
 msgid "将价格数据适配为单标的 `HistoryPanel`；"
-msgstr "Adapt prices to a single-instrument HistoryPanel"
+msgstr "Preise an ein einzelnes Instrument anpassen HistoryPanel"
 
 #: ../../source/references/2-get-history-data.md:382
 msgid "在 HistoryPanel 上追加用户需要的指标列（如 MA、布林带、MACD）；"
@@ -577,8 +578,8 @@ msgstr "Call `hp.plot(...)` to render"
 #: ../../source/references/2-get-history-data.md:385
 msgid "因此，你可以在保留现有 `qt.candle` 调用方式的同时，直接在 HistoryPanel 上 做更细粒度的控制。"
 msgstr ""
-"Keep existing `qt.candle` calls or control plotting directly on "
-"HistoryPanel."
+"Behalten Sie vorhandene „qt.candle“-Aufrufe bei oder steuern Sie das Plotten"
+" direkt auf HistoryPanel."
 
 #: ../../source/references/2-get-history-data.md:388
 msgid "常见用法示例："
@@ -603,13 +604,13 @@ msgstr "`'line'` / `'l'`: 1-D price line (usually `close`)"
 #: ../../source/references/2-get-history-data.md:411
 msgid "`'none'` / `'n'`：**只取数不绘图**，直接返回 `DataFrame`，方便你用 其它工具自行可视化。"
 msgstr ""
-"`'none'` / `'n'`: **data only**, return `DataFrame` for external plotting"
+"„none“ / „n“: **Nur Daten**, „DataFrame“ für externes Plotten zurückgeben"
 
 #: ../../source/references/2-get-history-data.md:414
 msgid "Renko 图（`'renko'` / `'r'`）在新版中已不再内置支持；若需要 Renko 图， 建议使用专门的技术分析或画图库。"
 msgstr ""
-"Renko (`'renko'` / `'r'`) is no longer built in; use a dedicated TA/charting"
-" library."
+"Renko („renko“ / „r“) ist nicht mehr eingebaut; Verwenden Sie eine spezielle"
+" TA-/Charting-Bibliothek."
 
 #: ../../source/references/2-get-history-data.md:417
 msgid "获取历史数据，并将数据保存在DataSource中"

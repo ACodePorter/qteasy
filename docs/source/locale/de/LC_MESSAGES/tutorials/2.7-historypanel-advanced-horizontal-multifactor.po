@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -97,8 +97,8 @@ msgstr ""
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:24
 msgid "最终能画出一条组合曲线，并和 `000300.SH` 做对比。"
 msgstr ""
-"In the end, you’ll be able to plot a combined curve and compare it with "
-"`000300.SH`."
+"Am Ende können Sie eine kombinierte Kurve zeichnen und diese mit „000300.SH“"
+" vergleichen."
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:48
 msgid "不过，仅仅“能画出来”还远远不够。   如果我们真的要把它当成日常选股研究工具来用，至少会遇到下面这些问题："
@@ -168,7 +168,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:60
 msgid "0.5 先贴最终效果（我们最后会得到什么）"
-msgstr "0.5 First, show the final result (what we’ll end up with)"
+msgstr "0.5 Zeigen Sie zunächst das Endergebnis (was am Ende herauskommt)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:62
 msgid "按本文做完，你会得到三个非常“研究友好”的产出："
@@ -203,7 +203,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:70
 msgid "1. 目标（我们这篇文章要完成什么）"
-msgstr "1. Goal (what this article aims to accomplish)"
+msgstr "1. Ziel (was dieser Artikel erreichen soll)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:72
 msgid "获取多 shares + `000300.SH` 的 `HistoryPanel`"
@@ -218,14 +218,14 @@ msgstr ""
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:74
 msgid "把多因子条件组合成 `(M,L)` bool，并用 `where()` 生成研究 mask"
 msgstr ""
-"Combine multi-factor conditions into a `(M,L)` bool, and use `where()` to "
-"generate the research mask"
+"Kombinieren Sie Multi-Faktor-Bedingungen in einem „(M,L)“-Bool und verwenden"
+" Sie „where()“, um die Forschungsmaske zu generieren"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:75
 msgid "用 `portfolio(mask=...)` 得到 long/short 两组组合曲线，并与 benchmark 对比"
 msgstr ""
-"Use `portfolio(mask=...)` to get the long/short portfolio curves, and "
-"compare them with the benchmark"
+"Verwenden Sie „portfolio(mask=...)“, um die Long/Short-Portfoliokurven zu "
+"erhalten und sie mit der Benchmark zu vergleichen"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:76
 msgid "用 `normalize/cum_return` 推导 CAGR 表"
@@ -234,8 +234,9 @@ msgstr "Use `normalize/cum_return` to derive the CAGR table"
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:77
 msgid "用 `plot(highlight=...)` 高亮“差异最大日/关键分化段”，做到可解释"
 msgstr ""
-"Use `plot(highlight=...)` to highlight the “max-difference day/key "
-"divergence segment” and make it explainable"
+"Verwenden Sie „plot(highlight=...)“, um das "
+"„Tages-/Schlüsseldivergenzsegment mit maximaler Differenz“ hervorzuheben und"
+" es erklärbar zu machen"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:78
 msgid "文末给出一段“单函数可跑”的完整代码"
@@ -251,7 +252,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:84
 msgid "2.1 本节要解决什么"
-msgstr "2.1 What this section aims to solve"
+msgstr "2.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:86
 msgid "横向截面研究最常见的陷阱之一是：   **股票太多，一次性画图读不动；股票太少，又体现不出“横向筛选”的意义。**"
@@ -288,7 +289,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:97
 msgid "2.3 可运行代码 + 预期效果"
-msgstr "2.3 Runnable code + expected results"
+msgstr "2.3 Ausführbarer Code + erwartete Ergebnisse"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:134
 msgid "3. 多因子构造（两条路线并列）：固定阈值代理版 + 可选真实估值版"
@@ -298,7 +299,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:136
 msgid "3.1 本节要解决什么"
-msgstr "3.1 What this section aims to solve"
+msgstr "3.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:138
 msgid ""
@@ -311,7 +312,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:141
 msgid "为简单起见，这里我们分成两条路线："
-msgstr "For simplicity, here we split into two tracks:"
+msgstr "Der Einfachheit halber teilen wir uns hier in zwei Tracks auf:"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:143
 msgid "**路线 A（入门推荐）**：完全用行情/技术指标派生“代理因子”，配合**固定阈值**，保证所有人都能跑通"
@@ -329,8 +330,8 @@ msgstr ""
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:146
 msgid "两条路线最终都输出同样的 `cond_long/cond_short`，后面的流程完全一致。"
 msgstr ""
-"Both routes ultimately output the same `cond_long/cond_short`, and the "
-"subsequent workflow is exactly the same."
+"Beide Routen geben letztendlich das gleiche „cond_long/cond_short“ aus und "
+"der nachfolgende Workflow ist genau der gleiche."
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:148
 msgid "3.2 最小必要原理"
@@ -339,8 +340,8 @@ msgstr "3.2 Minimum necessary principles"
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:150
 msgid "`HistoryPanel.kline.*` 会返回带新增列的新面板，例如："
 msgstr ""
-"`HistoryPanel.kline.*` will return a new panel with additional columns, for "
-"example:"
+"„HistoryPanel.kline.*“ gibt ein neues Panel mit zusätzlichen Spalten zurück,"
+" zum Beispiel:"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:152
 msgid "`sma_20`"
@@ -383,8 +384,8 @@ msgstr ""
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:165
 msgid "**价值代理**：`close / sma20`（偏离均线越低越“便宜”）"
 msgstr ""
-"**Value proxy**: `close / sma20` (the lower the deviation from the moving "
-"average, the more “cheap” it is)"
+"**Wert-Proxy**: „close / sma20“ (je geringer die Abweichung vom gleitenden "
+"Durchschnitt, desto „günstiger“ ist es)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:166
 msgid "**动量代理**：`macd_hist`（强弱）"
@@ -392,7 +393,7 @@ msgstr "**Momentum proxy**: `macd_hist` (strength/weakness)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:167
 msgid "**风险代理**：布林带带宽（波动大小）"
-msgstr "**Risk proxy**: Bollinger Band width (volatility magnitude)"
+msgstr "**Risiko-Proxy**: Bollinger-Bandbreite (Volatilitätsgröße)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:169
 msgid "这里要强调两点“研究口径上的诚实”："
@@ -422,13 +423,13 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:174
 msgid "3.3.2 可运行代码 + 预期效果"
-msgstr "3.3.2 Runnable code + expected results"
+msgstr "3.3.2 Ausführbarer Code + erwartete Ergebnisse"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:210
 msgid "到这里我们就拿到了横向筛选的“核心原料”：`cond_long/cond_short (M,L bool)`。"
 msgstr ""
-"At this point we’ve obtained the “core ingredients” for cross-sectional "
-"filtering: `cond_long/cond_short (M,L bool)`."
+"An diesem Punkt haben wir die „Kernzutaten“ für die Querschnittsfilterung "
+"erhalten: „cond_long/cond_short (M,L bool)“."
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:212
 msgid ""
@@ -451,12 +452,12 @@ msgstr ""
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:225
 msgid "3.4 路线 B：真实估值因子（可选增强，字段名以 `hp.htypes` 为准）"
 msgstr ""
-"3.4 Route B: true valuation factors (optional enhancement; field names are "
-"subject to `hp.htypes`)"
+"3.4 Route B: echte Bewertungsfaktoren (optionale Erweiterung; Feldnamen "
+"unterliegen „hp.htypes“)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:227
 msgid "3.4.1 要解决什么"
-msgstr "3.4.1 What needs to be solved"
+msgstr "3.4.1 Was muss gelöst werden"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:229
 msgid ""
@@ -474,11 +475,12 @@ msgstr "First print `hp.htypes`"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:233
 msgid "找到你本地实际列名"
-msgstr "Find the actual column names on your local setup"
+msgstr "Finden Sie die tatsächlichen Spaltennamen in Ihrem lokalen Setup"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:234
 msgid "再按固定阈值写条件"
-msgstr "Then write the conditions using fixed thresholds"
+msgstr ""
+"Schreiben Sie dann die Bedingungen unter Verwendung fester Schwellenwerte"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:236
 msgid "3.4.2 可运行代码（示意）"
@@ -504,17 +506,18 @@ msgstr ""
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:260
 msgid "4. 横向筛选：条件组合 -> `where()` 研究 mask"
 msgstr ""
-"4. Cross-sectional filtering: combine conditions -> `where()` research mask"
+"4. Querschnittsfilterung: Bedingungen kombinieren -> "
+"„where()“-Forschungsmaske"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:262
 msgid "4.1 本节要解决什么"
-msgstr "4.1 What this section aims to solve"
+msgstr "4.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:264
 msgid "我们把 `cond_long/cond_short` 变成可直接喂给 `portfolio(mask=...)` 的研究 mask。"
 msgstr ""
-"We turn `cond_long/cond_short` into a research mask that can be fed directly"
-" into `portfolio(mask=...)`."
+"Wir verwandeln „cond_long/cond_short“ in eine Research-Maske, die direkt in "
+"„portfolio(mask=...)“ eingespeist werden kann."
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:266
 msgid "4.2 最小必要原理"
@@ -544,15 +547,16 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:274
 msgid "4.3 可运行代码 + 预期效果"
-msgstr "4.3 Runnable code + expected result"
+msgstr "4.3 Ausführbarer Code + erwartetes Ergebnis"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:286
 msgid "5. 两组组合曲线 + benchmark：`portfolio(mask=...)`"
-msgstr "5. Two sets of composite curves + benchmark: `portfolio(mask=...)`"
+msgstr ""
+"5. Zwei Sätze zusammengesetzter Kurven + Benchmark: „portfolio(mask=...)“."
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:288
 msgid "5.1 本节要解决什么"
-msgstr "5.1 What this section aims to solve"
+msgstr "5.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:290
 msgid "对每个交易日，把满足条件的股票集合聚合成一条组合曲线（long/short），并与 `000300.SH` 对比。"
@@ -563,17 +567,19 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:292
 msgid "5.2 最小必要原理"
-msgstr "5.2 The minimum necessary principles"
+msgstr "5.2 Die minimal notwendigen Grundsätze"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:294
 msgid "`portfolio` 是研究粗聚合，不是交易执行"
-msgstr "`portfolio` is for coarse research aggregation, not trade execution"
+msgstr ""
+"„Portfolio“ dient der groben Research-Aggregation, nicht der "
+"Handelsausführung"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:295
 msgid "`benchmark_output='tag_along'` 会把基准行追加进输出，便于同图对比"
 msgstr ""
-"`benchmark_output='tag_along'` will append the benchmark row to the output, "
-"making it easy to compare on the same chart"
+"„benchmark_output='tag_along“ fügt die Benchmark-Zeile an die Ausgabe an und"
+" erleichtert so den Vergleich im selben Diagramm"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:297
 msgid "你可以把它理解成：对每一天，把“当日入选的股票集合”做等权平均，得到一条曲线。   由于集合每天会变，所以这条曲线本质上是在回答一个问题："
@@ -591,17 +597,17 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:302
 msgid "5.3 可运行代码 + 预期效果"
-msgstr "5.3 Runnable code + expected results"
+msgstr "5.3 Ausführbarer Code + erwartete Ergebnisse"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:331
 msgid "6. `normalize / cum_return` + CAGR：给出可比较的年化摘要表"
 msgstr ""
-"6. `normalize / cum_return` + CAGR: provide a comparable annualized summary "
-"table"
+"6. „normalize / cum_return“ + CAGR: Bereitstellung einer vergleichbaren, auf"
+" Jahresbasis umgerechneten Übersichtstabelle"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:333
 msgid "6.1 本节要解决什么"
-msgstr "6.1 What this section aims to solve"
+msgstr "6.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:335
 msgid "我们既想“看曲线”，也想“有一个能复用的数字总结”。   所以我们做两件事："
@@ -611,7 +617,8 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:338
 msgid "`normalize`：统一起点，便于目视"
-msgstr "`normalize`: align the starting point (for easier visual comparison)"
+msgstr ""
+"„normalisieren“: Startpunkt ausrichten (zum einfacheren visuellen Vergleich)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:339
 msgid "`cum_return + CAGR`：输出表格摘要"
@@ -619,7 +626,7 @@ msgstr "`cum_return + CAGR`: output a summary table"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:341
 msgid "6.2 最小必要原理"
-msgstr "6.2 The principle of minimum necessity"
+msgstr "6.2 Das Prinzip der Mindestnotwendigkeit"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:343
 msgid ""
@@ -645,12 +652,12 @@ msgstr ""
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:392
 msgid "7. 可视化与解释：用 `plot(highlight=...)` 高亮“关键差异日”"
 msgstr ""
-"7. Visualization and interpretation: use `plot(highlight=...)` to highlight "
-"“key divergence days”"
+"7. Visualisierung und Interpretation: Verwenden Sie „plot(highlight=...)“, "
+"um „wichtige Divergenztage“ hervorzuheben."
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:394
 msgid "7.1 本节要解决什么"
-msgstr "7.1 What this section aims to solve"
+msgstr "7.1 Was dieser Abschnitt lösen soll"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:396
 msgid "横向截面研究做到最后，最需要解释的一类问题是：   **long 和 benchmark 差异最大的一段，到底发生了什么？**"
@@ -670,7 +677,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:401
 msgid "7.2 最小必要原理"
-msgstr "7.2 The principle of minimum necessity"
+msgstr "7.2 Das Prinzip der Mindestnotwendigkeit"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:403
 msgid ""
@@ -684,7 +691,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:406
 msgid "7.3 可运行代码 + 预期效果"
-msgstr "7.3 Runnable code + expected output"
+msgstr "7.3 Ausführbarer Code + erwartete Ausgabe"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:413
 msgid ""
@@ -715,7 +722,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:420
 msgid "8. 完整代码（单函数可跑版本）"
-msgstr "8. Full code (single-function runnable version)"
+msgstr "8. Vollständiger Code (ausführbare Einzelfunktionsversion)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:422
 msgid "下面给出一段“单函数可跑”的完整版本，方便你复制进 Notebook 一键运行。它覆盖："
@@ -730,12 +737,13 @@ msgstr "Spur A (Proxy-Faktor mit festem Schwellenwert) als Hauptlinie;"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:425
 msgid "每天入选数量的 sanity check；"
-msgstr "A sanity check on the number selected each day;"
+msgstr "Jeden Tag eine Plausibilitätsprüfung der ausgewählten Nummer;"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:426
 msgid "`where -> portfolio -> cum_return -> CAGR` 的完整闭环；"
 msgstr ""
-"A complete closed loop of `where -> portfolio -> cum_return -> CAGR`; "
+"Eine vollständige geschlossene Schleife von „wo -> Portfolio -> cum_return "
+"-> CAGR“;"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:427
 msgid "`plot(highlight=...)` 的一个稳定演示。"
@@ -743,7 +751,7 @@ msgstr "A stable demo of `plot(highlight=...)`."
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:588
 msgid "9. 小结与边界"
-msgstr "9. Summary and boundaries"
+msgstr "9. Zusammenfassung und Grenzen"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:590
 msgid ""
@@ -787,7 +795,7 @@ msgstr "§0"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "多 shares 的最小可跑出图"
-msgstr "The minimal runnable chart with more shares"
+msgstr "Das minimal ausführbare Diagramm mit mehr Anteilen"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "`img/3.2_pf_compare.png`"
@@ -811,4 +819,6 @@ msgstr "§7"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "高亮“关键点”的示例（例如 max 点）"
-msgstr "Example of highlighting a “key point” (e.g., the max point)"
+msgstr ""
+"Beispiel für die Hervorhebung eines „Schlüsselpunkts“ (z. B. des "
+"Maximalpunkts)"

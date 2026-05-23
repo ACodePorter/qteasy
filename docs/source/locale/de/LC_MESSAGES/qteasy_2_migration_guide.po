@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -75,15 +75,15 @@ msgid ""
 "引入了 `Operator` 中的跟踪模式（Tracing "
 "mode），允许用户通过在策略实现中定义跟踪点来更详细地跟踪每个策略组的回测结果，跟踪结果将保存在交易日志中。"
 msgstr ""
-"``Operator`` tracing mode: define trace points in strategies; trace output "
-"is saved in trade logs."
+"``Operator`` Ablaufverfolgungsmodus: Ablaufverfolgungspunkte in Strategien "
+"definieren; Die Trace-Ausgabe wird in Handelsprotokollen gespeichert."
 
 #: ../../source/qteasy_2_migration_guide.md:13
 msgid ""
 "简化了交易策略实现方法realization的定义，现在用户可以通过更简单的API以更直观的方式获取历史数据和参数，并且可以使用用户定义的名称。"
 msgstr ""
-"Simpler ``realize()`` API for history data and parameters with user-defined "
-"names."
+"Einfachere „realize()“-API für Verlaufsdaten und Parameter mit "
+"benutzerdefinierten Namen."
 
 #: ../../source/qteasy_2_migration_guide.md:14
 msgid ""
@@ -100,7 +100,7 @@ msgstr ""
 
 #: ../../source/qteasy_2_migration_guide.md:17
 msgid "已移除或变更的配置参数 / Removed or changed configuration parameters"
-msgstr "Removed or changed configuration parameters"
+msgstr "Konfigurationsparameter entfernt oder geändert"
 
 #: ../../source/qteasy_2_migration_guide.md:19
 msgid ""
@@ -141,8 +141,8 @@ msgstr "**benchmark_asset_type**"
 #: ../../source/qteasy_2_migration_guide.md
 msgid "已移除。基准资产类型现由 `benchmark_asset` 的代码与数据源自动推断。仅需设置 `benchmark_asset`。"
 msgstr ""
-"Removed. Benchmark asset type is inferred from ``benchmark_asset`` and the "
-"data source; set ``benchmark_asset`` only."
+"ENTFERNT. Der Benchmark-Asset-Typ wird aus „benchmark_asset“ und der "
+"Datenquelle abgeleitet. Legen Sie nur „benchmark_asset“ fest."
 
 #: ../../source/qteasy_2_migration_guide.md
 msgid "**benchmark_dtype**"
@@ -151,8 +151,8 @@ msgstr "**benchmark_dtype**"
 #: ../../source/qteasy_2_migration_guide.md
 msgid "已移除。基准价格类型由运行时间表与数据源自动推断。仅需设置 `benchmark_asset`。"
 msgstr ""
-"Removed. Benchmark price type is inferred from the schedule and data source;"
-" set ``benchmark_asset`` only."
+"ENTFERNT. Der Benchmark-Preistyp wird aus dem Zeitplan und der Datenquelle "
+"abgeleitet. Legen Sie nur „benchmark_asset“ fest."
 
 #: ../../source/qteasy_2_migration_guide.md:29
 msgid "变更的配置键"
@@ -160,7 +160,9 @@ msgstr "Changed configuration keys"
 
 #: ../../source/qteasy_2_migration_guide.md:31
 msgid "本次仅做删除，无重命名或合并类变更。"
-msgstr "This release only removes keys; no renames or merges."
+msgstr ""
+"Diese Version entfernt nur Schlüssel; Keine Umbenennungen oder "
+"Zusammenführungen."
 
 #: ../../source/qteasy_2_migration_guide.md:33
 msgid "升级操作建议"
@@ -168,19 +170,22 @@ msgstr "Upgrade checklist"
 
 #: ../../source/qteasy_2_migration_guide.md:35
 msgid "在 `qteasy.cfg` 或自有配置中搜索并删除上述三个键。"
-msgstr "Search ``qteasy.cfg`` or your config and remove the three keys above."
+msgstr ""
+"Suchen Sie nach „qteasy.cfg“ oder Ihrer Konfiguration und entfernen Sie die "
+"drei oben genannten Schlüssel."
 
 #: ../../source/qteasy_2_migration_guide.md:36
 msgid ""
 "在代码中删除对 `qt.configure(..., "
 "maximize_cash_usage=...)`、`benchmark_asset_type`、`benchmark_dtype` 的传入。"
 msgstr ""
-"Remove ``qt.configure(..., maximize_cash_usage=...)``, "
-"``benchmark_asset_type``, and ``benchmark_dtype`` from code."
+"Entfernen Sie „qt.configure(..., maximieren_cash_usage=...)“, "
+"„benchmark_asset_type“ und „benchmark_dtype“ aus dem Code."
 
 #: ../../source/qteasy_2_migration_guide.md:37
 msgid "确认回测/优化仅依赖 `benchmark_asset` 即可得到正确基准。"
-msgstr "Confirm backtests/optimization work with ``benchmark_asset`` alone."
+msgstr ""
+"Bestätigen Sie Backtests/Optimierungsarbeiten nur mit „benchmark_asset“."
 
 #: ../../source/qteasy_2_migration_guide.md:39
 msgid "破坏性变更提示"

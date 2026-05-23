@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:1
 msgid "回测引擎与性能"
-msgstr "Backtesting Engine and Performance"
+msgstr "Backtesting-Engine und Leistung"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:3
 msgid ""
@@ -39,7 +39,7 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:5
 msgid "1. 回测引擎概览"
-msgstr "1. Backtesting Engine Overview"
+msgstr "1. Übersicht über die Backtesting-Engine"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:7
 #, python-format
@@ -91,11 +91,11 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:16
 msgid "2. 性能与向量化"
-msgstr "2. Performance and Vectorization"
+msgstr "2. Leistung und Vektorisierung"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:18
 msgid "2.1 核心计算加速"
-msgstr "2.1 Core Computation Acceleration"
+msgstr "2.1 Kernberechnungsbeschleunigung"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:20
 msgid "回测与交易结果计算中的以下核心函数均使用 **Numba JIT**（`@njit(nogil=True, cache=True)`）加速："
@@ -151,11 +151,11 @@ msgstr "Dimension"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "做法说明"
-msgstr "Approach Overview"
+msgstr "Ansatzübersicht"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "时间维"
-msgstr "Time Dimension"
+msgstr "Zeitdimension"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "顺序步进，以正确维护 T+1、交割周期、MOQ 等状态，与实盘一致。"
@@ -165,7 +165,7 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "标的维"
-msgstr "Instrument Dimension"
+msgstr "Instrumentendimension"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "单步内对所有标的做数组运算（如 `op_signal`、`own_amounts` 等为 1D 数组），实现向量化。"
@@ -176,7 +176,7 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "优化模式"
-msgstr "Optimization Mode"
+msgstr "Optimierungsmodus"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "多组参数通过多进程并行回测；每组内部使用 `backtest_flash_steps` 等高效路径，减少内存与计算。"
@@ -195,11 +195,11 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:39
 msgid "2.3 与 VectorBT 的简要对比"
-msgstr "2.3 Brief comparison with VectorBT"
+msgstr "2.3 Kurzer Vergleich mit VectorBT"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "对比项"
-msgstr "Comparison item"
+msgstr "Vergleichsartikel"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "qteasy"
@@ -211,7 +211,7 @@ msgstr "VectorBT"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "顺序步进，每步内向量化"
-msgstr "Step forward sequentially, vectorized within each step"
+msgstr "Gehen Sie sequentiell vorwärts, vektorisiert innerhalb jedes Schritts"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "全时间轴一次性矩阵运算，无显式时间循环"
@@ -221,7 +221,7 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "状态与约束"
-msgstr "States and constraints"
+msgstr "Zustände und Einschränkungen"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "显式维护 T+1、交割、MOQ 等，贴近实盘"
@@ -235,7 +235,7 @@ msgstr "Meist vereinfachte Aktienkurven; legt keinen Wert auf Abwicklung/MOQ"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "适用场景"
-msgstr "Applicable scenarios"
+msgstr "Anwendbare Szenarien"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "需要正确模拟 A 股规则、多策略合并、精细成本与交割时"
@@ -263,7 +263,7 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:49
 msgid "3. 本目录与相关文档"
-msgstr "3. This directory and related documents"
+msgstr "3. Dieses Verzeichnis und zugehörige Dokumente"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:51
 #, python-format

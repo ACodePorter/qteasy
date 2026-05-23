@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/api/Optimization.rst:2
 msgid "Optimizer 策略优化器"
-msgstr "Optimizer strategy optimizer"
+msgstr "Optimierer-Strategie-Optimierer"
 
 #: ../../source/api/Optimization.rst:4
 msgid "Optimizer 是一个策略优化器，可以通过遗传算法、粒子群算法等方法来优化策略参数。"
@@ -31,15 +31,15 @@ msgstr ""
 
 #: of qteasy.optimization.Optimizer:1
 msgid "最优参数搜索器对象"
-msgstr "Optimal-parameter searcher object"
+msgstr "Suchobjekt für optimale Parameter"
 
 #: ../../source/api/Optimization.rst:9
 msgid "策略参数优化方法"
-msgstr "Strategy parameter optimization method"
+msgstr "Methode zur Strategieparameteroptimierung"
 
 #: ../../source/api/Optimization.rst:12
 msgid "网格搜索"
-msgstr "Grid search"
+msgstr "Rastersuche"
 
 #: of qteasy.optimization.Optimizer._search_grid:1
 msgid "网格搜索：在参数空间上按固定步长取样并批量评估。"
@@ -49,40 +49,40 @@ msgstr ""
 
 #: ../../source/api/Optimization.rst
 msgid "参数"
-msgstr "Parameters"
+msgstr "Parameter"
 
 #: of qteasy.optimization.Optimizer._search_grid:3
 #: qteasy.optimization.Optimizer._search_montecarlo:3
 msgid "待搜索的参数空间。"
-msgstr "The parameter space to be searched."
+msgstr "Der zu durchsuchende Parameterraum."
 
 #: ../../source/api/Optimization.rst
 msgid "返回"
-msgstr "Back"
+msgstr "Zurück"
 
 #: of qteasy.optimization.Optimizer._search_grid:6
 #: qteasy.optimization.Optimizer._search_montecarlo:6
 #: qteasy.optimization.Optimizer._search_sa:9
 msgid "最优结果写入 ``self.result_pool``。"
-msgstr "Write the optimal result to ``self.result_pool``."
+msgstr "Schreiben Sie das optimale Ergebnis in „`self.result_pool`“."
 
 #: ../../source/api/Optimization.rst
 msgid "返回类型"
-msgstr "Return type"
+msgstr "Rückgabetyp"
 
 #: ../../source/api/Optimization.rst:17
 msgid "蒙特卡洛搜索"
-msgstr "Monte Carlo search"
+msgstr "Monte-Carlo-Suche"
 
 #: of qteasy.optimization.Optimizer._search_montecarlo:1
 msgid "蒙特卡洛随机搜索：在 ``space`` 内均匀随机取样并批量评估。"
 msgstr ""
-"Monte Carlo random search: uniformly sample at random within ``space`` and "
-"evaluate in batches."
+"Monte-Carlo-Zufallssuche: Gleichmäßige zufällige Stichprobe innerhalb des "
+"„Raums“ und stapelweise Auswertung."
 
 #: ../../source/api/Optimization.rst:22
 msgid "模拟退火搜索"
-msgstr "Simulated annealing search"
+msgstr "Simulierte Glühsuche"
 
 #: of qteasy.optimization.Optimizer._search_sa:1
 msgid "递进步长式随机搜索：多轮蒙特卡洛 + 子空间收缩。"
@@ -103,11 +103,11 @@ msgstr ""
 
 #: of qteasy.optimization.Optimizer._search_sa:6
 msgid "初始参数空间。"
-msgstr "Initial parameter space."
+msgstr "Anfänglicher Parameterraum."
 
 #: ../../source/api/Optimization.rst:27
 msgid "遗传算法搜索"
-msgstr "Genetic algorithm search"
+msgstr "Suche nach genetischen Algorithmen"
 
 #: of qteasy.optimization.Optimizer._search_ga:1
 msgid "最优参数搜索算法4: 遗传算法 遗传算法适用于在超大的参数空间内搜索全局最优或近似全局最优解，而它的计算量又处于可接受的范围内"
@@ -156,11 +156,11 @@ msgstr ""
 #: qteasy.optimization.Optimizer._search_ga:12
 #: qteasy.optimization.Optimizer._search_pso:9
 msgid "参数空间对象"
-msgstr "Parameter space object"
+msgstr "Parameterraumobjekt"
 
 #: ../../source/api/Optimization.rst:32
 msgid "梯度下降搜索"
-msgstr "Gradient descent search"
+msgstr "Suche nach Gradientenabstieg"
 
 #: of qteasy.optimization.Optimizer._search_gradient:1
 msgid "最优参数搜索算法5：梯度下降法（多点同时梯度搜索）"
@@ -196,11 +196,11 @@ msgstr ""
 
 #: of qteasy.optimization.Optimizer._search_gradient:9
 msgid "参数空间"
-msgstr "Parameter space"
+msgstr "Parameterraum"
 
 #: ../../source/api/Optimization.rst:37
 msgid "粒子群算法搜索"
-msgstr "Particle swarm optimization search"
+msgstr "Suche nach Partikelschwarmoptimierung"
 
 #: of qteasy.optimization.Optimizer._search_pso:1
 msgid "最优参数搜索算法6: Particle Swarm Optimization 粒子群优化算法"
@@ -232,7 +232,7 @@ msgstr ""
 
 #: ../../source/api/Optimization.rst:42
 msgid "贝叶斯优化搜索"
-msgstr "Bayesian optimization search"
+msgstr "Bayesianische Optimierungssuche"
 
 #: of qteasy.optimization.Optimizer._search_bayesian:1
 msgid "最优参数搜索算法6: 贝叶斯优化算法"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:1
 msgid "Operator 与 Group：谁在何时运行"
-msgstr "Operator and Group: who runs when"
+msgstr "Operator und Gruppe: Wer wird wann ausgeführt?"
 
 #: ../../source/design/04-operator-and-groups.md:3
 msgid "1. 运行层在整体中的位置"
@@ -46,7 +46,7 @@ msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:7
 msgid "2. Operator 的角色"
-msgstr "2. The role of Operator"
+msgstr "2. Die Rolle von Operator"
 
 #: ../../source/design/04-operator-and-groups.md:9
 msgid ""
@@ -87,7 +87,7 @@ msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:13
 msgid "3. Group 的概念"
-msgstr "3. The concept of Group"
+msgstr "3. Das Konzept der Gruppe"
 
 #: ../../source/design/04-operator-and-groups.md:15
 msgid ""
@@ -113,7 +113,7 @@ msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:18
 msgid "4. Operator 与 Group 的关系"
-msgstr "4. The relationship between Operator and Group"
+msgstr "4. Die Beziehung zwischen Operator und Group"
 
 #: ../../source/design/04-operator-and-groups.md:20
 msgid "Operator 包含多个 Group；每个 Group 包含多个 Strategy。"
@@ -233,7 +233,7 @@ msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:44
 msgid "8. 小结"
-msgstr "8. Summary"
+msgstr "8. Zusammenfassung"
 
 #: ../../source/design/04-operator-and-groups.md:46
 msgid ""

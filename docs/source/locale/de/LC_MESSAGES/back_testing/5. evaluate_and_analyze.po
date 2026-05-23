@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md:1
 msgid "回测结果评价与分析"
-msgstr "Backtest Results Evaluation and Analysis"
+msgstr "Auswertung und Analyse der Backtest-Ergebnisse"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md:3
 msgid "绩效指标完整列表（罗列并简短解释）"
@@ -36,63 +36,64 @@ msgstr ""
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "指标"
-msgstr "Metrics"
+msgstr "Metriken"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "总收益 / total_return"
-msgstr "Total return / total_return"
+msgstr "Gesamtrendite / total_return"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "区间累计收益率。"
-msgstr "Cumulative return over the period."
+msgstr "Kumulierte Rendite über den Zeitraum."
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "年化收益 / annual_return"
-msgstr "Annualized return / annual_return"
+msgstr "Annualisierte Rendite / annual_return"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "年化后的收益率。"
-msgstr "The annualized rate of return."
+msgstr "Die annualisierte Rendite."
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "夏普比率 / sharpe_ratio"
-msgstr "Sharpe ratio / sharpe_ratio"
+msgstr "Sharpe-Ratio / Sharpe_ratio"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "风险调整后收益。"
-msgstr "Risk-adjusted return."
+msgstr "Risikoadjustierte Rendite."
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "最大回撤 / max_drawdown"
-msgstr "Maximum drawdown / max_drawdown"
+msgstr "Maximaler Drawdown / max_drawdown"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "区间内最大净值回撤。"
-msgstr "Maximum net value drawdown within the period."
+msgstr "Maximaler Nettowertabzug innerhalb der Periode."
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "胜率 / win_rate"
-msgstr "Win rate / win_rate"
+msgstr "Gewinnrate / Win_Rate"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "盈利次数占交易次数比例。"
-msgstr "The proportion of winning trades out of total trades."
+msgstr "Der Anteil der erfolgreichen Trades an der Gesamtzahl der Trades."
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "盈亏比"
-msgstr "Profit/loss ratio"
+msgstr "Gewinn-Verlust-Verhältnis"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "平均盈利/平均亏损（若有）。"
-msgstr "Average profit / average loss (if any)."
+msgstr ""
+"Durchschnittlicher Gewinn/durchschnittlicher Verlust (falls vorhanden)."
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "其他"
-msgstr "Other"
+msgstr "Andere"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md
 msgid "如 Calmar、波动率等，以 evaluate 输出为准。"
@@ -102,7 +103,7 @@ msgstr ""
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md:17
 msgid "可视化"
-msgstr "Visualization"
+msgstr "Visualisierung"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md:19
 msgid "**visual=True**：在 **qt.run(..., visual=True)** 时，会生成并展示资金曲线、回撤等图。"
@@ -119,7 +120,7 @@ msgstr ""
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md:22
 msgid "结果导出"
-msgstr "Export results"
+msgstr "Ergebnisse exportieren"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md:24
 msgid ""
@@ -139,7 +140,7 @@ msgstr ""
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md:27
 msgid "简要分析思路"
-msgstr "Brief analysis approach"
+msgstr "Kurzer Analyseansatz"
 
 #: ../../source/back_testing/5. evaluate_and_analyze.md:29
 msgid "结合 **trade_log** 与**绩效指标**：检查高回撤时段对应的交易、胜率与盈亏比的匹配度。"

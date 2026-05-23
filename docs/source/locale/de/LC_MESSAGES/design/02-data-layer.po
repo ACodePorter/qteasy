@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/design/02-data-layer.md:1
 msgid "数据获取、存储与数据类型"
-msgstr "Data Acquisition, Storage, and Data Types"
+msgstr "Datenerfassung, -speicherung und Datentypen"
 
 #: ../../source/design/02-data-layer.md:3
 msgid "1. 数据层在整体中的位置"
-msgstr "1. The Data Layer’s Place in the Overall Architecture"
+msgstr "1. Der Platz der Datenschicht in der Gesamtarchitektur"
 
 #: ../../source/design/02-data-layer.md:5
 msgid ""
@@ -44,7 +44,7 @@ msgstr ""
 
 #: ../../source/design/02-data-layer.md:7
 msgid "2. 从原始数据到本地存储"
-msgstr "2. From Raw Data to Local Storage"
+msgstr "2. Von Rohdaten zum lokalen Speicher"
 
 #: ../../source/design/02-data-layer.md:9
 msgid "2.1 数据流"
@@ -100,7 +100,7 @@ msgstr ""
 
 #: ../../source/design/02-data-layer.md:21
 msgid "3. 数据表"
-msgstr "3. Data Tables"
+msgstr "3. Datentabellen"
 
 #: ../../source/design/02-data-layer.md:23
 msgid ""
@@ -135,7 +135,7 @@ msgstr ""
 
 #: ../../source/design/02-data-layer.md:28
 msgid "4.1 name、freq、asset_type 与 dtype_id"
-msgstr "4.1 name, freq, asset_type, and dtype_id"
+msgstr "4.1-Name, Häufigkeit, Asset-Typ und Dtype-ID"
 
 #: ../../source/design/02-data-layer.md:30
 msgid "**name**：数据类型名称（如 close、open、total_mv、pe），对应某类可用的信息。"

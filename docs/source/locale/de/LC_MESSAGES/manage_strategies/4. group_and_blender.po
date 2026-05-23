@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. group_and_blender.md:1
 msgid "Group 与策略信号混合"
-msgstr "Group and Strategy Signal Blending"
+msgstr "Gruppen- und Strategiesignalmischung"
 
 #: ../../source/manage_strategies/4. group_and_blender.md:3
 msgid ""
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. group_and_blender.md:5
 msgid "Group 的由来"
-msgstr "How Groups Are Formed"
+msgstr "Wie Gruppen gebildet werden"
 
 #: ../../source/manage_strategies/4. group_and_blender.md:7
 msgid "添加策略时若指定了 ``run_freq``、``run_timing``，与已有某组相同则归入该组，否则新建一组。"
@@ -51,21 +51,21 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. group_and_blender.md:10
 msgid "查看 Operator 的 Group"
-msgstr "Inspect Operator Groups"
+msgstr "Untersuchen Sie Operator-Gruppen"
 
 #: ../../source/manage_strategies/4. group_and_blender.md:12
 msgid "**groups**：各 Group 的配置与所含策略。"
-msgstr "**``groups``**: Configuration and member strategies of each Group."
+msgstr "**``groups``**: Konfiguration und Mitgliedsstrategien jeder Gruppe."
 
 #: ../../source/manage_strategies/4. group_and_blender.md:13
 msgid "**group_timing_table**：各组对应的 run_freq、run_timing 一览，便于核对运行时刻。"
 msgstr ""
-"**``group_timing_table``**: ``run_freq`` and ``run_timing`` per group for "
-"verifying run schedules."
+"**``group_timing_table``**: ``run_freq`` and ``run_timing`` pro Gruppe zur "
+"Überprüfung der Laufpläne."
 
 #: ../../source/manage_strategies/4. group_and_blender.md:15
 msgid "blender 表达式"
-msgstr "Blender Expressions"
+msgstr "Blender-Ausdrücke"
 
 #: ../../source/manage_strategies/4. group_and_blender.md:17
 msgid "Blender 将同组内多个策略的信号（按加入顺序记为 s0, s1, s2, …）合并为一个。常用形式："
@@ -75,11 +75,11 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "表达式"
-msgstr "Expression"
+msgstr "Ausdruck"
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "``s0``"
@@ -87,7 +87,7 @@ msgstr "``s0``"
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "仅使用第一个策略的信号。"
-msgstr "Use only the first strategy's signal."
+msgstr "Verwenden Sie nur das Signal der ersten Strategie."
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "``0.5*s0+0.5*s1``"
@@ -95,7 +95,7 @@ msgstr "``0.5*s0+0.5*s1``"
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "两策略信号等权加权。"
-msgstr "Equal-weight blend of two strategy signals."
+msgstr "Gleichgewichtige Mischung aus zwei Strategiesignalen."
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "``s0*s1``"
@@ -103,7 +103,7 @@ msgstr "``s0*s1``"
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "两信号逐元素相乘（如择时仓位相乘）。"
-msgstr "Element-wise product (e.g., multiply timing positions)."
+msgstr "Elementweises Produkt (z. B. Timing-Positionen multiplizieren)."
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "``(s0+s1)/2``"
@@ -111,7 +111,7 @@ msgstr "``(s0+s1)/2``"
 
 #: ../../source/manage_strategies/4. group_and_blender.md
 msgid "与 0.5*s0+0.5*s1 等价。"
-msgstr "Equivalent to ``0.5*s0+0.5*s1``."
+msgstr "Entspricht „`0.5*s0+0.5*s1`“."
 
 #: ../../source/manage_strategies/4. group_and_blender.md:26
 msgid ""
@@ -125,35 +125,37 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. group_and_blender.md:28
 msgid "多组时的合并"
-msgstr "Merging Multiple Groups"
+msgstr "Mehrere Gruppen zusammenführen"
 
 #: ../../source/manage_strategies/4. group_and_blender.md:30
 msgid "当 Operator 内有多个 Group 时，**group_merge_type** 决定多组最终信号如何合并："
 msgstr ""
-"When an ``Operator`` has multiple Groups, **``group_merge_type``** controls "
-"how final signals are merged:"
+"Wenn ein „`Operator`` has multiple Groups, **``group_merge_type`“** steuert,"
+" wie endgültige Signale zusammengeführt werden:"
 
 #: ../../source/manage_strategies/4. group_and_blender.md:32
 msgid "**None**：按框架默认方式（通常为最后一组或指定组）输出。"
 msgstr ""
-"**``None``**: Framework default (usually the last or a designated group)."
+"**``None``**: Framework-Standard (normalerweise die letzte oder eine "
+"bestimmte Gruppe)."
 
 #: ../../source/manage_strategies/4. group_and_blender.md:33
 msgid "**And**：多组信号做“与”逻辑（如择时均为 1 才为 1）。"
 msgstr ""
-"**``And``**: Logical AND across groups (e.g., all timing signals must be 1)."
+"**``And``**: Logisches UND über Gruppen hinweg (z. B. müssen alle "
+"Zeitsignale 1 sein)."
 
 #: ../../source/manage_strategies/4. group_and_blender.md:34
 msgid "**Or**：多组信号做“或”逻辑。"
-msgstr "**``Or``**: Logical OR across groups."
+msgstr "**``Or``**: Logisches ODER über Gruppen hinweg."
 
 #: ../../source/manage_strategies/4. group_and_blender.md:36
 msgid "示例"
-msgstr "Example"
+msgstr "Beispiel"
 
 #: ../../source/manage_strategies/4. group_and_blender.md:38
 msgid "两个择时策略等权混合的典型写法："
-msgstr "Typical equal-weight blend of two timing strategies:"
+msgstr "Typische gleichgewichtige Mischung aus zwei Timing-Strategien:"
 
 #: ../../source/manage_strategies/4. group_and_blender.md:47
 msgid "配置完成后，该 Group 在每个运行时刻会先分别计算 dma 与 macd 的信号，再按 blender 输出合并后的仓位。"

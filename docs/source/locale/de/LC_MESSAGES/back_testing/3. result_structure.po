@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md:1
 msgid "回测结果的结构"
-msgstr "Structure of Backtest Results"
+msgstr "Struktur der Backtest-Ergebnisse"
 
 #: ../../source/back_testing/3. result_structure.md:3
 msgid "返回值说明"
-msgstr "Return Value Description"
+msgstr "Beschreibung des Rückgabewerts"
 
 #: ../../source/back_testing/3. result_structure.md:5
 msgid ""
@@ -50,15 +50,15 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "字段/属性名"
-msgstr "Field/Attribute Name"
+msgstr "Feld-/Attributname"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "类型"
-msgstr "Type"
+msgstr "Typ"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "loop_result"
@@ -66,11 +66,11 @@ msgstr "loop_result"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "结构/列表"
-msgstr "Structure/List"
+msgstr "Struktur/Liste"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "按时间步的循环运行结果。"
-msgstr "Loop run results by time step."
+msgstr "Ergebnisse des Schleifenlaufs nach Zeitschritt."
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "complete_values"
@@ -96,7 +96,7 @@ msgstr "int/dict"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "操作次数或按类型统计。"
-msgstr "Number of operations or statistics by type."
+msgstr "Anzahl der Vorgänge oder Statistiken nach Typ."
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "summary"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "资金曲线/净值"
-msgstr "Equity curve / net asset value"
+msgstr "Eigenkapitalkurve / Nettoinventarwert"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "array/Series"
@@ -121,11 +121,11 @@ msgstr "array/Series"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "每日或每周期净值。"
-msgstr "Daily or per-period NAV."
+msgstr "Täglicher oder periodenbezogener NAV."
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "持仓"
-msgstr "Positions"
+msgstr "Positionen"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "DataFrame"
@@ -133,7 +133,7 @@ msgstr "DataFrame"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "各时点持仓明细（若有）。"
-msgstr "Position details at each time point (if any)."
+msgstr "Positionsdetails zu jedem Zeitpunkt (falls vorhanden)."
 
 #: ../../source/back_testing/3. result_structure.md:20
 msgid "其他可能字段：交易明细、费用汇总等，请以实际返回对象属性为准。"
@@ -144,7 +144,7 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md:22
 msgid "资金曲线与持仓"
-msgstr "Equity curve and positions"
+msgstr "Eigenkapitalkurve und Positionen"
 
 #: ../../source/back_testing/3. result_structure.md:24
 msgid "从结果中取出**每日净值**：通常来自 complete_values 的 `value` 列或类似属性。"
@@ -168,7 +168,7 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md:28
 msgid "绩效指标"
-msgstr "Performance metrics"
+msgstr "Leistungskennzahlen"
 
 #: ../../source/back_testing/3. result_structure.md:30
 msgid "结果中可能已包含 **evaluate** 或内置绩效指标（夏普、最大回撤、年化收益、胜率等）。"

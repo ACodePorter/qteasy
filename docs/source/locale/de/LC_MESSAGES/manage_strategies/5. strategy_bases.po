@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:5
 msgid "何时用哪种基类"
-msgstr "Which Base Class to Use"
+msgstr "Welche Basisklasse verwendet werden soll"
 
 #: ../../source/manage_strategies/5. strategy_bases.md:7
 msgid ""
@@ -76,15 +76,15 @@ msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:14
 msgid "**典型用法**：均线金叉死叉、MACD 柱状图符号等。"
-msgstr "**Typical use**: MA crossovers, MACD histogram sign, etc."
+msgstr "**Typische Verwendung**: MA-Crossovers, MACD-Histogrammzeichen usw."
 
 #: ../../source/manage_strategies/5. strategy_bases.md:15
 msgid "简短示例（逻辑示意）："
-msgstr "Brief example (logic sketch):"
+msgstr "Kurzes Beispiel (Logikskizze):"
 
 #: ../../source/manage_strategies/5. strategy_bases.md:29
 msgid "多标的参数（必读）"
-msgstr "Multi-instrument Parameters (Required Reading)"
+msgstr "Multi-Instrumenten-Parameter (Pflichtlektüre)"
 
 #: ../../source/manage_strategies/5. strategy_bases.md:31
 msgid ""

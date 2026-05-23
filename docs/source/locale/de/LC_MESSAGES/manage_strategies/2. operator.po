@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/2. operator.md:1
 msgid "Operator：创建与基本配置"
-msgstr "Operator: Creation and Basic Configuration"
+msgstr "Operator: Erstellung und Grundkonfiguration"
 
 #: ../../source/manage_strategies/2. operator.md:3
 msgid "Operator 是 qteasy 中策略的容器与调度器，负责在回测或实盘中按既定频率与时间点运行策略并输出统一格式的信号。"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/2. operator.md:5
 msgid "创建 Operator"
-msgstr "Create an Operator"
+msgstr "Erstellen Sie ein Operator"
 
 #: ../../source/manage_strategies/2. operator.md:7
 msgid ""
@@ -44,7 +44,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/2. operator.md:19
 msgid "添加策略"
-msgstr "Add Strategies"
+msgstr "Strategien hinzufügen"
 
 #: ../../source/manage_strategies/2. operator.md:21
 msgid ""
@@ -67,15 +67,15 @@ msgstr ""
 
 #: ../../source/manage_strategies/2. operator.md:30
 msgid "常用属性及含义"
-msgstr "Common Attributes and Meanings"
+msgstr "Gemeinsame Attribute und Bedeutungen"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "属性"
-msgstr "Attribute"
+msgstr "Attribut"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "**signal_type**"
@@ -84,8 +84,8 @@ msgstr "**signal_type**"
 #: ../../source/manage_strategies/2. operator.md
 msgid "信号类型：`PT` 择时（目标仓位）、`PS` 择股（选股列表）、`VS` 向量信号等。"
 msgstr ""
-"Signal type: ``PT`` position target, ``PS`` proportional signal, ``VS`` "
-"value signal, etc."
+"Signaltyp: Wertsignal „`PT`` position target, ``PS`` proportional signal, "
+"``VS`“ usw."
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "**run_freq**"
@@ -94,8 +94,8 @@ msgstr "**run_freq**"
 #: ../../source/manage_strategies/2. operator.md
 msgid "运行频率，如 `'d'` 日、`'1min'` 分钟等，与 DataType 的 freq 对应。"
 msgstr ""
-"Run frequency, e.g., ``'d'`` daily or ``'1min'``; aligns with ``DataType`` "
-"``freq``."
+"Lauffrequenz, z. B. „`'d'`` daily or ``'1min'``; aligns with "
+"``DataTypefreq`“."
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "**run_timing**"
@@ -103,7 +103,8 @@ msgstr "**run_timing**"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "运行时刻，如 `'open'` 开盘、`'close'` 收盘等。"
-msgstr "Run timing, e.g., ``'open'`` at open or ``'close'`` at close."
+msgstr ""
+"Führen Sie das Timing aus, z. B. „`'open'`` at open or ``'close'`“ am Ende."
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "**groups**"
@@ -112,12 +113,12 @@ msgstr "**groups**"
 #: ../../source/manage_strategies/2. operator.md
 msgid "各 Group 信息（相同 run_freq/run_timing 的策略为一组）。"
 msgstr ""
-"Group details (strategies with the same ``run_freq``/``run_timing`` form one"
-" group)."
+"Gruppendetails (Strategien mit demselben „`run_freq``/``run_timing`“ bilden "
+"eine Gruppe)."
 
 #: ../../source/manage_strategies/2. operator.md:39
 msgid "设置策略参数"
-msgstr "Set Strategy Parameters"
+msgstr "Legen Sie Strategieparameter fest"
 
 #: ../../source/manage_strategies/2. operator.md:41
 msgid ""
@@ -130,7 +131,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/2. operator.md:47
 msgid "运行前检查"
-msgstr "Pre-run Check"
+msgstr "Kontrolle vor dem Lauf"
 
 #: ../../source/manage_strategies/2. operator.md:49
 msgid "**is_ready()**：检查 Operator 是否已配置好策略与数据要求，可用于回测/优化前自检。"

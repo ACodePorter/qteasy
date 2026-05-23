@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:1
 msgid "Live Trading S1.3 设计理念与架构"
-msgstr "Live Trading S1.3 Design Philosophy and Architecture"
+msgstr "Live Trading S1.3 Designphilosophie und Architektur"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:3
 msgid "本文从设计视角解释 S1.3 的 live trading 改造思路：为什么这样分层、如何保持兼容、以及这些设计如何帮助后续扩展。"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:5
 msgid "0. 文档定位"
-msgstr "0. Document Positioning"
+msgstr "0. Dokumentenpositionierung"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:7
 msgid "本文是设计说明，不是使用教程"
@@ -57,7 +57,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:11
 msgid "1. 设计目标"
-msgstr "1. Design Goals"
+msgstr "1. Designziele"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:13
 msgid "在不破坏既有用户路径的前提下，提升 live 链路的可校验性与可审计性"
@@ -79,7 +79,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:17
 msgid "2. 分层结构"
-msgstr "2. Layered Structure"
+msgstr "2. Schichtstruktur"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:19
 msgid "S1.3 的 live 相关职责可抽象为："
@@ -94,11 +94,13 @@ msgstr "`Operator`: strategy execution scheduling and signal source"
 #: ../../source/design/10-live-trading-s1.3-architecture.md:22
 msgid "`Trader`：订单意图落地、风险闸门与执行协调"
 msgstr ""
-"`Trader`: materialize order intent, risk gating, and execution coordination"
+"„Trader“: Auftragsabsicht, Risiko-Gating und Ausführungskoordination "
+"verwirklichen"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:23
 msgid "`RiskManager`：纯逻辑规则评估，不依赖 IO"
-msgstr "`RiskManager`: pure logical rule evaluation, no IO dependencies"
+msgstr ""
+"„RiskManager“: reine logische Regelauswertung, keine IO-Abhängigkeiten"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:24
 msgid "`Broker`：提交、取消、回报、连接语义"
@@ -110,7 +112,7 @@ msgstr "`trade_io`: contract validation for order/trade data"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:27
 msgid "3. 关键设计原则"
-msgstr "3. Key design principles"
+msgstr "3. Wichtige Designprinzipien"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:29
 msgid "3.1 契约先行"
@@ -157,11 +159,11 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:45
 msgid "4. 典型疑难点与取舍"
-msgstr "4. Typical tricky points and trade-offs"
+msgstr "4. Typische knifflige Punkte und Kompromisse"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:47
 msgid "4.1 拒单兼容语义"
-msgstr "4.1 Rejection-order compatibility semantics"
+msgstr "4.1 Kompatibilitätssemantik der Ablehnungsreihenfolge"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:49
 msgid "保持历史兼容（拒单可表现为空结果），同时增强可见性（CLI/TUI 摘要 + 日志）。"
@@ -172,7 +174,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:51
 msgid "4.2 新旧链路并存"
-msgstr "4.2 Coexistence of new and legacy flows"
+msgstr "4.2 Koexistenz von neuen und alten Strömen"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:53
 msgid "保留 legacy queue 兼容路径，避免一次性迁移带来的回归风险。"
@@ -193,7 +195,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:59
 msgid "5. 与 S2.1 的关系"
-msgstr "5. Relationship with S2.1"
+msgstr "5. Zusammenhang mit S2.1"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:61
 msgid "S1.3 不是柜台接入终点，而是前置地基："
@@ -203,11 +205,11 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:63
 msgid "先稳定接口边界"
-msgstr "Stabilize the interface boundaries first"
+msgstr "Stabilisieren Sie zunächst die Schnittstellengrenzen"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:64
 msgid "再逐步接入真实柜台"
-msgstr "Then gradually connect to real broker systems."
+msgstr "Dann binden Sie sich nach und nach an echte Brokersysteme an."
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:65
 msgid "最后在不破坏上层用法的前提下扩展能力"
@@ -217,19 +219,19 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:67
 msgid "6. 对用户行为的影响"
-msgstr "6. Impact on user behavior"
+msgstr "6. Auswirkungen auf das Benutzerverhalten"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:69
 msgid "配置错误更早暴露"
-msgstr "Configuration errors are exposed earlier."
+msgstr "Konfigurationsfehler werden früher aufgedeckt."
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:70
 msgid "拒单原因更容易定位"
-msgstr "Rejection reasons are easier to pinpoint."
+msgstr "Ablehnungsgründe sind leichter zu ermitteln."
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:71
 msgid "live 运行中的状态变化更容易解释"
-msgstr "State changes during live operation are easier to explain."
+msgstr "Zustandsänderungen im laufenden Betrieb sind einfacher zu erklären."
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:72
 msgid "扩展第三方 broker 的成本更可控"
@@ -239,7 +241,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:74
 msgid "7. 相关阅读"
-msgstr "7. Further reading"
+msgstr "7. Weiterführende Literatur"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:76
 msgid "模块总览：`live_trading/1-overview.md`"
@@ -248,11 +250,12 @@ msgstr "Module overview: `live_trading/1-overview.md`"
 #: ../../source/design/10-live-trading-s1.3-architecture.md:77
 msgid "运行与配置：`live_trading/2-configuration-and-run.md`"
 msgstr ""
-"Operation and configuration: `live_trading/2-configuration-and-run.md`"
+"Bedienung und Konfiguration: `live_trading/2-configuration-and-run.md`"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:78
 msgid "风控与状态：`live_trading/3-risk-and-order-lifecycle.md`"
-msgstr "Risk control and state: `live_trading/3-risk-and-order-lifecycle.md`"
+msgstr ""
+"Risikokontrolle und Status: „live_trading/3-risk-and-order-lifecycle.md“."
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:79
 msgid "Broker 接入：`live_trading/4-broker-adapter-and-integration.md`"

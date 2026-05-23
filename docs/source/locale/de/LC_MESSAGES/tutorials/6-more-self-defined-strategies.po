@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -212,8 +212,8 @@ msgstr ""
 #: ../../source/tutorials/6-more-self-defined-strategies.md:46
 msgid "使用`built_in_doc`来查看这个内置交易策略的文档："
 msgstr ""
-"Use `built_in_doc` to view the documentation for this built-in trading "
-"strategy:"
+"Verwenden Sie „built_in_doc“, um die Dokumentation für diese integrierte "
+"Handelsstrategie anzuzeigen:"
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:52
 #: ../../source/tutorials/6-more-self-defined-strategies.md:102
@@ -285,20 +285,19 @@ msgstr "`qteasy`'s `DataType` includes three attributes:"
 #: ../../source/tutorials/6-more-self-defined-strategies.md:119
 msgid "name: 数据类型的名称，例如上面返回值中的`ebitda`"
 msgstr ""
-"name: the name of the data type, for example `ebitda` in the return value "
-"above"
+"Name: der Name des Datentyps, zum Beispiel „ebitda“ im obigen Rückgabewert"
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:120
 msgid "freq: 数据的频率，例如上面返回值中的`q`，代表季度数据"
 msgstr ""
-"freq: the frequency of the data, for example `q` in the return value above, "
-"which represents quarterly data"
+"freq: Die Häufigkeit der Daten, zum Beispiel „q“ im obigen Rückgabewert, der"
+" vierteljährliche Daten darstellt"
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:121
 msgid "asset_type: 数据的资产类型，例如上面返回值中的`E`，代表股票数据"
 msgstr ""
-"asset_type: the asset type of the data; for example, `E` in the return value"
-" above represents stock data"
+"asset_type: der Asset-Typ der Daten; Beispielsweise steht „E“ im obigen "
+"Rückgabewert für Bestandsdaten"
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:123
 msgid ""
@@ -392,7 +391,7 @@ msgstr ""
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:185
 msgid "得到如下输出："
-msgstr "You will get the following output:"
+msgstr "Sie erhalten die folgende Ausgabe:"
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:200
 msgid ""
@@ -532,13 +531,13 @@ msgstr ""
 #: ../../source/tutorials/6-more-self-defined-strategies.md:358
 msgid "**`DataType('total_mv', 'd', 'E')`**，这个数据类型的ID为 `total_mv_E_d`。"
 msgstr ""
-"**`DataType('total_mv', 'd', 'E')`**: the ID of this data type is "
-"`total_mv_E_d`."
+"**`DataType('total_mv', 'd', 'E')`**: Die ID dieses Datentyps ist "
+"„total_mv_E_d“."
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:359
 msgid "**`DataType('total_liab', 'q', 'E')`**，这个数据类型的ID为：`total_liab_E_d`。"
 msgstr ""
-"**`DataType('total_liab', 'q', 'E')`**: the ID of this data type is: "
+"**`DataType('total_liab', 'q', 'E')`**: Die ID dieses Datentyps lautet: "
 "`total_liab_E_d`."
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:361

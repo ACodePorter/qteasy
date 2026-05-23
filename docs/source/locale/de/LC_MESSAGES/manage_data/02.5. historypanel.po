@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -99,8 +99,8 @@ msgstr "Core concepts: 3D structure and `shape`"
 #: ../../source/manage_data/02.5. historypanel.md:17
 msgid "HistoryPanel 在内存中对应一个三维 `numpy.ndarray`，三条轴依次为："
 msgstr ""
-"The HistoryPanel corresponds to a three-dimensional `numpy.ndarray` in "
-"memory, with the three axes as follows:"
+"Der HistoryPanel entspricht einem dreidimensionalen „numpy.ndarray“ im "
+"Speicher, mit den drei Achsen wie folgt:"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "轴"
@@ -227,7 +227,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.5. historypanel.md:77
 msgid "基本操作：时间范围、标的与指标子集"
-msgstr "Basic operations: time range, target and indicator subset"
+msgstr "Grundoperationen: Zeitbereich, Ziel und Indikatorteilmenge"
 
 #: ../../source/manage_data/02.5. historypanel.md:79
 msgid "下列方法在**不改变取数语义**的前提下，缩小你当前关心的范围；返回值仍是 `HistoryPanel`（空面板除外）。"

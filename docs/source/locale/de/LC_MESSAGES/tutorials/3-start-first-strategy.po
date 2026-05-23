@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -128,7 +128,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:33
 msgid "当日涨幅 = \\frac{Price_0}{Price_{20}} - 1"
-msgstr "Daily return = \\frac{Price_0}{Price_{20}} - 1"
+msgstr "Tägliche Rendite = \\frac{Price_0}{Price_{20}} - 1"
 
 #: ../../source/tutorials/3-start-first-strategy.md:35
 msgid "策略的实现"
@@ -204,8 +204,8 @@ msgstr "The output is as follows:"
 #: ../../source/tutorials/3-start-first-strategy.md:125
 msgid "通过交易策略的`info()`方法也可以查看更详细的策略参数和信息:"
 msgstr ""
-"You can also view more detailed strategy parameters and information via the "
-"trading strategy’s `info()` method:"
+"Sie können detailliertere Strategieparameter und Informationen auch über die"
+" Methode „info()“ der Handelsstrategie anzeigen:"
 
 #: ../../source/tutorials/3-start-first-strategy.md:130
 msgid "输出如下"
@@ -582,7 +582,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:275
 msgid "回测报告详细解析："
-msgstr "Detailed explanation of the backtest report:"
+msgstr "Ausführliche Erläuterung des Backtest-Berichts:"
 
 #: ../../source/tutorials/3-start-first-strategy.md:277
 msgid "`qteasy`的回测报告包含大量的回测结果统计信息，我们来逐一详细了解："
@@ -605,7 +605,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:292
 msgid "第2部份：交易操作统计"
-msgstr "Part 2: Trading operation statistics"
+msgstr "Teil 2: Statistiken zu Handelsaktivitäten"
 
 #: ../../source/tutorials/3-start-first-strategy.md:293
 msgid "回测报告的第二部份是交易操作统计，以列表方式统计了每个投资标的的买入和卖出次数，以及持仓的时间占比："
@@ -640,7 +640,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:319
 msgid "第4部份：策略表现指标"
-msgstr "Part 4: Strategy performance metrics"
+msgstr "Teil 4: Kennzahlen zur Strategieleistung"
 
 #: ../../source/tutorials/3-start-first-strategy.md:320
 msgid ""
@@ -685,7 +685,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:343
 msgid "第1部分，基本信息以及投资回报指标"
-msgstr "Part 1: Basic information and investment return metrics"
+msgstr "Teil 1: Grundlegende Informationen und Kennzahlen zur Kapitalrendite"
 
 #: ../../source/tutorials/3-start-first-strategy.md:345
 msgid ""
@@ -725,7 +725,7 @@ msgstr "![Teil 2 der Visualisierungsdiagramme](img/visual_report_part_2.png)"
 
 #: ../../source/tutorials/3-start-first-strategy.md:352
 msgid "可视化图表第二部份"
-msgstr "Part 2 of the Visualization Charts"
+msgstr "Teil 2 der Visualisierungsdiagramme"
 
 #: ../../source/tutorials/3-start-first-strategy.md:354
 msgid "三张图表分别为："
@@ -809,7 +809,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:368
 msgid "第3部分，评价指标曲线图"
-msgstr "Part 3: Performance metric curve chart"
+msgstr "Teil 3: Diagramm der Leistungsmetrikkurve"
 
 #: ../../source/tutorials/3-start-first-strategy.md:370
 msgid "图表的第三部份是策略性能指标图，主要用于评价策略的盈利能力和风险控制能力，同样包括三张图表："
@@ -821,7 +821,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:372
 msgid "![可视化图表第三部份](img/visual_report_part_3.png)"
-msgstr "![Visualization chart part 3](img/visual_report_part_3.png)"
+msgstr "![Visualisierungsdiagramm Teil 3](img/visual_report_part_3.png)"
 
 #: ../../source/tutorials/3-start-first-strategy.md:372
 #: ../../source/tutorials/3-start-first-strategy.md:384
@@ -901,7 +901,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:384
 msgid "![可视化图表第三部份](img/visual_report_part_4.png)"
-msgstr "![Visualization Charts Part 3](img/visual_report_part_4.png)"
+msgstr "![Visualisierungsdiagramme Teil 3](img/visual_report_part_4.png)"
 
 #: ../../source/tutorials/3-start-first-strategy.md:386
 msgid "**月度收益热力图**：以填色方块的形式展示历年（纵坐标）每个月（横坐标）的收益率，颜色越偏绿表示收益越高、越偏红表示收益越低或亏损"
@@ -970,7 +970,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:398
 msgid "交易日志/交易报告详解"
-msgstr "Detailed Explanation of the Trading Log / Trading Report"
+msgstr "Detaillierte Erläuterung des Handelsprotokolls / Handelsberichts"
 
 #: ../../source/tutorials/3-start-first-strategy.md:399
 msgid ""
@@ -994,15 +994,15 @@ msgstr ""
 #: ../../source/tutorials/3-start-first-strategy.md:401
 msgid "Windows 指定到其他盘目录：`qt.configure(trade_log_file_path='C:\\\\qt_trade_logs\\\\')`"
 msgstr ""
-"On Windows, specify a directory on another drive: "
-"`qt.configure(trade_log_file_path='C:\\\\qt_trade_logs\\\\')`"
+"Geben Sie unter Windows ein Verzeichnis auf einem anderen Laufwerk an: "
+"„qt.configure(trade_log_file_path='C:\\\\qt_trade_logs\\\\')“."
 
 #: ../../source/tutorials/3-start-first-strategy.md:402
 msgid ""
 "macOS/Linux 指定到家目录：`qt.configure(trade_log_file_path='~/qt_trade_logs/')`"
 msgstr ""
-"On macOS/Linux, specify a directory under your home folder: "
-"`qt.configure(trade_log_file_path='~/qt_trade_logs/')`"
+"Geben Sie unter macOS/Linux ein Verzeichnis in Ihrem Home-Ordner an: "
+"„qt.configure(trade_log_file_path='~/qt_trade_logs/')“."
 
 #: ../../source/tutorials/3-start-first-strategy.md:404
 msgid ""
@@ -1031,7 +1031,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:412
 msgid "![两个交易明细报告](img/trade_log_path.png)"
-msgstr "![Two trade detail reports](img/trade_log_path.png)"
+msgstr "![Zwei Handelsdetailberichte](img/trade_log_path.png)"
 
 #: ../../source/tutorials/3-start-first-strategy.md:412
 msgid "两个交易明细报告"

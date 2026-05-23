@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:1
 msgid "内置策略的查找与使用"
-msgstr "Finding and Using Built-in Strategies"
+msgstr "Integrierte Strategien finden und nutzen"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:3
 msgid "qteasy 提供大量内置交易策略，可通过 ID 查找、获取文档并在 Operator 中直接使用。"
@@ -31,41 +31,41 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:5
 msgid "查找与获取内置策略"
-msgstr "Find and Retrieve Built-in Strategies"
+msgstr "Integrierte Strategien finden und abrufen"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:7
 msgid "**qt.built_in_list()**：返回所有内置策略 ID 的列表（或传入模糊字符串进行筛选）。"
 msgstr ""
-"**``qt.built_in_list()``**: Return all built-in strategy IDs (or filter with"
-" a fuzzy string)."
+"**``qt.built_in_list()``**: Alle integrierten Strategie-IDs zurückgeben "
+"(oder mit einer Fuzzy-Zeichenfolge filtern)."
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:8
 msgid "**qt.built_ins(stg_id)**：按 ID 返回策略类或实例的映射；不传参数则返回全部。"
 msgstr ""
 "**``qt.built_ins(stg_id)``**: Return a mapping of strategy classes or "
-"instances by ID; omit ``stg_id`` for all."
+"instances by ID; omit ``stg_id`` für alle."
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:9
 msgid "**qt.built_in_doc(stg_id)**：返回该策略的文档字符串（说明、参数等）。"
 msgstr ""
-"**``qt.built_in_doc(stg_id)``**: Return the strategy docstring (description,"
-" parameters, etc.)."
+"**``qt.built_in_doc(stg_id)``**: Gibt die Strategie-Dokumentzeichenfolge "
+"zurück (Beschreibung, Parameter usw.)."
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:10
 msgid "**qt.get_strategy_by_id(stg_id)**：根据 ID 获取可用的策略实例，用于 ``add_strategy``。"
 msgstr ""
-"**``qt.get_strategy_by_id(stg_id)``**: Get a usable strategy instance by ID "
-"for ``add_strategy``."
+"**``qt.get_strategy_by_id(stg_id)``**: Erhalten Sie eine verwendbare "
+"Strategieinstanz nach ID für „add_strategy“."
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:29
 msgid "在 Operator 中使用内置策略"
-msgstr "Use Built-in Strategies in an Operator"
+msgstr "Verwenden Sie integrierte Strategien in einem Operator"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:31
 msgid "可传入策略 **ID 字符串**（如 `'dma'`、`'macd'`）或 **策略类/实例**。"
 msgstr ""
-"Pass a strategy **ID string** (e.g., ``'dma'``, ``'macd'``) or a **strategy "
-"class/instance**."
+"Übergeben Sie eine Strategie-**ID-Zeichenfolge** (z. B. „`'dma'``, "
+"``'macd'`“) oder eine **Strategieklasse/-instanz**."
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:32
 msgid ""
@@ -78,7 +78,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:34
 msgid "所有内置策略清单（罗列并简短说明）"
-msgstr "Full Built-in Strategy List (with Brief Descriptions)"
+msgstr "Vollständige integrierte Strategieliste (mit kurzen Beschreibungen)"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:36
 msgid ""
@@ -91,11 +91,11 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "策略 ID"
-msgstr "Strategy ID"
+msgstr "Strategie-ID"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "类别/说明"
-msgstr "Category / Description"
+msgstr "Kategorie/Beschreibung"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "crossline"
@@ -103,7 +103,7 @@ msgstr "crossline"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "均线交叉类"
-msgstr "Moving-average crossover"
+msgstr "Crossover mit gleitendem Durchschnitt"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "macd, macdext"
@@ -111,7 +111,7 @@ msgstr "macd, macdext"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "MACD 相关"
-msgstr "MACD-related"
+msgstr "MACD-bezogen"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "dma, trix"
@@ -119,7 +119,7 @@ msgstr "dma, trix"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "双/多均线类"
-msgstr "Dual/multiple moving averages"
+msgstr "Duale/mehrfache gleitende Durchschnitte"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "cdl, bband, s-bband, sarext"
@@ -127,7 +127,7 @@ msgstr "cdl, bband, s-bband, sarext"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "K 线、布林、SAR 等"
-msgstr "Candlestick, Bollinger, SAR, etc."
+msgstr "Candlestick, Bollinger, SAR usw."
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "ssma, sdema, sema, sht, skama, smama, st3, stema, strima, swma"
@@ -135,7 +135,7 @@ msgstr "ssma, sdema, sema, sht, skama, smama, st3, stema, strima, swma"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "平滑类（SCR 前缀）"
-msgstr "Smoothing (SCR prefix)"
+msgstr "Glättung (SCR-Präfix)"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "dsma, ddema, dema, dkama, dmama, dt3, dtema, dtrima, dwma"
@@ -143,7 +143,7 @@ msgstr "dsma, ddema, dema, dkama, dmama, dt3, dtema, dtrima, dwma"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "平滑类（DCR 前缀）"
-msgstr "Smoothing (DCR prefix)"
+msgstr "Glättung (DCR-Präfix)"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid ""
@@ -153,7 +153,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "平滑类（SLP 前缀）"
-msgstr "Smoothing (SLP prefix)"
+msgstr "Glättung (SLP-Präfix)"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid ""
@@ -165,7 +165,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "技术指标类"
-msgstr "Technical indicators"
+msgstr "Technische Indikatoren"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "ad, adosc, obv"
@@ -173,7 +173,7 @@ msgstr "ad, adosc, obv"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "量能类"
-msgstr "Volume-based"
+msgstr "Volumenbasiert"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "signal_none, sellrate, buyrate"
@@ -181,7 +181,7 @@ msgstr "signal_none, sellrate, buyrate"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "信号控制/比例类"
-msgstr "Signal control / ratio"
+msgstr "Signalsteuerung/-verhältnis"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "long, short, zero"
@@ -189,7 +189,7 @@ msgstr "long, short, zero"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "择时固定仓位"
-msgstr "Fixed timing positions"
+msgstr "Feste Timing-Positionen"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "all, select_none, random"
@@ -197,7 +197,7 @@ msgstr "all, select_none, random"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "选股类（全选/不选/随机）"
-msgstr "Stock selection (all / none / random)"
+msgstr "Aktienauswahl (alle / keine / zufällig)"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "finance, ndaylast, ndayavg, ndayrate, ndaychg, ndayvol"
@@ -205,11 +205,11 @@ msgstr "finance, ndaylast, ndayavg, ndayrate, ndaychg, ndayvol"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md
 msgid "选股因子类"
-msgstr "Selection factor"
+msgstr "Auswahlfaktor"
 
 #: ../../source/manage_strategies/4. builtin_strategies.md:54
 msgid ""
 "完整 ID 以 **qt.built_in_list()** 返回为准；参数与用法以 **qt.built_in_doc('id')** 为准。"
 msgstr ""
-"The authoritative ID list is **``qt.built_in_list()``**; parameters and "
+"Die maßgebliche ID-Liste ist **``qt.built_in_list()``**; parameters and "
 "usage are in **``qt.built_in_doc('id')``**."

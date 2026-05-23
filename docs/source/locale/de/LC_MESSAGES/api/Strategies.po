@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/api/Strategies.rst:2
 msgid "交易策略基类"
-msgstr "Trading Strategy Class"
+msgstr "Handelsstrategieklasse"
 
 #: ../../source/api/Strategies.rst:4
 msgid "本页提供 Strategy 相关核心类的 API 自动文档入口。 设计思路与使用教程请参考："
@@ -30,15 +30,15 @@ msgstr ""
 
 #: ../../source/api/Strategies.rst:7
 msgid "设计文档：``design/10-live-trading-s1.3-architecture.md``"
-msgstr "Design: ``design/10-live-trading-s1.3-architecture.md``"
+msgstr "Design: „`design/10-live-trading-s1.3-architecture.md`“."
 
 #: ../../source/api/Strategies.rst:8
 msgid "策略管理文档：``manage_strategies/*``"
-msgstr "Strategy management: ``manage_strategies/*``"
+msgstr "Strategiemanagement: „`manage_strategies/*`“."
 
 #: ../../source/api/Strategies.rst:9
 msgid "实操教程：``tutorials/*``"
-msgstr "Hands-on tutorials: ``tutorials/*``"
+msgstr "Praktische Tutorials: „`tutorials/*`“."
 
 #: ../../source/api/Strategies.rst:12
 msgid "BaseStrategy"
@@ -46,7 +46,7 @@ msgstr "BaseStrategy"
 
 #: of qteasy.strategy.BaseStrategy:1
 msgid "基类：:py:class:`object`"
-msgstr "基类：:py:class:`object`"
+msgstr "基类::py:class:`object`"
 
 #: of qteasy.strategy.BaseStrategy:1
 msgid "量化投资策略的抽象基类，所有具体策略都应从本类继承并实现交易信号生成逻辑。"
@@ -71,13 +71,14 @@ msgstr ""
 
 #: of qteasy.strategy.BaseStrategy:10
 msgid "示例"
-msgstr "Example"
+msgstr "Beispiel"
 
 #: of qteasy.strategy.BaseStrategy:11
 msgid "BaseStrategy 为抽象基类，通常通过继承实现自定义策略。下面示例展示其类型信息（稳定输出）："
 msgstr ""
-"``BaseStrategy`` is abstract; implement custom strategies by subclassing. "
-"The example below shows stable type output:"
+"„BaseStrategy“ ist abstrakt; Implementieren Sie benutzerdefinierte "
+"Strategien durch Unterklassenbildung. Das folgende Beispiel zeigt die "
+"Ausgabe eines stabilen Typs:"
 
 #: of qteasy.strategy.BaseStrategy.get_pars:1
 msgid ""
@@ -90,23 +91,24 @@ msgstr ""
 
 #: of qteasy.strategy.BaseStrategy.info:1
 msgid "打印所有相关信息和主要属性"
-msgstr "Print all related information and main attributes"
+msgstr "Drucken Sie alle zugehörigen Informationen und Hauptattribute"
 
 #: ../../source/api/Strategies.rst
 msgid "参数"
-msgstr "No policy parameters"
+msgstr "Keine Richtlinienparameter"
 
 #: of qteasy.strategy.BaseStrategy.info:3
 msgid "是否打印更多的信息"
-msgstr "Whether to print extra details"
+msgstr "Ob zusätzliche Details gedruckt werden sollen"
 
 #: of qteasy.strategy.BaseStrategy.info:5
 msgid "是否打印策略的运行状态"
-msgstr "Whether to print strategy run state"
+msgstr "Ob der Strategie-Ausführungsstatus gedruckt werden soll"
 
 #: of qteasy.strategy.BaseStrategy.info:7
 msgid "策略的ID，如果为None，则打印策略的名称，否则打印策略的ID"
-msgstr "Strategy ID; if None, print the strategy name instead"
+msgstr ""
+"Strategie-ID; Wenn „Keine“, geben Sie stattdessen den Strategienamen aus"
 
 #: of qteasy.strategy.BaseStrategy.info:9
 msgid "额外的信息，可以是任何字符串，会被打印在策略主信息之后，参数和数据之前"
@@ -116,17 +118,17 @@ msgstr ""
 
 #: ../../source/api/Strategies.rst
 msgid "返回类型"
-msgstr "Return type"
+msgstr "Rückgabetyp"
 
 #: of qteasy.strategy.BaseStrategy.update_par_values:1
 msgid "快速更新策略的参数值"
-msgstr "Quickly update strategy parameter values"
+msgstr "Aktualisieren Sie schnell Strategieparameterwerte"
 
 #: of qteasy.strategy.BaseStrategy.update_par_values:3
 msgid "策略参数的值，元组中的每个元素是按顺序排列的所有参数值，如果 没有设置参数，则必须传入kwargs参数"
 msgstr ""
-"Parameter values as a tuple in parameter order; if parameters are not set, "
-"pass ``kwargs`` instead"
+"Parameterwerte als Tupel in Parameterreihenfolge; Wenn keine Parameter "
+"festgelegt sind, übergeben Sie stattdessen „kwargs“."
 
 #: of qteasy.strategy.BaseStrategy.update_par_values:6
 msgid "以字典形式传入具体需要更新的参数值，键为参数名，值为参数值"
@@ -141,13 +143,13 @@ msgstr "GeneralStg"
 #: of qteasy.strategy.FactorSorter:1 qteasy.strategy.GeneralStg:1
 #: qteasy.strategy.RuleIterator:1
 msgid "基类：:py:class:`~qteasy.strategy.BaseStrategy`"
-msgstr "基类：:py:class:`~qteasy.strategy.BaseStrategy`"
+msgstr "基类::py:class:`~qteasy.strategy.BaseStrategy`"
 
 #: of qteasy.strategy.GeneralStg:1
 msgid "通用交易策略类，用户需要完整定义策略的所有交易逻辑，并在realize()方法中定义策略的信号输出。"
 msgstr ""
-"General strategy class: define full trading logic and signal output in "
-"``realize()``."
+"Allgemeine Strategieklasse: Definieren Sie die vollständige Handelslogik und"
+" Signalausgabe in „realize()“."
 
 #: of qteasy.strategy.GeneralStg:3
 msgid "关于GeneralStg类的更详细说明，请参见qteasy的文档。"
@@ -226,13 +228,13 @@ msgstr ""
 
 #: ../../source/api/Strategies.rst:37
 msgid "交易策略参数对象"
-msgstr "No policy parameters"
+msgstr "Keine Richtlinienparameter"
 
 #: ../../source/api/Strategies.rst:39
 msgid "Parameter 用于定义策略可调参数的类型、范围与取值方式。"
 msgstr ""
-"``Parameter`` defines tunable strategy parameter type, range, and value "
-"semantics."
+"„Parameter“ definiert den Parametertyp, den Bereich und die Wertesemantik "
+"der einstellbaren Strategie."
 
 #: of qteasy.parameter.Parameter:1
 msgid "可调参数对象，可以是离散型、连续型、枚举型或者数组型参数，在交易策略中对策略的运行结果产生影响。"
@@ -242,11 +244,11 @@ msgstr ""
 
 #: of qteasy.parameter.Parameter.get_value:1
 msgid "获取参数的当前值"
-msgstr "Get the current parameter value"
+msgstr "Rufen Sie den aktuellen Parameterwert ab"
 
 #: of qteasy.parameter.Parameter.set_value:1
 msgid "设置参数的当前值"
-msgstr "Set the current parameter value"
+msgstr "Stellen Sie den aktuellen Parameterwert ein"
 
 #: of qteasy.parameter.Parameter.set_value:3
 msgid "需要设置的参数值，若参数为枚举型，则value可以是枚举值中的一个；若参数为离散型或连续型，则value可以是一个整数或浮点数"
@@ -256,27 +258,27 @@ msgstr ""
 
 #: ../../source/api/Strategies.rst
 msgid "抛出"
-msgstr "Raises"
+msgstr "Erhöht"
 
 #: of qteasy.parameter.Parameter.set_value:6
 msgid "当value不在数轴的可用值中时，抛出ValueError异常"
-msgstr "``ValueError`` if ``value`` is not on the allowed axis"
+msgstr "„`ValueError`` if ``value`“ liegt nicht auf der zulässigen Achse"
 
 #: of qteasy.parameter.Parameter.update_par_range:1
 msgid "更新参数的范围"
-msgstr "Update parameter bounds"
+msgstr "Parametergrenzen aktualisieren"
 
 #: of qteasy.parameter.Parameter.update_par_range:3
 msgid ""
 "数轴的上下界或枚举值，当数轴类型为conti或discr时，bounds_or_enum为一个长度为2的列表或元组，分别代表数轴的上下界； "
 "当数轴类型为enum时，bounds_or_enum为一个列表或元组，其中的元素为该数轴上所有可用的值"
 msgstr ""
-"For ``conti``/``discr``, a length-2 list/tuple of lower/upper bounds; for "
-"``enum``, a list/tuple of allowed values"
+"Für „conti“/„discr“ eine Liste/ein Tupel der Länge 2 mit unteren/oberen "
+"Grenzen; für „enum“ eine Liste/ein Tupel zulässiger Werte"
 
 #: of qteasy.parameter.Parameter.update_par_range:7
 msgid "当输入的数轴类型不在可选值中时，抛出ValueError异常"
-msgstr "``ValueError`` if the axis type is not supported"
+msgstr "„`ValueError`“, wenn der Achsentyp nicht unterstützt wird"
 
 #~ msgid "示例"
 #~ msgstr ""

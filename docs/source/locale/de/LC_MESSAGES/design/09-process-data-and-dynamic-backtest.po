@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -39,7 +39,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:5
 msgid "1. 背景与目标"
-msgstr "1. Background and Objectives"
+msgstr "1. Hintergrund und Ziele"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:7
 msgid "1.1 过程数据的含义"
@@ -53,11 +53,11 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:11
 msgid "当前/历史持仓、可用现金；"
-msgstr "Current/historical positions, available cash;"
+msgstr "Aktuelle/historische Positionen, verfügbares Bargeld;"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:12
 msgid "历史成交数量、成交价格、交易成本；"
-msgstr "Historical filled quantity, fill price, transaction costs;"
+msgstr "Historische Füllmenge, Füllpreis, Transaktionskosten;"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:13
 msgid "由持仓与价格推导的市值、总资产等。"
@@ -106,7 +106,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:23
 msgid "2. 过程数据的统一定义（proc.*）"
-msgstr "2. Unified Definition of Process Data (proc.*)"
+msgstr "2. Einheitliche Definition von Prozessdaten (proc.*)"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:25
 msgid "2.1 命名与曝光方式"
@@ -163,7 +163,7 @@ msgstr "`proc.own_cash`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "当前步开始时账户总现金"
-msgstr "Total cash in the account at the start of the current step"
+msgstr "Gesamtguthaben auf dem Konto zu Beginn des aktuellen Schritts"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.available_cash`"
@@ -237,7 +237,7 @@ msgstr "`proc.trade_cost`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "各步各标的的交易成本"
-msgstr "Transaction costs for each instrument at each step"
+msgstr "Transaktionskosten für jedes Instrument bei jedem Schritt"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.trade_price`"
@@ -245,7 +245,7 @@ msgstr "`proc.trade_price`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "各步各标的的成交价格"
-msgstr "Execution price for each instrument at each step"
+msgstr "Ausführungspreis für jedes Instrument bei jedem Schritt"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:46
 msgid "上述字段在回测与实盘中的时间语义与可见性约束见第 4 节。"
@@ -255,7 +255,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:48
 msgid "2.3 后续可扩展字段（可选）"
-msgstr "2.3 Future extensible fields (optional)"
+msgstr "2.3 Zukünftig erweiterbare Felder (optional)"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:50
 msgid ""
@@ -269,28 +269,28 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:52
 msgid "3. 访问接口：Strategy.get_data() 与 proc.*"
-msgstr "3. Data access APIs: Strategy.get_data() and proc.*"
+msgstr "3. Datenzugriffs-APIs: Strategy.get_data() und proc.*"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:54
 msgid "3.1 静态数据（无 proc. 前缀）"
-msgstr "3.1 Static data (no proc. prefix)"
+msgstr "3.1 Statische Daten (kein Prozesspräfix)"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:56
 msgid ""
 "单源：`self.get_data('close_E_d')`；多源：`self.get_data('close_E_d', 'high_E_d')`。"
 msgstr ""
-"Single source: `self.get_data('close_E_d')`; multiple sources: "
+"Einzelquelle: `self.get_data('close_E_d')`; mehrere Quellen: "
 "`self.get_data('close_E_d', 'high_E_d')`."
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:57
 msgid "静态数据**不支持** `lag` / `window` 参数；若传入则抛出英文 `ValueError`。"
 msgstr ""
-"Static data does **not** support the `lag` / `window` parameters; if "
-"provided, an English `ValueError` is raised."
+"Statische Daten unterstützen die Parameter „Lag“ und „Window“ **nicht**. "
+"Wenn angegeben, wird ein englischer „ValueError“ ausgelöst."
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:59
 msgid "3.2 过程数据（proc. 前缀）"
-msgstr "3.2 Process data (proc. prefix)"
+msgstr "3.2 Prozessdaten (Proc.-Präfix)"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:61
 msgid "**调用示例**："
@@ -299,25 +299,24 @@ msgstr "**Call examples**:"
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:62
 msgid "`self.get_data('proc.own_cash')`：截至当前步的现金序列；"
 msgstr ""
-"`self.get_data('proc.own_cash')`: the cash series up to the current step;"
+"`self.get_data('proc.own_cash')`: die Cash-Serie bis zum aktuellen Schritt;"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:63
 msgid "`self.get_data('proc.own_cash', lag=0)`：最近一步的现金；"
 msgstr ""
-"`self.get_data('proc.own_cash', lag=0)`: the cash value at the most recent "
-"step;"
+"`self.get_data('proc.own_cash', lag=0)`: der Barwert beim letzten Schritt;"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:64
 msgid "`self.get_data('proc.own_cash', lag='1d')`：按时间回溯 1 天对应的步；"
 msgstr ""
-"`self.get_data('proc.own_cash', lag='1d')`: the step corresponding to "
-"looking back 1 day by time;"
+"`self.get_data('proc.own_cash', lag='1d')`: der Schritt, der dem Rückblick "
+"um einen Tag entspricht;"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:65
 msgid "`self.get_data('proc.own_cash', window='5d')`：过去 5 天内的窗口切片。"
 msgstr ""
-"`self.get_data('proc.own_cash', window='5d')`: a window slice over the past "
-"5 days."
+"`self.get_data('proc.own_cash', window='5d')`: ein Fensterausschnitt über "
+"die letzten 5 Tage."
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:66
 msgid "**约束**："
@@ -342,8 +341,8 @@ msgstr ""
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:69
 msgid "**返回值**：统一为 `np.ndarray`，形状与数据类型以 API 文档为准。"
 msgstr ""
-"**Return value**: always `np.ndarray`; the shape and data type are subject "
-"to the API documentation."
+"**Rückgabewert**: immer `np.ndarray`; Form und Datentyp unterliegen der API-"
+"Dokumentation."
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:71
 msgid "4. 回测分支选择与过程数据协作"
@@ -351,7 +350,7 @@ msgstr "4. Backtest-Zweigauswahl und Zusammenarbeit mit Prozessdaten"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:73
 msgid "4.1 静态分支与动态分支"
-msgstr "4.1 Static branch and dynamic branch"
+msgstr "4.1 Statischer Zweig und dynamischer Zweig"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:75
 msgid ""
@@ -380,8 +379,8 @@ msgstr ""
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:78
 msgid "Backtester 在运行前通过 **`Operator.check_dynamic_data()`** 决定走哪条分支。"
 msgstr ""
-"Before running, the Backtester decides which branch to take via "
-"**`Operator.check_dynamic_data()`**."
+"Vor der Ausführung entscheidet der Backtester über "
+"**`Operator.check_dynamic_data()`**, welchen Zweig er nehmen möchte."
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:80
 msgid "4.2 check_dynamic_data() 的判定逻辑（当前实现）"
@@ -426,7 +425,7 @@ msgstr "4.3 No look-ahead guarantee"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:91
 msgid "策略在第 k 步生成信号时："
-msgstr "When the strategy generates a signal at step k:"
+msgstr "Wenn die Strategie in Schritt k ein Signal generiert:"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:92
 msgid "账户/持仓类（如 `own_cashes`、`own_amounts`）最多可见到索引 `[0..k]`（即当前步开始时的状态）；"
@@ -484,14 +483,14 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:101
 msgid "4.5 实盘（Trader）中的过程数据"
-msgstr "4.5 Process data in live trading (Trader)"
+msgstr "4.5 Prozessdaten im Live-Handel (Trader)"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:103
 msgid ""
 "当 `operator.check_dynamic_data()` 为 True 时，Trader 在 `_run_strategy()` 中会："
 msgstr ""
-"When `operator.check_dynamic_data()` is True, Trader will, in "
-"`_run_strategy()`, do the following:"
+"Wenn „operator.check_dynamic_data()“ True ist, führt Trader in "
+"„_run_strategy()“ Folgendes aus:"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:105
 msgid ""
@@ -515,7 +514,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:108
 msgid "5. 动态/静态路径一致性约定"
-msgstr "5. Consistency convention between dynamic/static paths"
+msgstr "5. Konsistenzkonvention zwischen dynamischen/statischen Pfaden"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:110
 msgid "当策略**不使用**过程数据时：应走静态分支；若因其他原因走动态分支，回测结果应与静态分支在数值上**完全一致**（相同配置与数据下）。"
@@ -548,7 +547,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:114
 msgid "6. 测试与文档索引"
-msgstr "6. Tests and documentation index"
+msgstr "6. Test- und Dokumentationsverzeichnis"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:116
 msgid "**专门测试**：`tests/test_process_data_api.py`"
@@ -557,8 +556,8 @@ msgstr "**Dedicated tests**: `tests/test_process_data_api.py`"
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:117
 msgid "A 组：`check_dynamic_data()` 在纯静态 / 使用 proc.* 策略下的行为；"
 msgstr ""
-"Group A: the behavior of `check_dynamic_data()` under purely static "
-"strategies / strategies using proc.*;"
+"Gruppe A: das Verhalten von „check_dynamic_data()“ unter rein statischen "
+"Strategien / Strategien mit proc.*;"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:118
 msgid "B 组：静态策略与“调用 proc 但逻辑等价”策略的回测数组一致性；"
@@ -569,8 +568,8 @@ msgstr ""
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:119
 msgid "C 组：`get_data` 对静态多源、lag/window 拒绝、proc 单字段与混合调用的报错行为；"
 msgstr ""
-"Group C: `get_data` error behavior for static multi-source, rejecting "
-"lag/window, proc single-field, and mixed calls;"
+"Gruppe C: „get_data“-Fehlerverhalten für statische Multi-Source-, "
+"Ablehnungs-Lag/Window-, Proc-Einzelfeld- und gemischte Aufrufe;"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:120
 msgid "D 组：`proc.trade_records` 无前视验证；"
@@ -586,8 +585,8 @@ msgstr ""
 msgid ""
 "**项目记忆**：`.cursor/rules/process-data-and-dynamic-backtest.mdc`（实现与约定摘要）。"
 msgstr ""
-"**Project memory**: `.cursor/rules/process-data-and-dynamic-backtest.mdc` "
-"(implementation and convention summary)."
+"**Projektspeicher**: `.cursor/rules/process-data-and-dynamic-backtest.mdc` "
+"(Implementierungs- und Konventionszusammenfassung)."
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:123
 msgid ""

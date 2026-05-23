@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:1
 msgid "回测引擎与性能（设计视角）"
-msgstr "Backtesting engine and performance (design perspective)"
+msgstr "Backtesting-Engine und Leistung (Designperspektive)"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:3
 msgid ""
@@ -39,7 +39,7 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:5
 msgid "1. 回测引擎在整体中的位置"
-msgstr "1. The role of the backtesting engine in the overall system"
+msgstr "1. Die Rolle der Backtesting-Engine im Gesamtsystem"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:7
 msgid ""
@@ -59,7 +59,7 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:9
 msgid "2. Numba 使用点与向量化结构"
-msgstr "2. Numba usage points and vectorized structures"
+msgstr "2. Numba-Nutzungspunkte und vektorisierte Strukturen"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:11
 msgid "2.1 核心函数"
@@ -84,8 +84,8 @@ msgstr ""
 #: ../../source/design/07-backtest-engine-and-performance.md:16
 msgid "**calculate_trade_results**：`@njit`，用于交易结果与资金变动计算。"
 msgstr ""
-"**calculate_trade_results**: `@njit`, used for calculating trade results and"
-" cash changes."
+"**calculate_trade_results**: „@njit“, wird zur Berechnung von "
+"Handelsergebnissen und Bargeldänderungen verwendet."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:17
 msgid ""
@@ -166,7 +166,7 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:33
 msgid "3. 与 VectorBT 的架构差异"
-msgstr "3. Architectural differences from VectorBT"
+msgstr "3. Architekturunterschiede zu VectorBT"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "维度"
@@ -267,7 +267,7 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:44
 msgid "4. 相关文档"
-msgstr "4. Related documents"
+msgstr "4. Verwandte Dokumente"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:46
 msgid "统一入口与模式：[回测、实盘与优化](06-backtest-live-optimization.md)。"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -111,13 +111,14 @@ msgstr "Eingabefunktion für Hilfeinformationen zum Modul qteasy (reserviert)."
 
 #: of qteasy.core.info:3
 msgid "预留参数（当前版本未使用）。"
-msgstr "Reserved parameter (not used in the current version)."
+msgstr ""
+"Reservierter Parameter (wird in der aktuellen Version nicht verwendet)."
 
 #: of qteasy.core.info:5
 msgid "当前版本未实现，调用将抛出 ``NotImplementedError``。"
 msgstr ""
-"Not implemented in the current version; calling it will raise "
-"``NotImplementedError``."
+"In der aktuellen Version nicht implementiert; Der Aufruf löst "
+"„NotImplementedError“ aus."
 
 #: of qteasy.core.info
 msgid "抛出"
@@ -125,7 +126,7 @@ msgstr "Raises"
 
 #: of qteasy.core.info:8
 msgid "当前版本未实现。"
-msgstr "Not implemented in the current version."
+msgstr "In der aktuellen Version nicht implementiert."
 
 #: of qteasy.core.info:12
 msgid "本函数为预留入口，建议使用 Sphinx 文档或 `help(qteasy)` 获取帮助信息："
@@ -136,7 +137,7 @@ msgstr ""
 
 #: ../../source/api/use_qteasy.rst:12
 msgid "运行模式与常量速查"
-msgstr "Run modes and constants quick reference"
+msgstr "Kurzreferenz zu Betriebsmodi und Konstanten"
 
 #: ../../source/api/use_qteasy.rst:14
 msgid ""
@@ -151,7 +152,7 @@ msgstr ""
 
 #: ../../source/api/use_qteasy.rst:17
 msgid "示例（常量值为稳定输出）：:"
-msgstr "Example (constant values produce stable output)::"
+msgstr "Beispiel (konstante Werte erzeugen eine stabile Ausgabe)::"
 
 #: ../../source/api/use_qteasy.rst:23
 msgid "日志与根目录路径常量（值受配置影响，尤其是日志路径支持运行时热更新）：:"

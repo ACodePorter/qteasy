@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/design/00-overview.md:1
 msgid "qteasy 总体架构与设计思路"
-msgstr "qteasy Overall Architecture and Design Approach"
+msgstr "qteasy Gesamtarchitektur und Designansatz"
 
 #: ../../source/design/00-overview.md:3
 msgid "1. 引言：为什么需要从“架构”理解 qteasy"
@@ -46,7 +46,7 @@ msgstr ""
 
 #: ../../source/design/00-overview.md:7
 msgid "2. 三条设计主线（简述）"
-msgstr "2. Three Main Design Threads (Brief)"
+msgstr "2. Drei Hauptdesignthemen (kurz)"
 
 #: ../../source/design/00-overview.md:9
 msgid "2.1 数据：从“原始表”到“类型化信息”（DataType）"
@@ -79,7 +79,8 @@ msgstr ""
 
 #: ../../source/design/00-overview.md:13
 msgid "2.2 策略：四大要素与统一的 realize()"
-msgstr "2.2 Strategy: Four Key Elements and a Unified realize()"
+msgstr ""
+"2.2 Strategie: Vier Schlüsselelemente und eine einheitliche realisieren()"
 
 #: ../../source/design/00-overview.md:15
 msgid "一个策略在概念上包含四类要素："
@@ -123,8 +124,8 @@ msgstr ""
 #: ../../source/design/00-overview.md:22
 msgid "同一段 `realize()` 在回测与实盘中复用，保证行为一致。"
 msgstr ""
-"The same `realize()` is reused in both backtesting and live trading to "
-"ensure consistent behavior."
+"Dasselbe „realize()“ wird sowohl beim Backtesting als auch beim Live-Handel "
+"wiederverwendet, um ein konsistentes Verhalten sicherzustellen."
 
 #: ../../source/design/00-overview.md:24
 msgid "2.3 运行：Operator 与 Group、按时间步驱动、统一 run(config)"
@@ -162,7 +163,7 @@ msgstr ""
 
 #: ../../source/design/00-overview.md:28
 msgid "2.4 可视化：HistoryPanel 与多后端图表"
-msgstr "2.4 Visualization: HistoryPanel and Multi-Backend Charts"
+msgstr "2.4 Visualisierung: HistoryPanel und Multi-Backend-Diagramme"
 
 #: ../../source/design/00-overview.md:30
 msgid "在数据与运行之上，qteasy 提供了**基于 HistoryPanel 的可视化栈**："
@@ -213,7 +214,7 @@ msgstr ""
 
 #: ../../source/design/00-overview.md:44
 msgid "3. 总体架构图（三层）"
-msgstr "3. Overall architecture diagram (three layers)"
+msgstr "3. Gesamtarchitekturdiagramm (drei Schichten)"
 
 #: ../../source/design/00-overview.md:46
 msgid "qteasy 从职责上可划分为三层，如下图所示（文字版）："
@@ -254,7 +255,7 @@ msgstr ""
 
 #: ../../source/design/00-overview.md:103
 msgid "4. 核心对象关系图"
-msgstr "4. Core object relationship diagram"
+msgstr "4. Kernobjekt-Beziehungsdiagramm"
 
 #: ../../source/design/00-overview.md:128
 msgid "Operator 包含多个 Group，每个 Group 包含多个 Strategy。"
@@ -271,12 +272,12 @@ msgstr ""
 #: ../../source/design/00-overview.md:130
 msgid "运行入口为 `op.run(config, datasource, logger)`，由 config 与 datasource 驱动。"
 msgstr ""
-"The entry point is `op.run(config, datasource, logger)`, driven by config "
-"and datasource."
+"Der Einstiegspunkt ist „op.run(config, datasource, logger)“, gesteuert durch"
+" config und datasource."
 
 #: ../../source/design/00-overview.md:132
 msgid "5. 数据与信号的大致流向"
-msgstr "5. Approximate flow of data and signals"
+msgstr "5. Ungefährer Daten- und Signalfluss"
 
 #: ../../source/design/00-overview.md:134
 msgid "从数据源到策略再到回测/实盘/优化，整体流向可简化为："
@@ -287,8 +288,8 @@ msgstr ""
 #: ../../source/design/00-overview.md:155
 msgid "用户通过 `qt.run(op, mode=...)` 进入回测（1）、实盘（0）或优化（2）。"
 msgstr ""
-"Users enter backtesting (1), live trading (0), or optimization (2) via "
-"`qt.run(op, mode=...)`."
+"Benutzer geben Backtesting (1), Live-Handel (0) oder Optimierung (2) über "
+"„qt.run(op, mode=...)“ ein."
 
 #: ../../source/design/00-overview.md:156
 msgid ""

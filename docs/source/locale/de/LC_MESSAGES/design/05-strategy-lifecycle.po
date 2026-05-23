@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/design/05-strategy-lifecycle.md:1
 msgid "Strategy 如何运行：时机、数据与参数"
-msgstr "How Strategy runs: timing, data, and parameters"
+msgstr "Wie Strategy funktioniert: Timing, Daten und Parameter"
 
 #: ../../source/design/05-strategy-lifecycle.md:3
 msgid "1. 策略运行时机"
-msgstr "1. Strategy execution timing"
+msgstr "1. Zeitpunkt der Strategieausführung"
 
 #: ../../source/design/05-strategy-lifecycle.md:5
 msgid ""
@@ -44,11 +44,11 @@ msgstr ""
 
 #: ../../source/design/05-strategy-lifecycle.md:7
 msgid "2. 单步运行流程（细化）"
-msgstr "2. Single-step execution flow (detailed)"
+msgstr "2. Einstufiger Ausführungsablauf (detailliert)"
 
 #: ../../source/design/05-strategy-lifecycle.md:9
 msgid "对**当前时间步**（step_index）："
-msgstr "For the **current time step** (step_index):"
+msgstr "Für den **aktuellen Zeitschritt** (step_index):"
 
 #: ../../source/design/05-strategy-lifecycle.md:11
 msgid "**查 group_timing_table**：取该步对应行，得到本步要运行的 Group 列表（取值为 1 的列）。"
@@ -104,7 +104,7 @@ msgstr ""
 
 #: ../../source/design/05-strategy-lifecycle.md:19
 msgid "3. Strategy 内部：realize() 与 get_pars / get_data"
-msgstr "3. Inside Strategy: realize() and get_pars / get_data"
+msgstr "3. Insider-Strategie: realisieren() und get_pars / get_data"
 
 #: ../../source/design/05-strategy-lifecycle.md:21
 msgid ""
@@ -130,7 +130,7 @@ msgstr ""
 
 #: ../../source/design/05-strategy-lifecycle.md:24
 msgid "4. 可调参数（Parameter）"
-msgstr "4. Tunable parameters (Parameter)"
+msgstr "4. Einstellbare Parameter (Parameter)"
 
 #: ../../source/design/05-strategy-lifecycle.md:26
 msgid ""
@@ -195,7 +195,7 @@ msgstr ""
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "择时、单规则多标的"
-msgstr "Timing, single rule with multiple instruments"
+msgstr "Timing, einzelne Regel mit mehreren Instrumenten"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "**FactorSorter**"
@@ -225,7 +225,7 @@ msgstr "Multi-asset, multi-dtype windows"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "一维信号数组（每资产一个目标仓位或比例）"
-msgstr "A 1D signal array (one target position or weight per asset)"
+msgstr "Ein 1D-Signalarray (eine Zielposition oder ein Zielgewicht pro Asset)"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "通用多资产信号"
@@ -233,7 +233,7 @@ msgstr "General-purpose multi-asset signals"
 
 #: ../../source/design/05-strategy-lifecycle.md:38
 msgid "6. 小结"
-msgstr "6. Summary"
+msgstr "6. Zusammenfassung"
 
 #: ../../source/design/05-strategy-lifecycle.md:40
 msgid ""

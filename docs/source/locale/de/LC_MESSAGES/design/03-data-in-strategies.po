@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/design/03-data-in-strategies.md:1
 msgid "策略如何声明与使用数据"
-msgstr "How a strategy declares and uses data"
+msgstr "Wie eine Strategie Daten deklariert und verwendet"
 
 #: ../../source/design/03-data-in-strategies.md:3
 msgid "1. 策略层在整体中的位置"
-msgstr "1. Where the strategy layer sits in the overall architecture"
+msgstr "1. Wo sich die Strategieebene in der Gesamtarchitektur befindet"
 
 #: ../../source/design/03-data-in-strategies.md:5
 msgid ""
@@ -43,13 +43,13 @@ msgstr ""
 
 #: ../../source/design/03-data-in-strategies.md:7
 msgid "2. 策略如何声明需要的数据"
-msgstr "2. How a strategy declares the data it needs"
+msgstr "2. Wie eine Strategie die benötigten Daten deklariert"
 
 #: ../../source/design/03-data-in-strategies.md:9
 msgid "在策略类初始化（`__init__`）时，通过以下属性声明对数据的需求："
 msgstr ""
-"When initializing the strategy class (`__init__`), declare data requirements"
-" via the following attributes:"
+"Deklarieren Sie beim Initialisieren der Strategieklasse („__init__“) "
+"Datenanforderungen über die folgenden Attribute:"
 
 #: ../../source/design/03-data-in-strategies.md:11
 msgid ""
@@ -85,7 +85,7 @@ msgstr ""
 
 #: ../../source/design/03-data-in-strategies.md:17
 msgid "3. 运行时数据如何到达策略"
-msgstr "3. How runtime data reaches the strategy"
+msgstr "3. Wie Laufzeitdaten die Strategie erreichen"
 
 #: ../../source/design/03-data-in-strategies.md:19
 msgid ""
@@ -128,7 +128,7 @@ msgstr ""
 
 #: ../../source/design/03-data-in-strategies.md:25
 msgid "4. 数据窗口的含义"
-msgstr "4. What a data window means"
+msgstr "4. Was ein Datenfenster bedeutet"
 
 #: ../../source/design/03-data-in-strategies.md:27
 msgid ""
@@ -175,7 +175,7 @@ msgstr ""
 
 #: ../../source/design/03-data-in-strategies.md:35
 msgid "5. 过程数据（proc.*）"
-msgstr "5. Process data (proc.*)"
+msgstr "5. Prozessdaten (proc.*)"
 
 #: ../../source/design/03-data-in-strategies.md:37
 msgid ""
@@ -220,7 +220,7 @@ msgstr ""
 
 #: ../../source/design/03-data-in-strategies.md:44
 msgid "6. 参考数据（若有）"
-msgstr "6. Reference data (if any)"
+msgstr "6. Referenzdaten (falls vorhanden)"
 
 #: ../../source/design/03-data-in-strategies.md:46
 msgid ""
@@ -240,7 +240,7 @@ msgstr ""
 
 #: ../../source/design/03-data-in-strategies.md:48
 msgid "7. 小结"
-msgstr "7. Summary"
+msgstr "7. Zusammenfassung"
 
 #: ../../source/design/03-data-in-strategies.md:50
 msgid "“声明 → 引擎注入 → get_data 引用”保证了："
@@ -261,7 +261,8 @@ msgstr ""
 
 #: ../../source/design/03-data-in-strategies.md:54
 msgid "接口统一、易于维护与扩展。"
-msgstr "A unified interface that is easy to maintain and extend."
+msgstr ""
+"Eine einheitliche Schnittstelle, die einfach zu warten und zu erweitern ist."
 
 #: ../../source/design/03-data-in-strategies.md:56
 msgid ""

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -385,8 +385,8 @@ msgstr "Index 1-min K-line: `index_1min`"
 #: ../../source/manage_data/3. data_tables_30.md:154
 msgid "数据表用途: `mins`, 资产类型: `IDX`, 数据频率: `1min` 分表规则：30 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `IDX`, frequency: `1min` Partition rule: 30 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „IDX“, Häufigkeit: „1 Minute“. "
+"Partitionsregel: 30 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:157
 msgid "指数分钟K线行情表包含了所有指数的1分钟K线行情数据，包括指数代码、交易日期时间、开盘价、最高价、最低价、收盘价、成交量、成交额等信息。"
@@ -402,8 +402,8 @@ msgstr "Index 5-min K-line: `index_5min`"
 #: ../../source/manage_data/3. data_tables_30.md:171
 msgid "数据表用途: `mins`, 资产类型: `IDX`, 数据频率: `5min` 分表规则：10 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `IDX`, frequency: `5min` Partition rule: 10 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „IDX“, Häufigkeit: „5 Minuten“. "
+"Partitionsregel: 10 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:174
 msgid "指数5分钟K线行情表包含了所有指数的5分钟K线行情数据，包括指数代码、交易日期时间、开盘价、最高价、最低价、收盘价、成交量、成交额等信息。"
@@ -419,8 +419,8 @@ msgstr "Index 15-min K-line: `index_15min`"
 #: ../../source/manage_data/3. data_tables_30.md:188
 msgid "数据表用途: `mins`, 资产类型: `IDX`, 数据频率: `15min` 分表规则：10 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `IDX`, frequency: `15min` Partition rule: 10 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „IDX“, Häufigkeit: „15 Minuten“. "
+"Partitionsregel: 10 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:191
 msgid ""
@@ -437,8 +437,8 @@ msgstr "Index 30-min K-line: `index_30min`"
 #: ../../source/manage_data/3. data_tables_30.md:205
 msgid "数据表用途: `mins`, 资产类型: `IDX`, 数据频率: `30min` 分表规则：5 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `IDX`, frequency: `30min` Partition rule: 5 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „IDX“, Häufigkeit: „30 Minuten“. "
+"Partitionsregel: 5 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:208
 msgid ""
@@ -455,8 +455,8 @@ msgstr "Index 60-min K-line: `index_hourly`"
 #: ../../source/manage_data/3. data_tables_30.md:222
 msgid "数据表用途: `mins`, 资产类型: `IDX`, 数据频率: `h` 分表规则：5 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `IDX`, frequency: `h` Partition rule: 5 by "
-"KEY(ts_code)"
+"Tabellenverwendung: „mins“, Asset-Typ: „IDX“, Häufigkeit: „h“ "
+"Partitionsregel: 5 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:225
 msgid ""
@@ -534,7 +534,7 @@ msgstr "Table use: `data`, asset type: `THS`, frequency: `d`"
 #: ../../source/manage_data/3. data_tables_30.md:300
 msgid ""
 "同花顺行业指数行情表包含了同花顺行业指数的日线行情数据，包括指数代码、交易日期、开盘价、最高价、最低价、收盘价、涨跌幅、成交量、成交额等信息。"
-msgstr "THS industry index daily OHLCV table."
+msgstr "Tägliche OHLCV-Tabelle des THS-Branchenindex."
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "varchar(14)"
@@ -631,7 +631,7 @@ msgstr "CSI index daily quotes: `ci_index_daily`"
 #: ../../source/manage_data/3. data_tables_30.md:320 data_tables_30.md:339
 #: data_tables_30.md:362
 msgid "数据表用途: reference, 资产类型: none, 数据频率: d"
-msgstr "Table use: reference, asset type: none, frequency: d"
+msgstr "Tabellenverwendung: Referenz, Asset-Typ: keine, Häufigkeit: d"
 
 #: ../../source/manage_data/3. data_tables_30.md:322
 msgid "中证指数日线行情表包含了中证指数的日线行情数据，包括指数代码、交易日期、开盘价、最高价、最低价、收盘价、涨跌幅、成交量、成交额等信息。"
@@ -713,11 +713,11 @@ msgstr "Major global indices include:"
 
 #: ../../source/manage_data/3. data_tables_30.md:365
 msgid "美国主要指数：道琼斯工业平均指数、标准普尔500指数、纳斯达克综合指数"
-msgstr "Major US indices: Dow Jones, S&P 500, NASDAQ Composite"
+msgstr "Wichtige US-Indizes: Dow Jones, S&P 500, NASDAQ Composite"
 
 #: ../../source/manage_data/3. data_tables_30.md:366
 msgid "欧洲主要指数：英国富时100指数、德国DAX指数、法国CAC40指数"
-msgstr "Major European indices: FTSE 100, DAX, CAC 40"
+msgstr "Wichtige europäische Indizes: FTSE 100, DAX, CAC 40"
 
 #: ../../source/manage_data/3. data_tables_30.md:367
 msgid "亚太主要指数：日经225指数、恒生指数、澳大利亚标普200指数"
@@ -759,7 +759,7 @@ msgstr "HKAH"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "恒生AH股H指数"
-msgstr "Hang Seng AH Premium Index (H-shares)"
+msgstr "Hang Seng AH Premium Index (H-Aktien)"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "DJI"
@@ -950,8 +950,8 @@ msgstr "On-exchange fund 1-min K-line: `fund_1min`"
 #: ../../source/manage_data/3. data_tables_30.md:415
 msgid "数据表用途: `mins`, 资产类型: `FD`, 数据频率: `1min` 分表规则：30 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FD`, frequency: `1min` Partition rule: 30 by"
-" KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „FD“, Häufigkeit: „1 Minute“. "
+"Partitionsregel: 30 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:418
 msgid ""
@@ -969,8 +969,8 @@ msgstr "On-exchange fund 5-min K-line: `fund_5min`"
 #: ../../source/manage_data/3. data_tables_30.md:432
 msgid "数据表用途: `mins`, 资产类型: `FD`, 数据频率: `5min` 分表规则：10 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FD`, frequency: `5min` Partition rule: 10 by"
-" KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „FD“, Häufigkeit: „5 Minuten“. "
+"Partitionsregel: 10 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:435
 msgid ""
@@ -987,8 +987,8 @@ msgstr "On-exchange fund 15-min K-line: `fund_15min`"
 #: ../../source/manage_data/3. data_tables_30.md:449
 msgid "数据表用途: `mins`, 资产类型: `FD`, 数据频率: `15min` 分表规则：10 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FD`, frequency: `15min` Partition rule: 10 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „FD“, Häufigkeit: „15 Minuten“. "
+"Partitionsregel: 10 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:452
 msgid ""
@@ -1006,8 +1006,8 @@ msgstr "On-exchange fund 30-min K-line: `fund_30min`"
 #: ../../source/manage_data/3. data_tables_30.md:466
 msgid "数据表用途: `mins`, 资产类型: `FD`, 数据频率: `30min` 分表规则：5 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FD`, frequency: `30min` Partition rule: 5 by"
-" KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „FD“, Häufigkeit: „30 Minuten“. "
+"Partitionsregel: 5 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:469
 msgid ""
@@ -1024,8 +1024,8 @@ msgstr "On-exchange fund 60-min K-line: `fund_hourly`"
 #: ../../source/manage_data/3. data_tables_30.md:483
 msgid "数据表用途: `mins`, 资产类型: `FD`, 数据频率: `h` 分表规则：5 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FD`, frequency: `h` Partition rule: 5 by "
-"KEY(ts_code)"
+"Tabellenverwendung: „Mins“, Asset-Typ: „FD“, Häufigkeit: „h“ "
+"Partitionsregel: 5 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:486
 msgid ""
@@ -1217,8 +1217,8 @@ msgstr "Futures 1-min K-line: `future_1min`"
 #: ../../source/manage_data/3. data_tables_30.md:588
 msgid "数据表用途: `mins`, 资产类型: `FT`, 数据频率: `1min` 分表规则：30 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FT`, frequency: `1min` Partition rule: 30 by"
-" KEY(ts_code)"
+"Tabellenverwendung: „Mins“, Asset-Typ: „FT“, Häufigkeit: „1 Minute“. "
+"Partitionsregel: 30 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:591
 msgid ""
@@ -1247,8 +1247,8 @@ msgstr "Futures 5-min K-line: `future_5min`"
 #: ../../source/manage_data/3. data_tables_30.md:606
 msgid "数据表用途: `mins`, 资产类型: `FT`, 数据频率: `5min` 分表规则：10 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FT`, frequency: `5min` Partition rule: 10 by"
-" KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „FT“, Häufigkeit: „5 Minuten“. "
+"Partitionsregel: 10 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:609
 msgid ""
@@ -1265,8 +1265,8 @@ msgstr "Futures 15-min K-line: `future_15min`"
 #: ../../source/manage_data/3. data_tables_30.md:624
 msgid "数据表用途: `mins`, 资产类型: `FT`, 数据频率: `15min` 分表规则：10 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FT`, frequency: `15min` Partition rule: 10 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „FT“, Häufigkeit: „15 Minuten“. "
+"Partitionsregel: 10 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:627
 msgid ""
@@ -1284,8 +1284,8 @@ msgstr "Futures 30-min K-line: `future_30min`"
 #: ../../source/manage_data/3. data_tables_30.md:642
 msgid "数据表用途: `mins`, 资产类型: `FT`, 数据频率: `30min` 分表规则：5 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FT`, frequency: `30min` Partition rule: 5 by"
-" KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „FT“, Häufigkeit: „30 Minuten“. "
+"Partitionsregel: 5 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:645
 msgid ""
@@ -1302,8 +1302,8 @@ msgstr "Futures 60-min K-line: `future_hourly`"
 #: ../../source/manage_data/3. data_tables_30.md:660
 msgid "数据表用途: `mins`, 资产类型: `FT`, 数据频率: `h` 分表规则：5 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `FT`, frequency: `h` Partition rule: 5 by "
-"KEY(ts_code)"
+"Tabellenverwendung: „mins“, Asset-Typ: „FT“, Häufigkeit: „h“ "
+"Partitionsregel: 5 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:663
 msgid ""
@@ -1351,7 +1351,7 @@ msgstr "change1"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "涨跌1 收盘价-昨结算价"
-msgstr "Change 1: close − previous settlement"
+msgstr "Änderung 1: Schluss − vorherige Abrechnung"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "change2"
@@ -1359,7 +1359,7 @@ msgstr "change2"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "涨跌2 结算价-昨结算价"
-msgstr "Change 2: settlement − previous settlement"
+msgstr "Änderung 2: Abrechnung − vorherige Abrechnung"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "成交金额(万元)"
@@ -1424,8 +1424,8 @@ msgstr "Option 1-min K-line: `options_1min`"
 #: ../../source/manage_data/3. data_tables_30.md:752
 msgid "数据表用途: `mins`, 资产类型: `OPT`, 数据频率: `1min` 分表规则：30 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `OPT`, frequency: `1min` Partition rule: 30 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „OPT“, Häufigkeit: „1 Minute“. "
+"Partitionsregel: 30 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:755
 msgid ""
@@ -1442,8 +1442,8 @@ msgstr "Option 5-min K-line: `options_5min`"
 #: ../../source/manage_data/3. data_tables_30.md:769
 msgid "数据表用途: `mins`, 资产类型: `OPT`, 数据频率: `5min` 分表规则：10 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `OPT`, frequency: `5min` Partition rule: 10 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „OPT“, Häufigkeit: „5 Minuten“. "
+"Partitionsregel: 10 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:772
 msgid ""
@@ -1460,8 +1460,8 @@ msgstr "Option 15-min K-line: `options_15min`"
 #: ../../source/manage_data/3. data_tables_30.md:786
 msgid "数据表用途: `mins`, 资产类型: `OPT`, 数据频率: `15min` 分表规则：10 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `OPT`, frequency: `15min` Partition rule: 10 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „OPT“, Häufigkeit: „15 Minuten“. "
+"Partitionsregel: 10 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:789
 msgid ""
@@ -1479,8 +1479,8 @@ msgstr "Option 30-min K-line: `options_30min`"
 #: ../../source/manage_data/3. data_tables_30.md:803
 msgid "数据表用途: `mins`, 资产类型: `OPT`, 数据频率: `30min` 分表规则：5 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `OPT`, frequency: `30min` Partition rule: 5 "
-"by KEY(ts_code)"
+"Tabellenverwendung: „Minuten“, Asset-Typ: „OPT“, Häufigkeit: „30 Minuten“. "
+"Partitionsregel: 5 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:806
 msgid ""
@@ -1497,8 +1497,8 @@ msgstr "Option 60-min K-line: `options_hourly`"
 #: ../../source/manage_data/3. data_tables_30.md:820
 msgid "数据表用途: `mins`, 资产类型: `OPT`, 数据频率: `h` 分表规则：5 by KEY(ts_code)"
 msgstr ""
-"Table use: `mins`, asset type: `OPT`, frequency: `h` Partition rule: 5 by "
-"KEY(ts_code)"
+"Tabellenverwendung: „mins“, Asset-Typ: „OPT“, Häufigkeit: „h“ "
+"Partitionsregel: 5 nach KEY(ts_code)"
 
 #: ../../source/manage_data/3. data_tables_30.md:823
 msgid ""
@@ -1518,7 +1518,7 @@ msgstr "Table use: `data`, asset type: `OPT`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_30.md:839
 msgid "期权每日行情数据表字段说明："
-msgstr "Option daily quote field descriptions:"
+msgstr "Beschreibungen der Optionsfelder für Tageskurse:"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "exchange"
@@ -1542,7 +1542,8 @@ msgstr "US stock daily quotes: `us_stock_daily`"
 
 #: ../../source/manage_data/3. data_tables_30.md:862
 msgid "数据表用途: `not_implemented`, 资产类型: `US`, 数据频率: `d`"
-msgstr "Table use: `not_implemented`, asset type: `US`, frequency: `d`"
+msgstr ""
+"Tabellenverwendung: „not_implemented“, Asset-Typ: „US“, Häufigkeit: „d“."
 
 #: ../../source/manage_data/3. data_tables_30.md:864
 msgid ""
@@ -1581,7 +1582,8 @@ msgstr "HK stock daily quotes: `hk_stock_daily`"
 
 #: ../../source/manage_data/3. data_tables_30.md:886
 msgid "数据表用途: `not_implemented`, 资产类型: `HK`, 数据频率: `d`"
-msgstr "Table use: `not_implemented`, asset type: `HK`, frequency: `d`"
+msgstr ""
+"Tabellenverwendung: „not_implemented“, Asset-Typ: „HK“, Häufigkeit: „d“."
 
 #: ../../source/manage_data/3. data_tables_30.md:888
 msgid ""

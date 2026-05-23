@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:1
 msgid "本地数据源——DataSource对象"
-msgstr "Local data source — DataSource object"
+msgstr "Lokale Datenquelle – DataSource-Objekt"
 
 #: ../../source/manage_data/2. datasource.md:3
 msgid ""
@@ -38,18 +38,20 @@ msgstr ""
 #: ../../source/manage_data/2. datasource.md:5
 msgid "要创建一个新的`DataSource`对象，可以使用下面的命令："
 msgstr ""
-"To create a new `DataSource` object, you can use the following command:"
+"Um ein neues „DataSource“-Objekt zu erstellen, können Sie den folgenden "
+"Befehl verwenden:"
 
 #: ../../source/manage_data/2. datasource.md:12
 msgid "通过打印`DataSource`对象，可以查看其最基本的属性："
 msgstr ""
-"By printing the `DataSource` object, you can view its most basic properties:"
+"Durch Drucken des Objekts „DataSource“ können Sie seine grundlegendsten "
+"Eigenschaften anzeigen:"
 
 #: ../../source/manage_data/2. datasource.md:19
 msgid "从`DataSource`的打印字符串`file://csv@qt_root/data/`中，可以看出它的基本属性"
 msgstr ""
-"From the printed string `file://csv@qt_root/data/` of `DataSource`, we can "
-"see its basic properties."
+"Aus der gedruckten Zeichenfolge „file://csv@qt_root/data/“ von „DataSource“ "
+"können wir seine grundlegenden Eigenschaften erkennen."
 
 #: ../../source/manage_data/2. datasource.md:21
 msgid "打印结果包含数据源对象的基本信息："
@@ -108,8 +110,8 @@ msgstr ""
 #: ../../source/manage_data/2. datasource.md:36
 msgid "`db:mysql` -- 数据源的类型为mysql数据库，所有的数据表都保存在数据库中"
 msgstr ""
-"`db:mysql` -- The data source type is a MySQL database; all data tables are "
-"stored in this database."
+"„db:mysql“ – Der Datenquellentyp ist eine MySQL-Datenbank; Alle "
+"Datentabellen werden in dieser Datenbank gespeichert."
 
 #: ../../source/manage_data/2. datasource.md:37
 msgid "`localhost` -- 数据库的主机名"
@@ -268,14 +270,14 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:127
 msgid "查看数据源的整体信息"
-msgstr "View overall information about the data source"
+msgstr "Gesamtinformationen zur Datenquelle anzeigen"
 
 #: ../../source/manage_data/2. datasource.md:129
 msgid ""
 "通过上面的方法，我们可以查看每一张数据表的具体定义和已经填充的数据信息。同样，通过`overview()`方法，我们可以检查所有的数据表，并汇总出整个数据源的整体信息："
 msgstr ""
-"Use the methods above to inspect each table; `overview()` summarizes the "
-"whole DataSource:"
+"Verwenden Sie die oben genannten Methoden, um jede Tabelle zu überprüfen. "
+"`overview()` fasst das gesamte DataSource zusammen:"
 
 #: ../../source/manage_data/2. datasource.md:145
 msgid "查看整个数据源的总体信息，可能需要花费数分钟的时间，因为需要统计每张数据表的所有信息。"
@@ -288,8 +290,8 @@ msgstr ""
 msgid ""
 "在统计过程中，`qteasy`会显示一根进度条显示统计的进度，最终统计分析完成后，`qteasy`会将数据源中所有数据表的信息以DataFrame的形式返回，并打印出关键的信息。"
 msgstr ""
-"During overview, qteasy shows a progress bar, then returns a `DataFrame` of "
-"all tables and prints key stats."
+"Während der Übersicht zeigt qteasy einen Fortschrittsbalken an, gibt dann "
+"einen „DataFrame“ aller Tabellen zurück und druckt wichtige Statistiken."
 
 #: ../../source/manage_data/2. datasource.md:150
 msgid ""
@@ -375,31 +377,31 @@ msgid ""
 "`sys_op_live_accounts` -- "
 "实盘交易账户信息表，包含了所有实盘交易账户的基本信息，包括账户ID、账户名称、账户类型、账户状态等信息。"
 msgstr ""
-"`sys_op_live_accounts` — Live trading account master table with account ID, "
-"name, type, status, etc."
+"„sys_op_live_accounts“ – Stammtabelle für Live-Handelskonten mit Konto-ID, "
+"Name, Typ, Status usw."
 
 #: ../../source/manage_data/2. datasource.md:201
 msgid ""
 "`sys_op_positions` -- 实盘持仓信息表，包括所有实盘交易账户的持仓信息，包括账户ID、证券代码、证券名称、持仓数量、持仓成本等信息。"
 msgstr ""
-"`sys_op_positions` — Live positions table with account ID, security "
-"code/name, quantity, cost, etc."
+"„sys_op_positions“ – Live-Positionstabelle mit Konto-ID, "
+"Sicherheitscode/-name, Menge, Kosten usw."
 
 #: ../../source/manage_data/2. datasource.md:202
 msgid ""
 "`sys_op_trade_orders` -- "
 "实盘交易委托表，包括所有实盘交易账户的交易委托信息，包括账户ID、委托时间、委托类型、证券代码、委托数量、委托价格等信息。"
 msgstr ""
-"`sys_op_trade_orders` — Live order table with account ID, order time/type, "
-"security code, quantity, price, etc."
+"„sys_op_trade_orders“ – Live-Auftragstabelle mit Konto-ID, Bestellzeit/-typ,"
+" Sicherheitscode, Menge, Preis usw."
 
 #: ../../source/manage_data/2. datasource.md:203
 msgid ""
 "`sys_op_trade_results` -- "
 "实盘交易成交表，包括所有实盘交易账户的交易成交信息，包括账户ID、成交时间、证券代码、成交数量、成交价格等信息。"
 msgstr ""
-"`sys_op_trade_results` — Live fill table with account ID, fill time, "
-"security code, quantity, price, etc."
+"„sys_op_trade_results“ – Live-Ausfülltabelle mit Konto-ID, Füllzeit, "
+"Sicherheitscode, Menge, Preis usw."
 
 #: ../../source/manage_data/2. datasource.md:205
 msgid "上面四张表是qteasy实盘交易功能的基础，这几张表中的数据不需要人为填充，而是系统自动生成，您不需要查看、填充或删除这些表"
@@ -457,8 +459,8 @@ msgstr ""
 #: ../../source/manage_data/2. datasource.md:219
 msgid "这些数据表的具体定义和数据类型，可以通过`get_table_info()`方法查看，或者通过本文档的下一章节查询。"
 msgstr ""
-"See `get_table_info()` or the next chapter for table definitions and data "
-"types."
+"Informationen zu Tabellendefinitionen und Datentypen finden Sie unter "
+"„get_table_info()“ oder im nächsten Kapitel."
 
 #: ../../source/manage_data/2. datasource.md:221
 msgid "从数据表中获取数据"
@@ -468,15 +470,17 @@ msgstr "Reading data from tables"
 msgid ""
 "如果数据表中已经填充了数据，那么现在就可以从中读取数据了。`DataSource`提供了`read_table_data()`方法，从数据源中直接读取某个数据表中的数据，同时，用户可以筛选数据的起止日期以及证券代码，同时不用考虑数据表的具体结构、存储方式、存储位置等具体的实现方式。"
 msgstr ""
-"Once filled, use `read_table_data()` to read with date/code filters without "
-"worrying about storage details."
+"Nach dem Ausfüllen können Sie mit „read_table_data()“ mit "
+"Datums-/Codefiltern lesen, ohne sich Gedanken über Speicherdetails machen zu"
+" müssen."
 
 #: ../../source/manage_data/2. datasource.md:225
 msgid ""
 "为了避免读取的数据量过大，建议在读取数据时一定要同时给出某些筛选条件。对于`read_table_data()`方法来说，用户总是可以通过证券代码和起止日期来筛选数据:"
 msgstr ""
-"To avoid huge reads, always pass filters. With `read_table_data()` you can "
-"filter by security code and date range:"
+"Um große Lesevorgänge zu vermeiden, übergeben Sie immer Filter. Mit "
+"„read_table_data()“ können Sie nach Sicherheitscode und Datumsbereich "
+"filtern:"
 
 #: ../../source/manage_data/2. datasource.md:227
 msgid "***`shares`***: 给出一个证券代码或者逗号分隔的多个证券代码，如果数据表的主键中含有证券代码，那么根据该证券代码筛选输出的数据"
@@ -506,13 +510,13 @@ msgstr ""
 #: ../../source/manage_data/2. datasource.md:231
 msgid "`DataSource`对象会根据输入的筛选条件自动筛选数据，例如："
 msgstr ""
-"`DataSource` filters data automatically from your criteria, for example:"
+"„DataSource“ filtert Daten automatisch anhand Ihrer Kriterien, zum Beispiel:"
 
 #: ../../source/manage_data/2. datasource.md:233
 msgid "从`stock_daily`表中读取一只股票（`000651.SZ`）从2024年1月1日到2024年1月15日之间的股票日K线数据："
 msgstr ""
-"Read daily K-line data for `000651.SZ` from `stock_daily` between 2024-01-01"
-" and 2024-01-15:"
+"Lesen Sie die täglichen K-Line-Daten für „000651.SZ“ von „stock_daily“ "
+"zwischen dem 01.01.2024 und dem 15.01.2024:"
 
 #: ../../source/manage_data/2. datasource.md:253
 msgid ""
@@ -554,8 +558,8 @@ msgstr ""
 msgid ""
 "向数据表中填充数据可以使用数据源的`update_table_data()`方法。使用这个API，用户可以将保存在一个`DataFrame`中的数据写入到相应的数据表中。这个API只需要给出三个参数："
 msgstr ""
-"Fill tables via `update_table_data()`, writing a `DataFrame` with three "
-"parameters:"
+"Füllen Sie Tabellen über „update_table_data()“ und schreiben Sie einen "
+"„DataFrame“ mit drei Parametern:"
 
 #: ../../source/manage_data/2. datasource.md:281
 msgid "***`table`***: 一个数据表的名称，需要写入数据的数据表"
@@ -563,13 +567,15 @@ msgstr "***`table`***: Name of the target table to write into"
 
 #: ../../source/manage_data/2. datasource.md:282
 msgid "***`df`***: 一个`DataFrame`，保存了需要写入数据表中的数据"
-msgstr "***`df`***: A `DataFrame` holding data to write into a table"
+msgstr ""
+"***`df`***: Ein „DataFrame“, der Daten enthält, die in eine Tabelle "
+"geschrieben werden sollen"
 
 #: ../../source/manage_data/2. datasource.md:283
 msgid "***`merge_type`***: 如果是`update`则更新数据表中已经存在的数据，如果是`ignore`则忽略重复的数据."
 msgstr ""
-"***`merge_type`***: If `update`, update existing rows in the table; if "
-"`ignore`, skip duplicate rows."
+"***`merge_type`***: Bei „update“ werden vorhandene Zeilen in der Tabelle "
+"aktualisiert; Bei „Ignorieren“ werden doppelte Zeilen übersprungen."
 
 #: ../../source/manage_data/2. datasource.md:285
 msgid ""
@@ -581,7 +587,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:287
 msgid "下面将一些示例数据写入数据源(写入的数据仅为演示效果)"
-msgstr "Sample data is written below for demonstration only."
+msgstr "Beispieldaten werden unten nur zur Demonstration aufgeführt."
 
 #: ../../source/manage_data/2. datasource.md:315
 msgid ""
@@ -602,7 +608,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:319
 msgid "`index_daily`数据表目前是空的，没有填充任何数据"
-msgstr "The `index_daily` table is currently empty with no data filled."
+msgstr "Die Tabelle „index_daily“ ist derzeit leer und enthält keine Daten."
 
 #: ../../source/manage_data/2. datasource.md:348
 msgid "接下来我们可以将数据写入数据表，如果方法执行正确，它将返回写入数据表中的数据的行数，如下所示："
@@ -612,18 +618,19 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:354
 msgid "将数据写入数据表之后，我们可以尝试一下从数据表中读取数据，现在我们已经可以读出刚才写入的数据了。"
-msgstr "After writing, we can read back the data just inserted."
+msgstr ""
+"Nach dem Schreiben können wir die gerade eingefügten Daten zurücklesen."
 
 #: ../../source/manage_data/2. datasource.md:356
 msgid ""
 "请注意，读出来的数据有许多列都是`NaN`值，这表明这些列没有写入数据，原因就是我们写入的`df`并不包含这些数据，因此读出的数据为`NaN`值。"
 msgstr ""
-"Many columns read as `NaN` because the written `df` did not include those "
-"fields."
+"Viele Spalten lauten „NaN“, weil das geschriebene „df“ diese Felder nicht "
+"enthielt."
 
 #: ../../source/manage_data/2. datasource.md:376
 msgid "删除数据表 —— 请尽量小心，删除后无法恢复！！"
-msgstr "Drop table — be careful; deletion is irreversible!!"
+msgstr "Drop-Tisch – seien Sie vorsichtig; Die Löschung ist unwiderruflich!!"
 
 #: ../../source/manage_data/2. datasource.md:378
 msgid ""
@@ -645,27 +652,29 @@ msgid ""
 "`qteasy`的`DataSource`对象提供了一个删除数据表的方法: "
 "`drop_table_data()`,这个方法将删除整个数据表，而且**删除后无法恢复**！"
 msgstr ""
-"The `DataSource` method `drop_table_data()` deletes an entire table and "
-"**cannot be undone**!"
+"Die `DataSource`-Methode `drop_table_data()` löscht eine gesamte Tabelle und"
+" **kann nicht rückgängig gemacht werden**!"
 
 #: ../../source/manage_data/2. datasource.md:384
 msgid ""
 "为了避免在代码中误删除数据表，默认情况下`drop_table_data()`会导致错误，例如我们想删除之前写入临时数据的`index_daily`表："
 msgstr ""
-"To prevent accidental drops, `drop_table_data()` errors by default — e.g. "
-"when dropping temporary `index_daily` data:"
+"Um versehentliches Löschen zu verhindern, werden standardmäßig "
+"„drop_table_data()“-Fehler angezeigt – z. beim Löschen temporärer "
+"„index_daily“-Daten:"
 
 #: ../../source/manage_data/2. datasource.md:404
 msgid ""
 "这时候我们需要修改数据源的`allow_drop_table`属性，将其修改为`True`，这样就可以删除数据表了，请记住删除后将`allow_drop_table`改为`False`。"
 msgstr ""
-"Set `allow_drop_table` to `True` to allow drops; set it back to `False` "
-"afterwards."
+"Setzen Sie „allow_drop_table“ auf „True“, um Drops zuzulassen. Setzen Sie es"
+" anschließend wieder auf „False“."
 
 #: ../../source/manage_data/2. datasource.md:406
 msgid "下面代码删除了`index_daily`表，然后就会发现，无法从该表读取数据了："
 msgstr ""
-"The code below drops `index_daily`; afterwards reads from that table fail:"
+"Der folgende Code löscht „index_daily“; Danach schlagen Lesevorgänge aus "
+"dieser Tabelle fehl:"
 
 #: ../../source/manage_data/2. datasource.md:420
 msgid "总结"
@@ -703,4 +712,4 @@ msgstr "How to batch-download and fill DataSource?"
 
 #: ../../source/manage_data/2. datasource.md:432
 msgid "如何从数据源中更有效地提取信息？"
-msgstr "Extracting information from DataSource more effectively?"
+msgstr "Informationen effektiver aus DataSource extrahieren?"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -37,17 +37,17 @@ msgstr ""
 
 #: ../../source/api/top_level_exports.md:5
 msgid "1. 顶层导出（按 `__all__` 分类）"
-msgstr "1. Top-level exports (grouped by `__all__`)"
+msgstr "1. Exporte der obersten Ebene (gruppiert nach „__all__“)"
 
 #: ../../source/api/top_level_exports.md:7
 msgid "1.1 启动/运行入口（core / configure）"
-msgstr "1.1 Startup/Run entry points (core / configure)"
+msgstr "1.1 Start-/Ausführungs-Einstiegspunkte (Kern/Konfigurieren)"
 
 #: ../../source/api/top_level_exports.md:9
 msgid "`run`（`qteasy/core.py`）：统一运行入口（回测/优化/实盘等）"
 msgstr ""
-"`run` (`qteasy/core.py`): unified run entry point "
-"(backtesting/optimization/live trading, etc.)"
+"`run` (`qteasy/core.py`): einheitlicher Run-Einstiegspunkt "
+"(Backtesting/Optimierung/Live-Handel usw.)"
 
 #: ../../source/api/top_level_exports.md:10
 msgid "`is_ready`（`qteasy/core.py`）：检查运行条件"
@@ -56,11 +56,12 @@ msgstr "`is_ready` (`qteasy/core.py`): check runtime prerequisites"
 #: ../../source/api/top_level_exports.md:11
 msgid "`info`（`qteasy/core.py`）：帮助/信息入口（目前未实现）"
 msgstr ""
-"`info` (`qteasy/core.py`): help/info entry point (not implemented yet)"
+"`info` (`qteasy/core.py`): Hilfe-/Info-Einstiegspunkt (noch nicht "
+"implementiert)"
 
 #: ../../source/api/top_level_exports.md:12
 msgid "`configure`（`qteasy/configure.py`）：配置入口"
-msgstr "`configure` (`qteasy/configure.py`): configuration entry point"
+msgstr "`configure` (`qteasy/configure.py`): Konfigurationseinstiegspunkt"
 
 #: ../../source/api/top_level_exports.md:13
 msgid "`set_config`（`qteasy/configure.py`）：配置别名"
@@ -72,7 +73,7 @@ msgid ""
 "`get_configurations`（`qteasy/configure.py`）：查看配置"
 msgstr ""
 "`configuration` / `get_config` / `get_configurations` "
-"(`qteasy/configure.py`): view configuration"
+"(`qteasy/configure.py`): Konfiguration anzeigen"
 
 #: ../../source/api/top_level_exports.md:15
 msgid ""
@@ -80,7 +81,7 @@ msgid ""
 "`view_config_files`（`qteasy/configure.py`）：配置文件与重置"
 msgstr ""
 "`save_config` / `load_config` / `reset_config` / `view_config_files` "
-"(`qteasy/configure.py`): config files and reset"
+"(`qteasy/configure.py`): Konfigurationsdateien und zurücksetzen"
 
 #: ../../source/api/top_level_exports.md:16
 msgid ""
@@ -94,8 +95,8 @@ msgstr ""
 #: ../../source/api/top_level_exports.md:17
 msgid "`start_up_config`（`qteasy/__init__.py`）：启动配置解析结果（常量）"
 msgstr ""
-"`start_up_config` (`qteasy/__init__.py`): startup configuration parsing "
-"result (constant)"
+"`start_up_config` (`qteasy/__init__.py`): Ergebnis der "
+"Startkonfigurationsanalyse (konstant)"
 
 #: ../../source/api/top_level_exports.md:19
 #: ../../source/api/top_level_exports.md:31
@@ -113,7 +114,7 @@ msgstr "`docs/source/api/use_qteasy.rst` (Startup and Running)"
 
 #: ../../source/api/top_level_exports.md:21
 msgid "`docs/source/api/api_reference.rst`（配置与参考）"
-msgstr "`docs/source/api/api_reference.rst` (Configuration and Reference)"
+msgstr "`docs/source/api/api_reference.rst` (Konfiguration und Referenz)"
 
 #: ../../source/api/top_level_exports.md:23
 msgid "1.2 数据获取/概览（core）"
@@ -177,8 +178,8 @@ msgid ""
 "`docs/source/design/10-historypanel-factor-research-layer.md`（可选 "
 "FactorResearch 层评估）"
 msgstr ""
-"`docs/source/design/10-historypanel-factor-research-layer.md` (optional "
-"FactorResearch layer evaluation)"
+"`docs/source/design/10-historypanel-factor-research-layer.md` (optionale "
+"FactorResearch-Layer-Bewertung)"
 
 #: ../../source/api/top_level_exports.md:44
 msgid ""
@@ -224,7 +225,7 @@ msgstr "`docs/source/api/built_in_strategies.rst`"
 
 #: ../../source/api/top_level_exports.md:57
 msgid "1.5 数据源与数据类型（database / datatypes）"
-msgstr "1.5 Data Sources and Data Types (database / datatypes)"
+msgstr "1.5 Datenquellen und Datentypen (Datenbank / Datentypen)"
 
 #: ../../source/api/top_level_exports.md:59
 msgid "`DataSource`（`qteasy/database.py`）"
@@ -244,7 +245,7 @@ msgstr "`docs/source/api/data_types.rst`"
 
 #: ../../source/api/top_level_exports.md:66
 msgid "1.6 可视化与费用（visual / finance）"
-msgstr "1.6 Visualization and Costs (visual / finance)"
+msgstr "1.6 Visualisierung und Kosten (Visual / Finanzen)"
 
 #: ../../source/api/top_level_exports.md:68
 msgid "`candle`（`qteasy/visual.py`）"
@@ -260,14 +261,14 @@ msgstr "`docs/source/api/use_qteasy.rst`（入口）"
 
 #: ../../source/api/top_level_exports.md:74
 msgid "1.7 常量与全局对象（__init__）"
-msgstr "1.7 Constants and Global Objects (__init__)"
+msgstr "1.7 Konstanten und globale Objekte (__init__)"
 
 #: ../../source/api/top_level_exports.md:76
 msgid ""
 "模式常量：`LIVE_MODE` / `BACKTEST_MODE` / `OPTIMIZE_MODE` / `PREDICT_MODE` 及别名"
 msgstr ""
-"Mode constants: `LIVE_MODE` / `BACKTEST_MODE` / `OPTIMIZE_MODE` / "
-"`PREDICT_MODE` and aliases"
+"Moduskonstanten: „LIVE_MODE“ / „BACKTEST_MODE“ / „OPTIMIZE_MODE“ / "
+"„PREDICT_MODE“ und Aliase"
 
 #: ../../source/api/top_level_exports.md:77
 msgid ""
@@ -284,5 +285,5 @@ msgstr "版本：`__version__` / `version_info`"
 #: ../../source/api/top_level_exports.md:81
 msgid "`docs/source/api/use_qteasy.rst`（运行模式与常量速查）"
 msgstr ""
-"`docs/source/api/use_qteasy.rst` (quick reference for run modes and "
-"constants)"
+"`docs/source/api/use_qteasy.rst` (Kurzreferenz für Ausführungsmodi und "
+"Konstanten)"

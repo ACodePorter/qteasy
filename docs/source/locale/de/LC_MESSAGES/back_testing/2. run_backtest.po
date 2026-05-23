@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/back_testing/2. run_backtest.md:1
 msgid "如何运行回测"
-msgstr "How to run a backtest"
+msgstr "So führen Sie einen Backtest durch"
 
 #: ../../source/back_testing/2. run_backtest.md:3
 msgid "入口与配置方式"
-msgstr "Entry point and configuration method"
+msgstr "Einstiegspunkt und Konfigurationsmethode"
 
 #: ../../source/back_testing/2. run_backtest.md:5
 msgid ""
@@ -51,15 +51,15 @@ msgstr ""
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "参数名"
-msgstr "Parameter name"
+msgstr "Parametername"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "类型/可选值"
-msgstr "Type/optional values"
+msgstr "Typ/optionale Werte"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "asset_pool"
@@ -67,11 +67,11 @@ msgstr "asset_pool"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "str 或 list"
-msgstr "str or list"
+msgstr "str oder Liste"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "回测标的池（股票代码等）。"
-msgstr "Backtest universe (stock tickers, etc.)."
+msgstr "Backtest-Universum (Börsenticker usw.)."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "asset_type"
@@ -83,7 +83,7 @@ msgstr "str"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "资产类型（如 'E' 股票）。"
-msgstr "Asset type (e.g., 'E' for equities)."
+msgstr "Vermögenswerttyp (z. B. „E“ für Aktien)."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "invest_start"
@@ -91,7 +91,7 @@ msgstr "invest_start"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "回测开始日期。"
-msgstr "Backtest start date."
+msgstr "Startdatum des Backtests."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "invest_end"
@@ -99,7 +99,7 @@ msgstr "invest_end"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "回测结束日期。"
-msgstr "Backtest end date."
+msgstr "Enddatum des Backtests."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "invest_cash_amounts"
@@ -111,7 +111,7 @@ msgstr "list/float"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "初始或分批投入资金。"
-msgstr "Invest funds initially or in installments."
+msgstr "Investieren Sie die Mittel zunächst oder in Raten."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "invest_cash_dates"
@@ -146,7 +146,7 @@ msgstr "cost_rate_buy"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "买入成本率（佣金等）。"
-msgstr "Buy cost rate (commissions, etc.)."
+msgstr "Kaufkostensatz (Provisionen usw.)."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "cost_rate_sell"
@@ -154,7 +154,7 @@ msgstr "cost_rate_sell"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "卖出成本率。"
-msgstr "Sell cost rate."
+msgstr "Verkaufskostensatz."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "cost_min"
@@ -162,7 +162,7 @@ msgstr "cost_min"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "单笔最小成本。"
-msgstr "Minimum cost per transaction."
+msgstr "Minimale Kosten pro Transaktion."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "allow_sell_short"
@@ -174,7 +174,7 @@ msgstr "bool"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "是否允许卖空。"
-msgstr "Whether short selling is allowed."
+msgstr "Ob Leerverkäufe erlaubt sind."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "trade_log"
@@ -182,7 +182,7 @@ msgstr "trade_log"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "是否记录交易日志。"
-msgstr "Whether to record the trade log."
+msgstr "Ob das Handelsprotokoll aufgezeichnet werden soll."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "visual"
@@ -190,7 +190,7 @@ msgstr "visual"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "是否输出可视化图表。"
-msgstr "Whether to output visualization charts."
+msgstr "Ob Visualisierungsdiagramme ausgegeben werden sollen."
 
 #: ../../source/back_testing/2. run_backtest.md:27
 msgid "其他可能参数：滑点、交易单位、印花税等，请以 **qt.configure()** 或 run 的文档为准。"
@@ -201,11 +201,11 @@ msgstr ""
 
 #: ../../source/back_testing/2. run_backtest.md:29
 msgid "最小可运行示例"
-msgstr "Minimum runnable example"
+msgstr "Minimal lauffähiges Beispiel"
 
 #: ../../source/back_testing/2. run_backtest.md:40
 msgid "常见使用场景"
-msgstr "Common use cases"
+msgstr "Häufige Anwendungsfälle"
 
 #: ../../source/back_testing/2. run_backtest.md:42
 msgid "**成本设置**：通过 cost_rate_buy、cost_rate_sell、cost_min 模拟佣金与印花税。"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -35,7 +35,7 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md:5
 msgid "1. 概念表（名称 / 含义 / 在文档中的位置）"
-msgstr "1. Concept Table (Name / Meaning / Location in the Document)"
+msgstr "1. Konzepttabelle (Name / Bedeutung / Ort im Dokument)"
 
 #: ../../source/design/01-concepts.md
 msgid "概念"
@@ -47,7 +47,7 @@ msgstr "Meaning"
 
 #: ../../source/design/01-concepts.md
 msgid "本系列中的位置"
-msgstr "Where It Fits in This Series"
+msgstr "Wo es in diese Serie passt"
 
 #: ../../source/design/01-concepts.md
 msgid "**DataSource**"
@@ -107,12 +107,12 @@ msgstr "**dtype_id**"
 #: ../../source/design/01-concepts.md
 msgid "DataType 的唯一标识，形如 `name_assettype_freq`（如 `close_E_d`）"
 msgstr ""
-"The unique identifier of a DataType, in the form `name_assettype_freq` "
-"(e.g., `close_E_d`)"
+"Die eindeutige Kennung eines DataType in der Form „name_assettype_freq“ (z. "
+"B. „close_E_d“)"
 
 #: ../../source/design/01-concepts.md
 msgid "下文“dtype_id 的构成与示例”"
-msgstr "See “Composition and Examples of dtype_id” below."
+msgstr "Siehe „Zusammensetzung und Beispiele von dtype_id“ unten."
 
 #: ../../source/design/01-concepts.md
 msgid "**Operator**"
@@ -126,7 +126,7 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md
 msgid "[Operator 与 Group](04-operator-and-groups.md)"
-msgstr "[Operator and Group](04-operator-and-groups.md)"
+msgstr "[Operator und Gruppe](04-operator-and-groups.md)"
 
 #: ../../source/design/01-concepts.md
 msgid "**Group**"
@@ -150,7 +150,7 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md
 msgid "[Strategy 如何运行](05-strategy-lifecycle.md)"
-msgstr "[How a Strategy Runs](05-strategy-lifecycle.md)"
+msgstr "[Wie eine Strategie abläuft](05-strategy-lifecycle.md)"
 
 #: ../../source/design/01-concepts.md
 msgid "**run_freq**"
@@ -159,8 +159,8 @@ msgstr "**run_freq**"
 #: ../../source/design/01-concepts.md
 msgid "策略（组）的运行频率，如 `'d'` 日、`'m'` 月"
 msgstr ""
-"The execution frequency of a strategy (group), e.g., `'d'` for daily, `'m'` "
-"for monthly."
+"Die Ausführungshäufigkeit einer Strategie (Gruppe), z. B. „d“ für täglich, "
+"„m“ für monatlich."
 
 #: ../../source/design/01-concepts.md
 msgid "**run_timing**"
@@ -169,8 +169,8 @@ msgstr "**run_timing**"
 #: ../../source/design/01-concepts.md
 msgid "策略（组）在周期内的运行时机，如 `'close'` 收盘、`'open'` 开盘"
 msgstr ""
-"When a strategy (group) runs within a period, e.g., `'close'` at close, "
-"`'open'` at open."
+"Wenn eine Strategie (Gruppe) innerhalb eines Zeitraums ausgeführt wird, z. "
+"B. „schließen“ beim Schließen, „öffnen“ beim Öffnen."
 
 #: ../../source/design/01-concepts.md
 msgid "**group_timing_table**"
@@ -204,7 +204,7 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md
 msgid "下文“三种信号类型 PT/PS/VS”"
-msgstr "Below: “Three signal types PT/PS/VS”"
+msgstr "Unten: „Drei Signaltypen PT/PS/VS“"
 
 #: ../../source/design/01-concepts.md
 msgid "**Parameter**"
@@ -303,7 +303,8 @@ msgstr "**Broker**"
 
 #: ../../source/design/01-concepts.md
 msgid "订单执行与成交回报的接口抽象"
-msgstr "Abstract interface for order execution and fill reports"
+msgstr ""
+"Abstrakte Schnittstelle für Auftragsausführung und Ausführungsberichte"
 
 #: ../../source/design/01-concepts.md
 msgid "**config**"
@@ -328,7 +329,7 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md:34
 msgid "2. dtype_id 的构成与示例"
-msgstr "2. Composition and examples of dtype_id"
+msgstr "2. Zusammensetzung und Beispiele von dtype_id"
 
 #: ../../source/design/01-concepts.md:36
 msgid "dtype_id 由三部分拼接而成：**name_assettype_freq**。"
@@ -338,18 +339,19 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md:38
 msgid "**name**：数据类型名称（如 close、open、total_mv、pe）。"
-msgstr "**name**: data type name (e.g., close, open, total_mv, pe)."
+msgstr "**Name**: Name des Datentyps (z. B. close, open, total_mv, pe)."
 
 #: ../../source/design/01-concepts.md:39
 msgid "**assettype**：资产类型，如 `E`（股票）、`IDX`（指数）、`ANY`（任意）。"
 msgstr ""
-"**assettype**: asset type, such as `E` (stocks), `IDX` (index), `ANY` (any)."
+"**Assettyp**: Vermögenswerttyp, z. B. „E“ (Aktien), „IDX“ (Index), „ANY“ "
+"(beliebig)."
 
 #: ../../source/design/01-concepts.md:40
 msgid "**freq**：数据频率，如 `d`（日）、`w`（周）、`m`（月）、`q`（季）。"
 msgstr ""
-"**freq**: data frequency, e.g., `d` (daily), `w` (weekly), `m` (monthly), "
-"`q` (quarterly)."
+"**freq**: Datenhäufigkeit, z. B. „d“ (täglich), „w“ (wöchentlich), „m“ "
+"(monatlich), „q“ (vierteljährlich)."
 
 #: ../../source/design/01-concepts.md:42
 msgid "示例："
@@ -373,7 +375,7 @@ msgstr "`close_IDX_d`"
 
 #: ../../source/design/01-concepts.md
 msgid "指数日频收盘价"
-msgstr "Daily closing price of an index"
+msgstr "Täglicher Schlusskurs eines Index"
 
 #: ../../source/design/01-concepts.md
 msgid "`close_ANY_d`"
@@ -381,7 +383,7 @@ msgstr "`close_ANY_d`"
 
 #: ../../source/design/01-concepts.md
 msgid "任意资产日频收盘价"
-msgstr "Daily closing price of any asset"
+msgstr "Täglicher Schlusskurs eines beliebigen Vermögenswerts"
 
 #: ../../source/design/01-concepts.md
 msgid "`total_mv_E_q`"
@@ -389,7 +391,7 @@ msgstr "`total_mv_E_q`"
 
 #: ../../source/design/01-concepts.md
 msgid "股票季频总市值"
-msgstr "Quarterly total market capitalization of stocks"
+msgstr "Vierteljährliche Gesamtmarktkapitalisierung der Aktien"
 
 #: ../../source/design/01-concepts.md
 msgid "`pe_E_d`"
@@ -397,7 +399,7 @@ msgstr "`pe_E_d`"
 
 #: ../../source/design/01-concepts.md
 msgid "股票日频市盈率（若存在）"
-msgstr "Daily stock P/E ratio (if available)"
+msgstr "Tägliches Aktien-KGV (falls verfügbar)"
 
 #: ../../source/design/01-concepts.md:52
 msgid ""
@@ -445,7 +447,7 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md
 msgid "0.5 表示目标 50% 多头仓位"
-msgstr "0.5 indicates a target 50% long position."
+msgstr "0,5 zeigt eine angestrebte Long-Position von 50 % an."
 
 #: ../../source/design/01-concepts.md
 msgid "**PS**"
@@ -525,11 +527,11 @@ msgstr "**RuleIterator**"
 
 #: ../../source/design/01-concepts.md
 msgid "择时、单规则迭代"
-msgstr "Market timing, single-rule iteration"
+msgstr "Market Timing, Iteration mit einer einzigen Regel"
 
 #: ../../source/design/01-concepts.md
 msgid "单资产或多资产的数据窗口（按 dtype_id）"
-msgstr "Single-asset or multi-asset data window (by dtype_id)"
+msgstr "Einzel-Asset- oder Multi-Asset-Datenfenster (von dtype_id)"
 
 #: ../../source/design/01-concepts.md
 msgid "标量信号（如 1 / -1 / 0），同一规则作用于所有资产"
@@ -561,11 +563,11 @@ msgstr "**GeneralStg**"
 
 #: ../../source/design/01-concepts.md
 msgid "通用多资产策略"
-msgstr "General-purpose multi-asset strategy"
+msgstr "Allzweck-Multi-Asset-Strategie"
 
 #: ../../source/design/01-concepts.md
 msgid "多资产、多数据类型的数据窗口"
-msgstr "Multi-asset, multi-data-type data window"
+msgstr "Datenfenster mit mehreren Assets und mehreren Datentypen"
 
 #: ../../source/design/01-concepts.md
 msgid "一维信号数组（每资产一个目标仓位或买卖比例）"

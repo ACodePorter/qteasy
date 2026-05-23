@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,13 +20,13 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_10.md:1
 msgid "统一定义的金融历史数据表"
-msgstr "Uniformly defined financial history tables"
+msgstr "Einheitlich definierte Finanzhistorientabellen"
 
 #: ../../source/manage_data/3. data_tables_10.md:3
 msgid "`DataTable`是`qteasy`内置统一定义的数据存储表。包括："
 msgstr ""
-"`DataTable` is qteasy's unified built-in storage table definition. It "
-"includes:"
+"„DataTable“ ist die einheitliche integrierte Speichertabellendefinition von "
+"qteasy. Es beinhaltet:"
 
 #: ../../source/manage_data/3. data_tables_10.md:5
 msgid "最重要的数据表"
@@ -123,7 +123,8 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_10.md:22
 msgid "数据表的`schema`信息可以通过`DataSource`对象的`get_table_info()`方法获取:"
-msgstr "Table `schema` is available via `DataSource.get_table_info()`:"
+msgstr ""
+"Die Tabelle „Schema“ ist über „DataSource.get_table_info()“ verfügbar:"
 
 #: ../../source/manage_data/3. data_tables_10.md:29
 msgid "数据表的定义"
@@ -131,7 +132,7 @@ msgstr "Table definitions"
 
 #: ../../source/manage_data/3. data_tables_10.md:31
 msgid "在`qteasy`中，每一张数据表都有以下几个基本属性："
-msgstr "Each table in qteasy has these basic attributes:"
+msgstr "Jede Tabelle in qteasy verfügt über diese grundlegenden Attribute:"
 
 #: ../../source/manage_data/3. data_tables_10.md:33
 msgid ""
@@ -147,8 +148,8 @@ msgstr ""
 msgid ""
 "**资产类型**：表示该数据表包含的信息属于哪种资产类型。不同的资产类型包括：`E`表示股票，`IDX`表示指数，`FD`表示基金，`FT`表示期货，`OPT`表示期权等"
 msgstr ""
-"**Asset type**: Asset class covered — `E` stock, `IDX` index, `FD` fund, "
-"`FT` futures, `OPT` options, etc."
+"**Anlagetyp**: Abgedeckte Anlageklasse – „E“-Aktie, „IDX“-Index, „FD“-Fonds,"
+" „FT“-Futures, „OPT“-Optionen usw."
 
 #: ../../source/manage_data/3. data_tables_10.md:35
 msgid ""
@@ -170,7 +171,7 @@ msgstr "**Table `SCHEMA`**: Defines all columns and data types"
 
 #: ../../source/manage_data/3. data_tables_10.md:39
 msgid "数据表的`SCHEMA`定义了数据表的所有字段和数据类型，`SCHEMA`各个字段的含义如下："
-msgstr "Table `SCHEMA` defines all columns and types; field meanings:"
+msgstr "Tabelle „SCHEMA“ definiert alle Spalten und Typen; Feldbedeutungen:"
 
 #: ../../source/manage_data/3. data_tables_10.md:41
 msgid "**`columns`** -- 字段名"
@@ -192,8 +193,8 @@ msgstr "**`remarks`** -- column remarks"
 #: ../../source/manage_data/3. data_tables_10.md:44
 msgid "**`is_prime_key`** -- 是否是主键，`Y`表示是主键，`N`表示不是主键"
 msgstr ""
-"**`is_prime_key`** -- whether the column is part of the primary key; `Y` = "
-"yes, `N` = no"
+"**`is_prime_key`** – ob die Spalte Teil des Primärschlüssels ist; „Y“ = ja, "
+"„N“ = nein"
 
 #: ../../source/manage_data/3. data_tables_10.md:47
 msgid "交易日历表的定义："

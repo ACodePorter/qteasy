@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -40,7 +40,7 @@ msgstr ""
 
 #: ../../source/api/history_data.rst:9
 msgid "查找支持历史数据"
-msgstr "Looking for supported Historical Data"
+msgstr "Auf der Suche nach unterstützten historischen Daten"
 
 #: ../../source/api/history_data.rst:11
 msgid ""
@@ -75,7 +75,9 @@ msgstr "Parameters"
 
 #: of qteasy.datatypes.find_history_data:4
 msgid "一个字符串，用于查找或匹配历史数据类型"
-msgstr "A string used to find or match historical data types"
+msgstr ""
+"Eine Zeichenfolge, die zum Suchen oder Abgleichen historischer Datentypen "
+"verwendet wird"
 
 #: of qteasy.datatypes.find_history_data:6
 msgid ""
@@ -194,15 +196,15 @@ msgstr ""
 
 #: of qteasy.datatypes.find_history_data:32
 msgid "name:        数据类型名称"
-msgstr "name:        Data type name"
+msgstr "Name: Name des Datentyps"
 
 #: of qteasy.datatypes.find_history_data:33
 msgid "description: 数据类型中文描述"
-msgstr "description: Chinese description of the data type"
+msgstr "Beschreibung: Chinesische Beschreibung des Datentyps"
 
 #: of qteasy.datatypes.find_history_data:34
 msgid "freq:        频率"
-msgstr "freq:        Frequency"
+msgstr "freq: Frequenz"
 
 #: of qteasy.datatypes.find_history_data:35
 msgid "asset_type:  资产类型"
@@ -210,11 +212,11 @@ msgstr "asset_type:  Asset type"
 
 #: of qteasy.datatypes.find_history_data:36
 msgid "table_name:  底层数据表名称"
-msgstr "table_name:  Underlying data table name"
+msgstr "Tabellenname: Name der zugrunde liegenden Datentabelle"
 
 #: of qteasy.datatypes.find_history_data:37
 msgid "column:      对应的数据字段名"
-msgstr "column:      Corresponding data field name"
+msgstr "Spalte: Entsprechender Datenfeldname"
 
 #: of qteasy.core.filter_stocks:17 qteasy.core.get_basic_info:33
 #: qteasy.core.get_data_overview:16 qteasy.core.get_history_data:55
@@ -332,7 +334,7 @@ msgstr ""
 
 #: of qteasy.core.refill_data_source:23
 msgid "是否更新trade_calendar表，如果为True，则会下载trade_calendar表的数据"
-msgstr "If True, the trade_calendar table will be downloaded"
+msgstr "Bei „True“ wird die Tabelle „trade_calendar“ heruntergeladen"
 
 #: of qteasy.core.refill_data_source:25
 msgid "是否更新依赖表的数据，默认True，如果设置为False，则忽略依赖表，这样可能导致数据下载不成功"
@@ -371,7 +373,7 @@ msgstr ""
 
 #: of qteasy.core.refill_data_source:35
 msgid "仅下载深圳交易所的股票数据"
-msgstr "Only download stock data from Shenzhen Stock Exchange"
+msgstr "Laden Sie nur Aktiendaten von der Shenzhen Stock Exchange herunter"
 
 #: of qteasy.core.refill_data_source:36
 msgid "['SSE', 'SZSE']"
@@ -449,7 +451,7 @@ msgstr ""
 
 #: of qteasy.core.refill_data_source:67
 msgid "是否记录数据下载日志"
-msgstr "If True, record data download log"
+msgstr "Wenn True, Daten-Download-Protokoll aufzeichnen"
 
 #: ../../source/api/history_data.rst of qteasy.core.filter_stocks
 #: qteasy.core.get_basic_info qteasy.core.get_stock_info
@@ -553,7 +555,9 @@ msgstr "}"
 
 #: ../../source/api/history_data.rst:34
 msgid "获取已经下载的本地数据总览"
-msgstr "Acquire the overview of the downloaded local data"
+msgstr ""
+"Verschaffen Sie sich einen Überblick über die heruntergeladenen lokalen "
+"Daten"
 
 #: ../../source/api/history_data.rst:36
 msgid ""
@@ -586,7 +590,7 @@ msgstr ""
 
 #: of qteasy.core.get_data_overview:9 qteasy.core.get_table_overview:7
 msgid "是否显示系统数据表的overview"
-msgstr "If True, display the overview of system data tables"
+msgstr "Wenn True, wird die Übersicht der Systemdatentabellen angezeigt"
 
 #: of qteasy.core.get_stock_info:34 qteasy.core.get_table_overview:13
 msgid "备注"
@@ -594,7 +598,7 @@ msgstr "Note"
 
 #: of qteasy.core.get_table_overview:14
 msgid "用法示例参见get_data_overview()"
-msgstr "Example usage see get_data_overview()"
+msgstr "Beispielverwendung siehe get_data_overview()"
 
 #: of qteasy.core.get_data_overview:1
 msgid "显示数据源的数据总览，等同于get_table_overview()"
@@ -626,7 +630,7 @@ msgstr ""
 
 #: ../../source/api/history_data.rst:45
 msgid "使用下载的数据——基础数据"
-msgstr "Use the downloaded data - Basic Data"
+msgstr "Verwenden Sie die heruntergeladenen Daten - Basisdaten"
 
 #: ../../source/api/history_data.rst:47
 msgid ""
@@ -677,7 +681,7 @@ msgstr ""
 
 #: of qteasy.core.get_basic_info:17 qteasy.core.get_stock_info:18
 msgid "如果为True，打印匹配到的结果"
-msgstr "If True, print the matched results"
+msgstr "Wenn True, werden die übereinstimmenden Ergebnisse gedruckt"
 
 #: of qteasy.core.get_basic_info:19 qteasy.core.get_stock_info:20
 msgid "当匹配到的证券太多时（多于五个），是否显示完整的信息 - False 默认值，只显示匹配度最高的内容 - True  显示所有匹配到的内容"
@@ -791,7 +795,9 @@ msgstr "**DataFrame**"
 
 #: ../../source/api/history_data.rst:60
 msgid "使用下载的数据——获取价格或技术指标"
-msgstr "Use the downloaded data - Get price or technical indicators"
+msgstr ""
+"Nutzen Sie die heruntergeladenen Daten – Erhalten Sie Preis- oder technische"
+" Indikatoren"
 
 #: ../../source/api/history_data.rst:62
 msgid ""
@@ -862,7 +868,7 @@ msgstr ""
 
 #: of qteasy.core.get_history_data:19
 msgid "需要获取历史数据的数据源"
-msgstr "Data source to obtain historical data"
+msgstr "Datenquelle zum Abrufen historischer Daten"
 
 #: of qteasy.core.get_history_data:21
 msgid ""
@@ -935,8 +941,8 @@ msgstr ""
 #: of qteasy.core.get_history_data:43
 msgid "``True`` 时返回 ``HistoryPanel``；``False`` 时返回 ``DataFrame`` 字典。"
 msgstr ""
-"Returns ``HistoryPanel`` when ``True``; returns a dictionary of "
-"``DataFrame`` when ``False``."
+"Gibt „HistoryPanel“ zurück, wenn „True“; gibt ein Wörterbuch von „DataFrame“"
+" zurück, wenn „False“ lautet."
 
 #: of qteasy.core.get_history_data:45
 msgid ""
@@ -973,16 +979,16 @@ msgstr ""
 msgid ""
 "*HistoryPanel* -- 当 ``as_data_frame`` 为 False 时，返回包含所有请求数据的 HistoryPanel 对象。"
 msgstr ""
-"*HistoryPanel* -- When ``as_data_frame`` is False, returns a HistoryPanel "
-"object containing all requested data."
+"*HistoryPanel* – Wenn „as_data_frame“ False ist, wird ein HistoryPanel-"
+"Objekt zurückgegeben, das alle angeforderten Daten enthält."
 
 #: of qteasy.core.get_history_data:52
 msgid ""
 "*dict of pandas.DataFrame* -- 当 ``as_data_frame`` 为 True 时，返回按 ``group_by`` "
 "分组的 DataFrame 字典。"
 msgstr ""
-"*dict of pandas.DataFrame* -- When ``as_data_frame`` is True, returns a dict"
-" of DataFrames grouped by ``group_by``."
+"*dict of pandas.DataFrame* – Wenn „as_data_frame“ True ist, wird ein Diktat "
+"von DataFrames zurückgegeben, gruppiert nach „group_by“."
 
 #~ msgid "参数"
 #~ msgstr ""

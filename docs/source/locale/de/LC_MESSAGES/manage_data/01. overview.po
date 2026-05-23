@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_data/1. overview.md:1
 msgid "qteasy金融历史数据管理"
-msgstr "Qteasy Financial Historical Data Management"
+msgstr "Qteasy Finanzhistorisches Datenmanagement"
 
 #: ../../source/manage_data/1. overview.md:3
 msgid "`qteasy` 是一套功能全面的量化交易工具包，金融数据的获取和使用是`qteasy`提供的核心功能之一。"
@@ -80,13 +80,14 @@ msgstr ""
 
 #: ../../source/manage_data/1. overview.md:15
 msgid "`qteasy`就是为了解决上面提到的这些痛点而设计的。"
-msgstr "`qteasy` was designed to address the pain points mentioned above."
+msgstr ""
+"„qteasy“ wurde entwickelt, um die oben genannten Schwachstellen zu beheben."
 
 #: ../../source/manage_data/1. overview.md:17
 msgid "`qteasy`的金融数据管理模块提供了三个主要的功能，这三个功能的设计，着眼点都是为了"
 msgstr ""
-"The financial data management module of `qteasy` provides three main "
-"functions, all designed with the goal of..."
+"Das Finanzdatenverwaltungsmodul von „qteasy“ bietet drei Hauptfunktionen, "
+"die alle mit dem Ziel entwickelt wurden, ..."
 
 #: ../../source/manage_data/1. overview.md:19
 msgid "**数据拉取**：从多个不同的网络数据提供商拉取多种金融数据，满足不同用户的使用习惯："
@@ -152,14 +153,14 @@ msgstr ""
 #: ../../source/manage_data/1. overview.md:32
 msgid "总体来说，`qteasy`的数据获取模块的结构可以用下面的示意图来表示："
 msgstr ""
-"In general, the structure of the data acquisition module in `qteasy` can be "
-"represented by the following diagram:"
+"Im Allgemeinen kann die Struktur des Datenerfassungsmoduls in „qteasy“ durch"
+" das folgende Diagramm dargestellt werden:"
 
 #: ../../source/manage_data/1. overview.md:34
 msgid "`QTEASY`数据管理模块: ![数据获取模块结构](img/Overview.png)"
 msgstr ""
-"`QTEASY` Data Management Module: ![Data Acquisition Module "
-"Structure](img/Overview.png)"
+"`QTEASY` Datenverwaltungsmodul: ![Struktur des "
+"Datenerfassungsmoduls](img/Overview.png)"
 
 #: ../../source/manage_data/1. overview.md:34
 msgid "数据获取模块结构"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 23:30+0800\n"
 "Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:1
 msgid "使用数据获取渠道自动填充数据"
-msgstr "Automatically populate data using data acquisition channels."
+msgstr "Füllen Sie Daten mithilfe von Datenerfassungskanälen automatisch aus."
 
 #: ../../source/manage_data/4. data_channels.md:3
 msgid ""
@@ -45,8 +45,8 @@ msgstr "QTEASY data retrieval function"
 #: ../../source/manage_data/4. data_channels.md:9
 msgid "`QTEASY`数据管理模块: ![数据获取模块结构](img/DataFetching.png)"
 msgstr ""
-"`QTEASY` Data Management Module: ![Data Fetching Module "
-"Structure](img/DataFetching.png)"
+"`QTEASY` Datenverwaltungsmodul: ![Struktur des "
+"Datenabrufmoduls](img/DataFetching.png)"
 
 #: ../../source/manage_data/4. data_channels.md:9
 msgid "数据获取模块结构"
@@ -109,8 +109,8 @@ msgstr ""
 #: ../../source/manage_data/4. data_channels.md:58
 msgid "可以看到，`trade_calendar`和`stock_daily`两张数据表中的数据已经被删除。"
 msgstr ""
-"As you can see, the data in the `trade_calendar` and `stock_daily` tables "
-"has been deleted."
+"Wie Sie sehen können, wurden die Daten in den Tabellen „trade_calendar“ und "
+"„stock_daily“ gelöscht."
 
 #: ../../source/manage_data/4. data_channels.md:60
 msgid ""
@@ -128,13 +128,13 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:146
 msgid "数据拉取API的功能特性"
-msgstr "Features of the Data Retrieval API"
+msgstr "Funktionen der Data Retrieval API"
 
 #: ../../source/manage_data/4. data_channels.md:148
 msgid "分析数据拉取的过程，我们可以看到，`qteasy`自动完成了下面的工作："
 msgstr ""
-"Analyzing the data retrieval process, we can see that `qteasy` automatically"
-" completed the following tasks:"
+"Bei der Analyse des Datenabrufprozesses können wir sehen, dass „qteasy“ die "
+"folgenden Aufgaben automatisch erledigt hat:"
 
 #: ../../source/manage_data/4. data_channels.md:150
 msgid ""
@@ -152,50 +152,53 @@ msgid ""
 "**下载进度可视化** —— "
 "`qteasy`提供了下载进度可视化，可以看到每个数据分块的下载进度，以及总体下载进度，过程中可以显示剩余时间，方便用户查看数据下载的情况。"
 msgstr ""
-"**Download Progress Visualization** — `qteasy` provides download progress "
-"visualization, allowing users to see the download progress of each data "
-"block, as well as the overall download progress. It also displays the "
-"remaining time, making it easy for users to monitor the data download "
-"status."
+"**Visualisierung des Download-Fortschritts** – „qteasy“ bietet eine "
+"Visualisierung des Download-Fortschritts, sodass Benutzer den Download-"
+"Fortschritt jedes Datenblocks sowie den gesamten Download-Fortschritt sehen "
+"können. Außerdem wird die verbleibende Zeit angezeigt, sodass Benutzer den "
+"Status des Datendownloads leicht überwachen können."
 
 #: ../../source/manage_data/4. data_channels.md:152
 msgid ""
 "**大数据量自动分块** —— "
 "上面的代码下载了2021年全年所有股票的日K线数据，这些数据量共有239万行，不管从任何数据渠道，这么大量的数据都不可能一次性下载下来，因此，`qteasy`自动将数据分块，每一块只有一天的数据，可以看到整年的数据被分成了243块，数据分块下载显著降低了每次网络申请的数据量，提高成功率且降低了被阻断的风险。"
 msgstr ""
-"**Automatic Data Chunking** — The code above downloaded daily candlestick "
-"chart data for all stocks throughout 2021, totaling 2.39 million rows. "
-"Regardless of the data source, such a massive amount of data cannot be "
-"downloaded all at once. Therefore, `qteasy` automatically chunks the data, "
-"with each chunk containing only one day's data. As you can see, the entire "
-"year's data was divided into 243 chunks. This chunked download significantly"
-" reduces the amount of data requested per network request, increasing the "
-"success rate and reducing the risk of being blocked."
+"**Automatische Datenaufteilung** – Der obige Code hat die täglichen "
+"Candlestick-Chartdaten für alle Aktien im Jahr 2021 heruntergeladen, "
+"insgesamt 2,39 Millionen Zeilen. Unabhängig von der Datenquelle kann eine "
+"derart große Datenmenge nicht auf einmal heruntergeladen werden. Daher teilt"
+" „qteasy“ die Daten automatisch auf, wobei jeder Block nur die Daten eines "
+"Tages enthält. Wie Sie sehen, wurden die Daten des gesamten Jahres in 243 "
+"Blöcke unterteilt. Dieser geblockte Download reduziert die pro "
+"Netzwerkanforderung angeforderte Datenmenge erheblich, erhöht die "
+"Erfolgsquote und verringert das Risiko einer Blockierung."
 
 #: ../../source/manage_data/4. data_channels.md:153
 msgid ""
 "**多线程并行下载** —— 实行数据分块下载后，`qteasy`自动使用多线程并行下载，加快数据下载速度，243个数据分块并行下载总共耗时仅16秒。"
 msgstr ""
-"**Multi-threaded Parallel Download** — After implementing data chunking for "
-"download, `qteasy` automatically uses multi-threaded parallel download to "
-"speed up the data download process. The total time for downloading 243 data "
-"chunks in parallel was only 16 seconds."
+"**Paralleler Download mit mehreren Threads** – Nach der Implementierung von "
+"Daten-Chunking für den Download verwendet „qteasy“ automatisch den "
+"parallelen Download mit mehreren Threads, um den Daten-Download-Prozess zu "
+"beschleunigen. Die Gesamtzeit für den parallelen Download von 243 "
+"Datenblöcken betrug nur 16 Sekunden."
 
 #: ../../source/manage_data/4. data_channels.md:155
 msgid ""
 "有了上面这些特性，`qteasy`的数据拉取功能可以满足几乎所有用户的数据获取需求，不管是下载大量数据，还是下载高频数据，`qteasy`都能提供高效的数据下载服务。"
 msgstr ""
-"With these features, `qteasy`'s data retrieval function can meet the data "
-"acquisition needs of almost all users. Whether downloading large amounts of "
-"data or high-frequency data, `qteasy` can provide efficient data download "
-"services."
+"Mit diesen Funktionen kann die Datenabruffunktion von „qteasy“ die "
+"Datenerfassungsanforderungen fast aller Benutzer erfüllen. Unabhängig davon,"
+" ob große Datenmengen oder Hochfrequenzdaten heruntergeladen werden, kann "
+"„qteasy“ effiziente Daten-Download-Dienste bereitstellen."
 
 #: ../../source/manage_data/4. data_channels.md:157
 msgid "当然，除了上面提到的这些特性之外，`qteasy`还提供了更多的功能特性，以针对下载过程中出现的各种状况，这些功能特性我们在后面会逐步介绍："
 msgstr ""
-"Of course, in addition to the features mentioned above, `qteasy` offers many"
-" more features to address various situations that may arise during the "
-"download process. We will introduce these features in detail later:"
+"Zusätzlich zu den oben genannten Funktionen bietet „qteasy“ natürlich noch "
+"viele weitere Funktionen, um verschiedene Situationen zu bewältigen, die "
+"während des Downloadvorgangs auftreten können. Wir werden diese Funktionen "
+"später im Detail vorstellen:"
 
 #: ../../source/manage_data/4. data_channels.md:159
 msgid ""
@@ -273,7 +276,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:188
 msgid "验证一下数据是否下载成功："
-msgstr "Verify that the data was downloaded successfully:"
+msgstr "Überprüfen Sie, ob die Daten erfolgreich heruntergeladen wurden:"
 
 #: ../../source/manage_data/4. data_channels.md:244
 msgid "数据下载显然也是成功的。分析上面的下载过程，可以发现几个特点："
@@ -415,19 +418,21 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:287
 msgid "`hist_dnld_retry_cnt` - 最大重试次数，默认为7次"
-msgstr "`hist_dnld_retry_cnt` - Maximum number of retries, defaults to 7."
+msgstr ""
+"„hist_dnld_retry_cnt“ – Maximale Anzahl von Wiederholungsversuchen, "
+"standardmäßig 7."
 
 #: ../../source/manage_data/4. data_channels.md:288
 msgid "`hist_dnld_retry_wait` - 第一次重试等待时间，默认为1.0秒"
 msgstr ""
-"`hist_dnld_retry_wait` - The wait time for the first retry, the default is "
-"1.0 second."
+"„hist_dnld_retry_wait“ – Die Wartezeit für den ersten Wiederholungsversuch, "
+"der Standardwert beträgt 1,0 Sekunden."
 
 #: ../../source/manage_data/4. data_channels.md:289
 msgid "`hist_dnld_backoff` - 重试等待时间增加倍数，默认为2.0"
 msgstr ""
-"`hist_dnld_backoff` - The multiplier for increasing the retry wait time; the"
-" default is 2.0."
+"„hist_dnld_backoff“ – Der Multiplikator zum Erhöhen der "
+"Wiederholungswartezeit; Der Standardwert ist 2.0."
 
 #: ../../source/manage_data/4. data_channels.md:291
 msgid ""
@@ -458,8 +463,8 @@ msgstr "Other functions"
 #: ../../source/manage_data/4. data_channels.md:299
 msgid "`qteasy`的`refill_data_source()`接口还提供了其他一些功能，例如："
 msgstr ""
-"The `qteasy` `refill_data_source()` interface also provides other "
-"functionalities, such as:"
+"Die Schnittstelle „qteasy“ „refill_data_source()“ bietet auch andere "
+"Funktionalitäten, wie zum Beispiel:"
 
 #: ../../source/manage_data/4. data_channels.md:301
 msgid ""
@@ -496,5 +501,5 @@ msgstr ""
 #: ../../source/manage_data/4. data_channels.md:306
 msgid "其他更多关于该接口的解释，请参见`qteasy`的[API文档](../api/history_data.rst)。"
 msgstr ""
-"For further explanation of this interface, please refer to the `qteasy` API "
-"documentation (../api/history_data.rst)."
+"Weitere Erläuterungen zu dieser Schnittstelle finden Sie in der API-"
+"Dokumentation „qteasy“ (../api/history_data.rst)."
