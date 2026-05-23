@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:1
@@ -40,9 +39,8 @@ msgstr ""
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:10
 msgid ""
 "本篇教程就围绕这个问题，用 `HistoryPanel.candle_pattern()` "
-"把形态事件变成可研究的数据，再把它窗口化成横向筛选条件，最后跑通完整闭环：   **事件信号 -> 事件窗口 -> `where/mask` ->"
-" `portfolio + benchmark` -> `cum_return + CAGR` -> `plot(highlight)` "
-"解释。**"
+"把形态事件变成可研究的数据，再把它窗口化成横向筛选条件，最后跑通完整闭环：   **事件信号 -> 事件窗口 -> `where/mask` -> "
+"`portfolio + benchmark` -> `cum_return + CAGR` -> `plot(highlight)` 解释。**"
 msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:13
@@ -78,11 +76,13 @@ msgid "不过，仅仅“能算出来/能画出来”还远远不够。   如果
 msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:50
-msgid "**事件太稀疏**：很多形态信号都像“针尖”一样跳出来——今天出现、明天又没了。如果你按“当天出现就选”来做篮子，组合会非常不稳定：入选股票数量忽多忽少，收益曲线也容易断断续续，最后你甚至分不清是在研究形态，还是在研究“样本稀疏性”。"
+msgid ""
+"**事件太稀疏**：很多形态信号都像“针尖”一样跳出来——今天出现、明天又没了。如果你按“当天出现就选”来做篮子，组合会非常不稳定：入选股票数量忽多忽少，收益曲线也容易断断续续，最后你甚至分不清是在研究形态，还是在研究“样本稀疏性”。"
 msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:51
-msgid "**怎么窗口化才像实战**：更自然的口径通常不是“今天出现就立刻选”，而是“最近一段时间出现过就算有效”。因为现实里我们不一定能在当天捕捉到完美的形态点；更常见的做法是把它当成一个“短窗口内的关注信号”。"
+msgid ""
+"**怎么窗口化才像实战**：更自然的口径通常不是“今天出现就立刻选”，而是“最近一段时间出现过就算有效”。因为现实里我们不一定能在当天捕捉到完美的形态点；更常见的做法是把它当成一个“短窗口内的关注信号”。"
 msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:52
@@ -192,7 +192,8 @@ msgid "3.1 本节要解决什么"
 msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:129
-msgid "我们要得到一张“事件信号表”：每一天、每只股票，是否出现该形态。   这里示例用 `cdlhammer`（锤头线），你后面可以替换成其他形态函数名。"
+msgid ""
+"我们要得到一张“事件信号表”：每一天、每只股票，是否出现该形态。   这里示例用 `cdlhammer`（锤头线），你后面可以替换成其他形态函数名。"
 msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:132
@@ -205,7 +206,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:136
 msgid "`DataFrame`（index=时间，columns=shares）"
-msgstr ""
+msgstr "`DataFrame` (index=time, columns=shares)"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:137
 msgid "值为浮点数（通常 0 表示无事件，正/负表示方向/强度，具体由 ta-lib 定义）"
@@ -258,7 +259,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:172
 msgid "`window_ml[i, t] = any(events_ml[i, t-K+1 : t+1])`"
-msgstr ""
+msgstr "`window_ml[i, t] = any(events_ml[i, t-K+1 : t+1])`"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:174
 msgid "最终得到的 `window_ml` 仍然是 `(M, L)` 的 bool，就可以直接喂给 `hp.where(window_ml)`。"
@@ -324,8 +325,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:307
 msgid ""
-"事件型研究最怕“只有一张收益表”。   我们需要把事件点标回到 K "
-"线图上，肉眼核对“这到底是什么形态、发生在什么趋势里”，这样结论才可复盘、可讨论。"
+"事件型研究最怕“只有一张收益表”。   我们需要把事件点标回到 K 线图上，肉眼核对“这到底是什么形态、发生在什么趋势里”，这样结论才可复盘、可讨论。"
 msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:310
@@ -382,9 +382,8 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:528
 msgid ""
-"需要再次强调：这条链路是研究向粗聚合，不含交易执行语义。   "
-"如果你希望把事件信号做成真实可回测的策略，应把“事件窗口的筛选规则”转成策略信号，并交给 `Operator/Backtester` "
-"处理交易层细节（成本、交割、下单约束等）。"
+"需要再次强调：这条链路是研究向粗聚合，不含交易执行语义。   如果你希望把事件信号做成真实可回测的策略，应把“事件窗口的筛选规则”转成策略信号，并交给 "
+"`Operator/Backtester` 处理交易层细节（成本、交割、下单约束等）。"
 msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:533
@@ -405,11 +404,11 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "`img/3.3_minimal_run.png`"
-msgstr ""
+msgstr "`img/3.3_minimal_run.png`"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "§0"
-msgstr ""
+msgstr "§0"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "最小可跑：算 signals + 画出基础图"
@@ -417,7 +416,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "`img/3.3_pf_compare.png`"
-msgstr ""
+msgstr "`img/3.3_pf_compare.png`"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "§0.5 或 §5"
@@ -429,13 +428,12 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "`img/3.3_highlight_pattern.png`"
-msgstr ""
+msgstr "`img/3.3_highlight_pattern.png`"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "§6"
-msgstr ""
+msgstr "§6"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "单股 K 线高亮事件发生日（可复盘解释）"
 msgstr ""
-

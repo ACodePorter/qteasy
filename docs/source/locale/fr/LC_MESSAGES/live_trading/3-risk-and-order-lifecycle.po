@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:1
@@ -30,7 +29,8 @@ msgid ""
 msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:5
-msgid "亲爱的用户，模拟实盘里「没成交」并不总意味着策略没信号。可能是本地风控拦下了，也可能是模拟券商不收单。我们把两条路径分开讲，您就不会误把风控拒单当成「券商坏了」。"
+msgid ""
+"亲爱的用户，模拟实盘里「没成交」并不总意味着策略没信号。可能是本地风控拦下了，也可能是模拟券商不收单。我们把两条路径分开讲，您就不会误把风控拒单当成「券商坏了」。"
 msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:7
@@ -101,7 +101,7 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "`risk_log`、`<RISK REJECTED>`"
-msgstr ""
+msgstr "`risk_log`、`<RISK REJECTED> `"
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "**柜台受理拒单**"
@@ -185,8 +185,7 @@ msgstr ""
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:55
 msgid ""
 "**RiskManager** 在 Trader 提交订单**之前**评估规则链——像复核台按 checklist "
-"逐项打勾。下表列举常见规则类型及用户可见结果，帮助您理解 `rule_id` 与拒因；**不是**内置规则全量列表（规则由您在 Python "
-"中组装）。"
+"逐项打勾。下表列举常见规则类型及用户可见结果，帮助您理解 `rule_id` 与拒因；**不是**内置规则全量列表（规则由您在 Python 中组装）。"
 msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:57
@@ -278,7 +277,8 @@ msgid "CLI/TUI 会显示类似："
 msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:80
-msgid "含义：**风控规则 MAX_ORDER_QTY** 认为数量超限。请到 `risk_log` 搜 `<RISK REJECTED>` 核对细节。"
+msgid ""
+"含义：**风控规则 MAX_ORDER_QTY** 认为数量超限。请到 `risk_log` 搜 `<RISK REJECTED>` 核对细节。"
 msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:82
@@ -306,8 +306,8 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:100
 msgid ""
-"**如何使用**：长期停在某一状态 → 查该行「您该关注什么」→ 必要时到 :doc:`5-artifacts-and-"
-"troubleshooting` 剧本 D/E。"
+"**如何使用**：长期停在某一状态 → 查该行「您该关注什么」→ 必要时到 :doc:`5-artifacts-and-troubleshooting`"
+" 剧本 D/E。"
 msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
@@ -324,7 +324,7 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "**submitted**"
-msgstr ""
+msgstr "**submitted**"
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "柜台已收单，尚未全部成交"
@@ -336,7 +336,7 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "**partial-filled**"
-msgstr ""
+msgstr "**partial-filled**"
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "部分成交，累计量 < 委托量"
@@ -348,7 +348,7 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "**filled**"
-msgstr ""
+msgstr "**filled**"
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "累计成交量达到委托量"
@@ -360,7 +360,7 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "**canceled**"
-msgstr ""
+msgstr "**canceled**"
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "已撤单"
@@ -372,7 +372,7 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "**rejected**"
-msgstr ""
+msgstr "Often `rejected`"
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md
 msgid "柜台受理阶段拒绝"
@@ -427,8 +427,8 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:126
 msgid ""
-"对您而言：收盘后请关注 `post_close` 相关日志与 `reconcile` 对账输出，确认在途单是否已按规则收尾，而不必记忆内部 API"
-" 名称。"
+"对您而言：收盘后请关注 `post_close` 相关日志与 `reconcile` 对账输出，确认在途单是否已按规则收尾，而不必记忆内部 API "
+"名称。"
 msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:128
@@ -489,7 +489,7 @@ msgstr ""
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:148
 msgid "CLI 命令：:doc:`8-cli-trader-capability-matrix`"
-msgstr ""
+msgstr "CLI command: :doc:`8-cli-trader-capability-matrix`"
 
 #: ../../source/live_trading/3-risk-and-order-lifecycle.md:149
 msgid ""
@@ -573,9 +573,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "optional backlog B1 修复后，分批成交状态判定更贴近实际累计成交量。   "
-#~ "当累计成交量达到目标数量时，状态应由 `partial-filled` 进入 "
-#~ "`filled`。"
+#~ "optional backlog B1 修复后，分批成交状态判定更贴近实际累计成交量。   当累计成交量达到目标数量时，状态应由 `partial-"
+#~ "filled` 进入 `filled`。"
 #~ msgstr ""
 
 #~ msgid "5. 收盘后处理（用户视角）"
@@ -616,4 +615,3 @@ msgstr ""
 
 #~ msgid "双路径教程：`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
 #~ msgstr ""
-

@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/back_testing/3. result_structure.md:1
@@ -29,8 +28,8 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md:5
 msgid ""
-"**qt.run(op, mode=1)** 返回的对象通常为回测结果容器（如 Backtester 或包含结果的结构），与 qteasy 2.0"
-" API 一致，具体类型以文档为准。"
+"**qt.run(op, mode=1)** 返回的对象通常为回测结果容器（如 Backtester 或包含结果的结构），与 qteasy 2.0 "
+"API 一致，具体类型以文档为准。"
 msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md:7
@@ -55,7 +54,7 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "loop_result"
-msgstr ""
+msgstr "loop_result"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "结构/列表"
@@ -67,11 +66,11 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "complete_values"
-msgstr ""
+msgstr "complete_values"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "DataFrame/array"
-msgstr ""
+msgstr "DataFrame/array"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "完整净值或资金曲线序列，含持仓、cash、value、fee 及 p-{股票代码} 当日价格列等。"
@@ -79,11 +78,11 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "oper_count"
-msgstr ""
+msgstr "oper_count"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "int/dict"
-msgstr ""
+msgstr "int/dict"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "操作次数或按类型统计。"
@@ -91,11 +90,11 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "summary"
-msgstr ""
+msgstr "summary"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "dict/str"
-msgstr ""
+msgstr "dict/str"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "汇总信息（如总收益、夏普等）。"
@@ -107,7 +106,7 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "array/Series"
-msgstr ""
+msgstr "array/Series"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "每日或每周期净值。"
@@ -119,7 +118,7 @@ msgstr ""
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "DataFrame"
-msgstr ""
+msgstr "DataFrame"
 
 #: ../../source/back_testing/3. result_structure.md
 msgid "各时点持仓明细（若有）。"
@@ -156,4 +155,3 @@ msgstr ""
 #: ../../source/back_testing/3. result_structure.md:31
 msgid "获取方式：如 `result.summary`、`result.evaluate()` 或单独调用评价函数，以 API 文档为准。"
 msgstr ""
-

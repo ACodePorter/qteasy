@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/api/api_reference.rst:2
@@ -33,9 +32,9 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst of qteasy.configure.configuration
 #: qteasy.configure.configure qteasy.configure.get_config
-#: qteasy.configure.get_configurations qteasy.configure.remove_start_up_setting
-#: qteasy.configure.reset_config qteasy.configure.set_config
-#: qteasy.configure.update_start_up_setting
+#: qteasy.configure.get_configurations
+#: qteasy.configure.remove_start_up_setting qteasy.configure.reset_config
+#: qteasy.configure.set_config qteasy.configure.update_start_up_setting
 msgid "参数"
 msgstr ""
 
@@ -43,8 +42,8 @@ msgstr ""
 #: qteasy.configure.get_configurations:3
 msgid ""
 "需要显示的配置变量名称，如果不给出任何名称，则按level，up_to等方式显示所有的匹配的变量名 "
-"可以以逗号分隔字符串的形式给出一个或多个变量名，也可以list形式给出一个或多个变量名 以下两种方式等价： 'local_data_source,"
-" local_data_file_type, local_data_file_path' ['local_data_source', "
+"可以以逗号分隔字符串的形式给出一个或多个变量名，也可以list形式给出一个或多个变量名 以下两种方式等价： 'local_data_source, "
+"local_data_file_type, local_data_file_path' ['local_data_source', "
 "'local_data_file_type', 'local_data_file_path']"
 msgstr ""
 
@@ -56,8 +55,8 @@ msgstr ""
 #: of qteasy.configure.configuration:12 qteasy.configure.get_config:12
 #: qteasy.configure.get_configurations:12
 msgid ""
-"需要显示的配置变量的级别上限，需要配合level设置。 例如，当level == 0, up_to == 2时 "
-"会显示级别在0～2之间的所有配置变量 如果给出了config，则忽略此参数"
+"需要显示的配置变量的级别上限，需要配合level设置。 例如，当level == 0, up_to == 2时 会显示级别在0～2之间的所有配置变量 "
+"如果给出了config，则忽略此参数"
 msgstr ""
 
 #: of qteasy.configure.configuration:17 qteasy.configure.get_config:17
@@ -72,9 +71,10 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst of qteasy.configure.configuration
 #: qteasy.configure.configure qteasy.configure.get_config
-#: qteasy.configure.get_configurations qteasy.configure.remove_start_up_setting
-#: qteasy.configure.reset_config qteasy.configure.set_config
-#: qteasy.configure.start_up_settings qteasy.configure.update_start_up_setting
+#: qteasy.configure.get_configurations
+#: qteasy.configure.remove_start_up_setting qteasy.configure.reset_config
+#: qteasy.configure.set_config qteasy.configure.start_up_settings
+#: qteasy.configure.update_start_up_setting
 msgid "返回类型"
 msgstr ""
 
@@ -224,7 +224,8 @@ msgid "将配置信息写入文件:"
 msgstr ""
 
 #: of qteasy.configure.save_config:1
-msgid "将config保存为一个文件 尚未实现的功能：如果initial_config为True，则将配置更新到初始化配置文件qteasy.cfg中()"
+msgid ""
+"将config保存为一个文件 尚未实现的功能：如果initial_config为True，则将配置更新到初始化配置文件qteasy.cfg中()"
 msgstr ""
 
 #: of qteasy.configure.save_config:4
@@ -241,8 +242,8 @@ msgstr ""
 
 #: of qteasy.configure.save_config:10
 msgid ""
-"保存配置变量到初始配置文件 qteasy.cfg 中，如果 qteasy.cfg 中已经存在配置变量，则覆盖对应变量。 TODO: "
-"实现将配置变量写入 qteasy.cfg 初始配置文件的功能。 由于目前使用 pickle 写入对象为二进制文件，而 qteasy.cfg "
+"保存配置变量到初始配置文件 qteasy.cfg 中，如果 qteasy.cfg 中已经存在配置变量，则覆盖对应变量。 TODO: 实现将配置变量写入 "
+"qteasy.cfg 初始配置文件的功能。 由于目前使用 pickle 写入对象为二进制文件，而 qteasy.cfg "
 "是文本文件，所以需要实现新的写入方式。"
 msgstr ""
 
@@ -255,7 +256,8 @@ msgid "qteasy的所有配置变量"
 msgstr ""
 
 #: ../../source/api/api_reference.rst:41
-msgid "下面是qteasy的配置变量，可以通过qteasy.get_config()函数查看当前的配置信息，也可以通过qteasy.configure()函数修改配置信息。"
+msgid ""
+"下面是qteasy的配置变量，可以通过qteasy.get_config()函数查看当前的配置信息，也可以通过qteasy.configure()函数修改配置信息。"
 msgstr ""
 
 #: ../../source/api/api_reference.rst:45
@@ -277,6 +279,7 @@ msgstr ""
 #: ../../source/api/api_reference.rst:50
 msgid "扩展 Broker：``live_trading/4-broker-adapter-and-integration.md``"
 msgstr ""
+"Extend the broker: ``live_trading/4-broker-adapter-and-integration.md``"
 
 #: ../../source/api/api_reference.rst:51
 msgid "排错复盘：``live_trading/5-artifacts-and-troubleshooting.md``"
@@ -308,30 +311,31 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:62
 msgid "qteasy Configuration Variables"
-msgstr ""
+msgstr "qteasy Configuration Variables"
 
 #: ../../source/api/api_reference.rst:66
 msgid "**Name**"
-msgstr ""
+msgstr "**Name**"
 
 #: ../../source/api/api_reference.rst:67
 msgid "**Level**"
-msgstr ""
+msgstr "**Level**"
 
 #: ../../source/api/api_reference.rst:68
 msgid "**Default Value**"
-msgstr ""
+msgstr "**Default Value**"
 
 #: ../../source/api/api_reference.rst:69
 msgid "**Description**"
-msgstr ""
+msgstr "**Description**"
 
 #: ../../source/api/api_reference.rst:70
 msgid "``mode``"
-msgstr ""
+msgstr "``mode``"
 
 #: ../../source/api/api_reference.rst:71 ../../source/api/api_reference.rst:95
-#: ../../source/api/api_reference.rst:99 ../../source/api/api_reference.rst:107
+#: ../../source/api/api_reference.rst:99
+#: ../../source/api/api_reference.rst:107
 #: ../../source/api/api_reference.rst:114
 #: ../../source/api/api_reference.rst:170
 #: ../../source/api/api_reference.rst:178
@@ -343,14 +347,15 @@ msgstr ""
 #: ../../source/api/api_reference.rst:545
 #: ../../source/api/api_reference.rst:551
 msgid "0"
-msgstr ""
+msgstr "0"
 
-#: ../../source/api/api_reference.rst:72 ../../source/api/api_reference.rst:479
+#: ../../source/api/api_reference.rst:72
+#: ../../source/api/api_reference.rst:479
 #: ../../source/api/api_reference.rst:500
 #: ../../source/api/api_reference.rst:631
 #: ../../source/api/api_reference.rst:641
 msgid "``1``"
-msgstr ""
+msgstr "[1, 2, 3] becomes: [0, 1, 0, 2, 0, 3, 0] after padding."
 
 #: ../../source/api/api_reference.rst
 msgid "qteasy 的运行模式:"
@@ -374,9 +379,10 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:78
 msgid "``time_zone``"
-msgstr ""
+msgstr "``time_zone``"
 
-#: ../../source/api/api_reference.rst:79 ../../source/api/api_reference.rst:165
+#: ../../source/api/api_reference.rst:79
+#: ../../source/api/api_reference.rst:165
 #: ../../source/api/api_reference.rst:206
 #: ../../source/api/api_reference.rst:210
 #: ../../source/api/api_reference.rst:214
@@ -401,11 +407,11 @@ msgstr ""
 #: ../../source/api/api_reference.rst:401
 #: ../../source/api/api_reference.rst:422
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../../source/api/api_reference.rst:80
 msgid "``local``"
-msgstr ""
+msgstr "``local''"
 
 #: ../../source/api/api_reference.rst
 msgid "回测时的时区，默认值\"local\"，表示使用本地时区。"
@@ -417,55 +423,56 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst
 msgid "Asia/Shanghai"
-msgstr ""
+msgstr "Asia/Shanghai"
 
 #: ../../source/api/api_reference.rst
 msgid "Asia/Hong_Kong"
-msgstr ""
+msgstr "Asia/Hong_Kong"
 
 #: ../../source/api/api_reference.rst
 msgid "US/Eastern"
-msgstr ""
+msgstr "US/Eastern"
 
 #: ../../source/api/api_reference.rst
 msgid "US/Pacific"
-msgstr ""
+msgstr "US/Pacific"
 
 #: ../../source/api/api_reference.rst
 msgid "Europe/London"
-msgstr ""
+msgstr "Europe/London"
 
 #: ../../source/api/api_reference.rst
 msgid "Europe/Paris"
-msgstr ""
+msgstr "Europe/Paris"
 
 #: ../../source/api/api_reference.rst
 msgid "Australia/Sydney"
-msgstr ""
+msgstr "Australia/Sydney"
 
 #: ../../source/api/api_reference.rst
 msgid "Australia/Melbourne"
-msgstr ""
+msgstr "Australia/Melbourne"
 
 #: ../../source/api/api_reference.rst
 msgid "Pacific/Auckland"
-msgstr ""
+msgstr "Pacific/Auckland"
 
 #: ../../source/api/api_reference.rst
 msgid "Pacific/Chatham"
-msgstr ""
+msgstr "Pacific/Chatham"
 
 #: ../../source/api/api_reference.rst
 msgid "etc."
-msgstr ""
+msgstr "etc."
 
 #: ../../source/api/api_reference.rst:94
 msgid "``asset_pool``"
-msgstr ""
+msgstr "``asset_pool``"
 
-#: ../../source/api/api_reference.rst:96 ../../source/api/api_reference.rst:316
+#: ../../source/api/api_reference.rst:96
+#: ../../source/api/api_reference.rst:316
 msgid "``000300.SH``"
-msgstr ""
+msgstr "``000300.SH``"
 
 #: ../../source/api/api_reference.rst:97
 msgid "可用投资产品池，投资组合基于池中的产品创建"
@@ -474,10 +481,20 @@ msgstr ""
 #: ../../source/api/api_reference.rst:98
 msgid "``asset_type``"
 msgstr ""
+"The set of names of the historical data to be fetched, if htypes is empty, "
+"the system will try to create all possible htypes by basing on the name of "
+"the historical data and the freq/asset_type parameter. the input can be str "
+"or list: - str: 'open, high, low, close' - list: ['open', 'high', 'low', "
+"'close'] - list: ['open', 'high', 'low', 'close'] - list: ['open', 'high', "
+"'low', 'close'] 'high', 'low', 'close']"
 
 #: ../../source/api/api_reference.rst:100
 msgid "``IDX``"
 msgstr ""
+"Limit the types of assets contained in the acquired data to the following "
+"options or a combination of the following options. Legitimate combinations "
+"include comma-separated strings or lists of strings, e.g., 'E, IDX' and "
+"['E', 'IDX'] are both legitimate inputs."
 
 #: ../../source/api/api_reference.rst
 msgid "投资产品的资产类型，包括："
@@ -501,7 +518,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:106
 msgid "``live_trade_account_id``"
-msgstr ""
+msgstr "``live_trade_account_id``"
 
 #: ../../source/api/api_reference.rst:108
 #: ../../source/api/api_reference.rst:115
@@ -517,7 +534,7 @@ msgstr ""
 #: ../../source/api/api_reference.rst:552
 #: ../../source/api/api_reference.rst:564
 msgid "``None``"
-msgstr ""
+msgstr "``None''"
 
 #: ../../source/api/api_reference.rst
 msgid "实盘交易账户ID，用于实盘交易，如果指定了该参数，则会直接"
@@ -537,7 +554,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:113
 msgid "``live_trade_account_name``"
-msgstr ""
+msgstr "``live_trade_account_name``"
 
 #: ../../source/api/api_reference.rst
 msgid "用于实盘交易的账户名称，如果live_trade_account为None，则"
@@ -553,7 +570,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:119
 msgid "``live_trade_debug_mode``"
-msgstr ""
+msgstr "``live_trade_debug_mode``"
 
 #: ../../source/api/api_reference.rst:120
 #: ../../source/api/api_reference.rst:124
@@ -575,7 +592,7 @@ msgstr ""
 #: ../../source/api/api_reference.rst:626
 #: ../../source/api/api_reference.rst:630
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../../source/api/api_reference.rst:121
 #: ../../source/api/api_reference.rst:220
@@ -583,6 +600,8 @@ msgstr ""
 #: ../../source/api/api_reference.rst:402
 msgid "``False``"
 msgstr ""
+"True returns the HistoryPanel object, False returns a dictionary containing "
+"the DataFrame object."
 
 #: ../../source/api/api_reference.rst:122
 msgid "实盘交易调试模式，True: 调试模式，False: 正常模式"
@@ -590,11 +609,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:123
 msgid "``live_trade_init_cash``"
-msgstr ""
+msgstr "``live_trade_init_cash``"
 
 #: ../../source/api/api_reference.rst:125
 msgid "``1000000.0``"
-msgstr ""
+msgstr "``1000000.0``"
 
 #: ../../source/api/api_reference.rst
 msgid "实盘交易账户的初始资金，浮点数，例如："
@@ -610,7 +629,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:129
 msgid "``live_trade_init_holdings``"
-msgstr ""
+msgstr "``live_trade_init_holdings``"
 
 #: ../../source/api/api_reference.rst
 msgid "实盘交易账户的初始持仓，字典，例如："
@@ -626,11 +645,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:135
 msgid "``live_trade_broker_type``"
-msgstr ""
+msgstr "``live_trade_broker_type``"
 
 #: ../../source/api/api_reference.rst:137
 msgid "``simulator``"
-msgstr ""
+msgstr "``simulator''"
 
 #: ../../source/api/api_reference.rst
 msgid "实盘交易账户的交易代理商类型，可以设置为模拟交易代理商返回交易结果、手动输入结果或者连接到交易代理商的交易接口"
@@ -642,7 +661,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:140
 msgid "``live_trade_broker_params``"
-msgstr ""
+msgstr "``live_trade_broker_params``"
 
 #: ../../source/api/api_reference.rst
 msgid "实盘交易账户的交易代理商参数，字典，例如："
@@ -666,7 +685,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:148
 msgid "``live_price_acquire_channel``"
-msgstr ""
+msgstr "``live_price_acquire_channel``"
 
 #: ../../source/api/api_reference.rst:149
 #: ../../source/api/api_reference.rst:156
@@ -683,11 +702,11 @@ msgstr ""
 #: ../../source/api/api_reference.rst:585
 #: ../../source/api/api_reference.rst:599
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: ../../source/api/api_reference.rst:150
 msgid "``eastmoney``"
-msgstr ""
+msgstr "``Eastmoney''"
 
 #: ../../source/api/api_reference.rst
 msgid "实盘交易时获取实时价格的方式："
@@ -707,11 +726,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:155
 msgid "``live_price_acquire_freq``"
-msgstr ""
+msgstr "``live_price_acquire_freq``"
 
 #: ../../source/api/api_reference.rst:157
 msgid "``15MIN``"
-msgstr ""
+msgstr "``15MIN``"
 
 #: ../../source/api/api_reference.rst
 msgid "实盘交易时获取实时价格的频率："
@@ -739,13 +758,13 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:164
 msgid "``watched_price_refresh_interval``"
-msgstr ""
+msgstr "``watched_price_refresh_interval``"
 
 #: ../../source/api/api_reference.rst:166
 #: ../../source/api/api_reference.rst:537
 #: ../../source/api/api_reference.rst:658
 msgid "``5``"
-msgstr ""
+msgstr "[(1, 2, 3), (4, 5), (6, 7)] merged to read: [(2), (4.5), (6.5)]"
 
 #: ../../source/api/api_reference.rst
 msgid "实盘交易时监看实时价格的刷新频率，单位为秒，默认为5秒"
@@ -757,12 +776,12 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:169
 msgid "``trade_batch_size``"
-msgstr ""
+msgstr "``trade_batch_size``"
 
 #: ../../source/api/api_reference.rst:171
 #: ../../source/api/api_reference.rst:179
 msgid "``0.01``"
-msgstr ""
+msgstr "``0.01``"
 
 #: ../../source/api/api_reference.rst
 msgid "投资产品的最小申购批量大小，浮点数，例如："
@@ -786,7 +805,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:177
 msgid "``sell_batch_size``"
-msgstr ""
+msgstr "``sell_batch_size``"
 
 #: ../../source/api/api_reference.rst
 msgid "投资产品的最小卖出或赎回批量大小，浮点数，例如："
@@ -798,12 +817,12 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:185
 msgid "``cash_decimal_places``"
-msgstr ""
+msgstr "``cash_decimal_places``"
 
 #: ../../source/api/api_reference.rst:187
 #: ../../source/api/api_reference.rst:193
 msgid "``2``"
-msgstr ""
+msgstr "[1, 2, 3] becomes: [0, 1, 0, 2, 0, 3, 0] after padding."
 
 #: ../../source/api/api_reference.rst
 msgid "现金的小数位数，例如："
@@ -819,7 +838,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:191
 msgid "``amount_decimal_places``"
-msgstr ""
+msgstr "``amount_decimal_places``"
 
 #: ../../source/api/api_reference.rst
 msgid "投资产品的份额的小数位数，例如："
@@ -831,11 +850,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:197
 msgid "``riskfree_ir``"
-msgstr ""
+msgstr "``riskfree_ir``"
 
 #: ../../source/api/api_reference.rst:199
 msgid "``0.0035``"
-msgstr ""
+msgstr "``0.0035`''"
 
 #: ../../source/api/api_reference.rst:200
 msgid "无风险利率，如果选择\"考虑现金的时间价值\"，则回测时现金按此年利率增值"
@@ -843,7 +862,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:201
 msgid "``parallel``"
-msgstr ""
+msgstr "``parallel`''"
 
 #: ../../source/api/api_reference.rst:203
 #: ../../source/api/api_reference.rst:311
@@ -853,7 +872,7 @@ msgstr ""
 #: ../../source/api/api_reference.rst:338
 #: ../../source/api/api_reference.rst:627
 msgid "``True``"
-msgstr ""
+msgstr "``True''"
 
 #: ../../source/api/api_reference.rst:204
 msgid "如果True，策略参数寻优时将利用多核心CPU进行并行计算提升效率"
@@ -861,12 +880,12 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:205
 msgid "``hist_dnld_parallel``"
-msgstr ""
+msgstr "``hist_dnld_parallel``"
 
 #: ../../source/api/api_reference.rst:207
 #: ../../source/api/api_reference.rst:649
 msgid "``16``"
-msgstr ""
+msgstr "``16''"
 
 #: ../../source/api/api_reference.rst:208
 msgid "下载历史数据时启用的线程数量，为0或1时采用单线程下载，大于1时启用多线程"
@@ -874,7 +893,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:209
 msgid "``hist_dnld_delay``"
-msgstr ""
+msgstr "``hist_dnld_delay``"
 
 #: ../../source/api/api_reference.rst:211
 #: ../../source/api/api_reference.rst:342
@@ -883,7 +902,7 @@ msgstr ""
 #: ../../source/api/api_reference.rst:444
 #: ../../source/api/api_reference.rst:451
 msgid "``0.0``"
-msgstr ""
+msgstr "``0.0``"
 
 #: ../../source/api/api_reference.rst:212
 msgid "为防止服务器数据压力过大，下载历史数据时下载一定数量的数据后延迟的时间长度，单位为秒"
@@ -891,12 +910,12 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:213
 msgid "``hist_dnld_delay_evy``"
-msgstr ""
+msgstr "``hist_dnld_delay_evy``"
 
 #: ../../source/api/api_reference.rst:215
 #: ../../source/api/api_reference.rst:472
 msgid "``0``"
-msgstr ""
+msgstr "``0``"
 
 #: ../../source/api/api_reference.rst
 msgid "为防止服务器数据压力过大，下载历史数据时，每下载一定数量的数据，就延迟一段时间。"
@@ -908,7 +927,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:218
 msgid "``hist_dnld_prog_bar``"
-msgstr ""
+msgstr "``hist_dnld_prog_bar``"
 
 #: ../../source/api/api_reference.rst:221
 msgid "下载历史数据时是否显示进度条"
@@ -916,11 +935,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:222
 msgid "``hist_dnld_retry_cnt``"
-msgstr ""
+msgstr "``hist_dnld_retry_cnt``"
 
 #: ../../source/api/api_reference.rst:224
 msgid "``7``"
-msgstr ""
+msgstr "[(1, 2, 3), (4, 5), (6, 7)] merged to read: [(2), (4.5), (6.5)]"
 
 #: ../../source/api/api_reference.rst:225
 msgid "下载历史数据失败时的自动重试次数"
@@ -928,12 +947,12 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:226
 msgid "``hist_dnld_retry_delay``"
-msgstr ""
+msgstr "``hist_dnld_retry_delay``"
 
 #: ../../source/api/api_reference.rst:228
 #: ../../source/api/api_reference.rst:408
 msgid "``1.0``"
-msgstr ""
+msgstr "``1.0''"
 
 #: ../../source/api/api_reference.rst:229
 msgid "下载历史数据失败时的自动重试前的延迟时间，单位为秒"
@@ -941,11 +960,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:230
 msgid "``hist_dnld_backoff``"
-msgstr ""
+msgstr "``hist_dnld_backoff``"
 
 #: ../../source/api/api_reference.rst:232
 msgid "``2.0``"
-msgstr ""
+msgstr "``2.0''"
 
 #: ../../source/api/api_reference.rst
 msgid "下载历史数据失败时的自动重试的延迟时间倍增乘数"
@@ -961,11 +980,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:236
 msgid "``auto_dnld_hist_tables``"
-msgstr ""
+msgstr "``auto_dnld_hist_tables``"
 
 #: ../../source/api/api_reference.rst:238
 msgid "``[]``"
-msgstr ""
+msgstr "``[]``"
 
 #: ../../source/api/api_reference.rst
 msgid "[PLANNED] 在实盘运行时自动下载的历史数据表名列表，例如："
@@ -973,7 +992,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst
 msgid "[\"stock_daily\", \"index_weekly\", \"stock_monthly\"]"
-msgstr ""
+msgstr "[\"stock_daily\", \"index_weekly\", \"stock_monthly\"]"
 
 #: ../../source/api/api_reference.rst
 msgid "当前版本尚未启用该功能，配置不产生实际效果。"
@@ -981,7 +1000,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:242
 msgid "``gpu``"
-msgstr ""
+msgstr "``gpu``"
 
 #: ../../source/api/api_reference.rst
 msgid "[PLANNED] 如果True，策略参数寻优时使用GPU加速计算。"
@@ -993,11 +1012,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:247
 msgid "``local_data_source``"
-msgstr ""
+msgstr "``local_data_source``"
 
 #: ../../source/api/api_reference.rst:249
 msgid "``file``"
-msgstr ""
+msgstr "``file``"
 
 #: ../../source/api/api_reference.rst
 msgid "确定本地历史数据存储方式："
@@ -1025,11 +1044,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:256
 msgid "``local_data_file_type``"
-msgstr ""
+msgstr "``local_data_file_type``"
 
 #: ../../source/api/api_reference.rst:258
 msgid "``csv``"
-msgstr ""
+msgstr "``csv''"
 
 #: ../../source/api/api_reference.rst
 msgid "确定本地历史数据文件的存储格式："
@@ -1049,11 +1068,13 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:263
 msgid "``local_data_file_path``"
-msgstr ""
+msgstr "``local_data_file_path``"
 
 #: ../../source/api/api_reference.rst:265
 msgid "``data/``"
 msgstr ""
+"*HistoryPanel* -- if as_data_frame is set to False, a HistoryPanel object is"
+" returned"
 
 #: ../../source/api/api_reference.rst:266
 msgid "确定本地历史数据文件存储路径"
@@ -1061,11 +1082,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:267
 msgid "``local_db_host``"
-msgstr ""
+msgstr "``local_db_host``"
 
 #: ../../source/api/api_reference.rst:269
 msgid "``localhost``"
-msgstr ""
+msgstr "``localhost`''"
 
 #: ../../source/api/api_reference.rst:270
 msgid "用于存储历史数据的数据库的主机名，该数据库应该为mysql数据库或MariaDB"
@@ -1073,11 +1094,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:271
 msgid "``local_db_port``"
-msgstr ""
+msgstr "``local_db_port``"
 
 #: ../../source/api/api_reference.rst:273
 msgid "``3306``"
-msgstr ""
+msgstr "``3306''"
 
 #: ../../source/api/api_reference.rst:274
 msgid "用于存储历史数据的数据库的端口号，默认值为mysql数据库的端口号3306"
@@ -1085,11 +1106,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:275
 msgid "``local_db_name``"
-msgstr ""
+msgstr "``local_db_name``"
 
 #: ../../source/api/api_reference.rst:277
 msgid "``qt_db``"
-msgstr ""
+msgstr "``qt_db``"
 
 #: ../../source/api/api_reference.rst:278
 msgid "用于存储历史数据的数据库名，默认值为\"qt_db\""
@@ -1097,7 +1118,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:279
 msgid "``local_db_user``"
-msgstr ""
+msgstr "``local_db_user``"
 
 #: ../../source/api/api_reference.rst
 msgid "访问数据库的用户名，该用户需具备足够的操作权限"
@@ -1109,7 +1130,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:284
 msgid "``local_db_password``"
-msgstr ""
+msgstr "``local_db_password``"
 
 #: ../../source/api/api_reference.rst
 msgid "数据库的访问密码"
@@ -1117,11 +1138,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:289
 msgid "``sys_log_file_path``"
-msgstr ""
+msgstr "``sys_log_file_path``"
 
 #: ../../source/api/api_reference.rst:291
 msgid "``syslog/``"
-msgstr ""
+msgstr "``syslog/``"
 
 #: ../../source/api/api_reference.rst
 msgid "系统运行日志及错误日志的存储路径。"
@@ -1141,11 +1162,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:296
 msgid "``trade_log_file_path``"
-msgstr ""
+msgstr "``trade_log_file_path``"
 
 #: ../../source/api/api_reference.rst:298
 msgid "``tradelog/``"
-msgstr ""
+msgstr "``tradelog/``"
 
 #: ../../source/api/api_reference.rst
 msgid "明细交易日志及交易汇总的存储路径（回测与实盘共用）。"
@@ -1157,12 +1178,12 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:303
 msgid "``trade_log_keep_days``"
-msgstr ""
+msgstr "``trade_log_keep_days``"
 
 #: ../../source/api/api_reference.rst:305
 #: ../../source/api/api_reference.rst:609
 msgid "``3``"
-msgstr ""
+msgstr "[1, 2, 3] becomes: [0, 1, 0, 2, 0, 3, 0] after padding."
 
 #: ../../source/api/api_reference.rst
 msgid ""
@@ -1171,16 +1192,18 @@ msgid ""
 msgstr ""
 
 #: ../../source/api/api_reference.rst
-msgid "在 **进程加载 qteasy 模块后** 对当前 ``trade_log_file_path`` 目录执行一次按天清理（非每次回测写文件前）。"
+msgid ""
+"在 **进程加载 qteasy 模块后** 对当前 ``trade_log_file_path`` 目录执行一次按天清理（非每次回测写文件前）。"
 msgstr ""
 
 #: ../../source/api/api_reference.rst
-msgid "设为 ``None`` 或 **小于等于 0** 可关闭自动删除；需要时可调用 ``qt.rotate_trade_logs()`` 手动清理。"
+msgid ""
+"设为 ``None`` 或 **小于等于 0** 可关闭自动删除；需要时可调用 ``qt.rotate_trade_logs()`` 手动清理。"
 msgstr ""
 
 #: ../../source/api/api_reference.rst:309
 msgid "``trade_log``"
-msgstr ""
+msgstr "``trade_log``"
 
 #: ../../source/api/api_reference.rst
 msgid "是否生成明细交易清单，以pd.DataFrame形式给出明细的每日交易清单"
@@ -1192,7 +1215,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:314
 msgid "``benchmark_asset``"
-msgstr ""
+msgstr "``benchmark_asset``"
 
 #: ../../source/api/api_reference.rst
 msgid "用来产生回测结果评价结果基准收益的资产类型，默认基准为沪深300指数"
@@ -1216,7 +1239,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:322
 msgid "``report``"
-msgstr ""
+msgstr "``report''"
 
 #: ../../source/api/api_reference.rst
 msgid "为True时打印运行结果报告"
@@ -1228,7 +1251,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:327
 msgid "``visual``"
-msgstr ""
+msgstr "``visual''"
 
 #: ../../source/api/api_reference.rst
 msgid "为True时使用图表显示可视化运行结果"
@@ -1240,7 +1263,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:332
 msgid "``buy_sell_points``"
-msgstr ""
+msgstr "``buy_sell_points`''"
 
 #: ../../source/api/api_reference.rst:335
 msgid "为True时在回测图表中显示买卖点，使用红色和绿色箭头标示出买卖点的位置"
@@ -1248,7 +1271,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:336
 msgid "``show_positions``"
-msgstr ""
+msgstr "``show_positions``"
 
 #: ../../source/api/api_reference.rst:339
 msgid "为True时在回测图表中用色带显示投资仓位"
@@ -1256,7 +1279,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:340
 msgid "``cost_fixed_buy``"
-msgstr ""
+msgstr "``cost_fixed_buy``"
 
 #: ../../source/api/api_reference.rst
 msgid "买入证券或资产时的固定成本或固定佣金，该金额不随买入金额变化"
@@ -1268,7 +1291,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:345
 msgid "``cost_fixed_sell``"
-msgstr ""
+msgstr "``cost_fixed_sell``"
 
 #: ../../source/api/api_reference.rst
 msgid "卖出证券或资产时的固定成本或固定佣金，该金额不随卖出金额变化"
@@ -1280,11 +1303,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:350
 msgid "``cost_rate_buy``"
-msgstr ""
+msgstr "``cost_rate_buy``"
 
 #: ../../source/api/api_reference.rst:352
 msgid "``0.0003``"
-msgstr ""
+msgstr "``0.0003`''"
 
 #: ../../source/api/api_reference.rst
 msgid "买入证券或资产时的成本费率或佣金比率，以买入金额的比例计算"
@@ -1296,11 +1319,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:355
 msgid "``cost_rate_sell``"
-msgstr ""
+msgstr "``cost_rate_sell``"
 
 #: ../../source/api/api_reference.rst:357
 msgid "``0.0001``"
-msgstr ""
+msgstr "``0.0001``"
 
 #: ../../source/api/api_reference.rst
 msgid "卖出证券或资产时的成本费率或佣金比率，以卖出金额的比例计算"
@@ -1312,12 +1335,12 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:360
 msgid "``cost_min_buy``"
-msgstr ""
+msgstr "``cost_min_buy``"
 
 #: ../../source/api/api_reference.rst:362
 #: ../../source/api/api_reference.rst:367
 msgid "``5.0``"
-msgstr ""
+msgstr "``5.0''"
 
 #: ../../source/api/api_reference.rst
 msgid "买入证券或资产时的最低成本或佣金，买入佣金只能大于或等于该最低金额"
@@ -1329,7 +1352,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:365
 msgid "``cost_min_sell``"
-msgstr ""
+msgstr "``cost_min_sell``"
 
 #: ../../source/api/api_reference.rst:368
 msgid "卖出证券或资产时的最低成本或佣金，卖出佣金只能大于或等于该最低金额"
@@ -1337,7 +1360,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:369
 msgid "``cost_slippage``"
-msgstr ""
+msgstr "``cost_slippage``"
 
 #: ../../source/api/api_reference.rst:372
 msgid "交易滑点，一个预设参数，模拟由于交易延迟或交易金额过大产生的额外交易成本"
@@ -1345,7 +1368,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:373
 msgid "``invest_start``"
-msgstr ""
+msgstr "``invest_start``"
 
 #: ../../source/api/api_reference.rst
 msgid "回测模式下的回测开始日期。"
@@ -1361,7 +1384,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:379
 msgid "``invest_end``"
-msgstr ""
+msgstr "``invest_end``"
 
 #: ../../source/api/api_reference.rst
 msgid "回测模式下的回测结束日期。"
@@ -1373,13 +1396,13 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:385
 msgid "``invest_cash_amounts``"
-msgstr ""
+msgstr "``invest_cash_amounts``"
 
 #: ../../source/api/api_reference.rst:387
 #: ../../source/api/api_reference.rst:515
 #: ../../source/api/api_reference.rst:558
 msgid "``[100000.0]``"
-msgstr ""
+msgstr "``[100000.0]''"
 
 #: ../../source/api/api_reference.rst:388
 msgid "投资的金额，一个tuple或list，每次投入资金的金额，多个数字表示多次投入"
@@ -1387,7 +1410,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:389
 msgid "``invest_cash_dates``"
-msgstr ""
+msgstr "``invest_cash_dates``"
 
 #: ../../source/api/api_reference.rst
 msgid "回测操作现金投入的日期，一个str或list，多个日期表示多次现金投入。默认为None"
@@ -1399,7 +1422,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst
 msgid "invest_start"
-msgstr ""
+msgstr "invest_start"
 
 #: ../../source/api/api_reference.rst
 msgid "参数输入类型为str时，格式为\"YYYYMMDD\""
@@ -1415,15 +1438,15 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst
 msgid "\"20100104,20100202,20100304\" ="
-msgstr ""
+msgstr "\"20100104,20100202,20100304\" ="
 
 #: ../../source/api/api_reference.rst
 msgid "[\"20100104\", \"20100202\", \"20100304\"]"
-msgstr ""
+msgstr "[\"20100104\", \"20100202\", \"20100304\"]"
 
 #: ../../source/api/api_reference.rst:400
 msgid "``allow_sell_short``"
-msgstr ""
+msgstr "``allow_sell_short`''"
 
 #: ../../source/api/api_reference.rst
 msgid "是否允许卖空交易，："
@@ -1439,7 +1462,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:406
 msgid "``long_position_limit``"
-msgstr ""
+msgstr "``long_position_limit``"
 
 #: ../../source/api/api_reference.rst:407
 #: ../../source/api/api_reference.rst:415
@@ -1471,7 +1494,7 @@ msgstr ""
 #: ../../source/api/api_reference.rst:665
 #: ../../source/api/api_reference.rst:669
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: ../../source/api/api_reference.rst
 msgid "回测过程中允许交易信号建立的多头仓位百分比的极限值，即允许动用"
@@ -1495,11 +1518,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:414
 msgid "``short_position_limit``"
-msgstr ""
+msgstr "``short_position_limit``"
 
 #: ../../source/api/api_reference.rst:416
 msgid "``-1.0``"
-msgstr ""
+msgstr "``-1.0''"
 
 #: ../../source/api/api_reference.rst
 msgid "回测过程中允许交易信号建立的空头仓位百分比的极限值，即允许持有的"
@@ -1519,11 +1542,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:421
 msgid "``backtest_price_adj``"
-msgstr ""
+msgstr "``backtest_price_adj``"
 
 #: ../../source/api/api_reference.rst:423
 msgid "``none``"
-msgstr ""
+msgstr "``none''"
 
 #: ../../source/api/api_reference.rst
 msgid "回测时的复权价格处理方法："
@@ -1559,11 +1582,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:432
 msgid "``PT_signal_timing``"
-msgstr ""
+msgstr "``PT_signal_timing``"
 
 #: ../../source/api/api_reference.rst:434
 msgid "``lazy``"
-msgstr ""
+msgstr "``lazy''"
 
 #: ../../source/api/api_reference.rst
 msgid "回测信号模式为PT（position target）时，控制检查实际持仓比例并自动生成交易"
@@ -1595,7 +1618,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:442
 msgid "``PT_buy_threshold``"
-msgstr ""
+msgstr "``PT_buy_threshold``"
 
 #: ../../source/api/api_reference.rst
 msgid "回测信号模式为PT（position target）时，触发买入信号的仓位差异阈值"
@@ -1615,7 +1638,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:449
 msgid "``PT_sell_threshold``"
-msgstr ""
+msgstr "``PT_sell_threshold``"
 
 #: ../../source/api/api_reference.rst
 msgid "回测信号模式为PT（position target）时，触发卖出信号的仓位差异阈值"
@@ -1631,11 +1654,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:456
 msgid "``price_priority_OHLC``"
-msgstr ""
+msgstr "``price_priority_OHLC``"
 
 #: ../../source/api/api_reference.rst:458
 msgid "``OHLC``"
-msgstr ""
+msgstr "``OHLC''"
 
 #: ../../source/api/api_reference.rst
 msgid "回测时如果存在多种价格类型的交易信号，而且交易价格的类型为OHLC时，处理各种"
@@ -1651,11 +1674,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:462
 msgid "``price_priority_quote``"
-msgstr ""
+msgstr "``price_priority_quote``"
 
 #: ../../source/api/api_reference.rst:464
 msgid "``normal``"
-msgstr ""
+msgstr "``Normal''"
 
 #: ../../source/api/api_reference.rst
 msgid "回测时如果存在多种价格类型的交易信号，而且交易价格的类型为实时报价时，回测程序处理"
@@ -1675,7 +1698,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:470
 msgid "``cash_delivery_period``"
-msgstr ""
+msgstr "``cash_delivery_period``"
 
 #: ../../source/api/api_reference.rst
 msgid "回测时卖出股票获得现金的交割周期，用一个数字N代表交易日后第N天可以完成现金交割。"
@@ -1695,7 +1718,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:477
 msgid "``stock_delivery_period``"
-msgstr ""
+msgstr "``stock_delivery_period``"
 
 #: ../../source/api/api_reference.rst
 msgid "回测时买入股票后的股票交割周期，用一个数字N代表交易日后第N天可以完成资产交割。"
@@ -1707,11 +1730,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:482
 msgid "``market_open_time_am``"
-msgstr ""
+msgstr "``market_open_time_am``"
 
 #: ../../source/api/api_reference.rst:484
 msgid "``09:30:00``"
-msgstr ""
+msgstr "``09:30:00``"
 
 #: ../../source/api/api_reference.rst:485
 msgid "交易市场上午开市时间"
@@ -1719,11 +1742,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:486
 msgid "``market_close_time_am``"
-msgstr ""
+msgstr "``market_close_time_am``"
 
 #: ../../source/api/api_reference.rst:488
 msgid "``11:30:00``"
-msgstr ""
+msgstr "``11:30:00''"
 
 #: ../../source/api/api_reference.rst:489
 msgid "交易市场上午收市时间"
@@ -1731,11 +1754,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:490
 msgid "``market_open_time_pm``"
-msgstr ""
+msgstr "``market_open_time_pm``"
 
 #: ../../source/api/api_reference.rst:492
 msgid "``13:00:00``"
-msgstr ""
+msgstr "``13:00:00`''"
 
 #: ../../source/api/api_reference.rst:493
 msgid "交易市场下午开市时间"
@@ -1743,11 +1766,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:494
 msgid "``market_close_time_pm``"
-msgstr ""
+msgstr "``market_close_time_pm``"
 
 #: ../../source/api/api_reference.rst:496
 msgid "``15:00:00``"
-msgstr ""
+msgstr "``15:00:00``"
 
 #: ../../source/api/api_reference.rst:497
 msgid "交易市场下午收市时间"
@@ -1755,7 +1778,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:498
 msgid "``strategy_open_close_timing_offset``"
-msgstr ""
+msgstr "``strategy_open_close_timing_offset``"
 
 #: ../../source/api/api_reference.rst
 msgid "策略信号的开盘/收盘运行时间偏移量，单位为分钟，当策略信号运行时机为开盘/收盘，需要提前/推迟"
@@ -1767,7 +1790,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:503
 msgid "``opti_start``"
-msgstr ""
+msgstr "``opti_start``"
 
 #: ../../source/api/api_reference.rst
 msgid "优化模式下的策略优化区间开始日期。"
@@ -1779,7 +1802,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:508
 msgid "``opti_end``"
-msgstr ""
+msgstr "``opti_end``"
 
 #: ../../source/api/api_reference.rst
 msgid "优化模式下的策略优化区间结束日期。"
@@ -1791,7 +1814,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:513
 msgid "``opti_cash_amounts``"
-msgstr ""
+msgstr "``opti_cash_amounts``"
 
 #: ../../source/api/api_reference.rst:516
 msgid "优化模式投资的金额，一个tuple或list，每次投入资金的金额，多个数字表示多次投入"
@@ -1799,7 +1822,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:517
 msgid "``opti_cash_dates``"
-msgstr ""
+msgstr "``opti_cash_dates``"
 
 #: ../../source/api/api_reference.rst
 msgid "策略优化区间现金投入的日期，一个str或list，多个日期表示多次现金投入。默认为None"
@@ -1807,16 +1830,16 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst
 msgid "\"20100104,20100202,20100304\"[\"20100104\", \"20100202\", \"20100304\"]"
-msgstr ""
+msgstr "\"20100104,20100202,20100304\" [\"20100104\", \"20100202\", \"20100304\"]"
 
 #: ../../source/api/api_reference.rst:527
 msgid "``opti_type``"
-msgstr ""
+msgstr "``opti_type``"
 
 #: ../../source/api/api_reference.rst:529
 #: ../../source/api/api_reference.rst:574
 msgid "``single``"
-msgstr ""
+msgstr "``single''"
 
 #: ../../source/api/api_reference.rst
 msgid "优化类型。指优化数据的利用方式:"
@@ -1840,7 +1863,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:535
 msgid "``opti_sub_periods``"
-msgstr ""
+msgstr "``opti_sub_periods``"
 
 #: ../../source/api/api_reference.rst:538
 msgid "仅对无监督优化有效。且仅当优化类型为\"multiple\"时有效。将优化区间切分为子区间的数量"
@@ -1848,11 +1871,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:539
 msgid "``opti_sub_prd_length``"
-msgstr ""
+msgstr "``opti_sub_prd_length``"
 
 #: ../../source/api/api_reference.rst:541
 msgid "``0.6``"
-msgstr ""
+msgstr "``0.6''"
 
 #: ../../source/api/api_reference.rst
 msgid "仅当优化类型为\"multiple\"时有效。每一个优化子区间长度占整个优化区间长度的比例"
@@ -1864,7 +1887,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:544
 msgid "``test_start``"
-msgstr ""
+msgstr "``test_start``"
 
 #: ../../source/api/api_reference.rst
 msgid "优化模式下的策略测试区间开始日期。"
@@ -1876,7 +1899,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:550
 msgid "``test_end``"
-msgstr ""
+msgstr "``test_end``"
 
 #: ../../source/api/api_reference.rst
 msgid "优化模式下的策略测试区间结束日期。"
@@ -1884,7 +1907,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:556
 msgid "``test_cash_amounts``"
-msgstr ""
+msgstr "``test_cash_amounts``"
 
 #: ../../source/api/api_reference.rst
 msgid "优化模式策略测试投资的金额，一个tuple或list，每次投入资金的金额。"
@@ -1900,7 +1923,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:562
 msgid "``test_cash_dates``"
-msgstr ""
+msgstr "``test_cash_dates``"
 
 #: ../../source/api/api_reference.rst
 msgid "invest_start参数|"
@@ -1908,7 +1931,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:572
 msgid "``test_type``"
-msgstr ""
+msgstr "``test_type``"
 
 #: ../../source/api/api_reference.rst
 msgid "测试类型。指测试数据的利用方式:"
@@ -1948,11 +1971,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:584
 msgid "``test_indicators``"
-msgstr ""
+msgstr "``test_indicators``"
 
 #: ../../source/api/api_reference.rst:586
 msgid "``years,fv,return,mdd,v,ref,alpha,beta,sharp,info``"
-msgstr ""
+msgstr "``years,fv,return,mdd,v,ref,alpha,beta,sharp,info``"
 
 #: ../../source/api/api_reference.rst
 msgid "对优化后的策略参数进行测试评价的评价指标。"
@@ -1964,47 +1987,47 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst
 msgid "\"years\"       - total year"
-msgstr ""
+msgstr "\"years\" - total year"
 
 #: ../../source/api/api_reference.rst
 msgid "\"fv\"          - final values"
-msgstr ""
+msgstr "\"fv\" - final values"
 
 #: ../../source/api/api_reference.rst
 msgid "\"return\"      - total return rate"
-msgstr ""
+msgstr "\"return\" - total return rate"
 
 #: ../../source/api/api_reference.rst
 msgid "\"mdd\"         - max draw down"
-msgstr ""
+msgstr "\"mdd\" - max draw down"
 
 #: ../../source/api/api_reference.rst
 msgid "\"ref\"         - reference data return"
-msgstr ""
+msgstr "\"ref\" - reference data return"
 
 #: ../../source/api/api_reference.rst
 msgid "\"alpha\"       - alpha rate"
-msgstr ""
+msgstr "\"alpha\" - alpha rate"
 
 #: ../../source/api/api_reference.rst
 msgid "\"beta\"        - beta rate"
-msgstr ""
+msgstr "\"beta\" - beta rate"
 
 #: ../../source/api/api_reference.rst
 msgid "\"sharp\"       - sharp rate"
-msgstr ""
+msgstr "\"sharp\" - sharp rate"
 
 #: ../../source/api/api_reference.rst
 msgid "\"info\"        - info rate"
-msgstr ""
+msgstr "\"info\" - info rate"
 
 #: ../../source/api/api_reference.rst:598
 msgid "``indicator_plot_type``"
-msgstr ""
+msgstr "``indicator_plot_type``"
 
 #: ../../source/api/api_reference.rst:600
 msgid "``histo``"
-msgstr ""
+msgstr "``histo``"
 
 #: ../../source/api/api_reference.rst
 msgid "优化或测试结果评价指标的可视化图表类型:"
@@ -2032,7 +2055,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:607
 msgid "``test_sub_periods``"
-msgstr ""
+msgstr "``test_sub_periods``"
 
 #: ../../source/api/api_reference.rst:610
 msgid "仅当测试类型为\"multiple\"时有效。将测试区间切分为子区间的数量"
@@ -2040,11 +2063,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:611
 msgid "``test_sub_prd_length``"
-msgstr ""
+msgstr "``test_sub_prd_length``"
 
 #: ../../source/api/api_reference.rst:613
 msgid "``0.75``"
-msgstr ""
+msgstr "``0.75`''"
 
 #: ../../source/api/api_reference.rst
 msgid "仅当测试类型为\"multiple\"时有效。每一个测试子区间长度占整个测试区间长度的比例"
@@ -2056,11 +2079,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:616
 msgid "``test_cycle_count``"
-msgstr ""
+msgstr "``test_cycle_count``"
 
 #: ../../source/api/api_reference.rst:618
 msgid "``100``"
-msgstr ""
+msgstr "``100''"
 
 #: ../../source/api/api_reference.rst
 msgid "仅当测试类型为\"montecarlo\"时有效。生成的模拟测试数据的数量。"
@@ -2072,11 +2095,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:621
 msgid "``optimize_target``"
-msgstr ""
+msgstr "``optimize_target``"
 
 #: ../../source/api/api_reference.rst:623
 msgid "``final_value``"
-msgstr ""
+msgstr "``final_value``"
 
 #: ../../source/api/api_reference.rst:624
 msgid "策略的优化目标。即优化时以找到该指标最佳的策略为目标"
@@ -2084,7 +2107,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:625
 msgid "``maximize_target``"
-msgstr ""
+msgstr "``maximize_target``"
 
 #: ../../source/api/api_reference.rst:628
 msgid "为True时寻找目标值最大的策略，为False时寻找目标值最低的策略"
@@ -2092,7 +2115,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:629
 msgid "``opti_method``"
-msgstr ""
+msgstr "``opti_method``"
 
 #: ../../source/api/api_reference.rst
 msgid "策略优化算法，可选值如下:"
@@ -2124,7 +2147,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:639
 msgid "``opti_grid_size``"
-msgstr ""
+msgstr "``opti_grid_size``"
 
 #: ../../source/api/api_reference.rst:642
 msgid "使用穷举法搜索最佳策略时有用，搜索步长"
@@ -2132,11 +2155,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:643
 msgid "``opti_sample_count``"
-msgstr ""
+msgstr "``| opti_sample_count``"
 
 #: ../../source/api/api_reference.rst:645
 msgid "``256``"
-msgstr ""
+msgstr "``256''"
 
 #: ../../source/api/api_reference.rst:646
 msgid "使用蒙特卡洛法搜索最佳策略时有用，在向量空间中采样的数量"
@@ -2144,7 +2167,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:647
 msgid "``opti_r_sample_count``"
-msgstr ""
+msgstr "``opti_r_sample_count``"
 
 #: ../../source/api/api_reference.rst:650
 msgid "在使用递进步长法搜索最佳策略时有用，每一轮随机取样的数量"
@@ -2152,11 +2175,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:651
 msgid "``opti_reduce_ratio``"
-msgstr ""
+msgstr "``opti_reduce_ratio``"
 
 #: ../../source/api/api_reference.rst:653
 msgid "``0.1``"
-msgstr ""
+msgstr "``0.1''"
 
 #: ../../source/api/api_reference.rst
 msgid "在使用递进步长法搜索最佳策略时有用，"
@@ -2168,7 +2191,7 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:656
 msgid "``opti_max_rounds``"
-msgstr ""
+msgstr "``opti_max_rounds``"
 
 #: ../../source/api/api_reference.rst:659
 msgid "在使用递进步长法搜索最佳策略时有用，多轮搜索的最大轮数，轮数大于该值时停止搜索"
@@ -2176,11 +2199,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:660
 msgid "``opti_min_volume``"
-msgstr ""
+msgstr "``opti_min_volume``"
 
 #: ../../source/api/api_reference.rst:662
 msgid "``1000``"
-msgstr ""
+msgstr "``1000''"
 
 #: ../../source/api/api_reference.rst:663
 msgid "在使用递进步长法搜索最佳策略时有用，空间最小体积，当空间volume低于该值时停止搜索"
@@ -2188,11 +2211,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:664
 msgid "``opti_population``"
-msgstr ""
+msgstr "``opti_population`''"
 
 #: ../../source/api/api_reference.rst:666
 msgid "``1000.0``"
-msgstr ""
+msgstr "``1000.0``"
 
 #: ../../source/api/api_reference.rst:667
 msgid "在使用遗传算法搜索最佳策略时有用，种群的数量"
@@ -2200,11 +2223,11 @@ msgstr ""
 
 #: ../../source/api/api_reference.rst:668
 msgid "``opti_output_count``"
-msgstr ""
+msgstr "``opti_output_count``"
 
 #: ../../source/api/api_reference.rst:670
 msgid "``30``"
-msgstr ""
+msgstr "``30''"
 
 #: ../../source/api/api_reference.rst:671
 msgid "策略参数优化后输出的最优参数数量"
@@ -2253,14 +2276,14 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "保配置变量到初始配置文件 qteasy.cfg 中，如果qteasy.cfg中已经存在部配置变量了，则覆盖相配置变量"
-#~ " TODO: 实现将配置变量写入qteasy.cfg初始配置文件的功能  "
+#~ "保配置变量到初始配置文件 qteasy.cfg 中，如果qteasy.cfg中已经存在部配置变量了，则覆盖相配置变量 TODO: "
+#~ "实现将配置变量写入qteasy.cfg初始配置文件的功能  "
 #~ "由于目前使用pickle写入对象为二进制文件，而qteasy.cfg是文本文件，所以需要实现一个新的写入方式"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "保配置变量到初始配置文件 qteasy.cfg 中，如果qteasy.cfg中已经存在部配置变量了，则覆盖相配置变量"
-#~ " TODO: 实现将配置变量写入qteasy.cfg初始配置文件的功能"
+#~ "保配置变量到初始配置文件 qteasy.cfg 中，如果qteasy.cfg中已经存在部配置变量了，则覆盖相配置变量 TODO: "
+#~ "实现将配置变量写入qteasy.cfg初始配置文件的功能"
 #~ msgstr ""
 
 #~ msgid "由于目前使用pickle写入对象为二进制文件，而qteasy.cfg是文本文件，所以需要实现一个新的写入方式"
@@ -2361,4 +2384,3 @@ msgstr ""
 
 #~ msgid "``| opti_sample_count``"
 #~ msgstr ""
-

@@ -3,235 +3,332 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/api/Backtest.rst:2
 msgid "Backtester 策略回测器"
-msgstr ""
+msgstr "Moteur de backtesting de stratégie Backtester"
 
 #: ../../source/api/Backtest.rst:4
 msgid "Backtester类用于对operator对象进行回测操作。"
 msgstr ""
+"La classe Backtester est utilisée pour backtester les objets opérateur."
 
 #: ../../source/api/Backtest.rst:6
 msgid ""
-"本类的属性包括回测计算中所需的所有参数，包括回测过程中产生的结果数据，这些结果数据以ndarray的形式 "
-"在对象的生命周期内长期保存，并可以反复刷新。"
+"本类的属性包括回测计算中所需的所有参数，包括回测过程中产生的结果数据，这些结果数据以ndarray的形式 在对象的生命周期内长期保存，并可以反复刷新。"
 msgstr ""
+"Les attributs de cette classe incluent tous les paramètres requis pour les "
+"calculs de backtest, ainsi que les données de résultat générées lors du "
+"backtest. Ces données de résultat sont stockées sous forme de ndarrays et "
+"conservées pendant toute la durée de vie de l'objet, et peuvent être "
+"actualisées à plusieurs reprises."
 
 #: ../../source/api/Backtest.rst:9 of qteasy.backtest.Backtester:5
 msgid ""
-"这个类只有在operator对象被创建之后才能被实例化，因为Backtester类需要依赖operator对象来生成交易 "
-"信号和执行交易。典型用法如下："
+"这个类只有在operator对象被创建之后才能被实例化，因为Backtester类需要依赖operator对象来生成交易 信号和执行交易。典型用法如下："
 msgstr ""
+"Cette classe ne peut être instanciée qu'après la création de l'objet "
+"opérateur, car la classe Backtester dépend de l'objet opérateur pour générer"
+" des signaux de trading et exécuter des transactions. L'utilisation typique "
+"est la suivante :"
 
 #: of qteasy.backtest.Backtester:1
 msgid ""
 "Backtester类用于对operator对象进行回测操作。 "
-"本类的属性包括回测计算中所需的所有参数，包括回测过程中产生的结果数据，这些结果数据以ndarray的形式 "
-"在对象的生命周期内长期保存，并可以反复刷新。"
+"本类的属性包括回测计算中所需的所有参数，包括回测过程中产生的结果数据，这些结果数据以ndarray的形式 在对象的生命周期内长期保存，并可以反复刷新。"
 msgstr ""
+"La classe Backtester est utilisée pour backtester un objet opérateur. Les "
+"attributs de cette classe incluent tous les paramètres requis pour les "
+"calculs de backtest, ainsi que les données de résultat générées lors du "
+"backtest. Ces données de résultat sont stockées sous forme de ndarrays et "
+"conservées pendant toute la durée de vie de l'objet, et peuvent être "
+"actualisées à plusieurs reprises."
 
 #: of qteasy.backtest.Backtester:23
 msgid "交易操作对象，包含交易信号生成和交易执行的逻辑"
 msgstr ""
+"Un objet d'opération de trading qui inclut la logique permettant de générer "
+"des signaux de trading et d'exécuter des transactions."
 
 #: of qteasy.backtest.Backtester
 msgid "type"
-msgstr ""
+msgstr "type"
 
 #: of qteasy.backtest.Backtester:25
 msgid "Operator"
-msgstr ""
+msgstr "Operator"
 
 #: of qteasy.backtest.Backtester.clear_backtest_buffers:1
 msgid "清除回测结果缓存数据，将回测结果数据重置为空数组，以便重新进行回测计算"
 msgstr ""
+"Effacez les données des résultats du backtest mises en cache et "
+"réinitialisez les données des résultats du backtest dans un tableau vide "
+"afin que le backtest puisse être recalculé."
 
 #: ../../source/api/Backtest.rst
 msgid "返回类型"
-msgstr ""
+msgstr "Type de retour"
 
 #: of qteasy.backtest.Backtester.evaluate_result:1
 msgid "生成交易结果的评价报告，保存在self.evaluate_result属性中"
 msgstr ""
+"Génère un rapport d'évaluation des résultats de trading et l'enregistre dans"
+" l'attribut self.evaluate_result"
 
 #: ../../source/api/Backtest.rst
 msgid "参数"
-msgstr ""
+msgstr "paramètre"
 
 #: of qteasy.backtest.Backtester.evaluate_result:3
 msgid "回测结果评价指标，详情参见qteasy.evaluate.evaluate()函数"
 msgstr ""
+"Mesures d'évaluation des résultats du backtest ; voir la fonction "
+"qteasy.evaluate.evaluate() pour plus de détails"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:1
 msgid "根据回测结果生成交易日志，交易日志是一份完整的交易记录文件，包含每一个交易期间的下列信息。"
 msgstr ""
+"Générez un journal de trading basé sur les résultats du backtest. Le journal"
+" de négociation est un fichier d'enregistrement commercial complet qui "
+"contient les informations suivantes pour chaque période de négociation."
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:3
 msgid "每一个交易期间包含 8 行数据，分别为："
 msgstr ""
+"Chaque période de négociation contient 8 lignes de données, comme suit :"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:5
 msgid "``0, trade signal``：每一支股票的当期交易信号"
 msgstr ""
+"``0, trade signal`` : le signal de trading de la période en cours pour "
+"chaque action"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:6
 msgid "``1, price``：每一支股票的当期交易价格"
 msgstr ""
+"``1, price`` : le prix de négociation de la période en cours pour chaque "
+"action"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:7
 msgid "``2, traded amounts``：每一支股票的当期交易数量，如果没有交易则为 0"
 msgstr ""
+"``2, traded amounts`` : la quantité négociée sur la période en cours pour "
+"chaque action ; 0 s'il n'y a pas d'échange"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:8
 msgid "``3, cash changed``：每一支股票的当期现金变动金额，买入为负数，卖出为正数"
 msgstr ""
+"``3, cash changed`` : le montant de la variation en espèces de la période en"
+" cours pour chaque action ; négatif pour les achats et positif pour les "
+"ventes"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:9
 msgid "``4, trade cost``：每一支股票的当期交易费用"
 msgstr ""
+"``4, trade cost`` : le coût de négociation de la période en cours pour "
+"chaque action"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:10
 msgid "``5, own amounts``：每一支股票的当期末持有数量"
 msgstr ""
+"``5, own amounts`` : la quantité de stocks en fin de période pour chaque "
+"stock"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:11
 msgid "``6, available amounts``：每一支股票的当期末可用数量"
 msgstr ""
+"``6, available amounts`` : la quantité disponible en fin de période pour "
+"chaque stock"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:12
 msgid "``7, summary``：当期每一支股票的持仓价值，同时包含汇总数据（当期末持有现金、可用现金、总资产价值）"
 msgstr ""
+"``7, summary`` : la valeur de position de chaque action pour la période en "
+"cours, comprenant également des données récapitulatives (trésorerie détenue "
+"à la fin de la période en cours, trésorerie disponible, valeur totale de "
+"l'actif)"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:14
 msgid ""
-"以上信息以 DataFrame 形式保存，行索引为多级索引，第一/二层为时间/策略组索引，第三层为上述 8 个数据类别。 交易日志文件可以被保存为"
-" csv 格式，文件名为 ``trade_log.csv``。"
+"以上信息以 DataFrame 形式保存，行索引为多级索引，第一/二层为时间/策略组索引，第三层为上述 8 个数据类别。 交易日志文件可以被保存为 "
+"csv 格式，文件名为 ``trade_log.csv``。"
 msgstr ""
+"Les informations ci-dessus sont enregistrées sous la forme d'un DataFrame. "
+"L'index de ligne est un MultiIndex : les premier/deuxième niveaux sont les "
+"indices de groupe de temps/stratégie, et le troisième niveau correspond aux "
+"8 catégories de données ci-dessus. Le fichier journal des échanges peut être"
+" enregistré au format CSV sous le nom de fichier ``trade_log.csv``."
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:17
 msgid "如果提供了文件路径，则将交易日志保存为CSV文件，默认值为None"
 msgstr ""
+"Si un chemin de fichier est fourni, enregistrez le journal des échanges sous"
+" forme de fichier CSV ; la valeur par défaut est Aucun."
 
 #: ../../source/api/Backtest.rst
 msgid "返回"
-msgstr ""
+msgstr "Dos"
 
 #: of qteasy.backtest.Backtester.generate_trade_logs:20
 msgid "**trade_log** -- 交易模拟结果数据"
-msgstr ""
+msgstr "**trade_log** -- données de résultats de simulation commerciale"
 
 #: of qteasy.backtest.Backtester.generate_trade_summary:1
 msgid ""
 "生成 trade summary 交易摘要表 (一个更加紧凑的交易汇总表，包含每次交易的关键信息， "
-"以一种更加易于人类阅读的方式呈现，并过滤掉无交易的记录)，函数的输入trade_log_df是函数 "
-"generate_trade_logs()的返回值。"
+"以一种更加易于人类阅读的方式呈现，并过滤掉无交易的记录)，函数的输入trade_log_df是函数 generate_trade_logs()的返回值。"
 msgstr ""
+"Générez le tableau récapitulatif des transactions (un tableau récapitulatif "
+"des transactions plus compact qui contient les informations clés de chaque "
+"transaction, présentées de manière plus lisible par l'homme, et filtre les "
+"enregistrements sans transaction). L'entrée de fonction trade_log_df est la "
+"valeur de retour de la fonction generate_trade_logs()."
 
 #: of qteasy.backtest.Backtester.generate_trade_summary:5
 msgid "交易标的名称列表, 如果为None，则使用“N/A”作为名称"
 msgstr ""
+"Liste des noms d'instruments de trading ; si aucun, utilisez « N/A » comme "
+"nom."
 
 #: of qteasy.backtest.Backtester.generate_trade_summary:7
 msgid "如果提供了文件路径，则将交易摘要表保存为CSV文件，默认值为None，不保存文件"
 msgstr ""
+"Si un chemin de fichier est fourni, enregistrez le tableau récapitulatif des"
+" transactions sous forme de fichier CSV ; la valeur par défaut est Aucun (ne"
+" pas enregistrer de fichier)."
 
 #: of qteasy.backtest.Backtester.plot_result:1
 msgid "以图表形式生成交易结果"
-msgstr ""
+msgstr "Générer des résultats de trading sous forme de graphique"
 
 #: of qteasy.backtest.Backtester.plot_result:3
 msgid "图表的标题名称"
-msgstr ""
+msgstr "Le titre du graphique"
 
 #: of qteasy.backtest.Backtester.plot_result:5
 msgid ""
 "是否显示持股仓位区间信息，如果设置为True，则在收益率曲线图上 以红色/绿色条带显示区间的持仓类型（绿色表示持多仓，红色表示持 "
 "空仓）颜色越深持仓比例越高"
 msgstr ""
+"S'il faut afficher les informations sur l'intervalle de position. S'il est "
+"défini sur True, affiche le type de position pour chaque intervalle sur le "
+"graphique de la courbe de rendement sous forme de bandes rouges/vertes (le "
+"vert indique le maintien d'une position longue, le rouge indique le maintien"
+" d'une position courte). Plus la couleur est foncée, plus le rapport de "
+"position est élevé."
 
 #: of qteasy.backtest.Backtester.plot_result:9
 msgid "是否在收益率曲线图上显示买卖点，如果设置为True，则在收益率曲 线图上以红绿色小箭头标示出买卖点"
 msgstr ""
+"S'il faut afficher les points d'achat/vente sur le graphique de la courbe de"
+" rendement. S'il est défini sur True, les points d'achat/vente sont marqués "
+"sur le graphique de la courbe de rendement avec de petites flèches "
+"rouges/vertes."
 
 #: of qteasy.backtest.Backtester.report_result:1
 msgid "生成回测结果的明细报告，报告为纯文本格式，可以使用print命令打印"
 msgstr ""
+"Générez un rapport détaillé des résultats du backtest. Le rapport est au "
+"format texte brut et peut être imprimé à l'aide de la commande d'impression"
 
 #: of qteasy.backtest.Backtester.report_result:3
 msgid "交易日志文件的存储路径，默认值为None，如果给出该路径，则在报告中打印交易日志的存储路径"
 msgstr ""
+"Chemin de stockage du fichier journal des échanges. La valeur par défaut est"
+" Aucun. Si ce chemin est fourni, le chemin de stockage du journal des "
+"échanges est imprimé dans le rapport"
 
 #: of qteasy.backtest.Backtester.report_result:5
 msgid "交易汇总记录文件的存储路径，默认值为None，如果给出，则在报告中打印交易汇总记录的存储路径"
 msgstr ""
+"Chemin de stockage du fichier d’enregistrement récapitulatif des "
+"transactions. La valeur par défaut est Aucun. Le cas échéant, imprimez le "
+"chemin de stockage du dossier récapitulatif des opérations dans le rapport."
 
 #: of qteasy.backtest.Backtester.report_result:8
 msgid "**report_str** -- 以打印格式排版的回测结果报告"
 msgstr ""
+"**report_str** -- Rapport des résultats du backtest formaté pour "
+"l'impression"
 
 #: of qteasy.backtest.Backtester.run:1
 msgid "执行回测计算，生成回测结果数据并存入对象属性中"
 msgstr ""
+"Exécutez les calculs de backtest, générez les données de résultat du "
+"backtest et stockez-les dans les attributs de l'objet"
 
 #: of qteasy.backtest.Backtester.save_complete_values:1
 msgid "将 complete_values 保存为 CSV 文件（当 trade_log=True 时由 qt_operator 调用）"
 msgstr ""
+"Enregistrez complete_values ​​en tant que fichier CSV (appelé par "
+"qt_operator lorsque trade_log=True)"
 
 #: of qteasy.backtest.Backtester.save_complete_values:3
 msgid "保存路径，若为 None 则不写入"
-msgstr ""
+msgstr "Enregistrer le chemin ; si Aucun, rien n'est écrit"
 
 #: of qteasy.backtest.Backtester.save_complete_values:6
 msgid "成功时返回保存路径，否则返回 None"
 msgstr ""
+"Renvoie le chemin de sauvegarde en cas de succès ; sinon retourner Aucun"
 
 #: of qteasy.backtest.Backtester.trace_result_df:1
 msgid "根据回测结果生成交易过程记录，输出内容为DataFrame格式"
 msgstr ""
+"Générer un enregistrement du processus de trading basé sur les résultats du "
+"backtest ; la sortie est au format DataFrame"
 
 #: of qteasy.backtest.Backtester.trace_result_df:3
 msgid ""
-"trace 行与 op_signal_index 的对齐由 Operator 在写入时保证（update_trace_step 使用 全局 "
-"signal 行号），此处仅按策略 concat 后设置 index 为 op_signal_index。"
+"trace 行与 op_signal_index 的对齐由 Operator 在写入时保证（update_trace_step 使用 全局 signal"
+" 行号），此处仅按策略 concat 后设置 index 为 op_signal_index。"
 msgstr ""
+"L'alignement entre les lignes de trace et op_signal_index est assuré par le "
+"Operator lors de l'écriture (update_trace_step utilise le numéro de ligne du"
+" signal global). Ici, nous concaténons uniquement par stratégie, puis "
+"définissons l'index sur op_signal_index."
 
 #: of qteasy.backtest.Backtester.trace_result_df:6
 msgid "**trade_trace** -- 交易模拟过程数据"
-msgstr ""
+msgstr "**trade_trace** -- données du processus de simulation commerciale"
 
 #: of qteasy.backtest.Backtester.trade_result_df:1
 msgid "根据回测结果生成资产价值记录，输出内容为DataFrame格式"
 msgstr ""
+"Générer des enregistrements de valeur d'actif basés sur les résultats du "
+"backtest ; la sortie est au format DataFrame."
 
 #: of qteasy.backtest.Backtester.trade_result_df:3
 msgid "**value_history** -- 交易模拟结果数据"
-msgstr ""
+msgstr "**value_history** -- données de résultats de simulation commerciale"
 
 #: of qteasy.backtest.Backtester.trade_result_final_value:1
 msgid "直接快速计算返回回测的终值结果"
 msgstr ""
+"Calculez et renvoyez directement et rapidement la valeur finale du backtest."
 
 #: of qteasy.backtest.Backtester.trade_result_max_drawdown:1
 msgid "直接快速计算返回回测的最大回撤结果"
 msgstr ""
+"Calculez et renvoyez directement et rapidement le résultat de réduction "
+"maximale du backtest."
 
 #: of qteasy.backtest.Backtester.trade_result_volatility:1
 msgid "直接快速计算返回回测的波动率结果"
 msgstr ""
-
+"Calculez et renvoyez directement et rapidement le résultat de la volatilité "
+"du backtest."

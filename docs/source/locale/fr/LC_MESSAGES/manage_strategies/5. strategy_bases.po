@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/manage_strategies/5. strategy_bases.md:1
@@ -34,7 +33,8 @@ msgid "何时用哪种基类"
 msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:7
-msgid "**RuleIterator**：单标的或单规则、逐周期迭代（如均线择时、MACD 择时）。输入多为单标的或多标的的行情序列，输出为仓位或单一信号。"
+msgid ""
+"**RuleIterator**：单标的或单规则、逐周期迭代（如均线择时、MACD 择时）。输入多为单标的或多标的的行情序列，输出为仓位或单一信号。"
 msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:8
@@ -45,13 +45,12 @@ msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:9
 msgid ""
-"**GeneralStg**：更通用的多资产、多规则或自定义输入输出形状的策略，当 RuleIterator/FactorSorter "
-"无法满足时使用。"
+"**GeneralStg**：更通用的多资产、多规则或自定义输入输出形状的策略，当 RuleIterator/FactorSorter 无法满足时使用。"
 msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:11
 msgid "RuleIterator"
-msgstr ""
+msgstr "RuleIterator"
 
 #: ../../source/manage_strategies/5. strategy_bases.md:13
 msgid ""
@@ -73,11 +72,11 @@ msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:31
 msgid ""
-"**需要每股不同参数时**：必须在 ``set_shares`` / ``Operator.set_shares`` 之后，用 **字典** 调用"
-" ``update_par_values({代码: (参数元组), ...})``（或通过 "
-"``Operator.set_parameter(..., par_values={...})`` 等效传入）。字典的键须与当前标的列表中的字符串"
-" **完全一致**。框架据此建立按标的顺序排列的 per-share 参数；之后在 ``realize()`` 里用 ``get_pars()``"
-" / ``update_par_values()`` 即可，由框架在 ``generate()`` 循环内对齐当前股票。"
+"**需要每股不同参数时**：必须在 ``set_shares`` / ``Operator.set_shares`` 之后，用 **字典** 调用 "
+"``update_par_values({代码: (参数元组), ...})``（或通过 ``Operator.set_parameter(..., "
+"par_values={...})`` 等效传入）。字典的键须与当前标的列表中的字符串 **完全一致**。框架据此建立按标的顺序排列的 per-"
+"share 参数；之后在 ``realize()`` 里用 ``get_pars()`` / ``update_par_values()`` "
+"即可，由框架在 ``generate()`` 循环内对齐当前股票。"
 msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:32
@@ -98,7 +97,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:35
 msgid "FactorSorter"
-msgstr ""
+msgstr "FactorSorter"
 
 #: ../../source/manage_strategies/5. strategy_bases.md:37
 msgid ""
@@ -112,7 +111,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/5. strategy_bases.md:40
 msgid "GeneralStg"
-msgstr ""
+msgstr "GeneralStg"
 
 #: ../../source/manage_strategies/5. strategy_bases.md:42
 msgid "**输入/输出**：更灵活，可自定义所需 DataType 与返回数组形状，适用于多资产权重、多规则组合等。"
@@ -121,4 +120,3 @@ msgstr ""
 #: ../../source/manage_strategies/5. strategy_bases.md:43
 msgid "**适用场景**：不限于单标的择时或简单因子选股时的自定义逻辑。"
 msgstr ""
-

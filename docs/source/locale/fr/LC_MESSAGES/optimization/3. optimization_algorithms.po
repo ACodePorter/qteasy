@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/optimization/3. optimization_algorithms.md:1
@@ -28,7 +27,8 @@ msgid "为何需要了解不同算法"
 msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md:5
-msgid "参数空间与计算成本差异大：网格搜索在小空间上可靠但组合爆炸；启发式或贝叶斯在有限评估次数下权衡精度与速度；不同算法对连续/离散/混合参数的支持也不同。"
+msgid ""
+"参数空间与计算成本差异大：网格搜索在小空间上可靠但组合爆炸；启发式或贝叶斯在有限评估次数下权衡精度与速度；不同算法对连续/离散/混合参数的支持也不同。"
 msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md:7
@@ -61,7 +61,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "grid"
-msgstr ""
+msgstr "grid"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "在网格点上穷举或遍历"
@@ -85,7 +85,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "montecarlo"
-msgstr ""
+msgstr "montecarlo"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "随机采样参数组合"
@@ -109,7 +109,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "GA"
-msgstr ""
+msgstr "GA"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "遗传、交叉、变异"
@@ -125,7 +125,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "SA"
-msgstr ""
+msgstr "SA"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "模拟退火、概率接受劣解"
@@ -145,7 +145,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "PSO"
-msgstr ""
+msgstr "PSO"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "粒子群位置与速度更新"
@@ -165,7 +165,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "bayesian"
-msgstr ""
+msgstr "bayesian"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "代理模型+采集函数"
@@ -201,8 +201,7 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md:23
 msgid ""
-"**opti_sample_count、参数个数**：样本或迭代不足时，启发式可能早停；可适当增大 opti_sample_count "
-"或降低参数维度。"
+"**opti_sample_count、参数个数**：样本或迭代不足时，启发式可能早停；可适当增大 opti_sample_count 或降低参数维度。"
 msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md:25
@@ -214,4 +213,3 @@ msgid ""
 "见上表；实施时以当前 qteasy 支持的 opti_method 及文档为准，注意各算法的典型参数（如 GA "
 "的种群大小、变异率等）在配置中的名称与默认值。"
 msgstr ""
-

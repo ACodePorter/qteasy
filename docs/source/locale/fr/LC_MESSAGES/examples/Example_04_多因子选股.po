@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/examples/Example_04_多因子选股.md:1
@@ -25,8 +24,8 @@ msgstr ""
 
 #: ../../source/examples/Example_04_多因子选股.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_04_多因子选股.ipynb` 第一个 "
-"Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_04_多因子选股.ipynb` 第一个 Markdown "
+"cell。"
 msgstr ""
 
 #: ../../source/examples/Example_04_多因子选股.md:5
@@ -76,12 +75,12 @@ msgstr ""
 
 #: ../../source/examples/Example_04_多因子选股.md:217
 msgid "![png](img/output_4_3.png)"
-msgstr ""
+msgstr "![png](img/output_4_3.png)"
 
 #: ../../source/examples/Example_04_多因子选股.md:217
 #: ../../source/examples/Example_04_多因子选股.md:306
 msgid "png"
-msgstr ""
+msgstr "png"
 
 #: ../../source/examples/Example_04_多因子选股.md:220
 msgid "设置另外的回测区间从2016-04-05到2021-02-01，运行策略，可以看到在不同的区间下该策略都是有效的"
@@ -89,5 +88,4 @@ msgstr ""
 
 #: ../../source/examples/Example_04_多因子选股.md:306
 msgid "![png](img/output_4_4.png)"
-msgstr ""
-
+msgstr "![png](img/output_4_4.png)"

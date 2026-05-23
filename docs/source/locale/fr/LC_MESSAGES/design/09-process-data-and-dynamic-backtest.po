@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:1
@@ -124,7 +123,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.own_cash`"
-msgstr ""
+msgstr "`proc.own_cash`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "当前步开始时账户总现金"
@@ -132,7 +131,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.available_cash`"
-msgstr ""
+msgstr "`proc.available_cash`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "当前步开始时可用于下单的现金"
@@ -140,7 +139,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.total_value`"
-msgstr ""
+msgstr "`proc.total_value`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "当前步开始时总资产市值（持仓估值 + 现金）"
@@ -152,7 +151,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.own_amounts`"
-msgstr ""
+msgstr "`proc.own_amounts`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "当前步开始时各标的总持仓数量"
@@ -160,7 +159,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.available_amounts`"
-msgstr ""
+msgstr "`proc.available_amounts`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "当前步开始时各标的可卖出数量"
@@ -168,7 +167,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.position_value`"
-msgstr ""
+msgstr "`proc.position_value`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "当前步开始时各标的持仓市值（由内部 price 与持仓计算）"
@@ -180,7 +179,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.trade_records`"
-msgstr ""
+msgstr "`proc.trade_records`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "各步各标的的实际成交数量（正买负卖）"
@@ -188,7 +187,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.trade_cost`"
-msgstr ""
+msgstr "`proc.trade_cost`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "各步各标的的交易成本"
@@ -196,7 +195,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.trade_price`"
-msgstr ""
+msgstr "`proc.trade_price`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "各步各标的的成交价格"
@@ -226,8 +225,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:56
 msgid ""
-"单源：`self.get_data('close_E_d')`；多源：`self.get_data('close_E_d', "
-"'high_E_d')`。"
+"单源：`self.get_data('close_E_d')`；多源：`self.get_data('close_E_d', 'high_E_d')`。"
 msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:57
@@ -268,8 +266,8 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:68
 msgid ""
-"`lag` 与 `window` 不可同时指定；支持 `lag` 为整数（步）或字符串（如 `'1d'`、`'8h'`），`window` "
-"为字符串（如 `'5d'`、`'8h'`）。"
+"`lag` 与 `window` 不可同时指定；支持 `lag` 为整数（步）或字符串（如 `'1d'`、`'8h'`），`window` 为字符串（如"
+" `'5d'`、`'8h'`）。"
 msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:69
@@ -286,8 +284,8 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:75
 msgid ""
-"**静态分支**（`_backtest_static_operator`）：一次性对所有时间步调用 `run_strategies` "
-"生成全部信号，再用 Numba 向量化函数 `backtest_batch_steps` 等完成回测。适用于不依赖过程数据的策略。"
+"**静态分支**（`_backtest_static_operator`）：一次性对所有时间步调用 `run_strategies` 生成全部信号，再用"
+" Numba 向量化函数 `backtest_batch_steps` 等完成回测。适用于不依赖过程数据的策略。"
 msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:76
@@ -355,8 +353,8 @@ msgstr ""
 msgid ""
 "**Backtester**（动态分支）：在 `_backtest_dynamic_operator` 入口处将 "
 "`own_cashes`、`available_cashes`、`own_amounts_array`、`available_amounts_array`、`trade_records_array`、`trade_cost_array`、`trade_price_array`、`trade_price_data`"
-" 等以 **`_process_data_sources`** 注入 Operator，并将 **`_process_time_index`** "
-"设为与 `op_signal_index` 对齐的时间轴。"
+" 等以 **`_process_data_sources`** 注入 Operator，并将 **`_process_time_index`** 设为与"
+" `op_signal_index` 对齐的时间轴。"
 msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:99
@@ -371,7 +369,8 @@ msgid "4.5 实盘（Trader）中的过程数据"
 msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:103
-msgid "当 `operator.check_dynamic_data()` 为 True 时，Trader 在 `_run_strategy()` 中会："
+msgid ""
+"当 `operator.check_dynamic_data()` 为 True 时，Trader 在 `_run_strategy()` 中会："
 msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:105
@@ -434,7 +433,8 @@ msgid "E 组：基于 process data 的真实动态策略路径正确性。"
 msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:122
-msgid "**项目记忆**：`.cursor/rules/process-data-and-dynamic-backtest.mdc`（实现与约定摘要）。"
+msgid ""
+"**项目记忆**：`.cursor/rules/process-data-and-dynamic-backtest.mdc`（实现与约定摘要）。"
 msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:123
@@ -442,4 +442,3 @@ msgid ""
 "**策略数据总览**： [策略如何声明与使用数据](03-data-in-"
 "strategies.md)；**回测入口与模式**：[回测、实盘与优化](06-backtest-live-optimization.md)。"
 msgstr ""
-

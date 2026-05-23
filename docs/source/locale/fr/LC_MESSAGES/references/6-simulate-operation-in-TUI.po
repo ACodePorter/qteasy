@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:1
@@ -111,7 +110,7 @@ msgstr ""
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/2-configuration-and-run.md`"
-msgstr ""
+msgstr "`live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "拒单/状态解释"
@@ -119,7 +118,7 @@ msgstr ""
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/3-risk-and-order-lifecycle.md`"
-msgstr ""
+msgstr "`live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "日志排障"
@@ -127,7 +126,7 @@ msgstr ""
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/5-artifacts-and-troubleshooting.md`"
-msgstr ""
+msgstr "`live_trading/5-artifacts-and-troubleshooting.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "完整实操路径"
@@ -135,7 +134,7 @@ msgstr ""
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
-msgstr ""
+msgstr "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:44
 msgid "5. 跳转导航"
@@ -161,4 +160,3 @@ msgstr ""
 
 #~ msgid "未完待续"
 #~ msgstr ""
-

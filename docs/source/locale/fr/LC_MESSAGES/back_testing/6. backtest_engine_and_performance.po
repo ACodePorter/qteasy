@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:1
@@ -37,8 +36,8 @@ msgstr ""
 #: ../../source/back_testing/6. backtest_engine_and_performance.md:7
 #, python-format
 msgid ""
-"回测入口与流程已在 [回测概览](1.%20overview.md) 与 [如何运行回测](2.%20run_backtest.md) "
-"中说明：通过 `qt.run(op, mode=1, ...)` 进入回测模式，内部按 **group_timing_table** "
+"回测入口与流程已在 [回测概览](1.%20overview.md) 与 [如何运行回测](2.%20run_backtest.md) 中说明：通过 "
+"`qt.run(op, mode=1, ...)` 进入回测模式，内部按 **group_timing_table** "
 "的每个时间步运行策略、解析信号并模拟成交。"
 msgstr ""
 
@@ -144,11 +143,11 @@ msgstr ""
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "qteasy"
-msgstr ""
+msgstr "qteasy"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "VectorBT"
-msgstr ""
+msgstr "VectorBT"
 
 #: ../../source/back_testing/6. backtest_engine_and_performance.md
 msgid "顺序步进，每步内向量化"
@@ -210,4 +209,3 @@ msgid ""
 "performance.md)、[设计：设计初衷与独特优势](../design/08-design-rationale-and-"
 "advantages.md)。"
 msgstr ""
-

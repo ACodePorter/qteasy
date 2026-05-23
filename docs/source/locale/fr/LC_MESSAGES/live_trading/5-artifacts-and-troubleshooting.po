@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:1
@@ -83,7 +82,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "`sys_log`"
-msgstr ""
+msgstr "`sys_log`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "系统运行日志"
@@ -95,7 +94,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "`trade_log`"
-msgstr ""
+msgstr "`trade_log`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "交易明细 CSV"
@@ -107,7 +106,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "`break_point`"
-msgstr ""
+msgstr "`break_point`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "断点恢复文件（键名是 `break_point`）"
@@ -119,7 +118,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "`risk_log`"
-msgstr ""
+msgstr "`risk_log`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "风控拒单审计（`*.risk.log`）"
@@ -157,13 +156,12 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:47
 msgid ""
-"长期 live 会积累 CSV 与 risk 日志。qteasy 按 **`trade_log_keep_days`**（默认 3 "
-"天）清理过期文件。"
+"长期 live 会积累 CSV 与 risk 日志。qteasy 按 **`trade_log_keep_days`**（默认 3 天）清理过期文件。"
 msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:49
 msgid "**API**：`qt.rotate_trade_logs(days=None)`"
-msgstr ""
+msgstr "**API**: `qt.rotate_trade_logs(days=None)`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:50
 msgid "**CLI**：`rotatelogs`（别名 `rotate-logs`），可选 `--days N`"
@@ -175,11 +173,11 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:54
 msgid "`trade_log_*.csv` / `trade_summary_*.csv` / `value_curve_*.csv`"
-msgstr ""
+msgstr "`trade_log_*.csv` / `trade_summary_*.csv` / `value_curve_*.csv`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:55
 msgid "`*.risk.log`"
-msgstr ""
+msgstr "`*.risk.log`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:57
 msgid "每次新 Python 进程导入 qteasy 时会**自动轮换一次**；您也可在运维时手动执行上述命令。"
@@ -247,7 +245,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:80
 msgid "或 Shell：`reconcile` 看 JSON"
-msgstr ""
+msgstr "Or use Shell: `reconcile` to view the JSON."
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:82
 msgid "**Step 6 — 配置是否如我所想**"
@@ -371,8 +369,8 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:127
 msgid ""
-"当本地订单状态、券商委托号或在途单列表「对不上」时，现象多样但都可归入下表几类。本表位于 live **5-C 可观测**范畴，与 :doc:`6"
-"-trader-snapshot-gate` 诊断字段一致；simulator 上远端列常为空，属正常。"
+"当本地订单状态、券商委托号或在途单列表「对不上」时，现象多样但都可归入下表几类。本表位于 live **5-C 可观测**范畴，与 "
+":doc:`6-trader-snapshot-gate` 诊断字段一致；simulator 上远端列常为空，属正常。"
 msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:129
@@ -419,7 +417,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "trace / reason"
-msgstr ""
+msgstr "trace / reason"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "已 submitted 但无 broker id"
@@ -431,7 +429,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid ":doc:`4-broker-adapter-and-integration`"
-msgstr ""
+msgstr ":doc:`4-broker-adapter-and-integration`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "本地与远端在途不一致"
@@ -439,7 +437,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "DEBUG：`run --task diagnose_pending_orders`"
-msgstr ""
+msgstr "DEBUG: `run --task diagnose_pending_orders`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md
 msgid "只读诊断；simulator 远端常为空"
@@ -447,7 +445,7 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:140
 msgid "CLI 辅助：`reconcile`、`gate`。"
-msgstr ""
+msgstr "CLI helpers: `reconcile`, `gate`."
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:142
 msgid "G. 界面与日志不一致"
@@ -551,11 +549,11 @@ msgstr ""
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:195
 msgid "CLI 对照：:doc:`8-cli-trader-capability-matrix`"
-msgstr ""
+msgstr "CLI Reference: :doc:`8-cli-trader-capability-matrix`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:196
 msgid "Broker：:doc:`4-broker-adapter-and-integration`"
-msgstr ""
+msgstr "Broker: :doc:`4-broker-adapter-and-integration`"
 
 #: ../../source/live_trading/5-artifacts-and-troubleshooting.md:197
 msgid ""
@@ -730,4 +728,3 @@ msgstr ""
 
 #~ msgid "实操教程：`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
 #~ msgstr ""
-

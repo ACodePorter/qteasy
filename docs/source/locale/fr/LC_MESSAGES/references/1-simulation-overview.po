@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/references/1-simulation-overview.md:1
@@ -59,7 +58,7 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`Operator`"
-msgstr ""
+msgstr "`Operator`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "运行策略与生成信号"
@@ -67,11 +66,11 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`qt.run(op)`"
-msgstr ""
+msgstr "`qt.run(op)`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`Trader`"
-msgstr ""
+msgstr "`Trader`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "下单协同、风控衔接、状态维护"
@@ -83,7 +82,7 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`RiskManager`"
-msgstr ""
+msgstr "`RiskManager`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "规则链评估与放行/拒绝决策"
@@ -91,11 +90,11 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`submit_trade_order` 前"
-msgstr ""
+msgstr "`submit_trade_order` 前"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`Broker`"
-msgstr ""
+msgstr "`Broker`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "提交、取消、回报、远端查询"
@@ -103,11 +102,11 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`submit/cancel/poll_fills`"
-msgstr ""
+msgstr "`submit/cancel/poll_fills`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`trade_io`"
-msgstr ""
+msgstr "`trade_io`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "订单与成交字典契约校验"
@@ -143,7 +142,7 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`live_trading/2-configuration-and-run.md`"
-msgstr ""
+msgstr "`live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "下单与风控"
@@ -155,7 +154,7 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`live_trading/3-risk-and-order-lifecycle.md`"
-msgstr ""
+msgstr "`live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "成交与状态"
@@ -175,7 +174,7 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`live_trading/4-broker-adapter-and-integration.md`"
-msgstr ""
+msgstr "`live_trading/4-broker-adapter-and-integration.md`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "日志与排错"
@@ -187,7 +186,7 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`live_trading/5-artifacts-and-troubleshooting.md`"
-msgstr ""
+msgstr "`live_trading/5-artifacts-and-troubleshooting.md`"
 
 #: ../../source/references/1-simulation-overview.md:31
 msgid "3. S1.3 行为变化速查"
@@ -215,11 +214,11 @@ msgstr ""
 
 #: ../../source/references/1-simulation-overview.md:40
 msgid "CLI 清单：`references/5-simulate-operation-in-CLI.md`"
-msgstr ""
+msgstr "CLI 清单：`references/5-simulate-operation-in-CLI.md`"
 
 #: ../../source/references/1-simulation-overview.md:41
 msgid "TUI 清单：`references/6-simulate-operation-in-TUI.md`"
-msgstr ""
+msgstr "TUI 清单：`references/6-simulate-operation-in-TUI.md`"
 
 #: ../../source/references/1-simulation-overview.md:42
 msgid "API 自动文档：`api/api_reference.rst`"
@@ -253,4 +252,3 @@ msgstr ""
 
 #~ msgid "未完待续"
 #~ msgstr ""
-

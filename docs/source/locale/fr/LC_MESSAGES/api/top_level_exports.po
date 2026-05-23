@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/api/top_level_exports.md:1
@@ -71,9 +70,8 @@ msgstr ""
 
 #: ../../source/api/top_level_exports.md:16
 msgid ""
-"`start_up_settings` / `update_start_up_setting` / "
-"`remove_start_up_setting` / "
-"`get_start_up_settings`（`qteasy/configure.py`）：启动配置维护"
+"`start_up_settings` / `update_start_up_setting` / `remove_start_up_setting` "
+"/ `get_start_up_settings`（`qteasy/configure.py`）：启动配置维护"
 msgstr ""
 
 #: ../../source/api/top_level_exports.md:17
@@ -104,31 +102,31 @@ msgstr ""
 
 #: ../../source/api/top_level_exports.md:25
 msgid "`get_basic_info` / `get_stock_info`（`qteasy/core.py`）"
-msgstr ""
+msgstr "`get_basic_info` / `get_stock_info` (`qteasy/core.py`)"
 
 #: ../../source/api/top_level_exports.md:26
 msgid "`get_data_overview` / `refill_data_source`（`qteasy/core.py`）"
-msgstr ""
+msgstr "`get_data_overview` / `refill_data_source` (`qteasy/core.py`)"
 
 #: ../../source/api/top_level_exports.md:27
 msgid "`get_history_data` / `get_kline`（`qteasy/core.py`）"
-msgstr ""
+msgstr "`get_history_data` / `get_kline` (`qteasy/core.py`)"
 
 #: ../../source/api/top_level_exports.md:28
 msgid "`filter_stock_codes` / `filter_stocks`（`qteasy/core.py`）"
-msgstr ""
+msgstr "`filter_stock_codes` / `filter_stocks` (`qteasy/core.py`)"
 
 #: ../../source/api/top_level_exports.md:29
 msgid "`get_table_info` / `get_table_overview`（`qteasy/core.py`）"
-msgstr ""
+msgstr "`get_table_info` / `get_table_overview` (`qteasy/core.py`)"
 
 #: ../../source/api/top_level_exports.md:32
 msgid "`docs/source/api/history_data.rst`"
-msgstr ""
+msgstr "`docs/source/api/history_data.rst`"
 
 #: ../../source/api/top_level_exports.md:33
 msgid "`docs/source/references/2-get-history-data.md`"
-msgstr ""
+msgstr "`docs/source/references/2-get-history-data.md`"
 
 #: ../../source/api/top_level_exports.md:35
 msgid "1.3 研究容器（history）"
@@ -136,15 +134,15 @@ msgstr ""
 
 #: ../../source/api/top_level_exports.md:37
 msgid "`HistoryPanel`（`qteasy/history.py`）"
-msgstr ""
+msgstr "`HistoryPanel` (`qteasy/history.py`)"
 
 #: ../../source/api/top_level_exports.md:38
 msgid "`dataframe_to_hp` / `stack_dataframes`（`qteasy/history.py`）"
-msgstr ""
+msgstr "`dataframe_to_hp` / `stack_dataframes` (`qteasy/history.py`)"
 
 #: ../../source/api/top_level_exports.md:41
 msgid "`docs/source/api/HistoryPanel.rst`"
-msgstr ""
+msgstr "`docs/source/api/HistoryPanel.rst`"
 
 #: ../../source/api/top_level_exports.md:42
 msgid ""
@@ -159,8 +157,12 @@ msgid ""
 msgstr ""
 
 #: ../../source/api/top_level_exports.md:44
-msgid "示例：`examples/historypanel_research_to_strategy.py`、`examples/historypanel_multisource_research.py`、`examples/historypanel_statsmodels_export.py`"
+msgid ""
+"示例：`examples/historypanel_research_to_strategy.py`、`examples/historypanel_multisource_research.py`、`examples/historypanel_statsmodels_export.py`"
 msgstr ""
+"Examples: `examples/historypanel_research_to_strategy.py`, "
+"`examples/historypanel_multisource_research.py`, "
+"`examples/historypanel_statsmodels_export.py`"
 
 #: ../../source/api/top_level_exports.md:46
 msgid "1.4 策略与算子（operator / strategy / built_in）"
@@ -168,31 +170,35 @@ msgstr ""
 
 #: ../../source/api/top_level_exports.md:48
 msgid "`Operator`（`qteasy/qt_operator.py`）"
-msgstr ""
+msgstr "`Operator` (`qteasy/qt_operator.py`)"
 
 #: ../../source/api/top_level_exports.md:49
 msgid ""
 "`BaseStrategy` / `RuleIterator` / `GeneralStg` / "
 "`FactorSorter`（`qteasy/strategy.py`）"
 msgstr ""
+"`BaseStrategy` / `RuleIterator` / `GeneralStg` / `FactorSorter` "
+"(`qteasy/strategy.py`)"
 
 #: ../../source/api/top_level_exports.md:50
 msgid ""
 "`built_ins` / `built_in_list` / `built_in_strategies` / "
 "`get_built_in_strategy`（`qteasy/built_in.py`）"
 msgstr ""
+"`built_ins` / `built_in_list` / `built_in_strategies` / "
+"`get_built_in_strategy` (`qteasy/built_in.py`)"
 
 #: ../../source/api/top_level_exports.md:53
 msgid "`docs/source/api/Operators.rst`"
-msgstr ""
+msgstr "`docs/source/api/Operators.rst`"
 
 #: ../../source/api/top_level_exports.md:54
 msgid "`docs/source/api/Strategies.rst`"
-msgstr ""
+msgstr "`docs/source/api/Strategies.rst`"
 
 #: ../../source/api/top_level_exports.md:55
 msgid "`docs/source/api/built_in_strategies.rst`"
-msgstr ""
+msgstr "`docs/source/api/built_in_strategies.rst`"
 
 #: ../../source/api/top_level_exports.md:57
 msgid "1.5 数据源与数据类型（database / datatypes）"
@@ -200,19 +206,19 @@ msgstr ""
 
 #: ../../source/api/top_level_exports.md:59
 msgid "`DataSource`（`qteasy/database.py`）"
-msgstr ""
+msgstr "`DataSource` (`qteasy/database.py`)"
 
 #: ../../source/api/top_level_exports.md:60
 msgid "`DataType` / `StgData` / `find_history_data`（`qteasy/datatypes.py`）"
-msgstr ""
+msgstr "`DataType` / `StgData` / `find_history_data` (`qteasy/datatypes.py`)"
 
 #: ../../source/api/top_level_exports.md:63
 msgid "`docs/source/api/data_source.rst`"
-msgstr ""
+msgstr "`docs/source/api/data_source.rst`"
 
 #: ../../source/api/top_level_exports.md:64
 msgid "`docs/source/api/data_types.rst`"
-msgstr ""
+msgstr "`docs/source/api/data_types.rst`"
 
 #: ../../source/api/top_level_exports.md:66
 msgid "1.6 可视化与费用（visual / finance）"
@@ -220,35 +226,35 @@ msgstr ""
 
 #: ../../source/api/top_level_exports.md:68
 msgid "`candle`（`qteasy/visual.py`）"
-msgstr ""
+msgstr "`candle` (`qteasy/visual.py`)"
 
 #: ../../source/api/top_level_exports.md:69
 msgid "`CashPlan` / `set_cost` / `update_cost`（`qteasy/finance.py`）"
-msgstr ""
+msgstr "`CashPlan` / `set_cost` / `update_cost` (`qteasy/finance.py`)"
 
 #: ../../source/api/top_level_exports.md:72
 msgid "`docs/source/api/use_qteasy.rst`（入口）"
-msgstr ""
+msgstr "`docs/source/api/use_qteasy.rst` (entry point)"
 
 #: ../../source/api/top_level_exports.md:74
 msgid "1.7 常量与全局对象（__init__）"
 msgstr ""
 
 #: ../../source/api/top_level_exports.md:76
-msgid "模式常量：`LIVE_MODE` / `BACKTEST_MODE` / `OPTIMIZE_MODE` / `PREDICT_MODE` 及别名"
+msgid ""
+"模式常量：`LIVE_MODE` / `BACKTEST_MODE` / `OPTIMIZE_MODE` / `PREDICT_MODE` 及别名"
 msgstr ""
 
 #: ../../source/api/top_level_exports.md:77
 msgid ""
-"路径与对象：`QT_ROOT_PATH` / `QT_SYS_LOG_PATH` / `QT_TRADE_LOG_PATH` / "
-"`QT_CONFIG` / `QT_DATA_SOURCE` / `logger_core`"
+"路径与对象：`QT_ROOT_PATH` / `QT_SYS_LOG_PATH` / `QT_TRADE_LOG_PATH` / `QT_CONFIG`"
+" / `QT_DATA_SOURCE` / `logger_core`"
 msgstr ""
 
 #: ../../source/api/top_level_exports.md:78
 msgid "版本：`__version__` / `version_info`"
-msgstr ""
+msgstr "Version: `__version__` / `version_info`"
 
 #: ../../source/api/top_level_exports.md:81
 msgid "`docs/source/api/use_qteasy.rst`（运行模式与常量速查）"
 msgstr ""
-

@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/tutorials/2.0-get-data.md:1
@@ -87,8 +86,8 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:25
 msgid ""
-"另外，为了方便后续图表等功能的使用，建议使用`jupyter "
-"notebook`来进行开发，您可以在新建的虚拟环境中运行以下命令安装`jupyter notebook`："
+"另外，为了方便后续图表等功能的使用，建议使用`jupyter notebook`来进行开发，您可以在新建的虚拟环境中运行以下命令安装`jupyter "
+"notebook`："
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:30
@@ -123,11 +122,13 @@ msgid "获取基础数据以及价格数据"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:49
-msgid "如上一篇教程介绍，刚刚初始化的`qteasy`是无法调用任何历史数据的，所有历史数据都必须首先下载到本地，保存到一个称为`Datasource`的数据仓库之后，才能完成后续所有需要数据的工作，例如调用历史数据，进行策略的回测和优化等等。"
+msgid ""
+"如上一篇教程介绍，刚刚初始化的`qteasy`是无法调用任何历史数据的，所有历史数据都必须首先下载到本地，保存到一个称为`Datasource`的数据仓库之后，才能完成后续所有需要数据的工作，例如调用历史数据，进行策略的回测和优化等等。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:51
-msgid "`qteasy`需要使用的数据种类很多，所有的数据都是保存在一些预定义的数据表中，`Datasource`就是一系列数据表的集合。其中最基础的数据表包括："
+msgid ""
+"`qteasy`需要使用的数据种类很多，所有的数据都是保存在一些预定义的数据表中，`Datasource`就是一系列数据表的集合。其中最基础的数据表包括："
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:53
@@ -157,7 +158,8 @@ msgid "提示信息："
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:69
-msgid "`qteasy`提供了一个函数`get_table_overview()`来显示本地存储的数据信息，运行这个函数，可以打印出本地保存的数据表的清单，存储的数据量、占用的磁盘空间大小、以及数据范围等等。"
+msgid ""
+"`qteasy`提供了一个函数`get_table_overview()`来显示本地存储的数据信息，运行这个函数，可以打印出本地保存的数据表的清单，存储的数据量、占用的磁盘空间大小、以及数据范围等等。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:74
@@ -177,7 +179,8 @@ msgid "下载交易日历和基础数据"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:96
-msgid "我们可以调用`refill_data_source`函数下载交易日历和基础数据。这个函数是`qteasy`的标准数据下载接口函数，所有的历史数据类型均可以通过此接口下载。这个函数的基本参数是`tables`，传入数据表的名称即可下载相应的数据到本地存储了。使用`refill_data_source`下载交易数据时，`qteasy`会自动进行数据清洗，排除重复数据，去除错误数据，发生错误自动重试，并将下载的数据合并到本地数据表中。目前`qteasy`仅支持通过`tushare`下载金融数据，未来还会增加其他的金融数据接口，丰富用户选择。"
+msgid ""
+"我们可以调用`refill_data_source`函数下载交易日历和基础数据。这个函数是`qteasy`的标准数据下载接口函数，所有的历史数据类型均可以通过此接口下载。这个函数的基本参数是`tables`，传入数据表的名称即可下载相应的数据到本地存储了。使用`refill_data_source`下载交易数据时，`qteasy`会自动进行数据清洗，排除重复数据，去除错误数据，发生错误自动重试，并将下载的数据合并到本地数据表中。目前`qteasy`仅支持通过`tushare`下载金融数据，未来还会增加其他的金融数据接口，丰富用户选择。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:98
@@ -202,7 +205,8 @@ msgid "可以看到数据已经成功下载到本地："
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:138
-msgid "可以看到，三张数据表已经被下载到本地数据源，数据源的类型为`\"file://csv@qt_root/data/\"`类型（即数据以`csv`文件形式存储在qt根路径的`/data/`路径下），包含三张数据表，其中交易日历的范围涵盖到2024年年底。"
+msgid ""
+"可以看到，三张数据表已经被下载到本地数据源，数据源的类型为`\"file://csv@qt_root/data/\"`类型（即数据以`csv`文件形式存储在qt根路径的`/data/`路径下），包含三张数据表，其中交易日历的范围涵盖到2024年年底。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:140
@@ -276,7 +280,8 @@ msgid "月K线"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:197
-msgid "我们同样使用`qt.refill_data_source()`函数下载股票数据。最常用的股票日K线数据保存在`stock_daily`表中。不过由于数据量较大，我们最好在下载数据时限定数据的范围，通过`start_date`/`end_date`参数，指定下载数据的起始日期，分批下载历史数据，否则，下载的过程将会非常漫长："
+msgid ""
+"我们同样使用`qt.refill_data_source()`函数下载股票数据。最常用的股票日K线数据保存在`stock_daily`表中。不过由于数据量较大，我们最好在下载数据时限定数据的范围，通过`start_date`/`end_date`参数，指定下载数据的起始日期，分批下载历史数据，否则，下载的过程将会非常漫长："
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:202
@@ -302,7 +307,8 @@ msgid "得到结果如下："
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:244
-msgid "上面函数的输出是一个字典，字典的键为`shares`参数指定的所有股票的代码，而值为一个`DataFrame`，包含该股票在指定期间的历史数据，这里我们指定了数据类型为K线量价数据。当然，我们也可以指定其他的数据类型，只要这些数据已经下载到了本地，就可以直接读取。"
+msgid ""
+"上面函数的输出是一个字典，字典的键为`shares`参数指定的所有股票的代码，而值为一个`DataFrame`，包含该股票在指定期间的历史数据，这里我们指定了数据类型为K线量价数据。当然，我们也可以指定其他的数据类型，只要这些数据已经下载到了本地，就可以直接读取。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:246
@@ -312,7 +318,8 @@ msgid ""
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:248
-msgid "关于`get_history_data`函数参数的详细解释，请参见[qteasy文档](https://qteasy.readthedocs.io)"
+msgid ""
+"关于`get_history_data`函数参数的详细解释，请参见[qteasy文档](https://qteasy.readthedocs.io)"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:250
@@ -340,16 +347,18 @@ msgid "![在这里插入图片描述](img/candle-600004-b.png)"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:270
-msgid "`qt.candle()`函数支持传入K线图的开始日期、结束日期、K线频率、复权方式以显示不同区间和频率的K线图，也支持传入移动均线的时长和macd的不同参数显示不同的均线，`qt.candle()`函数还支持通过股票名称显示K线图，如果输入是股票名称，会自动模糊查找，并且支持通配符。"
+msgid ""
+"`qt.candle()`函数支持传入K线图的开始日期、结束日期、K线频率、复权方式以显示不同区间和频率的K线图，也支持传入移动均线的时长和macd的不同参数显示不同的均线，`qt.candle()`函数还支持通过股票名称显示K线图，如果输入是股票名称，会自动模糊查找，并且支持通配符。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:272
-msgid "下面是更多的K线图例子，展示了股票、基金、指数等不同的资产类别，不同的数据频率，不同的均线设定、不同的图表类型等，为了显示下面示例中的K线图，您需要下载相应的数据。"
+msgid ""
+"下面是更多的K线图例子，展示了股票、基金、指数等不同的资产类别，不同的数据频率，不同的均线设定、不同的图表类型等，为了显示下面示例中的K线图，您需要下载相应的数据。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:289
 msgid "![png](img/output_18_1.png)"
-msgstr ""
+msgstr "![png](img/output_18_1.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:289
 #: ../../source/tutorials/2.0-get-data.md:292
@@ -363,62 +372,65 @@ msgstr ""
 #: ../../source/tutorials/2.0-get-data.md:316
 #: ../../source/tutorials/2.0-get-data.md:319
 msgid "png"
-msgstr ""
+msgstr "png"
 
 #: ../../source/tutorials/2.0-get-data.md:292
 msgid "![png](img/output_18_2.png)"
-msgstr ""
+msgstr "![png](img/output_18_2.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:295
 msgid "![png](img/output_18_3_copy.png)"
-msgstr ""
+msgstr "![png](img/output_18_3_copy.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:298
 msgid "![png](img/output_18_4.png)"
-msgstr ""
+msgstr "![png](img/output_18_4.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:301
 msgid "![png](img/output_18_5.png)"
-msgstr ""
+msgstr "![png](img/output_18_5.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:304
 msgid "![png](img/output_18_6.png)"
-msgstr ""
+msgstr "![png](img/output_18_6.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:307
 msgid "![png](img/output_18_7.png)"
-msgstr ""
+msgstr "![png](img/output_18_7.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:310
 msgid "![png](img/output_18_8.png)"
-msgstr ""
+msgstr "![png](img/output_18_8.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:313
 msgid "![png](img/output_18_9.png)"
-msgstr ""
+msgstr "![png](img/output_18_9.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:316
 msgid "![png](img/output_18_10.png)"
-msgstr ""
+msgstr "![png](img/output_18_10.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:319
 msgid "![png](img/output_18_11.png)"
-msgstr ""
+msgstr "![png](img/output_18_11.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:321
 msgid "数据类型`DataType`的查找"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:323
-msgid "前面提到过，`qteasy`中的所有数据类型均被封装为`DataType`对象，代表一种可以被直接使用的历史数据，每个`DataType`均有一个唯一的ID，通过这个ID，可以提取数据，在交易策略中引用该数据类型，完成`qteasy`中所需的工作。"
+msgid ""
+"前面提到过，`qteasy`中的所有数据类型均被封装为`DataType`对象，代表一种可以被直接使用的历史数据，每个`DataType`均有一个唯一的ID，通过这个ID，可以提取数据，在交易策略中引用该数据类型，完成`qteasy`中所需的工作。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:325
-msgid "为了更加了解`qteasy`中的数据类型，我们可以用`qt.find_history_data()`函数来查询所需的数据类型。`qteasy`中定义的数据类型是与数据频率、资产类型挂钩的，也就是说，不同资产的收盘价是不同的数据类型，不同频率的收盘价也是不同的。"
+msgid ""
+"为了更加了解`qteasy`中的数据类型，我们可以用`qt.find_history_data()`函数来查询所需的数据类型。`qteasy`中定义的数据类型是与数据频率、资产类型挂钩的，也就是说，不同资产的收盘价是不同的数据类型，不同频率的收盘价也是不同的。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:327
-msgid "`qt.find_history_data()`函数可以根据输入查找相关的数据类型，并且显示它们的ID，数据表、说明等相关信息，例如，搜索`‘close’`（收盘价）可以找到所有相关的数据类型："
+msgid ""
+"`qt.find_history_data()`函数可以根据输入查找相关的数据类型，并且显示它们的ID，数据表、说明等相关信息，例如，搜索`‘close’`（收盘价）可以找到所有相关的数据类型："
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:332
@@ -441,19 +453,23 @@ msgid "简单介绍`DataType`对象"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:370
-msgid "如上文所示，`qteasy`中的数据类型是以`DataType`对象的形式存在的，每个数据类型都有一个唯一的ID，通过这个ID可以提取数据，在交易策略中引用该数据类型，完成`qteasy`中所需的工作。"
+msgid ""
+"如上文所示，`qteasy`中的数据类型是以`DataType`对象的形式存在的，每个数据类型都有一个唯一的ID，通过这个ID可以提取数据，在交易策略中引用该数据类型，完成`qteasy`中所需的工作。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:372
-msgid "`DataType`代表了可以从数据源中提取出来的一种历史数据，例如，股票日K线的收盘价就是一种历史数据，股票周K线的收盘价又是另一种历史数据，股票月K线的收盘价又是另一种历史数据，虽然它们都是收盘价，但由于频率不同，所以被封装为不同的数据类型。"
+msgid ""
+"`DataType`代表了可以从数据源中提取出来的一种历史数据，例如，股票日K线的收盘价就是一种历史数据，股票周K线的收盘价又是另一种历史数据，股票月K线的收盘价又是另一种历史数据，虽然它们都是收盘价，但由于频率不同，所以被封装为不同的数据类型。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:374
-msgid "`DataType`类封装了统一的数据获取API和属性，大大方便了历史数据在`qteasy`中的使用。当我们需要使用某种历史数据时，只需要通过该ID使用get_history_data直接获取即可。"
+msgid ""
+"`DataType`类封装了统一的数据获取API和属性，大大方便了历史数据在`qteasy`中的使用。当我们需要使用某种历史数据时，只需要通过该ID使用get_history_data直接获取即可。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:376
-msgid "而需要在交易策略中使用某种数据，只要在交易策略定义过程中注册该数据的ID，就可以直接在策略中直接使用了，而不需要关心该数据是如何存储的，如何下载的，如何清洗的等等细节问题。"
+msgid ""
+"而需要在交易策略中使用某种数据，只要在交易策略定义过程中注册该数据的ID，就可以直接在策略中直接使用了，而不需要关心该数据是如何存储的，如何下载的，如何清洗的等等细节问题。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:378
@@ -461,7 +477,8 @@ msgid "定期下载数据到本地"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:380
-msgid "为了保持本地数据源的数据更新，我们可以使用`qt.refill_data_source()`函数定期下载数据到本地。创建一个文件`refill_data.py`，并在其中写入以下代码："
+msgid ""
+"为了保持本地数据源的数据更新，我们可以使用`qt.refill_data_source()`函数定期下载数据到本地。创建一个文件`refill_data.py`，并在其中写入以下代码："
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:426
@@ -479,7 +496,8 @@ msgid "回顾总结"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:439
-msgid "至此，我们已经初步了解了`qteasy`中对数据的管理方式，了解了数据下载的方法。下载了基本数据以及一些量价数据。我们学会了如何提取数据、如何显示K线图。最后，我们还学会了查询数据的方法，如果需要某种数据，知道如何查询，如何下载和调用这些数据。"
+msgid ""
+"至此，我们已经初步了解了`qteasy`中对数据的管理方式，了解了数据下载的方法。下载了基本数据以及一些量价数据。我们学会了如何提取数据、如何显示K线图。最后，我们还学会了查询数据的方法，如果需要某种数据，知道如何查询，如何下载和调用这些数据。"
 msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:441
@@ -489,4 +507,3 @@ msgstr ""
 #: ../../source/tutorials/2.0-get-data.md:443
 msgid "关于`qteasy`的更多介绍，请参见[qteasy文档](https://qteasy.readthedocs.io)"
 msgstr ""
-

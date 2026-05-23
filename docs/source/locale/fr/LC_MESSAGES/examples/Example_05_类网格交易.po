@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/examples/Example_05_类网格交易.md:1
@@ -25,8 +24,8 @@ msgstr ""
 
 #: ../../source/examples/Example_05_类网格交易.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_05_类网格交易.ipynb` 第一个 "
-"Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_05_类网格交易.ipynb` 第一个 Markdown "
+"cell。"
 msgstr ""
 
 #: ../../source/examples/Example_05_类网格交易.md:5
@@ -44,8 +43,8 @@ msgstr ""
 #: ../../source/examples/Example_05_类网格交易.md:8
 msgid ""
 "然后根据价格所在的区间来配置仓位(+/-40为上下界,无实际意义): "
-"(-40,-3],(-3,-2],(-2,2],(2,3],(3,40](具体价格等于均值+数字倍标准差) [-0.5, -0.3, 0.0, "
-"0.3, 0.5] (资金比例,此处负号表示开空仓，回测时设置为允许持有空头仓位)"
+"(-40,-3],(-3,-2],(-2,2],(2,3],(3,40](具体价格等于均值+数字倍标准差) [-0.5, -0.3, 0.0, 0.3,"
+" 0.5] (资金比例,此处负号表示开空仓，回测时设置为允许持有空头仓位)"
 msgstr ""
 
 #: ../../source/examples/Example_05_类网格交易.md:12
@@ -62,9 +61,8 @@ msgstr ""
 
 #: ../../source/examples/Example_05_类网格交易.md:133
 msgid "![png](img/output_3_1.png)"
-msgstr ""
+msgstr "![png](img/output_3_1.png)"
 
 #: ../../source/examples/Example_05_类网格交易.md:133
 msgid "png"
-msgstr ""
-
+msgstr "png"

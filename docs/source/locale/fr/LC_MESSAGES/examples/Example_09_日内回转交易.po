@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/examples/Example_09_日内回转交易.md:1
@@ -25,8 +24,8 @@ msgstr ""
 
 #: ../../source/examples/Example_09_日内回转交易.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_09_日内回转交易.ipynb` 第一个 "
-"Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_09_日内回转交易.ipynb` 第一个 Markdown"
+" cell。"
 msgstr ""
 
 #: ../../source/examples/Example_09_日内回转交易.md:5
@@ -67,5 +66,4 @@ msgstr ""
 
 #: ../../source/examples/Example_09_日内回转交易.md:42
 msgid "`examples/strategy_example_09.py`"
-msgstr ""
-
+msgstr "`examples/strategy_example_09.py`"

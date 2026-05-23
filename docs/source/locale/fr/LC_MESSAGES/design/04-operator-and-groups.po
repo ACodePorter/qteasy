@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/design/04-operator-and-groups.md:1
@@ -85,35 +84,35 @@ msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:21
 msgid ""
-"添加策略时，若已存在相同 run_freq、run_timing 的 Group，则策略加入该 Group；否则新建 Group。因此 Group"
-" 的划分完全由“运行时机”决定，策略类自身不保存 run_freq/run_timing，由所属 Group 管理。"
+"添加策略时，若已存在相同 run_freq、run_timing 的 Group，则策略加入该 Group；否则新建 Group。因此 Group "
+"的划分完全由“运行时机”决定，策略类自身不保存 run_freq/run_timing，由所属 Group 管理。"
 msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:23
 msgid "5. group_timing_table"
-msgstr ""
+msgstr "5. group_timing_table"
 
 #: ../../source/design/04-operator-and-groups.md:25
 msgid ""
-"**含义**：二维表，行 = 时间步（与回测区间或实盘 schedule 对齐），列 = Group；单元格为 1 表示该步运行该 Group，0"
-" 表示不运行。"
+"**含义**：二维表，行 = 时间步（与回测区间或实盘 schedule 对齐），列 = Group；单元格为 1 表示该步运行该 Group，0 "
+"表示不运行。"
 msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:26
 msgid ""
-"**与回测区间、run_freq 的关系**：回测时，根据 invest_start、invest_end 与交易日历生成时间轴，再根据各 "
-"Group 的 run_freq、run_timing 在该时间轴上标记“哪些步运行哪些 Group”，得到 "
+"**与回测区间、run_freq 的关系**：回测时，根据 invest_start、invest_end 与交易日历生成时间轴，再根据各 Group "
+"的 run_freq、run_timing 在该时间轴上标记“哪些步运行哪些 Group”，得到 "
 "group_timing_table。实盘时同理，按实际运行日与 run_freq/run_timing 决定何时触发哪些 Group。"
 msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:28
 msgid "6. blender"
-msgstr ""
+msgstr "6. blender"
 
 #: ../../source/design/04-operator-and-groups.md:30
 msgid ""
-"**作用**：同一 Group 内可能有多个策略，每步各策略输出一个信号（标量或数组）。**blender** 将这些信号按一定规则混合成该 "
-"Group 的**一个**合并信号（如加权平均、求和等）。"
+"**作用**：同一 Group 内可能有多个策略，每步各策略输出一个信号（标量或数组）。**blender** 将这些信号按一定规则混合成该 Group"
+" 的**一个**合并信号（如加权平均、求和等）。"
 msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:31
@@ -128,7 +127,7 @@ msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:34
 msgid "7. group_merge_type"
-msgstr ""
+msgstr "7. group_merge_type"
 
 #: ../../source/design/04-operator-and-groups.md:36
 msgid "当同一时间步有多个 Group 运行时，**group_merge_type** 决定各组信号如何合并："
@@ -159,4 +158,3 @@ msgid ""
 "Operator 通过 Group 与 group_timing_table 实现“按时间步、按组”的统一调度：每一步只运行该步标记为 1 的 "
 "Group，组内策略共享数据注入与 blender，输出合并信号供回测/实盘/优化使用。更多用法见《使用教程》与 API 文档。"
 msgstr ""
-

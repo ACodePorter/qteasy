@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/examples/Example_03_集合竞价选股.md:1
@@ -25,12 +24,13 @@ msgstr ""
 
 #: ../../source/examples/Example_03_集合竞价选股.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_03_集合竞价选股.ipynb` 第一个 "
-"Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_03_集合竞价选股.ipynb` 第一个 Markdown"
+" cell。"
 msgstr ""
 
 #: ../../source/examples/Example_03_集合竞价选股.md:5
-msgid "本策略通过获取SHSE.000300沪深300的成份股数据并统计其30天内开盘价大于前收盘价的天数,并在该天数大于阈值10的时候加入股票池,随后对不在股票池的股票平仓并等权配置股票池的标的,每次交易间隔1个月."
+msgid ""
+"本策略通过获取SHSE.000300沪深300的成份股数据并统计其30天内开盘价大于前收盘价的天数,并在该天数大于阈值10的时候加入股票池,随后对不在股票池的股票平仓并等权配置股票池的标的,每次交易间隔1个月."
 msgstr ""
 
 #: ../../source/examples/Example_03_集合竞价选股.md:7
@@ -61,19 +61,20 @@ msgstr ""
 
 #: ../../source/examples/Example_03_集合竞价选股.md:178
 msgid "![png](img/output_4_1_2.png)"
-msgstr ""
+msgstr "![png](img/output_4_1_2.png)"
 
 #: ../../source/examples/Example_03_集合竞价选股.md:178
 #: ../../source/examples/Example_03_集合竞价选股.md:313
 msgid "png"
-msgstr ""
+msgstr "png"
 
 #: ../../source/examples/Example_03_集合竞价选股.md:181
 msgid "第二种自定义策略设置方法，使用PT交易信号设置持仓目标："
 msgstr ""
 
 #: ../../source/examples/Example_03_集合竞价选股.md:183
-msgid "在完成选股因子的计算之后，直接设置每个股票的持仓目标，这样就不需要使用知道持仓数据，直接输出持仓目标信号 ，在回测过程中根据实际持仓量生成交易信号。"
+msgid ""
+"在完成选股因子的计算之后，直接设置每个股票的持仓目标，这样就不需要使用知道持仓数据，直接输出持仓目标信号 ，在回测过程中根据实际持仓量生成交易信号。"
 msgstr ""
 
 #: ../../source/examples/Example_03_集合竞价选股.md:226
@@ -86,8 +87,7 @@ msgstr ""
 
 #: ../../source/examples/Example_03_集合竞价选股.md:313
 msgid "![png](img/output_6_1.png)"
-msgstr ""
+msgstr "![png](img/output_6_1.png)"
 
 #~ msgid "第二种自定义策略设置方，使用PT交易信号设置持仓目标："
 #~ msgstr ""
-

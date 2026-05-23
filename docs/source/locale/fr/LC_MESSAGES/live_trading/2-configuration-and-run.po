@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/live_trading/2-configuration-and-run.md:1
@@ -78,7 +77,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "**Operator**"
-msgstr ""
+msgstr "**Operator**"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "持有策略与信号逻辑"
@@ -98,7 +97,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`live_trade_account_id` 或 `live_trade_account_name`"
-msgstr ""
+msgstr "`live_trade_account_id` or `live_trade_account_name`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "**本地数据源**"
@@ -114,10 +113,9 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md:26
 msgid ""
-"**LiveTradeConfig（live 配置快照）**：qteasy 在启动 Trader 前，会把分散在 "
-"`qt.configure(...)` 里的 live "
-"相关项**校验并冻结**成一份不可变快照——像起飞前签字的检查单，避免运行中被意外改配置。您可在 Shell 里用 `liveconfig` "
-"查看摘要。"
+"**LiveTradeConfig（live 配置快照）**：qteasy 在启动 Trader 前，会把分散在 `qt.configure(...)`"
+" 里的 live 相关项**校验并冻结**成一份不可变快照——像起飞前签字的检查单，避免运行中被意外改配置。您可在 Shell 里用 "
+"`liveconfig` 查看摘要。"
 msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md:28
@@ -154,7 +152,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`mode=0`"
-msgstr ""
+msgstr "`mode=0`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "进入 live / 模拟实盘"
@@ -167,6 +165,12 @@ msgstr ""
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`asset_type`"
 msgstr ""
+"The set of names of the historical data to be fetched, if htypes is empty, "
+"the system will try to create all possible htypes by basing on the name of "
+"the historical data and the freq/asset_type parameter. the input can be str "
+"or list: - str: 'open, high, low, close' - list: ['open', 'high', 'low', "
+"'close'] - list: ['open', 'high', 'low', 'close'] - list: ['open', 'high', "
+"'low', 'close'] 'high', 'low', 'close']"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "资产类型，如 `E` 股票、`FD` 场内基金"
@@ -186,7 +190,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`live_trade_broker_type`"
-msgstr ""
+msgstr "``live_trade_broker_type``"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "券商类型，初学用 `simulator`"
@@ -198,7 +202,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`live_price_acquire_channel`"
-msgstr ""
+msgstr "``live_price_acquire_channel``"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "实时价渠道，如 `eastmoney`"
@@ -210,7 +214,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`live_price_acquire_freq`"
-msgstr ""
+msgstr "``live_price_acquire_freq``"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "拉价频率，如 `15MIN`"
@@ -232,7 +236,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`trade_batch_size` / `sell_batch_size`"
-msgstr ""
+msgstr "`trade_batch_size` / `sell_batch_size`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "买卖最小单位"
@@ -244,7 +248,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`cash_decimal_places` / `amount_decimal_places`"
-msgstr ""
+msgstr "`cash_decimal_places` / `amount_decimal_places`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "现金/数量小数位"
@@ -252,7 +256,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`sys_log_file_path` / `trade_log_file_path`"
-msgstr ""
+msgstr "`sys_log_file_path` / `trade_log_file_path`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "系统/交易日志目录"
@@ -264,7 +268,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`trade_log_keep_days`"
-msgstr ""
+msgstr "``trade_log_keep_days``"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "日志保留天数（含 risk 日志）"
@@ -306,8 +310,8 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md:77
 msgid ""
-"live 相关配置键数量较多。为便于查阅，我们按**功能分组**归纳（非 API 全量列表；完整字段以 `LiveTradeConfig` "
-"为准）。在 qteasy 中，这些键在启动前被校验并冻结——您改 `qt.configure` 后需重启 live 进程才能完全生效。"
+"live 相关配置键数量较多。为便于查阅，我们按**功能分组**归纳（非 API 全量列表；完整字段以 `LiveTradeConfig` 为准）。在 "
+"qteasy 中，这些键在启动前被校验并冻结——您改 `qt.configure` 后需重启 live 进程才能完全生效。"
 msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md:79
@@ -324,8 +328,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md:83
 msgid ""
-"**示例**：子日频策略常改「行情与 refill」组的 "
-"`live_price_acquire_freq`，并视需要开启「策略快照（5-A）」组中的 "
+"**示例**：子日频策略常改「行情与 refill」组的 `live_price_acquire_freq`，并视需要开启「策略快照（5-A）」组中的 "
 "`live_trade_split_strategy_prepare`。"
 msgstr ""
 
@@ -346,8 +349,10 @@ msgid "账户与 UI"
 msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
-msgid "`live_trade_account_id`, `live_trade_account_name`, `live_trade_ui_type`"
+msgid ""
+"`live_trade_account_id`, `live_trade_account_name`, `live_trade_ui_type`"
 msgstr ""
+"`live_trade_account_id`, `live_trade_account_name`, `live_trade_ui_type`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "账户与 CLI / TUI 选择"
@@ -362,6 +367,8 @@ msgid ""
 "`live_price_acquire_channel`, `live_price_acquire_freq`, "
 "`live_trade_data_refill_channel`, `live_trade_*_refill_tables`"
 msgstr ""
+"`live_price_acquire_channel`, `live_price_acquire_freq`, "
+"`live_trade_data_refill_channel`, `live_trade_*_refill_tables`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "实时价与定时补数据"
@@ -376,6 +383,8 @@ msgid ""
 "`trade_batch_size`, `sell_batch_size`, `stock_delivery_period`, "
 "`cash_delivery_period`, `pt_buy_threshold`, `pt_sell_threshold`"
 msgstr ""
+"`trade_batch_size`, `sell_batch_size`, `stock_delivery_period`, "
+"`cash_delivery_period`, `pt_buy_threshold`, `pt_sell_threshold`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "与回测语义对齐"
@@ -383,11 +392,11 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "Broker"
-msgstr ""
+msgstr "Broker"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`live_trade_broker_type`, `live_trade_broker_params`"
-msgstr ""
+msgstr "`live_trade_broker_type`, `live_trade_broker_params`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "默认 `simulator`；扩展见 :doc:`4-broker-adapter-and-integration`"
@@ -402,6 +411,8 @@ msgid ""
 "`live_trade_split_strategy_prepare`, `live_trade_prepare_lead_seconds`, "
 "`live_trade_strategy_snapshot_max_age_seconds`"
 msgstr ""
+"`live_trade_split_strategy_prepare`, `live_trade_prepare_lead_seconds`, "
+"`live_trade_strategy_snapshot_max_age_seconds`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "策略运行前预拉数据；详见 :doc:`6-trader-snapshot-gate`"
@@ -413,7 +424,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`live_trade_startup_gate_mode`（`off` / `warn` / `block`）"
-msgstr ""
+msgstr "`live_trade_startup_gate_mode` (`off` / `warn` / `block`)"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "开盘前安全检查；CLI `gate`"
@@ -425,7 +436,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`sys_log_file_path`, `trade_log_file_path`, `trade_log_keep_days`"
-msgstr ""
+msgstr "`sys_log_file_path`, `trade_log_file_path`, `trade_log_keep_days`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "含 `*.risk.log` 轮换；见 :doc:`5-artifacts-and-troubleshooting`"
@@ -521,7 +532,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`liveconfig`"
-msgstr ""
+msgstr "`liveconfig`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "当前 live 配置摘要"
@@ -529,7 +540,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`artifacts`"
-msgstr ""
+msgstr "`artifacts`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "四键产物路径（日志在哪）"
@@ -537,7 +548,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`gate`"
-msgstr ""
+msgstr "`gate`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "手动跑一次启动门禁（调试）"
@@ -545,7 +556,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`broker status`"
-msgstr ""
+msgstr "`broker status`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "模拟券商是否「已连接」"
@@ -553,7 +564,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`reconcile`"
-msgstr ""
+msgstr "`reconcile`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "对账快照 JSON"
@@ -561,7 +572,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "`run --task diagnose_pending_orders`"
-msgstr ""
+msgstr "`run --task diagnose_pending_orders`"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "在途单诊断（需 **DEBUG** 模式）"
@@ -592,7 +603,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "**dashboard**"
-msgstr ""
+msgstr "**dashboard**"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "自动刷新状态行与监视价；Trader 主循环在后台继续运行"
@@ -752,7 +763,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "gate block"
-msgstr ""
+msgstr "gate block"
 
 #: ../../source/live_trading/2-configuration-and-run.md
 msgid "启动门禁 `block` 且检查未过"
@@ -776,7 +787,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md:232
 msgid "Broker 适配：:doc:`4-broker-adapter-and-integration`"
-msgstr ""
+msgstr "Broker adaptation: :doc:`4-broker-adapter-and-integration`"
 
 #: ../../source/live_trading/2-configuration-and-run.md:233
 msgid "快照/门禁：:doc:`6-trader-snapshot-gate`"
@@ -788,7 +799,7 @@ msgstr ""
 
 #: ../../source/live_trading/2-configuration-and-run.md:235
 msgid "CLI 对照：:doc:`8-cli-trader-capability-matrix`"
-msgstr ""
+msgstr "CLI Reference: :doc:`8-cli-trader-capability-matrix`"
 
 #: ../../source/live_trading/2-configuration-and-run.md:236
 msgid ""
@@ -963,4 +974,3 @@ msgstr ""
 
 #~ msgid "日志目录中可找到对应运行产物"
 #~ msgstr ""
-

@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:1
@@ -36,8 +35,8 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:7
 msgid ""
-"回测模式（mode=1）的流程在 [回测、实盘与优化](06-backtest-live-optimization.md) 中已概括：准备历史数据"
-" → 构建 Backtester → 按 group_timing_table 逐步运行 Operator 生成信号 → 解析信号并模拟成交 → "
+"回测模式（mode=1）的流程在 [回测、实盘与优化](06-backtest-live-optimization.md) 中已概括：准备历史数据 → "
+"构建 Backtester → 按 group_timing_table 逐步运行 Operator 生成信号 → 解析信号并模拟成交 → "
 "评价与输出。其中，“解析信号并模拟成交”由 **backtest** 模块中的 Numba 函数完成，实现“时间维顺序、标的维向量化”。"
 msgstr ""
 
@@ -51,7 +50,7 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:13
 msgid "在 `qteasy/backtest.py` 中："
-msgstr ""
+msgstr "In `qteasy/backtest.py`:"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:15
 msgid ""
@@ -76,7 +75,8 @@ msgid ""
 msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:20
-msgid "在 `qteasy/blender.py` 中，信号混合用的部分算子（如 `op_sum`、`op_floor` 等）也使用 `@njit` 加速。"
+msgid ""
+"在 `qteasy/blender.py` 中，信号混合用的部分算子（如 `op_sum`、`op_floor` 等）也使用 `@njit` 加速。"
 msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:22
@@ -89,8 +89,8 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:25
 msgid ""
-"**标的维向量化**：在每一个时间步内，对所有标的的 signal、持仓、买卖量、费用等用 NumPy 数组与 Numba 内联运算，避免 "
-"Python 层循环。"
+"**标的维向量化**：在每一个时间步内，对所有标的的 signal、持仓、买卖量、费用等用 NumPy 数组与 Numba 内联运算，避免 Python"
+" 层循环。"
 msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:27
@@ -103,9 +103,8 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:31
 msgid ""
-"在 `qteasy/optimization.py` 中，多组参数通过多进程（如 "
-"`ProcessPoolExecutor`）并行执行回测；每组内部使用 `backtest_flash_steps` "
-"等路径，只保留最终资金/持仓，以降低内存占用并提高吞吐。"
+"在 `qteasy/optimization.py` 中，多组参数通过多进程（如 `ProcessPoolExecutor`）并行执行回测；每组内部使用"
+" `backtest_flash_steps` 等路径，只保留最终资金/持仓，以降低内存占用并提高吞吐。"
 msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:33
@@ -118,11 +117,11 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "qteasy"
-msgstr ""
+msgstr "qteasy"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "VectorBT"
-msgstr ""
+msgstr "VectorBT"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "时间维度"
@@ -176,10 +175,9 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:42
 msgid ""
-"**结论**：qteasy "
-"并非“缺乏向量化/Numba”，而是在保证**状态正确性**（T+1、交割、MOQ、多策略合并等）的前提下，选择了“时间顺序 + 标的维向量化 +"
-" Numba 单步”的折中；与 VectorBT 的“全矩阵广播”各有适用场景（qteasy 偏规则严谨与实盘一致，VectorBT "
-"偏海量参数快速筛选）。"
+"**结论**：qteasy 并非“缺乏向量化/Numba”，而是在保证**状态正确性**（T+1、交割、MOQ、多策略合并等）的前提下，选择了“时间顺序"
+" + 标的维向量化 + Numba 单步”的折中；与 VectorBT 的“全矩阵广播”各有适用场景（qteasy "
+"偏规则严谨与实盘一致，VectorBT 偏海量参数快速筛选）。"
 msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:44
@@ -199,4 +197,3 @@ msgstr ""
 #: ../../source/design/07-backtest-engine-and-performance.md:48
 msgid "设计初衷与数据隔离：[设计初衷与独特优势](08-design-rationale-and-advantages.md)。"
 msgstr ""
-

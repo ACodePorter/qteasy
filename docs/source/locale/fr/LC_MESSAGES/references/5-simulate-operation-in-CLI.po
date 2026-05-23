@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:1
@@ -25,8 +24,8 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:3
 msgid ""
-"本文从命令与能力清单角度说明 CLI 中的模拟实盘功能。   如需按步骤操作，请阅读 `tutorials/8-live-trade-risk-"
-"and-broker-walkthrough.md`。"
+"本文从命令与能力清单角度说明 CLI 中的模拟实盘功能。   如需按步骤操作，请阅读 `tutorials/8-live-trade-risk-and-"
+"broker-walkthrough.md`。"
 msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:6
@@ -157,7 +156,7 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`live_trading/2-configuration-and-run.md`"
-msgstr ""
+msgstr "`live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "订单为何被拒或未成交"
@@ -165,7 +164,7 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`live_trading/3-risk-and-order-lifecycle.md`"
-msgstr ""
+msgstr "`live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "日志如何排查"
@@ -173,7 +172,7 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`live_trading/5-artifacts-and-troubleshooting.md`"
-msgstr ""
+msgstr "`live_trading/5-artifacts-and-troubleshooting.md`"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "完整实操路径"
@@ -181,7 +180,7 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
-msgstr ""
+msgstr "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:57
 msgid "5. 跳转导航"
@@ -197,7 +196,7 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:61
 msgid "API 参考：`api/api_reference.rst`"
-msgstr ""
+msgstr "API 参考：`api/api_reference.rst`"
 
 #~ msgid "模拟实盘交易——CLI"
 #~ msgstr ""
@@ -207,4 +206,3 @@ msgstr ""
 
 #~ msgid "未完待续"
 #~ msgstr ""
-

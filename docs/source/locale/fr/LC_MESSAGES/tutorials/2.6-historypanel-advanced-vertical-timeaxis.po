@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:1
@@ -28,13 +27,14 @@ msgid "纵向择时：因子阈值 -> bool mask -> 组合收益与 CAGR 对比"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:5
-msgid "本篇教程面向一个非常常见、也非常“接地气”的研究场景：我们手里只有少量股票（几只到十几只），想沿每只股票自己的时间轴做出**持有/不持有**的择时决策；然后把这些决策汇总成一条组合曲线，最后再和基准（HS300）对比，得到一个能复用的年化指标（CAGR）。"
+msgid ""
+"本篇教程面向一个非常常见、也非常“接地气”的研究场景：我们手里只有少量股票（几只到十几只），想沿每只股票自己的时间轴做出**持有/不持有**的择时决策；然后把这些决策汇总成一条组合曲线，最后再和基准（HS300）对比，得到一个能复用的年化指标（CAGR）。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:7
 msgid ""
-"先把定位说清楚：`HistoryPanel` 在这里扮演的是**轻量因子研究容器**。它的强项是把“数据 -> 条件 -> "
-"研究口径（mask）-> 组合聚合 -> "
+"先把定位说清楚：`HistoryPanel` 在这里扮演的是**轻量因子研究容器**。它的强项是把“数据 -> 条件 -> 研究口径（mask）-> "
+"组合聚合 -> "
 "可视化解释”打通，让我们能快速验证一个规则是不是值得继续深挖。它不是交易回测引擎：不处理交易成本、交割、滑点、资金约束、最小成交单位等完整交易语义。本文的目标是做**研究闭环**，不是做**交易闭环**。"
 msgstr ""
 
@@ -43,7 +43,8 @@ msgid "0. 开场：先跑通一个最小可用的研究闭环"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:13
-msgid "如下代码所示，我们只用几行就能拿到一个 `HistoryPanel`，并画出第一张图（不管是折线还是 K 线），证明“数据和可视化链路是通的”。"
+msgid ""
+"如下代码所示，我们只用几行就能拿到一个 `HistoryPanel`，并画出第一张图（不管是折线还是 K 线），证明“数据和可视化链路是通的”。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:35
@@ -104,7 +105,8 @@ msgid ""
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:56
-msgid "注：本文不强制你输出 GIF。更推荐的做法是：先在 Notebook 里把图跑通，截图即可；如果你要写博客或做分享，再把关键步骤录成 GIF。"
+msgid ""
+"注：本文不强制你输出 GIF。更推荐的做法是：先在 Notebook 里把图跑通，截图即可；如果你要写博客或做分享，再把关键步骤录成 GIF。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:60
@@ -159,8 +161,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:81
 msgid ""
-"本文的示例默认你已经在本地配置好了数据源，并且 `qt.get_kline()` 能成功取到 `20220101`–`20221231` "
-"的日线数据。"
+"本文的示例默认你已经在本地配置好了数据源，并且 `qt.get_kline()` 能成功取到 `20220101`–`20221231` 的日线数据。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:83
@@ -197,8 +198,8 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:97
 msgid ""
-"我们先把数据准备干净：   用 3 只个股做纵向择时，同时把 `000300.SH`（沪深 300）加入面板，作为后面 "
-"`portfolio(..., benchmark=...)` 的对照。"
+"我们先把数据准备干净：   用 3 只个股做纵向择时，同时把 `000300.SH`（沪深 300）加入面板，作为后面 `portfolio(..., "
+"benchmark=...)` 的对照。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:100
@@ -258,15 +259,15 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:164
 msgid "`macd_12_26_9`"
-msgstr ""
+msgstr "`macd_12_26_9`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:165
 msgid "`macd_signal_12_26_9`"
-msgstr ""
+msgstr "`macd_signal_12_26_9`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:166
 msgid "`macd_hist_12_26_9`"
-msgstr ""
+msgstr "`macd_hist_12_26_9`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:168
 msgid "注意这个命名：默认是带后缀的，不是裸的 `macd_hist`。   这一步我们把列名打印出来，后面写条件时就不会猜错。"
@@ -296,8 +297,8 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:188
 msgid ""
-"现在我们把择时规则写清楚：   例如“MACD 柱状图大于 0 的时候属于 long，小于等于 0 属于 short”。   "
-"这一步要交付的产物是两个 mask："
+"现在我们把择时规则写清楚：   例如“MACD 柱状图大于 0 的时候属于 long，小于等于 0 属于 short”。   这一步要交付的产物是两个 "
+"mask："
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:192
@@ -315,14 +316,14 @@ msgstr ""
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:197
 msgid ""
 "从 2.2.8 起，`HistoryPanel` 支持直接做比较运算：   例如 `hp_macd > 0` 会返回 "
-"`numpy.ndarray(bool)`。   而 `hp.where(condition)` 会把各种可广播条件规整为与 "
-"`hp.values` 同形的 `(M,L,N)` mask。"
+"`numpy.ndarray(bool)`。   而 `hp.where(condition)` 会把各种可广播条件规整为与 `hp.values` "
+"同形的 `(M,L,N)` mask。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:201
 msgid ""
-"这一步非常关键：我们不是在“删除数据”，而是在“定义研究口径”：   mask 为 False 的格点，在 "
-"`portfolio/cum_return` 里会被视作缺失（不参与聚合或导致路径断开）。   因此 mask 就是“研究规则本身”。"
+"这一步非常关键：我们不是在“删除数据”，而是在“定义研究口径”：   mask 为 False 的格点，在 `portfolio/cum_return`"
+" 里会被视作缺失（不参与聚合或导致路径断开）。   因此 mask 就是“研究规则本身”。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:205
@@ -357,11 +358,11 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:238
 msgid "`mask_long.shape == hp.shape`"
-msgstr ""
+msgstr "`mask_long.shape == hp.shape`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:239
 msgid "`mask_long.dtype == bool`"
-msgstr ""
+msgstr "`mask_long.dtype == bool`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:243
 msgid "5. 用 `portfolio(mask=...)` 聚合组合曲线，并与 benchmark 对比"
@@ -373,8 +374,8 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:247
 msgid ""
-"我们不做交易回测，只做研究向的“粗聚合”：   对每一天，把满足条件的股票（long/short）聚合成一条组合曲线，然后把 "
-"`000300.SH` 作为 benchmark 拉出来对比。"
+"我们不做交易回测，只做研究向的“粗聚合”：   对每一天，把满足条件的股票（long/short）聚合成一条组合曲线，然后把 `000300.SH` "
+"作为 benchmark 拉出来对比。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:250
@@ -430,7 +431,8 @@ msgid "6.1 本节要解决什么"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:302
-msgid "两条曲线摆在一起，人眼能看趋势，但很难快速总结：   “这一段研究期，long 比 benchmark 到底强多少？”   因此我们做两件事："
+msgid ""
+"两条曲线摆在一起，人眼能看趋势，但很难快速总结：   “这一段研究期，long 比 benchmark 到底强多少？”   因此我们做两件事："
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:306
@@ -459,7 +461,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:315
 msgid "\\[ \\\\text{CAGR}=(1+R)^{1/T}-1 \\]"
-msgstr ""
+msgstr "\\[ \\\\text{CAGR}=(1+R)^{1/T}-1 \\]"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:319
 msgid "其中 \\(R\\) 是区间累计收益（末值），\\(T\\) 是年数。"
@@ -512,16 +514,17 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:381
 msgid "简写：`highlight='max'/'min'`"
-msgstr ""
+msgstr "Shorthand: `highlight='max'/'min'`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:382
 msgid "显式：`highlight={'condition': <1D bool over time>, 'style': {...}}`"
 msgstr ""
+"Explicit: `highlight={'condition': <1D bool over time>, 'style': {...}}`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:384
 msgid ""
-"注意一点：静态渲染路径里 `condition` 更偏向 **1D 时间轴**（用于在图上散点标记）。因此我们在这里用单股时间轴的 1D bool"
-" 来做高亮更稳。"
+"注意一点：静态渲染路径里 `condition` 更偏向 **1D 时间轴**（用于在图上散点标记）。因此我们在这里用单股时间轴的 1D bool "
+"来做高亮更稳。"
 msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:386
@@ -570,8 +573,8 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md:589
 msgid ""
-"需要注意的是：这里的 `portfolio/cum_return` 都是研究向计算，**不包含**交易成本、滑点、交割、资金约束等完整回测语义。"
-"   如果你希望把研究逻辑迁移到真正的策略回测，建议把因子/条件输出成策略可用的数据列或信号，并交给 `Operator/Backtester` "
+"需要注意的是：这里的 `portfolio/cum_return` 都是研究向计算，**不包含**交易成本、滑点、交割、资金约束等完整回测语义。   "
+"如果你希望把研究逻辑迁移到真正的策略回测，建议把因子/条件输出成策略可用的数据列或信号，并交给 `Operator/Backtester` "
 "处理交易层语义。"
 msgstr ""
 
@@ -593,7 +596,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md
 msgid "`img/3.1_minimal_run.png`"
-msgstr ""
+msgstr "`img/3.1_minimal_run.png`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md
 msgid "§0 开场最小可跑"
@@ -605,7 +608,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md
 msgid "`img/3.1_pf_compare.png`"
-msgstr ""
+msgstr "`img/3.1_pf_compare.png`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md
 msgid "§0.5 或 §6"
@@ -617,13 +620,12 @@ msgstr ""
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md
 msgid "`img/3.1_highlight_one_share.png`"
-msgstr ""
+msgstr "`img/3.1_highlight_one_share.png`"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md
 msgid "§7"
-msgstr ""
+msgstr "§7"
 
 #: ../../source/tutorials/2.6-historypanel-advanced-vertical-timeaxis.md
 msgid "单股图上高亮触发点（便于复盘解释）"
 msgstr ""
-
