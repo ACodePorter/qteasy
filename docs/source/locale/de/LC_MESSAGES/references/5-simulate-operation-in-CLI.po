@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,7 @@ msgstr "**Laufsteuerung**: Starten, Anhalten, Fortsetzen, Stoppen"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:14
 msgid "**交易操作**：买入、卖出、撤单"
-msgstr "**Trading**: buy, sell, cancel"
+msgstr "**Handel**: Kaufen, Verkaufen, Stornieren"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:15
 msgid "**状态查询**：订单、成交、持仓、账户"
@@ -92,7 +92,7 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:24
 msgid "2.1 手工下单的订单类型语义（buy/sell）"
-msgstr "2.1 Manual Order Types (buy/sell)"
+msgstr "2.1 Manuelle Ordertypen (Kauf/Verkauf)"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:26
 msgid "`buy/sell ... -p 正数`：按**限价单**提交（`order_type='limit'`）"
@@ -111,19 +111,20 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:29
 msgid "在 `SimulatorBroker` 中，撮合判定的关键差异如下："
-msgstr "In ``SimulatorBroker``, key matching differences are:"
+msgstr ""
+"In „`SimulatorBroker`“ sind die wichtigsten Übereinstimmungsunterschiede:"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "订单类型"
-msgstr "Order type"
+msgstr "Auftragsart"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "主要成交条件（简化）"
-msgstr "Main fill condition (simplified)"
+msgstr "Hauptfüllbedingung (vereinfacht)"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`limit` 限价单"
-msgstr "``limit`` (limit order)"
+msgstr "``limit`` (Limit-Order)"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "卖单：实时价 `>=` 挂卖价（含偏差）；买单：实时价 `<=` 挂买价（含偏差）"
@@ -133,7 +134,7 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`market` 市价单"
-msgstr "``market`` (market order)"
+msgstr "``market`` (Marktauftrag)"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "实时涨跌幅位于非涨跌停区间时优先按市价撮合；若接近涨跌停，成交概率显著下降"
@@ -144,7 +145,7 @@ msgstr ""
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:36
 msgid "示例（用户可见反馈）："
-msgstr "Example (user-visible feedback):"
+msgstr "Beispiel (für den Benutzer sichtbares Feedback):"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:42
 msgid "3. 快速问题分流（CLI 视角）"
@@ -173,15 +174,15 @@ msgstr "4. Befehls-Dokument-Zuordnung"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "关注点"
-msgstr "Concern"
+msgstr "Sorge"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "先看哪里"
-msgstr "Check First"
+msgstr "Überprüfen Sie zuerst"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "运行是否配置正确"
-msgstr "Run configuration correct"
+msgstr "Führen Sie die Konfiguration korrekt aus"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`live_trading/2-configuration-and-run.md`"
@@ -189,7 +190,7 @@ msgstr "`live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "订单为何被拒或未成交"
-msgstr "Why order rejected or unfilled"
+msgstr "Warum wurde die Bestellung abgelehnt oder nicht ausgeführt?"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`live_trading/3-risk-and-order-lifecycle.md`"
@@ -197,7 +198,7 @@ msgstr "`live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "日志如何排查"
-msgstr "How to investigate logs"
+msgstr "So untersuchen Sie Protokolle"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`live_trading/5-artifacts-and-troubleshooting.md`"
@@ -205,7 +206,7 @@ msgstr "`live_trading/5-artifacts-and-troubleshooting.md`"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "完整实操路径"
-msgstr "Full hands-on path"
+msgstr "Vollständiger praktischer Weg"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md
 msgid "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
@@ -217,7 +218,7 @@ msgstr "5. Navigation"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:59
 msgid "机制说明：`live_trading/3-risk-and-order-lifecycle.md`"
-msgstr "Mechanism: `live_trading/3-risk-and-order-lifecycle.md`"
+msgstr "Mechanismus: `live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:60
 msgid "排错手册：`live_trading/5-artifacts-and-troubleshooting.md`"
@@ -225,7 +226,7 @@ msgstr "Fehlerbehebung: „live_trading/5-artifacts-and-troubleshooting.md“."
 
 #: ../../source/references/5-simulate-operation-in-CLI.md:61
 msgid "API 参考：`api/api_reference.rst`"
-msgstr "API 参考：`api/api_reference.rst`"
+msgstr "API-Code:`api/api_reference.rst`"
 
 #~ msgid "本文介绍如何使用命令行界面（CLI）模拟实盘交易。"
 #~ msgstr ""

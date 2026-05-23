@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
 "Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -328,7 +328,7 @@ msgstr "swing"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "振幅"
-msgstr "Amplitude"
+msgstr "Schwankungsbreite"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "selling"

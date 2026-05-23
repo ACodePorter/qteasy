@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:58
 msgid "输出如下:"
-msgstr "The output is as follows:"
+msgstr "Die Ausgabe ist wie folgt:"
 
 #: ../../source/tutorials/3-start-first-strategy.md:95
 msgid "至此，一个`Operator`对象和交易策略就已经创建好了。"
@@ -199,7 +199,7 @@ msgstr ""
 #: ../../source/tutorials/3-start-first-strategy.md:231
 #: ../../source/tutorials/3-start-first-strategy.md:512
 msgid "输出如下："
-msgstr "The output is as follows:"
+msgstr "Die Ausgabe ist wie folgt:"
 
 #: ../../source/tutorials/3-start-first-strategy.md:125
 msgid "通过交易策略的`info()`方法也可以查看更详细的策略参数和信息:"
@@ -209,7 +209,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:130
 msgid "输出如下"
-msgstr "Output as follows"
+msgstr "Ausgabe wie folgt"
 
 #: ../../source/tutorials/3-start-first-strategy.md:144
 msgid "从上面的信息中可以看到，`ndayrate`策略有许多的可配置参数，通过调整这些参数，我们可以调整策略的选股方式，从而调整交易策略的表现。"
@@ -465,7 +465,7 @@ msgstr "sell_batch_size=0\": Mindestlosgröße von \"0\" beim Verkauf einer Anla
 
 #: ../../source/tutorials/3-start-first-strategy.md:221
 msgid ""
-"`qteasy`还有其他的配置参数，参见[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)。"
+"`qteasy`还有其他的配置参数，参见[QTEASY文档](https://qteasy.readthedocs.io/de/latest/)。"
 msgstr ""
 "`qteasy` hat zusätzliche Konfigurationsparameter, siehe [QTEASY "
 "documentation](https://qteasy.readthedocs.io/de/latest/)."
@@ -593,7 +593,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:279
 msgid "第1部份：回测基本信息"
-msgstr "Part 1: Basic backtest information"
+msgstr "Teil 1: Grundlegende Backtest-Informationen"
 
 #: ../../source/tutorials/3-start-first-strategy.md:281
 msgid "报告的第一部份包含了回测的基本信息，包括回测耗时、回测的起止日期、回测的总周期等等，这些信息可以帮助我们了解回测的基本情况："
@@ -628,7 +628,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:305
 msgid "第3部份：回测结果统计"
-msgstr "Part 3: Backtest result statistics"
+msgstr "Teil 3: Statistik der Backtest-Ergebnisse"
 
 #: ../../source/tutorials/3-start-first-strategy.md:306
 msgid "回测报告的第三部份是回测结果统计，包含了投资的总金额、最终的资产总额、总收益率、年化收益率、基准收益率等等重要的回测结果统计信息："
@@ -710,7 +710,7 @@ msgstr "Der größte Rückschritt dauerte fast fünf Jahre"
 
 #: ../../source/tutorials/3-start-first-strategy.md:348
 msgid "第2部份，收益率曲线图"
-msgstr "Part 2: Return Curve Chart"
+msgstr "Teil 2: Renditekurvendiagramm"
 
 #: ../../source/tutorials/3-start-first-strategy.md:350
 msgid "回测的历史回报率曲线图包括三张图表，显示的内容都是历史收益率，但是各有侧重。"
@@ -729,7 +729,7 @@ msgstr "Teil 2 der Visualisierungsdiagramme"
 
 #: ../../source/tutorials/3-start-first-strategy.md:354
 msgid "三张图表分别为："
-msgstr "The three charts are:"
+msgstr "Die drei Diagramme sind:"
 
 #: ../../source/tutorials/3-start-first-strategy.md:356
 msgid ""
@@ -826,7 +826,7 @@ msgstr "![Visualisierungsdiagramm Teil 3](img/visual_report_part_3.png)"
 #: ../../source/tutorials/3-start-first-strategy.md:372
 #: ../../source/tutorials/3-start-first-strategy.md:384
 msgid "可视化图表第三部份"
-msgstr "Visualization chart part 3"
+msgstr "Visualisierungsdiagramm Teil 3"
 
 #: ../../source/tutorials/3-start-first-strategy.md:374
 msgid ""
@@ -891,7 +891,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:380
 msgid "第4部分，收益率统计图"
-msgstr "Part 4: Return statistics chart"
+msgstr "Teil 4: Retourenstatistikdiagramm"
 
 #: ../../source/tutorials/3-start-first-strategy.md:382
 msgid "最下面还有并列的三张图表，分别从不同角度统计历年或历月的收益率："
@@ -1072,7 +1072,7 @@ msgstr ""
 
 #: ../../source/tutorials/3-start-first-strategy.md:422
 msgid "交易日志解读"
-msgstr "Interpreting the Trade Logs"
+msgstr "Interpretation der Handelsprotokolle"
 
 #: ../../source/tutorials/3-start-first-strategy.md:424
 msgid ""

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
 "Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -413,7 +413,7 @@ msgstr "Da ist eine Zeile: „abgelehnt“."
 
 #: ../../source/live_trading/6-trader-snapshot-gate.rst:104
 msgid "**空**"
-msgstr "**null**"
+msgstr "**leer**"
 
 #: ../../source/live_trading/6-trader-snapshot-gate.rst:105
 #: ../../source/live_trading/6-trader-snapshot-gate.rst:109

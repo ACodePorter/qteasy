@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:7
 msgid "QTEASY数据拉取功能"
-msgstr "QTEASY data retrieval function"
+msgstr "QTEASY Datenabruffunktion"
 
 #: ../../source/manage_data/4. data_channels.md:9
 msgid "`QTEASY`数据管理模块: ![数据获取模块结构](img/DataFetching.png)"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:9
 msgid "数据获取模块结构"
-msgstr "Data acquisition module structure"
+msgstr "Struktur des Datenerfassungsmoduls"
 
 #: ../../source/manage_data/4. data_channels.md:11
 msgid ""
@@ -63,7 +63,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:13
 msgid "数据拉取接口`refill_data_source()`"
-msgstr "The data retrieval interface `refill_data_source()`"
+msgstr "Die Datenabrufschnittstelle `refill_data_source()`"
 
 #: ../../source/manage_data/4. data_channels.md:15
 msgid ""
@@ -248,7 +248,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:164
 msgid "多渠道拉取数据"
-msgstr "Data pulled from multiple channels"
+msgstr "Daten aus mehreren Kanälen"
 
 #: ../../source/manage_data/4. data_channels.md:166
 msgid "`qteasy`提供了多种数据下载渠道，很多数据表可以从多个不同的渠道下载，而且随着版本更新，数据拉取渠道也在不断增加。"
@@ -324,7 +324,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:252
 msgid "实现下载流量控制"
-msgstr "Implement download traffic control"
+msgstr "Implementieren Sie die Kontrolle des Download-Verkehrs"
 
 #: ../../source/manage_data/4. data_channels.md:254
 msgid ""
@@ -376,7 +376,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:277
 msgid "实现错误重试"
-msgstr "Implement error retries"
+msgstr "Implementieren Sie Fehlerwiederholungen"
 
 #: ../../source/manage_data/4. data_channels.md:279
 msgid "需要注意的是，数据下载过程中出错，`qteasy`会自动重试下载，重试机制如下："
@@ -444,7 +444,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:293
 msgid "日志记录"
-msgstr "Logging "
+msgstr "Protokollierung"
 
 #: ../../source/manage_data/4. data_channels.md:295
 msgid ""
@@ -458,7 +458,7 @@ msgstr ""
 
 #: ../../source/manage_data/4. data_channels.md:297
 msgid "其他功能"
-msgstr "Other functions"
+msgstr "Andere Funktionen"
 
 #: ../../source/manage_data/4. data_channels.md:299
 msgid "`qteasy`的`refill_data_source()`接口还提供了其他一些功能，例如："

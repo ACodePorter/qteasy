@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -207,7 +207,7 @@ msgstr "1. Ziel (was dieser Artikel erreichen soll)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:72
 msgid "获取多 shares + `000300.SH` 的 `HistoryPanel`"
-msgstr "Fetch the `HistoryPanel` for multiple shares + `000300.SH`"
+msgstr "Holen Sie sich den `HistoryPanel` für mehrere Freigaben + `000300.SH`"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:73
 msgid "构造多因子（两条路线并列：代理因子固定阈值版 + 可选真实估值版）"
@@ -229,7 +229,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:76
 msgid "用 `normalize/cum_return` 推导 CAGR 表"
-msgstr "Use `normalize/cum_return` to derive the CAGR table"
+msgstr "Verwenden Sie `normalize/cum_return`, um die CAGR-Tabelle abzuleiten"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:77
 msgid "用 `plot(highlight=...)` 高亮“差异最大日/关键分化段”，做到可解释"
@@ -273,7 +273,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:92
 msgid "2.2 最小必要原理"
-msgstr "2.2 Minimum necessary principles"
+msgstr "2.2 Mindestgrundsätze"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:94
 msgid ""
@@ -335,7 +335,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:148
 msgid "3.2 最小必要原理"
-msgstr "3.2 Minimum necessary principles"
+msgstr "3.2 Mindestgrundsätze"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:150
 msgid "`HistoryPanel.kline.*` 会返回带新增列的新面板，例如："
@@ -373,7 +373,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:161
 msgid "3.3.1 要解决什么"
-msgstr "3.3.1 What to solve"
+msgstr "3.3.1 Was zu lösen ist"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:163
 msgid "我们用三个“非常直觉”的代理因子，让读者快速进入状态："
@@ -389,7 +389,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:166
 msgid "**动量代理**：`macd_hist`（强弱）"
-msgstr "**Momentum proxy**: `macd_hist` (strength/weakness)"
+msgstr "**Momentum-Proxy**: `macd_hist` (Stärke/Schwäche)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:167
 msgid "**风险代理**：布林带带宽（波动大小）"
@@ -471,7 +471,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:232
 msgid "先打印 `hp.htypes`"
-msgstr "First print `hp.htypes`"
+msgstr "Erster Druck `hp.htypes`"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:233
 msgid "找到你本地实际列名"
@@ -484,7 +484,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:236
 msgid "3.4.2 可运行代码（示意）"
-msgstr "3.4.2 Runnable code (illustrative)"
+msgstr "3.4.2 Ausführbarer Code (veranschaulichend)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:254
 msgid "只要最终你仍然得到 `(M, L)` 的 `cond_long/cond_short`，后面流程就与路线 A 完全一致。"
@@ -521,7 +521,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:266
 msgid "4.2 最小必要原理"
-msgstr "4.2 Minimum necessary principles"
+msgstr "4.2 Mindestgrundsätze"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:268
 msgid ""
@@ -622,7 +622,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:339
 msgid "`cum_return + CAGR`：输出表格摘要"
-msgstr "`cum_return + CAGR`: output a summary table"
+msgstr "`cum_return + CAGR`: Ausgabe einer Übersichtstabelle"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:341
 msgid "6.2 最小必要原理"
@@ -640,7 +640,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:346
 msgid "6.3 可运行代码（示意）"
-msgstr "6.3 Runnable code (illustrative)"
+msgstr "6.3 Ausführbarer Code (veranschaulichend)"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:369
 msgid "建议你把它整理成一个小表（至少包含 LONG/SHORT/benchmark 三行），这样读者一眼就能比较："
@@ -747,7 +747,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:427
 msgid "`plot(highlight=...)` 的一个稳定演示。"
-msgstr "A stable demo of `plot(highlight=...)`."
+msgstr "Eine stabile Demo von `plot(highlight=...)`."
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md:588
 msgid "9. 小结与边界"
@@ -775,15 +775,15 @@ msgstr ""
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "插图"
-msgstr "Illustration"
+msgstr "Abbildung"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "建议放置位置"
-msgstr "Suggested placement"
+msgstr "Empfohlene Platzierung"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "你将看到什么"
-msgstr "What you’ll see"
+msgstr "Was Sie sehen werden"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "`img/3.2_minimal_run.png`"
@@ -803,11 +803,11 @@ msgstr "`img/3.2_pf_compare.png`"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "§0.5 或 §6"
-msgstr "§0.5 or §6"
+msgstr "§0.5 oder §6"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "`LONG/SHORT/000300.SH` 归一化曲线对比"
-msgstr "Normalized curve comparison of `LONG/SHORT/000300.SH`"
+msgstr "Normalisierter Kurvenvergleich von `LONG/SHORT/000300.SH`"
 
 #: ../../source/tutorials/2.7-historypanel-advanced-horizontal-multifactor.md
 msgid "`img/3.2_highlight_key_day.png`"

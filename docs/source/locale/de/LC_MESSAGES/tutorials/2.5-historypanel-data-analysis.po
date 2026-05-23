@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgstr "Technische Indikatoren der Overlay-K-Linie;"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:13
 msgid "识别部分蜡烛形态；"
-msgstr "Identify some candlestick patterns;"
+msgstr "Identifizieren Sie einige Candlestick-Muster."
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:14
 msgid "使用 ``where`` 生成与数据同形的 **bool 掩码**，为后续带 ``mask=`` 的研究接口做准备；"
@@ -107,7 +107,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:42
 msgid "此时："
-msgstr "At this point:"
+msgstr "An dieser Stelle:"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:44
 msgid "`hp.shape` 是一个 `(L, R, C)` 的三元组，分别对应 **股票数 × 时间长度 × 数据类型数**；"
@@ -117,7 +117,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:45
 msgid "`hp.shares` 通常是 `['000300.SH']`；"
-msgstr "`hp.shares` is usually `['000300.SH']`; "
+msgstr "`hp.shares` ist normalerweise `['000300.SH']`;"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:46
 msgid "`hp.htypes` 默认包含 `['open', 'high', 'low', 'close', 'vol']` 等。"
@@ -137,7 +137,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:75
 msgid "典型用法是："
-msgstr "A typical usage is:"
+msgstr "Eine typische Verwendung ist:"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:77
 msgid "将 `ret` 或 `vol` 当作因子值矩阵（时间 × 股票）；"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:100
 msgid "这里："
-msgstr "Here:"
+msgstr "Hier:"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:102
 msgid "`hp.kline.sma(...)` 会在 `htypes` 中追加一列，例如 `sma_20`；"
@@ -466,11 +466,11 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:286
 msgid "信号含义通常是："
-msgstr "The signal meaning is usually:"
+msgstr "Die Signalbedeutung ist normalerweise:"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:288
 msgid "`0`：未识别到该形态；"
-msgstr "`0`: the pattern is not detected;"
+msgstr "`0`: Das Muster wurde nicht erkannt;"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:289
 msgid "正数 / 负数：不同方向或强度的形态信号（取决于具体 ta-lib 函数的定义）。"
@@ -562,7 +562,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:343
 msgid "8.2 组合聚合（`portfolio`）"
-msgstr "8.2 Portfolio aggregation (`portfolio`)"
+msgstr "8.2 Portfolio-Aggregation (`portfolio`)"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:345
 msgid ""
@@ -675,7 +675,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:406
 msgid "9.2 正式回测阶段：`FactorSorter` + `Operator`"
-msgstr "9.2 Formal backtesting stage: `FactorSorter` + `Operator`"
+msgstr "9.2 Formale Backtesting-Phase: `FactorSorter` + `Operator`"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:408
 msgid ""
@@ -694,7 +694,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:444
 msgid "**注意**："
-msgstr "**Note**:"
+msgstr "**Notiz**:"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:446
 msgid "`Operator` 默认组内可使用 PT 类目标仓位信号；`FactorSorter` 与 PT 的搭配以你项目中的策略文档为准。"
@@ -810,7 +810,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:528
 msgid "11.1 按标的切成多个 `DataFrame`（宽表）"
-msgstr "11.1 Split by asset into multiple `DataFrame`s (wide table)"
+msgstr "11.1 Aufteilung nach Asset in mehrere `DataFrame`s (breite Tabelle)"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:535
 msgid "11.2 手工堆成长表（便于按日截面分组）"
@@ -888,7 +888,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:583
 msgid "下一步建议："
-msgstr "Recommended next steps:"
+msgstr "Empfohlene nächste Schritte:"
 
 #: ../../source/tutorials/2.5-historypanel-data-analysis.md:585
 msgid ""

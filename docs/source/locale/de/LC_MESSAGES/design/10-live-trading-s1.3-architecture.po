@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
 "Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -104,7 +104,9 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:24
 msgid "`Broker`：提交、取消、回报、连接语义"
-msgstr "`Broker`: submit, cancel, report, and connection semantics"
+msgstr ""
+"`Broker`: Übermittlung, Stornierung, Ausführungsmeldungen, "
+"Verbindungssemantik"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:25
 msgid "`trade_io`：订单/成交数据契约校验"

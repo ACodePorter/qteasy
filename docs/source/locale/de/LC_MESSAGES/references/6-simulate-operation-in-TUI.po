@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr "1. Panels und Interaktionen"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:13
 msgid "账户与资金状态展示"
-msgstr "Account and cash status display"
+msgstr "Anzeige des Konto- und Bargeldstatus"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:14
 msgid "订单提交与撤单交互"
@@ -61,7 +61,7 @@ msgstr "Interaktionen bestellen, absenden und abbrechen"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:15
 msgid "成交与历史信息查看"
-msgstr "Fill and history views"
+msgstr "Füll- und Verlaufsansichten"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:16
 msgid "系统日志与风险反馈显示"
@@ -89,7 +89,7 @@ msgstr "Klarerer Protokollpfad zur Fehlerbehebung über die Benutzeroberfläche"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:24
 msgid "示例（用户可见反馈）："
-msgstr "Example (user-visible feedback):"
+msgstr "Beispiel (für den Benutzer sichtbares Feedback):"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:30
 msgid "3. 快速问题分流（TUI 视角）"
@@ -113,15 +113,15 @@ msgstr "4. Bereich – Dokumentübersicht"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "关注点"
-msgstr "Concern"
+msgstr "Sorge"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "先看哪里"
-msgstr "Check First"
+msgstr "Überprüfen Sie zuerst"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "运行启动与配置核对"
-msgstr "Startup and config check"
+msgstr "Start- und Konfigurationsprüfung"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/2-configuration-and-run.md`"
@@ -129,7 +129,7 @@ msgstr "`live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "拒单/状态解释"
-msgstr "Rejection / status explanation"
+msgstr "Ablehnung / Statuserklärung"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/3-risk-and-order-lifecycle.md`"
@@ -137,7 +137,7 @@ msgstr "`live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "日志排障"
-msgstr "Log troubleshooting"
+msgstr "Fehlerbehebung im Protokoll"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/5-artifacts-and-troubleshooting.md`"
@@ -145,7 +145,7 @@ msgstr "`live_trading/5-artifacts-and-troubleshooting.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "完整实操路径"
-msgstr "Full hands-on path"
+msgstr "Vollständiger praktischer Weg"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
@@ -157,11 +157,12 @@ msgstr "5. Navigation"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:46
 msgid "配置与运行：`live_trading/2-configuration-and-run.md`"
-msgstr "Config and run: `live_trading/2-configuration-and-run.md`"
+msgstr ""
+"Konfigurieren und ausführen: `live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:47
 msgid "生命周期：`live_trading/3-risk-and-order-lifecycle.md`"
-msgstr "Lifecycle: `live_trading/3-risk-and-order-lifecycle.md`"
+msgstr "Lebenszyklus: `live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:48
 msgid "排错手册：`live_trading/5-artifacts-and-troubleshooting.md`"

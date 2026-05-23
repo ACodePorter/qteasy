@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -54,15 +54,15 @@ msgstr "1. Kernziele und Verantwortlichkeiten"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "对象"
-msgstr "Object"
+msgstr "Objekt"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "主要职责"
-msgstr "Main Responsibility"
+msgstr "Hauptverantwortung"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "常见入口"
-msgstr "Typical Entry"
+msgstr "Typischer Eintrag"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`Operator`"
@@ -70,7 +70,7 @@ msgstr "`Operator`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "运行策略与生成信号"
-msgstr "Run strategies and generate signals"
+msgstr "Führen Sie Strategien aus und generieren Sie Signale"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`qt.run(op)`"
@@ -86,7 +86,7 @@ msgstr "Auftragskoordination, Risikointegration, Zustandspflege"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "live 运行主链路"
-msgstr "Live-trading main path"
+msgstr "Hauptpfad des Live-Handels"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`RiskManager`"
@@ -98,7 +98,7 @@ msgstr "Auswertung der Regelkette und Annahme-/Ablehnungsentscheidungen"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`submit_trade_order` 前"
-msgstr "`submit_trade_order` 前"
+msgstr "Vor `submit_trade_order`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`Broker`"
@@ -122,7 +122,7 @@ msgstr "Bestellen und füllen Sie die Vertragsvalidierung aus"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "提交前与回报后"
-msgstr "Before submit and after fills"
+msgstr "Vor dem Absenden und nach dem Ausfüllen"
 
 #: ../../source/references/1-simulation-overview.md:21
 msgid "2. 功能分区清单"
@@ -130,19 +130,19 @@ msgstr "2. Fähigkeitsbereiche"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "功能区"
-msgstr "Area"
+msgstr "Bereich"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "核心能力"
-msgstr "Core Capability"
+msgstr "Kernkompetenz"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "对应页面"
-msgstr "Related Page"
+msgstr "Verwandte Seite"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "配置与启动"
-msgstr "Configuration and startup"
+msgstr "Konfiguration und Inbetriebnahme"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "live 配置校验与运行快照"
@@ -154,7 +154,7 @@ msgstr "`live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "下单与风控"
-msgstr "Orders and risk control"
+msgstr "Aufträge und Risikokontrolle"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "提交前评估、拒单可见性"
@@ -166,7 +166,7 @@ msgstr "`live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "成交与状态"
-msgstr "Fills and status"
+msgstr "Füllungen und Status"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "分批成交与状态收敛"
@@ -174,7 +174,7 @@ msgstr "Teilfüllungen und Statuskonvergenz"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "适配与扩展"
-msgstr "Adapters and extension"
+msgstr "Adapter und Verlängerung"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "adapter API 与兼容边界"
@@ -186,11 +186,11 @@ msgstr "`live_trading/4-broker-adapter-and-integration.md`"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "日志与排错"
-msgstr "Logs and troubleshooting"
+msgstr "Protokolle und Fehlerbehebung"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`sys_log/trade_log/risk_log` 排查顺序"
-msgstr "`sys_log` / `trade_log` / `risk_log` investigation order"
+msgstr "`sys_log` / `trade_log` / `risk_log` Ermittlungsanordnung"
 
 #: ../../source/references/1-simulation-overview.md
 msgid "`live_trading/5-artifacts-and-troubleshooting.md`"
@@ -202,7 +202,7 @@ msgstr "3. S1.3 Verhaltensänderungen (Kurzreferenz)"
 
 #: ../../source/references/1-simulation-overview.md:33
 msgid "`asset_type='FD'` 的模拟实盘可运行性增强"
-msgstr "Improved simulated live runnability for `asset_type='FD'`"
+msgstr "Verbesserte simulierte Live-Laufbarkeit für `asset_type='FD'`"
 
 #: ../../source/references/1-simulation-overview.md:34
 msgid "风控拒单在 CLI/TUI 中更可见"
@@ -222,15 +222,15 @@ msgstr "4. Eintragsindex"
 
 #: ../../source/references/1-simulation-overview.md:40
 msgid "CLI 清单：`references/5-simulate-operation-in-CLI.md`"
-msgstr "CLI 清单：`references/5-simulate-operation-in-CLI.md`"
+msgstr "CLI-Code:`references/5-simulate-operation-in-CLI.md`"
 
 #: ../../source/references/1-simulation-overview.md:41
 msgid "TUI 清单：`references/6-simulate-operation-in-TUI.md`"
-msgstr "TUI 清单：`references/6-simulate-operation-in-TUI.md`"
+msgstr "TUI-Code:`references/6-simulate-operation-in-TUI.md`"
 
 #: ../../source/references/1-simulation-overview.md:42
 msgid "API 自动文档：`api/api_reference.rst`"
-msgstr "API autodoc: `api/api_reference.rst`"
+msgstr "API-Autodoc: `api/api_reference.rst`"
 
 #: ../../source/references/1-simulation-overview.md:44
 msgid "5. 相关阅读"
@@ -238,7 +238,7 @@ msgstr "5. Verwandte Lektüre"
 
 #: ../../source/references/1-simulation-overview.md:46
 msgid "模块总览：`live_trading/1-overview.md`"
-msgstr "Module overview: `live_trading/1-overview.md`"
+msgstr "Modulübersicht: `live_trading/1-overview.md`"
 
 #: ../../source/references/1-simulation-overview.md:47
 msgid "配置运行：`live_trading/2-configuration-and-run.md`"

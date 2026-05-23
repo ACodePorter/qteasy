@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "1. Voraussetzungen"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:18
 msgid "已有可运行的 `Operator`"
-msgstr "An already runnable `Operator`"
+msgstr "Ein bereits lauffähiger `Operator`"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:19
 msgid "本地数据可支持运行频率"
@@ -99,7 +99,7 @@ msgstr "Schritt 1: Richten Sie die Konfiguration ein"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:40
 msgid "步骤 2：启动运行"
-msgstr "Step 2: Start running"
+msgstr "Schritt 2: Beginnen Sie mit dem Laufen"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:46
 msgid "步骤 3：提交一笔测试订单并观察反馈"
@@ -215,11 +215,11 @@ msgstr "6. Checkliste zur Tutorial-Akzeptanz"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:108
 msgid "E 路径可运行"
-msgstr "Path E is runnable"
+msgstr "Pfad E ist lauffähig"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:109
 msgid "FD 路径可运行"
-msgstr "Path FD is runnable"
+msgstr "Pfad FD ist ausführbar"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:110
 msgid "可触发并识别风控拒单"
@@ -281,7 +281,7 @@ msgstr ""
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:126
 msgid "为什么某笔订单会停留在 `partial-filled`？"
-msgstr "Why would an order remain in `partial-filled`?"
+msgstr "Warum sollte eine Bestellung in `partial-filled` bleiben?"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:127
 msgid "需要去哪个日志文件先看、再看什么字段？"

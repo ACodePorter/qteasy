@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -316,7 +316,7 @@ msgstr "ID"
 
 #: ../../source/tutorials/1-get-started.md
 msgid "策略名称"
-msgstr "Strategie Name"
+msgstr "Strategiename"
 
 #: ../../source/tutorials/1-get-started.md
 msgid "说明"
@@ -866,7 +866,7 @@ msgstr ""
 #: ../../source/tutorials/1-get-started.md:352
 #: ../../source/tutorials/1-get-started.md:380
 msgid "输出如下："
-msgstr "The output is as follows:"
+msgstr "Die Ausgabe ist wie folgt:"
 
 #: ../../source/tutorials/1-get-started.md:233
 msgid ""

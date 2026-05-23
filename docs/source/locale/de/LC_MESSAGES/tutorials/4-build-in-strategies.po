@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -228,7 +228,7 @@ msgstr "ID"
 
 #: ../../source/tutorials/4-build-in-strategies.md
 msgid "策略名称"
-msgstr "Strategie Name"
+msgstr "Strategiename"
 
 #: ../../source/tutorials/4-build-in-strategies.md
 msgid "说明"
@@ -459,7 +459,7 @@ msgstr ""
 
 #: ../../source/tutorials/4-build-in-strategies.md:88
 msgid "得到输出："
-msgstr "Output obtained:"
+msgstr "Erhaltene Ausgabe:"
 
 #: ../../source/tutorials/4-build-in-strategies.md:99
 msgid "如果需要查看每一个内置交易策略的详细解释，例如策略参数的含义、信号生成规则，可以查看每一个交易策略的`doc-string`："
@@ -590,7 +590,7 @@ msgstr ""
 
 #: ../../source/tutorials/4-build-in-strategies.md
 msgid "元素"
-msgstr "elementar"
+msgstr "Element"
 
 #: ../../source/tutorials/4-build-in-strategies.md
 msgid "示例"
@@ -1179,7 +1179,7 @@ msgstr ""
 #: ../../source/tutorials/4-build-in-strategies.md:307
 #: ../../source/tutorials/4-build-in-strategies.md:319
 msgid "输出如下："
-msgstr "The output is as follows:"
+msgstr "Die Ausgabe ist wie folgt:"
 
 #: ../../source/tutorials/4-build-in-strategies.md:301
 msgid "如果在调用`view_blender()`的时候指定了`group_id`参数，则只会输出这个策略组的混合器表达式："
@@ -1245,23 +1245,23 @@ msgstr ""
 
 #: ../../source/tutorials/4-build-in-strategies.md:338
 msgid "s0: 权重0.8"
-msgstr "s0: weight 0.8"
+msgstr "s0: Gewicht 0,8"
 
 #: ../../source/tutorials/4-build-in-strategies.md:339
 msgid "s1: 权重1.2"
-msgstr "s1: weight 1.2"
+msgstr "s1: Gewicht 1,2"
 
 #: ../../source/tutorials/4-build-in-strategies.md:340
 msgid "s2: 权重2.0"
-msgstr "s2: weight 2.0"
+msgstr "s2: Gewicht 2,0"
 
 #: ../../source/tutorials/4-build-in-strategies.md:341
 msgid "s3: 权重0.5"
-msgstr "s3: weight 0.5"
+msgstr "s3: Gewicht 0,5"
 
 #: ../../source/tutorials/4-build-in-strategies.md:342
 msgid "s4: 权重1.5"
-msgstr "s4: weight 1.5"
+msgstr "s4: Gewicht 1,5"
 
 #: ../../source/tutorials/4-build-in-strategies.md:344
 msgid ""

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -34,11 +34,11 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md:5
 msgid "市场基本面数据"
-msgstr "Market fundamentals data"
+msgstr "Marktfundamentaldaten"
 
 #: ../../source/manage_data/3. data_tables_50.md:7
 msgid "上海银行间行业拆放利率(SHIBOR): `shibor`"
-msgstr "Shanghai Interbank Offered Rate (SHIBOR): `shibor`"
+msgstr "Shanghaier Interbank-Angebotszins (SHIBOR): `shibor`"
 
 #: ../../source/manage_data/3. data_tables_50.md:8 data_tables_50.md:25
 #: data_tables_50.md:42 data_tables_50.md:59 data_tables_50.md:80
@@ -82,7 +82,7 @@ msgstr "date"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "日期"
-msgstr "Date"
+msgstr "Datum"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "Y"
@@ -102,7 +102,7 @@ msgstr "float"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "隔夜"
-msgstr "overnight"
+msgstr "über Nacht"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "N"
@@ -118,7 +118,7 @@ msgstr "1w"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "1周"
-msgstr "1 Week"
+msgstr "1 Woche"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "3"
@@ -130,7 +130,7 @@ msgstr "2w"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "2周"
-msgstr "2 weeks"
+msgstr "2 Wochen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "4"
@@ -142,7 +142,7 @@ msgstr "1m"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "1个月"
-msgstr "1 month"
+msgstr "1 Monat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "5"
@@ -154,7 +154,7 @@ msgstr "3m"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "3个月"
-msgstr "3 months"
+msgstr "3 Monate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "6"
@@ -166,7 +166,7 @@ msgstr "6m"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "6个月"
-msgstr "6 months"
+msgstr "6 Monate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "7"
@@ -178,7 +178,7 @@ msgstr "9m"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "9个月"
-msgstr "9 months"
+msgstr "9 Monate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "8"
@@ -190,11 +190,11 @@ msgstr "1y"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "1年"
-msgstr "1year"
+msgstr "1 Jahr"
 
 #: ../../source/manage_data/3. data_tables_50.md:24
 msgid "伦敦银行间行业拆放利率(LIBOR): `libor`"
-msgstr "London Interbank Offered Rate (LIBOR): `libor`"
+msgstr "Londoner Interbank-Angebotszins (LIBOR): `libor`"
 
 #: ../../source/manage_data/3. data_tables_50.md:27
 msgid "伦敦银行间行业拆放利率(LIBOR)是伦敦银行间同业拆息市场的利率指标，包括了隔夜、1周、1个月、3个月、6个月、1年等多个利率指标。"
@@ -213,7 +213,7 @@ msgstr "varchar(9)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "货币"
-msgstr "money"
+msgstr "Geld"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "2m"
@@ -221,7 +221,7 @@ msgstr "2m"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "2个月"
-msgstr "2 months"
+msgstr "2 Monate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "12m"
@@ -229,11 +229,11 @@ msgstr "12m"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "12个月"
-msgstr "12 months"
+msgstr "12 Monate"
 
 #: ../../source/manage_data/3. data_tables_50.md:41
 msgid "香港银行间行业拆放利率(HIBOR): `hibor`"
-msgstr "Hong Kong Interbank Offered Rate (HIBOR): `hibor`"
+msgstr "Hongkonger Interbank-Angebotszins (HIBOR): `hibor`"
 
 #: ../../source/manage_data/3. data_tables_50.md:44
 msgid ""
@@ -245,7 +245,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md:58
 msgid "温州民间借贷指数: `wz_index`"
-msgstr "Wenzhou Private Lending Index: `wz_index`"
+msgstr "Wenzhou-Index für privates Lending: `wz_index`"
 
 #: ../../source/manage_data/3. data_tables_50.md:61
 msgid ""
@@ -285,7 +285,7 @@ msgstr "micro_rate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "小额贷款公司放款利率"
-msgstr "Microloan companies' lending rates"
+msgstr "Kreditzinsen von Mikrokreditunternehmen"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "cm_rate"
@@ -301,7 +301,7 @@ msgstr "sdb_rate"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "社会直接借贷利率"
-msgstr "Direct lending rate"
+msgstr "Direktkreditzins"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "om_rate"
@@ -378,7 +378,7 @@ msgstr "Zinssätze für Privatkredite in Wenzhou (langfristig)"
 
 #: ../../source/manage_data/3. data_tables_50.md:79
 msgid "广州民间借贷指数: `gz_index`"
-msgstr "Guangzhou Private Lending Index: `gz_index`"
+msgstr "Guangzhou Privatkreditindex: `gz_index`"
 
 #: ../../source/manage_data/3. data_tables_50.md:82
 msgid ""
@@ -428,11 +428,11 @@ msgstr "Durchschnittlicher Zinssatz auf dem Mikrokreditmarkt (langfristig)"
 
 #: ../../source/manage_data/3. data_tables_50.md:94
 msgid "中国宏观经济数据"
-msgstr "China's macroeconomic data"
+msgstr "Chinas makroökonomische Daten"
 
 #: ../../source/manage_data/3. data_tables_50.md:96
 msgid "国内生产总值年度数据: `cn_gdp`"
-msgstr "Annual GDP data: `cn_gdp`"
+msgstr "Jährliche BIP-Daten: `cn_gdp`"
 
 #: ../../source/manage_data/3. data_tables_50.md:97
 msgid "数据表用途: `reference`, 资产类型: `none`, 数据频率: `q`"
@@ -467,7 +467,7 @@ msgstr "varchar(8)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "季度"
-msgstr "Quarter"
+msgstr "Quartal"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "gdp"
@@ -483,7 +483,7 @@ msgstr "gdp_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "当季同比增速（%）"
-msgstr "Year-on-year growth rate (%)"
+msgstr "Wachstumsrate im Jahresvergleich (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pi"
@@ -535,7 +535,7 @@ msgstr "Jahreswachstumsrate der tertiären Industrie (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md:115
 msgid "居民消费价格指数月度数据: `cn_cpi`"
-msgstr "Consumer Price Index (CPI) Monthly Data: `cn_cpi`"
+msgstr "Monatliche Daten zum Verbraucherpreisindex (VPI): `cn_cpi`"
 
 #: ../../source/manage_data/3. data_tables_50.md:116 data_tables_50.md:139
 #: data_tables_50.md:180 data_tables_50.md:200 data_tables_50.md:212
@@ -570,7 +570,7 @@ msgstr "month"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "月份YYYYMM"
-msgstr "Month YYYYMM"
+msgstr "Monat JJJJMM"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "nt_val"
@@ -578,7 +578,7 @@ msgstr "nt_val"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "全国当月值"
-msgstr "National monthly value"
+msgstr "Nationaler monatlicher Wert"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "nt_yoy"
@@ -586,7 +586,7 @@ msgstr "nt_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "全国同比（%）"
-msgstr "Nationwide year-on-year change (%)"
+msgstr "Landesweite Veränderung gegenüber dem Vorjahr (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "nt_mom"
@@ -594,7 +594,7 @@ msgstr "nt_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "全国环比（%）"
-msgstr "National month-on-month change (%)"
+msgstr "Nationale monatliche Veränderung (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "nt_accu"
@@ -602,7 +602,7 @@ msgstr "nt_accu"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "全国累计值"
-msgstr "National cumulative value"
+msgstr "Nationaler kumulierter Wert"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "town_val"
@@ -610,7 +610,7 @@ msgstr "town_val"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "城市当月值"
-msgstr "City monthly value"
+msgstr "Monatlicher Stadtwert"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "town_yoy"
@@ -618,7 +618,7 @@ msgstr "town_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "城市同比（%）"
-msgstr "City year-on-year change (%)"
+msgstr "Stadt, jährliche Veränderung (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "town_mom"
@@ -626,7 +626,7 @@ msgstr "town_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "城市环比（%）"
-msgstr "City-wide month-on-month change (%)"
+msgstr "Stadtweite monatliche Veränderung (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "town_accu"
@@ -634,7 +634,7 @@ msgstr "town_accu"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "城市累计值"
-msgstr "City Cumulative Value"
+msgstr "Kumulierter Wert der Stadt"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "cnt_val"
@@ -642,7 +642,7 @@ msgstr "cnt_val"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "农村当月值"
-msgstr "Rural monthly value"
+msgstr "Ländlicher Monatswert"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "cnt_yoy"
@@ -650,7 +650,7 @@ msgstr "cnt_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "农村同比（%）"
-msgstr "Rural areas year-on-year (%)"
+msgstr "Ländliche Gebiete im Jahresvergleich (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "cnt_mom"
@@ -666,11 +666,11 @@ msgstr "cnt_accu"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "农村累计值"
-msgstr "Rural cumulative value"
+msgstr "Ländlicher kumulierter Wert"
 
 #: ../../source/manage_data/3. data_tables_50.md:138
 msgid "工业品出厂价格指数月度数据: `cn_ppi`"
-msgstr "Monthly data for the Producer Price Index (PPI): `cn_ppi`"
+msgstr "Monatliche Daten für den Erzeugerpreisindex (PPI): `cn_ppi`"
 
 #: ../../source/manage_data/3. data_tables_50.md:141
 msgid ""
@@ -843,7 +843,7 @@ msgstr "ppi_cg_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生活资料：环比"
-msgstr "PPI: Consumer Goods: Month-on-Month"
+msgstr "PPI: Konsumgüter: Monat für Monat"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "17"
@@ -1026,7 +1026,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md:179
 msgid "中国货币供应量: `cn_money`"
-msgstr "China's money supply: `cn_money`"
+msgstr "Chinas Geldmenge: `cn_money`"
 
 #: ../../source/manage_data/3. data_tables_50.md:182
 msgid ""
@@ -1052,7 +1052,7 @@ msgstr "m0"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M0（亿元）"
-msgstr "M0 (100 million yuan)"
+msgstr "M0 (100 Millionen Yuan)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m0_yoy"
@@ -1060,7 +1060,7 @@ msgstr "m0_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M0同比（%）"
-msgstr "M0 year-on-year growth (%)"
+msgstr "M0-Wachstum gegenüber dem Vorjahr (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m0_mom"
@@ -1068,7 +1068,7 @@ msgstr "m0_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M0环比（%）"
-msgstr "M0 month-on-month change (%)"
+msgstr "M0-Veränderung gegenüber dem Vormonat (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m1"
@@ -1076,7 +1076,7 @@ msgstr "m1"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M1（亿元）"
-msgstr "M1 (100 million yuan)"
+msgstr "M1 (100 Millionen Yuan)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m1_yoy"
@@ -1084,7 +1084,7 @@ msgstr "m1_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M1同比（%）"
-msgstr "M1 year-on-year growth (%)"
+msgstr "M1-Wachstum gegenüber dem Vorjahr (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m1_mom"
@@ -1092,7 +1092,7 @@ msgstr "m1_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M1环比（%）"
-msgstr "M1 month-on-month change (%)"
+msgstr "M1-Veränderung gegenüber dem Vormonat (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m2"
@@ -1100,7 +1100,7 @@ msgstr "m2"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M2（亿元）"
-msgstr "M2 (100 million yuan)"
+msgstr "M2 (100 Millionen Yuan)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m2_yoy"
@@ -1108,7 +1108,7 @@ msgstr "m2_yoy"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M2同比（%）"
-msgstr "M2 year-on-year growth (%)"
+msgstr "M2-Wachstum gegenüber dem Vorjahr (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "m2_mom"
@@ -1116,11 +1116,11 @@ msgstr "m2_mom"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "M2环比（%）"
-msgstr "M2 month-on-month change (%)"
+msgstr "M2 Veränderung gegenüber dem Vormonat (%)"
 
 #: ../../source/manage_data/3. data_tables_50.md:199
 msgid "中国社会融资规模月度数据: `cn_sf`"
-msgstr "China's monthly social financing data: `cn_sf`"
+msgstr "Chinas monatliche Sozialfinanzierungsdaten: `cn_sf`"
 
 #: ../../source/manage_data/3. data_tables_50.md:202
 msgid ""
@@ -1137,7 +1137,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "月度"
-msgstr "Monthly"
+msgstr "Monatlich"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "inc_month"
@@ -1166,7 +1166,7 @@ msgstr "Endwert der gesamten Sozialfinanzierung (Billionen Yuan)"
 
 #: ../../source/manage_data/3. data_tables_50.md:211
 msgid "采购经理人指数月度数据: `cn_pmi`"
-msgstr "Purchasing Managers' Index (PMI) Monthly Data: `cn_pmi`"
+msgstr "Monatliche Daten zum Einkaufsmanagerindex (PMI): `cn_pmi`"
 
 #: ../../source/manage_data/3. data_tables_50.md:214
 msgid ""
@@ -1197,7 +1197,7 @@ msgstr "pmi010000"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI"
-msgstr "Manufacturing PMI"
+msgstr "PMI für das verarbeitende Gewerbe"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010100"
@@ -1431,7 +1431,7 @@ msgstr "pmi011000"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:其他/进口"
-msgstr "Manufacturing PMI: Other/Imports"
+msgstr "Einkaufsmanagerindex für verarbeitendes Gewerbe: Sonstige/Importe"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi011100"
@@ -1822,7 +1822,7 @@ msgstr "pmi020900"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:存货"
-msgstr "Non-manufacturing PMI: Inventories"
+msgstr "Einkaufsmanagerindex für nicht verarbeitendes Gewerbe: Vorräte"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "58"
@@ -1846,4 +1846,4 @@ msgstr "pmi030000"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "中国综合PMI:产出指数"
-msgstr "China Composite PMI: Output Index"
+msgstr "China Composite PMI: Produktionsindex"

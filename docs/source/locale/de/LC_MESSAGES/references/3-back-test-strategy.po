@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-26 09:45+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,8 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:12
 msgid "`qteasy`提供了两种方式创建交易策略："
-msgstr "`qteasy` provides two ways to create trading strategies:"
+msgstr ""
+"`qteasy` bietet zwei Möglichkeiten zum Erstellen von Handelsstrategien:"
 
 #: ../../source/references/3-back-test-strategy.md:14
 msgid "*使用内置交易策略组合*："
@@ -181,7 +182,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:41
 msgid "创建Strategy对象"
-msgstr "Create Strategy object"
+msgstr "Erstellen Sie ein Strategieobjekt"
 
 #: ../../source/references/3-back-test-strategy.md:43
 msgid "创建`Strategy`对象的最简单方法是使用`qt.built_in`模块, 也可以在创建`Operator`对象的时候同时创建。"
@@ -251,7 +252,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:82
 msgid "得到："
-msgstr "Result:"
+msgstr "Ergebnis:"
 
 #: ../../source/references/3-back-test-strategy.md:106
 msgid "更多关于内置策略的函数包括："
@@ -296,7 +297,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:117
 msgid "创建Operator对象"
-msgstr "Create Operator object"
+msgstr "Erstellen Sie ein Operator-Objekt"
 
 #: ../../source/references/3-back-test-strategy.md:119
 msgid ""
@@ -374,7 +375,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:133
 msgid "策略的三种信号类型"
-msgstr "Three types of strategy signals"
+msgstr "Drei Arten von Strategiesignalen"
 
 #: ../../source/references/3-back-test-strategy.md:135
 msgid ""
@@ -437,7 +438,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:279
 msgid "交易信号的混合"
-msgstr "Blending Trading Signals"
+msgstr "Mischen von Handelssignalen"
 
 #: ../../source/references/3-back-test-strategy.md:281
 msgid ""
@@ -500,7 +501,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:296
 msgid "`blender`表达式中支持的函数如下："
-msgstr "`blender` expressions support the following functions:"
+msgstr "`blender`-Ausdrücke unterstützen die folgenden Funktionen:"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "元素"
@@ -508,15 +509,15 @@ msgstr "Element"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "示例"
-msgstr "Example"
+msgstr "Beispiel"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "说明"
-msgstr "Description"
+msgstr "Beschreibung"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "策略序号"
-msgstr "Strategy index"
+msgstr "Strategieindex"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`s1`"
@@ -531,7 +532,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "数字"
-msgstr "Digits"
+msgstr "Ziffern"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`-1.35`"
@@ -544,7 +545,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "运算符"
-msgstr "Operators"
+msgstr "Betreiber"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`+`"
@@ -552,11 +553,11 @@ msgstr "`+`"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "包括`'+-*/^'`等四则运算符"
-msgstr "Includes `'+-*/^'` and other four arithmetic operators"
+msgstr "Enthält `'+-*/^'` und weitere vier arithmetische Operatoren"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "逻辑运算符"
-msgstr "Logical Operators"
+msgstr "Logische Operatoren"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`and`"
@@ -569,7 +570,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "函数"
-msgstr "Functions"
+msgstr "Funktionen"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`sum()`"
@@ -581,7 +582,7 @@ msgstr "Die unterstützten Funktionen sind in der folgenden Tabelle aufgeführt"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "括号"
-msgstr "Perentheses"
+msgstr "Perenthesen"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`()`"
@@ -589,7 +590,7 @@ msgstr "`()`"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "组合运算"
-msgstr "Combined Operations"
+msgstr "Kombinierte Operationen"
 
 #: ../../source/references/3-back-test-strategy.md:307
 #, python-format
@@ -692,7 +693,7 @@ msgstr "`op.op_type`"
 
 #: ../../source/references/3-back-test-strategy.md:348
 msgid "Operator对象的运行模式："
-msgstr "Running mode of Operator object:"
+msgstr "Laufmodus des Operator-Objekts:"
 
 #: ../../source/references/3-back-test-strategy.md:349
 msgid "`batch`: 批量运行模式，在回测模式或优化模式下，预先生成交易清单，再批量进行模拟交易，运行速度较快"
@@ -712,7 +713,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:352
 msgid "获取交易策略"
-msgstr "Get Trading Strategy"
+msgstr "Holen Sie sich eine Handelsstrategie"
 
 #: ../../source/references/3-back-test-strategy.md:354
 msgid "`op.get_stg(stg_id)`"
@@ -727,7 +728,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:361
 msgid "添加或修改交易策略"
-msgstr "Add or Modify Trading Strategy"
+msgstr "Handelsstrategie hinzufügen oder ändern"
 
 #: ../../source/references/3-back-test-strategy.md:363
 msgid "`op.add_strategy(stg, **kwargs)`"
@@ -755,7 +756,7 @@ msgstr "`op.remove_strategy(id_or_pos=None)`"
 
 #: ../../source/references/3-back-test-strategy.md:370
 msgid "从Operator中删除一个策略"
-msgstr "Remove a strategy from Operator"
+msgstr "Entfernen Sie eine Strategie aus Operator"
 
 #: ../../source/references/3-back-test-strategy.md:372
 msgid "`op.clear_strategies()`"
@@ -864,7 +865,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:445
 msgid "回测交易的目标股票/指数"
-msgstr "Target stocks/index for backtesting"
+msgstr "Zielaktien/Index für Backtesting"
 
 #: ../../source/references/3-back-test-strategy.md:446
 msgid "回测交易的起止时间段"
@@ -890,7 +891,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:469
 msgid "启动qteasy并开始运行Operator"
-msgstr "Start qteasy and run Operator"
+msgstr "Starten Sie qteasy und führen Sie Operator aus"
 
 #: ../../source/references/3-back-test-strategy.md:471
 msgid "`qt.run(operator, **config)`"
@@ -961,7 +962,7 @@ msgstr "Der Backtesting-Bericht enthält die folgenden Informationen:"
 
 #: ../../source/references/3-back-test-strategy.md:492
 msgid "回测计算耗时"
-msgstr "Total time taken for backtesting"
+msgstr "Gesamtzeit für das Backtesting"
 
 #: ../../source/references/3-back-test-strategy.md:493
 msgid "回测区间开始日期及结束日期、持续时间等信息"
@@ -1012,7 +1013,7 @@ msgstr "Renditekurve und Benchmark im logarithmischen Maßstab"
 
 #: ../../source/references/3-back-test-strategy.md:546
 msgid "每日收益变动图"
-msgstr "Daily return rate change chart"
+msgstr "Diagramm zur täglichen Änderung der Rücklaufquote"
 
 #: ../../source/references/3-back-test-strategy.md:547
 msgid "滚动夏普率和alpha率变动图（投资组合盈利能力评价）"
@@ -1239,7 +1240,7 @@ msgstr "![png](../tutorials/img/output_16_2.png)"
 
 #: ../../source/references/3-back-test-strategy.md:812
 msgid "创建一个自定义策略"
-msgstr "Create a Custom Strategy"
+msgstr "Erstellen Sie eine benutzerdefinierte Strategie"
 
 #: ../../source/references/3-back-test-strategy.md:814
 msgid "使用qteasy不仅可以使用内置策略，也可以创建自定义策略。下面有一个简单的例子，定义了一个简单的轮动交易策略"

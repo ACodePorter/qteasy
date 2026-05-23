@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
 "Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -146,7 +146,7 @@ msgstr "Kann lokalen Optima entkommen; langsamere Konvergenz"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "中"
-msgstr "Medium"
+msgstr "Mitte"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由迭代次数决定"

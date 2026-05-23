@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/qteasy_2_migration_guide.md:1
 msgid "QTEASY 2.0 版本迁移指引"
-msgstr "QTEASY 2.0 Migration Guide"
+msgstr "QTEASY 2.0 Migrationsleitfaden"
 
 #: ../../source/qteasy_2_migration_guide.md:3
 msgid "本指引提供了 QTEASY 2.0 中的更改和改进的概述，以及如何将现有代码库迁移到新版本的说明。"
@@ -30,7 +30,7 @@ msgstr ""
 
 #: ../../source/qteasy_2_migration_guide.md:5
 msgid "QTEASY 2.0 中的主要改进"
-msgstr "Major improvements in QTEASY 2.0"
+msgstr "Wesentliche Verbesserungen in QTEASY 2.0"
 
 #: ../../source/qteasy_2_migration_guide.md:7
 msgid ""
@@ -113,15 +113,15 @@ msgstr ""
 
 #: ../../source/qteasy_2_migration_guide.md:21
 msgid "删除的配置键"
-msgstr "Removed configuration keys"
+msgstr "Konfigurationsschlüssel entfernt"
 
 #: ../../source/qteasy_2_migration_guide.md
 msgid "配置键"
-msgstr "Config key"
+msgstr "Konfigurationsschlüssel"
 
 #: ../../source/qteasy_2_migration_guide.md
 msgid "说明与替代方式"
-msgstr "Notes and alternatives"
+msgstr "Hinweise und Alternativen"
 
 #: ../../source/qteasy_2_migration_guide.md
 msgid "**maximize_cash_usage**"
@@ -156,7 +156,7 @@ msgstr ""
 
 #: ../../source/qteasy_2_migration_guide.md:29
 msgid "变更的配置键"
-msgstr "Changed configuration keys"
+msgstr "Konfigurationsschlüssel geändert"
 
 #: ../../source/qteasy_2_migration_guide.md:31
 msgid "本次仅做删除，无重命名或合并类变更。"
@@ -166,7 +166,7 @@ msgstr ""
 
 #: ../../source/qteasy_2_migration_guide.md:33
 msgid "升级操作建议"
-msgstr "Upgrade checklist"
+msgstr "Upgrade-Checkliste"
 
 #: ../../source/qteasy_2_migration_guide.md:35
 msgid "在 `qteasy.cfg` 或自有配置中搜索并删除上述三个键。"
@@ -189,7 +189,7 @@ msgstr ""
 
 #: ../../source/qteasy_2_migration_guide.md:39
 msgid "破坏性变更提示"
-msgstr "Breaking changes"
+msgstr "Bahnbrechende Veränderungen"
 
 #: ../../source/qteasy_2_migration_guide.md:41
 msgid ""
@@ -202,8 +202,8 @@ msgstr ""
 
 #: ../../source/qteasy_2_migration_guide.md:45
 msgid "Migration Steps / 版本迁移步骤"
-msgstr "Migration steps"
+msgstr "Migrationsschritte"
 
 #: ../../source/qteasy_2_migration_guide.md:47
 msgid "针对自定义交易策略"
-msgstr "Custom trading strategies"
+msgstr "Benutzerdefinierte Handelsstrategien"

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:30+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -88,7 +88,7 @@ msgstr "Zuerst der minimal ausführbare Beweis: Wir machen nur zwei Dinge:"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:24
 msgid "计算形态信号；"
-msgstr "Compute the pattern signal;"
+msgstr "Berechnen Sie das Mustersignal."
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:25
 msgid "在单只股票的 K 线上把事件点高亮出来。"
@@ -220,7 +220,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:75
 msgid "用 `cum_return` 推导 CAGR 摘要表"
-msgstr "Use `cum_return` to derive a CAGR summary table"
+msgstr "Verwenden Sie `cum_return`, um eine CAGR-Übersichtstabelle abzuleiten"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:76
 msgid "用 `plot(highlight=...)` 在 K 线上高亮事件点，做到可解释闭环"
@@ -256,7 +256,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:88
 msgid "2.2 最小必要原理"
-msgstr "2.2 Minimum necessary principles"
+msgstr "2.2 Mindestgrundsätze"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:90
 msgid ""
@@ -291,7 +291,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:132
 msgid "3.2 最小必要原理"
-msgstr "3.2 Minimum necessary principles"
+msgstr "3.2 Mindestgrundsätze"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:134
 msgid "`signals = hp.candle_pattern(name='cdlhammer', as_panel=False)` 的返回是："
@@ -358,7 +358,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:167
 msgid "4.2 最小必要原理"
-msgstr "4.2 Minimum necessary principles"
+msgstr "4.2 Mindestgrundsätze"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:169
 msgid ""
@@ -453,7 +453,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:237
 msgid "5.3 可运行代码（示意）"
-msgstr "5.3 Runnable code (illustration)"
+msgstr "5.3 Ausführbarer Code (Abbildung)"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:280
 msgid "同样建议你整理成摘要表（至少 3 行：EVENT_LONG / EVENT_SHORT / benchmark），便于读者一眼比较："
@@ -528,7 +528,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:340
 msgid "`candle_pattern` 提取事件信号；"
-msgstr "`candle_pattern` extracts the event signals;"
+msgstr "`candle_pattern` extrahiert die Ereignissignale;"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md:341
 msgid "K=5 窗口化（最近 5 天 any）；"
@@ -578,15 +578,15 @@ msgstr ""
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "插图"
-msgstr "Illustration"
+msgstr "Abbildung"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "建议放置位置"
-msgstr "Suggested placement"
+msgstr "Empfohlene Platzierung"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "你将看到什么"
-msgstr "What you’ll see"
+msgstr "Was Sie sehen werden"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "`img/3.3_minimal_run.png`"
@@ -606,7 +606,7 @@ msgstr "`img/3.3_pf_compare.png`"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "§0.5 或 §5"
-msgstr "§0.5 or §5"
+msgstr "§0.5 oder §5"
 
 #: ../../source/tutorials/2.8-historypanel-advanced-event-kline-pattern.md
 msgid "事件窗口篮子 vs benchmark 的组合曲线"

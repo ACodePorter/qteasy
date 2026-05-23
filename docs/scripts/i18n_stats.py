@@ -132,16 +132,19 @@ def print_report(langs: List[str]) -> None:
             f"empty={stats['empty_files']}"
         )
 
-    print('\n--- Section breakdown (en) ---')
-    en_stats = scan_language('en')
-    sections = en_stats['sections']
-    for section, (trans, untrans) in sorted(
-        sections.items(),
-        key=lambda item: item[1][0] / (item[1][0] + item[1][1] + 1e-9),
-    ):
-        total = trans + untrans
-        pct = 100.0 * trans / total if total else 0.0
-        print(f"  {section:<25} {pct:5.1f}%  ({trans}/{total} msgs)")
+    for breakdown_lang in langs:
+        if breakdown_lang not in ('en', 'de'):
+            continue
+        print(f'\n--- Section breakdown ({breakdown_lang}) ---')
+        lang_stats = scan_language(breakdown_lang)
+        sections = lang_stats['sections']
+        for section, (trans, untrans) in sorted(
+            sections.items(),
+            key=lambda item: item[1][0] / (item[1][0] + item[1][1] + 1e-9),
+        ):
+            total = trans + untrans
+            pct = 100.0 * trans / total if total else 0.0
+            print(f"  {section:<25} {pct:5.1f}%  ({trans}/{total} msgs)")
 
 
 def main() -> int:

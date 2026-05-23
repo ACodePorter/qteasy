@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:1
 msgid "获取并管理金融数据"
-msgstr "Acquire and manage financial data"
+msgstr "Erfassen und verwalten Sie Finanzdaten"
 
 #: ../../source/tutorials/2.0-get-data.md:3
 msgid "`qteasy`是一个完全本地化部署和运行的量化交易分析工具包，具备以下功能："
@@ -63,7 +63,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:13
 msgid "开始前的准备工作"
-msgstr "Preparations before you begin"
+msgstr "Vorbereitungen, bevor Sie beginnen"
 
 #: ../../source/tutorials/2.0-get-data.md:15
 msgid "在开始本教程前，请完成以下工作："
@@ -97,7 +97,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:21
 msgid "完成`ta-lib`的安装 (***可选项***)"
-msgstr "Complete the installation of `ta-lib` (***optional***)"
+msgstr "Schließen Sie die Installation von `ta-lib` ab (***optional***)"
 
 #: ../../source/tutorials/2.0-get-data.md:23
 msgid ""
@@ -141,7 +141,7 @@ msgstr "![Bildbeschreibung hier einfügen](img/jupyter_notebook.png)"
 #: ../../source/tutorials/2.0-get-data.md:258
 #: ../../source/tutorials/2.0-get-data.md:267
 msgid "在这里插入图片描述"
-msgstr "Insert image description here"
+msgstr "Fügen Sie hier eine Bildbeschreibung ein"
 
 #: ../../source/tutorials/2.0-get-data.md:40
 msgid "如果不使用`jupyter notebook`，也可以使用`ipython`："
@@ -218,7 +218,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:64
 msgid "提示信息："
-msgstr "Tip:"
+msgstr "Tipp:"
 
 #: ../../source/tutorials/2.0-get-data.md:69
 msgid ""
@@ -291,7 +291,7 @@ msgstr ""
 #: ../../source/tutorials/2.0-get-data.md:105
 #: ../../source/tutorials/2.0-get-data.md:177
 msgid "输出如下："
-msgstr "The output is as follows:"
+msgstr "Die Ausgabe ist wie folgt:"
 
 #: ../../source/tutorials/2.0-get-data.md:116
 msgid "下载完成后，再次运行`qt.get_table_overview()`函数"
@@ -342,7 +342,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:150
 msgid "输出如下:"
-msgstr "The output is as follows:"
+msgstr "Die Ausgabe ist wie folgt:"
 
 #: ../../source/tutorials/2.0-get-data.md:164
 msgid "更多的输出可以查看下图："
@@ -362,7 +362,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:170
 msgid "**fund_basic**: 基金基础数据"
-msgstr "**fund_basic**: Basic fund data"
+msgstr "**fund_basic**: Grundlegende Fondsdaten"
 
 #: ../../source/tutorials/2.0-get-data.md:171
 msgid "**future_basic**: 期货基础数据"
@@ -377,7 +377,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:186
 msgid "下载沪市股票数据"
-msgstr "Download Shanghai-listed stock data"
+msgstr "Laden Sie die Daten der in Shanghai notierten Aktien herunter"
 
 #: ../../source/tutorials/2.0-get-data.md:188
 msgid "金融数据中最重要的数据类型非量价数据莫属。接下来，我们就来下载历史价格数据。"
@@ -400,15 +400,15 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:193
 msgid "日K线"
-msgstr "Daily candlestick chart"
+msgstr "Tages-Candlestick-Chart"
 
 #: ../../source/tutorials/2.0-get-data.md:194
 msgid "周K线"
-msgstr "Weekly candlestick chart"
+msgstr "Wöchentliches Candlestick-Diagramm"
 
 #: ../../source/tutorials/2.0-get-data.md:195
 msgid "月K线"
-msgstr "Monthly candlestick chart"
+msgstr "Monatlicher Candlestick-Chart"
 
 #: ../../source/tutorials/2.0-get-data.md:197
 msgid ""
@@ -459,7 +459,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:221
 msgid "得到结果如下："
-msgstr "The result is as follows:"
+msgstr "Das Ergebnis ist wie folgt:"
 
 #: ../../source/tutorials/2.0-get-data.md:244
 msgid ""
@@ -495,7 +495,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:250
 msgid "生成K线图"
-msgstr "Generate a candlestick chart"
+msgstr "Erstellen Sie ein Candlestick-Diagramm"
 
 #: ../../source/tutorials/2.0-get-data.md:251
 msgid "使用量价数据，更加方便易读的方法是将数据显示为K线图。"
@@ -609,7 +609,7 @@ msgstr "![png](img/output_18_11.png)"
 
 #: ../../source/tutorials/2.0-get-data.md:321
 msgid "数据类型`DataType`的查找"
-msgstr "Looking up the data type `DataType`"
+msgstr "Nachschlagen des Datentyps `DataType`"
 
 #: ../../source/tutorials/2.0-get-data.md:323
 msgid ""
@@ -664,7 +664,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:368
 msgid "简单介绍`DataType`对象"
-msgstr "A brief introduction to the `DataType` object"
+msgstr "Eine kurze Einführung in das `DataType`-Objekt"
 
 #: ../../source/tutorials/2.0-get-data.md:370
 msgid ""
@@ -741,7 +741,7 @@ msgstr ""
 
 #: ../../source/tutorials/2.0-get-data.md:437
 msgid "回顾总结"
-msgstr "Review and summary"
+msgstr "Rückblick und Zusammenfassung"
 
 #: ../../source/tutorials/2.0-get-data.md:439
 msgid ""
