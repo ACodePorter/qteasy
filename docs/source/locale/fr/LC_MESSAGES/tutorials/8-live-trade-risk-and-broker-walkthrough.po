@@ -21,146 +21,170 @@ msgstr ""
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:1
 msgid "模拟实盘中的风控与 Broker 适配（双路径）"
 msgstr ""
+"Simulez les contrôles des risques et l'adaptation du courtier dans le "
+"trading en direct (double chemin)"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:3
 msgid "本教程通过两条完整路径，带你在模拟实盘中验证 S1.3 的关键行为："
 msgstr ""
+"Ce didacticiel vous guide à travers deux chemins complets pour vérifier les "
+"comportements clés de S1.3 dans un environnement de trading en direct "
+"simulé :"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:5
 msgid "路径 A：`asset_type='E' + simulator`"
-msgstr "Path A: `asset_type='E' + simulator`"
+msgstr "Chemin A : `asset_type='E' + simulator`"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:6
 msgid "路径 B：`asset_type='FD' + simulator`"
-msgstr "Path B: `asset_type='FD' + simulator`"
+msgstr "Chemin B : `asset_type='FD' + simulator`"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:8
 msgid "目标是“跑通 + 观测 + 验证”，而不是只看概念。"
 msgstr ""
+"L’objectif est de « parcourir + observer + vérifier », et pas seulement "
+"d’examiner des concepts."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:10
 msgid "0. 教程目标"
-msgstr ""
+msgstr "0. Objectifs du didacticiel"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:12
 msgid "跑通两条路径（E 与 FD）"
-msgstr ""
+msgstr "Faites fonctionner les deux chemins (E et FD) de bout en bout"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:13
 msgid "人工触发一次拒单并定位原因"
-msgstr ""
+msgstr "Déclenchez manuellement un rejet de commande et identifiez la cause"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:14
 msgid "观察分批成交状态从 `partial-filled` 到 `filled` 的可见行为"
 msgstr ""
+"Observez le comportement visible de l'état de remplissage partiel passant de"
+" `partial-filled` à `filled`"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:16
 msgid "1. 前置准备"
-msgstr ""
+msgstr "1. Conditions préalables"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:18
 msgid "已有可运行的 `Operator`"
-msgstr ""
+msgstr "Un `Operator` déjà exécutable"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:19
 msgid "本地数据可支持运行频率"
 msgstr ""
+"Les données locales peuvent prendre en charge la fréquence d'exécution"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:20
 msgid "已配置 live 账户参数"
-msgstr ""
+msgstr "Les paramètres du compte Live ont été configurés"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:22
 msgid "建议先准备一个“可稳定触发拒单”的规则配置（例如较小的单笔数量上限），便于复现实验。"
 msgstr ""
+"Il est recommandé de préparer d'abord une configuration de règle qui peut "
+"« déclencher de manière stable des rejets de commandes » (par exemple, une "
+"limite de quantité par commande plus petite) pour faciliter la reproduction "
+"de l'expérience."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:24
 msgid "2. 路径 A：E + simulator"
-msgstr ""
+msgstr "2. Chemin A : E + simulateur"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:26
 msgid "步骤 1：设置配置"
-msgstr ""
+msgstr "Étape 1 : Configurer la configuration"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:40
 msgid "步骤 2：启动运行"
-msgstr ""
+msgstr "Étape 2 : Commencez à courir"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:46
 msgid "步骤 3：提交一笔测试订单并观察反馈"
-msgstr ""
+msgstr "Étape 3 : Soumettez une commande test et observez les commentaires"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:48
 msgid "关注是否出现提交成功提示"
-msgstr ""
+msgstr "Vérifiez si une invite « soumission réussie » apparaît"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:49
 msgid "关注是否出现风控拒单提示（英文）"
 msgstr ""
+"Vérifiez si une invite de rejet d’ordre de contrôle des risques apparaît (en"
+" anglais)."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:50
 msgid "记录一次订单 ID（后续对照日志）"
 msgstr ""
+"Enregistrez un ID de commande (pour une comparaison ultérieure du journal)"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:52
 msgid "3. 路径 B：FD + simulator"
-msgstr ""
+msgstr "3. Chemin B : FD + simulateur"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:54
 msgid "步骤 1：切换资产类型配置"
-msgstr ""
+msgstr "Étape 1 : Changez la configuration du type d'actif."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:68
 msgid "步骤 2：重复启动与下单"
-msgstr ""
+msgstr "Étape 2 : Redémarrez à plusieurs reprises et passez des commandes."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:74
 msgid "步骤 3：验证行为一致性"
-msgstr ""
+msgstr "Étape 3 : Vérifiez la cohérence comportementale."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:76
 msgid "FD 路径应可进入 live 运行链路"
-msgstr ""
+msgstr "Le chemin FD doit pouvoir entrer dans le flux d’exécution en direct."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:77
 msgid "拒单/提交/日志的观察方式与 E 路径一致"
 msgstr ""
+"La façon d’observer les rejets/soumissions/journaux est la même que dans le "
+"chemin E."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:78
 msgid "同一类订单在两条路径下应有一致的反馈语义"
 msgstr ""
+"Le même type de commande doit avoir une sémantique de rétroaction cohérente "
+"sur les deux chemins"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:80
 msgid "4. 人工触发一次风控拒单"
-msgstr ""
+msgstr "4. Déclenchez manuellement un rejet d’ordre de contrôle des risques."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:82
 msgid "建议临时设置严格规则（如单笔数量上限），提交超限订单。   你应看到类似英文提示："
 msgstr ""
+"Fixez temporairement des règles strictes (par exemple, un plafond de "
+"quantité par commande) et soumettez une commande qui dépasse la limite.   "
+"Vous devriez voir une invite en anglais semblable à :"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:89
 msgid "并可在 `risk_log` 中检索到对应记录。"
-msgstr ""
+msgstr "et l'enregistrement correspondant peut être récupéré dans `risk_log`."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:91
 msgid "建议至少验证两次："
-msgstr ""
+msgstr "Il est recommandé de vérifier au moins deux fois :"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:93
 msgid "一次被拒（确认拒因可见）"
-msgstr ""
+msgstr "Un rejet (confirmez que le motif du rejet est visible)."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:94
 msgid "一次放行（确认策略可继续运行）"
-msgstr ""
+msgstr "Une version (confirmez que la stratégie peut continuer à fonctionner)"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:96
 msgid "5. 观察订单状态变化"
-msgstr ""
+msgstr "5. Observez les changements de statut de la commande"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:98
 msgid "重点观察是否出现："
-msgstr ""
+msgstr "Concentrez-vous sur si les événements suivants se produisent :"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:100
 msgid "`submitted -> partial-filled -> filled`"
@@ -169,75 +193,96 @@ msgstr "`submitted -> partial-filled -> filled`"
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:102
 msgid "在分批成交场景中，最终状态应与累计成交量一致。"
 msgstr ""
+"Dans un scénario de remplissage partiel, l'état final doit être cohérent "
+"avec le volume rempli cumulé."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:104
 msgid "如果你看到了 `partial-filled` 长时间不变，请回到排错页按“状态理解偏差”剧本核对日志。"
 msgstr ""
+"Si vous voyez `partial-filled` rester inchangé pendant une longue période, "
+"revenez à la page de dépannage et vérifiez les journaux par rapport au "
+"playbook « incompréhension du statut »."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:106
 msgid "6. 教程验收清单"
-msgstr ""
+msgstr "6. Liste de contrôle d'acceptation du didacticiel"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:108
 msgid "E 路径可运行"
-msgstr ""
+msgstr "Le chemin E est exécutable"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:109
 msgid "FD 路径可运行"
-msgstr ""
+msgstr "Le chemin FD est exécutable"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:110
 msgid "可触发并识别风控拒单"
 msgstr ""
+"Peut déclencher et identifier les rejets d’ordres de contrôle des risques"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:111
 msgid "可在日志中定位拒单原因"
 msgstr ""
+"Vous pouvez localiser la raison du rejet de la commande dans les journaux."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:112
 msgid "可观察并理解分批成交状态变化"
 msgstr ""
+"Vous pouvez observer et comprendre les changements d’état lors de "
+"remplissages partiels."
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:113
 msgid "至少完成一次“拒单 -> 调整参数 -> 放行”闭环验证"
 msgstr ""
+"Effectuer au moins une vérification complète en boucle fermée de « rejet de "
+"commande -> ajustement des paramètres -> libération »"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:115
 msgid "7. 下一步"
-msgstr ""
+msgstr "7. Étape suivante"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:117
 msgid "深入机制：`live_trading/3-risk-and-order-lifecycle`"
 msgstr ""
+"Analyse approfondie du mécanisme : `live_trading/3-risk-and-order-lifecycle`"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:118
 msgid "扩展 Broker：`live_trading/4-broker-adapter-and-integration`"
-msgstr "Extend the broker: `live_trading/4-broker-adapter-and-integration`"
+msgstr "Étendre le courtier : `live_trading/4-broker-adapter-and-integration`"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:119
 msgid "排错手册：`live_trading/5-artifacts-and-troubleshooting`"
-msgstr ""
+msgstr "Manuel de dépannage : `live_trading/5-artifacts-and-troubleshooting`"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:121
 msgid "8. 结果判定标准"
-msgstr ""
+msgstr "8. Critères de détermination du résultat"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:123
 msgid "当你完成本教程后，应能独立回答以下问题："
 msgstr ""
+"Après avoir terminé ce didacticiel, vous devriez être capable de répondre "
+"indépendamment aux questions suivantes :"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:125
 msgid "当前订单是被风控拒绝，还是已提交但未成交？"
 msgstr ""
+"L'ordre en cours a-t-il été rejeté par le contrôle des risques ou a-t-il été"
+" soumis mais non exécuté ?"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:126
 msgid "为什么某笔订单会停留在 `partial-filled`？"
-msgstr ""
+msgstr "Pourquoi une commande resterait-elle dans `partial-filled` ?"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:127
 msgid "需要去哪个日志文件先看、再看什么字段？"
 msgstr ""
+"Quel fichier journal devez-vous vérifier en premier et quels champs devez-"
+"vous examiner ensuite ?"
 
 #: ../../source/tutorials/8-live-trade-risk-and-broker-walkthrough.md:129
 msgid "若以上三题都能独立回答，说明你已经具备 live 场景下的基本排错能力。"
 msgstr ""
+"Si vous pouvez répondre indépendamment aux trois questions ci-dessus, cela "
+"signifie que vous possédez déjà des compétences de base en matière de "
+"dépannage pour les scénarios réels."

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -20,44 +20,52 @@ msgstr ""
 
 #: ../../source/optimization/3. optimization_algorithms.md:1
 msgid "优化算法的区别与使用情境"
-msgstr ""
+msgstr "Algorithmes d'optimisation : différences et cas d'utilisation"
 
 #: ../../source/optimization/3. optimization_algorithms.md:3
 msgid "为何需要了解不同算法"
-msgstr ""
+msgstr "Pourquoi en savoir plus sur différents algorithmes"
 
 #: ../../source/optimization/3. optimization_algorithms.md:5
 msgid ""
 "参数空间与计算成本差异大：网格搜索在小空间上可靠但组合爆炸；启发式或贝叶斯在有限评估次数下权衡精度与速度；不同算法对连续/离散/混合参数的支持也不同。"
 msgstr ""
+"Les espaces de paramètres et les coûts de calcul varient considérablement : "
+"la recherche sur grille est fiable dans les petits espaces mais explose de "
+"manière combinatoire ; les méthodes heuristiques ou bayésiennes échangent la"
+" précision contre la rapidité avec un budget d'évaluation limité ; les "
+"algorithmes diffèrent également par la prise en charge de paramètres "
+"continus, discrets ou mixtes."
 
 #: ../../source/optimization/3. optimization_algorithms.md:7
 msgid "各优化算法对比（罗列并说明区别）"
 msgstr ""
+"Comparaison des algorithmes d'optimisation (répertoriés avec les "
+"différences)"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "算法"
-msgstr ""
+msgstr "Algorithme"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "原理简述"
-msgstr ""
+msgstr "Bref principe"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "优点与局限"
-msgstr ""
+msgstr "Avantages et limites"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "适用参数规模"
-msgstr ""
+msgstr "Échelle de paramètres typique"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "连续/离散/混合"
-msgstr ""
+msgstr "Continu / Discret / Mixte"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "典型计算成本"
-msgstr ""
+msgstr "Coût de calcul typique"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "grid"
@@ -65,23 +73,23 @@ msgstr "grid"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "在网格点上穷举或遍历"
-msgstr ""
+msgstr "Recherche ou parcours exhaustif sur des points de grille"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "实现简单、结果可复现；维数高时不可行"
-msgstr ""
+msgstr "Simple et reproductible ; peu pratique en grandes dimensions"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "小（2～3 维）"
-msgstr ""
+msgstr "Petit (2 à 3 dimensions)"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "离散为主"
-msgstr ""
+msgstr "Plutôt discret"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "随点数线性增长"
-msgstr ""
+msgstr "Croissance linéaire avec la taille de la grille"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "montecarlo"
@@ -89,23 +97,25 @@ msgstr "montecarlo"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "随机采样参数组合"
-msgstr ""
+msgstr "Échantillonnage aléatoire de combinaisons de paramètres"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "实现简单、易并行；需较多样本才稳定"
 msgstr ""
+"Simple et facile à paralléliser ; a besoin de nombreux échantillons pour la "
+"stabilité"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "中、大"
-msgstr ""
+msgstr "Moyen à grand"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "均可"
-msgstr ""
+msgstr "Tous pris en charge"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由 sample_count 决定"
-msgstr ""
+msgstr "Déterminé par ``sample_count``"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "GA"
@@ -113,15 +123,17 @@ msgstr "GA"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "遗传、交叉、变异"
-msgstr ""
+msgstr "Sélection, croisement, mutation"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "适合非凸、多峰；调参敏感"
 msgstr ""
+"Adapté aux problèmes non convexes et multimodaux ; sensible aux "
+"hyperparamètres"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由代数与种群规模决定"
-msgstr ""
+msgstr "Déterminé par les générations et la taille de la population"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "SA"
@@ -129,19 +141,19 @@ msgstr "SA"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "模拟退火、概率接受劣解"
-msgstr ""
+msgstr "Recuit simulé ; accepte de manière probabiliste les pires solutions"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "可跳出局部最优；收敛较慢"
-msgstr ""
+msgstr "Peut échapper aux optima locaux ; convergence plus lente"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "中"
-msgstr ""
+msgstr "Milieu"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由迭代次数决定"
-msgstr ""
+msgstr "Déterminé par le nombre d'itérations"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "PSO"
@@ -150,18 +162,20 @@ msgstr "PSO"
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "粒子群位置与速度更新"
 msgstr ""
+"Mises à jour de la position et de la vitesse de l'essaim de particules"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "连续空间表现好；离散需编码"
 msgstr ""
+"Fort dans les espaces continus ; les paramètres discrets doivent être codés"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "连续为主"
-msgstr ""
+msgstr "Surtout continu"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由粒子数与迭代决定"
-msgstr ""
+msgstr "Déterminé par le nombre de particules et les itérations"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "bayesian"
@@ -169,47 +183,59 @@ msgstr "bayesian"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "代理模型+采集函数"
-msgstr ""
+msgstr "Modèle de substitution + fonction d'acquisition"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "样本少时效率高；高维成本高"
-msgstr ""
+msgstr "Efficace avec peu d’échantillons ; coûteux en grandes dimensions"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "小、中"
-msgstr ""
+msgstr "Petit à moyen"
 
 #: ../../source/optimization/3. optimization_algorithms.md
 msgid "由迭代与模型拟合决定"
-msgstr ""
+msgstr "Déterminé par les itérations et l'ajustement du modèle"
 
 #: ../../source/optimization/3. optimization_algorithms.md:18
 msgid "使用情境与选择建议"
-msgstr ""
+msgstr "Cas d'utilisation et conseils de sélection"
 
 #: ../../source/optimization/3. optimization_algorithms.md:20
 msgid "**参数少、离散**：优先 grid 或小规模 montecarlo。"
 msgstr ""
+"**Peu de paramètres discrets** : Préférez ``grid`` or small-scale "
+"``montecarlo``."
 
 #: ../../source/optimization/3. optimization_algorithms.md:21
 msgid "**参数多、需少步数**：考虑 bayesian 或 GA/PSO。"
 msgstr ""
+"**De nombreux paramètres, peu d'étapes d'évaluation** : Considérez "
+"``bayesian`` or ``GA``/``PSO``."
 
 #: ../../source/optimization/3. optimization_algorithms.md:22
 msgid "**连续空间、多峰**：PSO、GA 或 SA。"
-msgstr ""
+msgstr "**Espace continu et multimodal** : ``PSO``, ``GA``, or ``SA``."
 
 #: ../../source/optimization/3. optimization_algorithms.md:23
 msgid ""
 "**opti_sample_count、参数个数**：样本或迭代不足时，启发式可能早停；可适当增大 opti_sample_count 或降低参数维度。"
 msgstr ""
+"**``opti_sample_count`` and parameter count**: With too few samples or "
+"iterations, heuristics may stop early; increase ``opti_sample_count`` ou "
+"réduisez la dimensionnalité des paramètres si nécessaire."
 
 #: ../../source/optimization/3. optimization_algorithms.md:25
 msgid "简要对比表"
-msgstr ""
+msgstr "Tableau de comparaison rapide"
 
 #: ../../source/optimization/3. optimization_algorithms.md:27
 msgid ""
 "见上表；实施时以当前 qteasy 支持的 opti_method 及文档为准，注意各算法的典型参数（如 GA "
 "的种群大小、变异率等）在配置中的名称与默认值。"
 msgstr ""
+"Voir le tableau ci-dessus. En pratique, suivez les valeurs ``opti_method`` "
+"prises en charge par la version actuelle qteasy et sa documentation ; notez "
+"les paramètres typiques de chaque algorithme (par exemple, la taille de la "
+"population GA et le taux de mutation) ainsi que leurs noms de configuration "
+"et leurs valeurs par défaut."

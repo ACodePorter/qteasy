@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -20,93 +20,108 @@ msgstr ""
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:1
 msgid "模拟实盘交易——TUI 功能清单"
-msgstr ""
+msgstr "Simuler le trading en direct dans TUI"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:3
 msgid ""
 "本文从功能清单角度介绍 TUI 的模拟实盘能力。   如需手把手步骤，请阅读 `tutorials/8-live-trade-risk-and-"
 "broker-walkthrough.md`。"
 msgstr ""
+"Cette page présente le trading en direct simulé par TUI du point de vue de "
+"la liste de capacités. Pour des conseils étape par étape, lisez "
+"`tutorials/8-live-trade-risk-and-broker-walkthrough.md`."
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:6
 msgid "0. 文档边界"
-msgstr ""
+msgstr "0. Portée du document"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:8
 msgid "本页是 TUI 能力索引，不替代步骤教程"
 msgstr ""
+"Cette page est un index de capacités TUI, pas un didacticiel étape par étape"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:9
 msgid "重点回答“在界面上看哪里、发生异常先看什么”"
 msgstr ""
+"Focus : où regarder à l'écran et que vérifier en premier en cas de problème"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:11
 msgid "1. 面板与交互能力"
-msgstr ""
+msgstr "1. Panneaux et interactions"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:13
 msgid "账户与资金状态展示"
-msgstr ""
+msgstr "Affichage de l'état du compte et de la trésorerie"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:14
 msgid "订单提交与撤单交互"
-msgstr ""
+msgstr "Commande soumettre et annuler les interactions"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:15
 msgid "成交与历史信息查看"
-msgstr ""
+msgstr "Vues de remplissage et d'historique"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:16
 msgid "系统日志与风险反馈显示"
-msgstr ""
+msgstr "Affichage du journal système et des commentaires sur les risques"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:18
 msgid "2. 核心反馈语义"
-msgstr ""
+msgstr "2. Sémantique de base des commentaires"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:20
 msgid "风控拒单摘要在交互中更容易识别"
 msgstr ""
+"Les résumés de rejet des risques sont plus faciles à repérer dans "
+"l'interface utilisateur"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:21
 msgid "订单状态变化（特别是分批成交）更一致"
 msgstr ""
+"Les changements de statut des commandes (en particulier les exécutions "
+"partielles) sont plus cohérents"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:22
 msgid "日志链路更清晰，便于从界面跳转排查"
 msgstr ""
+"Trace de journal plus claire pour le dépannage à partir de l'interface "
+"utilisateur"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:24
 msgid "示例（用户可见反馈）："
-msgstr ""
+msgstr "Exemple (commentaires visibles par l'utilisateur) :"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:30
 msgid "3. 快速问题分流（TUI 视角）"
-msgstr ""
+msgstr "3. Triage rapide (vue TUI)"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:32
 msgid "“界面没报错但下单失败”通常是风控拒绝，不是系统崩溃"
 msgstr ""
+"\"Aucune erreur d'interface utilisateur mais la commande a échoué\" est "
+"généralement un risque de rejet, pas un crash"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:33
 msgid "“订单一直 partial-filled”需要结合累计成交量判断最终状态"
 msgstr ""
+"« La commande reste partiellement exécutée » – jugez le statut final à "
+"partir du volume rempli cumulé"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:35
 msgid "4. 面板-文档映射"
-msgstr ""
+msgstr "4. Panneau–Carte des documents"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "关注点"
-msgstr ""
+msgstr "Préoccupation"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "先看哪里"
-msgstr ""
+msgstr "Vérifiez d'abord"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "运行启动与配置核对"
-msgstr ""
+msgstr "Vérification du démarrage et de la configuration"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/2-configuration-and-run.md`"
@@ -114,7 +129,7 @@ msgstr "`live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "拒单/状态解释"
-msgstr ""
+msgstr "Rejet/explication du statut"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/3-risk-and-order-lifecycle.md`"
@@ -122,7 +137,7 @@ msgstr "`live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "日志排障"
-msgstr ""
+msgstr "Dépannage du journal"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`live_trading/5-artifacts-and-troubleshooting.md`"
@@ -130,7 +145,7 @@ msgstr "`live_trading/5-artifacts-and-troubleshooting.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "完整实操路径"
-msgstr ""
+msgstr "Parcours pratique complet"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md
 msgid "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
@@ -138,19 +153,19 @@ msgstr "`tutorials/8-live-trade-risk-and-broker-walkthrough.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:44
 msgid "5. 跳转导航"
-msgstr ""
+msgstr "5. Navigation"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:46
 msgid "配置与运行：`live_trading/2-configuration-and-run.md`"
-msgstr ""
+msgstr "Configurer et exécuter : `live_trading/2-configuration-and-run.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:47
 msgid "生命周期：`live_trading/3-risk-and-order-lifecycle.md`"
-msgstr ""
+msgstr "Cycle de vie : `live_trading/3-risk-and-order-lifecycle.md`"
 
 #: ../../source/references/6-simulate-operation-in-TUI.md:48
 msgid "排错手册：`live_trading/5-artifacts-and-troubleshooting.md`"
-msgstr ""
+msgstr "Dépannage : `live_trading/5-artifacts-and-troubleshooting.md`"
 
 #~ msgid "模拟实盘交易——TUI"
 #~ msgstr ""

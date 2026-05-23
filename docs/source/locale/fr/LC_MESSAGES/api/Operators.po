@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -321,7 +321,7 @@ msgstr "Le nom ID ou le numéro d'index du groupe stratégique"
 #: qteasy.qt_operator.Operator.get_stg:9 qteasy.qt_operator.Operator.reset:4
 #: qteasy.qt_operator.Operator.set_opt_par_values:12
 msgid "备注"
-msgstr "Note"
+msgstr "Remarque"
 
 #: of qteasy.qt_operator.Operator.get_group_by_id:10
 msgid ""
@@ -793,7 +793,7 @@ msgstr "Un objet itérable contenant les index des étapes à exécuter."
 
 #: of qteasy.qt_operator.Operator.run_strategies
 msgid "生成器"
-msgstr "Générateur."
+msgstr "Générateur"
 
 #: of qteasy.qt_operator.Operator.run_strategies:6
 msgid ""

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -415,7 +415,7 @@ msgstr "Il y a une ligne, ``rejected``"
 
 #: ../../source/live_trading/6-trader-snapshot-gate.rst:104
 msgid "**空**"
-msgstr "**nul**"
+msgstr "**vide**"
 
 #: ../../source/live_trading/6-trader-snapshot-gate.rst:105
 #: ../../source/live_trading/6-trader-snapshot-gate.rst:109

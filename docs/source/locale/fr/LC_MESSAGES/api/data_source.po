@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -743,7 +743,7 @@ msgstr "**int**"
 
 #: of qteasy.database.DataSource.write_table_data:19
 msgid "备注"
-msgstr "Note"
+msgstr "Remarque"
 
 #: of qteasy.database.DataSource.write_table_data:20
 msgid "注意！！不应直接使用该函数将数据写入本地数据库，因为写入的数据不会被检查 请使用update_table_data()来更新或写入数据到本地"

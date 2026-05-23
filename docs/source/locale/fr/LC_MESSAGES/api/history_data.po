@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -593,7 +593,7 @@ msgstr "Si True, affiche l'aperçu des tableaux de données système"
 
 #: of qteasy.core.get_stock_info:34 qteasy.core.get_table_overview:13
 msgid "备注"
-msgstr "Note"
+msgstr "Remarque"
 
 #: of qteasy.core.get_table_overview:14
 msgid "用法示例参见get_data_overview()"

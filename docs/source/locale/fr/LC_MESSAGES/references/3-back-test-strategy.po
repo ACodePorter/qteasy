@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-06-26 09:45+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../../source/references/3-back-test-strategy.md:1
 msgid "创建交易策略并评价回测结果"
-msgstr ""
+msgstr "Retour Testez et évaluez la stratégie"
 
 #: ../../source/references/3-back-test-strategy.md:3
 msgid ""
@@ -26,137 +26,237 @@ msgid ""
 " 管理多个不同的交易策略，哪怕这些交易策略有不同的运行时机和运行频率，或者不同的用途，例如一个策略用于选股、另一个策略用于大盘择时，再一个策 "
 "略用于风险控制，用户可以非常灵活地添加或修改`Operator`对象中的策略。"
 msgstr ""
+"`qteasy` toutes les stratégies de trading sont mises en œuvre via l'objet "
+"`qteast.Operator` (trader) pour le backtest et le fonctionnement. L'objet "
+"`Operator` est un conteneur de stratégie, et un trader peut gérer "
+"simultanément plusieurs stratégies de trading différentes, même si ces "
+"stratégies de trading ont des horaires et des fréquences de fonctionnement "
+"différents, ou des objectifs différents. Par exemple, une stratégie est "
+"utilisée pour la sélection de titres, une autre pour le market timing et une"
+" autre pour le contrôle des risques. Les utilisateurs peuvent ajouter ou "
+"modifier de manière flexible les stratégies dans l'objet `Operator`."
 
 #: ../../source/references/3-back-test-strategy.md:7
 msgid ""
 "将策略交给`Operator`后，只要设置好交易的资产类别，资产池的大小，设定好每个策略的运行时机和频率后，`Operator`对象就会在合适的时间启动相应的"
 " 交易策略，生成策略信号，并将所有的策略信号混合(`blend`)后解析成为交易信号。"
 msgstr ""
+"Après avoir transmis la stratégie à `Operator`, tant que la classe d'actifs "
+"à négocier, la taille du pool d'actifs ainsi que le calendrier et la "
+"fréquence de fonctionnement de chaque stratégie sont définis, l'objet "
+"`Operator` démarrera la stratégie de trading correspondante au moment "
+"approprié, générera des signaux de stratégie et mélangera (`blend`) tous les"
+" signaux de stratégie pour les résoudre en signaux de trading."
 
 #: ../../source/references/3-back-test-strategy.md:10
 msgid "关于`Operator`对象的更多介绍，请参见`qteasy`文档"
 msgstr ""
+"Pour plus d'informations sur l'objet `Operator`, veuillez vous référer à la "
+"documentation `qteasy`."
 
 #: ../../source/references/3-back-test-strategy.md:12
 msgid "`qteasy`提供了两种方式创建交易策略："
-msgstr ""
+msgstr "`qteasy` propose deux façons de créer des stratégies de trading :"
 
 #: ../../source/references/3-back-test-strategy.md:14
 msgid "*使用内置交易策略组合*："
-msgstr ""
+msgstr "*Utilisation de combinaisons de stratégies de trading intégrées*"
 
 #: ../../source/references/3-back-test-strategy.md:15
 msgid ""
 "`qteasy`提供多种内置交易策略可供用户使用，不需要手工创建。通过引用内置策略的名称（关于所有内置策略的介绍，请参 "
 "见详细文档）用户可以快速建立策略，还可以通过多个简单的策略混合成较为复杂的复合策略。"
 msgstr ""
+"`qteasy` fournit une variété de stratégies de trading intégrées que les "
+"utilisateurs peuvent utiliser sans création manuelle. En faisant référence "
+"au nom de la stratégie intégrée (pour une documentation détaillée sur toutes"
+" les stratégies intégrées), les utilisateurs peuvent rapidement établir des "
+"stratégies et également mélanger plusieurs stratégies simples en stratégies "
+"composites plus complexes."
 
 #: ../../source/references/3-back-test-strategy.md:17
 msgid "*通过策略类自行创建策略*："
-msgstr ""
+msgstr "*Grâce au cours de stratégie pour créer des stratégies*"
 
 #: ../../source/references/3-back-test-strategy.md:18
 msgid "当用户的策略非常复杂时，可以通过`qteasy.Strategy`类来自定义一个策略。"
 msgstr ""
+"Si la stratégie de l'utilisateur est très complexe, une stratégie peut être "
+"personnalisée via la classe `qteasy.Strategy`."
 
 #: ../../source/references/3-back-test-strategy.md:21
 msgid ""
 "创建交易策略，并且使用历史数据回溯测试交易策略的交易结果，并对交易结果进行评价是`qteasy`的核心功能之一。 "
 "qteasy通过一个交易员对象（`Operator`）汇总一系列的交易策略，并且通过`qt.run()`函数在一段设定好的历史时间段内模拟交易策略的运行，生成交易信号，使用历史价格进行模拟交易，生成交易结果，计算评价指标，并以可视化形式输出为图表。"
 msgstr ""
+"La création de stratégies de trading, le backtest des résultats de trading "
+"des stratégies de trading à l'aide de données historiques et l'évaluation "
+"des résultats de trading sont l'une des fonctions principales de qteasy. "
+"qteasy résume une série de stratégies de trading via un objet trader "
+"(Operator) et simule le fonctionnement des stratégies de trading au cours "
+"d'une période historique définie à l'aide de la fonction qt.run(), générant "
+"des signaux de trading, simulant le trading à l'aide de prix historiques, "
+"générant des résultats de trading, calculant des indicateurs d'évaluation et"
+" les affichant sous forme visuelle sous forme de graphiques."
 
 #: ../../source/references/3-back-test-strategy.md:24
 msgid "本章节以一个最常见的基金择时投资策略为例子，演示了以下内容："
 msgstr ""
+"Voici un exemple de stratégie d’investissement commune en matière de timing "
+"de financement, démontrant le contenu suivant :"
 
 #: ../../source/references/3-back-test-strategy.md:25
 msgid "创建一个简单的dma择时投资策略，创建一个交易员对象使用这个策略，演示如何修改、添加策略"
 msgstr ""
+"Créez une stratégie d'investissement de timing DMA simple, créez un objet "
+"trader en utilisant cette stratégie et montrez comment modifier et ajouter "
+"des stratégies"
 
 #: ../../source/references/3-back-test-strategy.md:26
 msgid "通过`qt.configure()`设置相关的环境变量，使用过去10年的沪深300指数历史数据，回测策略表现"
 msgstr ""
+"Avec `qt.configure()` définissez les variables d'environnement pertinentes, "
+"utilisez les données historiques de l'indice CSI 300 des 10 dernières années"
+" pour backtester les performances de la stratégie"
 
 #: ../../source/references/3-back-test-strategy.md:27
 msgid "通过对过去10年左右的沪深300指数历史数据，对策略进行参数寻优，最终演示寻优后的结果"
 msgstr ""
+"Optimiser les paramètres de la stratégie à l'aide des données historiques de"
+" l'indice CSI 300 des 10 dernières années, et enfin démontrer les résultats "
+"après optimisation"
 
 #: ../../source/references/3-back-test-strategy.md:29
 msgid "首先我们导入qteasy模块 为了在线打印图表，使用`matplotlib inline`设置图表打印模式为在线打印"
 msgstr ""
+"Nous importons d’abord le module qteasy. Pour imprimer des graphiques en "
+"ligne, utilisez `matplotlib inline` pour définir le mode d'impression des "
+"graphiques sur l'impression en ligne."
 
 #: ../../source/references/3-back-test-strategy.md:33
 msgid "创建Strategy对象和Operator对象"
-msgstr ""
+msgstr "Créer des objets Stratégie et Operator"
 
 #: ../../source/references/3-back-test-strategy.md:34
 msgid "`qteasy`中的每一个交易策略都被定义为交易策略（`Strategy`）对象。每个交易对象包含了一系列的交易规则，这些规则包括三个方面："
 msgstr ""
+"Chaque stratégie de trading dans qteasy est définie comme un objet de "
+"stratégie de trading (Strategy). Chaque objet de trading contient une série "
+"de règles de trading, qui comprennent trois aspects :"
 
 #: ../../source/references/3-back-test-strategy.md:35
 msgid "**策略运行规则**，包括策略运行的频率，所使用的历史数据类型，历史数据窗口长度，定义了策略如何运行以及如何使用历史数据"
 msgstr ""
+"**Les règles d'exécution de la stratégie** incluent la fréquence d'exécution"
+" de la stratégie, le type de données historiques utilisées et la longueur de"
+" la fenêtre des données historiques, qui définissent le fonctionnement de la"
+" stratégie et la manière d'utiliser les données historiques."
 
 #: ../../source/references/3-back-test-strategy.md:36
 msgid "**信号生成规则**，交易信号的生成规则，即如何根据相关历史数据生成何种交易信号，这是交易策略的核心"
 msgstr ""
+"**Règles de génération de signaux** Les règles de génération de signaux de "
+"trading, c'est-à-dire comment générer quel type de signaux de trading en "
+"fonction des données historiques pertinentes, qui constituent le cœur de la "
+"stratégie de trading"
 
 #: ../../source/references/3-back-test-strategy.md:37
 msgid "**交易信号类型**，交易信号的不同类型决定了模拟交易模块如何处理交易信号"
 msgstr ""
+"**Types de signaux de trading** Les différents types de signaux de trading "
+"déterminent la manière dont le module de trading de simulation traite les "
+"signaux de trading"
 
 #: ../../source/references/3-back-test-strategy.md:39
 msgid ""
 "在`qteasy`中，交易策略是由交易员对象（`Operator`）执行的，同一时间只能有一个`Operator`对象在运行，但是同一个交易员可以同时执行一个或多个交易策略，这些交易策略可以针对同一个投资组合进行交易，用户可以定义特定的“混合”方法，把多个简单交易策略混合成为一个复杂交易策略运行。"
 msgstr ""
+"Dans qteasy, les stratégies de trading sont exécutées par l'objet trader "
+"(Operator). Dans le même temps, un seul objet Operator peut être exécuté, "
+"mais le même trader peut exécuter une ou plusieurs stratégies de trading "
+"simultanément. Ces stratégies de trading peuvent négocier sur le même "
+"portefeuille, et les utilisateurs peuvent définir des méthodes de « mixage »"
+" spécifiques pour combiner plusieurs stratégies de trading simples en une "
+"stratégie de trading complexe."
 
 #: ../../source/references/3-back-test-strategy.md:41
 msgid "创建Strategy对象"
-msgstr ""
+msgstr "Créer un objet stratégie"
 
 #: ../../source/references/3-back-test-strategy.md:43
 msgid "创建`Strategy`对象的最简单方法是使用`qt.built_in`模块, 也可以在创建`Operator`对象的时候同时创建。"
 msgstr ""
+"La création d'un objet Strategy est plus simple en utilisant le module "
+"qt.built_in, et il peut également être créé lors de la création de l'objet "
+"Operator."
 
 #: ../../source/references/3-back-test-strategy.md:69
 msgid "从上面的输出可以看到这个交易策略的基本信息。除了名称、描述以外，比较重要的信息包括："
 msgstr ""
+"Nous pouvons voir les informations de base de cette stratégie de trading à "
+"partir du résultat. En plus du nom et de la description, les informations "
+"importantes comprennent :"
 
 #: ../../source/references/3-back-test-strategy.md:71
 msgid ""
 "**策略参数 Strategy "
 "Parameter**。策略参数是策略运行过程中所需的外部参数，根据策略规则的不同，策略使用的参数也不同，这些参数对策略的运行过程产生影响，不同的参数会影响策略的输出。例如，在双均线则时策略中，长均线的计算周期和短均线的计算周期就是两个策略参数。"
 msgstr ""
+"**Paramètre de stratégie**. Le paramètre de stratégie est le paramètre "
+"externe requis lors du fonctionnement de la stratégie. Selon les différentes"
+" règles de stratégie, les paramètres utilisés par la stratégie sont "
+"également différents. Ces paramètres affectent le fonctionnement de la "
+"stratégie, et différents paramètres affectent le résultat de la stratégie. "
+"Par exemple, dans une stratégie à double moyenne mobile, la période de "
+"calcul de la moyenne mobile longue et la période de calcul de la moyenne "
+"mobile courte sont deux paramètres de stratégie."
 
 #: ../../source/references/3-back-test-strategy.md:72
 msgid ""
 "**参数类型/范围 Parameter Types / Range**: "
 "不同的策略参数会极大地影响一个策略的最终结果，设置好参数的取值范围和类型之后，qteasy可以通过不同方法在参数空间内搜索最佳参数，使策略的性能达到最佳。"
 msgstr ""
+"**Types/Plage de paramètres** : Différents paramètres de stratégie peuvent "
+"grandement affecter le résultat final d'une stratégie. Après avoir défini la"
+" plage de valeurs et le type de paramètres, qteasy peut rechercher les "
+"meilleurs paramètres dans l'espace des paramètres via différentes méthodes "
+"pour optimiser les performances de la stratégie."
 
 #: ../../source/references/3-back-test-strategy.md:73
 msgid ""
 "**策略数据频率和运行频率 Data Frequcney / Sample "
 "Frequency**。策略运行的频率以及所需数据的频率，例如每周执行一次，每月执行一次或每分钟执行一次等等，一般来说数据频率与执行频率相关"
 msgstr ""
+"**Fréquence des données de stratégie / Fréquence d'échantillonnage**. La "
+"fréquence de fonctionnement de la stratégie et la fréquence des données "
+"requises, par exemple une fois par semaine, une fois par mois ou une fois "
+"par minute, etc. De manière générale, la fréquence des données est liée à la"
+" fréquence d'exécution."
 
 #: ../../source/references/3-back-test-strategy.md:74
 msgid "**数据类型 Data Types**：运行策略所需要读取的历史数据类型。对DMA策略来说，仅需要收盘价即可。"
 msgstr ""
+"**Types de données** : types de données historiques requis pour exécuter la "
+"stratégie. Pour la stratégie DMA, seul le cours de clôture est nécessaire."
 
 #: ../../source/references/3-back-test-strategy.md:76
 msgid ""
 "也要查看所有的内置策略，可以使用qt.built_ins()函数，如果不给出函数的参数，则会显示所有内置策略的列表，如果给出参数，则会显示指定内置策略的详细信息。"
 " 例如："
 msgstr ""
+"Si vous souhaitez voir toutes les stratégies intégrées, vous pouvez utiliser"
+" la fonction qt.built_ins(). Si vous ne donnez pas de paramètres à la "
+"fonction, elle affichera une liste de toutes les stratégies intégrées. Si "
+"vous donnez des paramètres, des informations détaillées sur la stratégie "
+"intégrée spécifiée seront affichées. Par exemple:"
 
 #: ../../source/references/3-back-test-strategy.md:82
 msgid "得到："
-msgstr ""
+msgstr "Résultat:"
 
 #: ../../source/references/3-back-test-strategy.md:106
 msgid "更多关于内置策略的函数包括："
-msgstr ""
+msgstr "D'autres fonctions de stratégie intégrées incluent :"
 
 #: ../../source/references/3-back-test-strategy.md:108
 msgid "`qt.built_ins(stg_id=None)`"
@@ -165,6 +265,8 @@ msgstr "`qt.built_ins(stg_id=None)`"
 #: ../../source/references/3-back-test-strategy.md:109
 msgid "如果stg_id=None，显示所有内置策略的列表，否则显示指定内置策略的详细信息"
 msgstr ""
+"Si stg_id=None, affiche une liste de toutes les stratégies intégrées, sinon "
+"affiche des informations détaillées sur la stratégie intégrée spécifiée."
 
 #: ../../source/references/3-back-test-strategy.md:110
 msgid "`qt.built_in_list(stg_id=None)`"
@@ -174,6 +276,8 @@ msgstr "`qt.built_in_list(stg_id=None)`"
 #: ../../source/references/3-back-test-strategy.md:113
 msgid "如果stg_id=None，返回所有内置策略的列表，否则返回指定内置策略的详细信息"
 msgstr ""
+"Si stg_id=None, renvoie une liste de toutes les stratégies intégrées, sinon "
+"renvoie des informations détaillées sur la stratégie intégrée spécifiée."
 
 #: ../../source/references/3-back-test-strategy.md:112
 msgid "`qt.built_in_strategies(stg_id=None)`"
@@ -186,16 +290,22 @@ msgstr "`qt.get_built_in_strategy(stg_id)`"
 #: ../../source/references/3-back-test-strategy.md:115
 msgid "根据给出的内置策略ID，返回内置策略对象"
 msgstr ""
+"Selon l'ID de stratégie intégré donné, renvoie l'objet de stratégie intégré."
 
 #: ../../source/references/3-back-test-strategy.md:117
 msgid "创建Operator对象"
-msgstr ""
+msgstr "Créer un objet Operator"
 
 #: ../../source/references/3-back-test-strategy.md:119
 msgid ""
 "使用`qt.Operator()`可以创建`Operator`对象。 "
 "创建一个Operator对象后，所有的交易策略都由交易员对象来负责运行。创建交易员对象时可以指定交易信号的处理方式以及交易运行的方式："
 msgstr ""
+"La création d'un objet `Operator` peut être effectuée en utilisant "
+"`qt.Operator()`. Après avoir créé un objet Operator, toutes les stratégies "
+"de trading sont exécutées par l'objet trader. Lors de la création de l'objet"
+" trader, vous pouvez spécifier comment gérer les signaux de trading et "
+"comment exécuter le trading :"
 
 #: ../../source/references/3-back-test-strategy.md:122
 msgid "`qt.Operator(strategies=None, signal_type=None, op_type=None)`"
@@ -206,63 +316,128 @@ msgid ""
 "`strategies`: "
 "交易员对象中的交易策略，可以是一个或多个交易策略，也可以是一个交易策略的列表。如果不指定交易策略，则创建一个空的交易员对象，交易策略可以事后添加或删除。一旦添加了交易策略，交易员对象会为每一个交易策略赋予一个唯一的ID，这个ID可以用来引用这个交易策略。同时，交易员对象会根据策略的运行频率和运行时机，自动为每一个交易策略分配一个运行时机，只有在运行时机到来时，交易员对象才会执行这个交易策略，生成交易信号。"
 msgstr ""
+"`strategies` : Les stratégies de trading dans l'objet trader peuvent être "
+"une ou plusieurs stratégies de trading, ou une liste de stratégies de "
+"trading. Si aucune stratégie de trading n'est spécifiée, un objet trader "
+"vide est créé et la stratégie de trading peut être ajoutée ou supprimée "
+"ultérieurement. Une fois qu'une stratégie de trading est ajoutée, l'objet "
+"trader attribue un identifiant unique à chaque stratégie de trading, qui "
+"peut être utilisé pour référencer cette stratégie de trading. Dans le même "
+"temps, l'objet trader attribuera automatiquement un timing de fonctionnement"
+" à chaque stratégie de trading en fonction de la fréquence de fonctionnement"
+" et du timing de la stratégie. Ce n'est que lorsque le moment de "
+"fonctionnement arrivera que l'objet trader exécutera cette stratégie de "
+"trading et générera des signaux de trading."
 
 #: ../../source/references/3-back-test-strategy.md:125
 msgid ""
 "`signal_type`: "
 "交易信号的类型，可以是`'pt'`，`'ps'`或者`'vs'`，默认`'pt'`，分别代表目标持仓比例信号，百分比交易信号和数量交易信号。不同的交易信号类型决定了交易员对象如何处理交易信号，以及交易员对象如何将多个交易策略的交易信号混合成为一个交易信号。"
 msgstr ""
+"`signal_type` : Le type de signal de trading peut être `'pt'`, `'ps'` ou "
+"`'vs'`, par défaut `'pt'`, qui représente respectivement les signaux de "
+"ratio de détention cible, les signaux de trading en pourcentage et les "
+"signaux de trading de quantité. Différents types de signaux de trading "
+"déterminent la manière dont l'objet trader traite les signaux de trading et "
+"comment l'objet trader mélange les signaux de trading de plusieurs "
+"stratégies de trading en un seul signal de trading."
 
 #: ../../source/references/3-back-test-strategy.md:126
 msgid ""
 "`op_type`: "
 "交易员对象的运行模式，可以是`'batch'`或者`'realtime'`，默认`'batch'`，分别代表批量运行模式和实时运行模式。在批量运行模式下，交易员对象会在回测或者优化模式下，预先生成交易信号，再批量进行模拟交易，运行速度较快。在实时运行模式下，交易员对象会生成交易信号立即模拟交易，产生模拟交易结果后，再进行下一次交易信号生成，适用于实盘交易运行模式，或特殊情况下的回测模式。"
 msgstr ""
+"`op_type` : Le mode de fonctionnement de l'objet trader peut être `'batch'` "
+"ou `'realtime'`, par défaut `'batch'`, qui représente respectivement le mode"
+" de fonctionnement par lots et le mode de fonctionnement en temps réel. En "
+"mode de fonctionnement par lots, l'objet trader générera à l'avance des "
+"signaux de trading en mode backtesting ou optimisation, puis effectuera un "
+"trading simulé par lots, ce qui est plus rapide. En mode de fonctionnement "
+"en temps réel, l'objet trader générera des signaux de trading et simulera "
+"immédiatement le trading. Après avoir généré des résultats de trading "
+"simulés, il générera le prochain signal de trading, adapté au mode "
+"d'opération de trading réel ou au mode de backtesting spécial."
 
 #: ../../source/references/3-back-test-strategy.md:128
 msgid "对于qteasy来说，交易策略的交易信号和股票/基金的交易订单是两个不同的概念。"
 msgstr ""
+"Pour qteasy, les signaux de trading des stratégies de trading et les ordres "
+"de trading d'actions/fonds sont deux concepts différents."
 
 #: ../../source/references/3-back-test-strategy.md:130
 msgid "所有的交易策略都是基于历史数据生成的交易信号，而交易员对象则根据交易信号生成交易订单，然后模拟交易员的交易行为，最终生成交易结果。"
 msgstr ""
+"Toutes les stratégies de trading sont basées sur des données historiques "
+"pour générer des signaux de trading, tandis que l'objet trader génère des "
+"ordres de trading basés sur des signaux de trading, simulant le comportement"
+" de trading du trader et générant finalement des résultats de trading."
 
 #: ../../source/references/3-back-test-strategy.md:133
 msgid "策略的三种信号类型"
-msgstr ""
+msgstr "Trois types de signaux stratégiques"
 
 #: ../../source/references/3-back-test-strategy.md:135
 msgid ""
 "在qteasy中，交易信号是一个浮点数，同一个交易信号可以代表不同的含义，从而被交易员对象解读为不同的交易订单。交易信号的含义由交易员对象的信号类型决定，交易员对象的信号类型可以是`'pt'`，`'ps'`或者`'vs'`，分别代表目标持仓比例信号，百分比交易信号和数量交易信号。"
 msgstr ""
+"Dans qteasy, les signaux de trading sont des nombres à virgule flottante, et"
+" le même signal de trading peut représenter différentes significations, qui "
+"sont interprétées par l'objet trader comme différents ordres de trading. La "
+"signification du signal de trading est déterminée par le type de signal de "
+"l'objet trader, qui peut être `'pt'`, `'ps'` ou `'vs'`, représentant "
+"respectivement les signaux de ratio de détention cible, les signaux de "
+"trading en pourcentage et les signaux de trading en quantité."
 
 #: ../../source/references/3-back-test-strategy.md:137
 msgid "交易信号的类型包括三类："
-msgstr ""
+msgstr "Il existe trois types de signaux de trading :"
 
 #: ../../source/references/3-back-test-strategy.md:138
 msgid ""
 "**PT**: "
 "此时交易信号代表目标持仓比例，也就是说持有的股票的价值占总资产的比例，例如当前总资产为100万元时，0.2代表控制当前某股票或基金的持有数量，使其市值为100万元的20%也就是20万元。在这种情况下，买入或卖出股票的数量取决于当前持有的股票的数量，如果当前持有的股票数量为0，则买入20万元的股票，如果当前持有的股票价值为30万元，则需要卖出10万元。"
 msgstr ""
+"**PT** : Ce signal de trading représente le taux de détention cible, ce qui "
+"signifie que la valeur des actions détenues représente la proportion de "
+"l'actif total. Par exemple, lorsque l'actif total actuel est de 1 million de"
+" yuans, 0,2 signifie contrôler la quantité détenue d'une certaine action ou "
+"d'un fonds pour que sa valeur marchande soit de 20 % de 1 million de yuans, "
+"soit 200 000 yuans. Dans ce cas, le nombre d’actions achetées ou vendues "
+"dépend du nombre actuel d’actions détenues. Si le nombre actuel d’actions "
+"détenues est de 0, alors achetez pour 200 000 yuans d’actions. Si la valeur "
+"actuelle des actions détenues est de 300 000 yuans, vendez-en pour 100 000 "
+"yuans."
 
 #: ../../source/references/3-back-test-strategy.md:139
 msgid ""
 "**PS**: "
 "此时交易信号直接代表买卖比例，在这种情况下，买入或卖出股票的数量与当前持有的股票的数量无关，只与总资产有关。如果总资产为100万元时，0.2代表买入20万元的股票。"
 msgstr ""
+"**PS** : Ce signal de trading représente directement le ratio achat/vente. "
+"Dans ce cas, le nombre d’actions achetées ou vendues n’est pas lié au nombre"
+" actuel d’actions détenues, mais uniquement à l’actif total. Si l'actif "
+"total est de 1 million de yuans, 0,2 signifie acheter pour 200 000 yuans "
+"d'actions."
 
 #: ../../source/references/3-back-test-strategy.md:140
 msgid "**VS**: 此时交易信号直接代表买卖数量，在这种情况下，买入或卖出股票的数量与总资产或持股数量无关。2000代表买入2000股的股票。"
 msgstr ""
+"**VS** : Dans ce cas, le signal de trading représente directement la "
+"quantité d'achat/vente. Dans ce cas, le nombre d’actions achetées ou vendues"
+" n’a aucun rapport avec le total de l’actif ou le nombre d’actions détenues."
+" 2000 signifie acheter 2000 actions."
 
 #: ../../source/references/3-back-test-strategy.md:142
 msgid "不仅如此，如果根据交易员操作的账户类型不同（如股票账户或期货账户），生成的交易订单也会不同。具体的说明如下表："
 msgstr ""
+"De plus, si les ordres de trading générés diffèrent en fonction du type de "
+"compte géré par le trader (comme un compte d'actions ou un compte à terme), "
+"les ordres de trading générés différeront également. L'explication "
+"spécifique est présentée dans le tableau suivant :"
 
 #: ../../source/references/3-back-test-strategy.md:279
 msgid "交易信号的混合"
-msgstr ""
+msgstr "Mélanger les signaux de trading"
 
 #: ../../source/references/3-back-test-strategy.md:281
 msgid ""
@@ -270,48 +445,79 @@ msgid ""
 "也能产生无限多组同类型的交易策略。为了节省交易回测时的计算开销，避免冲突的交易信号或重复的交易信号占用计算资源，同时也 "
 "为了增加交易信号的灵活度，应该将所有交易信号首先混合成一组，再送入回测程序进行回测。"
 msgstr ""
+"Bien que le même objet Operator ne puisse générer qu'un seul type de signal "
+"à la fois, puisque l'objet Operator peut accueillir un nombre infini de "
+"stratégies de trading différentes, il peut également produire un nombre "
+"infini d'ensembles du même type de stratégies de trading. Pour économiser la"
+" charge de calcul lors du backtesting de trading, éviter que des signaux de "
+"trading contradictoires ou en double n'occupent des ressources informatiques"
+" et pour augmenter la flexibilité des signaux de trading, tous les signaux "
+"de trading doivent être mélangés dans un ensemble avant d'être envoyés au "
+"programme de backtesting pour test."
 
 #: ../../source/references/3-back-test-strategy.md:285
 msgid ""
 "不过，在一个Operator对象中，不同策略生成的交易信号可能运行的交易价格是不同的，例如，某些策略生成开盘价交易信号，而另一 "
 "些策略生成的是收盘价交易策略，那么不同的交易价格信号当然不应该混合。但除此之外，只要是交易价格相同的信号，都应该全部混合。"
 msgstr ""
+"Cependant, dans un objet Operator, les signaux de trading générés par "
+"différentes stratégies peuvent s'exécuter à des prix de trading différents. "
+"Par exemple, certaines stratégies génèrent des signaux de trading sur le "
+"prix d’ouverture, tandis que d’autres génèrent des stratégies de trading sur"
+" le prix de clôture. Dans ce cas, les différents signaux de prix de "
+"négociation ne doivent pas être mélangés. Mais à part cela, tant que les "
+"prix de négociation sont les mêmes, tous les signaux devraient être mitigés."
 
 #: ../../source/references/3-back-test-strategy.md:288
 msgid ""
 "交易信号的混合即交易信号的各种运算或函数，从简单的逻辑运算、加减运算一直到复杂的自定义函数，只要能够应用于一个ndarray的 "
 "函数，理论上都可以用于混合交易信号，只要最终输出的交易信号有意义即可。"
 msgstr ""
+"Le mélange de signaux de trading signifie diverses opérations ou fonctions "
+"de signaux de trading, depuis les opérations logiques simples et les "
+"opérations d'addition/soustraction jusqu'aux fonctions personnalisées "
+"complexes. Tant qu'ils peuvent être appliqués à une fonction ndarray, ils "
+"peuvent théoriquement être utilisés pour mélanger des signaux de trading, à "
+"condition que le signal de trading final soit significatif."
 
 #: ../../source/references/3-back-test-strategy.md:291
 msgid ""
 "交易信号的混合基于一系列事先定义的运算和函数，这些函数或运算都被称为\"原子函数\"或\"算子\"，用户利用这些\"算子\"来操作 "
 "Operator对象生成的交易信号，并将多个交易信号组变换成一个唯一的交易信号组，同时保持其形状不变，数字有意义。"
 msgstr ""
+"Le mélange de signaux est basé sur une série d'opérations et de fonctions "
+"prédéfinies, appelées « fonctions atomiques » ou « opérateurs ». Les "
+"utilisateurs utilisent ces « opérateurs » pour manipuler les signaux de "
+"trading générés par l'objet Operator et transformer plusieurs ensembles de "
+"signaux de trading en un ensemble unique de signaux de trading tout en "
+"conservant leur forme et leurs nombres significatifs."
 
 #: ../../source/references/3-back-test-strategy.md:294
 msgid "交易信号的混合是由一个混合表达式`blender`来确定的，例如`s0 and (s1 + s2) * avg(s3, s4)`"
 msgstr ""
+"Les signaux sont fusionnés par une expression de fusion `blender`, par "
+"exemple, `s0 and (s1 + s2) * avg(s3, s4)`"
 
 #: ../../source/references/3-back-test-strategy.md:296
 msgid "`blender`表达式中支持的函数如下："
 msgstr ""
+"Les expressions `blender` prennent en charge les fonctions suivantes :"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "元素"
-msgstr ""
+msgstr "Élément"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "示例"
-msgstr ""
+msgstr "Exemple"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "说明"
-msgstr ""
+msgstr "Remarque"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "策略序号"
-msgstr ""
+msgstr "Indice de stratégie"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`s1`"
@@ -320,10 +526,13 @@ msgstr "`s1`"
 #: ../../source/references/3-back-test-strategy.md
 msgid "以s开头，数字结尾的字符串，数字为`Operator`中的策略的序号，代表这个策略生成的交易信号"
 msgstr ""
+"Une chaîne commençant par s et se terminant par un nombre, où le nombre est "
+"le numéro de séquence de la stratégie dans `Operator`, représentant le "
+"signal de trading généré par cette stratégie"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "数字"
-msgstr ""
+msgstr "Chiffres"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`-1.35`"
@@ -332,10 +541,11 @@ msgstr "`-1.35`"
 #: ../../source/references/3-back-test-strategy.md
 msgid "任何合法的数字，参与表达式运算的数字"
 msgstr ""
+"Tout nombre valide, un nombre qui participe aux opérations d'expression"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "运算符"
-msgstr ""
+msgstr "Opérateurs"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`+`"
@@ -343,11 +553,11 @@ msgstr "`+`"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "包括`'+-*/^'`等四则运算符"
-msgstr ""
+msgstr "Comprend `'+-*/^'` et quatre autres opérateurs arithmétiques"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "逻辑运算符"
-msgstr ""
+msgstr "Opérateurs logiques"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`and`"
@@ -356,10 +566,12 @@ msgstr "`and`"
 #: ../../source/references/3-back-test-strategy.md
 msgid "支持`'&|~'`以及`'and/or/not'`形式的逻辑运算符"
 msgstr ""
+"Prend en charge les opérateurs logiques sous des formes telles que `'&|~'` "
+"et `'and/or/not'`"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "函数"
-msgstr ""
+msgstr "Fonctions"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`sum()`"
@@ -368,10 +580,11 @@ msgstr "`sum()`"
 #: ../../source/references/3-back-test-strategy.md
 msgid "支持的函数参见后表"
 msgstr ""
+"Les fonctions prises en charge sont indiquées dans le tableau ci-dessous"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "括号"
-msgstr ""
+msgstr "Perenthèses"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "`()`"
@@ -379,7 +592,7 @@ msgstr "`()`"
 
 #: ../../source/references/3-back-test-strategy.md
 msgid "组合运算"
-msgstr ""
+msgstr "Opérations combinées"
 
 #: ../../source/references/3-back-test-strategy.md:307
 #, python-format
@@ -387,19 +600,27 @@ msgid ""
 "关于更多的混合表达式的例子，请参见`qteasy` [Tutorial 04 - "
 "使用内置交易策略](https://github.com/shepherdpp/qteasy/blob/master/tutorials/Tutorial%2004%20-%20使用内置交易策略.md)"
 msgstr ""
+"Pour plus d'exemples d'expressions de fusion, veuillez vous référer à "
+"`qteasy` [Tutoriel 04 - Utiliser des stratégies "
+"intégrées](../tutorials/4-built-in-strategies.md)"
 
 #: ../../source/references/3-back-test-strategy.md:323
 msgid ""
 "交易员对象是一个策略容器，在一个Operator对象中可以添加任意多个交易策略，同时，在Operator对象中，可以管理交易策略的混合方式(blender)，交易信号的处理方式以及交易运行的方式。"
 msgstr ""
+"L'objet Operator est un conteneur de stratégie, et n'importe quel nombre de "
+"stratégies de trading peut être ajoutée à un objet Operator. Dans le même "
+"temps, la méthode de mélange (blender), la méthode de traitement du signal "
+"de trading et la méthode d'opération de trading de la stratégie de trading "
+"peuvent être gérées dans l'objet Operator."
 
 #: ../../source/references/3-back-test-strategy.md:325
 msgid "常用的Operator属性及方法如下："
-msgstr ""
+msgstr "Les attributs et méthodes normaux Operator sont les suivants :"
 
 #: ../../source/references/3-back-test-strategy.md:327
 msgid "获取Operator对象的基本信息"
-msgstr ""
+msgstr "Obtenez des informations de base sur l'objet Operator"
 
 #: ../../source/references/3-back-test-strategy.md:329
 msgid "`op.info()`"
@@ -407,7 +628,7 @@ msgstr "`op.info()`"
 
 #: ../../source/references/3-back-test-strategy.md:330
 msgid "打印Operator对象的重要信息"
-msgstr ""
+msgstr "Imprimer les informations importantes de l'objet Operator"
 
 #: ../../source/references/3-back-test-strategy.md:332
 msgid "`op.strategies`"
@@ -416,6 +637,7 @@ msgstr "`op.strategies`"
 #: ../../source/references/3-back-test-strategy.md:333
 msgid "获取Operator对象中所有交易策略的清单"
 msgstr ""
+"Obtenez la liste de toutes les stratégies de trading dans l'objet Operator"
 
 #: ../../source/references/3-back-test-strategy.md:335
 msgid "`op.strategy_ids`"
@@ -424,6 +646,8 @@ msgstr "`op.strategy_ids`"
 #: ../../source/references/3-back-test-strategy.md:336
 msgid "获取Operator对象中所有交易策略的ID"
 msgstr ""
+"Obtenez les identifiants de toutes les stratégies de trading dans l'objet "
+"Operator"
 
 #: ../../source/references/3-back-test-strategy.md:338
 msgid "`op.strategy_count`"
@@ -431,7 +655,7 @@ msgstr "`op.strategy_count`"
 
 #: ../../source/references/3-back-test-strategy.md:339
 msgid "获取Operator对象中交易策略的数量"
-msgstr ""
+msgstr "Obtenez le nombre de stratégies de trading dans l'objet Operator"
 
 #: ../../source/references/3-back-test-strategy.md:341
 msgid "`op.signal_type`"
@@ -440,20 +664,34 @@ msgstr "`op.signal_type`"
 #: ../../source/references/3-back-test-strategy.md:342
 msgid "Operator对象的信号类型，代表交易信号的含义及处理方式："
 msgstr ""
+"Type de signal de l'objet Operator, représentant la signification et la "
+"méthode de traitement des signaux de trading :"
 
 #: ../../source/references/3-back-test-strategy.md:343
 msgid ""
 "**`pt`: "
 "目标持仓比例信号**，在这个模式下，交易员关注一个投资组合中各个成份股票的持仓比例，通过适时的买入和买出，维持各个成份股的持仓比例在一个目标值上；"
 msgstr ""
+"**'pt' : signal de ratio de détention cible**, dans ce mode, le trader se "
+"concentre sur le ratio de détention de chaque action composant un "
+"portefeuille. En achetant et en vendant en temps opportun, maintenez le "
+"ratio de détention de chaque action composante à une valeur cible ;"
 
 #: ../../source/references/3-back-test-strategy.md:344
 msgid "**`ps`: 百分比交易信号**，在这个模式下，交易员关注定时产生的比例交易信号，根据交易信号按比例买入或买出股票"
 msgstr ""
+"**'ps' : Pourcentage de signal de trading**, dans ce mode, le trader se "
+"concentre sur la proportion de signaux de trading générés à intervalles "
+"réguliers, achetant ou vendant des actions en fonction des signaux de "
+"trading proportionnellement"
 
 #: ../../source/references/3-back-test-strategy.md:345
 msgid "**`vs`: 数量交易信号**，在这个模式下，交易员关注定时产生的交易信号，按照交易信号买入或买出一定数量的股票"
 msgstr ""
+"**'vs' : signal de trading de quantité**, dans ce mode, le trader se "
+"concentre sur les signaux de trading générés à intervalles réguliers, "
+"achetant ou vendant un certain nombre d'actions en fonction des signaux de "
+"trading"
 
 #: ../../source/references/3-back-test-strategy.md:347
 msgid "`op.op_type`"
@@ -461,20 +699,27 @@ msgstr "`op.op_type`"
 
 #: ../../source/references/3-back-test-strategy.md:348
 msgid "Operator对象的运行模式："
-msgstr ""
+msgstr "Mode d'exécution de l'objet Operator :"
 
 #: ../../source/references/3-back-test-strategy.md:349
 msgid "`batch`: 批量运行模式，在回测模式或优化模式下，预先生成交易清单，再批量进行模拟交易，运行速度较快"
 msgstr ""
+"'batch' : mode de fonctionnement par lots, en mode backtesting ou "
+"optimisation, génère des listes de trading à l'avance, puis effectue des "
+"transactions simulées par lots, ce qui est plus rapide"
 
 #: ../../source/references/3-back-test-strategy.md:350
 msgid ""
 "`realtime`: 实时运行模式，生成交易信号立即模拟交易，产生模拟交易结果后，再进行下一次交易信号生成，适用于实时运行模式，或特殊情况下的回测模式"
 msgstr ""
+"« temps réel » : mode de fonctionnement en temps réel, génère des signaux de"
+" trading et simule immédiatement le trading. Après avoir généré des "
+"résultats de trading simulés, générez le signal de trading suivant, adapté "
+"au mode de fonctionnement en temps réel ou au mode de backtest spécial."
 
 #: ../../source/references/3-back-test-strategy.md:352
 msgid "获取交易策略"
-msgstr ""
+msgstr "Obtenez une stratégie de trading"
 
 #: ../../source/references/3-back-test-strategy.md:354
 msgid "`op.get_stg(stg_id)`"
@@ -483,10 +728,13 @@ msgstr "`op.get_stg(stg_id)`"
 #: ../../source/references/3-back-test-strategy.md:355
 msgid "通过策略ID获取策略对象，下面的方法效果相同，且可以通过数字序号来获取策略"
 msgstr ""
+"Obtenez l'objet de stratégie par ID de stratégie. Les méthodes suivantes ont"
+" le même effet et peuvent être utilisées pour obtenir une stratégie par "
+"séquence de nombres"
 
 #: ../../source/references/3-back-test-strategy.md:361
 msgid "添加或修改交易策略"
-msgstr ""
+msgstr "Ajouter ou modifier une stratégie de trading"
 
 #: ../../source/references/3-back-test-strategy.md:363
 msgid "`op.add_strategy(stg, **kwargs)`"
@@ -495,6 +743,8 @@ msgstr "`op.add_strategy(stg, **kwargs)`"
 #: ../../source/references/3-back-test-strategy.md:364
 msgid "添加一个策略到Operator，添加策略的同时可以同时设置策略参数"
 msgstr ""
+"Ajoutez une stratégie à Operator et définissez les paramètres de stratégie "
+"en même temps"
 
 #: ../../source/references/3-back-test-strategy.md:366
 msgid "`op.add_strategies(strategies)`"
@@ -503,6 +753,8 @@ msgstr "`op.add_strategies(strategies)`"
 #: ../../source/references/3-back-test-strategy.md:367
 msgid "批量添加一系列策略到Operator，添加的同时不能同时设置策略参数"
 msgstr ""
+"Ajoutez une série de stratégies à Operator par lots et ne pouvez pas définir"
+" les paramètres de stratégie en même temps"
 
 #: ../../source/references/3-back-test-strategy.md:369
 msgid "`op.remove_strategy(id_or_pos=None)`"
@@ -510,7 +762,7 @@ msgstr "`op.remove_strategy(id_or_pos=None)`"
 
 #: ../../source/references/3-back-test-strategy.md:370
 msgid "从Operator中删除一个策略"
-msgstr ""
+msgstr "Supprimer une stratégie de Operator"
 
 #: ../../source/references/3-back-test-strategy.md:372
 msgid "`op.clear_strategies()`"
@@ -518,11 +770,11 @@ msgstr "`op.clear_strategies()`"
 
 #: ../../source/references/3-back-test-strategy.md:373
 msgid "清除Operator中的所有交易策略"
-msgstr ""
+msgstr "Supprimez toutes les stratégies de trading dans Operator"
 
 #: ../../source/references/3-back-test-strategy.md:375
 msgid "设置策略参数或Operator参数"
-msgstr ""
+msgstr "Définir les paramètres de stratégie ou les paramètres Operator"
 
 #: ../../source/references/3-back-test-strategy.md:377
 msgid ""
@@ -537,6 +789,8 @@ msgstr ""
 #: ../../source/references/3-back-test-strategy.md:378
 msgid "指定一个交易策略的ID，设置这个交易策略的策略参数或其他属性"
 msgstr ""
+"Étant donné un identifiant de stratégie de trading, définissez les "
+"paramètres de stratégie ou d'autres attributs de cette stratégie de trading"
 
 #: ../../source/references/3-back-test-strategy.md:380
 msgid "`op.set_blender(price_type=None, blender=None)`"
@@ -546,10 +800,18 @@ msgstr "`op.set_blender(price_type=None, blender=None)`"
 msgid ""
 "设置交易策略的混合方式。当Operator中有多个交易策略时，每个交易策略分别运行生成多组交易信号，再按照用户定义的规则混合后输出一组交易信号，用于交易"
 msgstr ""
+"Définissez la méthode de mélange de la stratégie de trading. Lorsqu'il "
+"existe plusieurs stratégies de trading dans Operator, chaque stratégie de "
+"trading s'exécute séparément pour générer plusieurs ensembles de signaux de "
+"trading, puis génère un ensemble de signaux de trading selon les règles de "
+"trading définies par l'utilisateur."
 
 #: ../../source/references/3-back-test-strategy.md:383
 msgid "我们可以用下面的代码将刚创建的DMA策略加入到Operator中去，并设置必要的策略参数"
 msgstr ""
+"Nous pouvons utiliser le code suivant pour ajouter la stratégie DMA "
+"nouvellement créée à Operator et définir les paramètres de stratégie "
+"nécessaires"
 
 #: ../../source/references/3-back-test-strategy.md:385
 msgid ""
@@ -557,20 +819,35 @@ msgid ""
 "通过设置策略的`opt_tag`可以控制策略是否参与优化，而`par_range`参数定义了策略优化时需要用到的参数空间 "
 "在此时我们并不知道对于过去15年的沪深300指数来说，最优的DMA择时参数是什么，因此可以输入几个随机的参数，进行一次回测，看看结果如何"
 msgstr ""
+"Tous les réglages de paramètres peuvent être effectués à l'aide de la "
+"méthode `operator.set_parameter`, et plusieurs paramètres peuvent être "
+"transmis en même temps. En définissant le `opt_tag` de la stratégie, vous "
+"pouvez contrôler si la stratégie participe à l'optimisation, tandis que le "
+"paramètre `par_range` définit l'espace des paramètres nécessaire à "
+"l'optimisation de la stratégie. À l'heure actuelle, nous ne savons pas quels"
+" sont les paramètres de timing DMA optimaux pour les 15 dernières années de "
+"l'indice CSI 300, nous pouvons donc saisir quelques paramètres aléatoires "
+"pour effectuer un backtest et voir comment cela se passe."
 
 #: ../../source/references/3-back-test-strategy.md:430
 msgid "配置qteasy的回测参数"
-msgstr ""
+msgstr "Configurer les paramètres de backtesting de qteasy"
 
 #: ../../source/references/3-back-test-strategy.md:432
 msgid "Operator对象创建好并添加策略后就可以开始进行回测了"
 msgstr ""
+"Le backtest peut commencer après la création de l'objet Operator et l'ajout "
+"de stratégies"
 
 #: ../../source/references/3-back-test-strategy.md:434
 msgid ""
 "qteasy提供了丰富的环境参数以控制回测的具体过程 "
 "所有的环境参数变量值都可以通过`qt.Configuration()`查看，并通过`qt.Configure()`来设置。"
 msgstr ""
+"qteasy fournit des paramètres d'environnement riches pour contrôler le "
+"processus spécifique de backtesting. Toutes les valeurs des variables des "
+"paramètres d'environnement peuvent être visualisées via `qt.Configuration()`"
+" et définies via `qt.Configure()`."
 
 #: ../../source/references/3-back-test-strategy.md:437
 msgid "`qt.configuration()`"
@@ -578,7 +855,7 @@ msgstr "`qt.configuration()`"
 
 #: ../../source/references/3-back-test-strategy.md:438
 msgid "查看qteasy运行环境变量"
-msgstr ""
+msgstr "Vérifiez les variables d'environnement en cours d'exécution qteasy"
 
 #: ../../source/references/3-back-test-strategy.md:440
 msgid "`qt.configure()`"
@@ -586,39 +863,42 @@ msgstr "`qt.configure()`"
 
 #: ../../source/references/3-back-test-strategy.md:441
 msgid "设置qteasy运行环境变量"
-msgstr ""
+msgstr "Définir les variables d'environnement d'exécution qteasy"
 
 #: ../../source/references/3-back-test-strategy.md:443
 msgid "与回测相关的主要环境变量参数包括："
 msgstr ""
+"Les paramètres des variables d'environnement liés au backtesting incluent :"
 
 #: ../../source/references/3-back-test-strategy.md:445
 msgid "回测交易的目标股票/指数"
-msgstr ""
+msgstr "Actions/indice cibles pour le backtesting"
 
 #: ../../source/references/3-back-test-strategy.md:446
 msgid "回测交易的起止时间段"
-msgstr ""
+msgstr "Période de début et de fin du backtesting"
 
 #: ../../source/references/3-back-test-strategy.md:447
 msgid "回测交易的初始投资金额"
-msgstr ""
+msgstr "Montant de l’investissement initial pour le backtesting"
 
 #: ../../source/references/3-back-test-strategy.md:448
 msgid "回测交易的交易费用和交易规则"
-msgstr ""
+msgstr "Frais de négociation et règles de négociation pour le backtesting"
 
 #: ../../source/references/3-back-test-strategy.md:449
 msgid "交易结果评价的基准指数"
-msgstr ""
+msgstr "Indice de référence pour évaluer les résultats de trading"
 
 #: ../../source/references/3-back-test-strategy.md:451
 msgid "以上所有回测交易参数都可以通过`qt.configure()`设置:"
 msgstr ""
+"Tous les paramètres de trading de backtesting ci-dessus peuvent être définis"
+" via `qt.configure()`"
 
 #: ../../source/references/3-back-test-strategy.md:469
 msgid "启动qteasy并开始运行Operator"
-msgstr ""
+msgstr "Démarrez qteasy et exécutez Operator"
 
 #: ../../source/references/3-back-test-strategy.md:471
 msgid "`qt.run(operator, **config)`"
@@ -627,99 +907,151 @@ msgstr "`qt.run(operator, **config)`"
 #: ../../source/references/3-back-test-strategy.md:472
 msgid "开始运行`Operator`，根据运行的mode，`qteasy`会进入到不同的运行模式，输出不同的结果："
 msgstr ""
+"Commencez à exécuter Operator. Selon le mode de fonctionnement, qteasy "
+"entrera dans différents modes de fonctionnement et produira différents "
+"résultats :"
 
 #: ../../source/references/3-back-test-strategy.md:474
 msgid ""
 "**mode 0 "
 "实时模式**：读取最近的（实时）数据，生成当前最新的交易信号。再此模式下，可以设置qteasy定期执行，定期读取最新数据，定期生成实时交易信号"
 msgstr ""
+"**mode 0 Mode temps réel** : Lisez les données les plus récentes (en temps "
+"réel) et générez les derniers signaux de trading. Dans ce mode, vous pouvez "
+"configurer qteasy pour qu'il s'exécute périodiquement, lise périodiquement "
+"les dernières données et génère périodiquement des signaux de trading en "
+"temps réel."
 
 #: ../../source/references/3-back-test-strategy.md:475
 msgid "**mode 1 回测模式**：读取过去一段时间内的历史数据，使用该数据生成交易信号并模拟交易，输出模拟交易的结果"
 msgstr ""
+"**mode 1 Mode backtesting** : lisez les données historiques sur une période "
+"donnée, générez des signaux de trading à l'aide de ces données et simulez le"
+" trading pour afficher les résultats du trading simulé."
 
 #: ../../source/references/3-back-test-strategy.md:476
 msgid ""
 "**mode 2 优化模式**：读取过去一段时间内的历史数据，通过反复运行同一套交易策略但使用不同的参数组合，搜索在这段时间内表现最佳的策略参数"
 msgstr ""
+"**mode 2 Mode d'optimisation** : Lisez les données historiques sur une "
+"période de temps, exécutez à plusieurs reprises le même ensemble de "
+"stratégies de trading mais utilisez différentes combinaisons de paramètres "
+"pour rechercher les paramètres de stratégie les plus performants au cours de"
+" cette période."
 
 #: ../../source/references/3-back-test-strategy.md:478
 msgid ""
 "只要运行`qteasy.run(operator, "
 "**config)`就可以开始运行`Operator`了，其中`**config`是测试环境参数，在`qt.run()`中以参数形式传入的环境变量仅仅在本次运行中有效，但是在`qt.configure()`中设置的环境变量将一直有效，直到下次改变为止"
 msgstr ""
+"Operator peut être démarré en exécutant `qteasy.run(operator, **config)`, où"
+" `**config` est le paramètre d'environnement de test. Les variables "
+"d'environnement transmises en tant que paramètres dans qt.run() ne sont "
+"valides que pour cette exécution, mais les variables d'environnement "
+"définies dans qt.configure() resteront valides jusqu'à leur prochaine "
+"modification."
 
 #: ../../source/references/3-back-test-strategy.md:481
 msgid "回测最终资产为19万元，年化收益率只有4.83%，夏普率只有0.0783，收益率低于同期沪深300指数"
 msgstr ""
+"Les actifs finaux de backtesting sont de 190 000 yuans, le rendement "
+"annualisé n'est que de 4,83 %, le ratio de Sharpe n'est que de 0,0783 et le "
+"rendement est inférieur à celui de l'indice CSI 300 au cours de la même "
+"période."
 
 #: ../../source/references/3-back-test-strategy.md:488
 msgid "运行qteasy后，系统会自动读取历史数据，进行回测，完成结果评价并打印回测报告。"
 msgstr ""
+"Le système lira automatiquement les données historiques, effectuera des "
+"backtests, terminera l'évaluation des résultats et imprimera le rapport de "
+"backtesting après avoir exécuté qteasy."
 
 #: ../../source/references/3-back-test-strategy.md:490
 msgid "回测报告会包含以下信息："
-msgstr ""
+msgstr "Le rapport de backtesting comprendra les informations suivantes :"
 
 #: ../../source/references/3-back-test-strategy.md:492
 msgid "回测计算耗时"
-msgstr ""
+msgstr "Temps total nécessaire au backtesting"
 
 #: ../../source/references/3-back-test-strategy.md:493
 msgid "回测区间开始日期及结束日期、持续时间等信息"
 msgstr ""
+"Dates de début et de fin de l'intervalle de backtesting, durée et autres "
+"informations"
 
 #: ../../source/references/3-back-test-strategy.md:494
 msgid "交易统计信息：如买入次数、卖出次数，满仓比例，空仓比例、总交易费用等"
 msgstr ""
+"Statistiques de trading : telles que le nombre d'achats, le nombre de "
+"ventes, le ratio de positions complètes, le ratio de positions vides, les "
+"coûts totaux de trading, etc."
 
 #: ../../source/references/3-back-test-strategy.md:495
 msgid "收益信息：初始投资额，最终资产额，总收益率，年化收益率，基准总收益率，基准年化收益率，收益率的峰度和偏度"
 msgstr ""
+"Informations sur le rendement : montant de l'investissement initial, montant"
+" de l'actif final, taux de rendement total, taux de rendement annualisé, "
+"taux de rendement total de référence, taux de rendement annualisé de "
+"référence, kurtosis et asymétrie du taux de rendement."
 
 #: ../../source/references/3-back-test-strategy.md:496
 msgid "投资组合评价指标：Alpha，Beta、夏普率、信息比率、波动率以及最大回撤"
 msgstr ""
+"Indicateurs d'évaluation du portefeuille : Alpha, Bêta, ratio de Sharpe, "
+"ratio d'information, volatilité et drawdown maximum"
 
 #: ../../source/references/3-back-test-strategy.md:540
 msgid "除了回测报告以外，一张可视化图表也会被打印出来，显示整个回测过程的详细信息。"
 msgstr ""
+"À l'exception du rapport de backtesting, un graphique visuel sera également "
+"imprimé, montrant des informations détaillées sur l'ensemble du processus de"
+" backtesting."
 
 #: ../../source/references/3-back-test-strategy.md:542
 msgid "在这张信息图中，会显示以下信息："
 msgstr ""
+"Les informations suivantes seront affichées dans ce tableau d'informations :"
 
 #: ../../source/references/3-back-test-strategy.md:544
 msgid "整个回测历史的收益率曲线图（同时显示持仓区间、卖卖点、基准收益率曲线和最大回撤区间）"
 msgstr ""
+"Courbe de taux de retour de l'ensemble de l'historique de backtesting "
+"(indiquant la période de détention, les points d'achat/vente, la courbe de "
+"taux de retour de référence et la période de prélèvement maximale)"
 
 #: ../../source/references/3-back-test-strategy.md:545
 msgid "对数比例收益率曲线和基准收益率对比图"
-msgstr ""
+msgstr "Courbe de taux de retour et référence en échelle logarithmique"
 
 #: ../../source/references/3-back-test-strategy.md:546
 msgid "每日收益变动图"
-msgstr ""
+msgstr "Tableau de variation du taux de retour quotidien"
 
 #: ../../source/references/3-back-test-strategy.md:547
 msgid "滚动夏普率和alpha率变动图（投资组合盈利能力评价）"
 msgstr ""
+"Tableau de variation du ratio Rolling Sharpe et du taux alpha (évaluation de"
+" la rentabilité du portefeuille)"
 
 #: ../../source/references/3-back-test-strategy.md:548
 msgid "滚动波动率（Volatility）和Beta率变动图（投资组合风险评价）"
 msgstr ""
+"Tableau de volatilité du rooling et de variation du taux bêta (évaluation du"
+" risque du portefeuille)"
 
 #: ../../source/references/3-back-test-strategy.md:549
 msgid "历史回撤分析图（潜水图）"
-msgstr ""
+msgstr "Carte d'analyse du rabattement (carte sous-marine)"
 
 #: ../../source/references/3-back-test-strategy.md:550
 msgid "月度、年度收益率热力图和条形图"
 msgstr ""
+"Carte thermique et graphique à barres des taux de retour mensuels et annuels"
 
 #: ../../source/references/3-back-test-strategy.md:551
 msgid "月度收益率统计频率直方图"
-msgstr ""
+msgstr "Histogramme de fréquence statistique du taux de retour mensuel"
 
 #: ../../source/references/3-back-test-strategy.md:554
 msgid "![png](../tutorials/img/output_12_2.png)"
@@ -734,117 +1066,170 @@ msgstr "png"
 #: ../../source/references/3-back-test-strategy.md:556
 msgid "在`qteasy`模拟的交易过程中，可以设置丰富的参数，例如："
 msgstr ""
+"Un grand nombre de paramètres peuvent être définis dans le processus de "
+"trading simulé de `qteasy`, tels que :"
 
 #: ../../source/references/3-back-test-strategy.md:558
 msgid "投入资金的数量、日期、或者设置分批多次投入资金；"
 msgstr ""
+"Montant total des fonds investis, date ou date d'investissement par lots "
+"plusieurs fois ;"
 
 #: ../../source/references/3-back-test-strategy.md:559
 msgid "买入和卖出交易的费用、包括佣金费率、最低费用、固定费用、以及滑点。各种费率都可以针对买入和卖出分别设定"
 msgstr ""
+"Frais de négociation pour l'achat et la vente, y compris le taux de "
+"commission, les frais minimum, les frais fixes et le slippage. Différents "
+"taux peuvent être fixés séparément pour l'achat et la vente"
 
 #: ../../source/references/3-back-test-strategy.md:560
 msgid "买入和卖出交易的交割时间，也就是T+N日交割制度"
 msgstr ""
+"Délai de livraison des transactions d'achat et de vente, c'est-à-dire "
+"système de livraison T+N"
 
 #: ../../source/references/3-back-test-strategy.md:561
 msgid "买入和卖出交易的最小批量，例如是否允许分数份额交易、还是必须整数份额、甚至整百份交易"
 msgstr ""
+"Taille minimale du lot pour les transactions d'achat et de vente, par "
+"exemple si les fractions d'actions sont autorisées ou si des actions "
+"entières ou même des centaines d'actions sont requises pour la négociation"
 
 #: ../../source/references/3-back-test-strategy.md:563
 msgid "最终打印的回测结果是考虑上述所有交易参数之后的最终结果，因此可以看到总交易成本。详细的交易参数设置请参见详细文档。"
 msgstr ""
+"Les résultats finaux du backtesting imprimés sont les résultats finaux après"
+" avoir pris en compte tous les paramètres de trading ci-dessus, afin que "
+"vous puissiez voir les coûts totaux de trading. Pour les paramètres de "
+"trading détaillés, veuillez vous référer à la documentation détaillée."
 
 #: ../../source/references/3-back-test-strategy.md:565
 msgid ""
 "另外，`qteasy`还给给出了关于策略表现的几个指标： "
 "如alpha和beta分别是0.067和1.002，而夏普率为0.041。最大回撤发生在2009年8月3日到2014年7月10日，回撤了35.0%，且到了2014年12月16日才翻盘。"
 msgstr ""
+"De plus, `qteasy` fournit également plusieurs indicateurs sur la performance"
+" de la stratégie : l'alpha et le bêta sont respectivement de 0,067 et 1,002,"
+" tandis que le ratio de Sharpe est de 0,041. Le prélèvement maximum s'est "
+"produit du 3 août 2009 au 10 juillet 2014, avec un prélèvement de 35,0 %, et"
+" ce n'est que le 16 décembre 2014 qu'il s'est inversé."
 
 #: ../../source/references/3-back-test-strategy.md:568
 msgid ""
 "在上面的回测结果中我们给出了参数`visual=False`，如果令`visual=True`，就能得到可视化的回测结果，以图表的形式给出，并提供可视化信息："
 msgstr ""
+"Dans les résultats du backtesting ci-dessus, nous définissons le paramètre "
+"`visual=False`. Si nous définissons `visual=True`, nous pouvons obtenir des "
+"résultats visuels de backtesting sous forme de graphiques et fournir des "
+"informations visuelles :"
 
 #: ../../source/references/3-back-test-strategy.md:570
 msgid "投资策略的历史资金曲线"
-msgstr ""
+msgstr "Courbe de capital de la stratégie d'investissement"
 
 #: ../../source/references/3-back-test-strategy.md:571
 msgid "参考数据（沪深300指数）的历史曲线"
-msgstr ""
+msgstr "Courbe historique des données de référence (indice CSI 300)"
 
 #: ../../source/references/3-back-test-strategy.md:572
 msgid "买点和卖点（在参考数据上以红色、绿色箭头显示）"
 msgstr ""
+"Points d'achat et de vente (affichés avec des flèches rouges et vertes sur "
+"les données de référence)"
 
 #: ../../source/references/3-back-test-strategy.md:573
 msgid "持仓区间（绿色表示持仓）"
-msgstr ""
+msgstr "Période de détention (le vert indique la détention)"
 
 #: ../../source/references/3-back-test-strategy.md:574
 msgid "投资策略的评价指标（alpha、sharp等）"
 msgstr ""
+"Indicateurs d'évaluation de la stratégie d'investissement (alpha, Sharp, "
+"etc.)"
 
 #: ../../source/references/3-back-test-strategy.md:575
 msgid "历史回撤分析（显示五次最大的回撤）"
 msgstr ""
+"Analyse des prélèvements (montrant les cinq prélèvements les plus "
+"importants)"
 
 #: ../../source/references/3-back-test-strategy.md:576
 msgid "历史收益率热力图、山积图等图表"
 msgstr ""
+"Carte thermique du taux de retour, graphique d'accumulation de montagnes et "
+"autres graphiques"
 
 #: ../../source/references/3-back-test-strategy.md:579
 msgid "`qteasy`提供了丰富的策略回测选项，例如："
 msgstr ""
+"`qteasy` fournit de riches options de backtesting de stratégie, telles que :"
 
 #: ../../source/references/3-back-test-strategy.md:581
 msgid "回测开始结束日期"
-msgstr ""
+msgstr "Date de début et de fin du backtesting"
 
 #: ../../source/references/3-back-test-strategy.md:582
 msgid "回测结果评价指标"
-msgstr ""
+msgstr "Indicateurs d'évaluation de la stratégie d'investissement"
 
 #: ../../source/references/3-back-test-strategy.md:583
 msgid "回测时是否允许持有负数仓位（用于模拟期货交易卖空行为，也可以使用专门的期货交易模拟算法）"
 msgstr ""
+"Si des positions négatives sont autorisées pendant le backtesting (utilisées"
+" pour simuler le comportement de vente à découvert des transactions à terme,"
+" ou des algorithmes spéciaux de simulation de transactions à terme peuvent "
+"être utilisés)"
 
 #: ../../source/references/3-back-test-strategy.md:585
 msgid "更多的选项请参见详细文档"
-msgstr ""
+msgstr "Plus d'options peuvent être trouvées dans la documentation détaillée"
 
 #: ../../source/references/3-back-test-strategy.md:587
 msgid "单择时策略的优化"
-msgstr ""
+msgstr "Optimisation de la stratégie de timing unique"
 
 #: ../../source/references/3-back-test-strategy.md:588
 msgid "显然，没有经过优化的参数无法得到理想的回测结果，因此我们需要进行一次优化"
 msgstr ""
+"Évidemment, les paramètres non optimisés ne peuvent pas obtenir des "
+"résultats de backtesting idéaux, nous devons donc effectuer une "
+"optimisation."
 
 #: ../../source/references/3-back-test-strategy.md:590
 msgid "通过设置context对象的各个参数，我们可以设置优化方式并控制优化过程： 以下参数的含义分别如下："
 msgstr ""
+"Nous pouvons définir la méthode d'optimisation et contrôler le processus "
+"d'optimisation en définissant divers paramètres de l'objet contextuel : Les "
+"significations des paramètres suivants sont les suivantes :"
 
 #: ../../source/references/3-back-test-strategy.md:593
 msgid "优化方法设置为1，使用蒙特卡洛优化，对于较大的参数空间有较好的寻优能力"
 msgstr ""
+"La méthode d'optimisation est définie sur 1, en utilisant l'optimisation de "
+"Monte Carlo, qui a une bonne capacité d'optimisation pour un espace de "
+"paramètres plus grand."
 
 #: ../../source/references/3-back-test-strategy.md:594
 msgid "输出结果数量设置为30"
-msgstr ""
+msgstr "La quantité de résultat de sortie est définie sur 30"
 
 #: ../../source/references/3-back-test-strategy.md:595
 msgid "优化过程迭代次数为1000次"
-msgstr ""
+msgstr "Le nombre d'itérations dans le processus d'optimisation est de 1 000"
 
 #: ../../source/references/3-back-test-strategy.md:596
 msgid "parallel参数设置为True会使用多核处理器的所有核心进行并行计算节省时间"
 msgstr ""
+"Si le paramètre parallèle est défini sur True, tous les cœurs du processeur "
+"multicœur seront utilisés pour le calcul parallèle pour gagner du temps"
 
 #: ../../source/references/3-back-test-strategy.md:598
 msgid "最后开始优化，使用`perfs_dma`和`pars_dma`两个变量来存储优化结果 优化过程中会显示进度条，结束后会显示优化结果"
 msgstr ""
+"Démarrez ensuite l'optimisation, en utilisant les variables `perfs_dma` et "
+"`pars_dma` pour stocker les résultats de l'optimisation. Une barre de "
+"progression s'affichera pendant le processus d'optimisation et les résultats"
+" de l'optimisation seront affichés une fois terminé."
 
 #: ../../source/references/3-back-test-strategy.md:745
 msgid "![png](../tutorials/img/output_14_2.png)"
@@ -853,14 +1238,21 @@ msgstr "![png](../tutorials/img/output_14_2.png)"
 #: ../../source/references/3-back-test-strategy.md:753
 msgid "优化结束后，可以看到三十组最佳参数，其中最差的一组也能实现最终资产6万元以上。我们可以手动选取其中最佳的参数，再进行一次回测："
 msgstr ""
+"Après l'optimisation, nous pouvons voir trente ensembles de meilleurs "
+"paramètres, et même le pire peut atteindre un actif final de plus de 60 000 "
+"yuans. Nous pouvons sélectionner manuellement les meilleurs paramètres parmi"
+" eux et effectuer un autre backtest :"
 
 #: ../../source/references/3-back-test-strategy.md:755
 msgid "能发现终值从上次回测的1.9万暴涨至12.4万，年化收益18.9%，夏普率也上升到了0.833"
 msgstr ""
+"Nous pouvons constater que la valeur finale est passée de 19 000 lors du "
+"dernier backtest à 124 000, avec un rendement annualisé de 18,9 %, et le "
+"ratio de Sharpe a également augmenté à 0,833."
 
 #: ../../source/references/3-back-test-strategy.md:764
 msgid "输出回测结果如下："
-msgstr ""
+msgstr "Les résultats du backtesting de sortie sont les suivants :"
 
 #: ../../source/references/3-back-test-strategy.md:810
 msgid "![png](../tutorials/img/output_16_2.png)"
@@ -868,11 +1260,15 @@ msgstr "![png](../tutorials/img/output_16_2.png)"
 
 #: ../../source/references/3-back-test-strategy.md:812
 msgid "创建一个自定义策略"
-msgstr ""
+msgstr "Créer une stratégie personnalisée"
 
 #: ../../source/references/3-back-test-strategy.md:814
 msgid "使用qteasy不仅可以使用内置策略，也可以创建自定义策略。下面有一个简单的例子，定义了一个简单的轮动交易策略"
 msgstr ""
+"qteasy permet non seulement l'utilisation de stratégies intégrées, mais "
+"également la création de stratégies personnalisées. Vous trouverez ci-"
+"dessous un exemple simple qui définit une stratégie de trading par rotation "
+"simple."
 
 #~ msgid "`queasy`提供了两种方式创建交易策略："
 #~ msgstr ""

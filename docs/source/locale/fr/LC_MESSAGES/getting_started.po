@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -31,6 +31,11 @@ msgid ""
 "使用 `pip` 安装（要求 `Python >= 3.9, <3.13`）：部分功能（如全部内置策略、数据库存储等）需要可选依赖，详见 "
 "[FAQ](https://qteasy.readthedocs.io/zh-cn/latest/faq.html) 与安装说明。"
 msgstr ""
+"Installer avec `pip` (nécessite `Python >= 3.9, <3.13`) : certaines "
+"fonctionnalités (telles que toutes les stratégies intégrées, le stockage de "
+"base de données, etc.) nécessitent des dépendances facultatives. Consultez "
+"la [FAQ](https://qteasy.readthedocs.io/fr/latest/faq.html) et les "
+"instructions d'installation pour plus de détails."
 
 #: ../../source/getting_started.md:10
 msgid "启动后即可导入 `qteasy` 并查看版本号："
@@ -41,7 +46,6 @@ msgstr ""
 #: ../../source/getting_started.md:17 ../../source/getting_started.md:45
 #: ../../source/getting_started.md:80 ../../source/getting_started.md:146
 #: ../../source/getting_started.md:228
-#, fuzzy
 msgid "输出如下："
 msgstr " Les résultats de sortie sont les suivants :"
 
@@ -67,7 +71,6 @@ msgstr ""
 "de backtest utilisable."
 
 #: ../../source/getting_started.md:31
-#, fuzzy
 msgid "1. 配置 tushare Token"
 msgstr "Configurer le jeton tushare"
 
@@ -293,7 +296,6 @@ msgstr ""
 "backtesting] (references/3-back-test-strategy.md)."
 
 #: ../../source/getting_started.md:278
-#, fuzzy
 msgid "`qteasy` 能做什么"
 msgstr "Importer `qteasy`"
 

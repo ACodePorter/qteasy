@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -35,7 +35,6 @@ msgid "下载并管理金融历史数据"
 msgstr "Téléchargez et gérez les données historiques financières"
 
 #: ../../source/index.rst:124
-#, fuzzy
 msgid "创建并操作交易策略"
 msgstr "Créer une stratégie de trading"
 
@@ -48,7 +47,6 @@ msgid "优化交易策略"
 msgstr "Optimiser la stratégie de trading"
 
 #: ../../source/index.rst:151
-#, fuzzy
 msgid "模拟实盘交易模块"
 msgstr "Simulez une stratégie de trading en temps réel"
 
@@ -81,7 +79,6 @@ msgid "欢迎使用 ``QTEASY`` 文档!"
 msgstr "Bienvenue dans la documentation ``QTEASY`` !"
 
 #: ../../source/index.rst:15
-#, fuzzy
 msgid ""
 "`qteasy`已经升级到2.0版本，使得交易策略能更加灵活有效地使用历史数据、同时简化了交易策略的定义过程、提高了效率。 由于 ``QTEASY`` "
 "仍处于测试中，软件中不免存在一些漏洞和bug，如果大家使用中出现问题，欢迎 `报告Issue`_ 或者提交 `新功能需求`_ 给我，也可以进入 "
@@ -118,7 +115,6 @@ msgid "简介"
 msgstr "Brève introduction"
 
 #: ../../source/index.rst:31
-#, fuzzy
 msgid "``QTEASY`` 是为量化交易人员开发的一套量化交易策略开发工具包，其特点如下："
 msgstr ""
 "``QTEASY`` est un ensemble de boîtes à outils de trading quantitatif "
@@ -251,7 +247,6 @@ msgstr ""
 " de backtest » et les « performances en direct décevantes »."
 
 #: ../../source/index.rst:71
-#, fuzzy
 msgid "交易策略的回测评价、优化和模拟自动化交易"
 msgstr "Créez une stratégie de trading, simulez un trading automatisé"
 
@@ -271,11 +266,12 @@ msgstr ""
 "les performances de la stratégie dans de grands espaces de paramètres."
 
 #: ../../source/index.rst:75
-#, fuzzy
 msgid "获取实时市场数据，运行策略模拟自动化交易，跟踪记录交易日志、股票持仓、账户资金变化等信息"
 msgstr ""
-"Suivez et enregistrez les journaux de transactions, les positions "
-"boursières, les modifications des fonds du compte, etc."
+"Récupérez des données de marché en temps réel, exécutez des simulations de "
+"stratégie pour le trading automatisé, et suivez et enregistrez les journaux "
+"de transactions, les positions d'actions, les variations des fonds du "
+"compte, etc."
 
 #: ../../source/index.rst:76
 msgid "回测、优化与实盘使用同一套运行机制，写一次策略即可全模式运行，配置清晰，便于复现与排查"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 12:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -144,7 +144,7 @@ msgstr ""
 
 #: ../../source/live_trading/7-manual-smoke-live-grid-roadmap.rst:41
 msgid "说明："
-msgstr "Note:"
+msgstr "Note :"
 
 #: ../../source/live_trading/7-manual-smoke-live-grid-roadmap.rst:43
 msgid "**冷启动**：新建 ``-n`` 或 ``--restart`` 后确认持仓为空。"
