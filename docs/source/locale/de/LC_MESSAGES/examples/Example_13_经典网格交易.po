@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-20 21:08+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -26,43 +25,39 @@ msgstr "Klassische Grid-Trading-Strategie"
 
 #: ../../source/examples/Example_13_经典网格交易.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_13_经典网格交易.ipynb` "
-"第一个 Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_13_经典网格交易.ipynb` 第一个 Markdown"
+" cell。"
 msgstr ""
 "Referenzquelle: `docs/_joinquant_migration_source/Example_13_classic grid "
 "trading.ipynb` Erste Markdown-Zelle."
 
 #: ../../source/examples/Example_13_经典网格交易.md:5
 msgid ""
-"本策略是一个经典的网格交易策略 策略的运行标的是000651.SZ格力电器，策略第一"
-"次运行时，买入1000股并持有，同时设定当前买入价格（四舍五入到0.1元）为基准网"
-"格， 并根据网格尺寸计算出卖出网格和买入网格， 接下来每隔5分钟运行一次，当股"
-"票价格触及买入网格或卖出网格时，产生交易信号，并刷新网格："
+"本策略是一个经典的网格交易策略 "
+"策略的运行标的是000651.SZ格力电器，策略第一次运行时，买入1000股并持有，同时设定当前买入价格（四舍五入到0.1元）为基准网格， "
+"并根据网格尺寸计算出卖出网格和买入网格， 接下来每隔5分钟运行一次，当股票价格触及买入网格或卖出网格时，产生交易信号，并刷新网格："
 msgstr ""
 "Diese Strategie ist eine klassische Grid-Trading-Strategie. Die Zielaktie "
-"ist Gree Electric Appliances (000651.SZ). Beim ersten Durchlauf werden "
-"1000 Aktien gekauft und gehalten. Der aktuelle Kaufpreis (gerundet auf 0,1 "
-"Yuan) dient als Basis-Grid. Die Kauf- und Verkaufs-Grids werden anhand "
-"dieser Grid-Größe berechnet. Die Strategie wird alle 5 Minuten ausgeführt. "
-"Sobald der Aktienkurs das Kauf- oder Verkaufs-Grid erreicht, wird ein "
-"Handelssignal generiert und das Grid aktualisiert."
+"ist Gree Electric Appliances (000651.SZ). Beim ersten Durchlauf werden 1000 "
+"Aktien gekauft und gehalten. Der aktuelle Kaufpreis (gerundet auf 0,1 Yuan) "
+"dient als Basis-Grid. Die Kauf- und Verkaufs-Grids werden anhand dieser "
+"Grid-Größe berechnet. Die Strategie wird alle 5 Minuten ausgeführt. Sobald "
+"der Aktienkurs das Kauf- oder Verkaufs-Grid erreicht, wird ein Handelssignal"
+" generiert und das Grid aktualisiert."
 
 #: ../../source/examples/Example_13_经典网格交易.md:9
 msgid "例如："
 msgstr "Beispiel:"
 
 #: ../../source/examples/Example_13_经典网格交易.md:10
-msgid ""
-"假设当前基准网格为30元，网格尺寸为0.5元，卖出网格为30.5元，买入网格为29.5元"
+msgid "假设当前基准网格为30元，网格尺寸为0.5元，卖出网格为30.5元，买入网格为29.5元"
 msgstr ""
 "Unter der Annahme, dass der aktuelle Basispreis 30 Yuan beträgt, die "
 "Rastergröße 0,5 Yuan, der Verkaufspreis 30,5 Yuan und der Kaufpreis 29,5 "
 "Yuan beträgt."
 
 #: ../../source/examples/Example_13_经典网格交易.md:11
-msgid ""
-"当价格触及卖出网格30.5元时，产生卖出信号，卖出200股并更新基准网格为30.5元，"
-"同时计算出新的卖出网格31元和买入网格30元"
+msgid "当价格触及卖出网格30.5元时，产生卖出信号，卖出200股并更新基准网格为30.5元，同时计算出新的卖出网格31元和买入网格30元"
 msgstr ""
 "Sobald der Kurs die Verkaufsgrenze von 30,5 Yuan erreicht, wird ein "
 "Verkaufssignal generiert, 200 Aktien werden verkauft und die Basisgrenze "
@@ -82,13 +77,11 @@ msgstr ""
 "2023."
 
 #: ../../source/examples/Example_13_经典网格交易.md:17
-msgid ""
-"注，由于策略网格参数在每次交易以后都会被刷新，因此该策略只能以stepwise方式"
-"进行回测，为了方便生成交易信号，该策略使用了VS信号类型"
+msgid "注，由于策略网格参数在每次交易以后都会被刷新，因此该策略只能以stepwise方式进行回测，为了方便生成交易信号，该策略使用了VS信号类型"
 msgstr ""
-"Da die Parameter des Strategierasters nach jedem Trade aktualisiert "
-"werden, kann diese Strategie nur schrittweise getestet werden. Zur "
-"Generierung von Handelssignalen verwendet diese Strategie den Signaltyp VS."
+"Da die Parameter des Strategierasters nach jedem Trade aktualisiert werden, "
+"kann diese Strategie nur schrittweise getestet werden. Zur Generierung von "
+"Handelssignalen verwendet diese Strategie den Signaltyp VS."
 
 #: ../../source/examples/Example_13_经典网格交易.md:97
 msgid "回测的结果如下："

@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-20 21:08+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -26,8 +25,8 @@ msgstr "Grid-ähnliche Handelsstrategien"
 
 #: ../../source/examples/Example_05_类网格交易.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_05_类网格交"
-"易.ipynb` 第一个 Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_05_类网格交易.ipynb` 第一个 Markdown "
+"cell。"
 msgstr ""
 "Referenzquelle: `docs/_joinquant_migration_source/Example_05_Class Grid "
 "Trading.ipynb` Erste Markdown-Zelle."
@@ -35,19 +34,17 @@ msgstr ""
 #: ../../source/examples/Example_05_类网格交易.md:5
 msgid "本策略首先计算过去300个价格数据的均值和标准差 (天数是一个可调参数)"
 msgstr ""
-"Diese Strategie berechnet zunächst den Mittelwert und die "
-"Standardabweichung der letzten 300 Preisdatenpunkte (die Anzahl der "
-"Tage ist ein anpassbarer Parameter)."
+"Diese Strategie berechnet zunächst den Mittelwert und die Standardabweichung"
+" der letzten 300 Preisdatenpunkte (die Anzahl der Tage ist ein anpassbarer "
+"Parameter)."
 
 #: ../../source/examples/Example_05_类网格交易.md:6
-msgid ""
-"并根据均值加减1和2个标准差得到网格的区间分界线,（加减标准差的倍数是可调"
-"参数)"
+msgid "并根据均值加减1和2个标准差得到网格的区间分界线,（加减标准差的倍数是可调参数)"
 msgstr ""
-"Die Grenzen des Gitterintervalls werden durch Addition bzw. Subtraktion "
-"von 1 bzw. 2 Standardabweichungen vom Mittelwert ermittelt (der "
-"Multiplikator für die Addition bzw. Subtraktion von "
-"Standardabweichungen ist ein anpassbarer Parameter)."
+"Die Grenzen des Gitterintervalls werden durch Addition bzw. Subtraktion von "
+"1 bzw. 2 Standardabweichungen vom Mittelwert ermittelt (der Multiplikator "
+"für die Addition bzw. Subtraktion von Standardabweichungen ist ein "
+"anpassbarer Parameter)."
 
 #: ../../source/examples/Example_05_类网格交易.md:7
 msgid "并分别配以0.3和0.5的仓位权重 (仓位权重是可调参数）"
@@ -57,27 +54,23 @@ msgstr ""
 
 #: ../../source/examples/Example_05_类网格交易.md:8
 msgid ""
-"然后根据价格所在的区间来配置仓位(+/-40为上下界,无实际意义): (-40,-3],"
-"(-3,-2],(-2,2],(2,3],(3,40](具体价格等于均值+数字倍标准差) [-0.5, -0.3, "
-"0.0, 0.3, 0.5] (资金比例,此处负号表示开空仓，回测时设置为允许持有空头仓"
-"位)"
+"然后根据价格所在的区间来配置仓位(+/-40为上下界,无实际意义): "
+"(-40,-3],(-3,-2],(-2,2],(2,3],(3,40](具体价格等于均值+数字倍标准差) [-0.5, -0.3, 0.0, 0.3,"
+" 0.5] (资金比例,此处负号表示开空仓，回测时设置为允许持有空头仓位)"
 msgstr ""
 "Konfigurieren Sie anschließend die Positionsgröße basierend auf der "
-"Preisspanne (+/-40 ist die obere und untere Grenze, die keine "
-"praktische Bedeutung hat): (-40,-3],(-3,-2],(-2,2],(2,3],(3,40] (der "
-"spezifische Preis entspricht dem Mittelwert plus einem Vielfachen der "
-"Standardabweichung) [-0,5, -0,3, 0,0, 0,3, 0,5] (Kapitalquote; das "
-"negative Vorzeichen hier zeigt die Eröffnung einer Short-Position an "
-"und ist so eingestellt, dass Short-Positionen während des Backtests "
-"gehalten werden können)."
+"Preisspanne (+/-40 ist die obere und untere Grenze, die keine praktische "
+"Bedeutung hat): (-40,-3],(-3,-2],(-2,2],(2,3],(3,40] (der spezifische Preis "
+"entspricht dem Mittelwert plus einem Vielfachen der Standardabweichung) "
+"[-0,5, -0,3, 0,0, 0,3, 0,5] (Kapitalquote; das negative Vorzeichen hier "
+"zeigt die Eröffnung einer Short-Position an und ist so eingestellt, dass "
+"Short-Positionen während des Backtests gehalten werden können)."
 
 #: ../../source/examples/Example_05_类网格交易.md:12
-msgid ""
-"回测数据为:HS300指数的1min数据 回测时间为:2022-03-01 09:30:00到"
-"2022-07-31 15:00:00"
+msgid "回测数据为:HS300指数的1min数据 回测时间为:2022-03-01 09:30:00到2022-07-31 15:00:00"
 msgstr ""
-"Die Backtesting-Daten bestehen aus 1-Minuten-Datenpunkten für den HS300-"
-"Index. Der Backtesting-Zeitraum erstreckt sich vom 1. März 2022, "
+"Die Backtesting-Daten bestehen aus 1-Minuten-Datenpunkten für den "
+"HS300-Index. Der Backtesting-Zeitraum erstreckt sich vom 1. März 2022, "
 "09:30:00 Uhr, bis zum 31. Juli 2022, 15:00:00 Uhr."
 
 #: ../../source/examples/Example_05_类网格交易.md:20
@@ -87,8 +80,8 @@ msgstr "Handelsstrategie definieren"
 #: ../../source/examples/Example_05_类网格交易.md:65
 msgid "设定交易员对象，并且设置交易配置，实施交易回测"
 msgstr ""
-"Definiere das Händlerobjekt, konfiguriere die Handelseinstellungen und "
-"führe Backtests durch."
+"Definiere das Händlerobjekt, konfiguriere die Handelseinstellungen und führe"
+" Backtests durch."
 
 #: ../../source/examples/Example_05_类网格交易.md:133
 msgid "![png](img/output_3_1.png)"

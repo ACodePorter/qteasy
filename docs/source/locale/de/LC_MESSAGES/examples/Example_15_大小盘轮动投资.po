@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-20 21:07+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -23,20 +22,18 @@ msgstr ""
 #: ../../source/examples/Example_15_大小盘轮动投资.md:1
 msgid "大小盘轮动投资策略（教学等价版）"
 msgstr ""
-"Anlagestrategie mit Rotation zwischen Large-Cap- und Small-Cap-"
-"Unternehmen (entspricht der Bildungsversion)"
+"Anlagestrategie mit Rotation zwischen Large-Cap- und Small-Cap-Unternehmen "
+"(entspricht der Bildungsversion)"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_15_大小盘轮动投资"
-"策略.ipynb`。   说明：该 notebook 的首个 Markdown cell 为空，本文按策"
-"略名称与后续代码意图给出教学实现。"
+"参考来源：`docs/_joinquant_migration_source/Example_15_大小盘轮动投资策略.ipynb`。   说明：该 "
+"notebook 的首个 Markdown cell 为空，本文按策略名称与后续代码意图给出教学实现。"
 msgstr ""
-"Referenzquelle: `docs/_joinquant_migration_source/Example_15_Small-"
-"Cap Rotation Investment Strategy.ipynb`. Hinweis: Die erste Markdown-"
-"Zelle dieses Notebooks ist leer. Dieser Artikel beschreibt die "
-"Implementierung anhand des Strategienamens und der Bedeutung des "
-"nachfolgenden Codes."
+"Referenzquelle: `docs/_joinquant_migration_source/Example_15_Small-Cap "
+"Rotation Investment Strategy.ipynb`. Hinweis: Die erste Markdown-Zelle "
+"dieses Notebooks ist leer. Dieser Artikel beschreibt die Implementierung "
+"anhand des Strategienamens und der Bedeutung des nachfolgenden Codes."
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:6
 msgid "策略思路"
@@ -53,9 +50,8 @@ msgstr "Vergleiche die relative Stärke der letzten N Tage;"
 #: ../../source/examples/Example_15_大小盘轮动投资.md:10
 msgid "将组合权重集中到强势标的，实现大小盘轮动。"
 msgstr ""
-"Durch die Konzentration der Portfoliogewichtung auf starke Aktien "
-"kann eine Rotation zwischen Large-Cap- und Small-Cap-Unternehmen "
-"erreicht werden."
+"Durch die Konzentration der Portfoliogewichtung auf starke Aktien kann eine "
+"Rotation zwischen Large-Cap- und Small-Cap-Unternehmen erreicht werden."
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:12
 msgid "qteasy 实现"

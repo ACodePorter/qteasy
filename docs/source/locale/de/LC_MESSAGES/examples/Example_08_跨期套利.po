@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-20 21:08+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -28,11 +27,11 @@ msgstr ""
 
 #: ../../source/examples/Example_08_跨期套利.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_08_跨期套"
-"利.ipynb` 第一个 Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_08_跨期套利.ipynb` 第一个 Markdown "
+"cell。"
 msgstr ""
-"Referenzquelle: `docs/_joinquant_migration_source/"
-"Example_08_intertemporal arbitrage.ipynb` Erste Markdown-Zelle."
+"Referenzquelle: `docs/_joinquant_migration_source/Example_08_intertemporal "
+"arbitrage.ipynb` Erste Markdown-Zelle."
 
 #: ../../source/examples/Example_08_跨期套利.md:5
 msgid "策略思路"
@@ -41,8 +40,8 @@ msgstr "Strategie und Ideen"
 #: ../../source/examples/Example_08_跨期套利.md:7
 msgid "使用同品种不同到期合约构造价差；"
 msgstr ""
-"Konstruieren Sie Preisspannen mithilfe von Verträgen desselben "
-"Typs, aber mit unterschiedlichen Verfallsdaten;"
+"Konstruieren Sie Preisspannen mithilfe von Verträgen desselben Typs, aber "
+"mit unterschiedlichen Verfallsdaten;"
 
 #: ../../source/examples/Example_08_跨期套利.md:8
 msgid "用滚动窗口估计价差偏离程度（zscore）；"
@@ -53,14 +52,13 @@ msgstr ""
 #: ../../source/examples/Example_08_跨期套利.md:9
 msgid "价差上穿上轨做空价差，下穿下轨做多价差；"
 msgstr ""
-"Gehen Sie short, wenn der Spread das obere Band nach oben kreuzt, "
-"und long, wenn er das untere Band nach unten kreuzt."
+"Gehen Sie short, wenn der Spread das obere Band nach oben kreuzt, und long, "
+"wenn er das untere Band nach unten kreuzt."
 
 #: ../../source/examples/Example_08_跨期套利.md:10
 msgid "回归到中性区间时平仓。"
 msgstr ""
-"Schließen Sie die Position, sobald sie wieder im neutralen "
-"Bereich ist."
+"Schließen Sie die Position, sobald sie wieder im neutralen Bereich ist."
 
 #: ../../source/examples/Example_08_跨期套利.md:12
 msgid "qteasy 实现说明"
@@ -68,24 +66,19 @@ msgstr "QtEasy-Implementierungsanleitung"
 
 #: ../../source/examples/Example_08_跨期套利.md:14
 msgid "本示例策略类为 `Example08CalendarSpread`；"
-msgstr ""
-"Die Strategieklasse in diesem Beispiel ist "
-"`Example08CalendarSpread`;"
+msgstr "Die Strategieklasse in diesem Beispiel ist `Example08CalendarSpread`;"
 
 #: ../../source/examples/Example_08_跨期套利.md:15
 msgid "为了教学稳定性，默认脚本使用指数日频做跨期逻辑近似；"
 msgstr ""
-"Um Stabilität zu gewährleisten, verwendet das Standardskript die "
-"tägliche Indexfrequenz für die logische Annäherung zwischen den "
-"Perioden."
+"Um Stabilität zu gewährleisten, verwendet das Standardskript die tägliche "
+"Indexfrequenz für die logische Annäherung zwischen den Perioden."
 
 #: ../../source/examples/Example_08_跨期套利.md:16
-msgid ""
-"若切换到真实期货合约，请同时处理换月逻辑，并在文档中记录换月规则。"
+msgid "若切换到真实期货合约，请同时处理换月逻辑，并在文档中记录换月规则。"
 msgstr ""
-"Wenn Sie auf einen realen Futures-Kontrakt umsteigen, behandeln "
-"Sie bitte gleichzeitig die Rollover-Logik und dokumentieren Sie "
-"die Rollover-Regeln."
+"Wenn Sie auf einen realen Futures-Kontrakt umsteigen, behandeln Sie bitte "
+"gleichzeitig die Rollover-Logik und dokumentieren Sie die Rollover-Regeln."
 
 #: ../../source/examples/Example_08_跨期套利.md:42
 msgid "可执行脚本"

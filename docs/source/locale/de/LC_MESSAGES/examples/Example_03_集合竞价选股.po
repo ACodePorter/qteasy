@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-20 21:06+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -25,57 +24,65 @@ msgid "集合竞价选股策略"
 msgstr "Strategie zur Aktienauswahl bei Telefonauktionen"
 
 #: ../../source/examples/Example_03_集合竞价选股.md:3
-msgid "参考来源：`docs/_joinquant_migration_source/Example_03_集合竞价选股.ipynb` 第一个 Markdown cell。"
+msgid ""
+"参考来源：`docs/_joinquant_migration_source/Example_03_集合竞价选股.ipynb` 第一个 Markdown"
+" cell。"
 msgstr ""
-"Referenzquelle: `docs/_joinquant_migration_source/Example_03_集集竞价选股.ipynb` Die erste Markdown-Zelle."
+"Referenzquelle: `docs/_joinquant_migration_source/Example_03_集集竞价选股.ipynb` "
+"Die erste Markdown-Zelle."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:5
 msgid ""
-"本策略通过获取SHSE.000300沪深300的成份股数据并统计其30天内开盘价大于前收盘价的天数,并在该天数大于阈值10的时候加"
-"入股票池,随后对不在股票池的股票平仓并等权配置股票池的标的,每次交易间隔1个月."
+"本策略通过获取SHSE.000300沪深300的成份股数据并统计其30天内开盘价大于前收盘价的天数,并在该天数大于阈值10的时候加入股票池,随后对不在股票池的股票平仓并等权配置股票池的标的,每次交易间隔1个月."
 msgstr ""
-"Diese Strategie greift auf die Daten der im SHSE.000300 CSI 300 enthaltenen Aktien zu und zählt die Anzahl der "
-"Tage innerhalb von 30 Tagen, an denen der Eröffnungskurs über dem Schlusskurs des Vortages liegt. Sobald die "
-"Anzahl dieser Tage einen Schwellenwert von 10 überschreitet, wird die Aktie dem Aktienpool hinzugefügt. "
-"Anschließend werden die nicht im Aktienpool enthaltenen Aktien verkauft und die verbleibenden Aktien "
-"gleichmäßig verteilt. Zwischen den einzelnen Transaktionen liegt jeweils ein Monat."
+"Diese Strategie greift auf die Daten der im SHSE.000300 CSI 300 enthaltenen "
+"Aktien zu und zählt die Anzahl der Tage innerhalb von 30 Tagen, an denen der"
+" Eröffnungskurs über dem Schlusskurs des Vortages liegt. Sobald die Anzahl "
+"dieser Tage einen Schwellenwert von 10 überschreitet, wird die Aktie dem "
+"Aktienpool hinzugefügt. Anschließend werden die nicht im Aktienpool "
+"enthaltenen Aktien verkauft und die verbleibenden Aktien gleichmäßig "
+"verteilt. Zwischen den einzelnen Transaktionen liegt jeweils ein Monat."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:7
 msgid "回测数据为:SHSE.000300沪深300指数成份股 回测时间为:2016-04-05 到 2021-02-01"
 msgstr ""
-"Die Backtesting-Daten umfassen die im SHSE.000300 CSI 300 Index enthaltenen Aktien. Der Backtesting-Zeitraum "
-"erstreckt sich vom 5. April 2016 bis zum 1. Februar 2021."
+"Die Backtesting-Daten umfassen die im SHSE.000300 CSI 300 Index enthaltenen "
+"Aktien. Der Backtesting-Zeitraum erstreckt sich vom 5. April 2016 bis zum 1."
+" Februar 2021."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:31
 msgid "第一种自定义策略设置方法，使用持仓数据和选股数据直接生成比例交易信号`PS`信号："
 msgstr ""
-"Die erste Methode zur Einrichtung einer benutzerdefinierten Strategie generiert direkt ein proportionales "
-"Handelssignal `PS` unter Verwendung von Positionsdaten und Aktienauswahldaten."
+"Die erste Methode zur Einrichtung einer benutzerdefinierten Strategie "
+"generiert direkt ein proportionales Handelssignal `PS` unter Verwendung von "
+"Positionsdaten und Aktienauswahldaten."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:32
 msgid ""
-"使用`GeneralStrategy`策略类，计算选股因子后，去掉所有小于零的因子，排序后提取排名前三十的股票 按以下逻辑生成交"
-"易信号： 1，检查当前持仓，如果持仓的股票未被选中，则全数卖出 2，检查当前持仓，如果新选中的股票没有持仓，则等权"
-"买入新增选中的股票"
+"使用`GeneralStrategy`策略类，计算选股因子后，去掉所有小于零的因子，排序后提取排名前三十的股票 按以下逻辑生成交易信号： "
+"1，检查当前持仓，如果持仓的股票未被选中，则全数卖出 2，检查当前持仓，如果新选中的股票没有持仓，则等权买入新增选中的股票"
 msgstr ""
-"Mithilfe der Klasse `GeneralStrategy` werden nach der Berechnung der Aktienauswahlfaktoren alle Faktoren "
-"kleiner als null entfernt und die 30 besten Aktien nach der Sortierung extrahiert. Handelssignale werden nach "
-"folgender Logik generiert: 1. Überprüfung des aktuellen Bestands; falls Aktien nicht ausgewählt sind, werden "
-"alle verkauft. 2. Überprüfung des aktuellen Bestands; falls die neu ausgewählten Aktien nicht ausgewählt sind, "
-"werden sie gleichgewichtet gekauft."
+"Mithilfe der Klasse `GeneralStrategy` werden nach der Berechnung der "
+"Aktienauswahlfaktoren alle Faktoren kleiner als null entfernt und die 30 "
+"besten Aktien nach der Sortierung extrahiert. Handelssignale werden nach "
+"folgender Logik generiert: 1. Überprüfung des aktuellen Bestands; falls "
+"Aktien nicht ausgewählt sind, werden alle verkauft. 2. Überprüfung des "
+"aktuellen Bestands; falls die neu ausgewählten Aktien nicht ausgewählt sind,"
+" werden sie gleichgewichtet gekauft."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:37
-msgid ""
-"设置交易信号类型为`PS`，生成交易信号 由于生成交易信号需要用到持仓数据，因此不能使用批量生成模式，只能使用"
-"`stepwise`模式"
+msgid "设置交易信号类型为`PS`，生成交易信号 由于生成交易信号需要用到持仓数据，因此不能使用批量生成模式，只能使用`stepwise`模式"
 msgstr ""
-"Stellen Sie den Handelssignaltyp auf „PS“ ein, um Handelssignale zu generieren. Da für die Generierung von "
-"Handelssignalen Positionsdaten benötigt werden, kann der Batch-Generierungsmodus nicht verwendet werden; es "
-"ist nur der schrittweise Modus möglich."
+"Stellen Sie den Handelssignaltyp auf „PS“ ein, um Handelssignale zu "
+"generieren. Da für die Generierung von Handelssignalen Positionsdaten "
+"benötigt werden, kann der Batch-Generierungsmodus nicht verwendet werden; es"
+" ist nur der schrittweise Modus möglich."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:88
 msgid "创建一个`Operator`对象，并回测交易策略"
-msgstr "Erstellen Sie ein `Operator`-Objekt und führen Sie einen Backtest für die Handelsstrategie durch."
+msgstr ""
+"Erstellen Sie ein `Operator`-Objekt und führen Sie einen Backtest für die "
+"Handelsstrategie durch."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:110
 msgid "运行结果如下："
@@ -93,21 +100,24 @@ msgstr "png"
 #: ../../source/examples/Example_03_集合竞价选股.md:181
 msgid "第二种自定义策略设置方法，使用PT交易信号设置持仓目标："
 msgstr ""
-"Die zweite Methode zur Festlegung benutzerdefinierter Strategien besteht darin, PT-Handelssignale zur "
-"Festlegung von Positionszielen zu verwenden:"
+"Die zweite Methode zur Festlegung benutzerdefinierter Strategien besteht "
+"darin, PT-Handelssignale zur Festlegung von Positionszielen zu verwenden:"
 
 #: ../../source/examples/Example_03_集合竞价选股.md:183
 msgid ""
-"在完成选股因子的计算之后，直接设置每个股票的持仓目标，这样就不需要使用知道持仓数据，直接输出持仓目标信号 ，在回"
-"测过程中根据实际持仓量生成交易信号。"
+"在完成选股因子的计算之后，直接设置每个股票的持仓目标，这样就不需要使用知道持仓数据，直接输出持仓目标信号 ，在回测过程中根据实际持仓量生成交易信号。"
 msgstr ""
-"Nach der Berechnung der Aktienauswahlfaktoren wird das Halteziel für jede Aktie direkt festgelegt. Dadurch "
-"entfällt die Notwendigkeit, die Bestandsdaten zu kennen, und das Haltezielsignal wird direkt ausgegeben. Beim "
-"Backtesting werden Handelssignale auf Basis des tatsächlichen Bestandsvolumens generiert."
+"Nach der Berechnung der Aktienauswahlfaktoren wird das Halteziel für jede "
+"Aktie direkt festgelegt. Dadurch entfällt die Notwendigkeit, die "
+"Bestandsdaten zu kennen, und das Haltezielsignal wird direkt ausgegeben. "
+"Beim Backtesting werden Handelssignale auf Basis des tatsächlichen "
+"Bestandsvolumens generiert."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:226
 msgid "创建一个Operator对象，开始回测交易策略"
-msgstr "Erstellen Sie ein Operator-Objekt und beginnen Sie mit dem Backtesting der Handelsstrategie."
+msgstr ""
+"Erstellen Sie ein Operator-Objekt und beginnen Sie mit dem Backtesting der "
+"Handelsstrategie."
 
 #: ../../source/examples/Example_03_集合竞价选股.md:246
 msgid "交易回测结果如下："

@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-20 21:06+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -26,11 +25,11 @@ msgstr "Market-Maker-Handelsstrategien (Tutorialversion)"
 
 #: ../../source/examples/Example_10_做市商交易.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_10_做市商交"
-"易.ipynb` 第一个 Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_10_做市商交易.ipynb` 第一个 Markdown "
+"cell。"
 msgstr ""
-"Referenzquelle: `docs/_joinquant_migration_source/"
-"Example_10_Market Maker Trading.ipynb` Erste Markdown-Zelle."
+"Referenzquelle: `docs/_joinquant_migration_source/Example_10_Market Maker "
+"Trading.ipynb` Erste Markdown-Zelle."
 
 #: ../../source/examples/Example_10_做市商交易.md:5
 msgid "策略思路"
@@ -39,24 +38,22 @@ msgstr "Strategie und Ideen"
 #: ../../source/examples/Example_10_做市商交易.md:7
 msgid "真实做市策略依赖逐笔盘口、挂撤单队列和成交优先级；"
 msgstr ""
-"Reale Market-Making-Strategien basieren auf einem Tick-by-Tick-"
-"Orderbuch, Orderwarteschlangen und der Priorisierung von Orders."
+"Reale Market-Making-Strategien basieren auf einem Tick-by-Tick-Orderbuch, "
+"Orderwarteschlangen und der Priorisierung von Orders."
 
 #: ../../source/examples/Example_10_做市商交易.md:8
-msgid ""
-"qteasy 回测层是 Bar 级撮合抽象，本示例以“均值回归双边挂单”近似做市"
-"行为；"
+msgid "qteasy 回测层是 Bar 级撮合抽象，本示例以“均值回归双边挂单”近似做市行为；"
 msgstr ""
-"Die qteasy-Backtesting-Schicht ist eine Abstraktion des Bar-Level-"
-"Matchings. Dieses Beispiel approximiert das Market-Making-"
-"Verhalten mit „mittelwertregressiver bilateraler Orderplatzierung“."
+"Die qteasy-Backtesting-Schicht ist eine Abstraktion des Bar-Level-Matchings."
+" Dieses Beispiel approximiert das Market-Making-Verhalten mit "
+"„mittelwertregressiver bilateraler Orderplatzierung“."
 
 #: ../../source/examples/Example_10_做市商交易.md:9
 msgid "当价格偏离均值上轨时卖出，偏离下轨时买入，中间区域观望。"
 msgstr ""
-"Verkaufen Sie, wenn der Preis vom oberen Rand des Durchschnitts "
-"abweicht, kaufen Sie, wenn er vom unteren Rand abweicht, und "
-"beobachten Sie den mittleren Bereich."
+"Verkaufen Sie, wenn der Preis vom oberen Rand des Durchschnitts abweicht, "
+"kaufen Sie, wenn er vom unteren Rand abweicht, und beobachten Sie den "
+"mittleren Bereich."
 
 #: ../../source/examples/Example_10_做市商交易.md:11
 msgid "诚实说明"
@@ -65,17 +62,14 @@ msgstr "Ehrlichkeit"
 #: ../../source/examples/Example_10_做市商交易.md:13
 msgid "本示例不是交易所级别的真实做市仿真；"
 msgstr ""
-"Dieses Beispiel stellt keine reale Market-Making-Simulation auf "
-"Börsenebene dar;"
+"Dieses Beispiel stellt keine reale Market-Making-Simulation auf Börsenebene "
+"dar;"
 
 #: ../../source/examples/Example_10_做市商交易.md:14
-msgid ""
-"仅用于讲解 qteasy 在高频风格场景下的 `VS` 信号和 stepwise 回测流"
-"程。"
+msgid "仅用于讲解 qteasy 在高频风格场景下的 `VS` 信号和 stepwise 回测流程。"
 msgstr ""
-"Dies dient lediglich der Erläuterung des `VS`-Signals und des "
-"schrittweisen Backtesting-Prozesses von qteasy in Hochfrequenz-"
-"Szenarien."
+"Dies dient lediglich der Erläuterung des `VS`-Signals und des schrittweisen "
+"Backtesting-Prozesses von qteasy in Hochfrequenz-Szenarien."
 
 #: ../../source/examples/Example_10_做市商交易.md:39
 msgid "可执行脚本"

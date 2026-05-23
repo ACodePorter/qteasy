@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-20 21:07+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -26,27 +25,25 @@ msgstr "Indexgestützte Aktienauswahlstrategie"
 
 #: ../../source/examples/Example_06_指数增强选股.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_06_指数增强选"
-"股.ipynb` 第一个 Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_06_指数增强选股.ipynb` 第一个 Markdown"
+" cell。"
 msgstr ""
-"Referenzquelle: `docs/_joinquant_migration_source/Example_06_index-"
-"enhanced stock selection.ipynb` Erste Markdown-Zelle."
+"Referenzquelle: `docs/_joinquant_migration_source/Example_06_index-enhanced "
+"stock selection.ipynb` Erste Markdown-Zelle."
 
 #: ../../source/examples/Example_06_指数增强选股.md:5
 msgid ""
-"本策略以0.8为初始权重跟踪指数标的沪深300中权重大于0.35%的成份股. 个"
-"股所占的百分比为(0.8*成份股权重)*100%.然后根据个股是否: 1.连续上涨5"
-"天 2.连续下跌5天 来判定个股是否为强势股/弱势股,并对其把权重由0.8调至"
-"1.0或0.6"
+"本策略以0.8为初始权重跟踪指数标的沪深300中权重大于0.35%的成份股. 个股所占的百分比为(0.8*成份股权重)*100%.然后根据个股是否: "
+"1.连续上涨5天 2.连续下跌5天 来判定个股是否为强势股/弱势股,并对其把权重由0.8调至1.0或0.6"
 msgstr ""
 "Diese Strategie bildet die im CSI 300 enthaltenen Aktien mit einer "
-"Gewichtung von über 0,35 % anhand einer anfänglichen Gewichtung von "
-"0,8 ab. Der prozentuale Anteil jeder einzelnen Aktie wird wie folgt "
-"berechnet: (0,8 * Gewichtung der enthaltenen Aktie) * 100 %. "
-"Anschließend wird, je nachdem, ob eine Aktie 1. fünf Tage in Folge "
-"gestiegen oder 2. fünf Tage in Folge gefallen ist, entschieden, ob "
-"es sich um eine starke oder schwache Aktie handelt. Ihre Gewichtung "
-"wird entsprechend von 0,8 auf 1,0 oder 0,6 angepasst."
+"Gewichtung von über 0,35 % anhand einer anfänglichen Gewichtung von 0,8 ab. "
+"Der prozentuale Anteil jeder einzelnen Aktie wird wie folgt berechnet: (0,8 "
+"* Gewichtung der enthaltenen Aktie) * 100 %. Anschließend wird, je nachdem, "
+"ob eine Aktie 1. fünf Tage in Folge gestiegen oder 2. fünf Tage in Folge "
+"gefallen ist, entschieden, ob es sich um eine starke oder schwache Aktie "
+"handelt. Ihre Gewichtung wird entsprechend von 0,8 auf 1,0 oder 0,6 "
+"angepasst."
 
 #: ../../source/examples/Example_06_指数增强选股.md:10
 msgid "策略运行频率：每日运行 策略运行时间：每日收盘前"
@@ -57,8 +54,8 @@ msgstr ""
 #: ../../source/examples/Example_06_指数增强选股.md:13
 msgid "回测时间为:2021-01-01到2022-12-31"
 msgstr ""
-"Der Backtesting-Zeitraum erstreckte sich vom 1. Januar 2021 bis zum "
-"31. Dezember 2022."
+"Der Backtesting-Zeitraum erstreckte sich vom 1. Januar 2021 bis zum 31. "
+"Dezember 2022."
 
 #: ../../source/examples/Example_06_指数增强选股.md:15
 msgid "1. 策略代码"

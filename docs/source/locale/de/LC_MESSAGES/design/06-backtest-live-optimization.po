@@ -3,114 +3,155 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: de\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/design/06-backtest-live-optimization.md:1
 msgid "回测、实盘与优化：统一入口与不同模式"
 msgstr ""
+"Backtesting, Live-Handel und Optimierung: ein einheitlicher Einstiegspunkt "
+"und verschiedene Modi"
 
 #: ../../source/design/06-backtest-live-optimization.md:3
 msgid "1. 统一入口"
-msgstr ""
+msgstr "1. Unified entry point"
 
 #: ../../source/design/06-backtest-live-optimization.md:5
 msgid "用户通过 **qt.run(op, mode=..., **kwargs)** 触发运行。内部会："
 msgstr ""
+"Benutzer lösen die Ausführung über **qt.run(op, mode=..., **kwargs)** aus. "
+"Intern wird es:"
 
 #: ../../source/design/06-backtest-live-optimization.md:7
 msgid "将 kwargs 与全局配置合并为 **config**（ConfigDict）。"
 msgstr ""
+"Kwargs mit der globalen Konfiguration in **config** (ConfigDict) "
+"zusammenführen."
 
 #: ../../source/design/06-backtest-live-optimization.md:8
 msgid ""
 "调用 **op.run(config, datasource, logger)**，并传入 qteasy 的默认 datasource 与 "
 "logger。"
 msgstr ""
+"Rufen Sie **op.run(config, datasource, logger)** auf und übergeben Sie die "
+"Standarddatenquelle und den Standardlogger von qteasy."
 
 #: ../../source/design/06-backtest-live-optimization.md:10
 msgid "**mode** 决定走哪条分支："
-msgstr ""
+msgstr "**mode** determines which branch to take:"
 
 #: ../../source/design/06-backtest-live-optimization.md:12
 msgid "**mode=0**：实盘模式，进入 Trader 流程（定时触发、获取实时数据、生成信号、下单并记录）。"
 msgstr ""
+"**mode=0**: Live-Handelsmodus; tritt in den Trader-Workflow ein (geplante "
+"Auslöser, Abrufen von Echtzeitdaten, Generieren von Signalen, Erteilen von "
+"Bestellungen und Aufzeichnen)."
 
 #: ../../source/design/06-backtest-live-optimization.md:13
 msgid ""
 "**mode=1**：回测模式，构建 Backtester，按 group_timing_table 逐步运行 "
 "Operator，模拟成交并输出资金曲线与绩效。"
 msgstr ""
+"**mode=1**: Backtest-Modus; erstellt einen Backtester, führt den Operator "
+"Schritt für Schritt gemäß der group_timing_table aus, simuliert Füllungen "
+"und gibt die Equity-Kurve und die Leistung aus."
 
 #: ../../source/design/06-backtest-live-optimization.md:14
 msgid "**mode=2**：优化模式，Optimizer 在参数空间搜索，每组参数执行一次回测，按目标函数汇总结果。"
 msgstr ""
+"**mode=2**: Optimierungsmodus. Der Optimierer durchsucht den Parameterraum; "
+"Jeder Parametersatz führt einen Backtest durch und die Ergebnisse werden "
+"entsprechend der Zielfunktion aggregiert."
 
 #: ../../source/design/06-backtest-live-optimization.md:15
 msgid "**mode=3/4**：追踪、预测等模式，参见文档与 API。"
 msgstr ""
+"**mode=3/4**: Modi wie Tracking und Prognose; siehe Dokumentation und API."
 
 #: ../../source/design/06-backtest-live-optimization.md:17
 msgid "因此，**同一 Operator** 在不同 mode 下复用同一套“按时间步运行策略、混合信号”的机制，差异仅在数据来源与结果处理。"
 msgstr ""
+"Daher verwendet **derselbe Operator** denselben Mechanismus des „Ausführens "
+"der Strategie nach Zeitschritt und Mischen von Signalen“ in verschiedenen "
+"Modi; Die einzigen Unterschiede bestehen in der Datenquelle und der Art und "
+"Weise, wie mit den Ergebnissen umgegangen wird."
 
 #: ../../source/design/06-backtest-live-optimization.md:19
 msgid "2. 配置（config）的作用"
-msgstr ""
+msgstr "2. The role of the configuration (config)"
 
 #: ../../source/design/06-backtest-live-optimization.md:21
 msgid "**config** 包含资产池、回测区间、成本参数、资金计划等，回测/实盘/优化共用同一套配置结构。例如："
 msgstr ""
+"**config** umfasst das Vermögensuniversum, den Backtest-Zeitraum, "
+"Kostenparameter, den Kapitalplan usw.; Backtesting/Live-Handel/Optimierung "
+"haben dieselbe Konfigurationsstruktur. Zum Beispiel:"
 
 #: ../../source/design/06-backtest-live-optimization.md:23
 msgid "资产池、资产类型、回测起止日；"
-msgstr ""
+msgstr "Asset pool, asset types, and the backtest start/end dates;"
 
 #: ../../source/design/06-backtest-live-optimization.md:24
 msgid "交易成本（费率、最低费用等）；"
-msgstr ""
+msgstr "Trading costs (fee rates, minimum fees, etc.);"
 
 #: ../../source/design/06-backtest-live-optimization.md:25
 msgid "资金投入计划（invest_cash_amounts 等）；"
-msgstr ""
+msgstr "Capital allocation plan (invest_cash_amounts, etc.);"
 
 #: ../../source/design/06-backtest-live-optimization.md:26
 msgid "实盘相关（账户、Broker 类型等，mode=0 时使用）。"
 msgstr ""
+"Bezogen auf den Live-Handel (Konto, Broker-Typ usw.; wird verwendet, wenn "
+"Modus=0)."
 
 #: ../../source/design/06-backtest-live-optimization.md:28
 msgid ""
-"config 由 **qt.run(..., **kwargs)** 与全局 QT_CONFIG 合并得到，并传入 "
-"**op.run(config, ...)**，由 Backtester、Trader、Optimizer 分别读取所需字段。"
+"config 由 **qt.run(..., **kwargs)** 与全局 QT_CONFIG 合并得到，并传入 **op.run(config, "
+"...)**，由 Backtester、Trader、Optimizer 分别读取所需字段。"
 msgstr ""
+"config wird durch Zusammenführen von **qt.run(..., **kwargs)** mit dem "
+"globalen QT_CONFIG erhalten und an **op.run(config, ...)** übergeben; "
+"Backtester, Trader und Optimizer lesen jeweils die Felder, die sie "
+"benötigen."
 
 #: ../../source/design/06-backtest-live-optimization.md:30
 msgid "3. 回测模式（mode=1）"
-msgstr ""
+msgstr "3. Backtest mode (mode=1)"
 
 #: ../../source/design/06-backtest-live-optimization.md:32
 msgid ""
-"**准备历史数据**：根据 config 中的资产池、回测区间与 Operator 内所有策略的 "
-"data_types、window_length，调用 **check_and_prepare_backtest_data** 等，从 "
-"DataSource 拉取并组装所需历史数据（含足够的历史窗口以覆盖区间起点）。"
+"**准备历史数据**：根据 config 中的资产池、回测区间与 Operator 内所有策略的 data_types、window_length，调用"
+" **check_and_prepare_backtest_data** 等，从 DataSource "
+"拉取并组装所需历史数据（含足够的历史窗口以覆盖区间起点）。"
 msgstr ""
+"**Historische Daten vorbereiten**: Rufen Sie basierend auf dem Asset-"
+"Universum, dem Backtest-Zeitraum in der Konfiguration und den Datentypen und"
+" Fensterlängen aller Strategien innerhalb des Operator "
+"**check_and_prepare_backtest_data** und dergleichen auf, um die "
+"erforderlichen historischen Daten aus dem DataSource abzurufen und "
+"zusammenzustellen (einschließlich ausreichender Lookback-Historie, um den "
+"Beginn des Zeitraums abzudecken)."
 
 #: ../../source/design/06-backtest-live-optimization.md:33
-msgid "**构建 Backtester**：传入 Operator、资产列表、资金计划、交易价格数据、成本参数等，生成 **Backtester** 实例。"
+msgid ""
+"**构建 Backtester**：传入 Operator、资产列表、资金计划、交易价格数据、成本参数等，生成 **Backtester** 实例。"
 msgstr ""
+"**Erstellen Sie den Backtester**: Übergeben Sie Operator, Vermögensliste, "
+"Kapitalplan, Handelspreisdaten, Kostenparameter usw., um eine "
+"**Backtester**-Instanz zu erstellen."
 
 #: ../../source/design/06-backtest-live-optimization.md:34
 msgid ""
@@ -120,68 +161,112 @@ msgid ""
 "或旧式动态数据类型），则走**动态分支**：按步生成信号、按步模拟成交并更新过程数据，供策略下一步使用。详见 "
 "[过程数据（proc.*）与动态回测](09-process-data-and-dynamic-backtest.md)。"
 msgstr ""
+"**Zweigauswahl**: Wenn **op.check_dynamic_data()** False ist (die Strategie "
+"hängt nicht von Prozessdaten ab), nehmen Sie den **statischen Zweig**: alle "
+"Signale auf einmal generieren, dann einen Numba-vektorisierten Backtest "
+"ausführen; Wenn True (die Strategie verwendet „get_data('proc.xxx')“ oder "
+"ältere dynamische Datentypen), nehmen Sie den **dynamischen Zweig**: Signale"
+" Schritt für Schritt generieren, Füllungen Schritt für Schritt simulieren "
+"und Prozessdaten aktualisieren, damit die Strategie im nächsten Schritt "
+"verwendet werden kann. Weitere Informationen finden Sie unter [Prozessdaten "
+"(proc.*) und dynamisches Backtesting](09-process-data-and-dynamic-"
+"backtest.md)."
 
 #: ../../source/design/06-backtest-live-optimization.md:35
 msgid ""
 "**按步运行**：按 **group_timing_table** 的每个时间步，调用 "
 "**op.run_strategies(steps)**（或等价接口），得到每一步的 (signal_type, signal)。"
 msgstr ""
+"**Schritt für Schritt ausführen**: Rufen Sie für jeden Zeitschritt in "
+"**group_timing_table** **op.run_strategies(steps)** (oder eine gleichwertige"
+" Schnittstelle) auf, um (signal_type, signal) für jeden Schritt abzurufen."
 
 #: ../../source/design/06-backtest-live-optimization.md:36
 msgid ""
 "**解析与模拟成交**：将信号按 signal_type（PT/PS/VS）解析为买卖意图，再通过 **backtest_step** "
 "等逻辑更新持仓、资金与交割队列，得到每日资金曲线与交易记录。"
 msgstr ""
+"**Auffüllungen analysieren und simulieren**: Signale nach Signaltyp "
+"(PT/PS/VS) in Kauf-/Verkaufsabsichten analysieren, dann Logik wie "
+"**backtest_step** verwenden, um Positionen, Bargeld und die "
+"Abwicklungswarteschlange zu aktualisieren und so die tägliche Aktienkurve "
+"und Handelsaufzeichnungen zu erstellen."
 
 #: ../../source/design/06-backtest-live-optimization.md:37
 msgid "**评价与输出**：对资金曲线与交易记录做绩效评价（如夏普、回撤等），返回给用户并可选生成报告与图表。"
 msgstr ""
+"**Bewertung und Ausgabe**: Bewerten Sie die Leistung der Aktienkurve und der"
+" Handelsaufzeichnungen (z. B. Sharpe Ratio, Drawdown usw.), geben Sie die "
+"Ergebnisse an den Benutzer zurück und erstellen Sie optional Berichte und "
+"Diagramme."
 
 #: ../../source/design/06-backtest-live-optimization.md:39
 msgid "4. 实盘模式（mode=0）"
-msgstr ""
+msgstr "4. Live trading mode (mode=0)"
 
 #: ../../source/design/06-backtest-live-optimization.md:41
 msgid ""
 "**Trader** 持有 Operator 与 config，按 **run_freq**、**run_timing** "
 "与交易日历在交易日内的指定时刻触发任务。"
 msgstr ""
+"**Trader** enthält Operator und Konfiguration und löst Aufgaben zu "
+"bestimmten Zeiten innerhalb von Handelstagen gemäß **run_freq**, "
+"**run_timing** und dem Handelskalender aus."
 
 #: ../../source/design/06-backtest-live-optimization.md:42
 msgid "**获取当前时刻数据**：根据策略声明从 DataSource（或实时接口）获取当前步所需的数据窗口。"
 msgstr ""
+"**Daten für die aktuelle Zeit abrufen**: Rufen Sie basierend auf den "
+"Strategiedeklarationen das für den aktuellen Schritt erforderliche "
+"Datenfenster vom DataSource (oder einer Echtzeitschnittstelle) ab."
 
 #: ../../source/design/06-backtest-live-optimization.md:43
 msgid "**运行 Operator**：在该步调用 Operator 生成信号（与回测相同的 run_strategy 流程）。"
 msgstr ""
+"**Führen Sie Operator aus**: Rufen Sie in diesem Schritt Operator auf, um "
+"Signale zu generieren (derselbe run_strategy-Ablauf wie beim Backtesting)."
 
 #: ../../source/design/06-backtest-live-optimization.md:44
 msgid "**解析并下单**：将信号解析为订单，交给 **Broker** 执行（模拟或真实券商接口），并记录成交与持仓。"
 msgstr ""
+"**Orders analysieren und aufgeben**: Signale in Orders analysieren, sie zur "
+"Ausführung an den **Broker** übergeben (simuliert oder über eine Live-"
+"Broker-Schnittstelle) und Ausführungen und Positionen aufzeichnen."
 
 #: ../../source/design/06-backtest-live-optimization.md:46
 msgid "5. 优化模式（mode=2）"
-msgstr ""
+msgstr "5. Optimization mode (mode=2)"
 
 #: ../../source/design/06-backtest-live-optimization.md:48
 msgid "**Optimizer** 根据策略的 **Parameter** 定义确定参数空间（如网格、随机采样、遗传算法等）。"
 msgstr ""
+"Der **Optimierer** bestimmt den Parameterraum (z. B. Rastersuche, "
+"Zufallsstichprobe, genetische Algorithmen usw.) basierend auf den "
+"**Parameter**-Definitionen der Strategie."
 
 #: ../../source/design/06-backtest-live-optimization.md:49
 msgid "对每组参数：通过 **set_parameter** 等将参数写入 Operator，然后执行一次**回测**（即 mode=1 的流程）。"
 msgstr ""
+"Für jeden Parametersatz: Schreiben Sie die Parameter über **set_parameter** "
+"und dergleichen in den Operator und führen Sie dann einen **Backtest** durch"
+" (d. h. den Modus=1-Workflow)."
 
 #: ../../source/design/06-backtest-live-optimization.md:50
 msgid "根据回测结果计算**目标函数**（如夏普比、收益回撤比等），汇总所有参数组合的结果。"
 msgstr ""
+"Berechnen Sie die **Zielfunktion** (z. B. Sharpe-Ratio, Return-to-Drawdown-"
+"Verhältnis usw.) aus den Backtest-Ergebnissen und aggregieren Sie die "
+"Ergebnisse aller Parameterkombinationen."
 
 #: ../../source/design/06-backtest-live-optimization.md:51
 msgid "输出较优参数组合及对应回测结果，供用户选择。"
 msgstr ""
+"Es gibt bessere Parameterkombinationen und die entsprechenden Backtest-"
+"Ergebnisse aus, aus denen Benutzer auswählen können."
 
 #: ../../source/design/06-backtest-live-optimization.md:53
 msgid "6. 小结"
-msgstr ""
+msgstr "6. Summary"
 
 #: ../../source/design/06-backtest-live-optimization.md:55
 msgid ""
@@ -189,4 +274,14 @@ msgid ""
 "逐步调用策略并混合信号。差异仅在于：回测使用历史数据与 Backtester 模拟成交；实盘使用实时数据与 Trader/Broker "
 "执行订单；优化则多次回测并比较目标函数。更多参数与用法见《使用教程》《回测并评价交易策略》《优化交易策略》与 API 参考。"
 msgstr ""
-
+"Backtesting, Live-Handel und Optimierung teilen den Mechanismus „Operator + "
+"schrittweise Ausführung im Laufe der Zeit“: Sie alle bereiten zuerst Daten "
+"vor und konfigurieren sie, rufen dann die Strategie Schritt für Schritt "
+"gemäß group_timing_table auf und mischen Signale. Die einzigen Unterschiede "
+"sind: Beim Backtesting werden historische Daten und Backtester verwendet, um"
+" Füllungen zu simulieren. Beim Live-Handel werden Echtzeitdaten und "
+"Trader/Broker zur Ausführung von Aufträgen verwendet. Die Optimierung führt "
+"mehrere Backtests durch und vergleicht die Zielfunktion. Weitere Parameter "
+"und deren Verwendung finden Sie im „Benutzerhandbuch“, „Backtest und "
+"Bewertung von Handelsstrategien“, „Handelsstrategien optimieren“ und in der "
+"API-Referenz."

@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-26 09:45+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: de\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/references/4-build-in-strategy-blender.md:1
@@ -24,556 +23,788 @@ msgid "内置交易策略"
 msgstr "Integrierte Handelsstrategien"
 
 #: ../../source/references/4-build-in-strategy-blender.md:3
-msgid "`qteasy`提供了70多种内置交易策略，用户可以很容易地直接使用这些交易策略，同时，`qteasy`提供了一套交易策略组合机制，用户可以将多个简单的交易策略组合成一个比较复杂的交易策略，策略的组合方式是可以灵活设定的。将多个简单交易策略组合成一个复杂的策略后，同样可以使用策略优化工具搜索整个复杂策略的最佳参数。"
+msgid ""
+"`qteasy`提供了70多种内置交易策略，用户可以很容易地直接使用这些交易策略，同时，`qteasy`提供了一套交易策略组合机制，用户可以将多个简单的交易策略组合成一个比较复杂的交易策略，策略的组合方式是可以灵活设定的。将多个简单交易策略组合成一个复杂的策略后，同样可以使用策略优化工具搜索整个复杂策略的最佳参数。"
 msgstr ""
+"In qteasy gibt es mehr als 70 integrierte Handelsstrategien, die Benutzer "
+"problemlos direkt nutzen können. Gleichzeitig bietet qteasy eine Reihe von "
+"Handelsstrategie-Kombinationsmechanismen, und Benutzer können mehrere "
+"einfache Handelsstrategien zu einer komplexeren Handelsstrategie "
+"kombinieren. Die Kombinationsmethode der Strategie kann flexibel eingestellt"
+" werden. Nach der Kombination mehrerer einfacher Handelsstrategien zu einer "
+"komplexen Strategie kann das Strategieoptimierungstool auch zur Suche nach "
+"den besten Parametern der gesamten komplexen Strategie verwendet werden."
 
 #: ../../source/references/4-build-in-strategy-blender.md:5
 msgid "在这篇教程中，您将了解如何使用内置交易策略，如何组合策略，如何设定组合规则实现复杂策略，以及如何优化策略。"
 msgstr ""
+"In diesem Tutorial erfahren Sie, wie Sie integrierte Handelsstrategien "
+"verwenden, wie Sie Strategien kombinieren, wie Sie Kombinationsregeln "
+"festlegen, um komplexe Strategien zu erreichen, und wie Sie Strategien "
+"optimieren."
 
 #: ../../source/references/4-build-in-strategy-blender.md:8
 msgid "内置交易策略的使用"
-msgstr ""
+msgstr "Built-in Strategies"
 
 #: ../../source/references/4-build-in-strategy-blender.md:10
 msgid "`qt.get_built_in_strategy(id)`"
-msgstr ""
+msgstr "`qt.get_built_in_strategy(id)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:12
 msgid "`qt.built_in_list(stg_id=None)`"
-msgstr ""
+msgstr "`qt.built_in_list(stg_id=None)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:14
 msgid ""
 "上面三个方法的输出是一样的，都用一个`dict`列出所有的内置交易策略，`dict`的`key`是交易策略的ID，`value`是交易策略对象。 "
 "如果给出`stg_id`，则打印出指定的交易策略的详细信息。例如："
 msgstr ""
+"Die Ausgabe der oben genannten drei Methoden ist die gleiche, alle listen "
+"alle integrierten Handelsstrategien mit einem Diktat auf, wobei der "
+"Schlüssel die ID der Handelsstrategie und der Wert das "
+"Handelsstrategieobjekt ist. Wenn stg_id angegeben ist, werden die "
+"detaillierten Informationen der angegebenen Handelsstrategie gedruckt. Zum "
+"Beispiel:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:21
 msgid "打印如下信息："
-msgstr ""
+msgstr "Following information is printed:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:47
 msgid "在`qteasy`中，可以直接使用策略的ID获取内置交易策略"
 msgstr ""
+"Die integrierte Handelsstrategie kann direkt über die ID in qteasy abgerufen"
+" werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md:49
-msgid "除了使用`qt.get_built_in_strategy()`获取交易策略以外，在创建`Operator`对象的时候，将内置交易策略的ID作为参数传入，也可以直接创建交易策略。"
+msgid ""
+"除了使用`qt.get_built_in_strategy()`获取交易策略以外，在创建`Operator`对象的时候，将内置交易策略的ID作为参数传入，也可以直接创建交易策略。"
 msgstr ""
+"Neben der Verwendung von qt.get_built_in_strategy() zum Abrufen der "
+"Handelsstrategie kann die integrierte Handelsstrategie-ID auch als Parameter"
+" beim Erstellen des Operator-Objekts übergeben werden, um die "
+"Handelsstrategie direkt zu erstellen."
 
 #: ../../source/references/4-build-in-strategy-blender.md:131
 msgid "目前`qteasy`支持的内置交易策略如下："
 msgstr ""
+"Die folgenden integrierten Handelsstrategien werden von qteasy unterstützt:"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "策略名称"
-msgstr ""
+msgstr "Name"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "说明"
-msgstr ""
+msgstr "Description"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "crossline"
-msgstr ""
+msgstr "crossline"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingCrossline`"
-msgstr ""
+msgstr "`TimingCrossline`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
-"crossline择时策略类，利用长短均线的交叉确定多空状态<br "
-"/>1，当短均线位于长均线上方，且距离大于l\\*m%时，设置仓位目标为1<br "
-"/>2，当短均线位于长均线下方，且距离大于l\\*m%时，设置仓位目标为-1<br "
-"/>3，当长短均线之间的距离不大于l\\*m%时，设置仓位目标为0"
+"crossline择时策略类，利用长短均线的交叉确定多空状态<br />1，当短均线位于长均线上方，且距离大于l\\*m%时，设置仓位目标为1<br "
+"/>2，当短均线位于长均线下方，且距离大于l\\*m%时，设置仓位目标为-1<br />3，当长短均线之间的距离不大于l\\*m%时，设置仓位目标为0"
 msgstr ""
+"Crossline-Timing-Strategieklasse, die den Schnittpunkt der gleitenden Long- "
+"und Short-Durchschnitte verwendet, um den Long- und Short-Zustand zu "
+"bestimmen<br />1. Wenn der kurze gleitende Durchschnitt über dem langen "
+"gleitenden Durchschnitt liegt und der Abstand größer als l\\*m% ist, setzen "
+"Sie das Positionsziel auf 1<br />2. Wenn der kurze gleitende Durchschnitt "
+"unter dem langen gleitenden Durchschnitt liegt und der Abstand größer als "
+"l\\*m% ist, setzen Sie das Positionsziel auf -1<br />3. Wenn der Abstand "
+"zwischen den gleitenden Long- und Short-Durchschnitten nicht größer als "
+"l\\*m% ist, setzen Sie das Positionsziel auf 0"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "macd"
-msgstr ""
+msgstr "macd"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingMACD`"
-msgstr ""
+msgstr "`TimingMACD`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "MACD择时策略类，运用MACD均线策略，生成目标仓位百分比:<br />1，当MACD值大于0时，设置仓位目标为1<br "
 "/>2，当MACD值小于0时，设置仓位目标为0"
 msgstr ""
+"MACD-Timing-Strategieklasse, die die MACD-Strategie des gleitenden "
+"Durchschnitts verwendet, um den Zielpositionsprozentsatz zu generieren:<br "
+"/>1. Wenn der MACD-Wert größer als 0 ist, setzen Sie das Positionsziel auf "
+"1<br />2. Wenn der MACD-Wert kleiner als 0 ist, setzen Sie das Positionsziel"
+" auf 0"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dma"
-msgstr ""
+msgstr "dma"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingDMA`"
-msgstr ""
+msgstr "`TimingDMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "DMA择时策略<br />1， DMA在AMA上方时，多头区间，即DMA线自下而上穿越AMA线后，输出为1<br />2， "
 "DMA在AMA下方时，空头区间，即DMA线自上而下穿越AMA线后，输出为0"
 msgstr ""
+"DMA-Timing-Strategie<br />1. Wenn DMA über AMA liegt, handelt es sich um ein"
+" langes Positionsintervall, d. h. wenn die DMA-Linie die AMA-Linie von unten"
+" nach oben kreuzt, beträgt die Ausgabe 1<br />2. Wenn DMA unter AMA liegt, "
+"handelt es sich um ein kurzes Positionsintervall, d. h. wenn die DMA-Linie "
+"die AMA-Linie von oben nach unten kreuzt, ist die Ausgabe 0"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "trix"
-msgstr ""
+msgstr "trix"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingTRIX`"
-msgstr ""
+msgstr "`TimingTRIX`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "TRIX择时策略，使用股票价格的三重平滑指数移动平均价格进行多空判断:<br "
-"/>计算价格的三重平滑指数移动平均价TRIX，再计算M日TRIX的移动平均：<br />1， "
-"TRIX位于MATRIX上方时，设置仓位目标为1<br />2， TRIX位于MATRIX下方时，设置仓位目标位-1"
+"/>计算价格的三重平滑指数移动平均价TRIX，再计算M日TRIX的移动平均：<br />1， TRIX位于MATRIX上方时，设置仓位目标为1<br "
+"/>2， TRIX位于MATRIX下方时，设置仓位目标位-1"
 msgstr ""
+"TRIX-Timing-Strategie, die den dreifach geglätteten exponentiellen "
+"gleitenden Durchschnittspreis der Aktienpreise für die Long- und Short-"
+"Beurteilung verwendet:<br />Berechnen Sie den dreifach geglätteten "
+"exponentiellen gleitenden Durchschnittspreis TRIX des Preises und berechnen "
+"Sie dann den gleitenden Durchschnitt des M-Tages-TRIX:<br />1. Wenn TRIX "
+"über MATRIX liegt, setzen Sie das Positionsziel auf 1<br />2. Wenn TRIX "
+"unter MATRIX liegt, setzen Sie das Positionsziel auf -1"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "cdl"
-msgstr ""
+msgstr "cdl"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingCDL`"
-msgstr ""
+msgstr "`TimingCDL`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "CDL择时策略，在K线图中找到符合要求的cdldoji模式<br "
 "/>搜索历史数据窗口内出现的cdldoji模式（匹配度0～100之间），加总后/100，计算 等效cdldoji匹配数量，以匹配数量为交易信号。"
 msgstr ""
+"CDL-Timing-Strategie: Finden Sie das Cdldoji-Muster, das den Anforderungen "
+"im K-Linien-Diagramm entspricht. Suchen Sie nach dem Cdldoji-Muster, das im "
+"historischen Datenfenster angezeigt wird (Übereinstimmungsgrad zwischen 0 "
+"und 100), addieren Sie es /100 und berechnen Sie die entsprechende Cdldoji-"
+"Übereinstimmungsmenge, indem Sie die Übereinstimmungsmenge als Handelssignal"
+" verwenden."
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "bband"
-msgstr ""
+msgstr "bband"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "TimingBBand"
-msgstr ""
+msgstr "TimingBBand"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
-"布林带线交易策略，根据股价与布林带上轨和布林带下轨之间的关系确定多空，在价格上穿或下穿布林带线上下轨时产生交易信号。布林带线的均线类型不可选<br"
-" />1，当价格上穿上轨时，产生全仓买入信号<br />2，当价格下穿下轨时，产生全仓卖出信号"
+"布林带线交易策略，根据股价与布林带上轨和布林带下轨之间的关系确定多空，在价格上穿或下穿布林带线上下轨时产生交易信号。布林带线的均线类型不可选<br "
+"/>1，当价格上穿上轨时，产生全仓买入信号<br />2，当价格下穿下轨时，产生全仓卖出信号"
 msgstr ""
+"Die Bollinger-Band-Handelsstrategie bestimmt Long- und Short-Positionen auf "
+"der Grundlage der Beziehung zwischen den Aktienkursen und den oberen und "
+"unteren Bändern der Bollinger-Bänder. Handelssignale werden generiert, wenn "
+"der Preis die oberen und unteren Bänder überschreitet oder unterschreitet. "
+"Der Typ des gleitenden Durchschnitts der Bollinger-Bänder ist nicht "
+"wählbar<br"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "s-bband"
-msgstr ""
+msgstr "s-bband"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "SoftBBand"
-msgstr ""
+msgstr "SoftBBand"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "布林带线渐进交易策略，根据股价与布林带上轨和布林带下轨之间的关系确定多空，交易信号不是一次性产生的，而是逐步渐进买入和卖出。计算BBAND，检查价格是否超过BBAND的上轨或下轨：<br"
 " />1，当价格大于上轨后，每天产生10%的比例买入交易信号<br />2，当价格低于下轨后，每天产生33%的比例卖出交易信号"
 msgstr ""
+"Die progressive Bollinger-Band-Handelsstrategie bestimmt Long- und Short-"
+"Positionen auf der Grundlage der Beziehung zwischen Aktienkursen und den "
+"oberen und unteren Bändern der Bollinger-Bänder. Das Handelssignal wird "
+"nicht auf einmal generiert, sondern für den Kauf und Verkauf schrittweise "
+"erhöht. Berechnen Sie BBAND ​​und prüfen Sie, ob der Preis das obere oder "
+"untere Band von BBAND ​​überschreitet:<br />1. Wenn der Preis über dem "
+"oberen Band liegt, wird jeden Tag ein Kaufhandelssignal mit einem Anteil von"
+" 10 % generiert<br />2. Wenn der Preis unter dem unteren Band liegt, wird "
+"täglich ein Verkaufssignal mit einem Anteil von 33 % generiert"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sarext"
-msgstr ""
+msgstr "sarext"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingSAREXT`"
-msgstr ""
+msgstr "`TimingSAREXT`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "扩展抛物线SAR策略，当指标大于0时发出买入信号，当指标小于0时发出卖出信号"
 msgstr ""
+"Bei der SAR-Strategie wird ein Kaufsignal ausgegeben, wenn der Indikator "
+"größer als 0 ist, und wenn der Indikator kleiner als 0 ist, wird ein "
+"Verkaufssignal ausgegeben."
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ssma"
-msgstr ""
+msgstr "ssma"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSSMA`"
-msgstr ""
+msgstr "`SCRSSMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——SMA均线(简单移动平均线)：根据股价与SMA均线的相对位置设定持仓比例"
 msgstr ""
+"Single Moving Average Crossover-Strategie – SMA Moving Average (einfacher "
+"Moving Average): Legen Sie das Positionsverhältnis entsprechend der "
+"relativen Position des Aktienpreises und des SMA Moving Average fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sdema"
-msgstr ""
+msgstr "sdema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSDEMA`"
-msgstr ""
+msgstr "`SCRSDEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——DEMA均线(双重指数平滑移动平均线)：根据股价与DEMA均线的相对位置设定持仓比例"
 msgstr ""
+"Single Moving Average Crossover-Strategie - DEMA Moving Average (doppelter "
+"exponentieller Glättungsdurchschnitt): Legen Sie das Positionsverhältnis "
+"entsprechend der relativen Position des Aktienpreises und des DEMA Moving "
+"Average fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sema"
-msgstr ""
+msgstr "sema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSEMA`"
-msgstr ""
+msgstr "`SCRSEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——EMA均线(指数平滑移动均线)：根据股价与EMA均线的相对位置设定持仓比例"
 msgstr ""
+"Single Moving Average Crossover-Strategie – EMA Moving Average (Exponential "
+"Smoothing Moving Average): Legen Sie das Positionsverhältnis entsprechend "
+"der relativen Position des Aktienkurses und des EMA Moving Average fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sht"
-msgstr ""
+msgstr "sht"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSHT`"
-msgstr ""
+msgstr "`SCRSHT`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——HT(希尔伯特变换瞬时趋势线)：根据股价与HT线的相对位置设定持仓比例"
 msgstr ""
+"Single Moving Average Crossover-Strategie – HT (Hilbert-Transformation der "
+"momentanen Trendlinie): Legen Sie das Positionsverhältnis entsprechend der "
+"relativen Position des Aktienkurses und der HT-Linie fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "skama"
-msgstr ""
+msgstr "skama"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSKAMA`"
-msgstr ""
+msgstr "`SCRSKAMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——KAMA均线(考夫曼自适应移动均线)：根据股价与KAMA均线的相对位置设定持仓比例"
 msgstr ""
+"Single Moving Average Crossover-Strategie – KAMA Moving Average (Kaufman "
+"Adaptive Moving Average): Legen Sie das Positionsverhältnis entsprechend der"
+" relativen Position des Aktienkurses und des KAMA Moving Average fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "smama"
-msgstr ""
+msgstr "smama"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSMAMA`"
-msgstr ""
+msgstr "`SCRSMAMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——MAMA均线(MESA自适应移动平均线)：根据股价与MAMA均线的相对位置设定持仓比例"
 msgstr ""
+"Single Moving Average Crossover-Strategie – MAMA Moving Average (MESA "
+"Adaptive Moving Average): Legen Sie das Positionsverhältnis entsprechend der"
+" relativen Position des Aktienpreises und des MAMA Moving Average fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "st3"
-msgstr ""
+msgstr "st3"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRST3`"
-msgstr ""
+msgstr "`SCRST3`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——T3均线(三重指数平滑移动平均线)：根据股价与T3均线的相对位置设定持仓比例"
 msgstr ""
+"Single Moving Average Crossover-Strategie - T3 Moving Average (dreifacher "
+"exponentieller Glättungs-Moving Average): Legen Sie das Positionsverhältnis "
+"entsprechend der relativen Position des Aktienpreises und des T3 Moving "
+"Average fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "stema"
-msgstr ""
+msgstr "stema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSTEMA`"
-msgstr ""
+msgstr "`SCRSTEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——TEMA均线(三重指数平滑移动平均线)：根据股价与TEMA均线的相对位置设定持仓比例"
 msgstr ""
+"Crossover-Strategie mit einfachem gleitendem Durchschnitt – gleitender TEMA-"
+"Durchschnitt (dreifacher exponentieller Glättungs-gleitender Durchschnitt): "
+"Legen Sie das Positionsverhältnis entsprechend der relativen Position des "
+"Aktienpreises und des gleitenden TEMA-Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "strima"
-msgstr ""
+msgstr "strima"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSTRIMA`"
-msgstr ""
+msgstr "`SCRSTRIMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——TRIMA均线(三重指数平滑移动平均线)：根据股价与TRIMA均线的相对位置设定持仓比例"
 msgstr ""
+"Single-Moving-Average-Crossover-Strategie – TRIMA-Moving-Average (dreifacher"
+" exponentieller Glättungs-Moving-Average): Legen Sie das Positionsverhältnis"
+" entsprechend der relativen Position des Aktienkurses und des TRIMA-Moving-"
+"Average fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "swma"
-msgstr ""
+msgstr "swma"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SCRSWMA`"
-msgstr ""
+msgstr "`SCRSWMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "单均线交叉策略——WMA均线(加权移动平均线)：根据股价与WMA均线的相对位置设定持仓比例"
 msgstr ""
+"Single Moving Average Crossover-Strategie – WMA Moving Average (gewichteter "
+"Moving Average): Legen Sie das Positionsverhältnis entsprechend der "
+"relativen Position des Aktienpreises und des WMA Moving Average fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dsma"
-msgstr ""
+msgstr "dsma"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRSSMA`"
-msgstr ""
+msgstr "`DCRSSMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于SMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Crossover-Strategie mit doppeltem gleitenden Durchschnitt – gleitender SMA-"
+"Durchschnitt (einfacher gleitender Durchschnitt): <br />Generieren Sie "
+"schnelle und langsame gleitende Durchschnitte basierend auf den "
+"Berechnungsregeln für gleitende SMA-Durchschnitte und legen Sie das "
+"Positionsverhältnis entsprechend der relativen Position der schnellen und "
+"langsamen gleitenden Durchschnitte fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ddema"
-msgstr ""
+msgstr "ddema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRSDEMA`"
-msgstr ""
+msgstr "`DCRSDEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
-msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于DEMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
+msgid ""
+"双均线交叉策略——SMA均线(简单移动平均线)：<br />基于DEMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Double Moving Average Crossover-Strategie – SMA Moving Average (einfacher "
+"gleitender Durchschnitt): <br />Generieren Sie schnelle und langsame "
+"gleitende Durchschnitte basierend auf den DEMA-Berechnungsregeln für "
+"gleitende Durchschnitte und legen Sie das Positionsverhältnis entsprechend "
+"der relativen Position der schnellen und langsamen gleitenden Durchschnitte "
+"fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dema"
-msgstr ""
+msgstr "dema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRSEMA`"
-msgstr ""
+msgstr "`DCRSEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于EMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Double Moving Average Crossover-Strategie – SMA Moving Average (einfacher "
+"gleitender Durchschnitt): <br />Generieren Sie schnelle und langsame "
+"gleitende Durchschnitte basierend auf den EMA-Berechnungsregeln für "
+"gleitende Durchschnitte und legen Sie das Positionsverhältnis entsprechend "
+"der relativen Position der schnellen und langsamen gleitenden Durchschnitte "
+"fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dkama"
-msgstr ""
+msgstr "dkama"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRSKAMA`"
-msgstr ""
+msgstr "`DCRSKAMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
-msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于KAMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
+msgid ""
+"双均线交叉策略——SMA均线(简单移动平均线)：<br />基于KAMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Crossover-Strategie mit doppeltem gleitenden Durchschnitt – gleitender SMA-"
+"Durchschnitt (einfacher gleitender Durchschnitt): <br />Generieren Sie "
+"schnelle und langsame gleitende Durchschnitte basierend auf den KAMA-"
+"Berechnungsregeln für gleitende Durchschnitte und legen Sie das "
+"Positionsverhältnis entsprechend der relativen Position der schnellen und "
+"langsamen gleitenden Durchschnitte fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dmama"
-msgstr ""
+msgstr "dmama"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRSMAMA`"
-msgstr ""
+msgstr "`DCRSMAMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
-msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于MAMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
+msgid ""
+"双均线交叉策略——SMA均线(简单移动平均线)：<br />基于MAMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Crossover-Strategie mit doppeltem gleitenden Durchschnitt – gleitender SMA-"
+"Durchschnitt (einfacher gleitender Durchschnitt): <br />Generieren Sie "
+"schnelle und langsame gleitende Durchschnitte basierend auf den MAMA-"
+"Berechnungsregeln für gleitende Durchschnitte und legen Sie das "
+"Positionsverhältnis entsprechend der relativen Position der schnellen und "
+"langsamen gleitenden Durchschnitte fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dt3"
-msgstr ""
+msgstr "dt3"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRST3`"
-msgstr ""
+msgstr "`DCRST3`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于T3均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Crossover-Strategie mit doppeltem gleitenden Durchschnitt – gleitender SMA-"
+"Durchschnitt (einfacher gleitender Durchschnitt): <br />Generieren Sie "
+"schnelle und langsame gleitende Durchschnitte basierend auf den "
+"T3-Berechnungsregeln für gleitende Durchschnitte und legen Sie das "
+"Positionsverhältnis entsprechend der relativen Position der schnellen und "
+"langsamen gleitenden Durchschnitte fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dtema"
-msgstr ""
+msgstr "dtema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRSTEMA`"
-msgstr ""
+msgstr "`DCRSTEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
-msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于TEMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
+msgid ""
+"双均线交叉策略——SMA均线(简单移动平均线)：<br />基于TEMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Crossover-Strategie mit doppeltem gleitenden Durchschnitt – gleitender SMA-"
+"Durchschnitt (einfacher gleitender Durchschnitt): <br />Generieren Sie "
+"schnelle und langsame gleitende Durchschnitte basierend auf den TEMA-"
+"Berechnungsregeln für gleitende Durchschnitte und legen Sie das "
+"Positionsverhältnis entsprechend der relativen Position der schnellen und "
+"langsamen gleitenden Durchschnitte fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dtrima"
-msgstr ""
+msgstr "dtrima"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRSTRIMA`"
-msgstr ""
+msgstr "`DCRSTRIMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
-msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于TRIMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
+msgid ""
+"双均线交叉策略——SMA均线(简单移动平均线)：<br />基于TRIMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Crossover-Strategie mit doppeltem gleitenden Durchschnitt – gleitender SMA-"
+"Durchschnitt (einfacher gleitender Durchschnitt): <br />Generieren Sie "
+"schnelle und langsame gleitende Durchschnitte basierend auf den TRIMA-"
+"Berechnungsregeln für gleitende Durchschnitte und legen Sie das "
+"Positionsverhältnis entsprechend der relativen Position der schnellen und "
+"langsamen gleitenden Durchschnitte fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dwma"
-msgstr ""
+msgstr "dwma"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DCRSWMA`"
-msgstr ""
+msgstr "`DCRSWMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "双均线交叉策略——SMA均线(简单移动平均线)：<br />基于WMA均线计算规则生成快慢两根均线，根据快与慢两根均线的相对位置设定持仓比例"
 msgstr ""
+"Crossover-Strategie mit doppeltem gleitenden Durchschnitt – gleitender SMA-"
+"Durchschnitt (einfacher gleitender Durchschnitt): <br />Generieren Sie "
+"schnelle und langsame gleitende Durchschnitte basierend auf den WMA-"
+"Berechnungsregeln für gleitende Durchschnitte und legen Sie das "
+"Positionsverhältnis entsprechend der relativen Position der schnellen und "
+"langsamen gleitenden Durchschnitte fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "slsma"
-msgstr ""
+msgstr "slsma"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPSMA`"
-msgstr ""
+msgstr "`SLPSMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——SMA均线(简单移动平均线)：<br />基于SMA计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – SMA-gleitender Durchschnitt (einfacher "
+"gleitender Durchschnitt): <br />Generieren Sie gleitende Durchschnitte "
+"basierend auf den SMA-Berechnungsregeln und legen Sie das "
+"Positionsverhältnisziel entsprechend der Steigung des gleitenden "
+"Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sldema"
-msgstr ""
+msgstr "sldema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPDEMA`"
-msgstr ""
+msgstr "`SLPDEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——DEMA均线(双重指数平滑移动平均线)：<br />基于DEMA计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – gleitender DEMA-Durchschnitt (gleitender "
+"Durchschnitt mit doppelter exponentieller Glättung): <br />Generieren Sie "
+"gleitende Durchschnitte basierend auf den DEMA-Berechnungsregeln und legen "
+"Sie das Positionsverhältnisziel entsprechend der Steigung des gleitenden "
+"Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "slema"
-msgstr ""
+msgstr "slema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPEMA`"
-msgstr ""
+msgstr "`SLPEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——EMA均线(指数平滑移动平均线)：<br />基于EMA计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – gleitender EMA-Durchschnitt (exponentiell "
+"glättender gleitender Durchschnitt): <br />Generieren Sie gleitende "
+"Durchschnitte basierend auf den EMA-Berechnungsregeln und legen Sie das "
+"Positionsverhältnisziel entsprechend der Steigung des gleitenden "
+"Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "slht"
-msgstr ""
+msgstr "slht"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPHT`"
-msgstr ""
+msgstr "`SLPHT`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——HT均线(希尔伯特变换——瞬时趋势线线)：<br />基于HT计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – gleitender HT-Durchschnitt (Hilbert-"
+"Transformation – sofortige Trendlinie): <br />Generieren Sie gleitende "
+"Durchschnitte basierend auf den HT-Berechnungsregeln und legen Sie das "
+"Positionsverhältnisziel entsprechend der Steigung des gleitenden "
+"Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "slkama"
-msgstr ""
+msgstr "slkama"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPKAMA`"
-msgstr ""
+msgstr "`SLPKAMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——KAMA均线(考夫曼自适应移动平均线)：<br />基于KAMA计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – KAMA Moving Average (Kaufman adaptiver "
+"gleitender Durchschnitt): <br />Generieren Sie gleitende Durchschnitte "
+"basierend auf den KAMA-Berechnungsregeln und legen Sie das "
+"Positionsverhältnisziel entsprechend der Steigung des gleitenden "
+"Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "slmama"
-msgstr ""
+msgstr "slmama"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPMAMA`"
-msgstr ""
+msgstr "`SLPMAMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——MAMA均线(MESA自适应移动平均线)：<br />基于MAMA计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – MAMA Moving Average (MESA Adaptive Moving "
+"Average): <br />Generieren Sie gleitende Durchschnitte basierend auf den "
+"MAMA-Berechnungsregeln und legen Sie das Positionsverhältnisziel "
+"entsprechend der Steigung des gleitenden Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "slt3"
-msgstr ""
+msgstr "slt3"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPT3`"
-msgstr ""
+msgstr "`SLPT3`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——T3均线(三重指数平滑移动平均线)：<br />基于T3计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – gleitender T3-Durchschnitt (gleitender "
+"Durchschnitt mit dreifacher exponentieller Glättung): <br />Generieren Sie "
+"gleitende Durchschnitte basierend auf den T3-Berechnungsregeln und legen Sie"
+" das Positionsverhältnisziel entsprechend der Steigung des gleitenden "
+"Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sltema"
-msgstr ""
+msgstr "sltema"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPTEMA`"
-msgstr ""
+msgstr "`SLPTEMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——TEMA均线(三重指数平滑移动平均线)：<br />基于TEMA计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – gleitender TEMA-Durchschnitt (dreifach "
+"exponentiell glättender gleitender Durchschnitt): <br />Generieren Sie "
+"gleitende Durchschnitte basierend auf den TEMA-Berechnungsregeln und legen "
+"Sie das Positionsverhältnisziel entsprechend der Steigung des gleitenden "
+"Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sltrima"
-msgstr ""
+msgstr "sltrima"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPTRIMA`"
-msgstr ""
+msgstr "`SLPTRIMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——TRIMA均线(三重指数平滑移动平均线)：<br />基于TRIMA计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – TRIMA Moving Average (dreifach exponentiell "
+"glättender gleitender Durchschnitt): <br />Generieren Sie gleitende "
+"Durchschnitte basierend auf den TRIMA-Berechnungsregeln und legen Sie das "
+"Positionsverhältnisziel entsprechend der Steigung des gleitenden "
+"Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "slwma"
-msgstr ""
+msgstr "slwma"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SLPWMA`"
-msgstr ""
+msgstr "`SLPWMA`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均线斜率交易策略——WMA均线(加权移动平均线)：<br />基于WMA计算规则生成移动均线，根据均线的斜率设定持仓比例目标"
 msgstr ""
+"Steigungshandelsstrategie – WMA Moving Average (gewichteter gleitender "
+"Durchschnitt): <br />Generieren Sie gleitende Durchschnitte basierend auf "
+"den WMA-Berechnungsregeln und legen Sie das Positionsverhältnisziel "
+"entsprechend der Steigung des gleitenden Durchschnitts fest"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "adx"
-msgstr ""
+msgstr "adx"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`ADX`"
-msgstr ""
+msgstr "`ADX`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "ADX指标（平均定向运动指数）选股策略：<br />基于ADX指标判断当前趋势的强度，从而根据趋势强度产生交易信号<br />1, "
-"当ADX大于25时，判断趋势向上，设定持仓比例为1<br />2, 当ADX介于20到25之间时，判断为中性趋势，设定持仓比例为0<br />3,"
-" 当ADX小于20时，判断趋势向下，设定持仓比例为-1"
+"当ADX大于25时，判断趋势向上，设定持仓比例为1<br />2, 当ADX介于20到25之间时，判断为中性趋势，设定持仓比例为0<br />3, "
+"当ADX小于20时，判断趋势向下，设定持仓比例为-1"
 msgstr ""
+"Aktienauswahlstrategie für den ADX-Indikator (Average Directional Movement "
+"Index): <br />Bestimmen Sie anhand des ADX-Indikators die Stärke des "
+"aktuellen Trends und generieren Sie Handelssignale basierend auf der "
+"Trendstärke<br />1. Wenn ADX größer als 25 ist, wird der Trend als "
+"Aufwärtstrend beurteilt und das Positionsverhältnis auf 1<br />2 gesetzt. "
+"Wenn ADX zwischen 20 und 25 liegt, wird dies als neutraler Trend beurteilt "
+"und das Positionsverhältnis wird auf 0<br />3 gesetzt. Wenn ADX weniger als "
+"20 beträgt, wird davon ausgegangen, dass der Trend abwärts geht, und das "
+"Positionsverhältnis wird auf -1 gesetzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "apo"
-msgstr ""
+msgstr "apo"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`APO`"
-msgstr ""
+msgstr "`APO`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "APO指标（绝对价格震荡指标）选股策略：<br />基于APO指标判断当前股价变动的牛熊趋势，从而根据趋势产生交易信号<br />1, "
 "当APO大于0时，判断为牛市趋势，设定持仓比例为1<br />2, 当ADX小于0时，判断为熊市趋势，设定持仓比例为-1"
 msgstr ""
+"Aktienauswahlstrategie für den APO-Indikator (Absolute Price Oscillator): "
+"<br />Bestimmen Sie anhand des APO-Indikators die bullischen und bärischen "
+"Trends der aktuellen Aktienkursbewegung und generieren Sie Handelssignale "
+"basierend auf dem Trend<br />1. Wenn der APO größer als 0 ist, wird dies als"
+" Aufwärtstrend gewertet und das Positionsverhältnis auf 1<br />2 gesetzt. "
+"Wenn ADX kleiner als 0 ist, wird dies als Bärenmarkttrend beurteilt und das "
+"Positionsverhältnis auf -1 gesetzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "aroon"
-msgstr ""
+msgstr "aroon"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`AROON`"
-msgstr ""
+msgstr "`AROON`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -581,14 +812,21 @@ msgid ""
 "当UP在DOWN的上方时，输出弱多头<br />2, 当UP位于DOWN下方时，输出弱空头<br />3, "
 "当UP大于70且DOWN小于30时，输出强多头<br />4, 当UP小于30且DOWN大于70时，输出强空头"
 msgstr ""
+"Strategie zur Aktienauswahl des AROON-Indikators: <br />Ausgabe von starkem "
+"Long/Short und schwachem Long/Short basierend auf der Stärke des AROON-"
+"Indikatortrends<br />1. Wenn UP über DOWN liegt, wird „Weak Long“ "
+"ausgegeben<br />2. Wenn UP unter DOWN liegt, wird ein schwacher Kurzschluss "
+"ausgegeben<br />3. Wenn UP größer als 70 und DOWN kleiner als 30 ist, wird "
+"Strong Long ausgegeben<br />4. Wenn UP weniger als 30 und DOWN mehr als 70 "
+"beträgt, wird ein starker Kurzschluss ausgegeben"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "aroonosc"
-msgstr ""
+msgstr "aroonosc"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`AROONOSC`"
-msgstr ""
+msgstr "`AROONOSC`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -597,30 +835,45 @@ msgid ""
 "当AROONOSC大于0时，输出弱多头<br />2, 当AROONOSC小于0时，输出弱空头<br />3, "
 "当AROONOSC大于50时，输出强多头<br /> 4, 当AROONOSC小于-50时，输出强空头"
 msgstr ""
+"Strategie zur Aktienauswahl von AROON Oscillator: <br />Wenn AROONOSC größer"
+" als 0 ist, zeigt dies an, dass der Preistrend nach oben zeigt, und "
+"umgekehrt, dass der Trend nach unten zeigt. Wenn der absolute Wert größer "
+"als 50 ist, deutet dies auf einen starken Trend hin<br />1. Wenn AROONOSC "
+"größer als 0 ist, wird „Weak Long“ ausgegeben<br />2. Wenn AROONOSC kleiner "
+"als 0 ist, wird ein schwacher Kurzschluss ausgegeben<br />3. Wenn AROONOSC "
+"größer als 50 ist, wird Strong Long ausgegeben<br />4. Wenn AROONOSC weniger"
+" als -50 beträgt, wird ein starker Kurzschluss ausgegeben"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "cci"
-msgstr ""
+msgstr "cci"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`CCI`"
-msgstr ""
+msgstr "`CCI`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "CCI (Commodity Channel Index商品渠道指数) 选股策略：<br "
-"/>CCI商品渠道指数被用来判断当前股价位于超卖还是超买区间，本策略使用这个指标生成投资仓位目标<br />1, "
-"当CCI大于0时，输出弱多头<br />2, 当CCI小于0时，输出弱空头<br />3, 当CCI大于50时，输出强多头<br />4, "
-"当CCI小于-50时，输出强空头"
+"/>CCI商品渠道指数被用来判断当前股价位于超卖还是超买区间，本策略使用这个指标生成投资仓位目标<br />1, 当CCI大于0时，输出弱多头<br "
+"/>2, 当CCI小于0时，输出弱空头<br />3, 当CCI大于50时，输出强多头<br />4, 当CCI小于-50时，输出强空头"
 msgstr ""
+"CCI-Aktienauswahlstrategie (Commodity Channel Index): <br />Der CCI "
+"Commodity Channel Index wird verwendet, um zu bestimmen, ob der aktuelle "
+"Aktienkurs im überverkauften oder überkauften Bereich liegt. Diese Strategie"
+" nutzt diesen Indikator zur Generierung von Anlagepositionszielen<br />1. "
+"Wenn CCI größer als 0 ist, wird „Weak Long“ ausgegeben<br />2. Wenn CCI "
+"kleiner als 0 ist, wird ein schwacher Kurzschluss ausgegeben<br />3. Wenn "
+"CCI größer als 50 ist, wird Strong Long ausgegeben<br />4. Wenn der CCI "
+"weniger als -50 beträgt, wird ein starker Short ausgegeben"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "cmo"
-msgstr ""
+msgstr "cmo"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`CMO`"
-msgstr ""
+msgstr "`CMO`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -629,14 +882,23 @@ msgid ""
 "当CMO大于0时，输出弱多头<br />2, 当CMO小于0时，输出弱空头<br />3, 当CMO大于50时，输出强多头<br />4, "
 "当CMO小于-50时，输出强空头"
 msgstr ""
+"CMO (Chande Momentum Oscillator) stock selection strategy: <br />CMO is a "
+"momentum indicator that fluctuates between -100 and 100. It is used to "
+"determine whether the current stock price is in the oversold or overbought "
+"range. Diese Strategie nutzt diesen Indikator zur Generierung von "
+"Anlagepositionszielen<br />1. Wenn CMO größer als 0 ist, wird „Weak Long“ "
+"ausgegeben<br />2. Wenn CMO kleiner als 0 ist, wird ein schwacher "
+"Kurzschluss ausgegeben<br />3. Wenn CMO größer als 50 ist, wird „Strong "
+"Long“ ausgegeben<br />4. Wenn der CMO weniger als -50 beträgt, wird ein "
+"starker Short ausgegeben"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "macdext"
-msgstr ""
+msgstr "macdext"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`MACDEXT`"
-msgstr ""
+msgstr "`MACDEXT`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -644,29 +906,41 @@ msgid ""
 "/>本策略使用MACD指标生成持仓目标，但是与标准的MACD不同，MACDEXT的快、慢、及信号均线的类型均可选<br />1, "
 "当hist>0时输出多头<br />2, 当hist<0时输出空头"
 msgstr ""
+"MACDEXT (Extendec MACD) Aktienauswahlstrategie: <br />Diese Strategie "
+"verwendet den MACD-Indikator, um Positionsziele zu generieren, aber im "
+"Gegensatz zum Standard-MACD können bei MACDEXT die schnellen, langsamen und "
+"Signal-Moving-Average-Typen ausgewählt werden<br />1. Wenn hist>0 ist, wird "
+"long<br />2 ausgegeben. Wenn hist<0, wird kurz ausgegeben"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "mfi"
-msgstr ""
+msgstr "mfi"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`MFI`"
-msgstr ""
+msgstr "`MFI`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "MFI (Money Flow Index 货币流向指数) 交易策略：<br "
-"/>MFI指数用于判断股价属于超买还是超卖状态，本策略使用MFI指标生成交易信号<br />1, "
-"当MFI>20时，持续不断产生10%买入交易信号<br />2, 当MFI>80时，持续不断产生30%卖出交易信号，持续卖出持仓股票"
+"/>MFI指数用于判断股价属于超买还是超卖状态，本策略使用MFI指标生成交易信号<br />1, 当MFI>20时，持续不断产生10%买入交易信号<br"
+" />2, 当MFI>80时，持续不断产生30%卖出交易信号，持续卖出持仓股票"
 msgstr ""
+"MFI-Aktienauswahlstrategie (Money Flow Index): <br />Der MFI-Index wird "
+"verwendet, um zu bestimmen, ob sich der Aktienkurs in einem überkauften oder"
+" überverkauften Zustand befindet. Diese Strategie nutzt den MFI-Indikator, "
+"um Handelssignale zu generieren<br />1. Wenn MFI>20, generieren Sie "
+"kontinuierlich 10 % Kaufhandelssignale<br />2. Wenn MFI > 80, generieren Sie"
+" kontinuierlich 30 % Verkaufssignale und verkaufen Sie weiterhin die "
+"gehaltenen Aktien"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "di"
-msgstr ""
+msgstr "di"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DI`"
-msgstr ""
+msgstr "`DI`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -674,45 +948,65 @@ msgid ""
 "指标包含负方向指标与正方向指标，它们分别表示价格上行和下行的趋势强度，本策略使用±DI指标生成交易信号<br />1, 当+DI > "
 "-DI时，设置持仓目标为1<br /> 2, 当+DI < -DI时，设置持仓目标为-1"
 msgstr ""
+"DI-Handelsstrategie (Directory Indicator): <br />Der DI-Indikator umfasst "
+"einen negativen Richtungsindikator und einen positiven Richtungsindikator, "
+"die die Stärke der Aufwärts- bzw. Abwärtspreistrends darstellen. Diese "
+"Strategie verwendet ±DI-Indikatoren, um Handelssignale zu generieren<br />1."
+" Wenn +DI > -DI, ​​setzen Sie das Positionsziel auf 1<br />2. Wenn +DI < "
+"-DI, ​​setzen Sie das Positionsziel auf -1"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "dm"
-msgstr ""
+msgstr "dm"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`DM`"
-msgstr ""
+msgstr "`DM`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "DM (Directional Movement 方向运动指标) 交易策略：<br />DM 指标包含负方向运动指标(Negative "
 "Directional Movement)与正方向运动指标(Positive Directional "
-"Movement)，它们分别表示价格上行和下行的趋势，本策略使用±DM指标生成交易信号<br />1, 当+DM > "
-"-DM时，设置持仓目标为1<br />2, 当+DM < -DM时，设置持仓目标为-1<br />3, 其余情况设置持仓目标为0"
+"Movement)，它们分别表示价格上行和下行的趋势，本策略使用±DM指标生成交易信号<br />1, 当+DM > -DM时，设置持仓目标为1<br "
+"/>2, 当+DM < -DM时，设置持仓目标为-1<br />3, 其余情况设置持仓目标为0"
 msgstr ""
+"DM-Handelsstrategie (Directional Movement): <br />Der DM-Indikator umfasst "
+"einen negativen Richtungsbewegungsindikator und einen positiven "
+"Richtungsbewegungsindikator, die die Aufwärts- bzw. Abwärtstrends des "
+"Preises darstellen. Diese Strategie verwendet ±DM-Indikatoren, um "
+"Handelssignale zu generieren<br />1. Wenn +DM > -DM, setzen Sie das "
+"Positionsziel auf 1<br />2. Wenn +DM < -DM, setzen Sie das Positionsziel auf"
+" -1<br />3. In anderen Fällen setzen Sie das Positionsziel auf 0"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "mom"
-msgstr ""
+msgstr "mom"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`MOM`"
-msgstr ""
+msgstr "`MOM`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "MOM (momentum indicator 动量指标) 交易策略：<br />MOM "
-"指标可以用于识别价格的上行或下行趋势的强度，当前价格高于N日前价格时，MOM为正，反之为负。<br />1, 当MOM > "
-"0时，设置持仓目标为1<br />2, 当MOM < 0时，设置持仓目标为-1<br />3, 其余情况设置持仓目标为0"
+"指标可以用于识别价格的上行或下行趋势的强度，当前价格高于N日前价格时，MOM为正，反之为负。<br />1, 当MOM > 0时，设置持仓目标为1<br"
+" />2, 当MOM < 0时，设置持仓目标为-1<br />3, 其余情况设置持仓目标为0"
 msgstr ""
+"MOM-Handelsstrategie (Momentum-Indikator): <br />Der MOM-Indikator kann "
+"verwendet werden, um die Stärke von Aufwärts- oder Abwärtstrends zu "
+"identifizieren. Wenn der aktuelle Preis höher ist als der Preis vor N Tagen,"
+" ist MOM positiv; andernfalls ist es negativ.<br />1. Wenn MOM > 0, setzen "
+"Sie das Positionsziel auf 1<br />2. Wenn MOM < 0 ist, setzen Sie das "
+"Positionsziel auf -1<br />3. In anderen Fällen setzen Sie das Positionsziel "
+"auf 0"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ppo"
-msgstr ""
+msgstr "ppo"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`PPO`"
-msgstr ""
+msgstr "`PPO`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -720,29 +1014,43 @@ msgid ""
 "指标表示快慢两根移动均线之间的百分比差值，用于判断价格的变化趋势。长短均线的计算周期和均线类型均为策略参数。<br />1, 当PPO > "
 "0时，设置持仓目标为1<br />2, 当PPO < 0时，设置持仓目标为-1<br />3, 其余情况设置持仓目标为0"
 msgstr ""
+"PO-Handelsstrategie (Percentage Price Oscillator): <br />Der PPO-Indikator "
+"stellt die prozentuale Differenz zwischen schnellen und langsamen gleitenden"
+" Durchschnitten dar und wird zur Bestimmung des Preisänderungstrends "
+"verwendet. Der Berechnungszeitraum und die Art des gleitenden Durchschnitts "
+"der langen und kurzen gleitenden Durchschnitte sind beides "
+"Strategieparameter.<br />1. Wenn PPO > 0, setzen Sie das Positionsziel auf "
+"1<br />2. Wenn PPO < 0 ist, setzen Sie das Positionsziel auf -1<br />3. In "
+"anderen Fällen setzen Sie das Positionsziel auf 0"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "rsi"
-msgstr ""
+msgstr "rsi"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`RSI`"
-msgstr ""
+msgstr "`RSI`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "RSI (Relative Strength Index 相对强度指数) 交易策略：<br />RSI "
-"指标度量最近价格变化的幅度，从而判断目前股票属于超卖还是超买状态<br />1, 当RSI > ulim时，设置持仓目标为1<br />2, "
-"当RSI < llim时，设置持仓目标为-1<br />3, 其余情况设置持仓目标为0"
+"指标度量最近价格变化的幅度，从而判断目前股票属于超卖还是超买状态<br />1, 当RSI > ulim时，设置持仓目标为1<br />2, 当RSI "
+"< llim时，设置持仓目标为-1<br />3, 其余情况设置持仓目标为0"
 msgstr ""
+"Handelsstrategie RSI (Relative Strength Index): <br />Der RSI-Indikator "
+"misst das Ausmaß der jüngsten Preisänderungen, um festzustellen, ob sich die"
+" aktuelle Aktie in einem überverkauften oder überkauften Zustand befindet<br"
+" />1. Wenn RSI > ulim, setzen Sie das Positionsziel auf 1<br />2. Wenn RSI <"
+" llim ist, setzen Sie das Positionsziel auf -1<br />3. In anderen Fällen "
+"setzen Sie das Positionsziel auf 0"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "stoch"
-msgstr ""
+msgstr "stoch"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`STOCH`"
-msgstr ""
+msgstr "`STOCH`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -750,14 +1058,21 @@ msgid ""
 "指标度量价格变化的动量，并且动量的大小判断价格趋势，并生成比例买卖交易信号。<br />1, 当k > "
 "80时，产生逐步卖出信号，每周期卖出持有份额的30%<br />2, 当k < 20时，产生逐步买入信号，每周期买入总投资额的10%"
 msgstr ""
+"Handelsstrategie STOCH (Stochastic Indicator): <br />Der STOCH-Indikator "
+"misst die Dynamik von Preisänderungen, und die Größe der Dynamik bestimmt "
+"den Preistrend und erzeugt proportionale Kauf- und "
+"Verkaufshandelssignale.<br />1. Wenn k > 80, wird ein allmähliches "
+"Verkaufssignal generiert, das in jedem Zyklus 30 % der gehaltenen Aktien "
+"verkauft<br />2. Wenn k < 20, wird ein allmähliches Kaufsignal generiert, "
+"das in jedem Zyklus 10 % des Gesamtinvestitionsbetrags kauft"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "stochf"
-msgstr ""
+msgstr "stochf"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`STOCHF`"
-msgstr ""
+msgstr "`STOCHF`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -765,29 +1080,45 @@ msgid ""
 "指标度量价格变化的动量，与STOCH策略类似，使用快速随机指标判断价格趋势，并生成比例买卖交易信号。<br />1, 当k > "
 "80时，产生逐步卖出信号，每周期卖出持有份额的30%<br />2, 当k < 20时，产生逐步买入信号，每周期买入总投资额的10%"
 msgstr ""
+"Handelsstrategie STOCHF (Stochastic Fast Indicator): <br />Der STOCHF-"
+"Indikator misst die Dynamik von Preisänderungen. Ähnlich wie die STOCH-"
+"Strategie nutzt sie den schnellen stochastischen Indikator, um den "
+"Preistrend zu bestimmen und proportionale Kauf- und Verkaufshandelssignale "
+"zu generieren.<br />1. Wenn k > 80, wird ein allmähliches Verkaufssignal "
+"generiert, das in jedem Zyklus 30 % der gehaltenen Aktien verkauft<br />2. "
+"Wenn k < 20, wird ein allmähliches Kaufsignal generiert, das in jedem Zyklus"
+" 10 % des Gesamtinvestitionsbetrags kauft"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "stochrsi"
-msgstr ""
+msgstr "stochrsi"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`STOCHRSI`"
-msgstr ""
+msgstr "`STOCHRSI`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
-"STOCHRSI (Stochastic Relative Strength Index 随机相对强弱指标) 交易策略：<br "
-"/>STOCHRSI 指标度量价格变化的动量，该指标在0～1之间波动，表示相对的价格趋势强弱程度，并生成比例买卖交易信号<br />1, 当k >"
-" 0.8时，产生逐步卖出信号，每周期卖出持有份额的30%<br />2, 当k < 0.2时，产生逐步买入信号，每周期买入总投资额的10%"
+"STOCHRSI (Stochastic Relative Strength Index 随机相对强弱指标) 交易策略：<br />STOCHRSI "
+"指标度量价格变化的动量，该指标在0～1之间波动，表示相对的价格趋势强弱程度，并生成比例买卖交易信号<br />1, 当k > "
+"0.8时，产生逐步卖出信号，每周期卖出持有份额的30%<br />2, 当k < 0.2时，产生逐步买入信号，每周期买入总投资额的10%"
 msgstr ""
+"Handelsstrategie STOCHRSI (Stochastic Relative Strength Index): <br />Der "
+"STOCHRSI-Indikator misst die Dynamik von Preisänderungen. Dieser Indikator "
+"schwankt zwischen 0 und 1, zeigt die relative Stärke des Preistrends an und "
+"generiert proportionale Kauf- und Verkaufshandelssignale<br />1. Wenn k > "
+"0,8, wird ein allmähliches Verkaufssignal generiert, das in jedem Zyklus 30 "
+"% der gehaltenen Aktien verkauft<br />2. Wenn k < 0,2, wird ein allmähliches"
+" Kaufsignal generiert, das in jedem Zyklus 10 % des "
+"Gesamtinvestitionsbetrags kauft"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ultosc"
-msgstr ""
+msgstr "ultosc"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`ULTOSC`"
-msgstr ""
+msgstr "`ULTOSC`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -795,14 +1126,21 @@ msgid ""
 "指标通过三个不同的时间跨度计算价格动量，并根据多种不同动量之间的偏离值生成交易信号。<br />1, 当ULTOSC > "
 "u时，产生逐步卖出信号，每周期卖出持有份额的30%<br />2, 当ULTOSC < l时，产生逐步买入信号，每周期买入总投资额的10%"
 msgstr ""
+"Handelsstrategie ULTOSC (Ultimate Oscillator Indicator): <br />Der ULTOSC-"
+"Indikator berechnet die Preisdynamik über drei verschiedene Zeitspannen und "
+"generiert Handelssignale basierend auf den Abweichungswerten zwischen "
+"verschiedenen Impulsen.<br />1. Wenn ULTOSC > u, wird ein allmähliches "
+"Verkaufssignal generiert, das in jedem Zyklus 30 % der gehaltenen Aktien "
+"verkauft<br />2. Wenn ULTOSC < l, wird ein allmähliches Kaufsignal "
+"generiert, das in jedem Zyklus 10 % des Gesamtinvestitionsbetrags kauft"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "willr"
-msgstr ""
+msgstr "willr"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`WILLR`"
-msgstr ""
+msgstr "`WILLR`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -810,441 +1148,617 @@ msgid ""
 "指标被用于计算股价当前处于超买还是超卖区间，并用于生成交易信号<br />1, 当WILLR > "
 "-l时，产生逐步卖出信号，每周期卖出持有份额的30%<br />2, 当WILLR < -u时，产生逐步买入信号，每周期买入总投资额的10%"
 msgstr ""
+"WILLR (William's %R) Handelsstrategie: <br />Der WILLR-Indikator wird "
+"verwendet, um zu berechnen, ob der Aktienkurs derzeit im überkauften oder "
+"überverkauften Bereich liegt, und wird zur Generierung von Handelssignalen "
+"verwendet<br />1. Wenn WILLR > -l, wird ein allmähliches Verkaufssignal "
+"generiert, das in jedem Zyklus 30 % der gehaltenen Aktien verkauft<br />2. "
+"Wenn WILLR < -u, wird ein allmähliches Kaufsignal generiert, das in jedem "
+"Zyklus 10 % des Gesamtinvestitionsbetrags kauft"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "signal_none"
-msgstr ""
+msgstr "signal_none"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SignalNone`"
-msgstr ""
+msgstr "`SignalNone`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "空交易信号策略：不生成任何交易信号的策略"
 msgstr ""
+"Leere Handelssignalstrategie: Eine Strategie, die keine Handelssignale "
+"generiert"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sellrate"
-msgstr ""
+msgstr "sellrate"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SellRate`"
-msgstr ""
+msgstr "`SellRate`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
 "变化率卖出信号策略：当价格的变化率超过阈值时，产生卖出信号<br />1，当change > "
 "0，且day日涨幅大于change时，产生-1卖出信号<br />2，当change < 0，且day日跌幅大于change时，产生-1卖出信号"
 msgstr ""
+"Rate-of-Change-Verkaufssignalstrategie: Wenn die Änderungsrate des Preises "
+"den Schwellenwert überschreitet, wird ein Verkaufssignal generiert<br />1. "
+"Wenn die Veränderung > 0 ist und der tägliche Anstieg größer als die "
+"Veränderung ist, wird ein Verkaufssignal von -1 generiert<br />2. Wenn die "
+"Veränderung < 0 ist und der tägliche Rückgang größer als die Veränderung "
+"ist, wird ein Verkaufssignal von -1 generiert"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "buyrate"
-msgstr ""
+msgstr "buyrate"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`BuyRate`"
-msgstr ""
+msgstr "`BuyRate`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
-"变化率买入信号策略：当价格的变化率超过阈值时，产生买入信号<br />1，当change > "
-"0，且day日涨幅大于change时，产生1买入信号<br />2，当change < 0，且day日跌幅大于change时，产生1买入信号"
+"变化率买入信号策略：当价格的变化率超过阈值时，产生买入信号<br />1，当change > 0，且day日涨幅大于change时，产生1买入信号<br"
+" />2，当change < 0，且day日跌幅大于change时，产生1买入信号"
 msgstr ""
+"Rate-of-Change-Kaufsignalstrategie: Wenn die Änderungsrate des Preises den "
+"Schwellenwert überschreitet, wird ein Kaufsignal generiert<br />1. Wenn die "
+"Veränderung > 0 ist und der tägliche Anstieg größer als die Veränderung ist,"
+" wird ein 1-Kaufsignal generiert<br />2. Wenn die Veränderung < 0 ist und "
+"der tägliche Rückgang größer als die Veränderung ist, wird ein Kaufsignal "
+"von 1 generiert"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "long"
-msgstr ""
+msgstr "long"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingLong`"
-msgstr ""
+msgstr "`TimingLong`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "简单择时策略，整个历史周期上固定保持多头全仓状态"
 msgstr ""
+"Einfache Timing-Strategie, feste Long-Position im gesamten historischen "
+"Zeitraum"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "short"
-msgstr ""
+msgstr "short"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingShort`"
-msgstr ""
+msgstr "`TimingShort`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "简单择时策略，整个历史周期上固定保持空头全仓状态"
 msgstr ""
+"Einfache Timing-Strategie, feste Short-Position im gesamten historischen "
+"Zeitraum"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "zero"
-msgstr ""
+msgstr "zero"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`TimingZero`"
-msgstr ""
+msgstr "`TimingZero`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "简单择时策略，整个历史周期上固定保持空仓状态"
 msgstr ""
+"Einfache Timing-Strategie, feste Leerposition im gesamten historischen "
+"Zeitraum"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "all"
-msgstr ""
+msgstr "all"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingAll`"
-msgstr ""
+msgstr "`SelectingAll`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "保持历史股票池中的所有股票都被选中，投资比例平均分配"
 msgstr ""
+"Wählen Sie alle Aktien im historischen Aktienpool aus und die "
+"Investitionsquote wird gleichmäßig verteilt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "select_none"
-msgstr ""
+msgstr "select_none"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingNone`"
-msgstr ""
+msgstr "`SelectingNone`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "保持历史股票池中的所有股票都不被选中，投资仓位为0"
 msgstr ""
+"Wählen Sie keine der Aktien im historischen Aktienpool aus und die "
+"Anlageposition ist 0"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "random"
-msgstr ""
+msgstr "random"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingRandom`"
-msgstr ""
+msgstr "`SelectingRandom`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "在每个历史分段中，按照指定的比例（p<1时）随机抽取若干股票，或随机抽取指定数量（p>=1）的股票进入投资组合，投资比例平均分配"
 msgstr ""
+"Wählen Sie in jedem historischen Segment eine zufällige Anzahl von Aktien "
+"gemäß dem angegebenen Anteil aus (wenn p < 1) oder wählen Sie zufällig eine "
+"bestimmte Anzahl von Aktien (wenn p> = 1) aus, um sie in das Anlageportfolio"
+" aufzunehmen, und die Investitionsquote wird gleichmäßig verteilt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "finance"
-msgstr ""
+msgstr "finance"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingAvgIndicator`"
-msgstr ""
+msgstr "`SelectingAvgIndicator`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
-msgid "以股票过去一段时间内的财务指标的平均值作为选股因子选股，基础选股策略：以股票的历史指标的平均值作为选股因子，因子排序参数可以作为策略参数传入，改变策略数据类型，根据不同的历史数据选股，选股参数可以通过pars传入"
+msgid ""
+"以股票过去一段时间内的财务指标的平均值作为选股因子选股，基础选股策略：以股票的历史指标的平均值作为选股因子，因子排序参数可以作为策略参数传入，改变策略数据类型，根据不同的历史数据选股，选股参数可以通过pars传入"
 msgstr ""
+"Wählen Sie Aktien basierend auf dem Durchschnittswert der Finanzindikatoren "
+"über einen bestimmten Zeitraum aus. Grundlegende Aktienauswahlstrategie: "
+"Verwenden Sie den Durchschnittswert historischer Aktienindikatoren als "
+"Faktoren für die Aktienauswahl. Der Faktorsortierungsparameter kann als "
+"Strategieparameter übergeben werden, um den Datentyp der Strategie zu "
+"ändern. Wählen Sie Aktien basierend auf verschiedenen historischen Daten "
+"aus. Die Aktienauswahlparameter können über pars übergeben werden."
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ndaylast"
-msgstr ""
+msgstr "ndaylast"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingNDayLast`"
-msgstr ""
+msgstr "`SelectingNDayLast`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "以股票N天前的价格或数据指标作为选股因子选股"
 msgstr ""
+"Wählen Sie Aktien basierend auf dem Preis oder Datenindikator der Aktie vor "
+"N Tagen als Aktienauswahlfaktor aus"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ndayavg"
-msgstr ""
+msgstr "ndayavg"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingNDayAvg`"
-msgstr ""
+msgstr "`SelectingNDayAvg`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "以股票过去N天的价格或数据指标的平均值作为选股因子选股"
 msgstr ""
+"Wählen Sie Aktien basierend auf dem Durchschnittswert des Preis- oder "
+"Datenindikators der Aktie in den letzten N Tagen als Aktienauswahlfaktor aus"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ndayrate"
-msgstr ""
+msgstr "ndayrate"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingNDayRateChange`"
-msgstr ""
+msgstr "`SelectingNDayRateChange`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "以股票过去N天的价格或数据指标的变动比例作为选股因子选股"
 msgstr ""
+"Wählen Sie Aktien basierend auf der prozentualen Änderung des Preises oder "
+"Datenindikators der Aktie in den letzten N Tagen als Aktienauswahlfaktor aus"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ndaychg"
-msgstr ""
+msgstr "ndaychg"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingNDayChange`"
-msgstr ""
+msgstr "`SelectingNDayChange`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "以股票过去N天的价格或数据指标的变动值作为选股因子选股"
 msgstr ""
+"Wählen Sie Aktien basierend auf dem Änderungswert des Preises oder "
+"Datenindikators der Aktie in den letzten N Tagen als Aktienauswahlfaktor aus"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ndayvol"
-msgstr ""
+msgstr "ndayvol"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`SelectingNDayVolatility`"
-msgstr ""
+msgstr "`SelectingNDayVolatility`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "根据股票以前N天的股价波动率作为选股因子"
 msgstr ""
+"Wählen Sie Aktien basierend auf der Aktienkursvolatilität der letzten N Tage"
+" als Aktienauswahlfaktor aus"
 
 #: ../../source/references/4-build-in-strategy-blender.md:208
 msgid "如果需要查看每一个内置交易策略的详细解释，例如策略参数的含义、信号生成规则，可以查看每一个交易策略的`Doc-string`："
 msgstr ""
+"Wenn Sie eine detaillierte Erklärung jeder integrierten Handelsstrategie "
+"benötigen, beispielsweise die Bedeutung der Strategieparameter und "
+"Signalgenerierungsregeln, können Sie die Dokumentzeichenfolge jeder "
+"Handelsstrategie überprüfen:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:210
 msgid "例如："
-msgstr ""
+msgstr "For example:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:215
 msgid "可以看到"
-msgstr ""
+msgstr "You can see"
 
 #: ../../source/references/4-build-in-strategy-blender.md:244
 msgid "在`ipython`等交互式`python`环境中，也可以使用?来显示内置交易策略的详细信息，例如："
 msgstr ""
+"Detaillierte Informationen zu integrierten Handelsstrategien können auch in "
+"interaktiven Python-Umgebungen wie ipython mit „?“ angezeigt werden, zum "
+"Beispiel:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:250
 msgid "可以看到："
-msgstr ""
+msgstr "You can see:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:295
 msgid "多重策略以及策略组合"
-msgstr ""
+msgstr "Multiple strategies and strategy combinations"
 
 #: ../../source/references/4-build-in-strategy-blender.md:297
-msgid "在`qteasy`中，一个`Operator`交易员对象可以同时运行多个交易策略。这些交易策略在运行的时候，都会分别提取各自所需的历史数据，独立生成不同的交易信号，这些交易信号会被组合成一组交易信号，统一执行。"
+msgid ""
+"在`qteasy`中，一个`Operator`交易员对象可以同时运行多个交易策略。这些交易策略在运行的时候，都会分别提取各自所需的历史数据，独立生成不同的交易信号，这些交易信号会被组合成一组交易信号，统一执行。"
 msgstr ""
+"In qteasy kann ein Operator-Händlerobjekt mehrere Handelsstrategien "
+"gleichzeitig ausführen. Diese Handelsstrategien extrahieren ihre jeweiligen "
+"historischen Daten während des Betriebs unabhängig voneinander und erzeugen "
+"so unterschiedliche Handelssignale. Diese Handelssignale werden zur "
+"einheitlichen Ausführung zu einer Reihe von Handelssignalen zusammengefasst."
 
 #: ../../source/references/4-build-in-strategy-blender.md:299
-msgid "利用这种特性，用户可以在一个交易员对象中同时运行多个各有侧重的交易策略，例如，一个交易策略监控个股的股价，根据股价产生择信号，第二个交易策略专门负责监控大盘走势，通过大盘走势决定整体仓位。第三个交易策略专门负责止盈止损，在特定时刻止损。最终的交易信号以第一个交易策略为主，但受到第二个策略的节制，必要时会被第三个策略完全控制。"
+msgid ""
+"利用这种特性，用户可以在一个交易员对象中同时运行多个各有侧重的交易策略，例如，一个交易策略监控个股的股价，根据股价产生择信号，第二个交易策略专门负责监控大盘走势，通过大盘走势决定整体仓位。第三个交易策略专门负责止盈止损，在特定时刻止损。最终的交易信号以第一个交易策略为主，但受到第二个策略的节制，必要时会被第三个策略完全控制。"
 msgstr ""
+"Mit dieser Funktion können Benutzer mehrere Handelsstrategien mit "
+"unterschiedlichen Schwerpunkten in einem Händlerobjekt ausführen. "
+"Beispielsweise überwacht eine Handelsstrategie den Aktienkurs und generiert "
+"Auswahlsignale auf der Grundlage des Aktienkurses, während die zweite "
+"Handelsstrategie dafür verantwortlich ist, den Gesamtmarkttrend zu "
+"überwachen und darauf basierend die Gesamtposition zu bestimmen. Die dritte "
+"Handelsstrategie ist für Gewinnmitnahmen und Stop-Loss verantwortlich und "
+"führt Stop-Loss zu bestimmten Zeiten aus. Das endgültige Handelssignal "
+"basiert hauptsächlich auf der ersten Handelsstrategie, wird jedoch durch die"
+" zweite Strategie eingeschränkt und kann bei Bedarf vollständig durch die "
+"dritte Strategie gesteuert werden."
 
 #: ../../source/references/4-build-in-strategy-blender.md:301
-msgid "或者，用户也可以很容易地制定出一个“委员会”策略，在一个综合性策略中由多个策略独立地做出交易决策，最终的交易信号由所有子策略组成的”委员会“投票决定，投票的方式可以是简单多数、绝对多数、加权投票结果等等。"
+msgid ""
+"或者，用户也可以很容易地制定出一个“委员会”策略，在一个综合性策略中由多个策略独立地做出交易决策，最终的交易信号由所有子策略组成的”委员会“投票决定，投票的方式可以是简单多数、绝对多数、加权投票结果等等。"
 msgstr ""
+"Oder Benutzer können ganz einfach eine „Komitee“-Strategie formulieren, bei "
+"der mehrere Strategien unabhängig voneinander Handelsentscheidungen in einer"
+" umfassenden Strategie treffen. Das endgültige Handelssignal wird vom "
+"„Komitee“, das sich aus allen Unterstrategien zusammensetzt, durch "
+"Abstimmung festgelegt, die mit einfacher Mehrheit, absoluter Mehrheit, "
+"gewichteten Abstimmungsergebnissen usw. erfolgen kann."
 
 #: ../../source/references/4-build-in-strategy-blender.md:303
-msgid "上述交易策略组合中，每一个独立的交易策略都很简单，很容易定义，而将他们组合起来，又能发挥更大的作用。同时每一个子策略都是独立的，可以自由组合出复杂的综合性交易策略。这样可以避免不断地重复开发策略，只需要对子策略重新排列组合，重新定义组合方式，就可以快速地搭建一系列的复杂综合性交易策略。相信这样能够极大地提高交易策略的搭建效率，缩短周期。时间就是金钱。"
+msgid ""
+"上述交易策略组合中，每一个独立的交易策略都很简单，很容易定义，而将他们组合起来，又能发挥更大的作用。同时每一个子策略都是独立的，可以自由组合出复杂的综合性交易策略。这样可以避免不断地重复开发策略，只需要对子策略重新排列组合，重新定义组合方式，就可以快速地搭建一系列的复杂综合性交易策略。相信这样能够极大地提高交易策略的搭建效率，缩短周期。时间就是金钱。"
 msgstr ""
+"Bei der oben genannten Strategiekombination ist jede einzelne "
+"Handelsstrategie einfach und leicht zu definieren, während ihre Kombination "
+"eine größere Rolle spielen kann. Gleichzeitig ist jede Teilstrategie "
+"unabhängig und ermöglicht die freie Kombination zu komplexen, umfassenden "
+"Handelsstrategien. Dadurch kann vermieden werden, dass immer wieder "
+"Strategien entwickelt werden müssen; Stattdessen kann durch einfaches "
+"Umordnen und Neudefinieren der Kombination von Unterstrategien schnell eine "
+"Reihe komplexer, umfassender Handelsstrategien entstehen. Es wird davon "
+"ausgegangen, dass dies die Effizienz beim Aufbau von Handelsstrategien "
+"erheblich verbessert und den Zyklus verkürzt. Zeit ist Geld."
 
 #: ../../source/references/4-build-in-strategy-blender.md:305
-msgid "不过，在一个`Operator`对象中，不同策略生成的交易信号可能运行的交易价格是不同的，例如，某些策略生成开盘价交易信号，而另一些策略生成的是收盘价交易策略，那么不同的交易价格信号当然不应该混合。但除此之外，只要是交易价格相同的信号，都应该全部混合。"
+msgid ""
+"不过，在一个`Operator`对象中，不同策略生成的交易信号可能运行的交易价格是不同的，例如，某些策略生成开盘价交易信号，而另一些策略生成的是收盘价交易策略，那么不同的交易价格信号当然不应该混合。但除此之外，只要是交易价格相同的信号，都应该全部混合。"
 msgstr ""
+"In einem Operator-Objekt können die von verschiedenen Strategien generierten"
+" Handelssignale jedoch zu unterschiedlichen Handelspreisen funktionieren. "
+"Beispielsweise generieren einige Strategien Handelssignale für den "
+"Eröffnungskurs, während andere Handelsstrategien für den Schlusskurs "
+"generieren. Daher sollten unterschiedliche Handelspreissignale nicht "
+"gemischt werden. Aber abgesehen davon sollten alle Signale gemischt werden, "
+"solange die Handelspreise gleich sind."
 
 #: ../../source/references/4-build-in-strategy-blender.md:307
-msgid "交易信号的混合即交易信号的各种运算或函数，从简单的逻辑运算、加减运算一直到复杂的自定义函数，只要能够应用于一个`ndarray`的函数，理论上都可以用于混合交易信号，只要最终输出的交易信号有意义即可。"
+msgid ""
+"交易信号的混合即交易信号的各种运算或函数，从简单的逻辑运算、加减运算一直到复杂的自定义函数，只要能够应用于一个`ndarray`的函数，理论上都可以用于混合交易信号，只要最终输出的交易信号有意义即可。"
 msgstr ""
+"Beim Mischen von Handelssignalen handelt es sich um verschiedene Operationen"
+" oder Funktionen an Handelssignalen, die von einfachen logischen Operationen"
+" und Addition/Subtraktion bis hin zu komplexen benutzerdefinierten "
+"Funktionen reichen. Solange die Funktion auf ein Ndarray angewendet werden "
+"kann, kann sie theoretisch zum Mischen von Handelssignalen verwendet werden,"
+" sofern das endgültige Ausgabehandelssignal aussagekräftig ist."
 
 #: ../../source/references/4-build-in-strategy-blender.md:308
 msgid "定义策略组合方式`blender`"
-msgstr ""
+msgstr "Defining strategy combination method `blender`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:310
-msgid "`qteasy`中的组合策略是由`blender`实现的。在一个`Operator`中，如果策略的数量多于1个，就必须定义一个`blender`。如果没有明确定义`blender`，而策略的数量超过1个时，`qteasy`会在运行`Operator`的时候创建一个默认的`blender`，但是为了让多重策略正确运行，用户需要自行定义`blender`。"
+msgid ""
+"`qteasy`中的组合策略是由`blender`实现的。在一个`Operator`中，如果策略的数量多于1个，就必须定义一个`blender`。如果没有明确定义`blender`，而策略的数量超过1个时，`qteasy`会在运行`Operator`的时候创建一个默认的`blender`，但是为了让多重策略正确运行，用户需要自行定义`blender`。"
 msgstr ""
+"Die Kombinationsstrategie von „qteasy“ wird von „blender“ implementiert. "
+"Wenn in einem „Operator“ die Anzahl der Strategien 1 überschreitet, muss ein"
+" „Blender“ definiert werden. Wenn kein „Blender“ explizit definiert ist und "
+"die Anzahl der Strategien 1 überschreitet, erstellt „qteasy“ beim Ausführen "
+"von „Operator“ einen Standard-„Blender“. Um jedoch den korrekten Betrieb "
+"mehrerer Strategien sicherzustellen, müssen Benutzer den „Mixer“ selbst "
+"definieren."
 
 #: ../../source/references/4-build-in-strategy-blender.md:312
 msgid ""
 "`blender "
 "expression`是用户自行定义的一个组合表达式，用户使用这个表达式确定不同交易策略的组合方式。这个组合表达式使用四则运算符、逻辑运算符、函数等符号规定策略信号是如何组合的。`blender`表达式中可以包括以下元素："
 msgstr ""
+"„Blender-Ausdruck“ ist ein benutzerdefinierter Kombinationsausdruck, der die"
+" Kombinationsmethode verschiedener Handelsstrategien bestimmt. Dieser "
+"Kombinationsausdruck verwendet arithmetische Operatoren, logische "
+"Operatoren, Funktionen und andere Symbole, um anzugeben, wie "
+"Strategiesignale kombiniert werden. Der „blender“-Ausdruck kann die "
+"folgenden Elemente enthalten:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:314
 #: ../../source/references/4-build-in-strategy-blender.md:360
 msgid "`blender`表达式中支持的函数如下："
-msgstr ""
+msgstr "`blender` expression supports the following functions:"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "元素"
-msgstr ""
+msgstr "Elements"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "示例"
-msgstr ""
+msgstr "Examples"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "策略序号"
-msgstr ""
+msgstr "Strategy Number"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`s1`"
-msgstr ""
+msgstr "`s1`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "以s开头，数字结尾的字符串，数字为`Operator`中的策略的序号，代表这个策略生成的交易信号"
 msgstr ""
+"Eine Zeichenfolge, die mit „s“ beginnt und mit einer Zahl endet, wobei die "
+"Zahl der Index der Strategie im „Operator“ ist und das von dieser Strategie "
+"generierte Handelssignal darstellt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "数字"
-msgstr ""
+msgstr "Numbers"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`-1.35`"
-msgstr ""
+msgstr "`-1.35`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "任何合法的数字，参与表达式运算的数字"
 msgstr ""
+"Jede gültige Zahl, eine Zahl, die an Ausdrucksoperationen beteiligt ist"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "运算符"
-msgstr ""
+msgstr "Operators"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`+`"
-msgstr ""
+msgstr "`+`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "包括`'+-*/^'`等四则运算符"
-msgstr ""
+msgstr "arithmetic operators like `'+-*/^'` "
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "逻辑运算符"
-msgstr ""
+msgstr "Logical Operators"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`and`"
-msgstr ""
+msgstr "`and`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "支持`'&"
-msgstr ""
+msgstr "Supports `&"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "函数"
-msgstr ""
+msgstr "Functions"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`sum()`"
-msgstr ""
+msgstr "`sum()`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "支持的函数参见后表"
-msgstr ""
+msgstr "Functions supported are listed in the table below"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "括号"
-msgstr ""
+msgstr "Perentheses"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`()`"
-msgstr ""
+msgstr "`()`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "组合运算"
-msgstr ""
+msgstr "Combined Operations"
 
 #: ../../source/references/4-build-in-strategy-blender.md:326
 msgid "`blender`示例"
-msgstr ""
+msgstr "`blender`示例"
 
 #: ../../source/references/4-build-in-strategy-blender.md:328
-msgid "当一个`Operator`对象中有三个交易策略时（其序号分别为0/1/2），按照以下方式定义的`blender`都是合法可用的，同时使用`Operator.set_blender()`来设置`blender`："
+msgid ""
+"当一个`Operator`对象中有三个交易策略时（其序号分别为0/1/2），按照以下方式定义的`blender`都是合法可用的，同时使用`Operator.set_blender()`来设置`blender`："
 msgstr ""
+"Wenn es drei Handelsstrategien in einem „Operator“-Objekt (mit den Indizes "
+"0/1/2) gibt, sind die folgenden Möglichkeiten zur Definition von „blender“ "
+"alle gültig und können verwendet werden. Verwenden Sie gleichzeitig "
+"„Operator.set_blender()“, um „blender“ festzulegen:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:330
 msgid "使用四则运算符定义blender表达式"
-msgstr ""
+msgstr "Defining blender expression using arithmetic operators"
 
 #: ../../source/references/4-build-in-strategy-blender.md:332
 msgid "`'s0 + s1 + s2'`"
-msgstr ""
+msgstr "`'s0 + s1 + s2'`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:334
-msgid "此时三个交易策略生成的交易信号会被加起来，成为最终的交易信号，如果策略0的结果为买入10%，策略1结果为买入10%，策略2结果为买入30%，则最终的结果为买入50%"
+msgid ""
+"此时三个交易策略生成的交易信号会被加起来，成为最终的交易信号，如果策略0的结果为买入10%，策略1结果为买入10%，策略2结果为买入30%，则最终的结果为买入50%"
 msgstr ""
+"Die durch die drei Handelsstrategien erzeugten Handelssignale werden "
+"addiert, um das endgültige Handelssignal zu bilden. Wenn das Ergebnis von "
+"Strategie 0 ein Kauf von 10 % ist, das Ergebnis von Strategie 1 ein Kauf von"
+" 10 % und das Ergebnis von Strategie 2 ein Kauf von 30 %, dann ist das "
+"Endergebnis ein Kauf von 50 %."
 
 #: ../../source/references/4-build-in-strategy-blender.md:336
 msgid "使用逻辑运算符定义blender表达式："
-msgstr ""
+msgstr "Defining blender expression using logical operators:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:338
 msgid "`'s0 and s1 and s2'`"
-msgstr ""
+msgstr "`'s0 and s1 and s2'`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:340
-msgid "表示只有当交易策略1、2、3都出现交易信号的时候，才会最终形成交易信号。如策略1的结果为买入，策略2结果为买入，而策略3没有交易信号，则最终的结果为没有交易信号。"
+msgid ""
+"表示只有当交易策略1、2、3都出现交易信号的时候，才会最终形成交易信号。如策略1的结果为买入，策略2结果为买入，而策略3没有交易信号，则最终的结果为没有交易信号。"
 msgstr ""
+"Zeigt an, dass ein Handelssignal nur dann gebildet wird, wenn die "
+"Handelsstrategien 1, 2 und 3 alle Handelssignale haben. Wenn beispielsweise "
+"das Ergebnis von Strategie 1 ein Kauf ist, das Ergebnis von Strategie 2 ein "
+"Kauf ist und Strategie 3 kein Handelssignal hat, dann ist das Endergebnis "
+"kein Handelssignal."
 
 #: ../../source/references/4-build-in-strategy-blender.md:342
 msgid "blender表达式中还可以包含括号和一些函数："
 msgstr ""
+"Funktionen und Klammern können auch in den Blender-Ausdruck eingefügt "
+"werden:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:344
 msgid "`'max(s0, s1) + s2'`"
-msgstr ""
+msgstr "`'max(s0, s1) + s2'`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:346
-msgid "表示策略1、2的结果中最大值与策略3的结果相加，成为最终交易信号。如果策略1的结果为买入10%，策略2结果为买入20%，策略3结果为买入30%，最终的结果为买入50%"
+msgid ""
+"表示策略1、2的结果中最大值与策略3的结果相加，成为最终交易信号。如果策略1的结果为买入10%，策略2结果为买入20%，策略3结果为买入30%，最终的结果为买入50%"
 msgstr ""
+"Der Maximalwert der Ergebnisse der Strategien 1 und 2 wird zum Ergebnis der "
+"Strategie 3 addiert, um das endgültige Handelssignal zu bilden. Wenn das "
+"Ergebnis von Strategie 1 ein Kauf von 10 % ist, das Ergebnis von Strategie 2"
+" ein Kauf von 20 % und das Ergebnis von Strategie 3 ein Kauf von 30 %, dann "
+"ist das Endergebnis ein Kauf von 50 %."
 
 #: ../../source/references/4-build-in-strategy-blender.md:348
 msgid "blender 表达式中每个策略可以出现不止一次，也可以出现纯数字："
 msgstr ""
+"Dieselbe Strategie kann im Blender-Ausdruck mehr als einmal vorkommen, und "
+"es können auch reine Zahlen vorkommen:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:350
 msgid "`'(0.5 * s0 + 1.0 * s1 + 1.5 * s2) / 3 * min(s0, s1, s2)'`"
-msgstr ""
+msgstr "`'(0.5 * s0 + 1.0 * s1 + 1.5 * s2) / 3 * min(s0, s1, s2)'`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:352
 msgid "上面的blender表达式表示：首先计算三个策略信号的加权平均（权重分别为0.5、1.0、1.5），然后再乘以三个信号的最小值"
 msgstr ""
+"Der obige Mixer-Ausdruck bedeutet: Berechnen Sie zunächst den gewichteten "
+"Durchschnitt der drei Strategiesignale (mit den Gewichtungen 0,5, 1,0 und "
+"1,5) und multiplizieren Sie ihn dann mit dem Mindestwert der drei Signale."
 
 #: ../../source/references/4-build-in-strategy-blender.md:354
 msgid "blender 表达式中函数的操作参数在函数名中定义："
 msgstr ""
+"Funktionsparameter im Blender-Ausdruck werden im Funktionsnamen definiert:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:356
 msgid "`'clip_-0.5_0.5(s0 + s1 + s2) + pos_2_0.2(s0, s1, s2)'`"
-msgstr ""
+msgstr "`'clip_-0.5_0.5(s0 + s1 + s2) + pos_2_0.2(s0, s1, s2)'`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:358
-msgid "上面的`blender`表达式定义了两种不同的函数操作，分别得到结果后相加得到最终结果。第一个函数是范围剪切，将三组策略信号相加后，剪切掉小于-0.5的信号值以及大于0.5的信号值，得到计算结果；第二个函数是仓位判断函数，统计三组信号中持仓大于0.2的时间段，将其定义为“多头”，然后再统计每一个时间段三个策略中持多头建议的数量，如果超过两个策略持多头建议，则输出满仓多头，否则输出空仓。"
+msgid ""
+"上面的`blender`表达式定义了两种不同的函数操作，分别得到结果后相加得到最终结果。第一个函数是范围剪切，将三组策略信号相加后，剪切掉小于-0.5的信号值以及大于0.5的信号值，得到计算结果；第二个函数是仓位判断函数，统计三组信号中持仓大于0.2的时间段，将其定义为“多头”，然后再统计每一个时间段三个策略中持多头建议的数量，如果超过两个策略持多头建议，则输出满仓多头，否则输出空仓。"
 msgstr ""
+"Der obige Blender-Ausdruck definiert zwei verschiedene Funktionsoperationen,"
+" und die Ergebnisse werden addiert, um das Endergebnis zu erhalten. Die "
+"erste Funktion ist eine Bereichsbeschneidungsfunktion, die die drei Sätze "
+"von Strategiesignalen addiert und die Signalwerte kleiner als -0,5 und "
+"größer als 0,5 schneidet, um das Berechnungsergebnis zu erhalten. Die zweite"
+" Funktion ist eine Positionsbeurteilungsfunktion, die die Zeiträume zählt, "
+"in denen die drei Signalsätze Positionen größer als 0,2 haben, und sie als "
+"„lang“ definiert. Anschließend wird die Anzahl der Strategien gezählt, die "
+"in jedem Zeitraum Long-Positionen vorschlagen. Wenn mehr als zwei Strategien"
+" Long-Positionen vorschlagen, wird eine vollständige Long-Position "
+"ausgegeben; andernfalls wird eine leere Position ausgegeben."
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "表达式"
-msgstr ""
+msgstr "Expressions"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "abs"
-msgstr ""
+msgstr "abs"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`abs(*signals)`"
-msgstr ""
+msgstr "`abs(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "绝对值函数<br />计算所有交易信号的绝对值<br />输入信号的数量不限"
 msgstr ""
+"Absolutwertfunktion<br />Berechnen Sie den Absolutwert aller "
+"Handelssignale<br />Die Anzahl der Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "avg"
-msgstr ""
+msgstr "avg"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`avg(*signals)`"
-msgstr ""
+msgstr "`avg(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "平均值函数<br />计算所有交易信号的平均值<br />输入信号的数量不限"
 msgstr ""
+"Durchschnittswertfunktion<br />Berechnen Sie den Durchschnittswert aller "
+"Handelssignale<br />Die Anzahl der Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "avgpos"
-msgstr ""
+msgstr "avgpos"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`avgpos_N_T(*signals)`"
-msgstr ""
+msgstr "`avgpos_N_T(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -1252,50 +1766,64 @@ msgid ""
 "/>当交易信号为持仓目标信号时，统计同一时间产生非空仓信号（输出信号绝对值>T）的个数，当空头/多头信号的数量大于N时，输出所有空头/多头信号的平均值，否则输出0.<br"
 " />输入信号的数量不限"
 msgstr ""
+"Durchschnittliche kumulative Funktion<br />Wenn das Handelssignal ein "
+"Positionszielsignal ist, zählen Sie die Anzahl der gleichzeitig erzeugten "
+"nicht leeren Positionssignale (Absolutwert des Ausgangssignals > T). Wenn "
+"die Anzahl der kurzen/langen Signale größer als N ist, wird der Durchschnitt"
+" aller kurzen/langen Signale ausgegeben. andernfalls Ausgang 0.<br />Die "
+"Anzahl der Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "ceil"
-msgstr ""
+msgstr "ceil"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`ceil(signal)`"
-msgstr ""
+msgstr "`ceil(signal)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "向上取整函数<br />交易信号向上取整<br />只能输入一个交易信号"
 msgstr ""
+"Deckenfunktion<br />Handelssignal aufgerundet<br />Es kann nur ein "
+"Handelssignal eingegeben werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "clip"
-msgstr ""
+msgstr "clip"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`clip_U_L(signal)`"
-msgstr ""
+msgstr "`clip_U_L(signal)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "范围剪切函数<br />剪切超过范围的信号值，剪切上下范围在函数名中定义<br />只能输入一个交易信号"
 msgstr ""
+"Clipping-Funktion<br />Clipping der Signalwerte, die den Bereich "
+"überschreiten, und die oberen und unteren Clipping-Bereiche werden im "
+"Funktionsnamen definiert<br />Es kann nur ein Handelssignal eingegeben "
+"werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "combo"
-msgstr ""
+msgstr "combo"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`combo(*signals)`"
-msgstr ""
+msgstr "`combo(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "组合值函数<br />输出所有交易信号加总的值<br />输入信号的数量不限"
 msgstr ""
+"Combo-Funktion<br />Geben Sie die Summe aller Handelssignale aus<br />Die "
+"Anzahl der Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "committee"
-msgstr ""
+msgstr "committee"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`cmt_N_T(*signals)`"
-msgstr ""
+msgstr "`cmt_N_T(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -1303,86 +1831,104 @@ msgid ""
 "/>当交易信号为持仓目标信号时，统计同一时间产生非空仓信号（输出信号绝对值>T）的个数数，当多头/空头信号的数量大于N时，输出-1/1，否则输出0.<br"
 " />输入信号的数量不限"
 msgstr ""
+"Ausschussfunktion (entspricht der kumulativen Positionsfunktion)<br />Wenn "
+"das Handelssignal ein Positionszielsignal ist, zählen Sie die Anzahl der "
+"gleichzeitig erzeugten nicht leeren Positionssignale (Absolutwert des "
+"Ausgangssignals > T). Wenn die Anzahl der langen/kurzen Signale größer als N"
+" ist, wird -1/1 ausgegeben; andernfalls Ausgang 0.<br />Die Anzahl der "
+"Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "exp"
-msgstr ""
+msgstr "exp"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`exp(signal)`"
-msgstr ""
+msgstr "`exp(signal)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "exp函数<br />计算e的信号次幂<br />只能输入一个交易信号"
 msgstr ""
+"Exponentenfunktion<br />Berechnen Sie die Potenz von e zum Signal<br />Es "
+"kann nur ein Handelssignal eingegeben werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "floor"
-msgstr ""
+msgstr "floor"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`floor(signal)`"
-msgstr ""
+msgstr "`floor(signal)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "向下取整函数<br />交易信号向下取整<br />只能输入一个交易信号"
 msgstr ""
+"Floor-Funktion<br />Handelssignal abgerundet<br />Es kann nur ein "
+"Handelssignal eingegeben werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "log"
-msgstr ""
+msgstr "log"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`log(signal)`"
-msgstr ""
+msgstr "`log(signal)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "对数函数<br />计算以e为底的对数值<br />只能输入一个交易信号"
 msgstr ""
+"Logarithmusfunktion<br />Berechnen Sie den Logarithmuswert mit der Basis "
+"e<br />Es kann nur ein Handelssignal eingegeben werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "log10"
-msgstr ""
+msgstr "log10"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`log10(signal)`"
-msgstr ""
+msgstr "`log10(signal)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "以10为底的对数函数<br />计算以10为底的对数值<br />只能输入一个交易信号"
 msgstr ""
+"Logarithmus-Basis-10-Funktion<br />Berechnen Sie den Logarithmuswert mit "
+"Basis 10<br />Es kann nur ein Handelssignal eingegeben werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "max"
-msgstr ""
+msgstr "max"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`max(*signals)`"
-msgstr ""
+msgstr "`max(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "最大值函数<br />计算所有交易信号的最大值<br />输入信号的数量不限"
 msgstr ""
+"Maximalwertfunktion<br />Berechnen Sie den Maximalwert aller "
+"Handelssignale<br />Die Anzahl der Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "min"
-msgstr ""
+msgstr "min"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`min(*signals)`"
-msgstr ""
+msgstr "`min(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "最小值函数<br />计算所有交易信号的最小值<br />输入信号的数量不限"
 msgstr ""
+"Minimalwertfunktion<br />Berechnen Sie den Minimalwert aller "
+"Handelssignale<br />Die Anzahl der Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "pos"
-msgstr ""
+msgstr "pos"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`pos_N_T(*signals)`"
-msgstr ""
+msgstr "`pos_N_T(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -1390,94 +1936,111 @@ msgid ""
 "/>当交易信号为持仓目标信号时，统计同一时间产生非空仓信号（输出信号绝对值>T）的个数数，当多头/空头信号的数量大于N时，输出-1/1，否则输出0.<br"
 " />输入信号的数量不限"
 msgstr ""
+"Kumulative Positionsfunktion<br />Wenn das Handelssignal ein "
+"Positionszielsignal ist, zählen Sie die Anzahl der gleichzeitig erzeugten "
+"nicht leeren Positionssignale (Absolutwert des Ausgangssignals > T). Wenn "
+"die Anzahl der langen/kurzen Signale größer als N ist, wird -1/1 ausgegeben;"
+" andernfalls Ausgang 0.<br />Die Anzahl der Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "position"
-msgstr ""
+msgstr "position"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`position_N_T(*signals)`"
-msgstr ""
+msgstr "`position_N_T(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "pow"
-msgstr ""
+msgstr "pow"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`pow(*signals)`"
-msgstr ""
+msgstr "`pow(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "幂函数<br />计算第一个交易信号的第二个信号次幂即sig0^sig1<br />输入信号的数量只能为两个"
 msgstr ""
+"Potenzfunktion<br />Berechnen Sie das erste Handelssignal hoch mit dem "
+"zweiten Handelssignal, d. h. sig0^sig1<br />Die Anzahl der Eingangssignale "
+"kann nur zwei betragen"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "power"
-msgstr ""
+msgstr "power"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`power(*signals)`"
-msgstr ""
+msgstr "`power(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sqrt"
-msgstr ""
+msgstr "sqrt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`sqrt(signal)`"
-msgstr ""
+msgstr "`sqrt(signal)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "平方根函数<br />交易信号的平方根<br />只能输入一个交易信号"
 msgstr ""
+"Quadratwurzelfunktion<br />Quadratwurzel des Handelssignals<br />Es kann nur"
+" ein Handelssignal eingegeben werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "str"
-msgstr ""
+msgstr "str"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`str_T(*signals)`"
-msgstr ""
+msgstr "`str_T(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "强度累计函数<br />将所有交易信号加总，当信号强度超过T时，输出1，否则输出0<br />输入信号的数量不限"
 msgstr ""
+"Kumulative Stärkefunktion<br />Alle Handelssignale summieren, 1 ausgeben, "
+"wenn die Signalstärke T überschreitet, andernfalls 0 ausgeben<br />Die "
+"Anzahl der Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "strength"
-msgstr ""
+msgstr "strength"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`strength_T(*signals)`"
-msgstr ""
+msgstr "`strength_T(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "sum"
-msgstr ""
+msgstr "sum"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`sum(*signals)`"
-msgstr ""
+msgstr "`sum(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "unify"
-msgstr ""
+msgstr "unify"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`unify(signal)`"
-msgstr ""
+msgstr "`unify(signal)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "均一化函数<br />均一化交易信号，等比缩放同一行的交易信号使每一行的总和为1<br />只能输入一个交易信号"
 msgstr ""
+"Vereinheitlichungsfunktion<br />Normalisieren Sie Handelssignale und "
+"skalieren Sie die Handelssignale in derselben Zeile proportional, sodass die"
+" Summe jeder Zeile 1 ist.<br />Es kann nur ein Handelssignal eingegeben "
+"werden"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "vote"
-msgstr ""
+msgstr "vote"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "`vote_N_T(*signals)`"
-msgstr ""
+msgstr "`vote_N_T(*signals)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid ""
@@ -1485,54 +2048,64 @@ msgid ""
 "/>当交易信号为持仓目标信号时，统计同一时间产生非空仓信号（输出信号绝对值>T）的个数数，当多头/空头信号的数量大于N时，输出-1/1，否则输出0.<br"
 " />输入信号的数量不限"
 msgstr ""
+"Abstimmungsfunktion (entspricht der kumulativen Positionsfunktion)<br />Wenn"
+" das Handelssignal ein Positionszielsignal ist, zählen Sie die Anzahl der "
+"gleichzeitig erzeugten nicht leeren Positionssignale (Absolutwert des "
+"Ausgangssignals > T). Wenn die Anzahl der langen/kurzen Signale größer als N"
+" ist, wird -1/1 ausgegeben; andernfalls Ausgang 0.<br />Die Anzahl der "
+"Eingangssignale ist unbegrenzt"
 
 #: ../../source/references/4-build-in-strategy-blender.md:389
 msgid "以下方法可以被用来设置或获取策略的`blender`"
-msgstr ""
+msgstr "blender can be set or retrieved using the following methods"
 
 #: ../../source/references/4-build-in-strategy-blender.md:391
 msgid "`operator.set_blender(blender=None, price_type=None)`"
-msgstr ""
+msgstr "`operator.set_blender(blender=None, price_type=None)`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:392
 msgid "设置`blender`，直接传入一个表达式，这个表达式会被自动解析后用于组合交易策略。"
 msgstr ""
+"Übergeben Sie direkt einen Ausdruck, um den Mixer festzulegen, der "
+"automatisch analysiert und zum Kombinieren von Handelsstrategien verwendet "
+"wird."
 
 #: ../../source/references/4-build-in-strategy-blender.md:395
 msgid "`operator.view_blender()`"
-msgstr ""
+msgstr "`operator.view_blender()`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:396
 msgid "查看`blender`"
-msgstr ""
+msgstr "查看`blender`"
 
 #: ../../source/references/4-build-in-strategy-blender.md:398
 msgid "`blender`使用示例"
-msgstr ""
+msgstr "Examples of blender usage"
 
 #: ../../source/references/4-build-in-strategy-blender.md:400
 msgid "下面使用一个例子来演示`blender`的工作方式："
-msgstr ""
+msgstr "Here is an example to demonstrate how blender works:"
 
 #: ../../source/references/4-build-in-strategy-blender.md:469
 msgid "![png](img/output_10_1.png)"
-msgstr ""
+msgstr "![png](img/output_10_1.png)"
 
 #: ../../source/references/4-build-in-strategy-blender.md:469
 #: ../../source/references/4-build-in-strategy-blender.md:527
 #: ../../source/references/4-build-in-strategy-blender.md:580
 msgid "png"
-msgstr ""
+msgstr "png"
 
 #: ../../source/references/4-build-in-strategy-blender.md:527
 msgid "![png](img/output_11_1.png)"
-msgstr ""
+msgstr "![png](img/output_11_1.png)"
 
 #: ../../source/references/4-build-in-strategy-blender.md:580
 msgid "![png](img/output_12_1_2.png)"
-msgstr ""
+msgstr "![png](img/output_12_1_2.png)"
 
-#~ msgid "qteasy提供了70多种内置交易策略，用户可以很容易地直接使用这些交易策略，同时，qteasy提供了一套交易策略组合机制，用户可以将多个简单的交易策略组合成一个比较复杂的交易策略，策略的组合方式是可以灵活设定的。将多个简单交易策略组合成一个复杂的策略后，同样可以使用策略优化工具搜索整个复杂策略的最佳参数。"
+#~ msgid ""
+#~ "qteasy提供了70多种内置交易策略，用户可以很容易地直接使用这些交易策略，同时，qteasy提供了一套交易策略组合机制，用户可以将多个简单的交易策略组合成一个比较复杂的交易策略，策略的组合方式是可以灵活设定的。将多个简单交易策略组合成一个复杂的策略后，同样可以使用策略优化工具搜索整个复杂策略的最佳参数。"
 #~ msgstr ""
 
 #~ msgid ""
@@ -1543,7 +2116,8 @@ msgstr ""
 #~ msgid "在qteasy中，可以直接使用策略的ID获取内置交易策略"
 #~ msgstr ""
 
-#~ msgid "除了使用qt.get_built_in_strategy()获取交易策略以外，在创建Operator对象的时候，将内置交易策略的ID作为参数传入，也可以直接创建交易策略。"
+#~ msgid ""
+#~ "除了使用qt.get_built_in_strategy()获取交易策略以外，在创建Operator对象的时候，将内置交易策略的ID作为参数传入，也可以直接创建交易策略。"
 #~ msgstr ""
 
 #~ msgid "目前qteasy支持的内置交易策略如下："
@@ -1555,16 +2129,20 @@ msgstr ""
 #~ msgid "在ipython等交互式python环境中，也可以使用?来显示内置交易策略的详细信息，例如："
 #~ msgstr ""
 
-#~ msgid "在qteasy中，一个Operator交易员对象可以同时运行多个交易策略。这些交易策略在运行的时候，都会分别提取各自所需的历史数据，独立生成不同的交易信号，这些交易信号会被组合成一组交易信号，统一执行。"
+#~ msgid ""
+#~ "在qteasy中，一个Operator交易员对象可以同时运行多个交易策略。这些交易策略在运行的时候，都会分别提取各自所需的历史数据，独立生成不同的交易信号，这些交易信号会被组合成一组交易信号，统一执行。"
 #~ msgstr ""
 
-#~ msgid "不过，在一个Operator对象中，不同策略生成的交易信号可能运行的交易价格是不同的，例如，某些策略生成开盘价交易信号，而另一些策略生成的是收盘价交易策略，那么不同的交易价格信号当然不应该混合。但除此之外，只要是交易价格相同的信号，都应该全部混合。"
+#~ msgid ""
+#~ "不过，在一个Operator对象中，不同策略生成的交易信号可能运行的交易价格是不同的，例如，某些策略生成开盘价交易信号，而另一些策略生成的是收盘价交易策略，那么不同的交易价格信号当然不应该混合。但除此之外，只要是交易价格相同的信号，都应该全部混合。"
 #~ msgstr ""
 
-#~ msgid "交易信号的混合即交易信号的各种运算或函数，从简单的逻辑运算、加减运算一直到复杂的自定义函数，只要能够应用于一个ndarray的函数，理论上都可以用于混合交易信号，只要最终输出的交易信号有意义即可。"
+#~ msgid ""
+#~ "交易信号的混合即交易信号的各种运算或函数，从简单的逻辑运算、加减运算一直到复杂的自定义函数，只要能够应用于一个ndarray的函数，理论上都可以用于混合交易信号，只要最终输出的交易信号有意义即可。"
 #~ msgstr ""
 
-#~ msgid "上面的blender表达式定义了两种不同的函数操作，分别得到结果后相加得到最终结果。第一个函数是范围剪切，将三组策略信号相加后，剪切掉小于-0.5的信号值以及大于0.5的信号值，得到计算结果；第二个函数是仓位判断函数，统计三组信号中持仓大于0.2的时间段，将其定义为“多头”，然后再统计每一个时间段三个策略中持多头建议的数量，如果超过两个策略持多头建议，则输出满仓多头，否则输出空仓。"
+#~ msgid ""
+#~ "上面的blender表达式定义了两种不同的函数操作，分别得到结果后相加得到最终结果。第一个函数是范围剪切，将三组策略信号相加后，剪切掉小于-0.5的信号值以及大于0.5的信号值，得到计算结果；第二个函数是仓位判断函数，统计三组信号中持仓大于0.2的时间段，将其定义为“多头”，然后再统计每一个时间段三个策略中持多头建议的数量，如果超过两个策略持多头建议，则输出满仓多头，否则输出空仓。"
 #~ msgstr ""
 
 #~ msgid "blender表达式中支持的函数如下："
@@ -1584,4 +2162,3 @@ msgstr ""
 
 #~ msgid "下面使用一个例子来演示blender的工作方式："
 #~ msgstr ""
-

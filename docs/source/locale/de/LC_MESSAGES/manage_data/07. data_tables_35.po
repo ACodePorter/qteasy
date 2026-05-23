@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -21,1675 +20,1665 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_35.md:1
 msgid "`DataTables`——上市公司技术面指标及市场趋势"
-msgstr ""
+msgstr "`DataTables` — Listed-company technical indicators and market trends"
 
 #: ../../source/manage_data/3. data_tables_35.md:4
 msgid "沪深股票技术指标数据："
-msgstr ""
+msgstr "A-share technical indicator data:"
 
 #: ../../source/manage_data/3. data_tables_35.md:6
 msgid "股票技术指标: `stock_indicator`"
-msgstr ""
+msgstr "Stock indicators: `stock_indicator`"
 
 #: ../../source/manage_data/3. data_tables_35.md:7 data_tables_35.md:33
 #: data_tables_35.md:260
 msgid "数据表用途: `data`, 资产类型: `E`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `data`, asset type: `E`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:9
-msgid ""
-"股票技术指标数据表包含了股票的各种技术指标数据，例如市盈率、市净率、市销率、"
-"股息率、换手率等。"
+msgid "股票技术指标数据表包含了股票的各种技术指标数据，例如市盈率、市净率、市销率、股息率、换手率等。"
 msgstr ""
+"Technische Aktienindikatoren: KGV, KGV, KGV, Dividendenrendite, "
+"Umschlagshäufigkeit usw."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "columns"
-msgstr ""
+msgstr "columns"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "dtypes"
-msgstr ""
+msgstr "dtypes"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "remarks"
-msgstr ""
+msgstr "remarks"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "is_prime_key"
-msgstr ""
+msgstr "is_prime_key"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "ts_code"
-msgstr ""
+msgstr "ts_code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(9)"
-msgstr ""
+msgstr "varchar(9)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "证券代码"
-msgstr ""
+msgstr "Security code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "trade_date"
-msgstr ""
+msgstr "trade_date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "date"
-msgstr ""
+msgstr "date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "交易日期"
-msgstr ""
+msgstr "Trade date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "close"
-msgstr ""
+msgstr "close"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "float"
-msgstr ""
+msgstr "float"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "当日收盘价"
-msgstr ""
+msgstr "Closing price on the day"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "turnover_rate"
-msgstr ""
+msgstr "turnover_rate"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "换手率(%)"
-msgstr ""
+msgstr "Turnover rate (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "turnover_rate_f"
-msgstr ""
+msgstr "turnover_rate_f"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "换手率(自由流通股)"
-msgstr ""
+msgstr "Turnover rate (free float shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "volume_ratio"
-msgstr ""
+msgstr "volume_ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "量比"
-msgstr ""
+msgstr "Volume ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "pe"
-msgstr ""
+msgstr "pe"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市盈率(总市值/净利润， 亏损的PE为空)"
 msgstr ""
+"KGV (Gesamtmarktkapitalisierung/Nettogewinn; leer, wenn verlustbringend)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "pe_ttm"
-msgstr ""
+msgstr "pe_ttm"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市盈率(TTM，亏损的PE为空)"
-msgstr ""
+msgstr "P/E ratio (TTM; blank if loss-making)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "pb"
-msgstr ""
+msgstr "pb"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市净率(总市值/净资产)"
-msgstr ""
+msgstr "P/B ratio (total market cap/net assets)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "ps"
-msgstr ""
+msgstr "ps"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市销率"
-msgstr ""
+msgstr "P/S ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "ps_ttm"
-msgstr ""
+msgstr "ps_ttm"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市销率(TTM)"
-msgstr ""
+msgstr "P/S ratio (TTM)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "11"
-msgstr ""
+msgstr "11"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "dv_ratio"
-msgstr ""
+msgstr "dv_ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "股息率(%)"
-msgstr ""
+msgstr "Dividend yield (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "dv_ttm"
-msgstr ""
+msgstr "dv_ttm"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "股息率(TTM)(%)"
-msgstr ""
+msgstr "Dividend yield (TTM) (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "13"
-msgstr ""
+msgstr "13"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "total_share"
-msgstr ""
+msgstr "total_share"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "double"
-msgstr ""
+msgstr "double"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "总股本(万股)"
-msgstr ""
+msgstr "Total shares outstanding (10,000 shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "14"
-msgstr ""
+msgstr "14"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "float_share"
-msgstr ""
+msgstr "float_share"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "流通股本(万股)"
-msgstr ""
+msgstr "Float shares outstanding (10,000 shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "15"
-msgstr ""
+msgstr "15"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "free_share"
-msgstr ""
+msgstr "free_share"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "自由流通股本(万)"
-msgstr ""
+msgstr "Free float shares (10,000)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "16"
-msgstr ""
+msgstr "16"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "total_mv"
-msgstr ""
+msgstr "total_mv"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "总市值(万元)"
-msgstr ""
+msgstr "Total market cap (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "17"
-msgstr ""
+msgstr "17"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "circ_mv"
-msgstr ""
+msgstr "circ_mv"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "流通市值(万元)"
-msgstr ""
+msgstr "Float market cap (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md:32
 msgid "股票技术指标表2: `stock_indicator2`"
-msgstr ""
+msgstr "Stock indicators table 2: `stock_indicator2`"
 
 #: ../../source/manage_data/3. data_tables_35.md:35
-msgid ""
-"股票技术指标表2包含了股票的各种技术指标数据，例如市盈率、市净率、市销率、股息"
-"率、换手率等。"
+msgid "股票技术指标表2包含了股票的各种技术指标数据，例如市盈率、市净率、市销率、股息率、换手率等。"
 msgstr ""
+"Technische Aktienindikatoren (Tabelle 2): KGV, P/B, P/S, Dividendenrendite, "
+"Fluktuationsrate usw."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "vol_ratio"
-msgstr ""
+msgstr "vol_ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "turn_over"
-msgstr ""
+msgstr "turn_over"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "换手率"
-msgstr ""
+msgstr "Turnover rate"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "swing"
-msgstr ""
+msgstr "swing"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "振幅"
-msgstr ""
+msgstr "Amplitude"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "selling"
-msgstr ""
+msgstr "selling"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "内盘(主动卖，手)"
-msgstr ""
+msgstr "Inner market (active sell, lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buying"
-msgstr ""
+msgstr "buying"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "外盘(主动买， 手)"
-msgstr ""
+msgstr "Outer market (active buy, lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "总股本(亿)"
-msgstr ""
+msgstr "Total shares outstanding (100 million shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "流通股本(亿)"
-msgstr ""
+msgstr "Float shares outstanding (100 million shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市盈(动)"
-msgstr ""
+msgstr "Dynamic P/E"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "float_mv"
-msgstr ""
+msgstr "float_mv"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "流通市值"
-msgstr ""
+msgstr "Float market cap"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "总市值"
-msgstr ""
+msgstr "Total market cap"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "avg_price"
-msgstr ""
+msgstr "avg_price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "平均价"
-msgstr ""
+msgstr "Average price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "strength"
-msgstr ""
+msgstr "strength"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "强弱度(%)"
-msgstr ""
+msgstr "Relative strength (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "activity"
-msgstr ""
+msgstr "activity"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "活跃度(%)"
-msgstr ""
+msgstr "Activity (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "avg_turnover"
-msgstr ""
+msgstr "avg_turnover"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "笔换手"
-msgstr ""
+msgstr "Turnover per trade"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "attack"
-msgstr ""
+msgstr "attack"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "攻击波(%)"
-msgstr ""
+msgstr "Attack wave (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "interval_3"
-msgstr ""
+msgstr "interval_3"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "近3月涨幅"
-msgstr ""
+msgstr "3-month return"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "18"
-msgstr ""
+msgstr "18"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "interval_6"
-msgstr ""
+msgstr "interval_6"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "近6月涨幅"
-msgstr ""
+msgstr "6-month return"
 
 #: ../../source/manage_data/3. data_tables_35.md:59
 msgid "港股技术指标: `hk_stock_indicator`"
-msgstr ""
+msgstr "HK stock indicators: `hk_stock_indicator`"
 
 #: ../../source/manage_data/3. data_tables_35.md:60
 msgid "数据表用途: `not_implemented`, 资产类型: `HK`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `not_implemented`, asset type: `HK`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:62
-msgid ""
-"港股技术指标数据表包含了港股的各种技术指标数据，例如市盈率、市净率、市销率、"
-"股息率、换手率等。"
+msgid "港股技术指标数据表包含了港股的各种技术指标数据，例如市盈率、市净率、市销率、股息率、换手率等。"
 msgstr ""
+"Technische Indikatoren für HK: P/E, P/B, P/S, Dividendenrendite, "
+"Fluktuationsrate usw."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "str"
-msgstr ""
+msgstr "str"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "股票代码"
-msgstr ""
+msgstr "Stock code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "收盘价"
-msgstr ""
+msgstr "Close price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "open"
-msgstr ""
+msgstr "open"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "开盘价"
-msgstr ""
+msgstr "Open price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "high"
-msgstr ""
+msgstr "high"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "最高价"
-msgstr ""
+msgstr "High price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "low"
-msgstr ""
+msgstr "low"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "最低价"
-msgstr ""
+msgstr "Low price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "pre_close"
-msgstr ""
+msgstr "pre_close"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "昨收价"
-msgstr ""
+msgstr "Previous close"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "change"
-msgstr ""
+msgstr "change"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "涨跌额"
-msgstr ""
+msgstr "Change amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "pct_change"
-msgstr ""
+msgstr "pct_change"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "涨跌幅"
-msgstr ""
+msgstr "Change (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "vol"
-msgstr ""
+msgstr "vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "None"
-msgstr ""
+msgstr "None"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成交量"
-msgstr ""
+msgstr "Volume"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "amount"
-msgstr ""
+msgstr "amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成交额"
-msgstr ""
+msgstr "Turnover"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "vwap"
-msgstr ""
+msgstr "vwap"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "adj_factor"
-msgstr ""
+msgstr "adj_factor"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "复权因子"
-msgstr ""
+msgstr "Adjustment factor"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "turnover_ratio"
-msgstr ""
+msgstr "turnover_ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "流通股本"
-msgstr ""
+msgstr "Float shares outstanding"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "总股本"
-msgstr ""
+msgstr "Total shares outstanding"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "free_mv"
-msgstr ""
+msgstr "free_mv"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "exchange"
-msgstr ""
+msgstr "exchange"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "交易所代码"
-msgstr ""
+msgstr "Exchange code"
 
 #: ../../source/manage_data/3. data_tables_35.md:86
 msgid "美股技术指标: `us_stock_indicator`"
-msgstr ""
+msgstr "US stock indicators: `us_stock_indicator`"
 
 #: ../../source/manage_data/3. data_tables_35.md:87
 msgid "数据表用途: `not_implemented`, 资产类型: `US`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `not_implemented`, asset type: `US`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:89
-msgid ""
-"每股技术指标数据表包含了美股的各种技术指标数据，例如市盈率、市净率、市销率、"
-"股息率、换手率等。"
+msgid "每股技术指标数据表包含了美股的各种技术指标数据，例如市盈率、市净率、市销率、股息率、换手率等。"
 msgstr ""
+"Technische Indikatoren für US-Aktien: KGV, KGV, KGV, Dividendenrendite, "
+"Umschlagshäufigkeit usw."
 
 #: ../../source/manage_data/3. data_tables_35.md:113
 msgid "沪深股票停复牌和大宗交易："
-msgstr ""
+msgstr "A-share suspension/resumption and block trades:"
 
 #: ../../source/manage_data/3. data_tables_35.md:115
 msgid "停复牌信息: `stock_suspend`"
-msgstr ""
+msgstr "Suspension/resumption: `stock_suspend`"
 
 #: ../../source/manage_data/3. data_tables_35.md:116 data_tables_35.md:128
 #: data_tables_35.md:143 data_tables_35.md:316 data_tables_35.md:335
 #: data_tables_35.md:360 data_tables_35.md:383 data_tables_35.md:418
 msgid "数据表用途: `events`, 资产类型: `E`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `events`, asset type: `E`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:118
-msgid ""
-"停复牌信息表包含了股票的停复牌信息，包括停复牌日期、停复牌时间段、停复牌类型"
-"等信息。"
-msgstr ""
+msgid "停复牌信息表包含了股票的停复牌信息，包括停复牌日期、停复牌时间段、停复牌类型等信息。"
+msgstr "Suspension/resumption table with date, time range, and type."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(10)"
-msgstr ""
+msgstr "varchar(10)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "停复牌日期"
-msgstr ""
+msgstr "Suspension/resumption date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "suspend_timing"
-msgstr ""
+msgstr "suspend_timing"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(40)"
-msgstr ""
+msgstr "varchar(40)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "日内停牌时间段"
-msgstr ""
+msgstr "Intraday suspension time range"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "suspend_type"
-msgstr ""
+msgstr "suspend_type"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(2)"
-msgstr ""
+msgstr "varchar(2)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "停复牌类型：S-停牌，R-复牌"
-msgstr ""
+msgstr "Suspension/resumption type: S = suspension, R = resumption"
 
 #: ../../source/manage_data/3. data_tables_35.md:127
 msgid "大宗交易: `block_trade`"
-msgstr ""
+msgstr "Block trade: `block_trade`"
 
 #: ../../source/manage_data/3. data_tables_35.md:130
-msgid ""
-"大宗交易表包含了股票的大宗交易信息，包括大宗交易日期、大宗交易价格、大宗交易"
-"量、大宗交易金额、买方营业部、卖方营业部等信息。"
+msgid "大宗交易表包含了股票的大宗交易信息，包括大宗交易日期、大宗交易价格、大宗交易量、大宗交易金额、买方营业部、卖方营业部等信息。"
 msgstr ""
+"Blockhandelstabelle mit Datum, Preis, Volumen, Betrag, Käufer-/Verkäufer-"
+"Vermittlung."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(14)"
-msgstr ""
+msgstr "varchar(14)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "交易日历"
-msgstr ""
+msgstr "Trading calendar"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "price"
-msgstr ""
+msgstr "price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成交价"
-msgstr ""
+msgstr "Trade price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成交量（万股）"
-msgstr ""
+msgstr "Volume (10,000 shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成交金额"
-msgstr ""
+msgstr "Trade amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buyer"
-msgstr ""
+msgstr "buyer"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "text"
-msgstr ""
+msgstr "text"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "买方营业部"
-msgstr ""
+msgstr "Buyer brokerage"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "seller"
-msgstr ""
+msgstr "seller"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "卖方营业部"
-msgstr ""
+msgstr "Seller brokerage"
 
 #: ../../source/manage_data/3. data_tables_35.md:142
 msgid "股东交易: `stock_holder_trade`"
-msgstr ""
+msgstr "Shareholder trades: `stock_holder_trade`"
 
 #: ../../source/manage_data/3. data_tables_35.md:145
 msgid ""
-"古董交易表包含了股票的股东交易信息，包括股东交易日期、股东交易价格、股东交易"
-"量、股东交易金额、股东名称、股东类型、增减持类型、变动数量、占流通比例、变动"
-"后持股、变动后占流通比例、平均价格、持股总数、增减持开始日期、增减持结束日期"
-"等��息。"
+"古董交易表包含了股票的股东交易信息，包括股东交易日期、股东交易价格、股东交易量、股东交易金额、股东名称、股东类型、增减持类型、变动数量、占流通比例、变动后持股、变动后占流通比例、平均价格、持股总数、增减持开始日期、增减持结束日期等��息。"
 msgstr ""
+"Aktionärshandelstabelle mit Handelsdatum/-preis/-volumen/-betrag, Name/Typ "
+"des Aktionärs, Änderungstyp, Menge, Float-Aktie, Bestände nach der Änderung,"
+" Durchschnittspreis, Gesamtbestände, Erhöhungs-/Verringerungszeitraum usw."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "ann_date"
-msgstr ""
+msgstr "ann_date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "公告日期"
-msgstr ""
+msgstr "Announcement date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "holder_name"
-msgstr ""
+msgstr "holder_name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "股东名称"
-msgstr ""
+msgstr "Shareholder name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "holder_type"
-msgstr ""
+msgstr "holder_type"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "股东类型G高管P个人C公司"
-msgstr ""
+msgstr "Shareholder type G executive P individual C company"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "in_de"
-msgstr ""
+msgstr "in_de"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(4)"
-msgstr ""
+msgstr "varchar(4)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "类型IN增持DE减持"
-msgstr ""
+msgstr "Type IN increase DE decrease"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "change_vol"
-msgstr ""
+msgstr "change_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "变动数量"
-msgstr ""
+msgstr "Change quantity"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "change_ratio"
-msgstr ""
+msgstr "change_ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "占流通比例（%）"
-msgstr ""
+msgstr "Share of float (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "after_share"
-msgstr ""
+msgstr "after_share"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "变动后持股"
-msgstr ""
+msgstr "Post-change holdings"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "after_ratio"
-msgstr ""
+msgstr "after_ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "变动后占流通比例（%）"
-msgstr ""
+msgstr "Post-change share of float (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "平均价格"
-msgstr ""
+msgstr "Average price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "持股总数"
-msgstr ""
+msgstr "Total shareholding"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "begin_date"
-msgstr ""
+msgstr "begin_date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "增减持开始日期"
-msgstr ""
+msgstr "Increase/decrease start date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "close_date"
-msgstr ""
+msgstr "close_date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "增减持结束日期"
-msgstr ""
+msgstr "Increase/decrease end date"
 
 #: ../../source/manage_data/3. data_tables_35.md:163
 msgid "股票成份和价格复权因子："
-msgstr ""
+msgstr "Stock constituents and price adjustment factors:"
 
 #: ../../source/manage_data/3. data_tables_35.md:165
 msgid "股票价格复权系数: `stock_adj_factor`"
-msgstr ""
+msgstr "Stock adjustment factor: `stock_adj_factor`"
 
 #: ../../source/manage_data/3. data_tables_35.md:166
 msgid "数据表用途: `adj`, 资产类型: `E`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `adj`, asset type: `E`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:168
 msgid ""
-"股票价格复权系数用于计算股票的前后复权价格。复权价格是指将股票的价格和成交量"
-"等指标调整为除权除息前的价格，以便于比较不同时间段的股票价格。复权因子是指除"
-"权除息后的价格与除权除息前的价格的比值。"
+"股票价格复权系数用于计算股票的前后复权价格。复权价格是指将股票的价格和成交量等指标调整为除权除息前的价格，以便于比较不同时间段的股票价格。复权因子是指除权除息后的价格与除权除息前的价格的比值。"
 msgstr ""
+"Bestandsanpassungsfaktoren berechnen vorwärts-/rückwärtsbereinigte Preise "
+"und Volumina für eine vergleichbare historische Analyse."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(24)"
-msgstr ""
+msgstr "varchar(24)"
 
 #: ../../source/manage_data/3. data_tables_35.md:176
 msgid "基金价格复权系数: `fund_adj_factor`"
-msgstr ""
+msgstr "Fund adjustment factor: `fund_adj_factor`"
 
 #: ../../source/manage_data/3. data_tables_35.md:177
 msgid "数据表用途: `adj`, 资产类型: `FD`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `adj`, asset type: `FD`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:179
 msgid ""
-"基金价格复权系数用于计算基金的前后复权价格。复权价格是指将基金的价格和成交量"
-"等指标调整为除权除息前的价格，以便于比较不同时间段的基金价格。复权因子是指除"
-"权除息后的价格与除权除息前的价格的比值。"
+"基金价格复权系数用于计算基金的前后复权价格。复权价格是指将基金的价格和成交量等指标调整为除权除息前的价格，以便于比较不同时间段的基金价格。复权因子是指除权除息后的价格与除权除息前的价格的比值。"
 msgstr ""
+"Fondsanpassungsfaktoren berechnen vorwärts-/rückwärtsbereinigte Preise und "
+"Volumina für eine vergleichbare historische Analyse."
 
 #: ../../source/manage_data/3. data_tables_35.md:187
 msgid "指数成分: `index_weight`"
-msgstr ""
+msgstr "Index constituents: `index_weight`"
 
 #: ../../source/manage_data/3. data_tables_35.md:188
 msgid "数据表用途: `comp`, 资产类型: IDX, 数据频率: d"
-msgstr ""
+msgstr "Table use: `comp`, asset type: IDX, frequency: d"
 
 #: ../../source/manage_data/3. data_tables_35.md:190
-msgid ""
-"指数成份数据表包含了指数的成份股数据，包括成份股代码、成份股权重等信息。"
-msgstr ""
+msgid "指数成份数据表包含了指数的成份股数据，包括成份股代码、成份股权重等信息。"
+msgstr "Index constituents with code and weight."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "index_code"
-msgstr ""
+msgstr "index_code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "指数代码"
-msgstr ""
+msgstr "Index code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "con_code"
-msgstr ""
+msgstr "con_code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(20)"
-msgstr ""
+msgstr "varchar(20)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成分代码"
-msgstr ""
+msgstr "Constituent code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "weight"
-msgstr ""
+msgstr "weight"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "权重(%)"
-msgstr ""
+msgstr "Weight (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md:199
 msgid "同花顺行业指数成分股权重: `ths_index_weight`"
-msgstr ""
+msgstr "THS industry index constituent weights: `ths_index_weight`"
 
 #: ../../source/manage_data/3. data_tables_35.md:200
 msgid "数据表用途: `comp`, 资产类型: `THS`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `comp`, asset type: `THS`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:202
-msgid ""
-"同花顺行业指数成份数据表包含了同花顺行业指数的成份股数据，包括成份股代码、成"
-"份股权重等信息。"
-msgstr ""
+msgid "同花顺行业指数成份数据表包含了同花顺行业指数的成份股数据，包括成份股代码、成份股权重等信息。"
+msgstr "THS industry index constituents with code and weight."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "con_name"
-msgstr ""
+msgstr "con_name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(80)"
-msgstr ""
+msgstr "varchar(80)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "股票名称"
-msgstr ""
+msgstr "Stock name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "权重"
-msgstr ""
+msgstr "Weight"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "in_date"
-msgstr ""
+msgstr "in_date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "纳入日期"
-msgstr ""
+msgstr "Inclusion date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "out_date"
-msgstr ""
+msgstr "out_date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "剔除日期"
-msgstr ""
+msgstr "Exclusion date"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "is_new"
-msgstr ""
+msgstr "is_new"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "是否最新Y是N否"
-msgstr ""
+msgstr "Is latest Y yes N no"
 
 #: ../../source/manage_data/3. data_tables_35.md:214
 msgid "申万行业分类明细: `sw_industry_detail`"
-msgstr ""
+msgstr "SW industry classification detail: `sw_industry_detail`"
 
 #: ../../source/manage_data/3. data_tables_35.md:215
 msgid "数据表用途: `comp`, 资产类型: `IDX`, 数据频率: `none`"
-msgstr ""
+msgstr "Table use: `comp`, asset type: `IDX`, frequency: `none`"
 
 #: ../../source/manage_data/3. data_tables_35.md:217
 msgid "more descriptions here:"
-msgstr ""
+msgstr "more descriptions here:"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l1_code"
-msgstr ""
+msgstr "l1_code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "一级行业代码"
-msgstr ""
+msgstr "Level-1 industry code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l2_code"
-msgstr ""
+msgstr "l2_code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "二级行业代码"
-msgstr ""
+msgstr "Level-2 industry code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l3_code"
-msgstr ""
+msgstr "l3_code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "三级行业代码"
-msgstr ""
+msgstr "Level-3 industry code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成分股票代码"
-msgstr ""
+msgstr "Constituent stock code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l1_name"
-msgstr ""
+msgstr "l1_name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "一级行业名称"
-msgstr ""
+msgstr "Level-1 industry name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l2_name"
-msgstr ""
+msgstr "l2_name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "二级行业名称"
-msgstr ""
+msgstr "Level-2 industry name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l3_name"
-msgstr ""
+msgstr "l3_name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "三级行业名称"
-msgstr ""
+msgstr "Level-3 industry name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "name"
-msgstr ""
+msgstr "name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成分股票名称"
-msgstr ""
+msgstr "Constituent stock name"
 
 #: ../../source/manage_data/3. data_tables_35.md:234
 msgid "基金和指数技术指标数据："
-msgstr ""
+msgstr "Fund and index technical indicator data:"
 
 #: ../../source/manage_data/3. data_tables_35.md:236
 msgid "指数关键指标: `index_indicator`"
-msgstr ""
+msgstr "Index key indicators: `index_indicator`"
 
 #: ../../source/manage_data/3. data_tables_35.md:237
 msgid "数据表用途: `data`, 资产类型: `IDX`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `data`, asset type: `IDX`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:239
-msgid ""
-"指数关键指标数据表包含了指数的关键指标数据，例如市盈率、市净率、市销率、股息"
-"率、换手率等。"
+msgid "指数关键指标数据表包含了指数的关键指标数据，例如市盈率、市净率、市销率、股息率、换手率等。"
 msgstr ""
+"Index-Schlüsselindikatoren: KGV, KGV, KGV, Dividendenrendite, "
+"Fluktuationsrate usw."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "当日总市值(元)"
-msgstr ""
+msgstr "Total market cap on the day (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "当日流通市值(元)"
-msgstr ""
+msgstr "Float market cap on the day (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "当日总股本(股)"
-msgstr ""
+msgstr "Total shares outstanding on the day (shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "当日流通股本(股)"
-msgstr ""
+msgstr "Float shares on the day (shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "当日自由流通股本(股)"
-msgstr ""
+msgstr "Free float shares on the day (shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "换手率(基于自由流通股本)"
-msgstr ""
+msgstr "Turnover rate (based on free float)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市盈率"
-msgstr ""
+msgstr "P/E ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市盈率TTM"
-msgstr ""
+msgstr "P/E TTM"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市净率"
-msgstr ""
+msgstr "P/B ratio"
 
 #: ../../source/manage_data/3. data_tables_35.md:257
 msgid "市场技术面趋势数据："
-msgstr ""
+msgstr "Market technical trend data:"
 
 #: ../../source/manage_data/3. data_tables_35.md:259
 msgid "个股资金流向: `money_flow`"
-msgstr ""
+msgstr "Stock money flow: `money_flow`"
 
 #: ../../source/manage_data/3. data_tables_35.md:262
-msgid ""
-"个股资金流向表包含了个股的资金流向数据，包括小单、中单、大单、特大单等资金流"
-"向数据。"
+msgid "个股资金流向表包含了个股的资金流向数据，包括小单、中单、大单、特大单等资金流向数据。"
 msgstr ""
+"Stock-Geldflusstabelle mit kleinen/mittleren/großen/extragroßen "
+"Auftragsflussdaten."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_sm_vol"
-msgstr ""
+msgstr "buy_sm_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "int"
-msgstr ""
+msgstr "int"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "小单买入量（手）"
-msgstr ""
+msgstr "Small-order buy volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_sm_amount"
-msgstr ""
+msgstr "buy_sm_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "小单买入金额（万元）"
-msgstr ""
+msgstr "Small-order buy amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_sm_vol"
-msgstr ""
+msgstr "sell_sm_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "小单卖出量（手）"
-msgstr ""
+msgstr "Small-order sell volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_sm_amount"
-msgstr ""
+msgstr "sell_sm_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "小单卖出金额（万元）"
-msgstr ""
+msgstr "Small-order sell amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_md_vol"
-msgstr ""
+msgstr "buy_md_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "中单买入量（手）"
-msgstr ""
+msgstr "Medium-order buy volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_md_amount"
-msgstr ""
+msgstr "buy_md_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "中单买入金额（万元）"
-msgstr ""
+msgstr "Medium-order buy amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_md_vol"
-msgstr ""
+msgstr "sell_md_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "中单卖出量（手）"
-msgstr ""
+msgstr "Medium-order sell volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_md_amount"
-msgstr ""
+msgstr "sell_md_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "中单卖出金额（万元）"
-msgstr ""
+msgstr "Medium-order sell amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_lg_vol"
-msgstr ""
+msgstr "buy_lg_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "大单买入量（手）"
-msgstr ""
+msgstr "Large-order buy volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_lg_amount"
-msgstr ""
+msgstr "buy_lg_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "大单买入金额（万元）"
-msgstr ""
+msgstr "Large-order buy amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_lg_vol"
-msgstr ""
+msgstr "sell_lg_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "大单卖出量（手）"
-msgstr ""
+msgstr "Large-order sell volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_lg_amount"
-msgstr ""
+msgstr "sell_lg_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "大单卖出金额（万元）"
-msgstr ""
+msgstr "Large-order sell amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_elg_vol"
-msgstr ""
+msgstr "buy_elg_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "特大单买入量（手）"
-msgstr ""
+msgstr "Extra-large-order buy volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_elg_amount"
-msgstr ""
+msgstr "buy_elg_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "特大单买入金额（万元）"
-msgstr ""
+msgstr "Extra-large-order buy amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_elg_vol"
-msgstr ""
+msgstr "sell_elg_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "特大单卖出量（手）"
-msgstr ""
+msgstr "Extra-large-order sell volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_elg_amount"
-msgstr ""
+msgstr "sell_elg_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "特大单卖出金额（万元）"
-msgstr ""
+msgstr "Extra-large-order sell amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "net_mf_vol"
-msgstr ""
+msgstr "net_mf_vol"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "净流入量（手）"
-msgstr ""
+msgstr "Net inflow volume (lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "19"
-msgstr ""
+msgstr "19"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "net_mf_amount"
-msgstr ""
+msgstr "net_mf_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "净流入额（万元）"
-msgstr ""
+msgstr "Net inflow amount (10,000 yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md:287
 msgid "涨跌停价格: `stock_limit`"
-msgstr ""
+msgstr "Limit up/down prices: `stock_limit`"
 
 #: ../../source/manage_data/3. data_tables_35.md:288
 msgid "数据表用途: `data`, 资产类型: `E,FD`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `data`, asset type: `E,FD`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:290
 msgid "涨跌停价格表包含了股票的涨停价和跌停价数据。"
-msgstr ""
+msgstr "Limit up/down price table."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "TS股票代码"
-msgstr ""
+msgstr "TS stock code"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "昨日收盘价"
-msgstr ""
+msgstr "Previous close"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "up_limit"
-msgstr ""
+msgstr "up_limit"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "涨停价"
-msgstr ""
+msgstr "Limit-up price"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "down_limit"
-msgstr ""
+msgstr "down_limit"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "跌停价"
-msgstr ""
+msgstr "Limit-down price"
 
 #: ../../source/manage_data/3. data_tables_35.md:300
 msgid "沪深股通资金流向: `hs_money_flow`"
-msgstr ""
+msgstr "Stock Connect money flow: `hs_money_flow`"
 
 #: ../../source/manage_data/3. data_tables_35.md:301 data_tables_35.md:401
 msgid "数据表用途: `reference`, 资产类型: `none`, 数据频率: `d`"
-msgstr ""
+msgstr "Table use: `reference`, asset type: `none`, frequency: `d`"
 
 #: ../../source/manage_data/3. data_tables_35.md:303
-msgid ""
-"沪深股通资金流向表包含了沪深股通的资金流向数据，包括港股通（沪）和港股通"
-"（深）的资金流向数据。"
-msgstr ""
+msgid "沪深股通资金流向表包含了沪深股通的资金流向数据，包括港股通（沪）和港股通（深）的资金流向数据。"
+msgstr "Stock Connect money flow for Shanghai and Shenzhen links."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "ggt_ss"
-msgstr ""
+msgstr "ggt_ss"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "港股通（上海）"
-msgstr ""
+msgstr "Stock Connect (Shanghai)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "ggt_sz"
-msgstr ""
+msgstr "ggt_sz"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "港股通（深圳）"
-msgstr ""
+msgstr "Stock Connect (Shenzhen)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "hgt"
-msgstr ""
+msgstr "hgt"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "沪股通（百万元）"
-msgstr ""
+msgstr "Stock Connect (Shanghai) (CNY million)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sgt"
-msgstr ""
+msgstr "sgt"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "深股通（百万元）"
-msgstr ""
+msgstr "Stock Connect (Shenzhen) (CNY million)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "north_money"
-msgstr ""
+msgstr "north_money"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "北向资金（百万元）"
-msgstr ""
+msgstr "Northbound capital (CNY million)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "south_money"
-msgstr ""
+msgstr "south_money"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "南向资金（百万元）"
-msgstr ""
+msgstr "Southbound capital (CNY million)"
 
 #: ../../source/manage_data/3. data_tables_35.md:315
 msgid "沪深股通十大成交股: `hs_top10_stock`"
-msgstr ""
+msgstr "Stock Connect top 10 trades: `hs_top10_stock`"
 
 #: ../../source/manage_data/3. data_tables_35.md:318
-msgid ""
-"沪深股通十大成交股数据表包含了沪深股通的十大成交股数据，包括成交股票代码、成"
-"交股票名称、成交金额、净成交金额等信息。"
-msgstr ""
+msgid "沪深股通十大成交股数据表包含了沪深股通的十大成交股数据，包括成交股票代码、成交股票名称、成交金额、净成交金额等信息。"
+msgstr "Stock Connect Top-10-Tabelle mit Code, Name, Umsatz, Nettoumsatz."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rank"
-msgstr ""
+msgstr "rank"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "资金排名"
-msgstr ""
+msgstr "Capital flow rank"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "market_type"
-msgstr ""
+msgstr "market_type"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(3)"
-msgstr ""
+msgstr "varchar(3)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市场类型（1：沪市 3：深市）"
-msgstr ""
+msgstr "Market type (1 Shanghai 3 Shenzhen)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "成交金额（元）"
-msgstr ""
+msgstr "Trade amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "net_amount"
-msgstr ""
+msgstr "net_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "净成交金额（元）"
-msgstr ""
+msgstr "Net trade amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy"
-msgstr ""
+msgstr "buy"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "买入金额（元）"
-msgstr ""
+msgstr "Buy amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell"
-msgstr ""
+msgstr "sell"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "卖出金额（元）"
-msgstr ""
+msgstr "Sell amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md:334
 msgid "港股通十大成交股: `hk_top10_stock`"
-msgstr ""
+msgstr "HK Stock Connect top 10: `hk_top10_stock`"
 
 #: ../../source/manage_data/3. data_tables_35.md:337
-msgid ""
-"港股通十大成交股数据表包含了港股通的十大成交股数据，包括成交股票代码、成交股"
-"票名称、成交金额、净成交金额等信息。"
-msgstr ""
+msgid "港股通十大成交股数据表包含了港股通的十大成交股数据，包括成交股票代码、成交股票名称、成交金额、净成交金额等信息。"
+msgstr "HK Stock Connect Top-10 mit Code, Name, Umsatz, Nettoumsatz."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "p_change"
-msgstr ""
+msgstr "p_change"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市场类型 2：港股通（沪） 4：港股通（深）"
-msgstr ""
+msgstr "Markttyp 2: Stock Connect (Shanghai) 4: Stock Connect (Shenzhen)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "累计成交金额（元）"
-msgstr ""
+msgstr "Cumulative trade amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "净买入金额（元）"
-msgstr ""
+msgstr "Net buy amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sh_amount"
-msgstr ""
+msgstr "sh_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "沪市成交金额（元）"
-msgstr ""
+msgstr "Shanghai turnover (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sh_net_amount"
-msgstr ""
+msgstr "sh_net_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "沪市净买入金额（元）"
-msgstr ""
+msgstr "Shanghai net buy amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sh_buy"
-msgstr ""
+msgstr "sh_buy"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "沪市买入金额（元）"
-msgstr ""
+msgstr "Shanghai buy amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sh_sell"
-msgstr ""
+msgstr "sh_sell"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "沪市卖出金额"
-msgstr ""
+msgstr "Shanghai sell amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sz_amount"
-msgstr ""
+msgstr "sz_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "深市成交金额（元）"
-msgstr ""
+msgstr "Shenzhen turnover (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sz_net_amount"
-msgstr ""
+msgstr "sz_net_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "深市净买入金额（元）"
-msgstr ""
+msgstr "Shenzhen net buy amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sz_buy"
-msgstr ""
+msgstr "sz_buy"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "深市买入金额（元）"
-msgstr ""
+msgstr "Shenzhen buy amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sz_sell"
-msgstr ""
+msgstr "sz_sell"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "深市卖出金额（元）"
-msgstr ""
+msgstr "Shenzhen sell amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md:359
 msgid "龙虎榜交易明细: `top_list`"
-msgstr ""
+msgstr "Top list trade detail: `top_list`"
 
 #: ../../source/manage_data/3. data_tables_35.md:362
 msgid ""
-"龙虎榜交易明细数据表包含了龙虎榜的交易明细数据，包括证券代码、交易日期、名"
-"称、收盘价、涨跌幅、换手率、总成交额、龙虎榜卖出额、龙虎榜买入额、龙虎榜成交"
-"额、龙虎榜净买入额、龙虎榜净买额占比、龙虎榜成交额占比、当日流通市值、上榜理"
-"由等信息。"
+"龙虎榜交易明细数据表包含了龙虎榜的交易明细数据，包括证券代码、交易日期、名称、收盘价、涨跌幅、换手率、总成交额、龙虎榜卖出额、龙虎榜买入额、龙虎榜成交额、龙虎榜净买入额、龙虎榜净买额占比、龙虎榜成交额占比、当日流通市值、上榜理由等信息。"
 msgstr ""
+"Top-Listendetails mit Wertpapiercode, Datum, Name, Abschluss, Änderung (%), "
+"Fluktuationsrate, Gesamtumsatz, Top-List-Kauf/Verkauf/Umsatz/Nettokauf und "
+"Aktien, Float-Marktkapitalisierung, Notierungsgrund."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "名称"
-msgstr ""
+msgstr "Name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "总成交额"
-msgstr ""
+msgstr "Total turnover"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l_sell"
-msgstr ""
+msgstr "l_sell"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "龙虎榜卖出额"
-msgstr ""
+msgstr "Top list sell amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l_buy"
-msgstr ""
+msgstr "l_buy"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "龙虎榜买入额"
-msgstr ""
+msgstr "Top list buy amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "l_amount"
-msgstr ""
+msgstr "l_amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "龙虎榜成交额"
-msgstr ""
+msgstr "Top list turnover"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "龙虎榜净买入额"
-msgstr ""
+msgstr "Top list net buy amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "net_rate"
-msgstr ""
+msgstr "net_rate"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "龙虎榜净买额占比"
-msgstr ""
+msgstr "Top list net buy share (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "amount_rate"
-msgstr ""
+msgstr "amount_rate"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "龙虎榜成交额占比"
-msgstr ""
+msgstr "Top list turnover share (%)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "float_values"
-msgstr ""
+msgstr "float_values"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "当日流通市值"
-msgstr ""
+msgstr "Float market cap on the day"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "reason"
-msgstr ""
+msgstr "reason"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "上榜理由"
-msgstr ""
+msgstr "Reason for listing"
 
 #: ../../source/manage_data/3. data_tables_35.md:382
 msgid "龙虎榜机构交易明细: `top_inst`"
-msgstr ""
+msgstr "Top list institutional detail: `top_inst`"
 
 #: ../../source/manage_data/3. data_tables_35.md:385
 msgid ""
-"龙虎榜机构交易明细数据表包含了龙虎榜的机构交易明细数据，包括证券代码、交易日"
-"期、机构名称、买入额、卖出额、净买入额、净买额占比、买入占总成交比例、卖出占"
-"总成交比例、净买占总成交比例、上榜理由等信息。"
+"龙虎榜机构交易明细数据表包含了龙虎榜的机构交易明细数据，包括证券代码、交易日期、机构名称、买入额、卖出额、净买入额、净买额占比、买入占总成交比例、卖出占总成交比例、净买占总成交比例、上榜理由等信息。"
 msgstr ""
+"Top-Liste der institutionellen Details mit Wertpapiercode, Datum, Name der "
+"Institution, Kauf-/Verkaufs-/Nettobeträge und Umsatzanteile, Listungsgrund."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "exalter"
-msgstr ""
+msgstr "exalter"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "营业部名称"
-msgstr ""
+msgstr "Brokerage name"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "side"
-msgstr ""
+msgstr "side"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "买卖类型0：买入金额最大的前5名， 1：卖出金额最大的前5名"
-msgstr ""
+msgstr "Trade type 0: top 5 by buy amount, 1: top 5 by sell amount"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "买入额（元）"
-msgstr ""
+msgstr "Buy amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "buy_rate"
-msgstr ""
+msgstr "buy_rate"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "买入占总成交比例"
-msgstr ""
+msgstr "Buy as % of total turnover"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "卖出额（元）"
-msgstr ""
+msgstr "Sell amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "sell_rate"
-msgstr ""
+msgstr "sell_rate"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "卖出占总成交比例"
-msgstr ""
+msgstr "Sell as % of total turnover"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "net_buy"
-msgstr ""
+msgstr "net_buy"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "净成交额（元）"
-msgstr ""
+msgstr "Net turnover (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md:400
 msgid "融资融券交易概况: `margin`"
-msgstr ""
+msgstr "Margin trading summary: `margin`"
 
 #: ../../source/manage_data/3. data_tables_35.md:403
 msgid ""
-"融资融券交易概况数据表包含了融资融券交易的概况数据，包括交易日期、交易所代"
-"码、融资余额、融资买入额、融资偿还额、融券余额、融券卖出量、融资融券余额、融"
-"券余量等信息。"
+"融资融券交易概况数据表包含了融资融券交易的概况数据，包括交易日期、交易所代码、融资余额、融资买入额、融资偿还额、融券余额、融券卖出量、融资融券余额、融券余量等信息。"
 msgstr ""
+"Margin-Zusammenfassung nach Handelsdatum und Austausch mit Saldo, Kauf, "
+"Rückzahlung, Kreditverkaufsvolumen usw."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "exchange_id"
-msgstr ""
+msgstr "exchange_id"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "varchar(6)"
-msgstr ""
+msgstr "varchar(6)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "交易所代码（SSE上交所SZSE深交所BSE北交所）"
-msgstr ""
+msgstr "Exchange code (SSE Shanghai, SZSE Shenzhen, BSE Beijing)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rzye"
-msgstr ""
+msgstr "rzye"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融资余额(元)"
-msgstr ""
+msgstr "Margin balance (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rzmre"
-msgstr ""
+msgstr "rzmre"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融资买入额(元)"
-msgstr ""
+msgstr "Margin buy amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rzche"
-msgstr ""
+msgstr "rzche"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融资偿还额(元)"
-msgstr ""
+msgstr "Margin repayment amount (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rqye"
-msgstr ""
+msgstr "rqye"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融券余额(元)"
-msgstr ""
+msgstr "Securities lending balance (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rqmcl"
-msgstr ""
+msgstr "rqmcl"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融券卖出量(股,份,手)"
-msgstr ""
+msgstr "Securities lending sell volume (shares/units/lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rzrqye"
-msgstr ""
+msgstr "rzrqye"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融资融券余额(元)"
-msgstr ""
+msgstr "Total margin balance (yuan)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rqyl"
-msgstr ""
+msgstr "rqyl"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融券余量(股,份,手)"
-msgstr ""
+msgstr "Securities lending volume (shares/units/lots)"
 
 #: ../../source/manage_data/3. data_tables_35.md:417
 msgid "融资融券交易明细: `margin_detail`"
-msgstr ""
+msgstr "Margin trading detail: `margin_detail`"
 
 #: ../../source/manage_data/3. data_tables_35.md:420
 msgid ""
-"融资融券交易明细数据表包含了融资融券交易的明细数据，包括证券代码、交易日期、"
-"融资余额、融资买入额、融资偿还额、融券余额、融券卖出量、融资融券余额、融券余"
-"量等信息。"
+"融资融券交易明细数据表包含了融资融券交易的明细数据，包括证券代码、交易日期、融资余额、融资买入额、融资偿还额、融券余额、融券卖出量、融资融券余额、融券余量等信息。"
 msgstr ""
+"Margin-Detail mit Sicherheitscode, Datum, Margin-Saldo/Kauf/Rückzahlung, "
+"Wertpapierleihsaldo/Verkaufsvolumen, Gesamt-Margin-Saldo, Kreditvolumen."
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融券余量（股）"
-msgstr ""
+msgstr "Securities lending volume (shares)"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "rqchl"
-msgstr ""
+msgstr "rqchl"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "融券偿还量(股)"
-msgstr ""
+msgstr "Securities lending repaid volume (shares)"

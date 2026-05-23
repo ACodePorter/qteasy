@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-20 21:05+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -26,11 +25,11 @@ msgstr "Turtle-Trading-Strategie (Vereinfachtes Tutorial)"
 
 #: ../../source/examples/Example_11_海龟交易法.md:3
 msgid ""
-"参考来源：`docs/_joinquant_migration_source/Example_11_海龟交易"
-"法.ipynb` 第一个 Markdown cell。"
+"参考来源：`docs/_joinquant_migration_source/Example_11_海龟交易法.ipynb` 第一个 Markdown "
+"cell。"
 msgstr ""
-"Referenzquelle: `docs/_joinquant_migration_source/"
-"Example_11_Turtle Trading Method.ipynb` Erste Markdown-Zelle."
+"Referenzquelle: `docs/_joinquant_migration_source/Example_11_Turtle Trading "
+"Method.ipynb` Erste Markdown-Zelle."
 
 #: ../../source/examples/Example_11_海龟交易法.md:5
 msgid "策略思路"
@@ -39,20 +38,20 @@ msgstr "Strategie und Ideen"
 #: ../../source/examples/Example_11_海龟交易法.md:7
 msgid "使用唐奇安通道的突破信号作为开仓依据；"
 msgstr ""
-"Nutzen Sie Ausbruchssignale aus dem Donchian-Kanal als Grundlage "
-"für Ihre Eröffnungspositionen;"
+"Nutzen Sie Ausbruchssignale aus dem Donchian-Kanal als Grundlage für Ihre "
+"Eröffnungspositionen;"
 
 #: ../../source/examples/Example_11_海龟交易法.md:8
 msgid "价格突破上轨做多，跌破下轨做空；"
 msgstr ""
-"Kaufen Sie, wenn der Kurs die obere Begrenzungslinie durchbricht, "
-"und verkaufen Sie, wenn er die untere Begrenzungslinie durchbricht."
+"Kaufen Sie, wenn der Kurs die obere Begrenzungslinie durchbricht, und "
+"verkaufen Sie, wenn er die untere Begrenzungslinie durchbricht."
 
 #: ../../source/examples/Example_11_海龟交易法.md:9
 msgid "结合较短周期通道控制退出（简化版海龟规则）。"
 msgstr ""
-"Kombiniert mit kürzeren Zyklus-Kanalsteuerungs-Ausgangszeiten "
-"(vereinfachte Turtle-Regeln)."
+"Kombiniert mit kürzeren Zyklus-Kanalsteuerungs-Ausgangszeiten (vereinfachte "
+"Turtle-Regeln)."
 
 #: ../../source/examples/Example_11_海龟交易法.md:11
 msgid "qteasy 实现"
@@ -69,9 +68,9 @@ msgstr "Signalart: `PT`;"
 #: ../../source/examples/Example_11_海龟交易法.md:15
 msgid "默认脚本使用单标的教学版，便于验证链路和参数优化流程。"
 msgstr ""
-"Das Standardskript verwendet eine einheitliche Lehrversion, was "
-"die Überprüfung der Verbindung und des "
-"Parameteroptimierungsprozesses erleichtert."
+"Das Standardskript verwendet eine einheitliche Lehrversion, was die "
+"Überprüfung der Verbindung und des Parameteroptimierungsprozesses "
+"erleichtert."
 
 #: ../../source/examples/Example_11_海龟交易法.md:41
 msgid "可执行脚本"
