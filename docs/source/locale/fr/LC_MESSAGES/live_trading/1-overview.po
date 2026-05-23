@@ -20,52 +20,81 @@ msgstr ""
 
 #: ../../source/live_trading/1-overview.md:1
 msgid "模拟实盘模块总览"
-msgstr ""
+msgstr "Présentation du module de simulation de trading en direct"
 
 #: ../../source/live_trading/1-overview.md:3
 msgid "本章帮您在进入模拟实盘之前建立整体地图：能做什么、和回测有何不同、关键术语是什么意思、下一步该读哪一章。"
 msgstr ""
+"Ce chapitre vous aide à établir une vue d'ensemble complète avant de vous "
+"lancer dans le trading en direct : ce que vous pouvez faire, en quoi cela "
+"diffère du backtesting, la signification des termes clés et quel chapitre "
+"lire ensuite."
 
 #: ../../source/live_trading/1-overview.md:5
 msgid ""
 "亲爱的用户，若您已完成策略回测并想「按真实时钟」观察策略表现，本模块就是为您准备的。我们尽量用与回测**同一套**策略代码，在本地模拟下单与记日志，让您在对接真实券商之前先走通完整链路。"
 msgstr ""
+"Cher utilisateur, si vous avez effectué un backtesting de stratégie et "
+"souhaitez observer les performances de votre stratégie « en temps réel », ce"
+" module est fait pour vous. Nous essayons d'utiliser le **même ensemble de**"
+" code de stratégie que le backtesting, en simulant le placement des ordres "
+"et la journalisation localement, vous permettant de terminer l'ensemble du "
+"processus avant de vous connecter à une véritable société de courtage."
 
 #: ../../source/live_trading/1-overview.md:7
 msgid "0. 适用场景"
-msgstr ""
+msgstr "0. Scénarios applicables"
 
 #: ../../source/live_trading/1-overview.md:9
 msgid "您已完成策略回测，准备进入**模拟实盘**阶段（尚未或暂不接入真实柜台）"
 msgstr ""
+"Vous avez terminé le backtesting de la stratégie et êtes prêt à entrer dans "
+"l'étape de **trading en direct simulé** (pas encore ou temporairement "
+"connecté à une véritable plateforme de trading)."
 
 #: ../../source/live_trading/1-overview.md:10
 msgid "您希望快速建立「配置 → 下单 → 成交 → 日志 → 排错」的整体认知"
 msgstr ""
+"Vous souhaitez établir rapidement une compréhension globale du processus "
+"depuis « configuration → passation de commande → achèvement de la "
+"transaction → journaux → dépannage »."
 
 #: ../../source/live_trading/1-overview.md:11
 msgid "您计划日后扩展真实券商（如 QMT），需要稳定的文档入口"
 msgstr ""
+"Si vous envisagez de vous développer pour inclure de véritables maisons de "
+"courtage (telles que QMT) à l'avenir, vous aurez besoin d'un point d'entrée "
+"de documents stable."
 
 #: ../../source/live_trading/1-overview.md:13
 msgid "1. 这个模块解决什么问题"
-msgstr ""
+msgstr "1. Quel problème ce module résout-il ?"
 
 #: ../../source/live_trading/1-overview.md:15
 msgid "统一解释模拟实盘里「配置、下单、成交、日志、排错」的完整链路"
 msgstr ""
+"Une explication unifiée du processus complet de « configuration, placement "
+"d'ordres, exécution, journalisation et dépannage » dans le trading en direct"
+" simulé."
 
 #: ../../source/live_trading/1-overview.md:16
 msgid "降低从回测切换到 live 时的理解成本——避免「回测参数能跑、live 一启动就懵」"
 msgstr ""
+"Réduisez la charge cognitive lors du passage du backtesting aux tests en "
+"direct : évitez la situation dans laquelle \"les paramètres de backtesting "
+"fonctionnent, mais vous êtes complètement confus lorsque le test en direct "
+"démarre\"."
 
 #: ../../source/live_trading/1-overview.md:17
 msgid "为后续扩展真实柜台适配提供文档入口，而不必从零摸索"
 msgstr ""
+"Cela fournit un point d’entrée à la documentation pour une extension future "
+"afin de prendre en charge les compteurs du monde réel, éliminant ainsi le "
+"besoin de repartir de zéro."
 
 #: ../../source/live_trading/1-overview.md:19
 msgid "2. 与回测的关系"
-msgstr ""
+msgstr "2. Relation avec le backtesting"
 
 #: ../../source/live_trading/1-overview.md:21
 msgid ""
@@ -73,68 +102,86 @@ msgid ""
 "的设计目标是：**同一套策略逻辑**既用于回测，也用于模拟实盘。区别主要在「时间如何流逝」和「谁来做撮合」——而不是重写一套策略代码。下表帮助您在选型时快速对照；若您已熟悉回测，可重点看「模拟实盘」列里与"
 " live 相关的入口与成交方式。"
 msgstr ""
+"L'objectif de conception de Qteasy est d'utiliser la même logique "
+"stratégique pour le backtesting et le trading en direct. La principale "
+"différence réside dans « comment le temps passe » et « qui effectue la "
+"correspondance », plutôt que de réécrire entièrement le code de la "
+"stratégie. Le tableau ci-dessous vous aidera à comparer rapidement les "
+"options lors de votre sélection ; si vous êtes déjà familier avec le "
+"backtesting, vous pouvez vous concentrer sur les points d'entrée et les "
+"méthodes de trading liées au « live trading » dans la colonne « live trading"
+" »."
 
 #: ../../source/live_trading/1-overview.md:23
 msgid ""
 "**各列含义**：**对比项**为维度；**回测**列描述历史验证模式；**模拟实盘（`mode=0`）** 列描述按真实时钟运行的 live 模式。"
 msgstr ""
+"**Significations des colonnes :** Les **éléments de comparaison** "
+"représentent les dimensions ; la colonne **Backtesting** décrit le mode de "
+"vérification historique ; la colonne **Simulated Live Trading (`mode=0`) "
+"décrit le mode live fonctionnant à une horloge réelle."
 
 #: ../../source/live_trading/1-overview.md:25
 msgid ""
 "**如何使用**：决定「现在该用哪种模式」时按行查；启动 live 时确认最后一行入口是否为 `mode=0` + `qt.run(op)`。"
 msgstr ""
+"**Comment utiliser :** Lorsque vous décidez \"quel mode utiliser "
+"maintenant\", effectuez une recherche par ligne ; lors du démarrage du live,"
+" confirmez que la dernière entrée de ligne est `mode=0` + `qt.run(op)`."
 
 #: ../../source/live_trading/1-overview.md
 msgid "对比项"
-msgstr ""
+msgstr "Élément de comparaison"
 
 #: ../../source/live_trading/1-overview.md
 msgid "回测"
-msgstr ""
+msgstr "Backtesting"
 
 #: ../../source/live_trading/1-overview.md
 msgid "模拟实盘（`mode=0`）"
-msgstr ""
+msgstr "Trading en direct simulé (`mode=0`)"
 
 #: ../../source/live_trading/1-overview.md
 msgid "时间"
-msgstr ""
+msgstr "Temps"
 
 #: ../../source/live_trading/1-overview.md
 msgid "历史区间上快进"
-msgstr ""
+msgstr "Avance rapide sur les intervalles historiques"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**真实时间**按交易日历推进"
-msgstr ""
+msgstr "**Temps réel** progresse selon le calendrier de trading."
 
 #: ../../source/live_trading/1-overview.md
 msgid "策略代码"
-msgstr ""
+msgstr "Code de stratégie"
 
 #: ../../source/live_trading/1-overview.md
 msgid "同一 `Operator` / 策略"
-msgstr ""
+msgstr "Même `Operator`/Stratégie"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**同一套**逻辑"
-msgstr ""
+msgstr "**Le même ensemble de** logique"
 
 #: ../../source/live_trading/1-overview.md
 msgid "成交"
-msgstr ""
+msgstr "Accord"
 
 #: ../../source/live_trading/1-overview.md
 msgid "按历史价模拟撮合"
-msgstr ""
+msgstr "Correspondance simulée basée sur les prix historiques"
 
 #: ../../source/live_trading/1-overview.md
 msgid "通常由 **模拟券商（simulator）** 按 live 价撮合"
 msgstr ""
+"En règle générale, les transactions sont comparées par un **simulateur** au "
+"prix en direct."
 
 #: ../../source/live_trading/1-overview.md
 msgid "典型入口"
-msgstr ""
+msgstr "entrée typique"
 
 #: ../../source/live_trading/1-overview.md
 msgid "`op.run_backtest()` / `qt.run(op, mode=1)`"
@@ -142,61 +189,101 @@ msgstr "`op.run_backtest()` / `qt.run(op, mode=1)`"
 
 #: ../../source/live_trading/1-overview.md
 msgid "`qt.run(op)` 且 `mode=0`"
-msgstr "`qt.run(op)` and `mode=0`"
+msgstr "`qt.run(op)` et `mode=0`"
 
 #: ../../source/live_trading/1-overview.md:34
 msgid ""
 "**Operator（交易员容器）**：您创建并持有策略的那个「交易员」对象；回测和 live "
 "都用它，只是运行模式不同。您可以把它理解为：同一位交易员，在「历史考场」和「模拟实盘考场」里答同一套卷子。"
 msgstr ""
+"**Operator (Trader Container)** : Il s'agit de l'objet « trader » que vous "
+"créez et détenez pour votre stratégie ; il est utilisé à la fois dans le "
+"backtesting et dans le trading en direct, uniquement dans différents modes. "
+"Vous pouvez y penser comme si le même trader passait le même test à la fois "
+"dans « l'examen historique » et dans « l'examen en direct simulé »."
 
 #: ../../source/live_trading/1-overview.md:36
 msgid "启动 live 的常见一行代码："
-msgstr ""
+msgstr "Un code commun sur une ligne pour démarrer le live :"
 
 #: ../../source/live_trading/1-overview.md:44
 msgid "3. 您将获得的 capability（能力地图）"
-msgstr ""
+msgstr "3. La carte des capacités que vous recevrez"
 
 #: ../../source/live_trading/1-overview.md:46
 msgid "以下能力在近年版本中逐步完善，目的是让模拟实盘**可校验、可拦截、可审计、可扩展**："
 msgstr ""
+"Les fonctionnalités suivantes ont été progressivement améliorées dans les "
+"versions récentes, dans le but de rendre le trading en direct simulé "
+"**vérifiable, interceptable, auditable et évolutif** :"
 
 #: ../../source/live_trading/1-overview.md:48
 msgid "**配置可校验**：live 相关参数在运行前集中检查，配置写错时更早报错，而不是跑到一半才崩溃。"
 msgstr ""
+"**Configuration vérifiable :** Les paramètres liés à Live sont vérifiés "
+"avant l'exécution, de sorte que les erreurs sont signalées plus tôt lorsque "
+"les configurations sont incorrectes, plutôt que de planter à mi-chemin du "
+"processus."
 
 #: ../../source/live_trading/1-overview.md:49
 msgid "**风控可插拔**：订单在「真正交给券商」之前，可在本地按规则拦截（像下单前的复核台）。"
 msgstr ""
+"**Contrôle des risques possible :** Les ordres peuvent être bloqués "
+"localement selon des règles avant d'être effectivement remis à la société de"
+" courtage (comme un comité d'examen des précommandes)."
 
 #: ../../source/live_trading/1-overview.md:50
 msgid "**拒单可审计**：被拒时可在日志里用规则编号和英文原因检索，便于复盘「为什么没成交」。"
 msgstr ""
+"**Rejets vérifiables :** Lorsqu'une commande est rejetée, elle peut être "
+"récupérée dans le journal en utilisant le numéro de règle et le motif en "
+"anglais, ce qui permet de vérifier facilement « pourquoi la commande n'a pas"
+" été clôturée »."
 
 #: ../../source/live_trading/1-overview.md:51
 msgid "**券商接口可扩展**：统一 connect / submit / 轮询成交等接口，便于日后接入 QMT 等真实柜台。"
 msgstr ""
+"**L'interface de courtage est évolutive :** Elle fournit des interfaces "
+"unifiées pour se connecter, soumettre et interroger les transactions, "
+"facilitant ainsi l'intégration future avec les plateformes de trading du "
+"monde réel telles que QMT."
 
 #: ../../source/live_trading/1-overview.md:52
 msgid "**订单状态更清晰**：部分成交、全部成交等状态与累计成交量更一致，减少「界面显示和心里预期对不上」。"
 msgstr ""
+"**Statut de commande plus clair :** Les statuts tels que partiellement "
+"terminé et entièrement terminé sont plus cohérents avec le volume cumulé des"
+" transactions, réduisant ainsi l'écart entre l'affichage de l'interface et "
+"les attentes de chacun."
 
 #: ../../source/live_trading/1-overview.md:54
 msgid "4. 术语速查表"
-msgstr ""
+msgstr "4. Tableau de référence rapide sur la terminologie"
 
 #: ../../source/live_trading/1-overview.md:56
 msgid ""
 "模拟实盘文档会反复出现 Operator、Trader、Broker、风控、产物路径等词。本节是**全模块术语 "
 "hub**：按主题分组，供各章正文首次出现后回来查阅。您不必一次读完——遇到陌生词时用页内搜索即可。"
 msgstr ""
+"La documentation de trading en direct simulée utilisera à plusieurs reprises"
+" des termes tels que Operator, Trader, courtier, contrôle des risques et "
+"chemin de produit. Cette section est le **hub terminologique à l'échelle du "
+"module** : regroupée par sujet, vous permettant de vous y référer après sa "
+"première apparition dans le texte principal de chaque chapitre. Vous n'avez "
+"pas besoin de tout lire d'un coup : utilisez la recherche sur la page "
+"lorsque vous rencontrez des termes inconnus."
 
 #: ../../source/live_trading/1-overview.md:58
 msgid ""
 "**各列含义**：**术语**为英文名或配置键；**说明**为在 qteasy live "
 "链路中的职责；**类比**用投资/日常场景帮助记忆（类比与真实行为若有差异，以说明列为准）。"
 msgstr ""
+"**Significations des colonnes** : **Les termes** sont des noms anglais ou "
+"des clés de configuration ; **Descriptions** décrivent les responsabilités "
+"dans le workflow en direct qteasy ; Les **Analogies** utilisent des "
+"scénarios d'investissement/quotidiens pour faciliter la mémorisation (s'il "
+"existe des différences entre l'analogie et le comportement du monde réel, la"
+" colonne de description prévaudra)."
 
 #: ../../source/live_trading/1-overview.md:60
 msgid ""
@@ -204,34 +291,50 @@ msgid ""
 "列找关键词，再跳转到 :doc:`3-risk-and-order-lifecycle` 或 :doc:`5-artifacts-and-"
 "troubleshooting` 等章节。"
 msgstr ""
+"**Comment utiliser :** Tout d'abord, déterminez dans quelle catégorie vous "
+"êtes coincé : \"Entité en cours d'exécution / Configuration / Commande / "
+"Maintenance\" et ouvrez la section correspondante. En fonction du problème "
+"actuel (par exemple, « Où vérifier les commandes rejetées »), recherchez des"
+" mots-clés dans la colonne **Instructions**, puis accédez à des sections "
+"telles que :doc:`3-risk-and-order-lifecycle` ou :doc:`5-artifacts-and-"
+"troubleshooting`."
 
 #: ../../source/live_trading/1-overview.md:62
 msgid ""
 "**示例**：您在 Shell 里看到 `partial-filled` 不懂 → 打开 §4.3 找到该行 → 得知是「部分成交」→ 到 "
 ":doc:`3-risk-and-order-lifecycle` 看状态流转。"
 msgstr ""
+"**Exemple** : Vous voyez `partial-filled` dans le Shell et ne le comprenez "
+"pas → Ouvrez §4.3 et trouvez la ligne → Vous apprendrez que cela signifie "
+"\"partiellement rempli\" → Allez dans :doc:`3-risk-and-order-lifecycle` pour"
+" voir le changement de statut."
 
 #: ../../source/live_trading/1-overview.md:64
 msgid "4.1 运行主体"
-msgstr ""
+msgstr "4.1 Entité opérationnelle"
 
 #: ../../source/live_trading/1-overview.md:66
 msgid ""
 "live 运行时，**Operator** 仍持有策略，但由 **Trader** 按真实日程驱动；订单经 **Broker** "
 "受理。本表覆盖从「策略容器」到「您交互界面」的主角色；不含具体配置键（见 §4.2）。"
 msgstr ""
+"Pendant l'exécution en direct, le **Operator** détient toujours la "
+"politique, mais elle est pilotée par le **Trader** selon le calendrier "
+"réel ; les commandes sont traitées par le **Courtier**. Ce tableau couvre "
+"les principaux rôles du « conteneur de stratégie » à « votre interface » ; "
+"il ne comporte pas de clés de configuration spécifiques (voir §4.2)."
 
 #: ../../source/live_trading/1-overview.md
 msgid "术语"
-msgstr ""
+msgstr "le terme"
 
 #: ../../source/live_trading/1-overview.md
 msgid "说明"
-msgstr ""
+msgstr "Description"
 
 #: ../../source/live_trading/1-overview.md
 msgid "类比"
-msgstr ""
+msgstr "analogie"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**Operator**"
@@ -240,10 +343,14 @@ msgstr "**Operator**"
 #: ../../source/live_trading/1-overview.md
 msgid "持有策略组、负责调度与信号合并的顶层容器"
 msgstr ""
+"Conteneur de niveau supérieur qui contient le groupe de stratégies et est "
+"responsable de la planification et de la fusion des signaux."
 
 #: ../../source/live_trading/1-overview.md
 msgid "投资组合经理：决定何时跑哪些策略"
 msgstr ""
+"Gestionnaire de portefeuille : décider quand et quelles stratégies mettre en"
+" œuvre"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**Trader**"
@@ -252,22 +359,29 @@ msgstr "**Trader**"
 #: ../../source/live_trading/1-overview.md
 msgid "live 模式下实际按日程运行策略、下单、写日志的进程主体"
 msgstr ""
+"En mode réel, les principaux processus qui s'exécutent réellement selon un "
+"calendrier, notamment l'exécution de la stratégie, le placement des ordres "
+"et la rédaction du journal, constituent le cœur de l'opération."
 
 #: ../../source/live_trading/1-overview.md
 msgid "交易员席位：您进 Shell 对话的对象"
 msgstr ""
+"Trader Siège : la personne avec laquelle vous interagissez dans votre "
+"conversation Shell"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**Broker（券商）**"
-msgstr ""
+msgstr "**Courtier (société de valeurs mobilières)**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "接收订单、返回受理结果与成交回报的适配对象"
 msgstr ""
+"Le public cible pour la réception des commandes, le renvoi des résultats de "
+"traitement et la confirmation des transactions."
 
 #: ../../source/live_trading/1-overview.md
 msgid "券商柜台：simulator 是「练习柜台」"
-msgstr ""
+msgstr "Compteur de courtage : simulateur signifie « compteur de pratique »."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**mode=0**"
@@ -276,10 +390,12 @@ msgstr "**mode=0**"
 #: ../../source/live_trading/1-overview.md
 msgid "配置项：表示 live / 模拟实盘（相对回测 mode=1 等）"
 msgstr ""
+"Élément de configuration : Indique le trading en direct/simulé (par rapport "
+"au mode de backtesting=1, etc.)"
 
 #: ../../source/live_trading/1-overview.md
 msgid "开关：0=按真实时钟跑"
-msgstr ""
+msgstr "Switch : 0 = Fonctionne en temps réel"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**CLI**"
@@ -287,11 +403,11 @@ msgstr "CLI command"
 
 #: ../../source/live_trading/1-overview.md
 msgid "命令行交互界面（Trader Shell）"
-msgstr ""
+msgstr "Interface interactive de ligne de commande (Trader Shell)"
 
 #: ../../source/live_trading/1-overview.md
 msgid "打字下指令的「交易员终端」"
-msgstr ""
+msgstr "Un \"terminal commerçant\" pour taper des commandes."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**TUI**"
@@ -299,15 +415,15 @@ msgstr "**TUI**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "图形化终端界面"
-msgstr ""
+msgstr "Interface graphique du terminal"
 
 #: ../../source/live_trading/1-overview.md
 msgid "带面板的全屏界面，与 CLI 二选一"
-msgstr ""
+msgstr "Une interface plein écran avec un panneau ou une option CLI."
 
 #: ../../source/live_trading/1-overview.md:77
 msgid "4.2 配置与数据"
-msgstr ""
+msgstr "4.2 Configuration et données"
 
 #: ../../source/live_trading/1-overview.md:79
 msgid ""
@@ -315,6 +431,11 @@ msgid ""
 "**LiveTradeConfig**，并决定资产类型、行情从哪里来、数据如何补齐。本表是配置章 (:doc:`2-configuration-and-"
 "run`) 的术语索引。"
 msgstr ""
+"Avant de démarrer LiveTrade, les éléments que vous écrivez via "
+"`qt.configure(...)` seront gelés en tant que **LiveTradeConfig**, "
+"déterminant les types d'actifs, d'où proviennent les données du marché et "
+"comment les données sont complétées. Ce tableau est un index terminologique "
+"pour le chapitre de configuration (:doc:`2-configuration-and-run`)."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**LiveTradeConfig**"
@@ -323,10 +444,14 @@ msgstr "**LiveTradeConfig**"
 #: ../../source/live_trading/1-overview.md
 msgid "启动前冻结的一份 live 配置快照，运行中不再被意外改掉"
 msgstr ""
+"Un instantané de la configuration en direct est gelé avant le démarrage et "
+"ne sera pas accidentellement modifié pendant l'exécution."
 
 #: ../../source/live_trading/1-overview.md
 msgid "起飞前的检查单，签字后不再涂改"
 msgstr ""
+"Le formulaire d'inspection pré-vol, une fois signé, ne doit pas être "
+"modifié."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**asset_type**"
@@ -341,10 +466,14 @@ msgstr ""
 #: ../../source/live_trading/1-overview.md
 msgid "资产类型，如 `E`（股票）、`FD`（场内基金/ETF）"
 msgstr ""
+"Types d'actifs, tels que `E` (actions) et `FD` (fonds négociés en "
+"bourse/ETF)."
 
 #: ../../source/live_trading/1-overview.md
 msgid "告诉系统「这批标的按哪套规则交易」"
 msgstr ""
+"Indiquez au système \"quel ensemble de règles s'applique à la négociation de"
+" ce lot d'actifs\"."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**refill**"
@@ -353,22 +482,26 @@ msgstr "Market conditions and refill"
 #: ../../source/live_trading/1-overview.md
 msgid "从网络渠道补齐本地数据源缺失表/区间"
 msgstr ""
+"Remplissez les tableaux/plages manquants dans la source de données locale à "
+"partir des canaux en ligne."
 
 #: ../../source/live_trading/1-overview.md
 msgid "给本地「数据仓库」补货"
-msgstr ""
+msgstr "Réapprovisionnement du « entrepôt de données » local"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**live 行情频率**"
-msgstr ""
+msgstr "**Fréquence du marché en direct**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "如 `live_price_acquire_freq='15MIN'`，多久拉一次实时价"
 msgstr ""
+"Par exemple, `live_price_acquire_freq='15MIN'` spécifie la fréquence à "
+"laquelle le prix en temps réel est récupéré."
 
 #: ../../source/live_trading/1-overview.md
 msgid "盯盘刷新间隔"
-msgstr ""
+msgstr "Intervalle d'actualisation de la surveillance du marché"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**simulator**"
@@ -377,92 +510,110 @@ msgstr "``simulator''"
 #: ../../source/live_trading/1-overview.md
 msgid "默认模拟券商类型，用 live 价模拟成交"
 msgstr ""
+"Le type de courtage simulé par défaut utilise la tarification en direct pour"
+" simuler les transactions."
 
 #: ../../source/live_trading/1-overview.md
 msgid "paper trading 柜台"
-msgstr ""
+msgstr "comptoir de négociation de papier"
 
 #: ../../source/live_trading/1-overview.md:89
 msgid "4.3 订单与风控"
-msgstr ""
+msgstr "4.3 Commandes et contrôle des risques"
 
 #: ../../source/live_trading/1-overview.md:91
 msgid ""
 "从策略信号到成交，中间经过「本地风控 → 券商受理 → 异步成交」。本表是 :doc:`3-risk-and-order-lifecycle` "
 "的核心词汇；**务必分清「风控拒单」与「柜台拒单」两行**。"
 msgstr ""
+"Du signal stratégique à l'exécution, le processus implique « contrôle local "
+"des risques → traitement du courtage → exécution asynchrone ». Ce tableau "
+"contient le vocabulaire de base de :doc:`3-risk-and-order-lifecycle`; "
+"**Veuillez veiller à faire la distinction entre les lignes « rejet du "
+"contrôle des risques » et « contre-rejet ».**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**OrderIntent（订单意图）**"
-msgstr ""
+msgstr "**Intention de commande**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "一笔打算下的单：标的、方向、数量、价格等"
-msgstr ""
+msgstr "Une commande planifiée : objet, direction, quantité, prix, etc."
 
 #: ../../source/live_trading/1-overview.md
 msgid "填好的委托单草稿"
-msgstr ""
+msgstr "Projet de formulaire d'autorisation complété"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**AccountSnapshot（账户快照）**"
-msgstr ""
+msgstr "**Instantané du compte**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "评估风控那一刻的现金、持仓、当日成交额等"
 msgstr ""
+"Trésorerie, positions ouvertes et volume de transactions quotidien au moment"
+" de l'évaluation des risques"
 
 #: ../../source/live_trading/1-overview.md
 msgid "下单瞬间的账户「定格照片」"
-msgstr ""
+msgstr "Un instantané du compte au moment où la commande a été passée."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**RiskManager（风控管理器）**"
-msgstr ""
+msgstr "**RiskManager**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "按顺序执行多条规则，决定是否放行"
 msgstr ""
+"Exécutez plusieurs règles de manière séquentielle pour déterminer si vous "
+"souhaitez autoriser le passage."
 
 #: ../../source/live_trading/1-overview.md
 msgid "复核台：任一规则不通过则拒单"
 msgstr ""
+"Bureau de révision : les commandes seront rejetées si une règle ne répond "
+"pas aux exigences."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**RiskDecision（风控决策）**"
-msgstr ""
+msgstr "**Décision de risque**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "放行或拒绝，及英文拒因、规则编号"
-msgstr ""
+msgstr "Libération ou refus, et motif du refus en anglais, numéro de règle"
 
 #: ../../source/live_trading/1-overview.md
 msgid "复核结论条"
-msgstr ""
+msgstr "Réviser le bordereau de conclusion"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**风控拒单**"
-msgstr ""
+msgstr "**Rejet de commande en raison du contrôle des risques**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "本地规则拦截：**不入**订单表，记 risk_log"
 msgstr ""
+"Interception de règles locales : **N'entrez pas** dans le tableau des "
+"commandes, enregistrez-le dans Risk_log."
 
 #: ../../source/live_trading/1-overview.md
 msgid "复核台打回，委托单还没递出柜台"
 msgstr ""
+"Le formulaire a été renvoyé par le bureau d’examen avant même d’être soumis."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**柜台受理拒单**"
-msgstr ""
+msgstr "**Service au comptoir pour les commandes refusées**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "券商返回不接受：订单表有 `rejected` 行，broker 号为空"
 msgstr ""
+"La société de bourse a rejeté l'ordre : le tableau des ordres contient une "
+"ligne `rejected` et l'ID du courtier est vide."
 
 #: ../../source/live_trading/1-overview.md
 msgid "柜台收单后退回"
-msgstr ""
+msgstr "Le guichet renverra le reçu."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**partial-filled**"
@@ -471,10 +622,12 @@ msgstr "**partial-filled**"
 #: ../../source/live_trading/1-overview.md
 msgid "部分成交：已成交数量小于委托数量"
 msgstr ""
+"Partiellement négocié : le nombre de transactions négociées est inférieur au"
+" nombre d'ordres passés."
 
 #: ../../source/live_trading/1-overview.md
 msgid "委托只成交了一部分"
-msgstr ""
+msgstr "Seule une partie de la commande a été exécutée."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**filled**"
@@ -482,11 +635,11 @@ msgstr "**filled**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "全部成交"
-msgstr ""
+msgstr "Succès des transactions"
 
 #: ../../source/live_trading/1-overview.md
 msgid "委托数量已达成"
-msgstr ""
+msgstr "Le nombre de commissions a été atteint."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**rejected**"
@@ -494,11 +647,11 @@ msgstr "Often `rejected`"
 
 #: ../../source/live_trading/1-overview.md
 msgid "被拒（多指柜台受理拒绝）"
-msgstr ""
+msgstr "Rejeté (souvent faisant référence au rejet au comptoir)"
 
 #: ../../source/live_trading/1-overview.md
 msgid "委托无效"
-msgstr ""
+msgstr "Délégation invalide"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**broker_order_id**"
@@ -507,10 +660,12 @@ msgstr "**broker_order_id**"
 #: ../../source/live_trading/1-overview.md
 msgid "券商侧委托编号，受理成功后回写本地"
 msgstr ""
+"Le numéro de commande de la société de courtage sera renvoyé au système "
+"local une fois le traitement réussi."
 
 #: ../../source/live_trading/1-overview.md
 msgid "柜台回执号"
-msgstr ""
+msgstr "Numéro de reçu au comptoir"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**submit_with_ack**"
@@ -519,10 +674,14 @@ msgstr "`submit_with_ack`"
 #: ../../source/live_trading/1-overview.md
 msgid "提交订单并**同步**得到是否受理的结果"
 msgstr ""
+"Soumettez une commande et recevez **de manière synchrone** le résultat de "
+"son acceptation."
 
 #: ../../source/live_trading/1-overview.md
 msgid "递单后立即听柜台说「收/不收」"
 msgstr ""
+"Immédiatement après avoir soumis le formulaire, le personnel du comptoir "
+"dira « Accepter/Ne pas accepter »."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**poll_fills**"
@@ -531,14 +690,17 @@ msgstr "`poll_fills`"
 #: ../../source/live_trading/1-overview.md
 msgid "轮询异步到达的成交回报"
 msgstr ""
+"Interrogation des résultats de transactions arrivant de manière asynchrone"
 
 #: ../../source/live_trading/1-overview.md
 msgid "定期问柜台「有没有新成交」"
 msgstr ""
+"Demandez régulièrement au guichet : « Y a-t-il eu de nouvelles transactions "
+"?"
 
 #: ../../source/live_trading/1-overview.md:108
 msgid "4.4 运维与可观测"
-msgstr ""
+msgstr "4.4 Fonctionnement et observabilité"
 
 #: ../../source/live_trading/1-overview.md:110
 msgid ""
@@ -546,74 +708,92 @@ msgid ""
 "troubleshooting`、:doc:`6-trader-snapshot-gate` 与 :doc:`8-cli-trader-"
 "capability-matrix`。"
 msgstr ""
+"Au cours de longues exécutions de tests en direct ou de dépannage, vous "
+"rencontrerez des chemins de journaux, un contrôle d'accès, une "
+"réconciliation et un débogage. Ce tableau correspond à :doc:`5-artifacts-"
+"and-troubleshooting`, :doc:`6-trader-snapshot-gate` et :doc:`8-cli-trader-"
+"capability-matrix`."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**四键产物**"
-msgstr ""
+msgstr "**Produits à quatre obligations**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "`sys_log`、`trade_log`、`break_point`、`risk_log` 四个固定路径"
 msgstr ""
+"Les quatre chemins fixes sont `sys_log`, `trade_log`, `break_point` et "
+"`risk_log`."
 
 #: ../../source/live_trading/1-overview.md
 msgid "四个专用文件夹：系统日记、成交明细、断点存档、风控记录"
 msgstr ""
+"Quatre dossiers dédiés : journal système, détails des transactions, archives"
+" de points d'arrêt et enregistrements de contrôle des risques."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**startup gate（启动门禁）**"
-msgstr ""
+msgstr "**Porte de démarrage**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "开盘/run 前检查：策略就绪、数据表、可选与远端账本比对"
 msgstr ""
+"Vérifications préalables : stratégie prête, tableaux de données, comparaison"
+" facultative avec le grand livre distant."
 
 #: ../../source/live_trading/1-overview.md
 msgid "发车前安全检查"
-msgstr ""
+msgstr "Contrôle de sécurité avant le départ"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**策略快照（路线图 5-A）**"
-msgstr ""
+msgstr "**Aperçu de la stratégie (Feuille de route 5-A)**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "策略运行前预先拉好数据，本步复用，减少重复 IO"
 msgstr ""
+"Les données sont pré-extraites avant l'exécution de la stratégie, et cette "
+"étape réutilise les données pour réduire les E/S redondantes."
 
 #: ../../source/live_trading/1-overview.md
 msgid "提前把「今日材料」备在案头"
-msgstr ""
+msgstr "Préparez à l'avance les documents d'aujourd'hui sur votre bureau."
 
 #: ../../source/live_trading/1-overview.md
 msgid "**reconcile（对账快照）**"
-msgstr ""
+msgstr "**Réconcilier (instantané de réconciliation)**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "收盘等时点输出本地与远端账本差异摘要 JSON"
 msgstr ""
+"Générez un résumé des différences entre les grands livres locaux et distants"
+" au format JSON à l'heure de clôture et à d'autres moments."
 
 #: ../../source/live_trading/1-overview.md
 msgid "日终对账条"
-msgstr ""
+msgstr "État de rapprochement de fin de journée"
 
 #: ../../source/live_trading/1-overview.md
 msgid "**DEBUG 模式**"
-msgstr ""
+msgstr "**Mode DÉBOGAGE**"
 
 #: ../../source/live_trading/1-overview.md
 msgid "Trader 调试开关，可手动 `run --task ...`"
 msgstr ""
+"Commutateur de débogage Trader, peut être réglé manuellement sur `run --task"
+" ...`"
 
 #: ../../source/live_trading/1-overview.md
 msgid "维修模式：可单步触发任务"
 msgstr ""
+"Mode réparation : Les tâches peuvent être déclenchées étape par étape."
 
 #: ../../source/live_trading/1-overview.md:120
 msgid "5. 推荐阅读路径"
-msgstr ""
+msgstr "5. Chemin de lecture recommandé"
 
 #: ../../source/live_trading/1-overview.md:122
 msgid "与模块首页目录一致："
-msgstr ""
+msgstr "Cohérent avec le répertoire de la page d'accueil du module :"
 
 #: ../../source/live_trading/1-overview.md:124
 #: ../../source/live_trading/1-overview.md:125
@@ -626,56 +806,76 @@ msgstr "doc"
 #: ../../source/live_trading/1-overview.md:124
 msgid "`2-configuration-and-run` — 完成最小可运行配置"
 msgstr ""
+"`2-configuration-and-run` — Complétez la configuration minimale exécutable"
 
 #: ../../source/live_trading/1-overview.md:125
 msgid "`../tutorials/8-live-trade-risk-and-broker-walkthrough` — 跟着教程走一遍"
 msgstr ""
+"`../tutorials/8-live-trade-risk-and-broker-walkthrough` — Suivez le tutoriel"
 
 #: ../../source/live_trading/1-overview.md:126
 msgid "`5-artifacts-and-troubleshooting` — 出问题时查产物与剧本"
 msgstr ""
+"`5-artifacts-and-troubleshooting` — Vérification des artefacts et des "
+"scripts lorsque des problèmes surviennent"
 
 #: ../../source/live_trading/1-overview.md:127
 msgid "`4-broker-adapter-and-integration` — 需要扩展券商时再读"
 msgstr ""
+"`4-broker-adapter-and-integration` — Lisez ceci lorsque vous avez besoin "
+"d'élargir votre portefeuille de courtage."
 
 #: ../../source/live_trading/1-overview.md:128
 msgid ""
 "`8-cli-trader-capability-matrix` — CLI 命令对照；长跑对照 :doc:`6-trader-snapshot-"
 "gate` 与 :doc:`7-manual-smoke-live-grid-roadmap`"
 msgstr ""
+"`8-cli-trader-capability-matrix` — Comparaison des commandes CLI ; "
+"comparaison longue distance : `6-trader-snapshot-gate` et `7-manual-smoke-"
+"live-grid-roadmap`"
 
 #: ../../source/live_trading/1-overview.md:130
 msgid "6. 相关索引"
-msgstr ""
+msgstr "6. Index associés"
 
 #: ../../source/live_trading/1-overview.md:132
 msgid ""
 "API 视角清单：[references/1-simulation-overview.md](../references/1-simulation-"
 "overview.md)"
 msgstr ""
+"Présentation de l'API : [references/1-simulation-"
+"overview.md](../references/1-simulation-overview.md)"
 
 #: ../../source/live_trading/1-overview.md:133
 msgid ""
 "CLI 功能清单：[references/5-simulate-operation-in-"
 "CLI.md](../references/5-simulate-operation-in-CLI.md)"
 msgstr ""
+"Liste des fonctionnalités CLI : [références/5-simulate-operation-in-"
+"CLI.md](../references/5-simulate-operation-in-CLI.md)"
 
 #: ../../source/live_trading/1-overview.md:134
 msgid ""
 "TUI 功能清单：[references/6-simulate-operation-in-"
 "TUI.md](../references/6-simulate-operation-in-TUI.md)"
 msgstr ""
+"Liste des fonctionnalités TUI : [références/6-simulate-operation-in-"
+"TUI.md](../references/6-simulate-operation-in-TUI.md)"
 
 #: ../../source/live_trading/1-overview.md:135
 msgid ""
 "设计理念：[design/10-live-trading-s1.3-architecture.md](../design/10-live-"
 "trading-s1.3-architecture.md)"
 msgstr ""
+"Concept de conception : [design/10-live-"
+"trading-s1.3-architecture.md](../design/10-live-"
+"trading-s1.3-architecture.md)"
 
 #: ../../source/live_trading/1-overview.md:136
 msgid "版本变更：[RELEASE_HISTORY.md](../RELEASE_HISTORY.md)（2.4.x / 2.5.0 等）"
 msgstr ""
+"Changement de version : [RELEASE_HISTORY.md](../RELEASE_HISTORY.md) (2.4.x /"
+" 2.5.0, etc.)"
 
 #~ msgid "live_trading 模块总览"
 #~ msgstr ""

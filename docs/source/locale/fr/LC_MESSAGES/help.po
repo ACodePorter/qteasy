@@ -20,15 +20,18 @@ msgstr ""
 
 #: ../../source/help.md:1
 msgid "需要帮助？"
-msgstr ""
+msgstr "Besoin d'aide ?"
 
 #: ../../source/help.md:3
 msgid "如果您在使用`qteasy`的过程中有任何问题或需要任何帮助，请随时联系我们，我们会尽力帮助您。"
 msgstr ""
+"Si vous avez des questions ou avez besoin d'aide lors de l'utilisation de "
+"`qteasy`, n'hésitez pas à nous contacter, nous ferons de notre mieux pour "
+"vous aider."
 
 #: ../../source/help.md:5
 msgid "报告bug或者功能请求"
-msgstr ""
+msgstr "Rapport de bug ou demande de fonctionnalité"
 
 #: ../../source/help.md:7
 msgid ""
@@ -38,34 +41,50 @@ msgid ""
 "bug报告.md&title=)或者[提交新功能需求](https://github.com/shepherdpp/qteasy/issues/new?assignees=&labels=&projects=&template=feature-"
 "request---新功能需求.md&title=)给我，"
 msgstr ""
+"Actuellement, `qteasy` est en cours de développement intensif et il pourrait"
+" y avoir des bugs. Si vous rencontrez un problème, veuillez [Issue-Report "
+"bug](https://github.com/shepherdpp/⟦QTEASY1⟧/issues/new?assignees=&labels=&projects=&template=bug-"
+"report---bug报告.md&title=) ou [Soumettre de nouvelles demandes de "
+"fonctionnalités](https://github.com/shepherdpp/⟦QTEASY2⟧/issues/new?assignees=&labels=&projects=&template=feature-"
+"request---新功能需求.md&title=)."
 
 #: ../../source/help.md:9
 msgid ""
 "在提交功能请求以前，请先访问我们的 [开发路线图](https://qteasy.readthedocs.io/zh-"
 "cn/latest/roadmap.html) 查阅你的功能请求是否已经在开发中。"
 msgstr ""
+"Avant de soumettre une demande de fonctionnalité, veuillez visiter notre "
+"[Feuille de route de "
+"développement](https://⟦QTEASY0⟧.readthedocs.io/en/latest/roadmap.html) pour"
+" voir si votre demande de fonctionnalité est déjà en développement."
 
 #: ../../source/help.md:11
 msgid "使用`qteasy`中遇到问题"
-msgstr ""
+msgstr "Rencontrez des problèmes avec `qteasy`"
 
 #: ../../source/help.md:13
 msgid ""
 "如果你在使用`qteasy`中遇到问题，可以进入`qteasy`的[讨论区](https://github.com/shepherdpp/qteasy/discussions)提交问题参与讨论。"
 msgstr ""
+"Si vous rencontrez des problèmes lors de l'utilisation de `qteasy`, vous "
+"pouvez accéder à la [Zone de "
+"discussion](https://github.com/shepherdpp/⟦QTEASY1⟧/discussions) pour "
+"soumettre des questions et participer aux discussions."
 
 #: ../../source/help.md:15
 msgid "贡献代码"
-msgstr ""
+msgstr "Faire des contributions"
 
 #: ../../source/help.md:17
 msgid ""
 "如果你对`qteasy`感兴趣，欢迎参与`qteasy`的开发，欢迎提交Pull Request，在参与之前，请先阅读CONTRIBUTING文档。"
 msgstr ""
+"Participer au développement de `qteasy` est très apprécié. Vous pouvez "
+"soumettre une Pull Request. Veuillez lire le document CONTRIBUANT."
 
 #: ../../source/help.md:19
 msgid "联系我们"
-msgstr ""
+msgstr "Contactez-nous"
 
 #: ../../source/help.md:21
 msgid "Email: jackie_pengzhao@163.com / jackie.pengzhao@gmail.com"
