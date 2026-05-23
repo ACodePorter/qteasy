@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
@@ -90,7 +89,7 @@ msgstr "**Understand how to customize trading strategies** ——[QTEASY教程5]
 
 #: ../../source/tutorials/7-more-complicated-self-define-srtategy.md:30
 msgid ""
-"在[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)中，还能找到更多关于使用内置交易策略、创建自定义策略等等相关内容。对`qteasy`的基本使用方法还不熟悉的同学，可以移步那里查看更多详细"
+"在[QTEASY文档](https://qteasy.readthedocs.io/en/latest/)中，还能找到更多关于使用内置交易策略、创建自定义策略等等相关内容。对`qteasy`的基本使用方法还不熟悉的同学，可以移步那里查看更多详细"
 "说明。"
 msgstr ""
 "In the [QTEASY documentation](https://qteasy.readthedocs.io/en/latest/), you can also find more content on using built-in trading strategies, creating custom strategies, and so on. If "

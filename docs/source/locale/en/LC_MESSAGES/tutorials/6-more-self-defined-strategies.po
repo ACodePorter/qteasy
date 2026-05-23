@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
@@ -81,7 +80,7 @@ msgid "**了解如何自定义交易策略**——[QTEASY教程5](5-first-self-d
 msgstr "**Learn how to customize trading strategies** —— [QTEASY Tutorial 5](5-first-self-defined-strategy.md)"
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:24
-msgid "在[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)中，还能找到更多关于使用内置交易策略、创建自定义策略等等相关内容。对`qteasy`的基本使用方法还不熟悉的同学，可以移步那里查看更多详细说明。"
+msgid "在[QTEASY文档](https://qteasy.readthedocs.io/en/latest/)中，还能找到更多关于使用内置交易策略、创建自定义策略等等相关内容。对`qteasy`的基本使用方法还不熟悉的同学，可以移步那里查看更多详细说明。"
 msgstr ""
 "In the [QTEASY documentation](https://qteasy.readthedocs.io/en/latest/), you can also find more content on using built-in trading strategies, creating custom strategies, and so on. If you’re not yet familiar with the basic usage of `qteasy`, you can go "
 "there to see more detailed explanations."
@@ -188,7 +187,7 @@ msgstr ""
 "such as type handling, frequency conversion, and ticker matching, so users don’t need to care about the storage method of each kind of data and can use it directly."
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:115
-msgid "关于`qteasy`数据类型的更详细介绍，请参见[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/data_types.html)。"
+msgid "关于`qteasy`数据类型的更详细介绍，请参见[QTEASY文档](https://qteasy.readthedocs.io/en/latest/data_types.html)。"
 msgstr "For a more detailed introduction to `qteasy` data types, please refer to the [QTEASY documentation](https://qteasy.readthedocs.io/en/latest/data_types.html)."
 
 #: ../../source/tutorials/6-more-self-defined-strategies.md:117

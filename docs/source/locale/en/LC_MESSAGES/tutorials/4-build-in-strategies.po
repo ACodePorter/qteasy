@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
@@ -78,10 +77,10 @@ msgstr ""
 
 #: ../../source/tutorials/4-build-in-strategies.md:21
 msgid ""
-"在[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)中，还能找到更多关于如何创建交易员对象运行策略，使用历史数据回测策略，检查回测交易记录，修改策略等等相关内容。对`qteasy`的基本使用方法还不熟悉的同学，可以移步那里查"
+"在[QTEASY文档](https://qteasy.readthedocs.io/en/latest/)中，还能找到更多关于如何创建交易员对象运行策略，使用历史数据回测策略，检查回测交易记录，修改策略等等相关内容。对`qteasy`的基本使用方法还不熟悉的同学，可以移步那里查"
 "看更多详细说明。"
 msgstr ""
-"In the [QTEASY documentation](https://qteasy.readthedocs.io/zh-cn/latest/), you can also find more content on how to create a trader object to run strategies, backtest strategies using historical data, review backtest "
+"In the [QTEASY documentation](https://qteasy.readthedocs.io/en/latest/), you can also find more content on how to create a trader object to run strategies, backtest strategies using historical data, review backtest "
 "trade records, modify strategies, and so on. If you’re not yet familiar with the basic usage of `qteasy`, you can go there for more detailed explanations."
 
 #: ../../source/tutorials/4-build-in-strategies.md:23

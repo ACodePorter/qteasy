@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
@@ -30,9 +29,9 @@ msgid "安装与导入"
 msgstr "Install and import"
 
 #: ../../source/getting_started.md:5
-msgid "使用 `pip` 安装（要求 `Python >= 3.9, <3.13`）：部分功能（如全部内置策略、数据库存储等）需要可选依赖，详见 [FAQ](https://qteasy.readthedocs.io/zh-cn/latest/faq.html) 与安装说明。"
+msgid "使用 `pip` 安装（要求 `Python >= 3.9, <3.13`）：部分功能（如全部内置策略、数据库存储等）需要可选依赖，详见 [FAQ](https://qteasy.readthedocs.io/en/latest/faq.html) 与安装说明。"
 msgstr ""
-"Install with `pip` (requires `Python >= 3.9, <3.13`): some features (such as all built-in strategies, database storage, etc.) require optional dependencies. See the [FAQ](https://qteasy.readthedocs.io/zh-cn/latest/faq.html) and the installation instructions "
+"Install with `pip` (requires `Python >= 3.9, <3.13`): some features (such as all built-in strategies, database storage, etc.) require optional dependencies. See the [FAQ](https://qteasy.readthedocs.io/en/latest/faq.html) and the installation instructions "
 "for details."
 
 #: ../../source/getting_started.md:10
