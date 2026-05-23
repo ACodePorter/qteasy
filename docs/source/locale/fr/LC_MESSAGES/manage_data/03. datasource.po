@@ -20,584 +20,718 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:1
 msgid "本地数据源——DataSource对象"
-msgstr ""
+msgstr "Source de données locale — Objet DataSource"
 
 #: ../../source/manage_data/2. datasource.md:3
 msgid ""
-"本地数据源是`qteasy`数据管理功能的核心，所有的数据都必须首先下载并保存在本地"
-"数据源中，才能为`qteasy`所用。`qteasy`使用`DataSource`对象管理本地数据源，本"
-"地数据源类似于一个数据库，包含一系列预先定义的数据表，`DataSource`类提供了一"
-"系列API用于数据表中数据的管理，包括读取、更新、删除和查询其中的数据。"
+"本地数据源是`qteasy`数据管理功能的核心，所有的数据都必须首先下载并保存在本地数据源中，才能为`qteasy`所用。`qteasy`使用`DataSource`对象管理本地数据源，本地数据源类似于一个数据库，包含一系列预先定义的数据表，`DataSource`类提供了一系列API用于数据表中数据的管理，包括读取、更新、删除和查询其中的数据。"
 msgstr ""
+"La source de données locale est au cœur de la fonctionnalité de gestion des "
+"données de `qteasy`. Toutes les données doivent d'abord être téléchargées et"
+" enregistrées dans la source de données locale avant de pouvoir être "
+"utilisées par `qteasy`. `qteasy` utilise des objets `DataSource` pour gérer "
+"la source de données locale. La source de données locale est similaire à une"
+" base de données, contenant une série de tables de données prédéfinies. La "
+"classe `DataSource` fournit une série d'API pour gérer les données dans les "
+"tables de données, notamment la lecture, la mise à jour, la suppression et "
+"l'interrogation des données."
 
 #: ../../source/manage_data/2. datasource.md:5
 msgid "要创建一个新的`DataSource`对象，可以使用下面的命令："
 msgstr ""
+"Pour créer un nouvel objet `DataSource`, vous pouvez utiliser la commande "
+"suivante :"
 
 #: ../../source/manage_data/2. datasource.md:12
 msgid "通过打印`DataSource`对象，可以查看其最基本的属性："
 msgstr ""
+"En imprimant l'objet `DataSource`, vous pouvez visualiser ses propriétés les"
+" plus élémentaires :"
 
 #: ../../source/manage_data/2. datasource.md:19
-msgid ""
-"从`DataSource`的打印字符串`file://csv@qt_root/data/`中，可以看出它的基本属性"
+msgid "从`DataSource`的打印字符串`file://csv@qt_root/data/`中，可以看出它的基本属性"
 msgstr ""
+"À partir de la chaîne imprimée `file://csv@qt_root/data/` de `DataSource`, "
+"nous pouvons voir ses propriétés de base."
 
 #: ../../source/manage_data/2. datasource.md:21
 msgid "打印结果包含数据源对象的基本信息："
 msgstr ""
+"Les résultats imprimés contiennent des informations de base sur l'objet "
+"source de données :"
 
 #: ../../source/manage_data/2. datasource.md:22
 msgid ""
-"`file:` -- 数据源的类型。`qteasy`支持两种类型的数据源：文件型和数据库型，"
-"`file`代表数据源中的所有数据表都是以文件的形式保存在磁盘上的，同样，数据也可"
-"以保存在`mysql`数据库中，此时数据源的类型代码为`db`。"
+"`file:` -- "
+"数据源的类型。`qteasy`支持两种类型的数据源：文件型和数据库型，`file`代表数据源中的所有数据表都是以文件的形式保存在磁盘上的，同样，数据也可以保存在`mysql`数据库中，此时数据源的类型代码为`db`。"
 msgstr ""
+"`file:` -- Le type de source de données. `qteasy` prend en charge deux types"
+" de sources de données : basées sur des fichiers et basées sur une base de "
+"données. `file` signifie que toutes les tables de données de la source de "
+"données sont stockées sur le disque sous forme de fichiers. De même, les "
+"données peuvent également être stockées dans une base de données `mysql`, "
+"auquel cas le code du type de source de données est `db`."
 
 #: ../../source/manage_data/2. datasource.md:23
 msgid ""
-"`csv:` -- 数据文件保存格式。`qteasy`可以将数据文件以不同的格式保存在磁盘上，"
-"最基本的格式为`csv`文件，但是用户同样可以将数据保存为`hdf`文件和`fth`文件"
-"（`feather`文件)，以满足不同的性能偏好。"
+"`csv:` -- "
+"数据文件保存格式。`qteasy`可以将数据文件以不同的格式保存在磁盘上，最基本的格式为`csv`文件，但是用户同样可以将数据保存为`hdf`文件和`fth`文件（`feather`文件)，以满足不同的性能偏好。"
 msgstr ""
+"`csv:` -- Format d'enregistrement du fichier de données. `qteasy` peut "
+"enregistrer des fichiers de données sur le disque dans différents formats. "
+"Le format le plus basique est `csv`, mais les utilisateurs peuvent également"
+" enregistrer des données sous forme de fichiers `hdf` et `fth` (`feather`) "
+"pour répondre à différentes préférences de performances."
 
 #: ../../source/manage_data/2. datasource.md:24
 msgid ""
-"`qt_root/data/:` -- 数据文件的保存路径。其中`qt_root`表示`qteasy`的安装根路"
-"径，默认情况下所有数据文件都保存在根目录下的`/data/`子路径下"
+"`qt_root/data/:` -- "
+"数据文件的保存路径。其中`qt_root`表示`qteasy`的安装根路径，默认情况下所有数据文件都保存在根目录下的`/data/`子路径下"
 msgstr ""
+"`qt_root/data/:` -- Le chemin d'enregistrement des fichiers de données. "
+"`qt_root` représente le chemin racine d'installation de `qteasy`. Par "
+"défaut, tous les fichiers de données sont enregistrés dans le sous-"
+"répertoire `/data/` sous le répertoire racine."
 
 #: ../../source/manage_data/2. datasource.md:26
 msgid ""
-"同样，可以创建一个数据保存类型为数据库的数据源对象，并查看其基本属性: 不过，"
-"创建类型为数据库的数据源时，需要指定需要连接的Mysql数据库的主机名、用户名、密"
-"码、（或者）数据库名称等信息:"
+"同样，可以创建一个数据保存类型为数据库的数据源对象，并查看其基本属性: "
+"不过，创建类型为数据库的数据源时，需要指定需要连接的Mysql数据库的主机名、用户名、密码、（或者）数据库名称等信息:"
 msgstr ""
+"De même, vous pouvez créer un objet source de données avec le type de "
+"stockage de données « base de données » et afficher ses propriétés de base. "
+"Cependant, lors de la création d'une source de données de type « base de "
+"données », vous devez spécifier le nom d'hôte, le nom d'utilisateur, le mot "
+"de passe et/ou le nom de la base de données MySQL à laquelle vous souhaitez "
+"vous connecter."
 
 #: ../../source/manage_data/2. datasource.md:35
 msgid "同样，打印结果中包含数据源的基本信息："
 msgstr ""
+"De même, les résultats imprimés contiennent des informations de base sur la "
+"source de données :"
 
 #: ../../source/manage_data/2. datasource.md:36
 msgid "`db:mysql` -- 数据源的类型为mysql数据库，所有的数据表都保存在数据库中"
 msgstr ""
+"`db:mysql` -- Le type de source de données est une base de données MySQL ; "
+"tous les tableaux de données sont stockés dans cette base de données."
 
 #: ../../source/manage_data/2. datasource.md:37
 msgid "`localhost` -- 数据库的主机名"
-msgstr ""
+msgstr "`localhost` -- le nom d'hôte de la base de données"
 
 #: ../../source/manage_data/2. datasource.md:38
 msgid "`3306` -- 数据库连接端口"
-msgstr ""
+msgstr "`3306` -- Port de connexion à la base de données"
 
 #: ../../source/manage_data/2. datasource.md:39
-msgid ""
-"`test_db` -- 数据库名称，如果不指定名称，默认数据库`qt_db`，不过这个数据库必"
-"须事先创建好"
+msgid "`test_db` -- 数据库名称，如果不指定名称，默认数据库`qt_db`，不过这个数据库必须事先创建好"
 msgstr ""
+"`test_db` -- Nom de la base de données. Si aucun nom n'est précisé, la base "
+"de données par défaut est `qt_db`, mais cette base de données doit être "
+"créée au préalable."
 
 #: ../../source/manage_data/2. datasource.md:41
 msgid ""
-"不同的数据源对象，如果它们的存储方式不同，存储路径不同，那么它们所保存的数据"
-"没有关系，互不干扰，但如果两个数据源指向同一个路径，且文件类型相同时，那么它"
-"们所保存的数据就会重复。"
+"不同的数据源对象，如果它们的存储方式不同，存储路径不同，那么它们所保存的数据没有关系，互不干扰，但如果两个数据源指向同一个路径，且文件类型相同时，那么它们所保存的数据就会重复。"
 msgstr ""
+"Différents objets de source de données, s'ils ont des méthodes de stockage "
+"et des chemins de stockage différents, n'auront aucune relation les uns avec"
+" les autres et n'interféreront pas avec les données des autres. Cependant, "
+"si deux sources de données pointent vers le même chemin et ont le même type "
+"de fichier, elles stockeront des données en double."
 
 #: ../../source/manage_data/2. datasource.md:43
 msgid "要查看数据源的更多基本属性，可以调用数据源对象的几个属性查看："
 msgstr ""
+"Pour afficher des propriétés plus élémentaires de la source de données, vous"
+" pouvez accéder à plusieurs propriétés de l'objet source de données :"
 
 #: ../../source/manage_data/2. datasource.md:56
 msgid "默认数据源"
-msgstr ""
+msgstr "Source de données par défaut"
 
 #: ../../source/manage_data/2. datasource.md:58
 msgid ""
-"`qteasy`有一个内置默认的数据源，不需要用户手动创建，默认情况下，所有的数据都"
-"会保存到这个默认数据源，并从这个数据源读取。用户可以通过`qteasy`的配置文件配"
-"置该数据源的参数，确保该数据源指向正确的路径或使用正确的用户名登陆正确的数据"
-"库。通过下面的方法查看内置默认数据源的属性："
+"`qteasy`有一个内置默认的数据源，不需要用户手动创建，默认情况下，所有的数据都会保存到这个默认数据源，并从这个数据源读取。用户可以通过`qteasy`的配置文件配置该数据源的参数，确保该数据源指向正确的路径或使用正确的用户名登陆正确的数据库。通过下面的方法查看内置默认数据源的属性："
 msgstr ""
+"`qteasy` dispose d'une source de données par défaut intégrée qui ne "
+"nécessite pas de création manuelle par l'utilisateur. Par défaut, toutes les"
+" données sont enregistrées et lues à partir de cette source de données par "
+"défaut. Les utilisateurs peuvent configurer les paramètres de cette source "
+"de données via le fichier de configuration de `qteasy`, en s'assurant que la"
+" source de données pointe vers le chemin correct ou que le nom d'utilisateur"
+" correct est utilisé pour se connecter à la bonne base de données. Les "
+"propriétés de la source de données par défaut intégrée peuvent être "
+"affichées à l'aide de la méthode suivante :"
 
 #: ../../source/manage_data/2. datasource.md:65
 msgid "查看数据表"
-msgstr ""
+msgstr "Afficher le tableau de données"
 
 #: ../../source/manage_data/2. datasource.md:67
 msgid "了解数据源对象的基本属性后，下一步可以进一步了解数据源中保存的数据。"
 msgstr ""
+"Après avoir compris les propriétés de base de l'objet source de données, "
+"l'étape suivante consiste à mieux comprendre les données stockées dans la "
+"source de données."
 
 #: ../../source/manage_data/2. datasource.md:69
 msgid ""
-"数据源中的数据表都是事先定义好的，每一张数据表都保存一类不同的数据，这些数据"
-"涵盖沪深股市、期货市场的股票、指数、基金、期货、期权等各种不同投资产品的基本"
-"信息、K线行情、上市公司业绩报表、宏观经济数据等等大量的数据，完整的数据表清单"
-"介绍，请参见下一章节，这里主要介绍如何查看各种数据表的基本情况和数据。"
+"数据源中的数据表都是事先定义好的，每一张数据表都保存一类不同的数据，这些数据涵盖沪深股市、期货市场的股票、指数、基金、期货、期权等各种不同投资产品的基本信息、K线行情、上市公司业绩报表、宏观经济数据等等大量的数据，完整的数据表清单介绍，请参见下一章节，这里主要介绍如何查看各种数据表的基本情况和数据。"
 msgstr ""
+"Les tables de données de la source de données sont toutes prédéfinies. "
+"Chaque table de données stocke un type de données différent. Ces données "
+"couvrent une grande quantité de données, y compris des informations de base,"
+" des données de la ligne K, des rapports sur les performances des sociétés "
+"cotées, des données macroéconomiques, etc. pour divers produits "
+"d'investissement tels que les actions, les indices, les fonds, les contrats "
+"à terme et les options sur les marchés boursiers et à terme de Shanghai et "
+"de Shenzhen. Pour une liste complète des tableaux de données, veuillez "
+"consulter le chapitre suivant. Cette section présente principalement comment"
+" afficher les informations de base et les données de diverses tables de "
+"données."
 
 #: ../../source/manage_data/2. datasource.md:71
 msgid ""
-"数据源中的数据表清单可以通过数据源的`all_tables`属性获取，它会返回一个列表对"
-"象，包含数据源中已经预定义的所有数据表。不过，这里必须厘清一个概念，数据源中"
-"虽然已经定义好了很多数据表，但这些数据表仅仅是有了基本的定义，即表头信息，数"
-"据表的字段名称、每个字段的含义以及数据类型都定义好了，但是刚刚建立的新数据"
-"源，其数据表往往都是空的，还没有任何数据。如果要查看数据源中有哪些数据表已经"
-"有了数据，需要用`get_table_info()`函数来获取："
+"数据源中的数据表清单可以通过数据源的`all_tables`属性获取，它会返回一个列表对象，包含数据源中已经预定义的所有数据表。不过，这里必须厘清一个概念，数据源中虽然已经定义好了很多数据表，但这些数据表仅仅是有了基本的定义，即表头信息，数据表的字段名称、每个字段的含义以及数据类型都定义好了，但是刚刚建立的新数据源，其数据表往往都是空的，还没有任何数据。如果要查看数据源中有哪些数据表已经有了数据，需要用`get_table_info()`函数来获取："
 msgstr ""
+"La liste des tables d'une source de données peut être obtenue via la "
+"propriété `all_tables` de la source de données, qui renvoie un objet liste "
+"contenant toutes les tables prédéfinies dans la source de données. "
+"Cependant, il est crucial de préciser que même si de nombreuses tables sont "
+"définies dans la source de données, elles n'ont que des définitions de base "
+": les informations d'en-tête, les noms de champs, les significations des "
+"champs et les types de données sont tous définis. Les sources de données "
+"nouvellement créées comportent généralement des tables vides ne contenant "
+"aucune donnée. Pour voir quelles tables de la source de données contiennent "
+"déjà des données, vous devez utiliser la fonction `get_table_info()`."
 
 #: ../../source/manage_data/2. datasource.md:79
-msgid ""
-"可见，目前版本的`qteasy`预定义了108张数据表，其中部分数据表的名称包括"
-"`stock_basic`等。"
+msgid "可见，目前版本的`qteasy`预定义了108张数据表，其中部分数据表的名称包括`stock_basic`等。"
 msgstr ""
+"Comme on peut le voir, la version actuelle de `qteasy` prédéfinit 108 tables"
+" de données, dont certaines portent des noms tels que `stock_basic`."
 
 #: ../../source/manage_data/2. datasource.md:81
-msgid ""
-"如果要查看当前数据源中某张数据表的详情，例如该数据表的定义，是否包含数据等信"
-"息，使用`get_table_info()`方法获取："
+msgid "如果要查看当前数据源中某张数据表的详情，例如该数据表的定义，是否包含数据等信息，使用`get_table_info()`方法获取："
 msgstr ""
+"Pour afficher les détails d'une table spécifique dans la source de données "
+"actuelle, tels que sa définition et si elle contient des données, utilisez "
+"la méthode `get_table_info()`."
 
 #: ../../source/manage_data/2. datasource.md:112
 msgid "打印的信息包括数据表的名称、说明、数据表的字段定义以及数据类型。"
 msgstr ""
+"Les informations imprimées incluent le nom de la table, la description, les "
+"définitions de champs et les types de données."
 
 #: ../../source/manage_data/2. datasource.md:114
-msgid ""
-"值得说明的是，如果数据表中已经填充了数据，那么就会显示出数据表目前的大小，在"
-"上面的例子中，一些关键信息的解释如下："
+msgid "值得说明的是，如果数据表中已经填充了数据，那么就会显示出数据表目前的大小，在上面的例子中，一些关键信息的解释如下："
 msgstr ""
+"Il convient de noter que si le tableau de données est déjà rempli de "
+"données, il affichera la taille actuelle du tableau. Dans l'exemple ci-"
+"dessus, certaines informations clés sont expliquées ci-dessous :"
 
 #: ../../source/manage_data/2. datasource.md:116
-msgid ""
-"`852KB/5K records on disc` -- 表示数据表占用磁盘空间大约852K字节，且数据量大"
-"约为5000行"
+msgid "`852KB/5K records on disc` -- 表示数据表占用磁盘空间大约852K字节，且数据量大约为5000行"
 msgstr ""
+"`852KB/5K records on disc` -- Cela indique que la table occupe environ 852 "
+"Ko d'espace disque et contient environ 5 000 lignes de données."
 
 #: ../../source/manage_data/2. datasource.md:117
 msgid ""
-"`primary keys` -- 显示数据的主键列，这里表示`ts_code`列为数据表的主键，且该列"
-"大约有5396条不同的记录。如果数据表有多个主键，那么每个主键列都分别列出，同时"
-"会列出该字段数据的范围，例如上例中`ts_code`列数据范围就是从`000001.SZ`开始一"
-"直到`920128.BJ`为止，让我们知道股票基本信息表里包含了代码从000001一直到920128"
-"为止的共五千多只股票的信息"
+"`primary keys` -- "
+"显示数据的主键列，这里表示`ts_code`列为数据表的主键，且该列大约有5396条不同的记录。如果数据表有多个主键，那么每个主键列都分别列出，同时会列出该字段数据的范围，例如上例中`ts_code`列数据范围就是从`000001.SZ`开始一直到`920128.BJ`为止，让我们知道股票基本信息表里包含了代码从000001一直到920128为止的共五千多只股票的信息"
 msgstr ""
+"`primary keys` -- Affiche les colonnes de clé primaire des données. Ici, "
+"cela indique que la colonne `ts_code` est la clé primaire de la table et que"
+" cette colonne contient environ 5396 enregistrements distincts. Si la table "
+"comporte plusieurs clés primaires, chaque colonne de clé primaire sera "
+"répertoriée séparément, ainsi que la plage de données pour ce champ. Par "
+"exemple, dans l'exemple ci-dessus, la plage de données pour la colonne "
+"`ts_code` va de `000001.SZ` à `920128.BJ`, nous indiquant que le tableau "
+"d'informations de base sur les stocks contient des informations sur plus de "
+"5 000 actions avec des codes de 000001 à 920128."
 
 #: ../../source/manage_data/2. datasource.md:118
 msgid ""
-"`columns of table` -- 这里显示数据表的字段定义，也就是数据表的`schema`。列出"
-"每一列的名称`columns`、数据类型`dtypes`以及说明信息`remarks`"
+"`columns of table` -- "
+"这里显示数据表的字段定义，也就是数据表的`schema`。列出每一列的名称`columns`、数据类型`dtypes`以及说明信息`remarks`"
 msgstr ""
+"`columns of table` -- Ceci affiche les définitions de champ de la table de "
+"données, qui est le `schema` de la table. Il répertorie le nom `columns`, le"
+" type de données `dtypes` et les informations descriptives `remarks` pour "
+"chaque colonne."
 
 #: ../../source/manage_data/2. datasource.md:120
 msgid ""
-"另外，`get_table_info()`方法返回一个`dict`，同样包含该数据表的信息,可以将这些"
-"信息打印出来，与上述格式化信息对照了解："
+"另外，`get_table_info()`方法返回一个`dict`，同样包含该数据表的信息,可以将这些信息打印出来，与上述格式化信息对照了解："
 msgstr ""
+"De plus, la méthode `get_table_info()` renvoie un `dict`, qui contient "
+"également des informations sur la table. Ces informations peuvent être "
+"imprimées et comparées aux informations formatées décrites ci-dessus pour "
+"une meilleure compréhension."
 
 #: ../../source/manage_data/2. datasource.md:127
 msgid "查看数据源的整体信息"
-msgstr ""
+msgstr "Afficher les informations globales sur la source de données"
 
 #: ../../source/manage_data/2. datasource.md:129
 msgid ""
-"通过上面的方法，我们可以查看每一张数据表的具体定义和已经填充的数据信息。同"
-"样，通过`overview()`方法，我们可以检查所有的数据表，并汇总出整个数据源的整体"
-"信息："
+"通过上面的方法，我们可以查看每一张数据表的具体定义和已经填充的数据信息。同样，通过`overview()`方法，我们可以检查所有的数据表，并汇总出整个数据源的整体信息："
 msgstr ""
+"Utilisez les méthodes ci-dessus pour inspecter chaque table ; `overview()` "
+"résume l'ensemble DataSource :"
 
 #: ../../source/manage_data/2. datasource.md:145
-msgid ""
-"查看整个数据源的总体信息，可能需要花费数分钟的时间，因为需要统计每张数据表的"
-"所有信息。"
+msgid "查看整个数据源的总体信息，可能需要花费数分钟的时间，因为需要统计每张数据表的所有信息。"
 msgstr ""
+"L'affichage des informations globales de l'ensemble de la source de données "
+"peut prendre plusieurs minutes car il nécessite de résumer toutes les "
+"informations de chaque table de données."
 
 #: ../../source/manage_data/2. datasource.md:147
 msgid ""
-"在统计过程中，`qteasy`会显示一根进度条显示统计的进度，最终统计分析完成后，"
-"`qteasy`会将数据源中所有数据表的信息以DataFrame的形式返回，并打印出关键的信"
-"息。"
+"在统计过程中，`qteasy`会显示一根进度条显示统计的进度，最终统计分析完成后，`qteasy`会将数据源中所有数据表的信息以DataFrame的形式返回，并打印出关键的信息。"
 msgstr ""
+"Pendant la présentation, qteasy affiche une barre de progression, puis "
+"renvoie un `DataFrame` de toutes les tables et imprime les statistiques "
+"clés."
 
 #: ../../source/manage_data/2. datasource.md:150
 msgid ""
-"上面的信息显示了数据源中有3张数据表已经有了数据，包括`trade_calendar`、"
-"`stock_basic`和`stock_daily`，并显示了这些数据表的数据量、占用磁盘空间、数据"
-"的起始日期��结束日期等信息。如果想查看所有数据表的信息，可以将返回的"
-"`DataFrame`打印出来："
+"上面的信息显示了数据源中有3张数据表已经有了数据，包括`trade_calendar`、`stock_basic`和`stock_daily`，并显示了这些数据表的数据量、占用磁盘空间、数据的起始日期��结束日期等信息。如果想查看所有数据表的信息，可以将返回的`DataFrame`打印出来："
 msgstr ""
+"Le résumé montre trois tables remplies — `trade_calendar`, `stock_basic`, "
+"`stock_daily` — avec le nombre de lignes, l'utilisation du disque et les "
+"dates de début/fin. Imprimez le `DataFrame` renvoyé pour voir tous les "
+"tableaux :"
 
 #: ../../source/manage_data/2. datasource.md:185
 msgid "最重要的数据表"
-msgstr ""
+msgstr "Le tableau de données le plus important"
 
 #: ../../source/manage_data/2. datasource.md:187
 msgid ""
-"如果您是第一次使用`qteasy`，很可能数据源中的数据表都是空的，没有任何数据。通"
-"常这没有任何问题，因为`qteasy`的设计初衷就是极大地简化金融数据的获取和使用过"
-"程。"
+"如果您是第一次使用`qteasy`，很可能数据源中的数据表都是空的，没有任何数据。通常这没有任何问题，因为`qteasy`的设计初衷就是极大地简化金融数据的获取和使用过程。"
 msgstr ""
+"Lors de la première utilisation, les tableaux sont souvent vides — de par "
+"leur conception, qteasy simplifie l'acquisition et l'utilisation des données"
+" financières."
 
 #: ../../source/manage_data/2. datasource.md:189
 msgid ""
-"您可以非常容易地从网络数据提供商处获取最基本的数据。不过，虽然数据表中的数据"
-"可以是空的，但是有几张数据表却比其他的数据表更加重要，您应该优先将这几张数据"
-"表的数据填充完整，因为这几张数据表中的数据是很多其他数据表的基础，甚至是"
-"`qteasy`的运行基础："
+"您可以非常容易地从网络数据提供商处获取最基本的数据。不过，虽然数据表中的数据可以是空的，但是有几张数据表却比其他的数据表更加重要，您应该优先将这几张数据表的数据填充完整，因为这几张数据表中的数据是很多其他数据表的基础，甚至是`qteasy`的运行基础："
 msgstr ""
+"Les données de base sont faciles à télécharger, mais certaines tables sont "
+"plus critiques — remplissez-les d'abord car d'autres dépendent d'elles et de"
+" qteasy lui-même :"
 
 #: ../../source/manage_data/2. datasource.md:191
 msgid ""
-"`trade_calendar` -- 交易日历表，包含了所有交易所的交易日历信息，包括交易日、"
-"交易所代码、交易所名称等信息。可以说这是`qteasy`运行的基础，如果缺了这张表，"
-"`qteasy`的很多功能都将无法运行或者将降低效率。 `qteasy`使用这张表中的数据来判"
-"断交易日，如果要下载其他的数据表，通常也必须通过交易日数据表来确定下载的起止"
-"日期，因此，这是您应该**绝对优先**填充的数据表。"
+"`trade_calendar` -- "
+"交易日历表，包含了所有交易所的交易日历信息，包括交易日、交易所代码、交易所名称等信息。可以说这是`qteasy`运行的基础，如果缺了这张表，`qteasy`的很多功能都将无法运行或者将降低效率。"
+" "
+"`qteasy`使用这张表中的数据来判断交易日，如果要下载其他的数据表，通常也必须通过交易日数据表来确定下载的起止日期，因此，这是您应该**绝对优先**填充的数据表。"
 msgstr ""
+"`trade_calendar` — Calendrier de négociation pour toutes les bourses (jour "
+"de bourse, code/nom de la bourse). Cœur de qteasy : de nombreuses "
+"fonctionnalités échouent ou ralentissent sans cela. Utilisé pour déterminer "
+"les jours de négociation et télécharger les plages de dates — **remplissez "
+"d'abord ce tableau**."
 
 #: ../../source/manage_data/2. datasource.md:192
 msgid ""
-"`stock_basic` -- 股票基本信息表，包含了所有上市股票的基本信息，包括股票代码、"
-"股票名称、上市日期、退市日期、所属行业、地域等信息。这张表是很多其他数据表的"
-"基础，例如股票日K线数据表、股票财务数据表等，因此，这也是您应该**优先**填充的"
-"数据表。"
+"`stock_basic` -- "
+"股票基本信息表，包含了所有上市股票的基本信息，包括股票代码、股票名称、上市日期、退市日期、所属行业、地域等信息。这张表是很多其他数据表的基础，例如股票日K线数据表、股票财务数据表等，因此，这也是您应该**优先**填充的数据表。"
 msgstr ""
+"`stock_basic` — Tableau de base des actions avec code, nom, dates "
+"d'inscription/radiation, secteur d'activité, région, etc. Fondation pour la "
+"ligne K quotidienne des actions et les tableaux financiers ; **donner la "
+"priorité** au remplissage de ce tableau."
 
 #: ../../source/manage_data/2. datasource.md:193
 msgid ""
-"`index_basic` -- 指数基本信息表，包含了所有指数的基本信息，包括指数代码、指数"
-"名称、发布日期、退市日期等信息。这张表是很多其他数据表的基础，例如指数日K线数"
-"据表、指数成分股表等，因此，这也是您应该**优先**填充的数据表。"
+"`index_basic` -- "
+"指数基本信息表，包含了所有指数的基本信息，包括指数代码、指数名称、发布日期、退市日期等信息。这张表是很多其他数据表的基础，例如指数日K线数据表、指数成分股表等，因此，这也是您应该**优先**填充的数据表。"
 msgstr ""
+"`index_basic` — Table de base de l'index avec code, nom, dates de "
+"publication/suppression de la liste, etc. Fondation de la ligne K "
+"quotidienne de l'index et des tables constitutives ; **donner la priorité** "
+"au remplissage de ce tableau."
 
 #: ../../source/manage_data/2. datasource.md:194
 msgid ""
-"`fund_basic` -- 基金基本信息表，包含了所有基金的基本信息，包括基金代码、基金"
-"名称、基金类型、基金规模等信息。这张表是很多其他数据表的基础，例如基金日K线数"
-"据表、基金净值数据表等，因此，这也是您应该**优先**填充的数据表。"
+"`fund_basic` -- "
+"基金基本信息表，包含了所有基金的基本信息，包括基金代码、基金名称、基金类型、基金规模等信息。这张表是很多其他数据表的基础，例如基金日K线数据表、基金净值数据表等，因此，这也是您应该**优先**填充的数据表。"
 msgstr ""
+"`fund_basic` — Tableau de base du fonds avec code, nom, type, taille, etc. "
+"Fondation pour les tableaux quotidiens de ligne K et de valeur liquidative "
+"du fonds ; **donner la priorité** au remplissage de ce tableau."
 
 #: ../../source/manage_data/2. datasource.md:196
-msgid ""
-"基本上，如果您能够填充了上面这几张数据表的数据，那么您就可以开始比较顺畅使用"
-"`qteasy`的大部分数据相关的功能了。"
+msgid "基本上，如果您能够填充了上面这几张数据表的数据，那么您就可以开始比较顺畅使用`qteasy`的大部分数据相关的功能了。"
 msgstr ""
+"Une fois ces tableaux clés remplis, la plupart des fonctionnalités de "
+"données qteasy fonctionnent correctement."
 
 #: ../../source/manage_data/2. datasource.md:198
-msgid ""
-"另外，`qteasy`还在数据源中定义了几张系统数据表，这些表一共四张，用于存储跟实"
-"盘交易相关的信息："
+msgid "另外，`qteasy`还在数据源中定义了几张系统数据表，这些表一共四张，用于存储跟实盘交易相关的信息："
 msgstr ""
+"qteasy définit également quatre tables système pour les enregistrements de "
+"trading en direct :"
 
 #: ../../source/manage_data/2. datasource.md:200
 msgid ""
-"`sys_op_live_accounts` -- 实盘交易账户信息表，包含了所有实盘交易账户的基本信"
-"息，包括账户ID、账户名称、账户类型、账户状态等信息。"
+"`sys_op_live_accounts` -- "
+"实盘交易账户信息表，包含了所有实盘交易账户的基本信息，包括账户ID、账户名称、账户类型、账户状态等信息。"
 msgstr ""
+"`sys_op_live_accounts` — Table principale du compte de trading en direct "
+"avec identifiant de compte, nom, type, statut, etc."
 
 #: ../../source/manage_data/2. datasource.md:201
 msgid ""
-"`sys_op_positions` -- 实盘持仓信息表，包括所有实盘交易账户的持仓信息，包括账"
-"户ID、证券代码、证券名称、持仓数量、持仓成本等信息。"
+"`sys_op_positions` -- 实盘持仓信息表，包括所有实盘交易账户的持仓信息，包括账户ID、证券代码、证券名称、持仓数量、持仓成本等信息。"
 msgstr ""
+"`sys_op_positions` — Tableau des positions en direct avec identifiant de "
+"compte, code/nom de sécurité, quantité, coût, etc."
 
 #: ../../source/manage_data/2. datasource.md:202
 msgid ""
-"`sys_op_trade_orders` -- 实盘交易委托表，包括所有实盘交易账户的交易委托信息，"
-"包括账户ID、委托时间、委托类型、证券代码、委托数量、委托价格等信息。"
+"`sys_op_trade_orders` -- "
+"实盘交易委托表，包括所有实盘交易账户的交易委托信息，包括账户ID、委托时间、委托类型、证券代码、委托数量、委托价格等信息。"
 msgstr ""
+"`sys_op_trade_orders` — Tableau de commande en direct avec identifiant de "
+"compte, heure/type de commande, code de sécurité, quantité, prix, etc."
 
 #: ../../source/manage_data/2. datasource.md:203
 msgid ""
-"`sys_op_trade_results` -- 实盘交易成交表，包括所有实盘交易账户的交易成交信"
-"息，包括账户ID、成交时间、证券代码、成交数量、成交价格等信息。"
+"`sys_op_trade_results` -- "
+"实盘交易成交表，包括所有实盘交易账户的交易成交信息，包括账户ID、成交时间、证券代码、成交数量、成交价格等信息。"
 msgstr ""
+"`sys_op_trade_results` — Tableau de remplissage en direct avec identifiant "
+"de compte, temps de remplissage, code de sécurité, quantité, prix, etc."
 
 #: ../../source/manage_data/2. datasource.md:205
-msgid ""
-"上面四张表是qteasy实盘交易功能的基础，这几张表中的数据不需要人为填充，而是系"
-"统自动生成，您不需要查看、填充或删除这些表"
+msgid "上面四张表是qteasy实盘交易功能的基础，这几张表中的数据不需要人为填充，而是系统自动生成，您不需要查看、填充或删除这些表"
 msgstr ""
+"Ces quatre tables système sous-tendent le trading en direct ; les données "
+"sont générées automatiquement : ne les remplissez pas, ne les affichez pas "
+"et ne les supprimez pas manuellement."
 
 #: ../../source/manage_data/2. datasource.md:207
 msgid "其他的数据表"
-msgstr ""
+msgstr "Autres tableaux"
 
 #: ../../source/manage_data/2. datasource.md:209
 msgid ""
-"除了上面提到的几张重要的数据表之外，数据源中还定义了大量的数据表，这些数据表"
-"包含了各种各样的金融数据，包括股票、指数、基金、期货、期权等各种金融产品的基"
-"本信息、日K线数据、财务数据、分红数据、业绩报表、宏观经济数据等等，主要分类如"
-"下："
+"除了上面提到的几张重要的数据表之外，数据源中还定义了大量的数据表，这些数据表包含了各种各样的金融数据，包括股票、指数、基金、期货、期权等各种金融产品的基本信息、日K线数据、财务数据、分红数据、业绩报表、宏观经济数据等等，主要分类如下："
 msgstr ""
+"Outre les tableaux clés, DataSource en définit de nombreux autres couvrant "
+"les bases, la ligne K quotidienne, les données financières, les dividendes, "
+"les rapports sur les bénéfices, les données macro, etc. :"
 
 #: ../../source/manage_data/2. datasource.md:211
 msgid "行情数据表 -- 这类数据表包含了股票、基金、指数各个不同频率的K线行情数据"
 msgstr ""
+"Tableaux de données de marché — OHLCV à différentes fréquences pour les "
+"actions, fonds, indices"
 
 #: ../../source/manage_data/2. datasource.md:212
-msgid ""
-"基本信息表 -- 这类数据表包含了股票、基金、指数、期货、期权等各种金融产品的基"
-"本信息"
+msgid "基本信息表 -- 这类数据表包含了股票、基金、指数、期货、期权等各种金融产品的基本信息"
 msgstr ""
+"Tableaux de base : actions, fonds, indices, contrats à terme, options, etc."
 
 #: ../../source/manage_data/2. datasource.md:213
-msgid ""
-"指标信息表 -- 这类数据表包含了各种指标的信息，例如技术指标、基本面指标、宏观"
-"经济指标等"
+msgid "指标信息表 -- 这类数据表包含了各种指标的信息，例如技术指标、基本面指标、宏观经济指标等"
 msgstr ""
+"Tableaux d'indicateurs - indicateurs techniques, fondamentaux, macro, etc."
 
 #: ../../source/manage_data/2. datasource.md:214
-msgid ""
-"财务数据表 -- 这类数据表包含了上市公司的财务报表数据，包括资产负债表、利润"
-"表、现金流量表等"
+msgid "财务数据表 -- 这类数据表包含了上市公司的财务报表数据，包括资产负债表、利润表、现金流量表等"
 msgstr ""
+"Tableaux des états financiers – bilan, compte de résultat, flux de "
+"trésorerie, etc."
 
 #: ../../source/manage_data/2. datasource.md:215
-msgid ""
-"业绩报表表 -- 这类数据表包含了上市公司的业绩报表数据，包括业绩快报、业绩预"
-"告、业绩预测等"
+msgid "业绩报表表 -- 这类数据表包含了上市公司的业绩报表数据，包括业绩快报、业绩预告、业绩预测等"
 msgstr ""
+"Tableaux de rapports sur les bénéfices : rapports express, conseils sur les "
+"bénéfices, prévisions, etc."
 
 #: ../../source/manage_data/2. datasource.md:216
-msgid ""
-"分红交易数据表 -- 这类数据表包含了上市公司的分红数据，以及股票大宗交易、股东"
-"交易等信息表"
+msgid "分红交易数据表 -- 这类数据表包含了上市公司的分红数据，以及股票大宗交易、股东交易等信息表"
 msgstr ""
+"Tableaux de dividendes et d'échanges de blocs — dividendes, échanges de "
+"blocs, échanges d'actionnaires, etc."
 
 #: ../../source/manage_data/2. datasource.md:217
-msgid ""
-"参考数据表 -- 这类数据表包含了各种参考数据，例如宏观经济数据、行业数据、交易"
-"所数据等"
+msgid "参考数据表 -- 这类数据表包含了各种参考数据，例如宏观经济数据、行业数据、交易所数据等"
 msgstr ""
+"Tableaux de référence - données macro, sectorielles, boursières et autres "
+"données de référence"
 
 #: ../../source/manage_data/2. datasource.md:219
-msgid ""
-"这些数据表的具体定义和数据类型，可以通过`get_table_info()`方法查看，或者通过"
-"本文档的下一章节查询。"
+msgid "这些数据表的具体定义和数据类型，可以通过`get_table_info()`方法查看，或者通过本文档的下一章节查询。"
 msgstr ""
+"Voir `get_table_info()` ou le chapitre suivant pour les définitions de table"
+" et les types de données."
 
 #: ../../source/manage_data/2. datasource.md:221
 msgid "从数据表中获取数据"
-msgstr ""
+msgstr "Lire des données à partir de tableaux"
 
 #: ../../source/manage_data/2. datasource.md:223
 msgid ""
-"如果数据表中已经填充了数据，那么现在就可以从中读取数据了。`DataSource`提供了"
-"`read_table_data()`方法，从数据源中直接读取某个数据表中的数据，同时，用户可以"
-"筛选数据的起止日期以及证券代码，同时不用考虑数据表的具体结构、存储方式、存储"
-"位置等具体的实现方式。"
+"如果数据表中已经填充了数据，那么现在就可以从中读取数据了。`DataSource`提供了`read_table_data()`方法，从数据源中直接读取某个数据表中的数据，同时，用户可以筛选数据的起止日期以及证券代码，同时不用考虑数据表的具体结构、存储方式、存储位置等具体的实现方式。"
 msgstr ""
+"Une fois rempli, utilisez `read_table_data()` pour lire avec des filtres "
+"date/code sans vous soucier des détails de stockage."
 
 #: ../../source/manage_data/2. datasource.md:225
 msgid ""
-"为了避免读取的数据量过大，建议在读取数据时一定要同时给出某些筛选条件。对于"
-"`read_table_data()`方法来说，用户总是可以通过证券代码和起止日期来筛选数据:"
+"为了避免读取的数据量过大，建议在读取数据时一定要同时给出某些筛选条件。对于`read_table_data()`方法来说，用户总是可以通过证券代码和起止日期来筛选数据:"
 msgstr ""
+"Pour éviter les lectures volumineuses, passez toujours les filtres. Avec "
+"`read_table_data()`, vous pouvez filtrer par code de sécurité et plage de "
+"dates :"
 
 #: ../../source/manage_data/2. datasource.md:227
-msgid ""
-"***`shares`***: 给出一个证券代码或者逗号分隔的多个证券代码，如果数据表的主键"
-"中含有证券代码，那么根据该证券代码筛选输出的数据"
+msgid "***`shares`***: 给出一个证券代码或者逗号分隔的多个证券代码，如果数据表的主键中含有证券代码，那么根据该证券代码筛选输出的数据"
 msgstr ""
+"***`shares`*** : Un code de sécurité ou des codes séparés par des virgules. "
+"Si la clé primaire comprend un code de sécurité, filtrez la sortie en "
+"fonction de ces codes"
 
 #: ../../source/manage_data/2. datasource.md:228
 msgid ""
-"***`start`***: 给出一个日期，格式为`“YYYYMMDD”`，如果数据表的主键包含时间或日"
-"期，那么根据筛选`start`与`end`之间的数据，`start/end`必须成对给出"
+"***`start`***: "
+"给出一个日期，格式为`“YYYYMMDD”`，如果数据表的主键包含时间或日期，那么根据筛选`start`与`end`之间的数据，`start/end`必须成对给出"
 msgstr ""
+"***`start`*** : Une date au format `“YYYYMMDD”`. Si la clé primaire de la "
+"table inclut l'heure ou la date, filtrez les lignes entre `start` et `end` ;"
+" `start`/`end` doivent être fournis par paire"
 
 #: ../../source/manage_data/2. datasource.md:229
 msgid ""
-"***`end`***: 给出一个日期，格式为`“YYYYMMDD”`，如果数据表的主键包含时间或日"
-"期，那么根据筛选`start`与`end`之间的数据，`start/end`必须成对给出"
+"***`end`***: "
+"给出一个日期，格式为`“YYYYMMDD”`，如果数据表的主键包含时间或日期，那么根据筛选`start`与`end`之间的数据，`start/end`必须成对给出"
 msgstr ""
+"***`end`*** : Une date au format `“YYYYMMDD”`. Si la clé primaire de la "
+"table inclut l'heure ou la date, filtrez les lignes entre `start` et `end` ;"
+" `start`/`end` doivent être fournis par paire"
 
 #: ../../source/manage_data/2. datasource.md:231
 msgid "`DataSource`对象会根据输入的筛选条件自动筛选数据，例如："
 msgstr ""
+"`DataSource` filtre automatiquement les données à partir de vos critères, "
+"par exemple :"
 
 #: ../../source/manage_data/2. datasource.md:233
-msgid ""
-"从`stock_daily`表中读取一只股票（`000651.SZ`）从2024年1月1日到2024年1月15日之"
-"间的股票日K线数据："
+msgid "从`stock_daily`表中读取一只股票（`000651.SZ`）从2024年1月1日到2024年1月15日之间的股票日K线数据："
 msgstr ""
+"Lisez les données quotidiennes de la ligne K pour `000651.SZ` à partir de "
+"`stock_daily` entre le 01/01/2024 et le 15/01/2024 :"
 
 #: ../../source/manage_data/2. datasource.md:253
 msgid ""
-"`DataSource`对象会自动根据数据表的定义来进行正确的筛选，并忽略掉不必要的参"
-"数。例如，我们可以筛选出某两支股票的基本信息。对于股票基本信息来说，交易日期"
-"是个不必要的参数，此时`qteasy`会自动忽略掉`start`/`end`参数并给出提示信息。同"
-"样，`shares`参数也不一定只能匹配股票代码，对于基金、指数、甚至期货、期权，都"
-"可以同样匹配："
+"`DataSource`对象会自动根据数据表的定义来进行正确的筛选，并忽略掉不必要的参数。例如，我们可以筛选出某两支股票的基本信息。对于股票基本信息来说，交易日期是个不必要的参数，此时`qteasy`会自动忽略掉`start`/`end`参数并给出提示信息。同样，`shares`参数也不一定只能匹配股票代码，对于基金、指数、甚至期货、期权，都可以同样匹配："
 msgstr ""
+"`DataSource` applique les filtres corrects pour chaque table et ignore les "
+"paramètres inutiles. Par exemple, lors de l'interrogation d'informations de "
+"base pour deux actions, la date de transaction n'est pas requise — `qteasy` "
+"ignore `start`/`end` avec un avis. Le paramètre `shares` fonctionne "
+"également pour les fonds, les indices, les contrats à terme et les options, "
+"pas seulement pour les actions :"
 
 #: ../../source/manage_data/2. datasource.md:269
-msgid ""
-"关于`read_table_data()`方法的更多信息，请参阅`DataSource`对象的参考信息。"
+msgid "关于`read_table_data()`方法的更多信息，请参阅`DataSource`对象的参考信息。"
 msgstr ""
+"Voir la référence `DataSource` pour en savoir plus sur `read_table_data()`."
 
 #: ../../source/manage_data/2. datasource.md:271
 msgid "向数据表中添加数据"
-msgstr ""
+msgstr "Ajout de données aux tableaux"
 
 #: ../../source/manage_data/2. datasource.md:273
-msgid ""
-"如果数据表中尚未填充数据，或者数据表中填充的数据不足以满足我们的需求，那么读"
-"取数据就会不成功。为了避免这种情况，我们需要向数据表中填充数据。"
+msgid "如果数据表中尚未填充数据，或者数据表中填充的数据不足以满足我们的需求，那么读取数据就会不成功。为了避免这种情况，我们需要向数据表中填充数据。"
 msgstr ""
+"Les lectures échouent si les tables sont vides ou insuffisantes : remplissez"
+" d'abord les tables."
 
 #: ../../source/manage_data/2. datasource.md:275
 msgid "请注意："
-msgstr ""
+msgstr "Note:"
 
 #: ../../source/manage_data/2. datasource.md:277
 msgid ""
-"这里介绍的仅仅是向数据表中手动添加数据的基本方法。`qteasy`还提供了全自动数据"
-"下载、数据清洗、数据填充等功能，可以帮助用户自动从网络数据源中下载数据，并将"
-"数据整理、清洗、更新到数据表中。这些功能将在后续章节中介绍。"
+"这里介绍的仅仅是向数据表中手动添加数据的基本方法。`qteasy`还提供了全自动数据下载、数据清洗、数据填充等功能，可以帮助用户自动从网络数据源中下载数据，并将数据整理、清洗、更新到数据表中。这些功能将在后续章节中介绍。"
 msgstr ""
+"Cela couvre uniquement les écritures manuelles ; le téléchargement, le "
+"nettoyage et le rechargement automatiques seront abordés plus tard."
 
 #: ../../source/manage_data/2. datasource.md:279
 msgid ""
-"向数据表中填充数据可以使用数据源的`update_table_data()`方法。使用这个API，用"
-"户可以将保存在一个`DataFrame`中的数据写入到相应的数据表中。这个API只需要给出"
-"三个参数："
+"向数据表中填充数据可以使用数据源的`update_table_data()`方法。使用这个API，用户可以将保存在一个`DataFrame`中的数据写入到相应的数据表中。这个API只需要给出三个参数："
 msgstr ""
+"Remplissez les tableaux via `update_table_data()`, en écrivant un "
+"`DataFrame` avec trois paramètres :"
 
 #: ../../source/manage_data/2. datasource.md:281
 msgid "***`table`***: 一个数据表的名称，需要写入数据的数据表"
-msgstr ""
+msgstr "***`table`*** : Nom de la table cible dans laquelle écrire"
 
 #: ../../source/manage_data/2. datasource.md:282
 msgid "***`df`***: 一个`DataFrame`，保存了需要写入数据表中的数据"
 msgstr ""
+"***`df`*** : Un `DataFrame` contenant des données à écrire dans une table"
 
 #: ../../source/manage_data/2. datasource.md:283
-msgid ""
-"***`merge_type`***: 如果是`update`则更新数据表中已经存在的数据，如果是"
-"`ignore`则忽略重复的数据."
+msgid "***`merge_type`***: 如果是`update`则更新数据表中已经存在的数据，如果是`ignore`则忽略重复的数据."
 msgstr ""
+"***`merge_type`*** : Si `update`, mettez à jour les lignes existantes dans "
+"le tableau ; si `ignore`, ignorez les lignes en double."
 
 #: ../../source/manage_data/2. datasource.md:285
 msgid ""
-"使用`update_table_data()`方法，用户不需要保证写入的数据格式与数据表完全一致，"
-"只要数据格式与数据表大致一致，`qteasy`就会自动整理数据格式、删除重复数据，确"
-"保写入数据表中的数据符合要求。"
+"使用`update_table_data()`方法，用户不需要保证写入的数据格式与数据表完全一致，只要数据格式与数据表大致一致，`qteasy`就会自动整理数据格式、删除重复数据，确保写入数据表中的数据符合要求。"
 msgstr ""
+"Avec `update_table_data()`, une correspondance exacte du schéma n'est pas "
+"requise — qteasy normalise le format et déduplique avant l'écriture."
 
 #: ../../source/manage_data/2. datasource.md:287
 msgid "下面将一些示例数据写入数据源(写入的数据仅为演示效果)"
 msgstr ""
+"Des exemples de données sont écrits ci-dessous à titre de démonstration "
+"uniquement."
 
 #: ../../source/manage_data/2. datasource.md:315
 msgid ""
-"上面的`DataFrame`中保存了一些示例数据，我们下面将把这个`DataFrame`的数据写入"
-"数据源中的`index_daily`数据表。 目前我们可以看到，`index_daily`数据表是空的，"
-"而且这个数据表的`schema`与上面的`DataFrame`并不完全相同："
+"上面的`DataFrame`中保存了一些示例数据，我们下面将把这个`DataFrame`的数据写入数据源中的`index_daily`数据表。 "
+"目前我们可以看到，`index_daily`数据表是空的，而且这个数据表的`schema`与上面的`DataFrame`并不完全相同："
 msgstr ""
+"L'exemple `DataFrame` ci-dessus sera écrit dans `index_daily`. Actuellement,"
+" le `index_daily` est vide et son `schema` diffère légèrement du "
+"`DataFrame` :"
 
 #: ../../source/manage_data/2. datasource.md:318
 msgid ""
-"`index_daily`数据表的数据定义中包含11列，而上面的数据只有6列，不过`DataFrame`"
-"中的所有列都包含在`index_daily`数据表的`schema`中"
+"`index_daily`数据表的数据定义中包含11列，而上面的数据只有6列，不过`DataFrame`中的所有列都包含在`index_daily`数据表的`schema`中"
 msgstr ""
+"Le schéma de table `index_daily` définit 11 colonnes alors que l'exemple "
+"`DataFrame` ci-dessus n'en a que 6 ; toutes les colonnes `DataFrame` sont "
+"toujours dans le `index_daily` `schema`."
 
 #: ../../source/manage_data/2. datasource.md:319
 msgid "`index_daily`数据表目前是空的，没有填充任何数据"
 msgstr ""
+"La table `index_daily` est actuellement vide et aucune donnée n'est "
+"renseignée."
 
 #: ../../source/manage_data/2. datasource.md:348
-msgid ""
-"接下来我们可以将数据写入数据表，如果方法执行正确，它将返回写入数据表中的数据"
-"的行数，如下所示："
+msgid "接下来我们可以将数据写入数据表，如果方法执行正确，它将返回写入数据表中的数据的行数，如下所示："
 msgstr ""
+"Ensuite, nous écrivons les données ; en cas de succès, la méthode renvoie "
+"les lignes écrites :"
 
 #: ../../source/manage_data/2. datasource.md:354
-msgid ""
-"将数据写入数据表之后，我们可以尝试一下从数据表中读取数据，现在我们已经可以读"
-"出刚才写入的数据了。"
+msgid "将数据写入数据表之后，我们可以尝试一下从数据表中读取数据，现在我们已经可以读出刚才写入的数据了。"
 msgstr ""
+"Après l'écriture, nous pouvons relire les données qui viennent d'être "
+"insérées."
 
 #: ../../source/manage_data/2. datasource.md:356
 msgid ""
-"请注意，读出来的数据有许多列都是`NaN`值，这表明这些列没有写入数据，原因就是我"
-"们写入的`df`并不包含这些数据，因此读出的数据为`NaN`值。"
+"请注意，读出来的数据有许多列都是`NaN`值，这表明这些列没有写入数据，原因就是我们写入的`df`并不包含这些数据，因此读出的数据为`NaN`值。"
 msgstr ""
+"De nombreuses colonnes se lisent comme `NaN` car le `df` écrit n'incluait "
+"pas ces champs."
 
 #: ../../source/manage_data/2. datasource.md:376
 msgid "删除数据表 —— 请尽量小心，删除后无法恢复！！"
 msgstr ""
+"Supprimez la table – soyez prudent ; la suppression est irréversible !!"
 
 #: ../../source/manage_data/2. datasource.md:378
 msgid ""
-"我们除了可以向数据表中写入数据，从数据表中读取数据之外，当然也可以删除数据，"
-"不过请注意，在`qteasy`中操作`DataSource`删除数据时，您务必非常小心：因为"
-"`qteasy`不支持从数据表中删除部分数据，您只能删除整张数据表。"
+"我们除了可以向数据表中写入数据，从数据表中读取数据之外，当然也可以删除数据，不过请注意，在`qteasy`中操作`DataSource`删除数据时，您务必非常小心：因为`qteasy`不支持从数据表中删除部分数据，您只能删除整张数据表。"
 msgstr ""
+"Vous pouvez également supprimer des tables entières — qteasy ne prend pas en"
+" charge les suppressions partielles ; soyez très prudent."
 
 #: ../../source/manage_data/2. datasource.md:380
 msgid ""
-"这是因为`qteasy`的数据源被设计为高效地存储和读取数据，但它并不是一个通常的数"
-"据库，我们并不需要经常操作其中的数据，这个数据仓库的作用是为了存储巨量的数"
-"据，因此，它的重点在于保存和提取数据，而不是删除操作。"
+"这是因为`qteasy`的数据源被设计为高效地存储和读取数据，但它并不是一个通常的数据库，我们并不需要经常操作其中的数据，这个数据仓库的作用是为了存储巨量的数据，因此，它的重点在于保存和提取数据，而不是删除操作。"
 msgstr ""
+"DataSource est optimisé pour le stockage et les lectures, pas pour les "
+"suppressions fréquentes — il s'agit d'un entrepôt de données, pas d'une base"
+" de données générale."
 
 #: ../../source/manage_data/2. datasource.md:382
 msgid ""
-"`qteasy`的`DataSource`对象提供了一个删除数据表的方法: `drop_table_data()`,这"
-"个方法将删除整个数据表，而且**删除后无法恢复**！"
+"`qteasy`的`DataSource`对象提供了一个删除数据表的方法: "
+"`drop_table_data()`,这个方法将删除整个数据表，而且**删除后无法恢复**！"
 msgstr ""
+"La méthode `DataSource` `drop_table_data()` supprime une table entière et "
+"**ne peut pas être annulée** !"
 
 #: ../../source/manage_data/2. datasource.md:384
 msgid ""
-"为了避免在代码中误删除数据表，默认情况下`drop_table_data()`会导致错误，例如我"
-"们想删除之前写入临时数据的`index_daily`表："
+"为了避免在代码中误删除数据表，默认情况下`drop_table_data()`会导致错误，例如我们想删除之前写入临时数据的`index_daily`表："
 msgstr ""
+"Pour éviter les chutes accidentelles, les erreurs `drop_table_data()` par "
+"défaut — par ex. lors de la suppression de données temporaires "
+"`index_daily` :"
 
 #: ../../source/manage_data/2. datasource.md:404
 msgid ""
-"这时候我们需要修改数据源的`allow_drop_table`属性，将其修改为`True`，这样就可"
-"以删除数据表了，请记住删除后将`allow_drop_table`改为`False`。"
+"这时候我们需要修改数据源的`allow_drop_table`属性，将其修改为`True`，这样就可以删除数据表了，请记住删除后将`allow_drop_table`改为`False`。"
 msgstr ""
+"Définissez `allow_drop_table` sur `True` pour autoriser les suppressions ; "
+"remettez-le ensuite sur `False`."
 
 #: ../../source/manage_data/2. datasource.md:406
 msgid "下面代码删除了`index_daily`表，然后就会发现，无法从该表读取数据了："
 msgstr ""
+"Le code ci-dessous supprime `index_daily` ; les lectures ultérieures de "
+"cette table échouent :"
 
 #: ../../source/manage_data/2. datasource.md:420
 msgid "总结"
-msgstr ""
+msgstr "Résumé"
 
 #: ../../source/manage_data/2. datasource.md:422
-msgid ""
-"至此，我们已经了解了`DataSource`对象，`qteasy`中金融历史数据管理的最重要的核"
-"心类的基本工作方式，了解了下面内容："
+msgid "至此，我们已经了解了`DataSource`对象，`qteasy`中金融历史数据管理的最重要的核心类的基本工作方式，了解了下面内容："
 msgstr ""
+"Nous comprenons maintenant la classe principale de `DataSource`, qteasy pour"
+" la gestion des données d'historique financier, notamment :"
 
 #: ../../source/manage_data/2. datasource.md:424
 msgid "什么是`DataSource`，如何创建一个数据源"
-msgstr ""
+msgstr "Qu'est-ce que `DataSource` et comment en créer un"
 
 #: ../../source/manage_data/2. datasource.md:425
 msgid "如何从数据源中提取数据"
-msgstr ""
+msgstr "Extraire des données de DataSource"
 
 #: ../../source/manage_data/2. datasource.md:426
 msgid "如何操作数据源"
-msgstr ""
+msgstr "Travailler avec DataSource"
 
 #: ../../source/manage_data/2. datasource.md:428
 msgid "在后面的章节中，您将会了解更多的内容："
-msgstr ""
+msgstr "Les chapitres suivants couvrent davantage :"
 
 #: ../../source/manage_data/2. datasource.md:430
 msgid "数据源中有哪些有用的金融数据？"
-msgstr ""
+msgstr "Quelles données financières utiles contient DataSource ?"
 
 #: ../../source/manage_data/2. datasource.md:431
 msgid "如何批量下载数据并填充到数据源中？"
-msgstr ""
+msgstr "Comment télécharger et remplir par lots DataSource ?"
 
 #: ../../source/manage_data/2. datasource.md:432
 msgid "如何从数据源中更有效地提取信息？"
-msgstr ""
+msgstr "Extraire les informations de DataSource plus efficacement ?"

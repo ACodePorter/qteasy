@@ -20,61 +20,65 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_20.md:1
 msgid "`DataTables`——基本信息表"
-msgstr ""
+msgstr "`DataTables` — Tableaux de base"
 
 #: ../../source/manage_data/3. data_tables_20.md:3
 msgid ""
 "下面列出`qteasy`中所有的内置预定义数据表，包括交易日历表、股票基本信息表、指数基本信息表、基金基本信息表、期货基本信息表、期权基本信息表、同花顺指数基本信息表、申万行业分类表等。"
 msgstr ""
+"Vous trouverez ci-dessous tous les tableaux prédéfinis intégrés : calendrier"
+" de négociation, bases des actions/indices/fonds/futures/options, bases de "
+"l'indice THS, classification de l'industrie SW, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md:5
 msgid "交易日历："
-msgstr ""
+msgstr "Calendrier des échanges :"
 
 #: ../../source/manage_data/3. data_tables_20.md:8
 msgid "中国交易日历: `trade_calendar`"
-msgstr ""
+msgstr "Calendrier commercial en Chine : `trade_calendar`"
 
 #: ../../source/manage_data/3. data_tables_20.md:9 data_tables_20.md:31
 #: data_tables_20.md:42
 msgid "数据表用途: `cal`, 资产类型: `none`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `cal`, type d'actif : `none`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:11
 msgid "中国交易日历包括上海、深圳股票交易所的交易日历，也包括各大期货商品交易所的交易日历"
-msgstr ""
+msgstr "Couvre SSE/SZSE et les principales bourses à terme."
 
 #: ../../source/manage_data/3. data_tables_20.md:13
 msgid "交易所代码对照如下："
-msgstr ""
+msgstr "Référence du code d'échange :"
 
 #: ../../source/manage_data/3. data_tables_20.md:15
 msgid "**SSE** 上交所——上海证券交易所"
-msgstr ""
+msgstr "**SSE** SSE — Bourse de Shanghai"
 
 #: ../../source/manage_data/3. data_tables_20.md:16
 msgid "**SZSE** 深交所——深圳股票交易所"
-msgstr ""
+msgstr "**SZSE** SZSE — Bourse de Shenzhen"
 
 #: ../../source/manage_data/3. data_tables_20.md:17
 msgid "**CFFEX** 中金所——中国金融期货交易所"
-msgstr ""
+msgstr "**CFFEX** CFFEX — Bourse chinoise des contrats à terme financiers"
 
 #: ../../source/manage_data/3. data_tables_20.md:18
 msgid "**SHFE** 上期所——上海期货交易所"
-msgstr ""
+msgstr "**SHFE** SHFE — Bourse à terme de Shanghai"
 
 #: ../../source/manage_data/3. data_tables_20.md:19
 msgid "**CZCE** 郑商所——郑州商品交易所"
-msgstr ""
+msgstr "**CZCE** CZCE — Bourse des matières premières de Zhengzhou"
 
 #: ../../source/manage_data/3. data_tables_20.md:20
 msgid "**DCE** 大商所——大连商品交易所"
-msgstr ""
+msgstr "**DCE** DCE — Bourse de marchandises de Dalian"
 
 #: ../../source/manage_data/3. data_tables_20.md:21
 msgid "**INE** 上能源——上海国际能源交易中心"
-msgstr ""
+msgstr "**INE** INE — Bourse internationale de l'énergie de Shanghai"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "columns"
@@ -106,7 +110,7 @@ msgstr "date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "日期（格式YYYYMMDD）"
-msgstr ""
+msgstr "Date (format AAAAMMJJ)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "Y"
@@ -126,7 +130,7 @@ msgstr "varchar(9)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易所"
-msgstr ""
+msgstr "Échange"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "2"
@@ -142,7 +146,7 @@ msgstr "tinyint"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "是否交易"
-msgstr ""
+msgstr "C'est un jour de bourse"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "N"
@@ -158,47 +162,51 @@ msgstr "pretrade_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "上一交易日"
-msgstr ""
+msgstr "Jour de bourse précédent"
 
 #: ../../source/manage_data/3. data_tables_20.md:30
 msgid "美股交易日历: `us_trade_calendar`"
-msgstr ""
+msgstr "Calendrier de trading américain : `us_trade_calendar`"
 
 #: ../../source/manage_data/3. data_tables_20.md:33
 msgid "美股交易日历保存了美股的交易日历表"
-msgstr ""
+msgstr "Tableau du calendrier commercial américain."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "日期"
-msgstr ""
+msgstr "Date"
 
 #: ../../source/manage_data/3. data_tables_20.md:41
 msgid "港股交易日历: `hk_trade_calendar`"
-msgstr ""
+msgstr "Calendrier de trading de Hong Kong : `hk_trade_calendar`"
 
 #: ../../source/manage_data/3. data_tables_20.md:44
 msgid "港股交易日历表保存了香港股票交易所的交易日历"
-msgstr ""
+msgstr "Tableau du calendrier de trading HKEX."
 
 #: ../../source/manage_data/3. data_tables_20.md:52
 msgid "股票基本信息表："
-msgstr ""
+msgstr "Tableau de base des stocks :"
 
 #: ../../source/manage_data/3. data_tables_20.md:54
 msgid "基本信息表包括了股票、指数、基金、期货、期权等各种金融产品的基本信息。"
 msgstr ""
+"Les tableaux de base couvrent les actions, les indices, les fonds, les "
+"contrats à terme, les options, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md:56
 msgid "股票基本信息: `stock_basic`"
-msgstr ""
+msgstr "Les bases du stock : `stock_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:57 data_tables_20.md:94
 msgid "数据表用途: basics, 资产类型: E, 数据频率: none"
-msgstr ""
+msgstr "Utilisation de la table : bases, type d'actif : E, fréquence : aucune"
 
 #: ../../source/manage_data/3. data_tables_20.md:59
 msgid "股票基本信息表包含了所有上市股票的基本信息，包括股票代码、股票名称、上市日期、退市日期、所属行业、地域等信息。"
 msgstr ""
+"Notions de base sur les actions avec code, nom, dates "
+"d'inscription/radiation, secteur d'activité, région."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "ts_code"
@@ -206,7 +214,7 @@ msgstr "ts_code"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "证券代码"
-msgstr ""
+msgstr "Code de sécurité"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "symbol"
@@ -218,7 +226,7 @@ msgstr "varchar(6)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "股票代码"
-msgstr ""
+msgstr "Code de stock"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "name"
@@ -230,7 +238,7 @@ msgstr "varchar(20)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "股票名称"
-msgstr ""
+msgstr "Nom du stock"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "area"
@@ -242,7 +250,7 @@ msgstr "varchar(10)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "地域"
-msgstr ""
+msgstr "Région"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "4"
@@ -254,7 +262,7 @@ msgstr "industry"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "所属行业"
-msgstr ""
+msgstr "Industrie"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "5"
@@ -270,7 +278,7 @@ msgstr "varchar(50)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "股票全称"
-msgstr ""
+msgstr "Nom complet du stock"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "6"
@@ -286,7 +294,7 @@ msgstr "varchar(120)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "英文全称"
-msgstr ""
+msgstr "Nom complet anglais"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "7"
@@ -302,7 +310,7 @@ msgstr "varchar(40)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "拼音缩写"
-msgstr ""
+msgstr "Abréviation pinyin"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "8"
@@ -314,7 +322,7 @@ msgstr "market"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "市场类型"
-msgstr ""
+msgstr "Type de marché"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "9"
@@ -322,7 +330,7 @@ msgstr "9"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易所代码"
-msgstr ""
+msgstr "Code d'échange"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "10"
@@ -334,7 +342,7 @@ msgstr "curr_type"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易货币"
-msgstr ""
+msgstr "Monnaie de trading"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "11"
@@ -350,7 +358,7 @@ msgstr "varchar(4)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "上市状态"
-msgstr ""
+msgstr "Statut de l'annonce"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "12"
@@ -362,7 +370,7 @@ msgstr "list_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "上市日期"
-msgstr ""
+msgstr "Date d'inscription"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "13"
@@ -374,7 +382,7 @@ msgstr "delist_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "退市日期"
-msgstr ""
+msgstr "Date de radiation"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "14"
@@ -390,19 +398,22 @@ msgstr "varchar(2)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "是否沪深港通"
-msgstr ""
+msgstr "Stock Connect est-il éligible"
 
 #: ../../source/manage_data/3. data_tables_20.md:79
 msgid "股票名称变更: `stock_names`"
-msgstr ""
+msgstr "Changements de nom de stock : `stock_names`"
 
 #: ../../source/manage_data/3. data_tables_20.md:80
 msgid "数据表用途: `events`, 资产类型: `E`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `events`, type d'actif : `E`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:82
 msgid "股票名称变更表包含了所有股票名称变更的信息，包括股票代码、开始日期、证券名称、结束日期、公告日期、变更原因等信息。"
 msgstr ""
+"Tableau de changement de nom de titre avec code, dates de début/fin, nom du "
+"titre, date d'annonce, motif."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "start_date"
@@ -410,7 +421,7 @@ msgstr "start_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "开始日期"
-msgstr ""
+msgstr "Date de début"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "varchar(8)"
@@ -418,7 +429,7 @@ msgstr "varchar(8)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "证券名称"
-msgstr ""
+msgstr "Nom de sécurité"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "end_date"
@@ -426,7 +437,7 @@ msgstr "end_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "结束日期"
-msgstr ""
+msgstr "Date de fin"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "ann_date"
@@ -434,7 +445,7 @@ msgstr "ann_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "公告日期"
-msgstr ""
+msgstr "Date de l'annonce"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "change_reason"
@@ -446,16 +457,21 @@ msgstr "text"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "变更原因"
-msgstr ""
+msgstr "Raison du changement"
 
 #: ../../source/manage_data/3. data_tables_20.md:93
 msgid "上市公司基本信息: `stock_company`"
-msgstr ""
+msgstr "Informations de base sur la société cotée : `stock_company`"
 
 #: ../../source/manage_data/3. data_tables_20.md:96
 msgid ""
 "上市公司基本信息表包含了所有上市公司的基本信息，包括公司代码、公司名称、法人代表、总经理、董秘、注册资本、注册日期、所在省份、所在城市、公司介绍、公司主页、电子邮件、办公室地址、员工人数、主要业务及产品、经营范围等信息。"
 msgstr ""
+"Tableau de base de la société cotée avec code/nom de l'entreprise, "
+"représentant légal, directeur général, secrétaire du conseil "
+"d'administration, capital social/date, province/ville, introduction, site "
+"Web, e-mail, adresse du bureau, effectif, activité principale/produits, "
+"périmètre d'activité, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "chairman"
@@ -467,7 +483,7 @@ msgstr "varchar(48)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "法人代表"
-msgstr ""
+msgstr "Représentant légal"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "manager"
@@ -475,7 +491,7 @@ msgstr "manager"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "总经理"
-msgstr ""
+msgstr "directeur général"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "secretary"
@@ -483,7 +499,7 @@ msgstr "secretary"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "董秘"
-msgstr ""
+msgstr "Secrétaire du conseil d'administration"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "reg_capital"
@@ -495,7 +511,7 @@ msgstr "float"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "注册资本"
-msgstr ""
+msgstr "Capital social"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "setup_date"
@@ -503,7 +519,7 @@ msgstr "setup_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "注册日期"
-msgstr ""
+msgstr "Date d'inscription"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "province"
@@ -511,7 +527,7 @@ msgstr "province"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "所在省份"
-msgstr ""
+msgstr "Province"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "city"
@@ -519,7 +535,7 @@ msgstr "city"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "所在城市"
-msgstr ""
+msgstr "Ville"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "introduction"
@@ -527,7 +543,7 @@ msgstr "introduction"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "公司介绍"
-msgstr ""
+msgstr "Présentation de l'entreprise"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "website"
@@ -539,7 +555,7 @@ msgstr "varchar(75)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "公司主页"
-msgstr ""
+msgstr "Site Internet de l'entreprise"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "email"
@@ -547,7 +563,7 @@ msgstr "email"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "电子邮件"
-msgstr ""
+msgstr "E-mail"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "office"
@@ -555,7 +571,7 @@ msgstr "office"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "办公室地址"
-msgstr ""
+msgstr "Adresse du bureau"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "employees"
@@ -567,7 +583,7 @@ msgstr "int"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "员工人数"
-msgstr ""
+msgstr "Nombre d'employés"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "main_business"
@@ -575,7 +591,7 @@ msgstr "main_business"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "主要业务及产品"
-msgstr ""
+msgstr "Activité principale et produits"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "15"
@@ -587,27 +603,30 @@ msgstr "business_scope"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "经营范围"
-msgstr ""
+msgstr "Portée de l'activité"
 
 #: ../../source/manage_data/3. data_tables_20.md:117
 msgid "上市公司管理层: `stk_managers`"
-msgstr ""
+msgstr "Gestion de sociétés cotées : `stk_managers`"
 
 #: ../../source/manage_data/3. data_tables_20.md:118
 msgid "数据表用途: `events`, 资产类型: `E`, 数据频率: `d`"
 msgstr ""
+"Utilisation de la table : `events`, type d'actif : `E`, fréquence : `d`"
 
 #: ../../source/manage_data/3. data_tables_20.md:120
 msgid "上市公司管理层表包含了上市公司的高管信息，包括公司管理层姓名、性别、学历、简历以及任职期限等"
 msgstr ""
+"Tableau de gestion avec nom du dirigeant, sexe, formation, curriculum vitae "
+"et mandat."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "TS股票代码"
-msgstr ""
+msgstr "Code de stock TS"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "姓名"
-msgstr ""
+msgstr "Nom"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "gender"
@@ -615,7 +634,7 @@ msgstr "gender"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "性别"
-msgstr ""
+msgstr "Genre"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "lev"
@@ -623,7 +642,7 @@ msgstr "lev"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "岗位类别"
-msgstr ""
+msgstr "Catégorie de poste"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "title"
@@ -631,7 +650,7 @@ msgstr "title"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "岗位"
-msgstr ""
+msgstr "Position"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "edu"
@@ -643,7 +662,7 @@ msgstr "varchar(30)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "学历"
-msgstr ""
+msgstr "Éducation"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "national"
@@ -651,7 +670,7 @@ msgstr "national"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "国籍"
-msgstr ""
+msgstr "Nationalité"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "birthday"
@@ -659,7 +678,7 @@ msgstr "birthday"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "出生年月"
-msgstr ""
+msgstr "Date de naissance (année-mois)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "begin_date"
@@ -667,11 +686,11 @@ msgstr "begin_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "上任日期"
-msgstr ""
+msgstr "Date de rendez-vous"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "离任日期"
-msgstr ""
+msgstr "Date de départ"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "resume"
@@ -679,20 +698,26 @@ msgstr "resume"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "个人简历"
-msgstr ""
+msgstr "CV personnel"
 
 #: ../../source/manage_data/3. data_tables_20.md:137
 msgid "IPO新股列表: `new_share`"
-msgstr ""
+msgstr "Nouvelles émissions en introduction en bourse : `new_share`"
 
 #: ../../source/manage_data/3. data_tables_20.md:138
 msgid "数据表用途: `basics`, 资产类型: `E`, 数据频率: `d`"
 msgstr ""
+"Utilisation de la table : `basics`, type d'actif : `E`, fréquence : `d`"
 
 #: ../../source/manage_data/3. data_tables_20.md:140
 msgid ""
 "IPO新股列表包含了所有新股的基本信息，包括股票代码、申购代码、名称、上网发行日期、上市日期、发行总量、上网发行总量、发行价格、市盈率、个人申购上限、募集资金、中签率等信息。"
 msgstr ""
+"Le tableau des nouvelles émissions d'introduction en bourse répertorie les "
+"informations de base pour toutes les nouvelles cotations : code d'action, "
+"code d'abonnement, nom, date d'émission en ligne, date de cotation, taille "
+"totale de l'émission, taille de l'émission en ligne, prix d'émission, ratio "
+"P/E, plafond de souscription individuel, fonds levés, taux de gain, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "sub_code"
@@ -700,11 +725,11 @@ msgstr "sub_code"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "申购代码"
-msgstr ""
+msgstr "Code d'abonnement"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "名称"
-msgstr ""
+msgstr "Nom"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "ipo_date"
@@ -712,7 +737,7 @@ msgstr "ipo_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "上网发行日期"
-msgstr ""
+msgstr "Date d'émission en ligne"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "issue_date"
@@ -724,7 +749,7 @@ msgstr "amount"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "发行总量（万股）"
-msgstr ""
+msgstr "Taille totale de l'émission (10 000 actions)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "market_amount"
@@ -732,7 +757,7 @@ msgstr "market_amount"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "上网发行总量（万股）"
-msgstr ""
+msgstr "Taille de l'émission en ligne (10 000 actions)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "price"
@@ -740,7 +765,7 @@ msgstr "price"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "发行价格"
-msgstr ""
+msgstr "Prix ​​d'émission"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "pe"
@@ -748,7 +773,7 @@ msgstr "pe"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "市盈率"
-msgstr ""
+msgstr "Ratio cours/bénéfice"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "limit_amount"
@@ -756,7 +781,7 @@ msgstr "limit_amount"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "个人申购上限（万股）"
-msgstr ""
+msgstr "Plafond de souscription individuel (10 000 actions)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "funds"
@@ -764,7 +789,7 @@ msgstr "funds"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "募集资金（亿元）"
-msgstr ""
+msgstr "Fonds récoltés (100 millions de yuans)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "ballot"
@@ -772,23 +797,26 @@ msgstr "ballot"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "中签率"
-msgstr ""
+msgstr "Taux de gain"
 
 #: ../../source/manage_data/3. data_tables_20.md:157
 msgid "指数基本信息表"
-msgstr ""
+msgstr "Tableau de base de l'index"
 
 #: ../../source/manage_data/3. data_tables_20.md:159
 msgid "指数基本信息: `index_basic`"
-msgstr ""
+msgstr "Bases de l'index : `index_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:160 data_tables_20.md:195
 msgid "数据表用途: `basics`, 资产类型: `IDX`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `basics`, type d'actif : `IDX`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:162
 msgid "指数基本信息表包含了所有指数的基本信息，包括指数代码、指数名称、发布日期、退市日期等信息。"
 msgstr ""
+"Indexez les bases avec le code, le nom, les dates de publication/suppression"
+" de la liste."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "varchar(24)"
@@ -800,15 +828,15 @@ msgstr "varchar(80)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "简称"
-msgstr ""
+msgstr "Nom court"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "指数全称"
-msgstr ""
+msgstr "Nom complet de l'index"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "市场"
-msgstr ""
+msgstr "Marché"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "publisher"
@@ -816,7 +844,7 @@ msgstr "publisher"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "发布方"
-msgstr ""
+msgstr "Éditeur"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "index_type"
@@ -824,7 +852,7 @@ msgstr "index_type"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "指数风格"
-msgstr ""
+msgstr "Style d'index"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "category"
@@ -832,7 +860,7 @@ msgstr "category"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "指数类别"
-msgstr ""
+msgstr "Catégorie d'indice"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "base_date"
@@ -840,7 +868,7 @@ msgstr "base_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "基期"
-msgstr ""
+msgstr "Période de base"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "base_point"
@@ -848,11 +876,11 @@ msgstr "base_point"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "基点"
-msgstr ""
+msgstr "Points de base"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "发布日期"
-msgstr ""
+msgstr "Date de publication"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "weight_rule"
@@ -860,7 +888,7 @@ msgstr "weight_rule"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "加权方式"
-msgstr ""
+msgstr "Méthode de pondération"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "desc"
@@ -868,7 +896,7 @@ msgstr "desc"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "描述"
-msgstr ""
+msgstr "Description"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "exp_date"
@@ -876,19 +904,22 @@ msgstr "exp_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "终止日期"
-msgstr ""
+msgstr "Date de fin"
 
 #: ../../source/manage_data/3. data_tables_20.md:180
 msgid "同花顺指数基本信息: `ths_index_basic`"
-msgstr ""
+msgstr "Bases de l'index THS : `ths_index_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:181
 msgid "数据表用途: `basics`, 资产类型: `THS`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `basics`, type d'actif : `THS`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:183
 msgid "同花顺指数基本信息表包含了所有同花顺指数的基本信息，包括指数代码、名称、成分个数、交易所、上市日期、N概念指数S特色指数等信息。"
 msgstr ""
+"Bases de l'index THS avec code, nom, nombre de constituants, échange, date "
+"de cotation, drapeaux de spécialité N concept / S, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "varchar(14)"
@@ -896,7 +927,7 @@ msgstr "varchar(14)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "代码"
-msgstr ""
+msgstr "Code"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "count"
@@ -904,7 +935,7 @@ msgstr "count"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "成分个数"
-msgstr ""
+msgstr "Nombre de constituants"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "type"
@@ -912,16 +943,19 @@ msgstr "type"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "N概念指数S特色指数"
-msgstr ""
+msgstr "Indice de concept N Indice de spécialité S"
 
 #: ../../source/manage_data/3. data_tables_20.md:194
 msgid "申万行业分类: `sw_industry_basic`"
-msgstr ""
+msgstr "Classification de l'industrie SW : `sw_industry_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:197
 msgid ""
 "申万行业分类指数表包含了所有申万行业分类指数的基本信息，包括指数代码、行业名称、父级代码、行业级别、行业代码、是否发布了指数、行业分类（SW申万）等信息。"
 msgstr ""
+"Bases de l'index de l'industrie SW avec code, nom de l'industrie, code "
+"parent, niveau, code de l'industrie, indicateur publié de l'index, "
+"classification SW."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "index_code"
@@ -929,7 +963,7 @@ msgstr "index_code"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "指数代码"
-msgstr ""
+msgstr "Code d'indexation"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "industry_name"
@@ -937,7 +971,7 @@ msgstr "industry_name"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "行业名称"
-msgstr ""
+msgstr "Nom de l'industrie"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "parent_code"
@@ -945,7 +979,7 @@ msgstr "parent_code"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "父级代码"
-msgstr ""
+msgstr "Code parental"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "level"
@@ -957,7 +991,7 @@ msgstr "industry_code"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "行业代码"
-msgstr ""
+msgstr "Code de l'industrie"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "is_pub"
@@ -965,7 +999,7 @@ msgstr "is_pub"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "是否发布了指数"
-msgstr ""
+msgstr "Index publié (O/N)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "src"
@@ -973,24 +1007,29 @@ msgstr "src"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "行业分类（SW申万）"
-msgstr ""
+msgstr "Classification de l'industrie (SW Shenwan)"
 
 #: ../../source/manage_data/3. data_tables_20.md:209
 msgid "基金基本信息表"
-msgstr ""
+msgstr "Tableau de base des fonds"
 
 #: ../../source/manage_data/3. data_tables_20.md:211
 msgid "基金基本信息: `fund_basic`"
-msgstr ""
+msgstr "Les bases du fonds : `fund_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:212
 msgid "数据表用途: `basics`, 资产类型: `FD`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `basics`, type d'actif : `FD`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:214
 msgid ""
 "基金基本信息表包含了所有基金的基本信息，包括基金代码、基金名称、管理人、托管人、投资类型、成立日期、到期日期、上市时间、发行日期、退市日期、发行份额、管理费、托管费、存续期、面值、起点金额、预期收益率、业绩比较基准、存续状态、投资风格、基金类型、受托人、日常申购起始日、日常赎回起始日、场内场外等信息。"
 msgstr ""
+"Les bases du fonds avec code, nom, gestionnaire, dépositaire, type "
+"d'investissement, dates, frais, durée, valeur nominale, investissement "
+"minimum, rendement attendu, indice de référence, statut, style, type, "
+"fiduciaire, dates de souscription/rachat, indicateur d'échange, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "management"
@@ -998,7 +1037,7 @@ msgstr "management"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "管理人"
-msgstr ""
+msgstr "Directeur"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "custodian"
@@ -1006,7 +1045,7 @@ msgstr "custodian"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "托管人"
-msgstr ""
+msgstr "Gardien"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "fund_type"
@@ -1014,7 +1053,7 @@ msgstr "fund_type"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "投资类型"
-msgstr ""
+msgstr "Type d'investissement"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "found_date"
@@ -1022,7 +1061,7 @@ msgstr "found_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "成立日期"
-msgstr ""
+msgstr "Date d'établissement"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "due_date"
@@ -1030,15 +1069,15 @@ msgstr "due_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "到期日期"
-msgstr ""
+msgstr "Date d'échéance"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "上市时间"
-msgstr ""
+msgstr "Heure d'inscription"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "发行日期"
-msgstr ""
+msgstr "Date d'émission"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "issue_amount"
@@ -1046,7 +1085,7 @@ msgstr "issue_amount"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "发行份额(亿)"
-msgstr ""
+msgstr "Taille de l'émission (100 millions d'unités)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "m_fee"
@@ -1054,7 +1093,7 @@ msgstr "m_fee"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "管理费"
-msgstr ""
+msgstr "Frais de gestion"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "c_fee"
@@ -1062,7 +1101,7 @@ msgstr "c_fee"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "托管费"
-msgstr ""
+msgstr "Frais de garde"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "duration_year"
@@ -1070,7 +1109,7 @@ msgstr "duration_year"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "存续期"
-msgstr ""
+msgstr "Durée"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "p_value"
@@ -1078,7 +1117,7 @@ msgstr "p_value"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "面值"
-msgstr ""
+msgstr "Valeur nominale"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "min_amount"
@@ -1086,7 +1125,7 @@ msgstr "min_amount"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "起点金额(万元)"
-msgstr ""
+msgstr "Investissement minimum (10 000 yuans)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "16"
@@ -1098,7 +1137,7 @@ msgstr "exp_return"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "预期收益率"
-msgstr ""
+msgstr "Retour attendu"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "17"
@@ -1110,7 +1149,7 @@ msgstr "benchmark"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "业绩比较基准"
-msgstr ""
+msgstr "Évaluation des performances"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "18"
@@ -1122,7 +1161,7 @@ msgstr "status"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "存续状态D摘牌 I发行 L已上市"
-msgstr ""
+msgstr "Statut D radié I délivrant L listé"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "19"
@@ -1134,7 +1173,7 @@ msgstr "invest_type"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "投资风格"
-msgstr ""
+msgstr "Style d'investissement"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "20"
@@ -1142,7 +1181,7 @@ msgstr "20"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "基金类型"
-msgstr ""
+msgstr "Type de fonds"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "21"
@@ -1154,7 +1193,7 @@ msgstr "trustee"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "受托人"
-msgstr ""
+msgstr "Curateur"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "22"
@@ -1166,7 +1205,7 @@ msgstr "purc_startdate"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "日常申购起始日"
-msgstr ""
+msgstr "Date de début de l'abonnement quotidien"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "23"
@@ -1178,7 +1217,7 @@ msgstr "redm_startdate"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "日常赎回起始日"
-msgstr ""
+msgstr "Date de début du rachat quotidien"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "24"
@@ -1186,23 +1225,26 @@ msgstr "24"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "E场内O场外"
-msgstr ""
+msgstr "E en bourse O hors bourse"
 
 #: ../../source/manage_data/3. data_tables_20.md:244
 msgid "基金经理: `fund_manager`"
-msgstr ""
+msgstr "Gestionnaire du fonds : `fund_manager`"
 
 #: ../../source/manage_data/3. data_tables_20.md:245
 msgid "数据表用途: `events`, 资产类型: `FD`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `events`, type d'actif : `FD`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:247
 msgid "基金经理表包含基金经理的详细信息，包括姓名、性别、出生年月和简历等信息"
 msgstr ""
+"Détails du gestionnaire de fonds : nom, sexe, date de naissance, curriculum "
+"vitae."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "基金经理姓名"
-msgstr ""
+msgstr "Nom du gestionnaire du fonds"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "birth_year"
@@ -1214,7 +1256,7 @@ msgstr "varchar(12)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "出生年份"
-msgstr ""
+msgstr "Année de naissance"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "nationality"
@@ -1222,23 +1264,24 @@ msgstr "nationality"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "任职日期"
-msgstr ""
+msgstr "Date de début du mandat"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "简历"
-msgstr ""
+msgstr "CV"
 
 #: ../../source/manage_data/3. data_tables_20.md:262
 msgid "基金份额: `fund_share`"
-msgstr ""
+msgstr "Parts du fonds : `fund_share`"
 
 #: ../../source/manage_data/3. data_tables_20.md:263
 msgid "数据表用途: `data`, 资产类型: `FD`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `data`, type d'actif : `FD`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:265
 msgid "基金份额表包含"
-msgstr ""
+msgstr "Le tableau des parts de fonds contient"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "trade_date"
@@ -1246,7 +1289,7 @@ msgstr "trade_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "变动日期，格式YYYYMMDD"
-msgstr ""
+msgstr "Changer la date, format AAAAMMJJ"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "fd_share"
@@ -1254,36 +1297,42 @@ msgstr "fd_share"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "基金份额(万)"
-msgstr ""
+msgstr "Parts de fonds (10 000 parts)"
 
 #: ../../source/manage_data/3. data_tables_20.md:273
 msgid "期货和期权基本信息"
-msgstr ""
+msgstr "Notions de base sur les contrats à terme et les options"
 
 #: ../../source/manage_data/3. data_tables_20.md:275
 msgid "期货基本信息: `future_basic`"
-msgstr ""
+msgstr "Bases des contrats à terme : `future_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:276
 msgid "数据表用途: `basics`, 资产类型: `FT`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `basics`, type d'actif : `FT`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:278
 msgid ""
 "期货基本信息表包含了所有期货的基本信息，包括合约代码、交易标识、交易市场、中文简称、合约产品代码、合约乘数、交易计量单位、交易单位(每手)、报价单位、最小报价单位说明、交割方式说明、上市日期、最后交易日期、交割月份、最后交割日、交易时间说明等信息。"
 msgstr ""
+"Bases des contrats à terme avec code de contrat, identifiant de "
+"négociation/marché, nom abrégé, code de produit, multiplicateur, unités, "
+"unité de cotation, tick minimum, méthode de livraison, cotation/dernières "
+"dates de négociation, mois de livraison/dernier jour de livraison, heures de"
+" négociation, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易标识"
-msgstr ""
+msgstr "Identifiant commercial"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易市场"
-msgstr ""
+msgstr "Marché commercial"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "中文简称"
-msgstr ""
+msgstr "Nom court chinois"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "fut_code"
@@ -1291,7 +1340,7 @@ msgstr "fut_code"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "合约产品代码"
-msgstr ""
+msgstr "Code produit du contrat"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "multiplier"
@@ -1299,7 +1348,7 @@ msgstr "multiplier"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "合约乘数"
-msgstr ""
+msgstr "Multiplicateur de contrat"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "trade_unit"
@@ -1307,7 +1356,7 @@ msgstr "trade_unit"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易计量单位"
-msgstr ""
+msgstr "Unité de mesure commerciale"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "per_unit"
@@ -1315,7 +1364,7 @@ msgstr "per_unit"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易单位(每手)"
-msgstr ""
+msgstr "Unité commerciale (par lot)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "quote_unit"
@@ -1323,7 +1372,7 @@ msgstr "quote_unit"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "报价单位"
-msgstr ""
+msgstr "Unité de cotation"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "quote_unit_desc"
@@ -1331,7 +1380,7 @@ msgstr "quote_unit_desc"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "最小报价单位说明"
-msgstr ""
+msgstr "Description de l'unité de cotation minimale"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "d_mode_desc"
@@ -1339,11 +1388,11 @@ msgstr "d_mode_desc"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交割方式说明"
-msgstr ""
+msgstr "Description du mode de livraison"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "最后交易日期"
-msgstr ""
+msgstr "Dernière date de négociation"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "d_month"
@@ -1351,7 +1400,7 @@ msgstr "d_month"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交割月份"
-msgstr ""
+msgstr "Mois de livraison"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "last_ddate"
@@ -1359,7 +1408,7 @@ msgstr "last_ddate"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "最后交割日"
-msgstr ""
+msgstr "Dernière date de livraison"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "trade_time_desc"
@@ -1367,28 +1416,33 @@ msgstr "trade_time_desc"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易时间说明"
-msgstr ""
+msgstr "Description des heures de négociation"
 
 #: ../../source/manage_data/3. data_tables_20.md:299
 msgid "期权基本信息: `opt_basic`"
-msgstr ""
+msgstr "Bases des options : `opt_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:300
 msgid "数据表用途: `basics`, 资产类型: `OPT`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `basics`, type d'actif : `OPT`, fréquence : `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:302
 msgid ""
 "期权基本信息表包含了所有期权的基本信息，包括证券代码、交易市场、合约名称、合约单位、标准合约代码、合约类型、期权类型、行权方式、行权价格、结算月、到期日、挂牌基准价、开始交易日期、最后交易日期、最后行权日期、最后交割日期、报价单位、最小价格波幅等信息。"
 msgstr ""
+"Bases de l'option avec code de sécurité, marché, nom/unité du contrat, code "
+"standard, type de contrat/option, méthode/prix d'exercice, mois de "
+"règlement, expiration, prix de référence de cotation, dates de "
+"négociation/exercice/livraison, unité de cotation, tick minimum, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "合约名称"
-msgstr ""
+msgstr "Nom du contrat"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "合约单位"
-msgstr ""
+msgstr "Unité contractuelle"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "opt_code"
@@ -1396,7 +1450,7 @@ msgstr "opt_code"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "标准合约代码"
-msgstr ""
+msgstr "Code de contrat standard"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "opt_type"
@@ -1404,7 +1458,7 @@ msgstr "opt_type"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "合约类型"
-msgstr ""
+msgstr "Type de contrat"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "call_put"
@@ -1412,7 +1466,7 @@ msgstr "call_put"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "期权类型"
-msgstr ""
+msgstr "Type d'option"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "exercise_type"
@@ -1420,7 +1474,7 @@ msgstr "exercise_type"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "行权方式"
-msgstr ""
+msgstr "Méthode d'exercice"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "exercise_price"
@@ -1428,7 +1482,7 @@ msgstr "exercise_price"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "行权价格"
-msgstr ""
+msgstr "Prix ​​d'exercice"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "s_month"
@@ -1436,7 +1490,7 @@ msgstr "s_month"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "结算月"
-msgstr ""
+msgstr "Mois de règlement"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "maturity_date"
@@ -1444,7 +1498,7 @@ msgstr "maturity_date"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "到期日"
-msgstr ""
+msgstr "Date d'échéance"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "list_price"
@@ -1452,11 +1506,11 @@ msgstr "list_price"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "挂牌基准价"
-msgstr ""
+msgstr "Prix ​​de référence de l'annonce"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "开始交易日期"
-msgstr ""
+msgstr "Date de début de négociation"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "last_edate"
@@ -1464,11 +1518,11 @@ msgstr "last_edate"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "最后行权日期"
-msgstr ""
+msgstr "Date du dernier exercice"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "最后交割日期"
-msgstr ""
+msgstr "Dernière date de livraison"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "min_price_chg"
@@ -1476,35 +1530,37 @@ msgstr "min_price_chg"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "最小价格波幅"
-msgstr ""
+msgstr "Cocher le prix minimum"
 
 #: ../../source/manage_data/3. data_tables_20.md:325
 msgid "美股和港股基本信息"
-msgstr ""
+msgstr "Bases des actions américaines et de Hong Kong"
 
 #: ../../source/manage_data/3. data_tables_20.md:327
 msgid "美股基本信息: `us_stock_basic`"
-msgstr ""
+msgstr "Bases des actions américaines : `us_stock_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:328
 msgid "数据表用途: `not_implemented`, 资产类型: `US`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `not_implemented`, type d'actif : `US`, fréquence "
+": `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:330
 msgid "美股基本信息包括美国股票的基本信息如名称、上市日期等"
-msgstr ""
+msgstr "Nom de l’action américaine, date de cotation, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "美股代码"
-msgstr ""
+msgstr "Code boursier américain"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "中文名称"
-msgstr ""
+msgstr "nom chinois"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "英文名称"
-msgstr ""
+msgstr "Nom anglais"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "classify"
@@ -1512,7 +1568,7 @@ msgstr "classify"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "分类:ADR/GDR/EQT"
-msgstr ""
+msgstr "Classement : ADR/RDA/EQT"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "datetime"
@@ -1520,23 +1576,25 @@ msgstr "datetime"
 
 #: ../../source/manage_data/3. data_tables_20.md:341
 msgid "港股基本信息: `hk_stock_basic`"
-msgstr ""
+msgstr "Bases des actions de Hong Kong : `hk_stock_basic`"
 
 #: ../../source/manage_data/3. data_tables_20.md:342
 msgid "数据表用途: `not_implemented`, 资产类型: `HK`, 数据频率: `none`"
 msgstr ""
+"Utilisation de la table : `not_implemented`, type d'actif : `HK`, fréquence "
+": `none`"
 
 #: ../../source/manage_data/3. data_tables_20.md:344
 msgid "港股基本信息包括港交所股票的代码、名称、公司名称等基本信息"
-msgstr ""
+msgstr "Code boursier HK, nom, nom de l'entreprise, etc."
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "股票简称"
-msgstr ""
+msgstr "Nom abrégé de l'action"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "公司全称"
-msgstr ""
+msgstr "Nom complet de l'entreprise"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "cn_spell"
@@ -1544,15 +1602,15 @@ msgstr "cn_spell"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "拼音"
-msgstr ""
+msgstr "Pinyin"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "市场类别"
-msgstr ""
+msgstr "Catégorie de marché"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "交易单位"
-msgstr ""
+msgstr "Unité de négociation"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "isin"
@@ -1564,8 +1622,8 @@ msgstr "varchar(16)"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "ISIN代码"
-msgstr ""
+msgstr "Code ISIN"
 
 #: ../../source/manage_data/3. data_tables_20.md
 msgid "货币代码"
-msgstr ""
+msgstr "Code devise"
