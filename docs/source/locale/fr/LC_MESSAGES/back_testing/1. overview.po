@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/back_testing/overview.md:1
 msgid "交易策略的回测"
-msgstr ""
+msgstr "Backtest des stratégies de trading"
 
 #: ../../source/back_testing/overview.md:3
 msgid "未完待续"

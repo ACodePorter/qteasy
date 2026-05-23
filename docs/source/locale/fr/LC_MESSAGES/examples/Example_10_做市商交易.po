@@ -20,45 +20,59 @@ msgstr ""
 
 #: ../../source/examples/Example_10_做市商交易.md:1
 msgid "做市商交易策略（教学近似版）"
-msgstr ""
+msgstr "Stratégies de trading des teneurs de marché (version tutoriel)"
 
 #: ../../source/examples/Example_10_做市商交易.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_10_做市商交易.ipynb` 第一个 Markdown "
 "cell。"
 msgstr ""
+"Source de référence : `docs/_joinquant_migration_source/Example_10_Market "
+"Maker Trading.ipynb` Première cellule Markdown."
 
 #: ../../source/examples/Example_10_做市商交易.md:5
 msgid "策略思路"
-msgstr ""
+msgstr "Stratégie et idées"
 
 #: ../../source/examples/Example_10_做市商交易.md:7
 msgid "真实做市策略依赖逐笔盘口、挂撤单队列和成交优先级；"
 msgstr ""
+"Les véritables stratégies de tenue de marché reposent sur le carnet d'ordres"
+" tick par tick, les files d'attente d'ordres et la priorité des ordres."
 
 #: ../../source/examples/Example_10_做市商交易.md:8
 msgid "qteasy 回测层是 Bar 级撮合抽象，本示例以“均值回归双边挂单”近似做市行为；"
 msgstr ""
+"La couche de backtesting qteasy est une abstraction de correspondance au "
+"niveau de la barre. Cet exemple se rapproche du comportement de tenue de "
+"marché avec le « placement d'ordres bilatéraux à régression moyenne »."
 
 #: ../../source/examples/Example_10_做市商交易.md:9
 msgid "当价格偏离均值上轨时卖出，偏离下轨时买入，中间区域观望。"
 msgstr ""
+"Vendez lorsque le prix s'écarte de la bande supérieure de la moyenne, "
+"achetez lorsqu'il s'écarte de la bande inférieure et observez dans la "
+"fourchette médiane."
 
 #: ../../source/examples/Example_10_做市商交易.md:11
 msgid "诚实说明"
-msgstr ""
+msgstr "Honnêteté"
 
 #: ../../source/examples/Example_10_做市商交易.md:13
 msgid "本示例不是交易所级别的真实做市仿真；"
 msgstr ""
+"Cet exemple n’est pas une véritable simulation de tenue de marché au niveau "
+"d’une bourse ;"
 
 #: ../../source/examples/Example_10_做市商交易.md:14
 msgid "仅用于讲解 qteasy 在高频风格场景下的 `VS` 信号和 stepwise 回测流程。"
 msgstr ""
+"Ceci est uniquement destiné à expliquer le signal `VS` et le processus de "
+"backtest par étapes de qteasy dans des scénarios de style haute fréquence."
 
 #: ../../source/examples/Example_10_做市商交易.md:39
 msgid "可执行脚本"
-msgstr ""
+msgstr "Script exécutable"
 
 #: ../../source/examples/Example_10_做市商交易.md:41
 msgid "`examples/strategy_example_10.py`"

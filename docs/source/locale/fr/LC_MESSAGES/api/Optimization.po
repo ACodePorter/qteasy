@@ -10,94 +10,112 @@ msgstr ""
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/api/Optimization.rst:2
 msgid "Optimizer 策略优化器"
-msgstr ""
+msgstr "Optimiseur de stratégie d'optimisation"
 
 #: ../../source/api/Optimization.rst:4
 msgid "Optimizer 是一个策略优化器，可以通过遗传算法、粒子群算法等方法来优化策略参数。"
 msgstr ""
+"Optimizer est un optimiseur de stratégie qui peut optimiser les paramètres "
+"de stratégie à l'aide de méthodes telles que les algorithmes génétiques et "
+"l'optimisation des essaims de particules."
 
 #: of qteasy.optimization.Optimizer:1
 msgid "最优参数搜索器对象"
-msgstr ""
+msgstr "Objet de recherche de paramètres optimaux"
 
 #: ../../source/api/Optimization.rst:9
 msgid "策略参数优化方法"
-msgstr ""
+msgstr "Méthode d'optimisation des paramètres de stratégie"
 
 #: ../../source/api/Optimization.rst:12
 msgid "网格搜索"
-msgstr ""
+msgstr "Recherche par grille"
 
 #: of qteasy.optimization.Optimizer._search_grid:1
 msgid "网格搜索：在参数空间上按固定步长取样并批量评估。"
 msgstr ""
+"Recherche par grille : échantillonnez l'espace des paramètres à un pas fixe "
+"et évaluez-le par lots."
 
 #: ../../source/api/Optimization.rst
 msgid "参数"
-msgstr ""
+msgstr "Paramètres"
 
 #: of qteasy.optimization.Optimizer._search_grid:3
 #: qteasy.optimization.Optimizer._search_montecarlo:3
 msgid "待搜索的参数空间。"
-msgstr ""
+msgstr "L’espace de paramètres à rechercher."
 
 #: ../../source/api/Optimization.rst
 msgid "返回"
-msgstr ""
+msgstr "Dos"
 
 #: of qteasy.optimization.Optimizer._search_grid:6
 #: qteasy.optimization.Optimizer._search_montecarlo:6
 #: qteasy.optimization.Optimizer._search_sa:9
 msgid "最优结果写入 ``self.result_pool``。"
-msgstr ""
+msgstr "Écrivez le résultat optimal dans ``self.result_pool``."
 
 #: ../../source/api/Optimization.rst
 msgid "返回类型"
-msgstr ""
+msgstr "Type de retour"
 
 #: ../../source/api/Optimization.rst:17
 msgid "蒙特卡洛搜索"
-msgstr ""
+msgstr "Recherche Monte-Carlo"
 
 #: of qteasy.optimization.Optimizer._search_montecarlo:1
 msgid "蒙特卡洛随机搜索：在 ``space`` 内均匀随机取样并批量评估。"
 msgstr ""
+"Recherche aléatoire de Monte Carlo : échantillonnez uniformément au hasard "
+"dans ``space`` et évaluez par lots."
 
 #: ../../source/api/Optimization.rst:22
 msgid "模拟退火搜索"
-msgstr ""
+msgstr "Recherche de recuit simulé"
 
 #: of qteasy.optimization.Optimizer._search_sa:1
 msgid "递进步长式随机搜索：多轮蒙特卡洛 + 子空间收缩。"
 msgstr ""
+"Recherche aléatoire progressive par étapes : plusieurs tours de Monte Carlo "
+"+ contraction du sous-espace."
 
 #: of qteasy.optimization.Optimizer._search_sa:3
 msgid ""
 "每轮在若干子空间内随机采样，择优后用 ``reduce_ratio`` 等配置收缩邻域并进入下一轮， 直至达到 ``min_volume`` 或 "
 "``max_rounds`` 等停止条件。"
 msgstr ""
+"À chaque tour, échantillonnez au hasard dans plusieurs sous-espaces ; après "
+"avoir sélectionné le meilleur, réduisez le quartier en utilisant des "
+"configurations telles que ``reduce_ratio`` and proceed to the next round, "
+"until stopping conditions such as ``min_volume`` or ``max_rounds`` sont "
+"remplies."
 
 #: of qteasy.optimization.Optimizer._search_sa:6
 msgid "初始参数空间。"
-msgstr ""
+msgstr "Espace des paramètres initiaux."
 
 #: ../../source/api/Optimization.rst:27
 msgid "遗传算法搜索"
-msgstr ""
+msgstr "Recherche d'algorithmes génétiques"
 
 #: of qteasy.optimization.Optimizer._search_ga:1
 msgid "最优参数搜索算法4: 遗传算法 遗传算法适用于在超大的参数空间内搜索全局最优或近似全局最优解，而它的计算量又处于可接受的范围内"
 msgstr ""
+"Algorithme de recherche d'hyperparamètres optimal 4 : algorithme génétique. "
+"Les algorithmes génétiques conviennent à la recherche d'un optimal global ou"
+" d'un optimal global approximatif dans un espace de paramètres extrêmement "
+"vaste, tout en maintenant le coût de calcul dans une plage acceptable."
 
 #: of qteasy.optimization.Optimizer._search_ga:4
 msgid ""
@@ -109,26 +127,58 @@ msgid ""
 "同时在繁殖的过程中引入随机的基因变异生成新的个体。最终使种群的数量恢复到初始值。这样就完成 "
 "一次种群的迭代。重复上面过程数千乃至数万代直到种群中出现希望得到的最优或近似最优解为止"
 msgstr ""
+"Les algorithmes génétiques s’appuient sur le processus génétique itératif "
+"des organismes vivants. Premièrement, un certain nombre de points de "
+"paramètres sont sélectionnés de manière aléatoire dans l'espace des "
+"paramètres ; cet ensemble de points de paramètres est appelé une « "
+"population ». Un calcul itératif est ensuite effectué à partir de cette "
+"population. Avant chaque itération (appelée reproduction), la probabilité "
+"que chaque individu survive ou meure est déterminée en fonction de la valeur"
+" de sa fonction d'évaluation. La règle est la suivante : plus la valeur de "
+"la fonction d’évaluation d’un individu est proche de la valeur optimale, "
+"plus sa probabilité de survie et plus sa probabilité de produire une "
+"progéniture est élevée ; sinon, ces probabilités sont plus faibles. Après "
+"avoir déterminé les probabilités de survie/mort et de reproduction, un "
+"certain nombre d'individus sont sélectionnés pour mourir en fonction des "
+"probabilités de survie/mort. Parmi les individus restants (survivants), ceux"
+" ayant les probabilités de reproduction les plus élevées sont sélectionnés "
+"pour le croisement et la reproduction de la génération suivante d'individus."
+" Dans le même temps, des mutations génétiques aléatoires sont introduites "
+"lors de la reproduction pour générer de nouveaux individus. En fin de "
+"compte, la taille de la population retrouve sa valeur initiale. De cette "
+"façon, une itération de population est terminée. Le processus ci-dessus est "
+"répété pendant des milliers, voire des dizaines de milliers de générations, "
+"jusqu'à ce que la solution optimale ou quasi optimale souhaitée apparaisse "
+"dans la population."
 
 #: of qteasy.optimization.Optimizer._search_bayesian:8
 #: qteasy.optimization.Optimizer._search_ga:12
 #: qteasy.optimization.Optimizer._search_pso:9
 msgid "参数空间对象"
-msgstr ""
+msgstr "Objet d'espace de paramètres"
 
 #: ../../source/api/Optimization.rst:32
 msgid "梯度下降搜索"
-msgstr ""
+msgstr "Recherche de descente de gradient"
 
 #: of qteasy.optimization.Optimizer._search_gradient:1
 msgid "最优参数搜索算法5：梯度下降法（多点同时梯度搜索）"
 msgstr ""
+"Algorithme de recherche de paramètres optimaux 5 : descente de gradient "
+"(recherche de gradient simultanée multipoint)"
 
 #: of qteasy.optimization.Optimizer._search_gradient:3
 msgid ""
 "在参数空间中寻找优化结果变优最快的方向，始终保持向最优方向前进（采用自适应步长）一直到结果不再改变或达到 "
 "最大步数为止。在参数空间中随机选择N个起点开始搜索，输出结果为最后一步的N个结果。"
 msgstr ""
+"Recherchez, dans l'espace des paramètres, la direction dans laquelle le "
+"résultat de l'optimisation s'améliore le plus rapidement et avancez toujours"
+" vers la meilleure direction (en utilisant une taille de pas adaptative) "
+"jusqu'à ce que le résultat ne change plus ou que le nombre maximum de pas "
+"soit atteint. Choisissez au hasard N points de départ dans l'espace des "
+"paramètres pour commencer la recherche ; le résultat correspond aux N "
+"résultats de l’étape finale."
 
 #: of qteasy.optimization.Optimizer._search_gradient:6
 msgid ""
@@ -136,44 +186,75 @@ msgid ""
 "int/float/enum/int_array/float_array。 仅对 float "
 "维做自适应步长（放大/缩小）；无改进时缩小步长，步长过小或连续无改进达阈值则终止该轨迹。"
 msgstr ""
+"Le quartier est généré via space.neighbors(point, axis_index, ...), prenant "
+"en charge int/float/enum/int_array/float_array. Les tailles de pas "
+"adaptatives (augmentation/diminution) sont appliquées uniquement aux "
+"dimensions flottantes ; s'il n'y a pas d'amélioration, la taille du pas est "
+"réduite et la trajectoire se termine lorsque la taille du pas devient trop "
+"petite ou lorsque le nombre de non-améliorations consécutives atteint le "
+"seuil."
 
 #: of qteasy.optimization.Optimizer._search_gradient:9
 msgid "参数空间"
-msgstr ""
+msgstr "Espace de paramètres"
 
 #: ../../source/api/Optimization.rst:37
 msgid "粒子群算法搜索"
-msgstr ""
+msgstr "Recherche d'optimisation d'essaim de particules"
 
 #: of qteasy.optimization.Optimizer._search_pso:1
 msgid "最优参数搜索算法6: Particle Swarm Optimization 粒子群优化算法"
 msgstr ""
+"Algorithme de recherche d'hyperparamètres optimal 6 : Optimisation des "
+"essaims de particules (PSO)"
 
 #: of qteasy.optimization.Optimizer._search_pso:3
 msgid ""
 "在参数空间中随机选择N个起点作为粒子群的初始位置，每个粒子根据自身的历史最优位置和全局的历史最优位置 "
 "来调整自己的速度和位置，逐步向最优解靠近。经过多次迭代后，粒子群会收敛到全局最优解或近似最优解。"
 msgstr ""
+"Choisissez au hasard N points de départ dans l’espace des paramètres comme "
+"positions initiales de l’essaim de particules. Chaque particule ajuste sa "
+"vitesse et sa position en fonction de sa propre meilleure position "
+"historique et de la meilleure position historique globale, se rapprochant "
+"progressivement de l'optimum. Après plusieurs itérations, l'essaim converge "
+"vers l'optimum global ou un optimal approximatif."
 
 #: of qteasy.optimization.Optimizer._search_pso:6
 msgid ""
 "数值表示使用 space.point_to_vector / space.vector_to_point，在编码向量空间内做速度与位置更新， "
 "再映射回合法参数点。惯性权重 w=0.7，个体系数 c1=1.5，社会系数 c2=1.5。"
 msgstr ""
+"La représentation numérique utilise space.point_to_vector / "
+"space.vector_to_point : met à jour la vitesse et la position dans l'espace "
+"vectoriel codé, puis mappe vers des points de paramètres valides. Poids "
+"d'inertie w=0,7, coefficient cognitif c1=1,5, coefficient social c2=1,5."
 
 #: ../../source/api/Optimization.rst:42
 msgid "贝叶斯优化搜索"
-msgstr ""
+msgstr "Recherche d'optimisation bayésienne"
 
 #: of qteasy.optimization.Optimizer._search_bayesian:1
 msgid "最优参数搜索算法6: 贝叶斯优化算法"
 msgstr ""
+"Algorithme de recherche d'hyperparamètres optimaux 6 : optimisation "
+"bayésienne"
 
 #: of qteasy.optimization.Optimizer._search_bayesian:3
 msgid ""
 "贝叶斯优化是一种基于贝叶斯统计理论的全局优化方法，适用于高维、非凸、黑箱函数的优化问题。 "
-"它通过构建目标函数的概率模型（通常是高斯过程）来指导参数搜索过程，从而在有限的评估次数内找到最优解。 流程：初始随机采样 -> 用 (X, y) "
-"拟合 surrogate（RBF 核高斯过程）-> 迭代：在候选点上计算 UCB 采集函数， 选取采集值最大的点评估 -> 更新 (X, y) 与"
-" result_pool，直至达到 max_iterations。"
+"它通过构建目标函数的概率模型（通常是高斯过程）来指导参数搜索过程，从而在有限的评估次数内找到最优解。 流程：初始随机采样 -> 用 (X, y) 拟合 "
+"surrogate（RBF 核高斯过程）-> 迭代：在候选点上计算 UCB 采集函数， 选取采集值最大的点评估 -> 更新 (X, y) 与 "
+"result_pool，直至达到 max_iterations。"
 msgstr ""
-
+"L'optimisation bayésienne est une méthode d'optimisation globale basée sur "
+"la théorie statistique bayésienne, adaptée à l'optimisation de fonctions de "
+"boîte noire de grande dimension, non convexes. Il guide la recherche de "
+"paramètres en construisant un modèle probabiliste de la fonction objectif "
+"(généralement un processus gaussien), trouvant ainsi l'optimum dans un "
+"nombre limité d'évaluations. Workflow : échantillonnage aléatoire initial ->"
+" ajuster un substitut avec (X, y) (processus gaussien avec un noyau RBF) -> "
+"itérer : calculer la fonction d'acquisition UCB sur les points candidats, "
+"sélectionner le point avec la plus grande valeur d'acquisition pour "
+"évaluation -> mettre à jour (X, y) et result_pool, jusqu'à ce que "
+"max_iterations soit atteint."

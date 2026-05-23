@@ -20,58 +20,77 @@ msgstr ""
 
 #: ../../source/examples/Example_04_多因子选股.md:1
 msgid "多因子选股策略"
-msgstr ""
+msgstr "Sélection de titres multifactorielle"
 
 #: ../../source/examples/Example_04_多因子选股.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_04_多因子选股.ipynb` 第一个 Markdown "
 "cell。"
 msgstr ""
+"Source de référence : "
+"`docs/_joinquant_migration_source/Example_04_Multifactor Stock "
+"Selection.ipynb` Première cellule Markdown."
 
 #: ../../source/examples/Example_04_多因子选股.md:5
 msgid ""
 "本策略每隔1个月定时触发,根据Fama-French三因子模型对每只股票进行回归，得到其alpha值。 假设Fama-"
 "French三因子模型可以完全解释市场，则alpha为负表明市场低估该股，因此应该买入。"
 msgstr ""
+"Cette stratégie est déclenchée mensuellement, en effectuant une analyse de "
+"régression sur chaque titre en utilisant le modèle à trois facteurs Fama-"
+"French pour obtenir sa valeur alpha. En supposant que le modèle à trois "
+"facteurs Fama-French puisse expliquer pleinement le marché, un alpha négatif"
+" indique que le marché sous-évalue le titre, justifiant ainsi un achat."
 
 #: ../../source/examples/Example_04_多因子选股.md:8
 msgid "策略思路："
-msgstr ""
+msgstr "Stratégie et approche :"
 
 #: ../../source/examples/Example_04_多因子选股.md:10
 msgid ""
 "计算市场收益率、个股的账面市值比和市值,并对后两个进行了分类, 根据分类得到的组合分别计算其市值加权收益率、SMB和HML.  "
 "对各个股票进行回归(假设无风险收益率等于0)得到alpha值."
 msgstr ""
+"Le rendement du marché, le ratio valeur comptable/valeur du marché et la "
+"capitalisation boursière des actions individuelles ont été calculés, et ces "
+"deux derniers ont été classés. Sur la base des portefeuilles catégorisés, "
+"leur rendement pondéré en fonction de la capitalisation boursière, SMB et "
+"HML ont été calculés. Une régression a été effectuée sur chaque action (en "
+"supposant un taux de rendement sans risque de 0) pour obtenir la valeur "
+"alpha."
 
 #: ../../source/examples/Example_04_多因子选股.md:14
 msgid "选取alpha值小于0并为最小的10只股票进入标的池，平掉不在标的池的股票并等权买入在标的池的股票"
 msgstr ""
+"Les 10 actions ayant les valeurs alpha les plus faibles (inférieures à 0) "
+"sont sélectionnées pour être incluses dans le pool cible. Les actions ne "
+"faisant pas partie du pool cible sont supprimées et les actions restantes "
+"dans le pool cible sont achetées avec une pondération égale."
 
 #: ../../source/examples/Example_04_多因子选股.md:16
 msgid "回测数据:SHSE.000300的成份股"
-msgstr ""
+msgstr "Données de backtesting : actions constituantes SHSE.000300"
 
 #: ../../source/examples/Example_04_多因子选股.md:18
 msgid "回测时间为:2019-05-01 到 2022-05-01"
-msgstr ""
+msgstr "La période de backtesting s’étendait du 1er mai 2019 au 1er mai 2022."
 
 #: ../../source/examples/Example_04_多因子选股.md:21
 msgid "定义策略"
-msgstr ""
+msgstr "Définir la stratégie"
 
 #: ../../source/examples/Example_04_多因子选股.md:126
 msgid "运行策略"
-msgstr ""
+msgstr "Stratégie opérationnelle"
 
 #: ../../source/examples/Example_04_多因子选股.md:128
 msgid "设置回测参数，运行策略"
-msgstr ""
+msgstr "Définissez les paramètres de backtesting et exécutez la stratégie."
 
 #: ../../source/examples/Example_04_多因子选股.md:146
 #: ../../source/examples/Example_04_多因子选股.md:240
 msgid "运行结果如下："
-msgstr ""
+msgstr "Les résultats sont les suivants :"
 
 #: ../../source/examples/Example_04_多因子选股.md:217
 msgid "![png](img/output_4_3.png)"
@@ -85,6 +104,9 @@ msgstr "png"
 #: ../../source/examples/Example_04_多因子选股.md:220
 msgid "设置另外的回测区间从2016-04-05到2021-02-01，运行策略，可以看到在不同的区间下该策略都是有效的"
 msgstr ""
+"Mettez en place une autre période de backtesting du 5 avril 2016 au 1er "
+"février 2021 et exécutez la stratégie. Vous pouvez voir que la stratégie est"
+" efficace à différentes périodes."
 
 #: ../../source/examples/Example_04_多因子选股.md:306
 msgid "![png](img/output_4_4.png)"

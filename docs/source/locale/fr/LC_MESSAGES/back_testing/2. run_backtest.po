@@ -20,37 +20,45 @@ msgstr ""
 
 #: ../../source/back_testing/2. run_backtest.md:1
 msgid "如何运行回测"
-msgstr ""
+msgstr "Comment exécuter un backtest"
 
 #: ../../source/back_testing/2. run_backtest.md:3
 msgid "入口与配置方式"
-msgstr ""
+msgstr "Point d'entrée et méthode de configuration"
 
 #: ../../source/back_testing/2. run_backtest.md:5
 msgid ""
 "使用 **qt.run(op, mode=1, ...)** 运行回测。配置可通过 **qt.configure(...)** 预先设置，run "
 "时传入的 kwargs 会与当前配置合并（run 中参数优先）。"
 msgstr ""
+"Exécutez le backtest en utilisant **qt.run(op, mode=1, ...)**. La "
+"configuration peut être définie à l'avance via **qt.configure(...)**. Les "
+"kwargs passés à l'exécution seront fusionnés avec la configuration actuelle "
+"(les paramètres passés à l'exécution sont prioritaires)."
 
 #: ../../source/back_testing/2. run_backtest.md:7
 msgid "回测运行参数完整列表（罗列并简短解释）"
 msgstr ""
+"Liste complète des paramètres d'exécution du backtest (lister et expliquer "
+"brièvement)"
 
 #: ../../source/back_testing/2. run_backtest.md:9
 msgid "以下为与 mode=1 回测相关的主要参数，具体以当前 qteasy 2.0 API 为准。"
 msgstr ""
+"Voici les principaux paramètres liés au backtesting mode=1 ; veuillez vous "
+"référer à l'API qteasy 2.0 actuelle pour plus de détails."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "参数名"
-msgstr ""
+msgstr "Nom du paramètre"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "类型/可选值"
-msgstr ""
+msgstr "Type/valeurs facultatives"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "含义"
-msgstr ""
+msgstr "Signification"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "asset_pool"
@@ -58,11 +66,11 @@ msgstr "asset_pool"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "str 或 list"
-msgstr ""
+msgstr "chaîne ou liste"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "回测标的池（股票代码等）。"
-msgstr ""
+msgstr "Univers de backtest (boursiers, etc.)."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "asset_type"
@@ -74,7 +82,7 @@ msgstr "str"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "资产类型（如 'E' 股票）。"
-msgstr ""
+msgstr "Type d'actif (par exemple, « E » pour les actions)."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "invest_start"
@@ -82,7 +90,7 @@ msgstr "invest_start"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "回测开始日期。"
-msgstr ""
+msgstr "Date de début du backtest."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "invest_end"
@@ -90,7 +98,7 @@ msgstr "invest_end"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "回测结束日期。"
-msgstr ""
+msgstr "Date de fin du backtest."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "invest_cash_amounts"
@@ -102,7 +110,7 @@ msgstr "list/float"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "初始或分批投入资金。"
-msgstr ""
+msgstr "Investissez des fonds initialement ou par versements."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "invest_cash_dates"
@@ -115,6 +123,7 @@ msgstr "list"
 #: ../../source/back_testing/2. run_backtest.md
 msgid "与 invest_cash_amounts 对应的投入日期（若分批）。"
 msgstr ""
+"Dates d'investissement correspondant à invest_cash_amounts (si par lots)."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "trade_batch_size"
@@ -127,6 +136,8 @@ msgstr "float"
 #: ../../source/back_testing/2. run_backtest.md
 msgid "每笔交易最小数量单位（最小值 0.01，例如 A 股可设 100 表示一手）。"
 msgstr ""
+"Unité de quantité minimale par transaction (minimum 0,01 ; par exemple, pour"
+" les actions A, vous pouvez la définir sur 100 pour représenter un lot)."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "cost_rate_buy"
@@ -134,7 +145,7 @@ msgstr "cost_rate_buy"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "买入成本率（佣金等）。"
-msgstr ""
+msgstr "Taux de coût d'achat (commissions, etc.)."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "cost_rate_sell"
@@ -142,7 +153,7 @@ msgstr "cost_rate_sell"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "卖出成本率。"
-msgstr ""
+msgstr "Taux de revient de vente."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "cost_min"
@@ -150,7 +161,7 @@ msgstr "cost_min"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "单笔最小成本。"
-msgstr ""
+msgstr "Coût minimum par transaction."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "allow_sell_short"
@@ -162,7 +173,7 @@ msgstr "bool"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "是否允许卖空。"
-msgstr ""
+msgstr "Si la vente à découvert est autorisée."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "trade_log"
@@ -170,7 +181,7 @@ msgstr "trade_log"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "是否记录交易日志。"
-msgstr ""
+msgstr "S'il faut enregistrer le journal des échanges."
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "visual"
@@ -178,28 +189,38 @@ msgstr "visual"
 
 #: ../../source/back_testing/2. run_backtest.md
 msgid "是否输出可视化图表。"
-msgstr ""
+msgstr "Indique s'il faut afficher des graphiques de visualisation."
 
 #: ../../source/back_testing/2. run_backtest.md:27
 msgid "其他可能参数：滑点、交易单位、印花税等，请以 **qt.configure()** 或 run 的文档为准。"
 msgstr ""
+"Autres paramètres possibles : glissement, unité de négociation, droit de "
+"timbre, etc. Veuillez vous référer à la documentation de **qt.configure()** "
+"ou exécuter."
 
 #: ../../source/back_testing/2. run_backtest.md:29
 msgid "最小可运行示例"
-msgstr ""
+msgstr "Exemple d'exécution minimale"
 
 #: ../../source/back_testing/2. run_backtest.md:40
 msgid "常见使用场景"
-msgstr ""
+msgstr "Cas d'utilisation courants"
 
 #: ../../source/back_testing/2. run_backtest.md:42
 msgid "**成本设置**：通过 cost_rate_buy、cost_rate_sell、cost_min 模拟佣金与印花税。"
 msgstr ""
+"**Paramètres de coût** : utilisez cost_rate_buy, cost_rate_sell et cost_min "
+"pour simuler les commissions et les droits de timbre."
 
 #: ../../source/back_testing/2. run_backtest.md:43
 msgid "**交易单位**：trade_batch_size 控制最小交易单位（最小值为 0.01，如 A 股可设为 100 股）。"
 msgstr ""
+"**Unité de négociation** : trade_batch_size contrôle l'unité de négociation "
+"minimale (le minimum est de 0,01 ; par exemple, pour les actions A, il peut "
+"être fixé à 100 actions)."
 
 #: ../../source/back_testing/2. run_backtest.md:44
 msgid "**是否允许卖空**：allow_sell_short=False 表示仅做多。"
 msgstr ""
+"**Si la vente à découvert est autorisée** :allow_sell_short=False signifie "
+"position longue uniquement."

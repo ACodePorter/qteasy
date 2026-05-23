@@ -21,48 +21,57 @@ msgstr ""
 #: ../../source/examples/Example_15_大小盘轮动投资.md:1
 msgid "大小盘轮动投资策略（教学等价版）"
 msgstr ""
+"Stratégie d'investissement de rotation grandes/petites capitalisations "
+"(équivalent à la version éducative)"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_15_大小盘轮动投资策略.ipynb`。   说明：该 "
 "notebook 的首个 Markdown cell 为空，本文按策略名称与后续代码意图给出教学实现。"
 msgstr ""
+"Source de référence : `docs/_joinquant_migration_source/Example_15_Small-Cap"
+" Rotation Investment Strategy.ipynb`. Remarque : La première cellule "
+"Markdown de ce bloc-notes est vide. Cet article fournit la mise en œuvre "
+"pédagogique en fonction du nom de la stratégie et de l'intention du code "
+"suivant."
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:6
 msgid "策略思路"
-msgstr ""
+msgstr "Stratégie et idées"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:8
 msgid "选取大盘/中小盘代理指数；"
-msgstr ""
+msgstr "Sélectionnez des indices proxy grandes/petites capitalisations ;"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:9
 msgid "比较近 N 日相对强弱；"
-msgstr ""
+msgstr "Comparez la force relative au cours des N derniers jours ;"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:10
 msgid "将组合权重集中到强势标的，实现大小盘轮动。"
 msgstr ""
+"En concentrant les pondérations du portefeuille sur des actions solides, une"
+" rotation entre grandes et petites capitalisations peut être réalisée."
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:12
 msgid "qteasy 实现"
-msgstr ""
+msgstr "Implémentation de QtEasy"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:14
 msgid "策略类：`Example15LargeSmallRotation`；"
-msgstr ""
+msgstr "Classe de stratégie : `Example 15 Large Small Rotation` ;"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:15
 msgid "信号类型：`PT`；"
-msgstr ""
+msgstr "Type de signal : `PT` ;"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:16
 msgid "默认指数池：`000300.SH`、`000905.SH`、`000852.SH`。"
-msgstr ""
+msgstr "Pool d'index par défaut : `000300.SH`, `000905.SH`, `000852.SH`."
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:41
 msgid "可执行脚本"
-msgstr ""
+msgstr "Script exécutable"
 
 #: ../../source/examples/Example_15_大小盘轮动投资.md:43
 msgid "`examples/strategy_example_15.py`"

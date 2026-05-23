@@ -21,48 +21,66 @@ msgstr ""
 #: ../../source/examples/Example_09_日内回转交易.md:1
 msgid "日内回转交易策略（教学等价版）"
 msgstr ""
+"Stratégie de trading de redressement intrajournalier (équivalent à la "
+"version tutoriel)"
 
 #: ../../source/examples/Example_09_日内回转交易.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_09_日内回转交易.ipynb` 第一个 Markdown"
 " cell。"
 msgstr ""
+"Source de référence : "
+"`docs/_joinquant_migration_source/Example_09_日内回转交易.ipynb` Première cellule "
+"Markdown."
 
 #: ../../source/examples/Example_09_日内回转交易.md:5
 msgid "策略思路"
-msgstr ""
+msgstr "Stratégie et idées"
 
 #: ../../source/examples/Example_09_日内回转交易.md:7
 msgid "使用分钟级价格计算 MACD；"
-msgstr ""
+msgstr "Calculez le MACD en utilisant les prix à la minute ;"
 
 #: ../../source/examples/Example_09_日内回转交易.md:8
 msgid "MACD 为正时加仓、为负时减仓；"
 msgstr ""
+"Augmentez votre position lorsque le MACD est positif et réduisez votre "
+"position lorsqu'il est négatif."
 
 #: ../../source/examples/Example_09_日内回转交易.md:9
 msgid "通过 `VS` 信号输出固定交易数量，形成日内回转风格。"
 msgstr ""
+"En émettant un nombre fixe de transactions à l'aide du signal `VS`, un style"
+" d'inversion intrajournalière peut être formé."
 
 #: ../../source/examples/Example_09_日内回转交易.md:11
 msgid "诚实说明"
-msgstr ""
+msgstr "Honnêteté"
 
 #: ../../source/examples/Example_09_日内回转交易.md:13
 msgid "原始策略强调 A 股日内回转，但真实 A 股存在 T+1 约束；"
 msgstr ""
+"La stratégie initiale mettait l'accent sur les retournements "
+"intrajournaliers des actions A, mais en réalité, les actions A sont soumises"
+" à des restrictions T+1."
 
 #: ../../source/examples/Example_09_日内回转交易.md:14
 msgid "本示例仅演示 qteasy 的日内信号处理链路，不等同于真实可执行的 A 股 T+0 回转；"
 msgstr ""
+"Cet exemple démontre uniquement la chaîne de traitement du signal "
+"intrajournalier de qteasy et n'est pas équivalent à un véritable "
+"redressement exécutable d'un partage A T+0 ;"
 
 #: ../../source/examples/Example_09_日内回转交易.md:15
 msgid "若需要贴近实盘，请改用 ETF 或期货标的，并校准交易制度参数。"
 msgstr ""
+"Si vous avez besoin de ressembler étroitement au trading en direct, veuillez"
+" utiliser des ETF ou des contrats à terme et calibrer les paramètres du "
+"système de trading."
 
 #: ../../source/examples/Example_09_日内回转交易.md:40
 msgid "可执行脚本"
-msgstr ""
+msgstr "Script exécutable"
 
 #: ../../source/examples/Example_09_日内回转交易.md:42
 msgid "`examples/strategy_example_09.py`"

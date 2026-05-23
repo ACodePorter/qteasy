@@ -20,38 +20,52 @@ msgstr ""
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:1
 msgid "Alpha选股交易策略"
-msgstr ""
+msgstr "Sélection d'actions Alpha"
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_02_Alpha选股策略.ipynb` 第一个 "
 "Markdown cell。"
 msgstr ""
+"Source de référence : `docs/_joinquant_migration_source/Example_02_Alpha "
+"stock selection strategy.ipynb` Première cellule Markdown."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:5
 msgid ""
 "本策略每隔1个月定时触发计算SHSE.000300成份股的过去的EV/EBITDA并选取EV/EBITDA大于0的股票，随后平掉排名EV/EBITDA不在最小的30的股票持仓并等权购买EV/EBITDA最小排名在前30的股票"
 msgstr ""
+"Cette stratégie se déclenche chaque mois pour calculer l'EV/EBITDA passé des"
+" actions composantes SHSE.000300 et sélectionne les actions avec un "
+"EV/EBITDA supérieur à 0. Ensuite, elle clôture les positions des actions "
+"classées dans le plus petit 30 de l'EV/EBITDA et achète également des "
+"actions classées dans le top 30 du plus petit EV/EBITDA."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:7
 msgid "回测数据为:SHSE.000300沪深300指数成份股"
 msgstr ""
+"Données de backtest : SHSE.000300 Actions composant l'indice Shanghai et "
+"Shenzhen 300"
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:9
 msgid "回测时间为:2016-04-05 到 2021-02-01"
-msgstr ""
+msgstr "Heure du backtest : du 05/04/2016 au 01/02/2021"
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:12
 msgid "首先导入`qteasy`模块"
-msgstr ""
+msgstr "Tout d’abord, importez le module `qteasy`."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:17
 msgid "在选股之前，需要检查需要的历史数据"
 msgstr ""
+"Avant la sélection de titres, vous devez vérifier les données historiques "
+"requises"
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:19
 msgid "EV/EBITDA数据并不直接存在于qteasy定义的数据类型中，需要通过几个数据组合计算出来"
 msgstr ""
+"Les données EV/EBITDA n'existent pas directement dans les types de données "
+"définis par qteasy et doivent être calculées à travers plusieurs "
+"combinaisons de données"
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:21
 msgid "EV/EBITDA = (Market Capitalization + Total Debt - Total Cash) / EBITDA"
@@ -62,58 +76,103 @@ msgstr ""
 msgid ""
 "上面几个数据分别代表总市值、总负债、总现金及现金等价物，这些数据需要从qteasy内置的数据类型中分别提取，并使用上面的公式计算后，作为选股因子。排除掉小于0的因子后，将所有选股因子从小到大排列，选出因子排在最前的30支股票，将手中的全部资金平均分配投入到所有选中的股票中持有一个月，直到下一次选股为止。"
 msgstr ""
+"Les points de données ci-dessus représentent respectivement la "
+"capitalisation boursière totale, le total du passif, la trésorerie totale et"
+" les équivalents de trésorerie. Ces données doivent être extraites des types"
+" de données intégrés dans QtEasy et calculées à l'aide de la formule ci-"
+"dessus pour servir de facteurs de sélection de titres. Après avoir exclu les"
+" facteurs dont les valeurs sont inférieures à 0, tous les facteurs de "
+"sélection de titres sont triés du plus petit au plus grand. Les 30 "
+"principales actions sur la base de ces facteurs sont sélectionnées et tous "
+"les fonds disponibles sont répartis uniformément entre ces actions "
+"sélectionnées et conservés pendant un mois jusqu'au prochain cycle de "
+"sélection d'actions."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:36
 #: ../../source/examples/Example_02_Alpha选股策略.md:115
 #: ../../source/examples/Example_02_Alpha选股策略.md:252
 #: ../../source/examples/Example_02_Alpha选股策略.md:378
 msgid "输出如下："
-msgstr ""
+msgstr "Le résultat est le suivant :"
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:42
 msgid "第一种自定义策略设置方法: 使用持仓数据和选股数据直接生成比例交易信号PS信号："
 msgstr ""
+"La première méthode pour mettre en place une stratégie personnalisée : "
+"générer directement un signal de trading proportionnel (signal PS) à l'aide "
+"des données de position et des données de sélection de titres."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:44
 msgid ""
 "使用GeneralStrategy策略类，计算选股因子后，去掉所有小于零的因子，排序后提取排名前三十的股票 按以下逻辑生成交易信号： "
 "1，检查当前持仓，如果持仓的股票不在选中的30个中间，则全数卖出 2，检查当前持仓，如果新选中的股票没有持仓，则等权买入新增选中的股票"
 msgstr ""
+"À l'aide de la classe GeneralStrategy, après avoir calculé les facteurs de "
+"sélection de titres, tous les facteurs inférieurs à zéro sont supprimés et "
+"les 30 premiers titres sont extraits après tri. Les signaux de trading sont "
+"générés selon la logique suivante : 1. Vérifiez les avoirs actuels ; si un "
+"stock détenu ne fait pas partie des 30 sélectionnés, vendez-le en totalité. "
+"2. Vérifiez les avoirs actuels ; si l'action nouvellement sélectionnée n'est"
+" pas détenue, achetez l'action nouvellement sélectionnée avec une "
+"pondération égale."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:49
 msgid "设置交易信号类型为PS，生成交易信号 由于生成交易信号需要用到持仓数据，因此不能使用批量生成模式，只能使用realtime模式"
 msgstr ""
+"Définissez le type de signal de trading sur PS pour générer des signaux de "
+"trading. Étant donné que la génération de signaux de trading nécessite des "
+"données de position, le mode de génération par lots ne peut pas être utilisé"
+" ; seul le mode temps réel peut être utilisé."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:90
 msgid "定义好交易策略之后，就可以开始创建Operator对象并启动回测了："
 msgstr ""
+"Après avoir défini la stratégie de trading, vous pouvez commencer à créer "
+"des objets Operator et lancer le backtesting :"
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:181
 #: ../../source/examples/Example_02_Alpha选股策略.md:318
 #: ../../source/examples/Example_02_Alpha选股策略.md:448
 msgid "注：本段示意图在部分构建环境中可能存在编码兼容问题，若未显示不影响示例步骤理解。"
 msgstr ""
+"Remarque : Le diagramme de cette section peut présenter des problèmes de "
+"compatibilité d'encodage dans certains environnements de construction. S’il "
+"n’est pas affiché, cela n’affectera pas la compréhension des exemples "
+"d’étapes."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:188
 msgid "第二种自定义策略设置方法：设置交易信号类型为PT，生成持仓目标信号，在回测过程中自动生成交易信号"
 msgstr ""
+"La deuxième méthode pour configurer une stratégie personnalisée : définissez"
+" le type de signal de trading sur PT, générez des signaux de position cible "
+"et générez automatiquement des signaux de trading pendant le backtesting."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:224
 #: ../../source/examples/Example_02_Alpha选股策略.md:346
 msgid "使用同样的方法创建一个Operator对象并启动回测。"
 msgstr ""
+"Utilisez la même méthode pour créer un objet Operator et démarrer le "
+"backtest."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:322
 msgid "第三种自定义策略设置方法：使用FactorSorter策略类"
 msgstr ""
+"La troisième méthode pour définir des stratégies personnalisées : utiliser "
+"la classe de stratégie FactorSorter."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:323
 msgid "使用FactorSorter策略类，直接生成交易策略的选股因子，再根据 FactorSorter策略的选股参数实现选股"
 msgstr ""
+"À l'aide de la classe de stratégie FactorSorter, les facteurs de sélection "
+"d'actions pour les stratégies de trading sont directement générés, puis la "
+"sélection d'actions est mise en œuvre sur la base des paramètres de "
+"sélection d'actions de la stratégie FactorSorter."
 
 #: ../../source/examples/Example_02_Alpha选股策略.md:326
 msgid "设置交易信号类型为PT，生成持仓目标，自动生成交易信号"
 msgstr ""
+"Définissez le type de signal de trading sur PT, générez des cibles de "
+"détention et générez automatiquement des signaux de trading."
 
 #~ msgid ""
 #~ "上面几个数据分别代表总市值、总负债、总现金及现金等价物，这些数据需要从`qteasy`内置的数据类型中分别提取，并使用上面的公式计算后，作为选股因子。排除掉小于0的因子后，将所有选股因子从小到大排列，选出因子排在最前的30支股票，将手中的全部资金平均分配投入到所有选中的股票中持有一个月，直到下一次选股为止。"

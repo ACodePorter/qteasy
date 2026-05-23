@@ -21,48 +21,63 @@ msgstr ""
 #: ../../source/examples/Example_12_行业轮动选股.md:1
 msgid "行业轮动选股策略（教学等价版）"
 msgstr ""
+"Stratégie de sélection de titres à rotation sectorielle (équivalent à la "
+"version éducative)"
 
 #: ../../source/examples/Example_12_行业轮动选股.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_12_行业轮动选股.ipynb` 第一个 Markdown"
 " cell。"
 msgstr ""
+"Source de référence : "
+"`docs/_joinquant_migration_source/Example_12_行业轮动选股.ipynb` Première cellule "
+"Markdown."
 
 #: ../../source/examples/Example_12_行业轮动选股.md:5
 msgid "策略思路"
-msgstr ""
+msgstr "Stratégie et idées"
 
 #: ../../source/examples/Example_12_行业轮动选股.md:7
 msgid "每月比较行业代理指数近 N 日收益；"
 msgstr ""
+"Comparaison mensuelle des revenus de l'indice des agences industrielles au "
+"cours des N derniers jours ;"
 
 #: ../../source/examples/Example_12_行业轮动选股.md:8
 msgid "选择收益最强的行业代理标的；"
 msgstr ""
+"Choisissez les cibles des agences industrielles avec les rendements les plus"
+" élevés ;"
 
 #: ../../source/examples/Example_12_行业轮动选股.md:9
 msgid "将仓位集中在最强行业上（教学版）。"
 msgstr ""
+"Concentrez vos positions sur les secteurs les plus forts (version tutoriel)."
 
 #: ../../source/examples/Example_12_行业轮动选股.md:11
 msgid "qteasy 实现说明"
-msgstr ""
+msgstr "QtEasy Instructions de mise en œuvre"
 
 #: ../../source/examples/Example_12_行业轮动选股.md:13
 msgid "策略类：`Example12IndustryRotation`；"
-msgstr ""
+msgstr "Classe de stratégie : `Example12IndustryRotation` ;"
 
 #: ../../source/examples/Example_12_行业轮动选股.md:14
 msgid "默认采用指数代理池（`000300.SH`、`000905.SH`、`000852.SH`）演示轮动逻辑；"
 msgstr ""
+"Le pool de proxy d'index par défaut (`000300.SH`, `000905.SH`, `000852.SH`) "
+"est utilisé pour démontrer la logique de rotation ;"
 
 #: ../../source/examples/Example_12_行业轮动选股.md:15
 msgid "若切换到“行业成分股 + 市值筛选”版本，可在此基础上扩展二阶段选股。"
 msgstr ""
+"Si vous passez à la version « Actions des composantes sectorielles + "
+"Sélection de la valeur marchande », vous pouvez sur cette base étendre la "
+"sélection d'actions en deux étapes."
 
 #: ../../source/examples/Example_12_行业轮动选股.md:40
 msgid "可执行脚本"
-msgstr ""
+msgstr "Script exécutable"
 
 #: ../../source/examples/Example_12_行业轮动选股.md:42
 msgid "`examples/strategy_example_12.py`"

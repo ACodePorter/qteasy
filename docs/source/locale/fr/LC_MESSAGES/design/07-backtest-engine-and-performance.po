@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/design/07-backtest-engine-and-performance.md:1
 msgid "回测引擎与性能（设计视角）"
-msgstr ""
+msgstr "Moteur de backtesting et performances (perspective conception)"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:3
 msgid ""
@@ -28,10 +28,18 @@ msgid ""
 "等框架的差异，供需要深入理解或做技术选型的读者参考。使用层面的说明见《回测并评价交易策略》中的 [6. "
 "回测引擎与性能](../back_testing/6.%20backtest_engine_and_performance.md)。"
 msgstr ""
+"Ce chapitre explique, du point de vue de **l'architecture et de la mise en "
+"œuvre**, comment le moteur de backtesting de qteasy utilise la vectorisation"
+" et Numba, et en quoi il diffère des frameworks tels que VectorBT, pour les "
+"lecteurs qui ont besoin d'une compréhension plus approfondie ou qui font des"
+" choix techniques. Pour des explications sur le niveau d'utilisation, voir "
+"[6. Moteur de backtesting et "
+"performances](../back_testing/6.%20backtest_engine_and_performance.md) dans "
+"« Backtest et évaluation des stratégies de trading »."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:5
 msgid "1. 回测引擎在整体中的位置"
-msgstr ""
+msgstr "1. Le rôle du moteur de backtesting dans le système global"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:7
 msgid ""
@@ -39,81 +47,130 @@ msgid ""
 "构建 Backtester → 按 group_timing_table 逐步运行 Operator 生成信号 → 解析信号并模拟成交 → "
 "评价与输出。其中，“解析信号并模拟成交”由 **backtest** 模块中的 Numba 函数完成，实现“时间维顺序、标的维向量化”。"
 msgstr ""
+"Le flux de travail du mode backtest (mode=1) est résumé dans [Backtesting, "
+"Live Trading et Optimization](06-backtest-live-optimization.md) : préparer "
+"les données historiques → construire le Backtester → exécuter le Operator "
+"étape par étape selon group_timing_table pour générer des signaux → analyser"
+" les signaux et simuler les remplissages → évaluer et produire. Parmi ceux-"
+"ci, « analyser les signaux et simuler les remplissages » est géré par les "
+"fonctions Numba dans le module **backtest**, obtenant « un séquentiel le "
+"long de la dimension temporelle, vectorisé le long de la dimension de "
+"l'instrument »."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:9
 msgid "2. Numba 使用点与向量化结构"
-msgstr ""
+msgstr "2. Points d'utilisation Numba et structures vectorisées"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:11
 msgid "2.1 核心函数"
-msgstr ""
+msgstr "2.1 Fonctions principales"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:13
 msgid "在 `qteasy/backtest.py` 中："
-msgstr "In `qteasy/backtest.py`:"
+msgstr "Dans `qteasy/backtest.py` :"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:15
 msgid ""
 "**backtest_step**：`@njit(nogil=True, "
 "cache=True)`。单步内根据信号与当前持仓、现金、交割队列，计算买卖量、费用、持仓更新与交割队列更新；对整批标的做数组运算。"
 msgstr ""
+"**backtest_step** : `@njit(nogil=True, cache=True)`. En une seule étape, sur"
+" la base des signaux et des positions actuelles, des liquidités et de la "
+"file d'attente de règlement, il calcule les quantités d'achat/vente, les "
+"frais, les mises à jour de position et les mises à jour de la file d'attente"
+" de règlement ; il effectue des opérations de réseau sur l'ensemble du lot "
+"d'instruments."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:16
 msgid "**calculate_trade_results**：`@njit`，用于交易结果与资金变动计算。"
 msgstr ""
+"**calculate_trade_results** : `@njit`, utilisé pour calculer les résultats "
+"commerciaux et les variations de trésorerie."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:17
 msgid ""
 "**backtest_batch_steps**：`@njit(nogil=True, cache=True)`。在 Numba 内按 "
 "`signal_count`（时间步数）循环，每步调用 `backtest_step`，完成整段回测，实现“时间维顺序、标的维向量化”。"
 msgstr ""
+"**backtest_batch_steps** : `@njit(nogil=True, cache=True)`. Il boucle à "
+"l'intérieur de Numba par `signal_count` (nombre de pas de temps) ; à chaque "
+"étape, il appelle `backtest_step` pour compléter l'ensemble du segment de "
+"backtest, obtenant « un séquentiel le long de la dimension temporelle, "
+"vectorisé le long de la dimension de l'instrument »."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:18
 msgid ""
 "**backtest_flash_steps**：`@njit(nogil=True, cache=True)`。与 "
 "`backtest_batch_steps` 类似，但不保留中间资金与持仓序列，仅保留最终状态，用于优化阶段多组参数回测时节省内存。"
 msgstr ""
+"**backtest_flash_steps** : `@njit(nogil=True, cache=True)`. Semblable à "
+"`backtest_batch_steps`, mais il ne conserve pas les séries intermédiaires de"
+" liquidités et de positions (seul l'état final est conservé) pour économiser"
+" de la mémoire pendant la phase d'optimisation lors du backtest de plusieurs"
+" ensembles de paramètres."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:20
 msgid ""
 "在 `qteasy/blender.py` 中，信号混合用的部分算子（如 `op_sum`、`op_floor` 等）也使用 `@njit` 加速。"
 msgstr ""
+"Dans `qteasy/blender.py`, certains opérateurs utilisés pour le mélange de "
+"signaux (tels que `op_sum`, `op_floor`, etc.) utilisent également `@njit` "
+"pour l'accélération."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:22
 msgid "2.2 时间维顺序与标的维向量化"
 msgstr ""
+"2.2 Ordre et vectorisation de la dimension temporelle le long de la "
+"dimension de l'instrument"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:24
 msgid "**时间维必须顺序**：因为存在交割队列、T+1、MOQ 等状态，下一笔交易依赖当前持仓与交割状态，无法在时间轴上完全并行或一次性矩阵化。"
 msgstr ""
+"**La dimension temporelle doit être séquentielle** : comme il existe des "
+"états tels que la file d'attente de règlement, T+1, MOQ, etc., la prochaine "
+"transaction dépend des positions actuelles et de l'état de règlement, elle "
+"ne peut donc pas être entièrement parallélisée le long de l'axe du temps ou "
+"matricielle d'un seul coup."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:25
 msgid ""
 "**标的维向量化**：在每一个时间步内，对所有标的的 signal、持仓、买卖量、费用等用 NumPy 数组与 Numba 内联运算，避免 Python"
 " 层循环。"
 msgstr ""
+"**Vectorisation des dimensions de l'instrument** : à chaque pas de temps, "
+"utilisez les tableaux NumPy et les opérations intégrées dans Numba pour les "
+"signaux, positions, quantités d'achat/vente, frais, etc. de tous les "
+"instruments, en évitant les boucles au niveau Python."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:27
 msgid "因此，单次回测可以理解为：**一层 Numba 内的时间步循环 + 每步内的向量化计算**。"
 msgstr ""
+"Par conséquent, un seul backtest peut être compris comme : **une boucle de "
+"pas de temps à l'intérieur d'une couche Numba + un calcul vectorisé au sein "
+"de chaque étape**."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:29
 msgid "2.3 优化阶段"
-msgstr ""
+msgstr "2.3 Étape d'optimisation"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:31
 msgid ""
 "在 `qteasy/optimization.py` 中，多组参数通过多进程（如 `ProcessPoolExecutor`）并行执行回测；每组内部使用"
 " `backtest_flash_steps` 等路径，只保留最终资金/持仓，以降低内存占用并提高吞吐。"
 msgstr ""
+"Dans `qteasy/optimization.py`, plusieurs jeux de paramètres exécutent des "
+"backtests en parallèle via le multitraitement (par exemple, "
+"`ProcessPoolExecutor`) ; au sein de chaque ensemble, il utilise des chemins "
+"tels que `backtest_flash_steps`, ne conservant que les espèces/positions "
+"finales pour réduire l'utilisation de la mémoire et augmenter le débit."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:33
 msgid "3. 与 VectorBT 的架构差异"
-msgstr ""
+msgstr "3. Différences architecturales par rapport à VectorBT"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "维度"
-msgstr ""
+msgstr "Dimension"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "qteasy"
@@ -125,53 +182,70 @@ msgstr "VectorBT"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "时间维度"
-msgstr ""
+msgstr "Dimension temporelle"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "顺序步进（for 步），每步内向量化"
-msgstr ""
+msgstr "Pas séquentiel (étapes de boucle for), vectorisé dans chaque étape"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "全时间轴一次性矩阵运算，无显式时间循环"
 msgstr ""
+"Opérations matricielles ponctuelles sur toute la chronologie, sans boucle "
+"temporelle explicite"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "标的维度"
-msgstr ""
+msgstr "Dimension de l'actif"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "每步对全部标的做数组运算（1D 数组）"
 msgstr ""
+"À chaque étape, effectuez des opérations de tableau sur tous les actifs "
+"(tableaux 1D)"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "标的与时间一起参与广播，多策略/多参数可一并广播"
 msgstr ""
+"L'instrument et le temps participent ensemble à la diffusion ; plusieurs "
+"stratégies/plusieurs ensembles de paramètres peuvent être diffusés en une "
+"seule fois."
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "核心加速"
-msgstr ""
+msgstr "Accélération de base"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid ""
 "backtest_step、backtest_batch_steps、backtest_flash_steps 等为 "
 "@njit；信号解析、交割队列等也用 Numba"
 msgstr ""
+"`backtest_step`, `backtest_batch_steps`, `backtest_flash_steps`, etc. sont "
+"`@njit` ; l'analyse du signal, la file d'attente de règlement/livraison, "
+"etc. utilisent également Numba."
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "NumPy + Numba，策略表达为纯数组运算"
 msgstr ""
+"NumPy + Numba, avec des stratégies exprimées sous forme d'opérations de "
+"tableau pures"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "状态与约束"
-msgstr ""
+msgstr "États et contraintes"
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "显式维护现金、持仓、交割队列（T+1 等），状态依赖下一笔，故时间维必须顺序"
 msgstr ""
+"Maintient explicitement des liquidités, des positions et une file d'attente "
+"de règlement/livraison (T+1, etc.) ; l'état dépend du prochain échange, la "
+"dimension temporelle doit donc être séquentielle."
 
 #: ../../source/design/07-backtest-engine-and-performance.md
 msgid "多为简化资金曲线，不强调 T+1/交割/MOQ，易做全矩阵"
 msgstr ""
+"Principalement une courbe d'actions simplifiée, sans mettre l'accent sur "
+"T+1/règlement/MOQ, ce qui facilite la construction d'une matrice complète."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:42
 msgid ""
@@ -179,21 +253,37 @@ msgid ""
 " + 标的维向量化 + Numba 单步”的折中；与 VectorBT 的“全矩阵广播”各有适用场景（qteasy "
 "偏规则严谨与实盘一致，VectorBT 偏海量参数快速筛选）。"
 msgstr ""
+"**Conclusion** : qteasy ne « manque pas de vectorisation/Numba » ; au lieu "
+"de cela, dans le but de garantir **l'exactitude de l'état** (T+1, règlement,"
+" MOQ, fusion multi-stratégies, etc.), il a choisi un compromis entre "
+"« ordonnée dans le temps + vectorisation de la dimension de l'instrument + "
+"Numba par étape » ; lui et la « diffusion matricielle complète » de VectorBT"
+" ont chacun leurs propres scénarios applicables (qteasy penche vers des "
+"règles rigoureuses et une cohérence avec le trading en direct, tandis que "
+"VectorBT penche vers un filtrage rapide sur des grilles de paramètres "
+"massives)."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:44
 msgid "4. 相关文档"
-msgstr ""
+msgstr "4. Documents associés"
 
 #: ../../source/design/07-backtest-engine-and-performance.md:46
 msgid "统一入口与模式：[回测、实盘与优化](06-backtest-live-optimization.md)。"
 msgstr ""
+"Point d'entrée et modes unifiés : [Backtesting, Live Trading et "
+"Optimisation] (06-backtest-live-optimization.md)."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:47
 msgid ""
 "使用侧说明：[回测并评价交易策略 - "
 "回测引擎与性能](../back_testing/6.%20backtest_engine_and_performance.md)。"
 msgstr ""
+"Explication côté utilisateur : [Backtest et évaluation des stratégies de "
+"trading - Moteur de backtest et "
+"performances](../back_testing/6.%20backtest_engine_and_performance.md)."
 
 #: ../../source/design/07-backtest-engine-and-performance.md:48
 msgid "设计初衷与数据隔离：[设计初衷与独特优势](08-design-rationale-and-advantages.md)。"
 msgstr ""
+"Intention de conception et isolation des données : [Justification de la "
+"conception et avantages uniques] (08-design-rationale-and-advantages.md)."

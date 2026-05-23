@@ -21,52 +21,74 @@ msgstr ""
 #: ../../source/examples/Example_07_跨品种套利.md:1
 msgid "跨品种套利交易策略（教学等价版）"
 msgstr ""
+"Stratégies de trading d'arbitrage multi-produits (version pédagogique "
+"équivalente)"
 
 #: ../../source/examples/Example_07_跨品种套利.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_07_跨品种套利.ipynb` 第一个 Markdown "
 "cell。   说明：原 notebook 已标注“信息有问题需要更正”，本示例以 qteasy 可稳定复现的教学实现为准。"
 msgstr ""
+"Source de référence : "
+"`docs/_joinquant_migration_source/Example_07_跨商品套利.ipynb` Première cellule "
+"Markdown. Remarque : Le carnet d'origine portait la mention « Les problèmes "
+"d'information nécessitent une correction ». Cet exemple est basé sur "
+"l'implémentation reproductible dans qteasy."
 
 #: ../../source/examples/Example_07_跨品种套利.md:6
 msgid "策略思路"
-msgstr ""
+msgstr "Stratégie et idées"
 
 #: ../../source/examples/Example_07_跨品种套利.md:8
 msgid "选取两个高相关交易标的，构造价差 `spread = p1 - p2`；"
 msgstr ""
+"Sélectionnez deux instruments de trading hautement corrélés et construisez "
+"un écart de prix `spread = p1 - p2` ;"
 
 #: ../../source/examples/Example_07_跨品种套利.md:9
 msgid "在滚动窗口内计算价差均值与标准差，得到 zscore；"
 msgstr ""
+"La moyenne et l'écart type de la différence de prix sont calculés dans une "
+"fenêtre déroulante pour obtenir le zscore."
 
 #: ../../source/examples/Example_07_跨品种套利.md:10
 msgid "当 zscore 高于上阈值时做空价差（卖出第一个、买入第二个），低于下阈值时做多价差；"
 msgstr ""
+"Lorsque le zscore est supérieur au seuil supérieur, des spreads courts sont "
+"ouverts (vendre le premier et acheter le second) ; lorsque le zscore est "
+"inférieur au seuil inférieur, des spreads longs sont ouverts."
 
 #: ../../source/examples/Example_07_跨品种套利.md:11
 msgid "回归到退出阈值附近时平仓。"
-msgstr ""
+msgstr "Clôturez la position lorsque le prix revient près du seuil de sortie."
 
 #: ../../source/examples/Example_07_跨品种套利.md:13
 msgid "qteasy 实现说明"
-msgstr ""
+msgstr "QtEasy Instructions de mise en œuvre"
 
 #: ../../source/examples/Example_07_跨品种套利.md:15
 msgid "本文使用 `PT` 信号，策略类为 `Example07CrossSymbolSpread`；"
 msgstr ""
+"Cet article utilise le signal `PT` et la classe de stratégie est "
+"`Example07CrossSymbolSpread` ;"
 
 #: ../../source/examples/Example_07_跨品种套利.md:16
 msgid "为降低数据依赖，示例脚本默认使用日频指数对（教学近似），不是原始分钟期货合约对；"
 msgstr ""
+"Pour réduire la dépendance aux données, l'exemple de script utilise par "
+"défaut des paires d'indices quotidiens (approximatifs à des fins "
+"pédagogiques), au lieu des paires de contrats à terme d'origine minute ;"
 
 #: ../../source/examples/Example_07_跨品种套利.md:17
 msgid "若你本地具备期货分钟数据，可将脚本中的 `asset_type/asset_pool/freq` 替换为期货版本。"
 msgstr ""
+"Si vous disposez de données de minutes futures locales, vous pouvez "
+"remplacer `asset_type/asset_pool/freq` dans le script par la version "
+"futures."
 
 #: ../../source/examples/Example_07_跨品种套利.md:43
 msgid "可执行脚本"
-msgstr ""
+msgstr "Script exécutable"
 
 #: ../../source/examples/Example_07_跨品种套利.md:45
 msgid "`examples/strategy_example_07.py`"

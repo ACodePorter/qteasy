@@ -21,52 +21,69 @@ msgstr ""
 #: ../../source/examples/Example_08_跨期套利.md:1
 msgid "跨期套利交易策略（教学等价版）"
 msgstr ""
+"Stratégies de trading d'arbitrage intertemporel (version éducative "
+"équivalente)"
 
 #: ../../source/examples/Example_08_跨期套利.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_08_跨期套利.ipynb` 第一个 Markdown "
 "cell。"
 msgstr ""
+"Source de référence : "
+"`docs/_joinquant_migration_source/Example_08_intertemporal arbitrage.ipynb` "
+"Première cellule Markdown."
 
 #: ../../source/examples/Example_08_跨期套利.md:5
 msgid "策略思路"
-msgstr ""
+msgstr "Stratégie et idées"
 
 #: ../../source/examples/Example_08_跨期套利.md:7
 msgid "使用同品种不同到期合约构造价差；"
 msgstr ""
+"Construire des spreads de prix en utilisant des contrats du même type mais "
+"avec des dates d'expiration différentes ;"
 
 #: ../../source/examples/Example_08_跨期套利.md:8
 msgid "用滚动窗口估计价差偏离程度（zscore）；"
 msgstr ""
+"Utilisez une fenêtre glissante pour estimer le degré d’écart de l’écart de "
+"prix (zscore)."
 
 #: ../../source/examples/Example_08_跨期套利.md:9
 msgid "价差上穿上轨做空价差，下穿下轨做多价差；"
 msgstr ""
+"Short le spread lorsqu'il passe au-dessus de la bande supérieure et long "
+"lorsqu'il passe en dessous de la bande inférieure."
 
 #: ../../source/examples/Example_08_跨期套利.md:10
 msgid "回归到中性区间时平仓。"
-msgstr ""
+msgstr "Fermez la position lorsqu'elle revient à la plage neutre."
 
 #: ../../source/examples/Example_08_跨期套利.md:12
 msgid "qteasy 实现说明"
-msgstr ""
+msgstr "QtEasy Instructions de mise en œuvre"
 
 #: ../../source/examples/Example_08_跨期套利.md:14
 msgid "本示例策略类为 `Example08CalendarSpread`；"
 msgstr ""
+"La classe de stratégie dans cet exemple est `Example08CalendarSpread` ;"
 
 #: ../../source/examples/Example_08_跨期套利.md:15
 msgid "为了教学稳定性，默认脚本使用指数日频做跨期逻辑近似；"
 msgstr ""
+"Dans un souci de stabilité pédagogique, le script par défaut utilise la "
+"fréquence d'index quotidienne pour l'approximation logique inter-périodes ;"
 
 #: ../../source/examples/Example_08_跨期套利.md:16
 msgid "若切换到真实期货合约，请同时处理换月逻辑，并在文档中记录换月规则。"
 msgstr ""
+"Si vous passez à un contrat à terme réel, veuillez gérer la logique de "
+"roulement en même temps et enregistrer les règles de roulement dans la "
+"documentation."
 
 #: ../../source/examples/Example_08_跨期套利.md:42
 msgid "可执行脚本"
-msgstr ""
+msgstr "Script exécutable"
 
 #: ../../source/examples/Example_08_跨期套利.md:44
 msgid "`examples/strategy_example_08.py`"

@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/design/04-operator-and-groups.md:1
 msgid "Operator 与 Group：谁在何时运行"
-msgstr ""
+msgstr "Operator et Groupe : qui court quand"
 
 #: ../../source/design/04-operator-and-groups.md:3
 msgid "1. 运行层在整体中的位置"
-msgstr ""
+msgstr "1. Où s'intègre la couche d'exécution dans l'architecture globale"
 
 #: ../../source/design/04-operator-and-groups.md:5
 msgid ""
@@ -33,10 +33,20 @@ msgid ""
 "logger)`）。Operator 通过 **Group** 与 **group_timing_table** "
 "决定“每个时间步由哪些策略运行、信号如何混合”，从而实现与回测区间和运行频率一致的可重复执行。"
 msgstr ""
+"La couche d'exécution est responsable de l'exécution de la stratégie **en "
+"fonction du temps**, de l'agrégation des signaux de chaque stratégie et de "
+"la transmission des résultats au backtesting/au trading en direct/à "
+"l'optimisation. Le noyau est le **Operator** : c'est à la fois un conteneur "
+"pour les stratégies et un point d'entrée unifié pour l'exécution "
+"(`op.run(config, datasource, logger)`). Grâce à **Group** et "
+"**group_timing_table**, le Operator détermine « quelles stratégies "
+"s'exécutent à chaque pas de temps et comment les signaux sont mélangés », "
+"permettant ainsi une exécution reproductible cohérente avec la période de "
+"backtest et la fréquence d'exécution."
 
 #: ../../source/design/04-operator-and-groups.md:7
 msgid "2. Operator 的角色"
-msgstr ""
+msgstr "2. Le rôle de Operator"
 
 #: ../../source/design/04-operator-and-groups.md:9
 msgid ""
@@ -44,6 +54,11 @@ msgid ""
 "`Operator([...])` 添加策略时，根据 **run_freq**、**run_timing** 将策略归入已有 Group 或新建 "
 "Group。"
 msgstr ""
+"**Conteneur de stratégie** : contient plusieurs **Groupes**. Chaque groupe "
+"contient plusieurs stratégies (Stratégie). Lorsque les utilisateurs ajoutent"
+" des stratégies via `add_strategy` / `Operator([...])`, les stratégies sont "
+"attribuées à un groupe existant ou un nouveau groupe est créé en fonction de"
+" **run_freq** et **run_timing**."
 
 #: ../../source/design/04-operator-and-groups.md:10
 msgid ""
@@ -51,42 +66,70 @@ msgid ""
 "中包含资产池、回测区间、成本、资金计划等；datasource 提供历史或实时数据；运行逻辑按 **group_timing_table** "
 "逐步执行各组策略并汇总信号。"
 msgstr ""
+"**Point d'entrée d'exécution** : expose **run(config, datasource, logger)** "
+"en externe. La configuration comprend l'univers des actifs, la période de "
+"backtest, les coûts, le plan d'investissement, etc. ; la source de données "
+"fournit des données historiques ou en temps réel. La logique d'exécution "
+"exécute chaque groupe étape par étape selon **group_timing_table** et "
+"regroupe les signaux."
 
 #: ../../source/design/04-operator-and-groups.md:11
 msgid ""
 "**持有 group_timing_table**：该表在运行前根据回测区间（或实盘 schedule）与各 Group 的 "
 "run_freq、run_timing 生成，每一行对应一个时间步，每一列对应一个 Group，取值为 1 表示该步该组运行、0 表示不运行。"
 msgstr ""
+"**Maintenir group_timing_table** : avant l'exécution, cette table est "
+"générée en fonction de la période de backtest (ou du calendrier en direct) "
+"et du run_freq et du run_timing de chaque groupe. Chaque ligne correspond à "
+"un pas de temps, chaque colonne correspond à un Groupe ; une valeur de 1 "
+"signifie que le groupe s'exécute à cette étape, 0 signifie qu'il ne "
+"s'exécute pas."
 
 #: ../../source/design/04-operator-and-groups.md:13
 msgid "3. Group 的概念"
-msgstr ""
+msgstr "3. La notion de Groupe"
 
 #: ../../source/design/04-operator-and-groups.md:15
 msgid ""
 "**定义**：一个 Group 是一组具有相同 **run_freq**、**run_timing** 的策略集合，并拥有统一的 "
 "**signal_type**（PT/PS/VS）和 **blender**（混合规则）。"
 msgstr ""
+"**Définition** : un groupe est un ensemble de stratégies qui partagent les "
+"mêmes **run_freq** et **run_timing**, et il a un **signal_type** (PT/PS/VS) "
+"et un **blender** (règles de mélange)."
 
 #: ../../source/design/04-operator-and-groups.md:16
 msgid ""
 "**为何按“运行时机”分组**：同一时刻运行的策略共享同一套“当前时间步”的数据与调度；混合时也按“同组信号”用 blender 合并，再按 "
 "group_merge_type 处理多组并存的情况，便于理解和配置。"
 msgstr ""
+"**Pourquoi regrouper par « timing d'exécution »** : les stratégies qui "
+"s'exécutent au même moment partagent le même ensemble de données et de "
+"planification « pas de temps actuel » ; une fois mélangés, les signaux sont "
+"d'abord fusionnés avec un mélangeur en tant que « signaux du même groupe », "
+"puis group_merge_type est utilisé pour gérer le cas où plusieurs groupes "
+"coexistent, ce qui facilite la compréhension et la configuration."
 
 #: ../../source/design/04-operator-and-groups.md:18
 msgid "4. Operator 与 Group 的关系"
-msgstr ""
+msgstr "4. La relation entre Operator et le groupe"
 
 #: ../../source/design/04-operator-and-groups.md:20
 msgid "Operator 包含多个 Group；每个 Group 包含多个 Strategy。"
 msgstr ""
+"Un Operator contient plusieurs groupes et chaque groupe contient plusieurs "
+"stratégies."
 
 #: ../../source/design/04-operator-and-groups.md:21
 msgid ""
 "添加策略时，若已存在相同 run_freq、run_timing 的 Group，则策略加入该 Group；否则新建 Group。因此 Group "
 "的划分完全由“运行时机”决定，策略类自身不保存 run_freq/run_timing，由所属 Group 管理。"
 msgstr ""
+"Lors de l'ajout d'une stratégie, si un groupe avec les mêmes run_freq et "
+"run_timing existe déjà, la stratégie est ajoutée à ce groupe ; sinon, un "
+"nouveau groupe est créé. Par conséquent, le partitionnement du groupe est "
+"entièrement déterminé par le « timing d’exécution ». La classe de stratégie "
+"elle-même ne stocke pas run_freq/run_timing ; ils sont gérés par son Groupe."
 
 #: ../../source/design/04-operator-and-groups.md:23
 msgid "5. group_timing_table"
@@ -97,6 +140,10 @@ msgid ""
 "**含义**：二维表，行 = 时间步（与回测区间或实盘 schedule 对齐），列 = Group；单元格为 1 表示该步运行该 Group，0 "
 "表示不运行。"
 msgstr ""
+"**Signification** : Un tableau 2D : lignes = pas de temps (alignés sur la "
+"période de backtest ou le planning live), colonnes = Groupes ; une valeur de"
+" cellule de 1 signifie que le groupe s'exécute à cette étape, 0 signifie "
+"qu'il ne s'exécute pas."
 
 #: ../../source/design/04-operator-and-groups.md:26
 msgid ""
@@ -104,6 +151,13 @@ msgid ""
 "的 run_freq、run_timing 在该时间轴上标记“哪些步运行哪些 Group”，得到 "
 "group_timing_table。实盘时同理，按实际运行日与 run_freq/run_timing 决定何时触发哪些 Group。"
 msgstr ""
+"**Relation avec la période de backtest et run_freq** : lors du backtesting, "
+"une chronologie est générée à partir de invest_start, invest_end et du "
+"calendrier de trading, puis run_freq et run_timing de chaque groupe sont "
+"utilisés pour marquer « quelles étapes exécutent quels groupes » sur cette "
+"chronologie, produisant group_timing_table. Le trading en direct est "
+"similaire : les groupes déclenchés sont déterminés par les dates d'exécution"
+" réelles et run_freq/run_timing."
 
 #: ../../source/design/04-operator-and-groups.md:28
 msgid "6. blender"
@@ -114,16 +168,29 @@ msgid ""
 "**作用**：同一 Group 内可能有多个策略，每步各策略输出一个信号（标量或数组）。**blender** 将这些信号按一定规则混合成该 Group"
 " 的**一个**合并信号（如加权平均、求和等）。"
 msgstr ""
+"**Objectif** : Il peut y avoir plusieurs stratégies au sein d'un même "
+"groupe. A chaque étape, chaque stratégie génère un signal (un scalaire ou un"
+" tableau). Le **blender** mélange ces signaux en **un** signal fusionné pour"
+" le Groupe selon certaines règles (par exemple, moyenne pondérée, somme, "
+"etc.)."
 
 #: ../../source/design/04-operator-and-groups.md:31
 msgid ""
 "**配置方式**：可为表达式（如 `0.5*s0+0.5*s1`），或使用默认规则：PT 下常用各策略目标仓位的平均，PS/VS "
 "下常用求和等，具体以文档与 API 为准。"
 msgstr ""
+"**Configuration** : peut être une expression (par exemple, `0.5*s0+0.5*s1`),"
+" ou utiliser les règles par défaut : sous PT, elle utilise généralement la "
+"moyenne de la position cible de chaque stratégie ; sous PS/VS, il utilise "
+"couramment la sommation, etc. Pour plus de détails, reportez-vous à la "
+"documentation et à l'API."
 
 #: ../../source/design/04-operator-and-groups.md:32
 msgid "**结果**：混合后的信号作为该步、该组的输出，再根据 group_merge_type 与其它组的输出合并（若有多组同时运行）。"
 msgstr ""
+"**Résultat** : Le signal mélangé est utilisé comme sortie de cette étape et "
+"de ce groupe, puis est fusionné avec les sorties d'autres groupes selon "
+"group_merge_type (si plusieurs groupes s'exécutent en même temps)."
 
 #: ../../source/design/04-operator-and-groups.md:34
 msgid "7. group_merge_type"
@@ -132,29 +199,49 @@ msgstr "7. group_merge_type"
 #: ../../source/design/04-operator-and-groups.md:36
 msgid "当同一时间步有多个 Group 运行时，**group_merge_type** 决定各组信号如何合并："
 msgstr ""
+"Lorsque plusieurs groupes s'exécutent au même pas de temps, "
+"**group_merge_type** détermine la manière dont les signaux des groupes sont "
+"fusionnés :"
 
 #: ../../source/design/04-operator-and-groups.md:38
 msgid "**None**：各 Group 独立输出，不合并（多组时可能产生多条执行路径，取决于上层如何使用）。"
 msgstr ""
+"**Aucun** : chaque groupe produit indépendamment, sans fusion (lorsqu'il "
+"existe plusieurs groupes, cela peut produire plusieurs chemins d'exécution, "
+"en fonction de la manière dont la couche supérieure les utilise)."
 
 #: ../../source/design/04-operator-and-groups.md:39
 msgid "**And**：各组信号相乘等逻辑与合并。"
 msgstr ""
+"**Et** : fusion logique de style ET, telle que la multiplication des signaux"
+" entre les groupes."
 
 #: ../../source/design/04-operator-and-groups.md:40
 msgid "**Or**：各组信号相加等逻辑或合并。"
 msgstr ""
+"**Ou** : fusion de style OU logique, telle que l'ajout de signaux entre les "
+"groupes."
 
 #: ../../source/design/04-operator-and-groups.md:42
 msgid "具体语义以当前版本文档为准；通常单组使用时无需关心。"
 msgstr ""
+"La sémantique exacte est soumise à la documentation de la version actuelle ;"
+" généralement, vous n’avez pas besoin de vous en soucier lorsque vous "
+"utilisez un seul groupe."
 
 #: ../../source/design/04-operator-and-groups.md:44
 msgid "8. 小结"
-msgstr ""
+msgstr "8. Résumé"
 
 #: ../../source/design/04-operator-and-groups.md:46
 msgid ""
 "Operator 通过 Group 与 group_timing_table 实现“按时间步、按组”的统一调度：每一步只运行该步标记为 1 的 "
 "Group，组内策略共享数据注入与 blender，输出合并信号供回测/实盘/优化使用。更多用法见《使用教程》与 API 文档。"
 msgstr ""
+"Grâce à Group et group_timing_table, le Operator implémente une "
+"planification unifiée « par pas de temps, par groupe » : à chaque étape, il "
+"exécute uniquement les groupes marqués 1 pour cette étape ; les stratégies "
+"au sein d'un groupe partagent l'injection de données et le mélangeur, et "
+"génèrent un signal fusionné pour le backtesting/le trading en "
+"direct/l'optimisation. Pour plus d'informations, consultez le Guide de "
+"l'utilisateur et la documentation de l'API."

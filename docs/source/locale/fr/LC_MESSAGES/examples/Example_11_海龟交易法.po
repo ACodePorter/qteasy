@@ -20,49 +20,60 @@ msgstr ""
 
 #: ../../source/examples/Example_11_海龟交易法.md:1
 msgid "海龟交易法策略（教学简化版）"
-msgstr ""
+msgstr "Stratégie de trading de tortues (tutoriel simplifié)"
 
 #: ../../source/examples/Example_11_海龟交易法.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_11_海龟交易法.ipynb` 第一个 Markdown "
 "cell。"
 msgstr ""
+"Source de référence : `docs/_joinquant_migration_source/Example_11_Turtle "
+"Trading Method.ipynb` Première cellule Markdown."
 
 #: ../../source/examples/Example_11_海龟交易法.md:5
 msgid "策略思路"
-msgstr ""
+msgstr "Stratégie et idées"
 
 #: ../../source/examples/Example_11_海龟交易法.md:7
 msgid "使用唐奇安通道的突破信号作为开仓依据；"
 msgstr ""
+"Utiliser les signaux de cassure du canal Donchian comme base pour ouvrir des"
+" positions ;"
 
 #: ../../source/examples/Example_11_海龟交易法.md:8
 msgid "价格突破上轨做多，跌破下轨做空；"
 msgstr ""
+"Achetez lorsque le prix franchit la bande supérieure et vendez lorsqu'il "
+"franchit la bande inférieure."
 
 #: ../../source/examples/Example_11_海龟交易法.md:9
 msgid "结合较短周期通道控制退出（简化版海龟规则）。"
 msgstr ""
+"Combiné avec une sortie de contrôle de canal à cycle plus court (règles de "
+"tortue simplifiées)."
 
 #: ../../source/examples/Example_11_海龟交易法.md:11
 msgid "qteasy 实现"
-msgstr ""
+msgstr "Implémentation de QtEasy"
 
 #: ../../source/examples/Example_11_海龟交易法.md:13
 msgid "策略类：`Example11Turtle`；"
-msgstr ""
+msgstr "Classe de stratégie : `Example11Turtle` ;"
 
 #: ../../source/examples/Example_11_海龟交易法.md:14
 msgid "信号类型：`PT`；"
-msgstr ""
+msgstr "Type de signal : `PT` ;"
 
 #: ../../source/examples/Example_11_海龟交易法.md:15
 msgid "默认脚本使用单标的教学版，便于验证链路和参数优化流程。"
 msgstr ""
+"Le script par défaut utilise une version d'enseignement standard unique, ce "
+"qui facilite la vérification du processus d'optimisation des liens et des "
+"paramètres."
 
 #: ../../source/examples/Example_11_海龟交易法.md:41
 msgid "可执行脚本"
-msgstr ""
+msgstr "Script exécutable"
 
 #: ../../source/examples/Example_11_海龟交易法.md:43
 msgid "`examples/strategy_example_11.py`"

@@ -20,13 +20,15 @@ msgstr ""
 
 #: ../../source/examples/Example_13_经典网格交易.md:1
 msgid "经典网格交易策略"
-msgstr ""
+msgstr "Stratégie de trading en grille"
 
 #: ../../source/examples/Example_13_经典网格交易.md:3
 msgid ""
 "参考来源：`docs/_joinquant_migration_source/Example_13_经典网格交易.ipynb` 第一个 Markdown"
 " cell。"
 msgstr ""
+"Source de référence : `docs/_joinquant_migration_source/Example_13_classic "
+"grid trading.ipynb` Première cellule Markdown."
 
 #: ../../source/examples/Example_13_经典网格交易.md:5
 msgid ""
@@ -34,34 +36,54 @@ msgid ""
 "策略的运行标的是000651.SZ格力电器，策略第一次运行时，买入1000股并持有，同时设定当前买入价格（四舍五入到0.1元）为基准网格， "
 "并根据网格尺寸计算出卖出网格和买入网格， 接下来每隔5分钟运行一次，当股票价格触及买入网格或卖出网格时，产生交易信号，并刷新网格："
 msgstr ""
+"Cette stratégie est une stratégie classique de trading en grille. La "
+"stratégie fonctionne sur le stock 000651.SZ Gree Electric. Lorsque la "
+"stratégie est exécutée pour la première fois, elle achète 1 000 actions et "
+"les conserve. Dans le même temps, le prix d'achat actuel (arrondi à 0,1 "
+"yuan) est défini comme grille de référence, et la grille de vente et la "
+"grille d'achat sont calculées en fonction de la taille de la grille. "
+"Ensuite, la stratégie s'exécute toutes les 5 minutes. Lorsque le cours de "
+"l'action touche la grille d'achat ou la grille de vente, un signal de "
+"trading est généré et la grille est actualisée :"
 
 #: ../../source/examples/Example_13_经典网格交易.md:9
 msgid "例如："
-msgstr ""
+msgstr "Par exemple:"
 
 #: ../../source/examples/Example_13_经典网格交易.md:10
 msgid "假设当前基准网格为30元，网格尺寸为0.5元，卖出网格为30.5元，买入网格为29.5元"
 msgstr ""
+"Supposons que la grille de référence actuelle soit de 30 yuans, la taille de"
+" la grille est de 0,5 yuans, la grille de vente est de 30,5 yuans et la "
+"grille d'achat est de 29,5 yuans."
 
 #: ../../source/examples/Example_13_经典网格交易.md:11
 msgid "当价格触及卖出网格30.5元时，产生卖出信号，卖出200股并更新基准网格为30.5元，同时计算出新的卖出网格31元和买入网格30元"
 msgstr ""
+"Lorsque le prix atteint la grille de vente de 30,5 yuans, un signal de vente"
+" est généré, 200 actions sont vendues et la grille de référence est mise à "
+"jour à 30,5 yuans. En même temps, la nouvelle grille de vente de 31 yuans et"
+" la grille d'achat de 30 yuans sont calculées."
 
 #: ../../source/examples/Example_13_经典网格交易.md:13
 msgid "交易回测的标的是：000651.SZ格力电器，"
-msgstr ""
+msgstr "Cible du backtesting : 000651.SZ Gree Electric"
 
 #: ../../source/examples/Example_13_经典网格交易.md:15
 msgid "交易回测区间是：2023年1月1日至2023年3月1日"
-msgstr ""
+msgstr "Période de backtesting : du 1er janvier 2023 au 1er mars 2023"
 
 #: ../../source/examples/Example_13_经典网格交易.md:17
 msgid "注，由于策略网格参数在每次交易以后都会被刷新，因此该策略只能以stepwise方式进行回测，为了方便生成交易信号，该策略使用了VS信号类型"
 msgstr ""
+"Veuillez noter que puisque les paramètres de la grille de stratégie seront "
+"actualisés après chaque transaction, cette stratégie ne peut être backtestée"
+" que par étapes. Pour faciliter la génération de signaux de trading, la "
+"stratégie utilise le type de signal VS"
 
 #: ../../source/examples/Example_13_经典网格交易.md:97
 msgid "回测的结果如下："
-msgstr ""
+msgstr "Les résultats du backtest sont les suivants :"
 
 #: ../../source/examples/Example_13_经典网格交易.md:146
 msgid "![png](img/output_13_1.png)"
