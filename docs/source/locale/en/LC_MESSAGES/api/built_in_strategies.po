@@ -2467,47 +2467,17 @@ msgstr "Data types: ``high``, ``low``, ``close``, high, low, close, multiple dat
 msgid "Not Implemented Yet"
 msgstr "Not Implemented Yet"
 
-#~ msgid "参数"
-#~ msgstr "Parameters"
 
-#~ msgid "返回"
-#~ msgstr "Returns"
 
-#~ msgid "返回类型"
-#~ msgstr "Return Type"
 
-#~ msgid "示例"
-#~ msgstr "Examples"
 
-#~ msgid "抛出"
-#~ msgstr "Raises"
 
-#~ msgid "Parameters"
-#~ msgstr "Parameters"
 
-#~ msgid "Returns"
-#~ msgstr "Returns"
 
-#~ msgid "Return type"
-#~ msgstr "Return type"
 
-#~ msgid "Examples"
-#~ msgstr "Examples"
 
-#~ msgid "Raises"
-#~ msgstr "Raises"
 
-#~ msgid "采样频率: ``Y``, 年"
-#~ msgstr "Frequency: ``Y``, Year"
 
-#~ msgid "采样频率: 月"
-#~ msgstr "Frequency: Month"
 
-#~ msgid "采样频率: ``M``, 月"
-#~ msgstr "Sampling frequency: ``M``, months"
 
-#~ msgid "采样频率: 天"
-#~ msgstr "Sampling frequency: days"
 
-#~ msgid "采样频率: ``D``, 天"
-#~ msgstr "Sampling frequency: ``D``, days"

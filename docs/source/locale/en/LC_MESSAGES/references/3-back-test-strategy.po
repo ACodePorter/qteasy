@@ -1218,6 +1218,4 @@ msgstr ""
 "creation of custom strategies. Below is a simple example that defines a "
 "simple rotation trading strategy"
 
-#~ msgid "支持`'&"
-#~ msgstr "`&` is supported"
 

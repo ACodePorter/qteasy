@@ -593,771 +593,129 @@ msgstr "*HistoryPanel* -- When ``as_data_frame`` is False, returns a HistoryPane
 msgid "*dict of pandas.DataFrame* -- 当 ``as_data_frame`` 为 True 时，返回按 ``group_by`` 分组的 DataFrame 字典。"
 msgstr "*dict of pandas.DataFrame* -- When ``as_data_frame`` is True, returns a dict of DataFrames grouped by ``group_by``."
 
-#~ msgid "参数"
-#~ msgstr "Parameters"
 
-#~ msgid "返回"
-#~ msgstr "Returns"
 
-#~ msgid "返回类型"
-#~ msgstr "Return Type"
 
-#~ msgid "示例"
-#~ msgstr "Example"
 
-#~ msgid "抛出"
-#~ msgstr "Raises"
 
-#~ msgid "备注"
-#~ msgstr "Notes"
 
-#~ msgid "Parameters"
-#~ msgstr ""
 
-#~ msgid "是否模糊匹配数据描述，如果给出的字符串中含有非Ascii字符，会自动转为True"
-#~ msgstr ""
-#~ "If the string contains non-Ascii "
-#~ "characters, it will be automatically "
-#~ "converted to True"
 
-#~ msgid "False: 仅匹配数据名称"
-#~ msgstr "False: Match only the data name"
 
-#~ msgid "True:  同时匹配数据描述"
-#~ msgstr "True:  Match both the data name and the data description"
 
-#~ msgid "是否模糊匹配数据名称，如果给出的字符串中含有非Ascii字符或通配符*/?，会自动转为True"
-#~ msgstr ""
-#~ "Whether to match the data name "
-#~ "fuzzily, if the string contains non-"
-#~ "Ascii characters or wildcards */?, it"
-#~ " will be automatically converted to "
-#~ "True"
 
-#~ msgid "False: 精确匹配数据名称"
-#~ msgstr "If False: Match the data name exactly"
 
-#~ msgid "True:  模糊匹配数据名称或数据描述"
-#~ msgstr "If True:  Fuzzy match the data name or the data description"
 
-#~ msgid "Returns"
-#~ msgstr ""
 
-#~ msgid "Return type"
-#~ msgstr ""
 
-#~ msgid "Examples"
-#~ msgstr ""
 
-#~ msgid "Raises"
-#~ msgstr ""
 
-#~ msgid "'SZSE'"
-#~ msgstr ""
 
-#~ msgid "以及数据列的名称、数据类型及说明"
-#~ msgstr "as well as the name, data type and description of the data column"
 
-#~ msgid "Parameters:"
-#~ msgstr ""
 
-#~ msgid "table_name: str"
-#~ msgstr ""
 
-#~ msgid "data_source: DataSource"
-#~ msgstr ""
 
-#~ msgid "verbose: bool, Default: True，"
-#~ msgstr ""
 
-#~ msgid "returns"
-#~ msgstr ""
 
-#~ msgid "{"
-#~ msgstr ""
 
-#~ msgid "rtype"
-#~ msgstr ""
 
-#~ msgid "一个dict，包含数据表的结构化信息："
-#~ msgstr "A dict containing the structured information of the data table:"
 
-#~ msgid "Notes"
-#~ msgstr ""
 
-#~ msgid "等同于get_stock_info()"
-#~ msgstr "Same as get_stock_info()"
 
-#~ msgid "证券代码或名称："
-#~ msgstr "Stock code or name:"
 
-#~ msgid "如果是证券代码，可以含后缀也可以不含后缀，含后缀时精确查找、不含后缀时全局匹配"
-#~ msgstr ""
-#~ "If it is a stock code, it "
-#~ "can contain suffixes or not. When "
-#~ "it contains suffixes, it is precisely"
-#~ " searched. When it does not contain"
-#~ " suffixes, it is globally matched"
-
-#~ msgid "如果是证券名称，可以包含通配符模糊查找，也可以通过名称模糊查找"
-#~ msgstr ""
-#~ "If it is a stock name, it "
-#~ "can contain wildcard fuzzy search, or"
-#~ " fuzzy search by name"
-
-#~ msgid "如果精确匹配到一个证券代码，返回一个字典，包含该证券代码的相关信息"
-#~ msgstr ""
-#~ "If an exact match is found for "
-#~ "a stock code, return a dictionary "
-#~ "containing the relevant information of "
-#~ "the stock code"
-
-#~ msgid "证券类型，接受列表或逗号分隔字符串，包含认可的资产类型："
-#~ msgstr ""
-#~ "Asset type, accepts a list or "
-#~ "comma-separated string, including recognized "
-#~ "asset types:"
-
-#~ msgid "E     股票"
-#~ msgstr "E    Stock"
-
-#~ msgid "IDX   指数"
-#~ msgstr "IDX   Index"
-
-#~ msgid "FD    基金"
-#~ msgstr "FD    Fund"
-
-#~ msgid "FT    期货"
-#~ msgstr "FT    Futures"
-
-#~ msgid "OPT   期权"
-#~ msgstr "OPT   Options"
-
-#~ msgid "当匹配到的证券太多时（多于五个），是否显示完整的信息"
-#~ msgstr ""
-#~ "If the number of matched securities "
-#~ "is too large (more than five), "
-#~ "whether to display the complete "
-#~ "information"
-
-#~ msgid "False 默认值，只显示匹配度最高的内容"
-#~ msgstr "Default to False, only display the highest matching content"
-
-#~ msgid "True  显示所有匹配到的内容"
-#~ msgstr "True  display all matched content"
-
-#~ msgid "当仅找到一个匹配时，返回一个dict，包含找到的基本信息，根据不同的证券类型，找到的信息不同："
-#~ msgstr ""
-#~ "If only one match is found, return"
-#~ " a dict containing the basic "
-#~ "information found. Depending on the type"
-#~ " of security, the information found "
-#~ "is different:"
-
-#~ msgid "股票信息：公司名、地区、行业、全名、上市状态、上市日期"
-#~ msgstr ""
-#~ "Stock information: company name, region, "
-#~ "industry, full name, listing status, "
-#~ "listing date"
-
-#~ msgid "指数信息：指数名、全名、发行人、种类、发行日期"
-#~ msgstr "Index information: index name, full name, issuer, type, issue date"
-
-#~ msgid "基金：   基金名、管理人、托管人、基金类型、发行日期、发行数量、投资类型、类型"
-#~ msgstr ""
-#~ "Fund:   fund name, manager, custodian, "
-#~ "fund type, issue date, issue quantity,"
-#~ " investment type, type"
-
-#~ msgid "期货：   期货名称"
-#~ msgstr "Futures:   futures name"
-
-#~ msgid "期权：   期权名称"
-#~ msgstr "Options:   options name"
-
-#~ msgid "从本地data_source获取所需的数据并组装为适应于策略"
-#~ msgstr ""
-#~ "Acquire the required data from the "
-#~ "local data_source and assemble it to "
-#~ "adapt to the strategy"
-
-#~ msgid "需要的HistoryPanel数据对象"
-#~ msgstr "Needed HistoryPanel data object"
-
-#~ msgid ""
-#~ "需要获取的数据类型可以由data_types参数给出，如果不给出data_types参数，则可以通过htypes/htype_names等参数"
-#~ " "
-#~ "结合freq和asset_type参数创建可能的htypes，如果给出了data_types参数，则htypes/htype_names参数将被忽略"
-#~ msgstr ""
-#~ "The data types to be obtained can"
-#~ " be given by the data_types "
-#~ "parameter. If the data_types parameter "
-#~ "is not given, possible htypes can "
-#~ "be created by combining the "
-#~ "htypes/htype_names parameters with the freq"
-#~ " and asset_type parameters. If the "
-#~ "data_types parameter is given, the "
-#~ "htypes/htype_names parameters will be ignored"
-
-#~ msgid ""
-#~ "需要获取的历史数据的名称集合，如果htypes为空，则系统将尝试通过根据历史数据名称和freq/asset_type参数创建 "
-#~ "所有可能的htypes。输入方式可以为str或list：  - str:     'open, "
-#~ "high, low, close'  - list:    ['open',"
-#~ " 'high', 'low', 'close']"
-#~ msgstr ""
-#~ "The set of historical data names "
-#~ "to be obtained. If htypes is "
-#~ "empty, the system will try to "
-#~ "create all possible htypes based on "
-#~ "the historical data names and "
-#~ "freq/asset_type parameters. The input method"
-#~ " can be str or list:  - str:"
-#~ "     'open, high, low, close'  - "
-#~ "list:    ['open', 'high', 'low', 'close']"
-
-#~ msgid ""
-#~ "需要获取的历史数据的名称集合，如果htypes为空，则系统将尝试通过根据历史数据名称和freq/asset_type参数创建 "
-#~ "所有可能的htypes。输入方式可以为str或list："
-#~ msgstr ""
-#~ "The set of historical data names "
-#~ "to be obtained. If htypes is "
-#~ "empty, the system will try to "
-#~ "create all possible htypes based on "
-#~ "the historical data names and "
-#~ "freq/asset_type parameters. The input method"
-#~ " can be str or list:"
-
-#~ msgid "str:     'open, high, low, close'"
-#~ msgstr ""
-
-#~ msgid "list:    ['open', 'high', 'low', 'close']"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "需要获取历史数据的证券代码集合，可以是以逗号分隔的证券代码字符串或者证券代码字符列表， 如以下两种输入方式皆合法且等效："
-#~ "  - str:     '000001.SZ, 000002.SZ, "
-#~ "000004.SZ, 000005.SZ'  - list:    "
-#~ "['000001.SZ', '000002.SZ', '000004.SZ', '000005.SZ']"
-#~ msgstr ""
-#~ "Set of stock codes for which "
-#~ "historical data is to be obtained, "
-#~ "which can be a comma-separated "
-#~ "string of stock codes or a list"
-#~ " of stock code characters. The "
-#~ "following two input methods are both "
-#~ "legal and equivalent:  - str:     "
-#~ "'000001.SZ, 000002.SZ, 000004.SZ, 000005.SZ'  "
-#~ "- list:    ['000001.SZ', '000002.SZ', "
-#~ "'000004.SZ', '000005.SZ']"
-
-#~ msgid "需要获取历史数据的证券代码集合，可以是以逗号分隔的证券代码字符串或者证券代码字符列表， 如以下两种输入方式皆合法且等效："
-#~ msgstr ""
-#~ "Stock codes for which historical data"
-#~ " is to be obtained, which can "
-#~ "be a comma-separated string of "
-#~ "stock codes or a list of stock "
-#~ "code characters. The following two input"
-#~ " methods are both legal and "
-#~ "equivalent:"
-
-#~ msgid "str:     '000001.SZ, 000002.SZ, 000004.SZ, 000005.SZ'"
-#~ msgstr ""
-
-#~ msgid "list:    ['000001.SZ', '000002.SZ', '000004.SZ', '000005.SZ']"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "需要获取历史数据的证券代码集合，可以是以逗号分隔的证券代码字符串或者证券代码字符列表， 如以下两种输入方式皆合法且等效： "
-#~ "- str:     '000001, 000002, 000004, "
-#~ "000005' - list:    ['000001', '000002', "
-#~ "'000004', '000005']"
-#~ msgstr ""
-#~ "Set of stock codes for which "
-#~ "historical data is to be obtained, "
-#~ "which can be a comma-separated "
-#~ "string of stock codes or a list"
-#~ " of stock code characters. The "
-#~ "following two input methods are both "
-#~ "legal and equivalent: - str:     "
-#~ "'000001, 000002, 000004, 000005' - list:"
-#~ "    ['000001', '000002', '000004', '000005']"
-
-#~ msgid ""
-#~ "获取的历史数据的频率，包括以下选项：  - 1/5/15/30min "
-#~ "1/5/15/30分钟频率周期数据(如K线)  - H/D/W/M 分别代表小时/天/周/月 "
-#~ "周期数据(如K线)"
-#~ msgstr ""
-#~ "Frequency of historical data to be "
-#~ "obtained, including the following options:"
-#~ "  - 1/5/15/30min 1/5/15/30 minute frequency"
-#~ " cycle data (such as K-line)  - "
-#~ "H/D/W/M respectively represent hour/day/week/month"
-#~ " cycle data (such as K-line)"
-
-#~ msgid "获取的历史数据的频率，包括以下选项："
-#~ msgstr ""
-#~ "Frequency of historical data to be "
-#~ "obtained, including the following options:"
-
-#~ msgid "1/5/15/30min 1/5/15/30分钟频率周期数据(如K线)"
-#~ msgstr "1/5/15/30 minute frequency cycle data (such as K-line)"
-
-#~ msgid "H/D/W/M 分别代表小时/天/周/月 周期数据(如K线)"
-#~ msgstr ""
-#~ "H/D/W/M respectively represent hour/day/week/month"
-#~ " cycle data (such as K-line)"
-
-#~ msgid ""
-#~ "限定获取的数据中包含的资产种类，包含以下选项或下面选项的组合，合法的组合方式包括 逗号分隔字符串或字符串列表，例如: "
-#~ "'E, IDX' 和 ['E', 'IDX']都是合法输入  - "
-#~ "any: 可以获取任意资产类型的证券数据(默认值)  - E:   只获取股票类型证券的数据"
-#~ "  - IDX: 只获取指数类型证券的数据  - FT:  "
-#~ "只获取期货类型证券的数据  - FD:  只获取基金类型证券的数据"
-#~ msgstr ""
-#~ "Limit the types of assets included "
-#~ "in the data to be obtained, "
-#~ "including the following options or "
-#~ "combinations of the options below. Legal"
-#~ " combinations include comma-separated "
-#~ "strings or string lists, for example:"
-#~ " 'E, IDX' and ['E', 'IDX'] are "
-#~ "both legal inputs  - any: You can"
-#~ " obtain securities data of any asset"
-#~ " type (default value)  - E:   Only"
-#~ " obtain data of stock type securities"
-#~ "  - IDX: Only obtain data of "
-#~ "index type securities  - FT:  Only "
-#~ "obtain data of futures type securities"
-#~ "  - FD:  Only obtain data of "
-#~ "fund type securities"
-
-#~ msgid ""
-#~ "限定获取的数据中包含的资产种类，包含以下选项或下面选项的组合，合法的组合方式包括 逗号分隔字符串或字符串列表，例如: "
-#~ "'E, IDX' 和 ['E', 'IDX']都是合法输入"
-#~ msgstr ""
-#~ "Limit the types of assets included "
-#~ "in the data to be obtained, "
-#~ "including the following options or "
-#~ "combinations of the options below. Legal"
-#~ " combinations include comma-separated "
-#~ "strings or string lists, for example:"
-#~ " 'E, IDX' and ['E', 'IDX'] are "
-#~ "both legal inputs"
-
-#~ msgid "any: 可以获取任意资产类型的证券数据(默认值)"
-#~ msgstr "any: You can obtain securities data of any asset type (default value)"
-
-#~ msgid "E:   只获取股票类型证券的数据"
-#~ msgstr "E:   Only obtain data of stock type securities"
-
-#~ msgid "IDX: 只获取指数类型证券的数据"
-#~ msgstr "IDX: Only obtain data of index type securities"
-
-#~ msgid "FT:  只获取期货类型证券的数据"
-#~ msgstr "FT: Only obtain data of futures type securities"
-
-#~ msgid "FD:  只获取基金类型证券的数据"
-#~ msgstr "FD: Only obtain data of fund type securities"
-
-#~ msgid ""
-#~ "Deprecated: 对于某些数据，可以获取复权数据，需要通过复权因子计算，复权选项包括：  - "
-#~ "none / n: 不复权(默认值)  - back / "
-#~ "b: 后复权  - forward / fw / f:"
-#~ " 前复权  从下一个版本开始，adj参数将不再可用，请直接在htype中使用close:b等方式指定复权价格"
-#~ msgstr ""
-#~ "Deprecated: For some data, you can "
-#~ "obtain adjusted data, which needs to "
-#~ "be calculated through the adjustment "
-#~ "factor, the adjustment options include:  "
-#~ "- none / n: no adjustment (default"
-#~ " value)  - back / b: back "
-#~ "adjustment  - forward / fw / f:"
-#~ " forward adjustment  "
-
-#~ msgid "Deprecated: 对于某些数据，可以获取复权数据，需要通过复权因子计算，复权选项包括："
-#~ msgstr ""
-#~ "Deprecated: For some data, you can "
-#~ "obtain adjusted data, which needs to "
-#~ "be calculated through the adjustment "
-#~ "factor, the adjustment options include:"
-
-#~ msgid "none / n: 不复权(默认值)"
-#~ msgstr "none / n: No adjustment (default value)"
-
-#~ msgid "back / b: 后复权"
-#~ msgstr "back / b: Back adjustment"
-
-#~ msgid "forward / fw / f: 前复权"
-#~ msgstr "forward / fw / f: Forward adjustment"
-
-#~ msgid "从下一个版本开始，adj参数将不再可用，请直接在htype中使用close:b等方式指定复权价格"
-#~ msgstr ""
-#~ "Starting from the next version, the "
-#~ "adj parameter will no longer be "
-#~ "available. Please directly specify the "
-#~ "adjusted price in the htype using "
-#~ "close:b and other methods"
-
-#~ msgid ""
-#~ "如果返回DataFrame对象，设置dataframe的分组策略 - 'shares' / "
-#~ "'share' / 's': 每一个share组合为一个dataframe - "
-#~ "'htypes' / 'htype' / 'h': "
-#~ "每一个htype组合为一个dataframe"
-#~ msgstr ""
-#~ "If returning DataFrame objects, set the"
-#~ " grouping strategy for dataframe - "
-#~ "'shares' / 'share' / 's': Every "
-#~ "share combination is grouped into a "
-#~ "dataframe - 'htypes' / 'htype' / "
-#~ "'h': Every htype combination is grouped"
-#~ " into a dataframe"
-
-#~ msgid ""
-#~ "用于生成trade_time_index的参数，包括： drop_nan: bool     "
-#~ "是否保留全NaN的行 resample_method: str     "
-#~ "如果数据需要升频或降频时，调整频率的方法     调整数据频率分为数据降频和升频，在两种不同情况下，可用的method不同："
-#~ "     数据降频就是将多个数据合并为一个，从而减少数据的数量，但保留尽可能多的信息，     "
-#~ "例如，合并下列数据(每一个tuple合并为一个数值，?表示合并后的数值）         [(1, 2, "
-#~ "3), (4, 5), (6, 7)] 合并后变为: [(?),"
-#~ " (?), (?)]     数据合并方法:     - "
-#~ "'last'/'close': 使用合并区间的最后一个值。如：         [(1, 2, "
-#~ "3), (4, 5), (6, 7)] 合并后变为: [(3),"
-#~ " (5), (7)]     - 'first'/'open': "
-#~ "使用合并区间的第一个值。如：         [(1, 2, 3), (4, "
-#~ "5), (6, 7)] 合并后变为: [(1), (4), (6)]"
-#~ "     - 'max'/'high': 使用合并区间的最大值作为合并值：         "
-#~ "[(1, 2, 3), (4, 5), (6, 7)] "
-#~ "合并后变为: [(3), (5), (7)]     - "
-#~ "'min'/'low': 使用合并区间的最小值作为合并值：         [(1, 2, "
-#~ "3), (4, 5), (6, 7)] 合并后变为: [(1),"
-#~ " (4), (6)]     - 'avg'/'mean': "
-#~ "使用合并区间的平均值作为合并值：         [(1, 2, 3), (4, "
-#~ "5), (6, 7)] 合并后变为: [(2), (4.5), "
-#~ "(6.5)]     - 'sum'/'total': 使用合并区间的平均值作为合并值："
-#~ "         [(1, 2, 3), (4, 5), (6, "
-#~ "7)] 合并后变为: [(2), (4.5), (6.5)]      "
-#~ "数据升频就是在已有数据中插入新的数据，插入的新数据是缺失数据，需要填充。     例如，填充下列数据(?表示插入的数据）"
-#~ "         [1, 2, 3] 填充后变为: [?, 1, "
-#~ "?, 2, ?, 3, ?]     缺失数据的填充方法如下:     "
-#~ "- 'ffill': 使用缺失数据之前的最近可用数据填充，如果没有可用数据，填充为NaN。如："
-#~ "         [1, 2, 3] 填充后变为: [NaN, 1,"
-#~ " 1, 2, 2, 3, 3]     - 'bfill':"
-#~ " 使用缺失数据之后的最近可用数据填充，如果没有可用数据，填充为NaN。如：         [1, 2,"
-#~ " 3] 填充后变为: [1, 1, 2, 2, 3, "
-#~ "3, NaN]     - 'nan': 使用NaN值填充缺失数据：         "
-#~ "[1, 2, 3] 填充后变为: [NaN, 1, NaN, "
-#~ "2, NaN, 3, NaN]     - 'zero': "
-#~ "使用0值填充缺失数据：         [1, 2, 3] 填充后变为: [0,"
-#~ " 1, 0, 2, 0, 3, 0] b_days_only:"
-#~ " bool 默认True     是否强制转换自然日频率为工作日，即：     'D' "
-#~ "-> 'B'     'W' -> 'W-FRI'     'M' "
-#~ "-> 'BM' trade_time_only: bool, default "
-#~ "True     为True时 仅生成交易时间段内的数据，交易时间段的参数通过**kwargs设定 "
-#~ "include_start: bool, default True     "
-#~ "日期时间序列是否包含开始日期/时间 include_end: bool, default "
-#~ "True     日期时间序列是否包含结束日期/时间 start_am:, str     "
-#~ "早晨交易时段的开始时间 end_am:, str     早晨交易时段的结束时间 "
-#~ "include_start_am: bool     早晨交易时段是否包括开始时间 "
-#~ "include_end_am: bool     早晨交易时段是否包括结束时间 start_pm:"
-#~ " str     下午交易时段的开始时间 end_pm: str     "
-#~ "下午交易时段的结束时间 include_start_pm: bool     "
-#~ "下午交易时段是否包含开始时间 include_end_pm: bool     "
-#~ "下午交易时段是否包含结束时间"
-#~ msgstr ""
-#~ "Parameters used to generate trade_time_index,"
-#~ " including: drop_nan: bool     Whether to"
-#~ " keep all NaN rows resample_method: "
-#~ "str     If the data needs to be"
-#~ " upsampled or downsampled, adjust the "
-#~ "frequency method     Adjusting data frequency"
-#~ " is divided into data downsampling "
-#~ "and upsampling. In two different cases,"
-#~ " the available methods are different:"
-#~ "     Data downsampling is to combine "
-#~ "multiple data into one, thereby reducing"
-#~ " the amount of data while retaining"
-#~ " as much information as possible,     "
-#~ "For example, merge the following data"
-#~ " (each tuple is merged into a "
-#~ "value, ? indicates the merged value)"
-#~ "         [(1, 2, 3), (4, 5), (6, "
-#~ "7)] After merging: [(?), (?), (?)]"
-#~ "     Data merging method:     - "
-#~ "'last'/'close': Use the last value of"
-#~ " the merged interval. For example:"
-#~ "         [(1, 2, 3), (4, 5), (6, "
-#~ "7)] After merging: [(3), (5), (7)]"
-#~ "     - 'first'/'open': Use the first "
-#~ "value of the merged interval. For "
-#~ "example:         [(1, 2, 3), (4, 5), "
-#~ "(6, 7)] After merging: [(1), (4), "
-#~ "(6)]     - 'max'/'high': Use the maximum"
-#~ " value of the merged interval as "
-#~ "the merged value:         [(1, 2, 3),"
-#~ " (4, 5), (6, 7)] After merging: "
-#~ "[(3), (5), (7)]     - 'min'/'low': Use"
-#~ " the minimum value of the merged "
-#~ "interval as the merged value:         "
-#~ "[(1, 2, 3), (4, 5), (6, 7)] "
-#~ "After merging: [(1), (4), (6)]     - "
-#~ "'avg'/'mean': Use the average value of"
-#~ " the merged interval as the merged"
-#~ " value:         [(1, 2, 3), (4, 5),"
-#~ " (6, 7)] After merging: [(2), (4.5),"
-#~ " (6.5)]     - 'sum'/'total': Use the "
-#~ "average value of the merged interval "
-#~ "as the merged value:         [(1, 2, "
-#~ "3), (4, 5), (6, 7)] After merging:"
-#~ " [(2), (4.5), (6.5)]      Data upsampling"
-#~ " is to insert new data into "
-#~ "existing data, and the inserted new "
-#~ "data is missing data that needs to"
-#~ " be filled.     For example, fill the"
-#~ " following data (? indicates the "
-#~ "inserted data)         [1, 2, 3] After"
-#~ " filling: [?, 1, ?, 2, ?, 3,"
-#~ " ?]     The method of filling missing"
-#~ " data is as follows:     - 'ffill':"
-#~ " Use the most recent available data"
-#~ " before the missing data to fill "
-#~ "in. If there is no available data,"
-#~ " fill in NaN. For example:         "
-#~ "[1, 2, 3] After filling: [NaN, 1,"
-#~ " 1, 2, 2, 3, 3]     - 'bfill':"
-#~ " Use the most recent available data"
-#~ " after the missing data to fill "
-#~ "in. If there is no available data,"
-#~ " fill in NaN. For example:         "
-#~ "[1, 2, 3] After filling: [1, 1,"
-#~ " 2, 2, 3, 3, NaN]     - 'nan':"
-#~ " Fill in missing data with NaN "
-#~ "value:         [1, 2, 3] After filling:"
-#~ " [NaN, 1, NaN, 2, NaN, 3, NaN]"
-#~ "     - 'zero': Fill in missing data"
-#~ " with zero value:         [1, 2, 3]"
-#~ " After filling: [0, 1, 0, 2, 0,"
-#~ " 3, 0] b_days_only: bool default True"
-#~ "     Whether to force convert natural "
-#~ "day frequency to working day frequency:"
-#~ "     'D' -> 'B'     'W' -> 'W-FRI'"
-#~ "     'M' -> 'BM' trade_time_only: bool "
-#~ "default True     If True only generate"
-#~ " data within trading hours. The "
-#~ "parameters for trading hours are set "
-#~ "through **kwargs include_start: bool default"
-#~ " True     Whether the date time "
-#~ "series includes start date/time include_end:"
-#~ " bool default True     Whether the "
-#~ "date time series includes end date/time"
-#~ " start_am:, str     Morning trading period"
-#~ " start time end_am:, str     Morning "
-#~ "trading period end time include_start_am: "
-#~ "bool     Whether the morning trading "
-#~ "period includes start time include_end_am: "
-#~ "bool     Whether the morning trading "
-#~ "period includes end time start_pm: str"
-#~ "     Afternoon trading period start time"
-#~ " end_pm: str     Afternoon trading period"
-#~ " end time include_start_pm: bool     "
-#~ "Whether the afternoon trading period "
-#~ "includes start time include_end_pm:"
-
-#~ msgid "用于生成trade_time_index的参数，包括： drop_nan: bool"
-#~ msgstr "Parameters used to generate trade_time_index, including: drop_nan: bool"
-
-#~ msgid "是否保留全NaN的行"
-#~ msgstr "If True, keep all NaN rows"
-
-#~ msgid "resample_method: str"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "如果数据需要升频或降频时，调整频率的方法 调整数据频率分为数据降频和升频，在两种不同情况下，可用的method不同： "
-#~ "数据降频就是将多个数据合并为一个，从而减少数据的数量，但保留尽可能多的信息， "
-#~ "例如，合并下列数据(每一个tuple合并为一个数值，?表示合并后的数值）"
-#~ msgstr ""
-#~ "If the data needs to be upsampled"
-#~ " or downsampled, adjust the frequency "
-#~ "method Adjusting data frequency is "
-#~ "divided into data downsampling and "
-#~ "upsampling. In two different cases, the"
-#~ " available methods are different: Data "
-#~ "downsampling is to combine multiple data"
-#~ " into one, thereby reducing the "
-#~ "amount of data while retaining as "
-#~ "much information as possible, For "
-#~ "example, merge the following data (each"
-#~ " tuple is merged into a value, "
-#~ "? indicates the merged value)"
-
-#~ msgid "[(1, 2, 3), (4, 5), (6, 7)] 合并后变为: [(?), (?), (?)]"
-#~ msgstr "[(1, 2, 3), (4, 5), (6, 7)] After merging: [(?), (?), (?)]"
-
-#~ msgid "数据合并方法: - 'last'/'close': 使用合并区间的最后一个值。如："
-#~ msgstr ""
-#~ "Merging method: - 'last'/'close': Use "
-#~ "the last value of the merged "
-#~ "interval. For example:"
-
-#~ msgid "[(1, 2, 3), (4, 5), (6, 7)] 合并后变为: [(3), (5), (7)]"
-#~ msgstr "[(1, 2, 3), (4, 5), (6, 7)] After merging: [(3), (5), (7)]"
-
-#~ msgid "'first'/'open': 使用合并区间的第一个值。如："
-#~ msgstr ""
-#~ "'first'/'open': Use the first value of"
-#~ " the merged interval. For example:"
-
-#~ msgid "[(1, 2, 3), (4, 5), (6, 7)] 合并后变为: [(1), (4), (6)]"
-#~ msgstr "[(1, 2, 3), (4, 5), (6, 7)] After merging: [(1), (4), (6)]"
-
-#~ msgid "'max'/'high': 使用合并区间的最大值作为合并值："
-#~ msgstr ""
-#~ "'max'/'high': Use the maximum value of"
-#~ " the merged interval as the merged"
-#~ " value:"
-
-#~ msgid "'min'/'low': 使用合并区间的最小值作为合并值："
-#~ msgstr ""
-#~ "'min'/'low': Use the minimum value of"
-#~ " the merged interval as the merged"
-#~ " value:"
-
-#~ msgid "'avg'/'mean': 使用合并区间的平均值作为合并值："
-#~ msgstr ""
-#~ "'avg'/'mean': Use the average value of"
-#~ " the merged interval as the merged"
-#~ " value:"
-
-#~ msgid "[(1, 2, 3), (4, 5), (6, 7)] 合并后变为: [(2), (4.5), (6.5)]"
-#~ msgstr "[(1, 2, 3), (4, 5), (6, 7)] After merging: [(2), (4.5), (6.5)]"
-
-#~ msgid "'sum'/'total': 使用合并区间的平均值作为合并值："
-#~ msgstr ""
-#~ "'sum'/'total': Use the average value of"
-#~ " the merged interval as the merged"
-#~ " value:"
-
-#~ msgid "数据升频就是在已有数据中插入新的数据，插入的新数据是缺失数据，需要填充。 例如，填充下列数据(?表示插入的数据）"
-#~ msgstr ""
-#~ "Upsampling is to insert new data "
-#~ "into existing data, and the inserted "
-#~ "new data is missing data that "
-#~ "needs to be filled. For example, "
-#~ "fill the following data (? indicates "
-#~ "the inserted data)"
-
-#~ msgid "[1, 2, 3] 填充后变为: [?, 1, ?, 2, ?, 3, ?]"
-#~ msgstr "[1, 2, 3] After filling: [?, 1, ?, 2, ?, 3, ?]"
-
-#~ msgid "缺失数据的填充方法如下: - 'ffill': 使用缺失数据之前的最近可用数据填充，如果没有可用数据，填充为NaN。如："
-#~ msgstr ""
-#~ "Missing data can be filled as "
-#~ "follows: - 'ffill': Use the most "
-#~ "recent available data before the missing"
-#~ " data to fill in. If there is"
-#~ " no available data, fill in NaN. "
-#~ "For example:"
-
-#~ msgid "[1, 2, 3] 填充后变为: [NaN, 1, 1, 2, 2, 3, 3]"
-#~ msgstr "[1, 2, 3] After filling: [NaN, 1, 1, 2, 2, 3, 3]"
-
-#~ msgid "'bfill': 使用缺失数据之后的最近可用数据填充，如果没有可用数据，填充为NaN。如："
-#~ msgstr ""
-#~ "'bfill': Use the most recent available"
-#~ " data after the missing data to "
-#~ "fill in. If there is no available"
-#~ " data, fill in NaN. For example:"
-
-#~ msgid "[1, 2, 3] 填充后变为: [1, 1, 2, 2, 3, 3, NaN]"
-#~ msgstr "[1, 2, 3] After filling: [1, 1, 2, 2, 3, 3, NaN]"
-
-#~ msgid "'nan': 使用NaN值填充缺失数据："
-#~ msgstr "'nan': Fill in missing data with NaN value:"
-
-#~ msgid "[1, 2, 3] 填充后变为: [NaN, 1, NaN, 2, NaN, 3, NaN]"
-#~ msgstr "[1, 2, 3] After filling: [NaN, 1, NaN, 2, NaN, 3, NaN]"
-
-#~ msgid "'zero': 使用0值填充缺失数据："
-#~ msgstr "'zero': Fill in missing data with zero value:"
-
-#~ msgid "[1, 2, 3] 填充后变为: [0, 1, 0, 2, 0, 3, 0]"
-#~ msgstr "[1, 2, 3] After filling: [0, 1, 0, 2, 0, 3, 0]"
-
-#~ msgid "b_days_only: bool 默认True"
-#~ msgstr "b_days_only: bool default True"
-
-#~ msgid "是否强制转换自然日频率为工作日，即： 'D' -> 'B' 'W' -> 'W-FRI' 'M' -> 'BM'"
-#~ msgstr ""
-#~ "If True, force convert natural day "
-#~ "frequency to working day frequency: 'D'"
-#~ " -> 'B' 'W' -> 'W-FRI' 'M' ->"
-#~ " 'BM'"
-
-#~ msgid "trade_time_only: bool, default True"
-#~ msgstr ""
-
-#~ msgid "为True时 仅生成交易时间段内的数据，交易时间段的参数通过**kwargs设定"
-#~ msgstr ""
-#~ "If True only generate data within "
-#~ "trading hours. The parameters for "
-#~ "trading hours are set through **kwargs"
-
-#~ msgid "include_start: bool, default True"
-#~ msgstr ""
-
-#~ msgid "日期时间序列是否包含开始日期/时间"
-#~ msgstr "If True, the date time series includes start date/time"
-
-#~ msgid "include_end: bool, default True"
-#~ msgstr ""
-
-#~ msgid "日期时间序列是否包含结束日期/时间"
-#~ msgstr "If True, the date time series includes end date/time"
-
-#~ msgid "start_am:, str"
-#~ msgstr ""
-
-#~ msgid "早晨交易时段的开始时间"
-#~ msgstr "Start time of morning trading period"
-
-#~ msgid "end_am:, str"
-#~ msgstr ""
-
-#~ msgid "早晨交易时段的结束时间"
-#~ msgstr "End time of morning trading period"
-
-#~ msgid "include_start_am: bool"
-#~ msgstr ""
-
-#~ msgid "早晨交易时段是否包括开始时间"
-#~ msgstr "If True, the morning trading period includes start time"
-
-#~ msgid "include_end_am: bool"
-#~ msgstr ""
-
-#~ msgid "早晨交易时段是否包括结束时间"
-#~ msgstr "If True, the morning trading period includes end time"
-
-#~ msgid "start_pm: str"
-#~ msgstr ""
-
-#~ msgid "下午交易时段的开始时间"
-#~ msgstr "Start time of afternoon trading period"
-
-#~ msgid "end_pm: str"
-#~ msgstr ""
-
-#~ msgid "下午交易时段的结束时间"
-#~ msgstr "End time of afternoon trading period"
-
-#~ msgid "include_start_pm: bool"
-#~ msgstr ""
-
-#~ msgid "下午交易时段是否包含开始时间"
-#~ msgstr "If True, the afternoon trading period includes start time"
-
-#~ msgid "include_end_pm: bool"
-#~ msgstr ""
-
-#~ msgid "下午交易时段是否包含结束时间"
-#~ msgstr "If True, the afternoon trading period includes end time"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

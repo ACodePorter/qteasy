@@ -200,12 +200,5 @@ msgstr ""
 msgid "API 参考：`api/api_reference.rst`"
 msgstr ""
 
-#~ msgid "本文介绍如何使用命令行界面（CLI）模拟实盘交易。"
-#~ msgstr ""
-#~ "This article describes how to simulate"
-#~ " live trading using the command line"
-#~ " interface (CLI)."
 
-#~ msgid "未完待续"
-#~ msgstr "To be completed"
 

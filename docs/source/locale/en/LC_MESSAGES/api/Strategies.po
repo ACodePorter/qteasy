@@ -240,925 +240,193 @@ msgstr ""
 msgid "当输入的数轴类型不在可选值中时，抛出ValueError异常"
 msgstr ""
 
-#~ msgid "量化投资策略的抽象基类，所有策略都继承自该抽象类，本类定义了generate抽象方法模版，供具体的策略类调用"
-#~ msgstr ""
-#~ "Abstract base class for quantitative "
-#~ "investment strategies, all strategies inherit"
-#~ " from this abstract class, this class"
-#~ " defines the generate abstract method "
-#~ "template for specific strategy class "
-#~ "calls"
-
-#~ msgid "Properties"
-#~ msgstr ""
-
-#~ msgid "pars: any"
-#~ msgstr ""
-
-#~ msgid "策略可调参数，可以是任意类型。策略的优化过程，就是寻找策略可调参数的最优组合的过程。"
-#~ msgstr ""
-#~ "Strategy adjustable parameters, which can "
-#~ "be of any type. The optimization "
-#~ "process of a strategy is the "
-#~ "process of finding the optimal "
-#~ "combination of strategy adjustable parameters."
-
-#~ msgid "opt_tag: int {0, 1}"
-#~ msgstr ""
-
-#~ msgid "策略的优化标签，0表示不参与优化，1表示参与优化"
-#~ msgstr ""
-#~ "Optimization label of the strategy, 0"
-#~ " means not involved in optimization, "
-#~ "1 means involved in optimization"
-
-#~ msgid "par_count: int"
-#~ msgstr ""
-
-#~ msgid "策略可调参数的个数"
-#~ msgstr "Number of adjustable parameters of the strategy"
-
-#~ msgid "par_types: [list, str]"
-#~ msgstr ""
-
-#~ msgid "策略可调参数的类型，可以是一个列表，也可以是一个字符串，如果是字符串，则表示所有参数的类型都相同"
-#~ msgstr ""
-#~ "The type of the policy tunable "
-#~ "parameter, either a list or a "
-#~ "string, and if it is a string, "
-#~ "it means that all parameters are "
-#~ "of the same type"
-
-#~ msgid "par_range: [list, tuple]"
-#~ msgstr ""
-
-#~ msgid "策略可调参数的取值范围，可以是一个列表，也可以是一个元组，如果是列表，则表示所有参数的取值范围都相同"
-#~ msgstr ""
-#~ "The range of values for the policy"
-#~ " tunable parameters, either a list or"
-#~ " a tuple, if it is a list, "
-#~ "it means that all parameters have "
-#~ "the same range of values"
-
-#~ msgid "stg_type: str"
-#~ msgstr ""
-
-#~ msgid "策略类型，用户自定义，用于区分不同的策略，例如均线策略、趋势跟随策略等"
-#~ msgstr ""
-#~ "Strategy type, user-defined, used to "
-#~ "distinguish between different strategies, such"
-#~ " as averaging strategy, trend-following "
-#~ "strategy, etc."
-
-#~ msgid "name: str"
-#~ msgstr ""
-
-#~ msgid "策略名称，用户自定义，用于区分不同的策略"
-#~ msgstr ""
-#~ "Policy name, user-defined, used to "
-#~ "distinguish between different policies"
-
-#~ msgid "description: str"
-#~ msgstr ""
-
-#~ msgid "策略描述，用户自定义，用于描述策略的基本原理"
-#~ msgstr ""
-#~ "Policy description, user-defined, used "
-#~ "to describe the rationale for the "
-#~ "policy"
-
-#~ msgid "data_freq: str"
-#~ msgstr ""
-
-#~ msgid "策略所使用的数据的频率，可以是以下几种类型： 'd'：日线数据 'w'：周线数据 'm'：月线数据"
-#~ msgstr ""
-#~ "The frequency of the data used by"
-#~ " the strategy can be of the "
-#~ "following types: 'd': daily data 'w':"
-#~ " weekly data 'm': monthly data"
-
-#~ msgid "sample_freq: str"
-#~ msgstr ""
-
-#~ msgid "策略的采样频率，可以是以下几种类型： 'd'：日线数据 'w'：周线数据 'm'：月线数据"
-#~ msgstr ""
-#~ "The sampling frequency of the strategy,"
-#~ " which can be of the following "
-#~ "types: 'd': daily data 'w': weekly "
-#~ "data 'm': monthly data"
-
-#~ msgid "window_length: int"
-#~ msgstr ""
-
-#~ msgid "策略所使用的数据的长度，即策略所使用的数据的长度，例如策略所使用的均线的长度"
-#~ msgstr ""
-#~ "The length of the data used by "
-#~ "the strategy, i.e. the length of "
-#~ "the data used by the strategy, "
-#~ "e.g. the length of the SMA used"
-#~ " by the strategy"
-
-#~ msgid "data_types: [str, list]"
-#~ msgstr ""
-
-#~ msgid "策略所使用的数据的类型，可以是一个字符串，也可以是一个列表，如果是字符串，则表示所有数据的类型都相同"
-#~ msgstr ""
-#~ "The type of data used by the "
-#~ "policy, either as a string or as"
-#~ " a list, and if it's a string,"
-#~ " it means that all the data is"
-#~ " of the same type"
-
-#~ msgid "reference_data_types: [str, list]"
-#~ msgstr ""
-
-#~ msgid "策略所使用的参考数据的类型，可以是一个字符串，也可以是一个列表，如果是字符串，则表示所有数据的类型都相同"
-#~ msgstr ""
-#~ "The type of reference data used by"
-#~ " the policy, either a string or "
-#~ "a list, and if it is a "
-#~ "string, it means that all the data"
-#~ " are of the same type"
-
-#~ msgid "bt_price_type: str"
-#~ msgstr ""
-
-#~ msgid "策略回测时的价格类型，可以是以下几种类型： 'open'：开盘价 'high'：最高价 'low'：最低价 'close'：收盘价"
-#~ msgstr ""
-#~ "The type of price for strategy "
-#~ "backtesting, which can be of the "
-#~ "following types: 'open': opening price "
-#~ "'high': highest price 'low': lowest "
-#~ "price 'close': closing price"
-
-#~ msgid "生成策略信号，该方法是策略的核心方法，所有的策略都必须实现该方法"
-#~ msgstr ""
-#~ "Generate strategy signals, this method "
-#~ "is the core method of the "
-#~ "strategy, all strategies must implement "
-#~ "this method"
-
-#~ msgid "通用交易策略类，用户可以使用策略输入的历史数据、参考数据和成交数据，自定信号生成规则，生成交易信号。"
-#~ msgstr ""
-#~ "General trading strategy class, the user"
-#~ " can use the strategy input "
-#~ "historical data, reference data and "
-#~ "transaction data, self-defined signal "
-#~ "generation rules, to generate trading "
-#~ "signals."
-
-#~ msgid ""
-#~ "策略的实现 要创建一个通用交易策略，需要创建一个GeneralStg策略类，并重写realize()方法，在其中定义交易信号"
-#~ " 的生成规则，并在策略属性中定义相关的数据类型和策略的运行参数。这样就可以将策略用于实盘或回测了。"
-#~ msgstr ""
-#~ "Strategy Implementation To create a "
-#~ "generic trading strategy, you need to"
-#~ " create a GeneralStg strategy class "
-#~ "and override the realize() method, where"
-#~ " you define the rules for generating"
-#~ " the trading signals, and define the"
-#~ " relevant data types and the "
-#~ "strategy's operational parameters in the "
-#~ "strategy properties. The strategy can "
-#~ "then be used for live trading or"
-#~ " backtesting."
-
-#~ msgid "推荐使用下面的方法创建策略类："
-#~ msgstr ""
-#~ "It is recommended to use the "
-#~ "following method to create a strategy"
-#~ " class:"
-
-#~ msgid "Class ExampleStrategy(GeneralStg):"
-#~ msgstr ""
-
-#~ msgid "def realize(self, h, r=None, t=None, pars=None):"
-#~ msgstr ""
-
-#~ msgid "# 在这里编写信号生成逻辑 ... result = ... # result代表策略的输出"
-#~ msgstr ""
-#~ "# Write the signal generation logic "
-#~ "here ... result = ... # result "
-#~ "represents the output of the strategy"
-
-#~ msgid "return result"
-#~ msgstr "return result"
-
-#~ msgid "用下面的方法创建一个策略对象："
-#~ msgstr "Create a policy object with the following method:"
-
-#~ msgid "example_strategy = ExampleStrategy(pars=<example pars>,"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "name='example', description='example strategy', "
-#~ "data_types='close' ... )"
-#~ msgstr ""
-
-#~ msgid "在创建策略类的时候可以定义默认策略参数，详见qteasy的文档——创建交易策略"
-#~ msgstr ""
-#~ "Default strategy parameters can be "
-#~ "defined when creating a strategy class,"
-#~ " see qteasy's documentation - Creating "
-#~ "Trading Strategies for more details"
-
-#~ msgid "GeneralStg通用策略的参数如下，更详细的参数说明、取值范围和含义请参见qteasy文档："
-#~ msgstr ""
-#~ "The parameters of the GeneralStg general"
-#~ " policy are listed below. See the "
-#~ "qteasy documentation for a more detailed"
-#~ " description of the parameters, value "
-#~ "ranges, and meanings:"
-
-#~ msgid ""
-#~ "pars: tuple,            策略参数 opt_tag: int,"
-#~ "           优化标记，策略是否参与参数优化 name: str,              "
-#~ "策略名称 description: str,       策略简介 par_count:"
-#~ " int,         策略参数个数 par_types: tuple/list,  "
-#~ "策略参数类型 par_range:              策略参数取值范围 data_freq:"
-#~ " str:         数据频率，用于生成策略输出所需的历史数据的频率 run_freq:"
-#~ "            策略运行采样频率，即相邻两次策略生成的间隔频率。 window_length:"
-#~ "          历史数据视窗长度。即生成策略输出所需要的历史数据的数量 data_types:"
-#~ "             静态属性生成策略输出所需要的历史数据的种类，由以逗号分隔的参数字符串组成 "
-#~ "strategy_run_timing:          "
-#~ "策略回测时所使用的历史价格种类，可以定义为开盘、收盘、最高、最低价中的一种 reference_data_types:"
-#~ "   参考数据类型，用于生成交易策略的历史数据，但是与具体的股票无关，可用于所有的股票的信号"
-#~ msgstr ""
-
-#~ msgid "生成，如指数、宏观经济数据等。"
-#~ msgstr "generation, such as indices, macroeconomic data, etc."
-
-#~ msgid "编写策略规则，策略规则是通过realize()函数实现的，关于realize()函数更详细的介绍，请参见qteasy文档。"
-#~ msgstr ""
-#~ "Write policy rules. Policy rules are "
-#~ "implemented using the realize() function. "
-#~ "For a more detailed description of "
-#~ "the realize() function, see the qteasy"
-#~ " documentation."
-
-#~ msgid "realize()的定义："
-#~ msgstr "Definition of realize():"
-
-#~ msgid "def realize(self,"
-#~ msgstr ""
-
-#~ msgid "h: np.ndarray, r: np.ndarray, t: np.ndarray):"
-#~ msgstr ""
-
-#~ msgid "realize()中获取策略参数："
-#~ msgstr "Get the policy parameters in realize():"
-
-#~ msgid "par_1, par_2, ..., par_n = self.pars"
-#~ msgstr ""
-
-#~ msgid "realize()中获取历史数据及其他相关数据，关于历史数据的更多详细说明，请参考qteasy文档："
-#~ msgstr ""
-#~ "Get historical data and other related"
-#~ " data in realize(), please refer to"
-#~ " the qteasy documentation for more "
-#~ "details about historical data:"
-
-#~ msgid "h(history): 历史数据片段，shape为(M, N, L)，即："
-#~ msgstr "h(history): history data fragment with shape (M, N, L), ie:"
-
-#~ msgid "M层：   股票类型"
-#~ msgstr "Level M: Stock Type"
-
-#~ msgid "N行：   交易日期/时间轴"
-#~ msgstr "Line N: Transaction date/timeline"
-
-#~ msgid "L列：   历史数据类型轴"
-#~ msgstr "Column L: Historical data type axis"
-
-#~ msgid "在realize()中获取历史数据可以使用切片的方法，获取的数据可用于策略。下面给出几个例子： 例如：设定："
-#~ msgstr ""
-#~ "Getting historical data in realize() can"
-#~ " be done using the slicing method,"
-#~ " and the acquired data can be "
-#~ "used for strategy. A few examples "
-#~ "are given below: e.g. Setting:"
-
-#~ msgid "asset_pool = \"000001.SZ, 000002.SZ, 600001.SH\""
-#~ msgstr ""
-
-#~ msgid "data_freq = 'd'"
-#~ msgstr ""
-
-#~ msgid "window_length = 100"
-#~ msgstr ""
-
-#~ msgid "data_types = \"open, high, low, close, pe\""
-#~ msgstr ""
-
-#~ msgid "以下例子都基于前面给出的参数设定 例1，计算每只股票最近的收盘价相对于10天前的涨跌幅："
-#~ msgstr ""
-#~ "The following examples are all based "
-#~ "on the parameter settings given earlier"
-#~ " Example 1, which calculates the "
-#~ "increase or decrease in each stock's "
-#~ "most recent closing price relative to"
-#~ " 10 days ago:"
-
-#~ msgid ""
-#~ "close_last_day = h_seg[:, -1, 3] "
-#~ "close_10_day = h_seg[:, -10, 3] rate_10"
-#~ " = (close_last_day / close_10_day) - "
-#~ "1"
-#~ msgstr ""
-
-#~ msgid "例2, 判断股票最近的收盘价是否大于10日内的最高价："
-#~ msgstr ""
-#~ "Example 2, Determine if the most "
-#~ "recent closing price of a stock is"
-#~ " greater than the highest price "
-#~ "within 10 days:"
-
-#~ msgid ""
-#~ "max_10_day = h_seg[:, -10:-1, 1].max(axis=1)"
-#~ " close_last_day = h_seg[:, -1, 3] "
-#~ "penetrate = close_last_day > max_10_day"
-#~ msgstr ""
-
-#~ msgid "例3, 获取股票最近10日市盈率的平均值"
-#~ msgstr ""
-#~ "Example 3, Getting the average of "
-#~ "a stock's P/E ratio over the last"
-#~ " 10 days."
-
-#~ msgid "pe_10_days = h_seg[:, -10:-1, 4] avg_pe = pe_10_days.mean(axis=1)"
-#~ msgstr ""
-
-#~ msgid "例4, 计算股票最近收盘价的10日移动平均价和50日移动平均价"
-#~ msgstr ""
-#~ "Example 4, Calculate the 10-day moving"
-#~ " average and 50-day moving average of"
-#~ " a stock's most recent closing price."
-
-#~ msgid ""
-#~ "close_10_days = h_seg[:, -10:-1, 3] "
-#~ "close_50_days = h_seg[:, -50:-1, 3] "
-#~ "ma_10 = close_10_days.mean(axis=1) ma_50 = "
-#~ "close_10_days.mean(axis=1)"
-#~ msgstr ""
-
-#~ msgid "r(reference):参考历史数据，默认为None，shape为(N, L)"
-#~ msgstr ""
-#~ "r(reference): reference to historical data,"
-#~ " default is None, shape is (N, "
-#~ "L)"
-
-#~ msgid "与每个个股并不直接相关，但是可以在生成交易信号时用做参考的数据，例如大盘数据，或者 宏观经济数据等，"
-#~ msgstr ""
-#~ "Data that is not directly related "
-#~ "to each individual stock, but can "
-#~ "be used as a reference when "
-#~ "generating trading signals, such as "
-#~ "broad market data, or macroeconomic "
-#~ "data."
-
-#~ msgid "N行, 交易日期/时间轴"
-#~ msgstr "Line N, transaction date/timeline"
-
-#~ msgid "L列，参考数据类型轴"
-#~ msgstr "Column L, reference data type axis"
-
-#~ msgid "以下是获取参考数据的几个例子："
-#~ msgstr "Below are a few examples of obtaining reference data:"
-
-#~ msgid "设定："
-#~ msgstr ""
-#~ "1, When ``APO`` is greater than 0,"
-#~ " it is judged to be a bullish"
-#~ " trend and the position ratio is "
-#~ "set to 1"
-
-#~ msgid "reference_data_types = \"000300.SH.close, 000001.SH.close\""
-#~ msgstr ""
-
-#~ msgid "例1: 获取最近一天的沪深300收盘价："
-#~ msgstr "Example 1: Get the closing price of CSI 300 for the last day:"
-
-#~ msgid "close_300 = r[-1, 0]"
-#~ msgstr ""
-
-#~ msgid "例2: 获取五天前的上证指数收盘价:"
-#~ msgstr "Example 2: Get the closing price of the SSE five days ago."
-
-#~ msgid "close_SH = r[-5, 1]"
-#~ msgstr ""
-
-#~ msgid "t(trade):交易历史数据，默认为None，shape为(N, 5)"
-#~ msgstr "t(trade): trade history data, default is None, shape is (N, 5)"
-
-#~ msgid ""
-#~ "最近几次交易的结果数据，2D数据。包含N行5列数据 如果交易信号不依赖交易结果（只有这样才能批量生成交易信号），t会是None。"
-#~ " 数据的结构如下"
-#~ msgstr ""
-#~ "Result data of the last few "
-#~ "trades, 2D data. Contains N rows "
-#~ "and 5 columns of data If the "
-#~ "trade signals do not depend on the"
-#~ " trade results (the only way to "
-#~ "batch generate trade signals), t will"
-#~ " be None. The structure of the "
-#~ "data is as follows"
-
-#~ msgid "N行， 股票/证券类型轴"
-#~ msgstr "Row N, Stock/Security Type Axis"
-
-#~ msgid "每一列代表一只个股或证券"
-#~ msgstr "Each column represents an individual stock or security"
-
-#~ msgid "5列,  交易数据类型轴"
-#~ msgstr "5 columns, transaction data type axis"
-
-#~ msgid "0, own_amounts:              当前持有每种股票的份额"
-#~ msgstr "0, own_amounts: Current share of each stock held"
-
-#~ msgid "1, available_amounts:        当前可用的每种股票的份额"
-#~ msgstr "1, available_amounts: currently available shares of each stock"
-
-#~ msgid "2, current_prices:           当前的股票价格"
-#~ msgstr "2, current_prices: current stock prices"
-
-#~ msgid "3, recent_amounts_change:    最近一次成交量（正数表示买入，负数表示卖出）"
-#~ msgstr ""
-#~ "3, recent_amounts_change: recent volume "
-#~ "(positive numbers indicate buying, negative"
-#~ " numbers indicate selling)"
-
-#~ msgid "4, recent_trade_prices:      最近一次成交价格"
-#~ msgstr "4, recent_trade_prices: latest trade prices"
-
-#~ msgid "示例：以下是在策略中获取交易数据的几个例子："
-#~ msgstr ""
-#~ "Examples: Here are a few examples "
-#~ "of how to get transaction data in"
-#~ " a strategy:"
-
-#~ msgid "例1: 获取所有股票最近一次成交的价格和成交量(1D array，没有成交时输出为nan)："
-#~ msgstr ""
-#~ "Example 1: Get the price and "
-#~ "volume of the most recent transaction"
-#~ " of all stocks (1D array, output "
-#~ "as nan if there is no "
-#~ "transaction):"
-
-#~ msgid ""
-#~ "volume = t[:, 3] trade_prices = "
-#~ "t[:, 4] 或者: t = t.T volume ="
-#~ " t[3] trade_prices = t[4]"
-#~ msgstr ""
-
-#~ msgid "例2: 获取当前持有股票数量:"
-#~ msgstr "Example 2: Get the current number of stocks held."
-
-#~ msgid "own_amounts = t[:, 0] 或者: t = t.T own_amounts = t[0]"
-#~ msgstr "own_amounts = t[:, 0] or: t = t.T own_amounts = t[0]"
-
-#~ msgid ""
-#~ "realize()方法的输出： realize()方法的输出就是交易信号(1D "
-#~ "ndarray),shape为(M,)，M为股票的个数，dtype为float "
-#~ "ndarray中每个元素代表相应股票的操作信号。在不同的信号类型时，交易信号的含义不同："
-#~ msgstr ""
-#~ "realize() method output: realize() method "
-#~ "output is the trading signal (1D "
-#~ "ndarray), shape is (M,), M is the"
-#~ " number of stocks, dtype is float "
-#~ "ndarray in each element represents the"
-#~ " corresponding stock operation signal. At"
-#~ " different signal types, trading signals"
-#~ " have different meanings:"
-
-#~ msgid ""
-#~ "signal type   |         PT           |"
-#~ "            PS           |       VS"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "sig > 1    |         N/A          |"
-#~ "           N/A           | Buy in sig "
-#~ "shares"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "1 >= sig > 0  | Buy to "
-#~ "sig position  | Buy with sig% of"
-#~ " cash   | Buy in sig shares"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "sig = 0    | Sell to hold 0"
-#~ " share |        Do Nothing       |     "
-#~ "Do Nothing"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "0 > sig >= -1 |         N/A"
-#~ "          | Sell sig% of share hold"
-#~ " |  Sell sig shares"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "sig < -1    |         N/A          |"
-#~ "           N/A           |  Sell sig shares"
-#~ msgstr ""
-
-#~ msgid "按照前述规则设置好策略的参数，并在realize函数中定义好逻辑规则后，一个策略就可以被添加到Operator 中，并产生交易信号了。"
-#~ msgstr ""
-#~ "After setting the parameters of the "
-#~ "strategy according to the aforementioned "
-#~ "rules and defining the logical rules "
-#~ "in the realize function, a strategy "
-#~ "can be added to Operator and trade"
-#~ " signals can be generated."
-
-#~ msgid ""
-#~ "这些选股因子的排序和筛选条件，由6个选股参数来控制，因此用户只需要在策略属性中设置好相应的参数， "
-#~ "策略就可以根据选股因子输出交易信号了。用户只需要集中精力思考选股因子的定义逻辑即可，无需费时费力编写 因子的筛选排序取舍逻辑了。"
-#~ msgstr ""
-#~ "The sorting and filtering conditions of"
-#~ " these stock picks are controlled by"
-#~ " 6 stock picking parameters, so the"
-#~ " user only needs to set up the"
-#~ " corresponding parameters in the strategy"
-#~ " properties, and the strategy will be"
-#~ " able to output trading signals based"
-#~ " on the stock picks. Users only "
-#~ "need to focus on thinking about "
-#~ "the logic of defining the stock "
-#~ "picking factors, and do not need "
-#~ "to spend time and effort writing "
-#~ "the logic of filtering, sorting and "
-#~ "rounding the factors."
-
-#~ msgid "Class ExampleStrategy(FactorSorter):"
-#~ msgstr ""
-
-#~ msgid "# 在这里编写信号生成逻辑 ... factor = ... # factor代表策略输出的选股因子，用于进一步选股"
-#~ msgstr ""
-#~ "# Write signal generation logic here "
-#~ "... factor = ... # factor "
-#~ "represents the stock picking factor "
-#~ "output by the strategy, which is "
-#~ "used for further stock picking"
-
-#~ msgid "return factor"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "与通用策略类不同，FactorSorter策略需要几个特殊属性用于确定选股行为（以下*者） "
-#~ "策略属性如下，更详细的参数说明、取值范围和含义请参见qteasy文档："
-#~ msgstr ""
-#~ "Unlike the generic strategy classes, "
-#~ "FactorSorter strategies require several "
-#~ "special attributes for determining stock "
-#~ "picking behavior (the following *'s) The"
-#~ " strategy attributes are listed below, "
-#~ "see the qteasy documentation for more"
-#~ " detailed parameter descriptions, value "
-#~ "ranges, and meanings:"
-
-#~ msgid ""
-#~ "pars:               tuple,  策略参数 opt_tag:"
-#~ "            int,    优化标记，策略是否参与参数优化 name:"
-#~ "               str,    策略名称 description:        "
-#~ "str,    策略简介 par_count:          int,    "
-#~ "策略参数个数 par_types:          tuple,  策略参数类型 "
-#~ "par_range:          tuple,  策略参数取值范围 data_freq:"
-#~ "          str:    数据频率，用于生成策略输出所需的历史数据的频率 run_freq:"
-#~ "                策略运行采样频率，即相邻两次策略生成的间隔频率。 window_length:"
-#~ "              历史数据视窗长度。即生成策略输出所需要的历史数据的数量 data_types:"
-#~ "                 静态属性生成策略输出所需要的历史数据的种类，由以逗号分隔的参数字符串组成 "
-#~ "strategy_run_timing:              "
-#~ "策略回测时所使用的历史价格种类，可以定义为开盘、收盘、最高、最低价中的一种 reference_data_types:"
-#~ "       参考数据类型，用于生成交易策略的历史数据，但是与具体的股票无关，可用于所有的股票的信号"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "*max_sel_count:     float,  "
-#~ "选股限额，表示最多选出的股票的数量，默认值：0.5，表示选中50%的股票 *condition:         "
-#~ "str ,   确定股票的筛选条件，默认值'any'"
-#~ msgstr ""
-#~ "*max_sel_count: float, stock selection limit,"
-#~ " indicates the maximum number of "
-#~ "stocks selected, default value: 0.5, "
-#~ "indicates 50% of stocks selected "
-#~ "*condition: str , determines the "
-#~ "screening condition of the stock, "
-#~ "default value 'any'"
-
-#~ msgid ""
-#~ "'any'        :默认值，选择所有可用股票 'greater'    "
-#~ ":筛选出因子大于ubound的股票 'less'       :筛选出因子小于lbound的股票 "
-#~ "'between'    :筛选出因子介于lbound与ubound之间的股票 "
-#~ "'not_between':筛选出因子不在lbound与ubound之间的股票"
-#~ msgstr ""
-#~ "'any' :default value, select all "
-#~ "available stocks 'greater' :filter out "
-#~ "stocks with factor greater than ubound"
-#~ " 'less' :filter out stocks with "
-#~ "factor less than lbound 'between' "
-#~ ":filter out stocks with factor between"
-#~ " lbound and ubound 'not_between' :filter"
-#~ " out stocks with factor not between"
-#~ " lbound and ubound"
-
-#~ msgid ""
-#~ "*lbound:            float,  执行条件筛选时的指标下界, 默认值np.-inf"
-#~ " *ubound:            float,  执行条件筛选时的指标上界, "
-#~ "默认值np.inf *sort_ascending:    bool,   排序方法，默认值: "
-#~ "False, True: 优先选择因子最小的股票, False, 优先选择因子最大的股票"
-#~ " *weighting:         str ,   确定如何分配选中股票的权重"
-#~ msgstr ""
-#~ "*lbound: float, the lower bound of "
-#~ "the indicator when performing conditional "
-#~ "filtering, defaults to np.-inf *ubound: "
-#~ "float, the upper bound of the "
-#~ "indicator when performing conditional "
-#~ "filtering, defaults to np.inf *sort_ascending:"
-#~ " bool, the sorting method, defaults "
-#~ "to: False, True: prioritize stocks with"
-#~ " the smallest factor, False, prioritize "
-#~ "stocks with the largest factor. False,"
-#~ " prioritize stocks with the largest "
-#~ "selection factor *weighting: str , "
-#~ "determines how to assign weights to "
-#~ "selected stocks"
-
-#~ msgid ""
-#~ "默认值: 'even' 'even'       :所有被选中的股票都获得同样的权重 "
-#~ "'linear'     :权重根据因子排序线性分配 'distance'   "
-#~ ":股票的权重与他们的指标与最低之间的差值（距离）成比例 'proportion' :权重与股票的因子分值成正比"
-#~ msgstr ""
-#~ "Default: 'even' 'even' :all selected "
-#~ "stocks are given the same weight "
-#~ "'linear' :weights are assigned linearly "
-#~ "according to the factor ordering "
-#~ "'distance' :stocks are given weights "
-#~ "proportional to the difference (distance) "
-#~ "between their indicator and the minimum"
-#~ " 'proportion' :weights are proportional to"
-#~ " the stock's factor scores"
-
-#~ msgid ""
-#~ "h: np.ndarray, r: np.ndarray = None, "
-#~ "t: np.ndarray = None, pars: tuple "
-#~ "= None ):"
-#~ msgstr ""
-
-#~ msgid "或者："
-#~ msgstr "or:"
-
-#~ msgid "if pars is not None:"
-#~ msgstr "if pars is not None: If pars is not None."
-
-#~ msgid "par_1, par_2, ..., par_n = pars"
-#~ msgstr ""
-
-#~ msgid "else:"
-#~ msgstr ""
-
-#~ msgid "M层：   M种股票的数据"
-#~ msgstr "Layer M: Data for M stocks"
-
-#~ msgid "N行：   历史数据时间跨度"
-#~ msgstr "Row N: Historical data time span"
-
-#~ msgid "L列：   L种历史数据类型"
-#~ msgstr "Column L: L historical data types"
-
-#~ msgid ""
-#~ "close_last_day = h[:, -1, 3] "
-#~ "close_10_day = h[:, -10, 3] rate_10 "
-#~ "= (close_last_day / close_10_day) - 1"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "max_10_day = h[:, -10:-1, 1].max(axis=1) "
-#~ "close_last_day = h[:, -1, 3] penetrate"
-#~ " = close_last_day > max_10_day"
-#~ msgstr ""
-
-#~ msgid "pe_10_days = h[:, -10:-1, 4] avg_pe = pe_10_days.mean(axis=1)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "close_10_days = h[:, -10:-1, 3] "
-#~ "close_50_days = h[:, -50:-1, 3] ma_10"
-#~ " = close_10_days.mean(axis=1) ma_50 = "
-#~ "close_10_days.mean(axis=1)"
-#~ msgstr ""
-
-#~ msgid "reference_data_types = \"close-000300.SH, close-000001.SH\""
-#~ msgstr ""
-
-#~ msgid "2, current_prices:           当前的交易价格"
-#~ msgstr "2, current_prices: current transaction prices"
-
-#~ msgid ""
-#~ "realize()方法的输出： FactorSorter交易策略的输出信号为1D "
-#~ "ndarray，这个数组不是交易信号，而是选股因子，策略会根据选股因子 "
-#~ "自动生成股票的交易信号，通常交易信号类型应该为PT，即使用选股因子控制股票的目标仓位。"
-#~ msgstr ""
-
-#~ msgid "output："
-#~ msgstr ""
-
-#~ msgid "np.array(arr), 如： np.array[0.1, 1.0, 10.0, 100.0]"
-#~ msgstr "np.array(arr), e.g. np.array[0.1, 1.0, 10.0, 100.0]"
-
-#~ msgid "根据上述选股因子，FactorSorter()策略会根据其配置参数生成各个股票的目标仓位，"
-#~ msgstr ""
-
-#~ msgid "例如：当"
-#~ msgstr "for example: when"
-
-#~ msgid "max_sel_count=0.5 condition='greater', ubound=0.5, weighting='even'"
-#~ msgstr ""
-
-#~ msgid "时，上述因子的选股结果为:"
-#~ msgstr "The stock selection results for the above factors when."
-
-#~ msgid "np.array[0.0, 0.0, 0.5, 0.5]"
-#~ msgstr ""
-
-#~ msgid "在使用FactorSorter策略类时，建议将信号类型设置为PT,此时策略根据选股因子生成的交易信号含义如下:"
-#~ msgstr ""
-
-#~ msgid "signal type   |         PT prefered type     |"
-#~ msgstr ""
-
-#~ msgid "sig > 1    |              N/A             |"
-#~ msgstr ""
-
-#~ msgid "1 >= sig > 0  |      Buy to sig position     |"
-#~ msgstr ""
-
-#~ msgid "sig = 0    |      Sell to hold 0 share    |"
-#~ msgstr ""
-
-#~ msgid "0 > sig >= -1 |             N/A              |"
-#~ msgstr ""
-
-#~ msgid "sig < -1    |             N/A              |"
-#~ msgstr ""
-
-#~ msgid "关于Strategy类的更详细说明，请参见qteasy的文档。"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "这类策略要求用户针对投资组合中的一个投资品种设计交易规则，在realize()方法定义该交易规则， "
-#~ "策略可以把同样的交易规则应用推广到投资组合中的所有投资品种上，同时可以采用不同的策略参数。"
-#~ msgstr ""
-
-#~ msgid "pars:               tuple,"
-#~ msgstr ""
-
-#~ msgid "opt_tag:            int,"
-#~ msgstr ""
-
-#~ msgid "优化标记，策略是否参与参数优化"
-#~ msgstr ""
-
-#~ msgid "name:               str,"
-#~ msgstr ""
-
-#~ msgid "策略名称"
-#~ msgstr ""
-
-#~ msgid "description:        str,"
-#~ msgstr ""
-
-#~ msgid "策略简介"
-#~ msgstr ""
-
-#~ msgid "par_count:          int,"
-#~ msgstr ""
-
-#~ msgid "策略参数个数"
-#~ msgstr ""
-
-#~ msgid "par_types:          tuple,"
-#~ msgstr ""
-
-#~ msgid "策略参数类型"
-#~ msgstr ""
-
-#~ msgid "par_range:          tuple,"
-#~ msgstr ""
-
-#~ msgid "策略参数取值范围"
-#~ msgstr ""
-
-#~ msgid "data_freq:          str:"
-#~ msgstr ""
-
-#~ msgid "数据频率，用于生成策略输出所需的历史数据的频率"
-#~ msgstr ""
-
-#~ msgid "run_freq:"
-#~ msgstr ""
-
-#~ msgid "策略运行采样频率，即相邻两次策略生成的间隔频率。"
-#~ msgstr ""
-
-#~ msgid "window_length:"
-#~ msgstr ""
-
-#~ msgid "历史数据视窗长度。即生成策略输出所需要的历史数据的数量"
-#~ msgstr ""
-
-#~ msgid "data_types:"
-#~ msgstr ""
-
-#~ msgid "静态属性生成策略输出所需要的历史数据的种类，由以逗号分隔的参数字符串组成"
-#~ msgstr ""
-
-#~ msgid "strategy_run_timing:"
-#~ msgstr ""
-
-#~ msgid "策略回测时所使用的历史价格种类，可以定义为开盘、收盘、最高、最低价中的一种"
-#~ msgstr ""
-
-#~ msgid "reference_data_types:"
-#~ msgstr ""
-
-#~ msgid "参考数据类型，用于生成交易策略的历史数据，但是与具体的股票无关，可用于所有 的股票的信号生成，如指数、宏观经济数据等。"
-#~ msgstr ""
-
-#~ msgid "Examples"
-#~ msgstr ""
-
-#~ msgid "Class ExampleStrategy(RuleIterator):"
-#~ msgstr ""
-
-#~ msgid "input"
-#~ msgstr ""
-
-#~ msgid "h: 历史数据，一个2D numpy数组，包含一只股票在一个时间窗口内的所有类型的历史数据，"
-#~ msgstr ""
-
-#~ msgid "h 的shape为(N, L)，含义如下："
-#~ msgstr ""
-
-#~ msgid "N行：交易时间轴"
-#~ msgstr ""
-
-#~ msgid "L列： 历史数据类型轴"
-#~ msgstr ""
-
-#~ msgid "示例："
-#~ msgstr ""
-
-#~ msgid "以下例子都基于前面给出的参数设定 例1，计算最近的收盘价相对于10天前的涨跌幅："
-#~ msgstr ""
-
-#~ msgid ""
-#~ "close_last_day = h_seg[-1, 3] close_10_day "
-#~ "= h_seg[-10, 3] rate_10 = "
-#~ "(close_last_day / close_10_day) - 1"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "max_10_day = h_seg[-10:-1, 1].max(axis=1) "
-#~ "close_last_day = h_seg[-1, 3] penetrate "
-#~ "= close_last_day > max_10_day"
-#~ msgstr ""
-
-#~ msgid "pe_10_days = h_seg[-10:-1, 4] avg_pe = pe_10_days.mean(axis=1)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "close_10_days = h_seg[-10:-1, 3] close_50_days"
-#~ " = h_seg[-50:-1, 3] ma_10 = "
-#~ "close_10_days.mean(axis=1) ma_50 = "
-#~ "close_10_days.mean(axis=1)"
-#~ msgstr ""
-
-#~ msgid ":output signals: 一个代表交易信号的数字，dtype为float"
-#~ msgstr ""
-
-#~ msgid "realize()方法的输出： realize()方法的输出就是交易信号，该交易信号是一个数字，策略会将其推广到整个投资组合："
-#~ msgstr ""
-
-#~ msgid "def realize(): -> int"
-#~ msgstr ""
-
-#~ msgid "投资组合： [share1, share2, share3, share4]"
-#~ msgstr ""
-
-#~ msgid "|       |       |"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "[ int1,    int2,   int3,   int4] -> "
-#~ "np.array[ int1,    int2,   int3,   int4]"
-#~ msgstr ""
-
-#~ msgid "在不同的信号类型下，信号的含义不同。"
-#~ msgstr ""
-
-#~ msgid "关于Strategy类的更详细说明，请参见qteasy的文档。 RuleIterator 策略类继承了交易策略基类"
-#~ msgstr ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

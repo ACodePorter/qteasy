@@ -154,12 +154,5 @@ msgstr ""
 msgid "排错手册：`live_trading/5-artifacts-and-troubleshooting.md`"
 msgstr ""
 
-#~ msgid "本文介绍如何在 TUI 中模拟实盘交易。"
-#~ msgstr ""
-#~ "This article describes how to simulate"
-#~ " live trading in Terminal User "
-#~ "Interface (TUI)."
 
-#~ msgid "未完待续"
-#~ msgstr "To be completed"
 

@@ -2033,6 +2033,4 @@ msgstr ""
 msgid "![png](img/output_12_1_2.png)"
 msgstr ""
 
-#~ msgid "blender表达式中支持的函数如下："
-#~ msgstr "Functions supported in the blender expression are as follows:"
 

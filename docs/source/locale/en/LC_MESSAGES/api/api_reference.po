@@ -2202,138 +2202,33 @@ msgstr "``30''"
 msgid "策略参数优化后输出的最优参数数量"
 msgstr "Number of optimal parameters output after optimization of policy parameters"
 
-#~ msgid "参数"
-#~ msgstr "Parameters"
 
-#~ msgid "Parameters"
-#~ msgstr "Parameters"
 
-#~ msgid "Return type"
-#~ msgstr "Return type"
 
-#~ msgid "Notes"
-#~ msgstr "Notes"
 
-#~ msgid "Examples"
-#~ msgstr "Examples"
 
-#~ msgid "重设config对象，将所有的参数都设置为默认值"
-#~ msgstr "Reset the config object to set all parameters to their default values"
 
-#~ msgid "Returns"
-#~ msgstr "Returns"
 
-#~ msgid "Raises"
-#~ msgstr "Raises"
 
-#~ msgid ""
-#~ "保配置变量到初始配置文件 qteasy.cfg 中，如果qteasy.cfg中已经存在部配置变量了，则覆盖相配置变量"
-#~ " TODO: 实现将配置变量写入qteasy.cfg初始配置文件的功能"
-#~ msgstr ""
-#~ "Ensures that configuration variables are "
-#~ "written to the initial qteasy.cfg "
-#~ "configuration file, and overrides them "
-#~ "if they already exist in qteasy.cfg "
-#~ "TODO: Implement the ability to write "
-#~ "configuration variables to the initial "
-#~ "qteasy.cfg configuration file."
 
-#~ msgid "由于目前使用pickle写入对象为二进制文件，而qteasy.cfg是文本文件，所以需要实现一个新的写入方式"
-#~ msgstr ""
-#~ "Since the current write object using "
-#~ "pickle is a binary file and "
-#~ "qteasy.cfg is a text file, a new"
-#~ " write method needs to be implemented"
 
-#~ msgid "如果列表为空，则不自动下载任何历史数据"
-#~ msgstr "If the list is empty, no historical data is automatically downloaded"
 
-#~ msgid "<本功能目前尚未实现! NotImplemented>"
-#~ msgstr "<This feature is currently not implemented! NotImplemented>"
 
-#~ msgid "明细交易日志的存储路径"
-#~ msgstr "Detailed transaction log storage path"
 
-#~ msgid "``benchmark_asset_type``"
-#~ msgstr "``benchmark_asset_type``"
 
-#~ msgid "基准收益的资产类型，包括："
-#~ msgstr "Asset types for benchmark returns, including:"
 
-#~ msgid "``benchmark_dtype``"
-#~ msgstr "``benchmark_dtype``"
 
-#~ msgid "``close``"
-#~ msgstr ""
-#~ "Starting from the next version, the "
-#~ "adj parameter will no longer be "
-#~ "available, so please specify the "
-#~ "reweighting price directly in htype "
-#~ "using close:b, etc."
 
-#~ msgid "作为基准收益的资产的价格类型。"
-#~ msgstr "The type of price of the asset used as the benchmark return."
 
-#~ msgid "``20160405``"
-#~ msgstr "``20160405``"
 
-#~ msgid "``20210201``"
-#~ msgstr "``20210201``"
 
-#~ msgid "``maximize_cash_usage``"
-#~ msgstr "``maximize_cash_usage``"
 
-#~ msgid "回测交易时是否最大化利用同一批次交易获得的现金。即优先卖出股票并将获得的现金立即"
-#~ msgstr ""
-#~ "Backtesting trades to see if they "
-#~ "maximize the use of cash gained "
-#~ "from the same batch of trades. "
-#~ "That is, prioritizing the sale of "
-#~ "shares and the immediate cash gained"
 
-#~ msgid "用于同一批次的买入交易，以便最大限度利用可用现金。当现金的交割期大于0时无效。"
-#~ msgstr ""
-#~ "Used for buy trades in the same"
-#~ " lot to maximize the use of "
-#~ "available cash. Not valid when cash "
-#~ "has a delivery period greater than "
-#~ "0."
 
-#~ msgid "- True -  默认值，首先处理同一批次交易中的卖出信号，并在可能时将获得的现金"
-#~ msgstr ""
-#~ "- True - the default value, which"
-#~ " first processes sell signals in the"
-#~ " same batch of trades and, when "
-#~ "possible, will obtain the cash"
 
-#~ msgid "立即用于本次买入"
-#~ msgstr "Immediately available for this buy"
 
-#~ msgid "- False - 同批次买入和卖出信号同时处理，不立即使用卖出资产的现金将同一批"
-#~ msgstr ""
-#~ "- False - The same batch of "
-#~ "buy and sell signals are processed "
-#~ "at the same time, and cash that"
-#~ " is not immediately used to sell "
-#~ "assets will be the same batch of"
 
-#~ msgid "次交易委托同时提交时，这是正常情况"
-#~ msgstr ""
-#~ "This is the normal case if all "
-#~ "the orders are submitted at the "
-#~ "same time."
 
-#~ msgid "``20191231``"
-#~ msgstr "``20191231`''"
 
-#~ msgid "``20200106``"
-#~ msgstr "``20200106`''"
 
-#~ msgid "优化模式下的策略测试区间开始日期格式为\"YYYYMMDD\"字符串类型输入"
-#~ msgstr ""
-#~ "Optimized mode policy test interval "
-#~ "start date format \"YYYYMMDD\" string "
-#~ "type input"
 
-#~ msgid "格式为\"YYYYMMDD\"字符串类型输入"
-#~ msgstr "Format as \"YYYYMMDD\" string type input"

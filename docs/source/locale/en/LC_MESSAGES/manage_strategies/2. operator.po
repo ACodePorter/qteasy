@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2026-05-23 14:30+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -21,97 +20,109 @@ msgstr ""
 
 #: ../../source/manage_strategies/2. operator.md:1
 msgid "Operator：创建与基本配置"
-msgstr ""
+msgstr "Operator: Creation and Basic Configuration"
 
 #: ../../source/manage_strategies/2. operator.md:3
 msgid "Operator 是 qteasy 中策略的容器与调度器，负责在回测或实盘中按既定频率与时间点运行策略并输出统一格式的信号。"
 msgstr ""
+"``Operator`` is qteasy's strategy container and scheduler. It runs strategies at configured frequencies "
+"and times in backtest or live trading and outputs signals in a unified format."
 
 #: ../../source/manage_strategies/2. operator.md:5
 msgid "创建 Operator"
-msgstr ""
+msgstr "Create an Operator"
 
 #: ../../source/manage_strategies/2. operator.md:7
 msgid ""
 "使用 ``qt.Operator()`` 创建，可传入策略列表及 "
 "``signal_type``、``run_freq``、``run_timing`` 等："
 msgstr ""
+"Create one with ``qt.Operator()``, optionally passing a strategy list and ``signal_type``, "
+"``run_freq``, ``run_timing``, and other arguments:"
 
 #: ../../source/manage_strategies/2. operator.md:19
 msgid "添加策略"
-msgstr ""
+msgstr "Add Strategies"
 
 #: ../../source/manage_strategies/2. operator.md:21
 msgid ""
 "**add_strategy(stg, run_freq=None, run_timing=None)**：添加单个策略，可指定该策略的 "
 "``run_freq``/``run_timing``，与已有相同则归入同一 Group，否则新建 Group。"
 msgstr ""
+"**``add_strategy(stg, run_freq=None, run_timing=None)``**: Add a single strategy with optional "
+"``run_freq``/``run_timing``; joins an existing Group if they match, otherwise creates a new Group."
 
 #: ../../source/manage_strategies/2. operator.md:22
 msgid ""
 "**add_strategies(stg_list, run_freq=None, run_timing=None)**：批量添加，同样按 "
 "``run_freq``/``run_timing`` 归组。"
 msgstr ""
+"**``add_strategies(stg_list, run_freq=None, run_timing=None)``**: Add multiple strategies and group them "
+"by ``run_freq``/``run_timing`` the same way."
 
 #: ../../source/manage_strategies/2. operator.md:30
 msgid "常用属性及含义"
-msgstr ""
+msgstr "Common Attributes and Meanings"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "属性"
-msgstr ""
+msgstr "Attribute"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "含义"
-msgstr ""
+msgstr "Meaning"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "**signal_type**"
-msgstr ""
+msgstr "**signal_type**"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "信号类型：`PT` 择时（目标仓位）、`PS` 择股（选股列表）、`VS` 向量信号等。"
 msgstr ""
+"Signal type: ``PT`` position target, ``PS`` proportional signal, ``VS`` value signal, etc."
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "**run_freq**"
-msgstr ""
+msgstr "**run_freq**"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "运行频率，如 `'d'` 日、`'1min'` 分钟等，与 DataType 的 freq 对应。"
-msgstr ""
+msgstr "Run frequency, e.g., ``'d'`` daily or ``'1min'``; aligns with ``DataType`` ``freq``."
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "**run_timing**"
-msgstr ""
+msgstr "**run_timing**"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "运行时刻，如 `'open'` 开盘、`'close'` 收盘等。"
-msgstr ""
+msgstr "Run timing, e.g., ``'open'`` at open or ``'close'`` at close."
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "**groups**"
-msgstr ""
+msgstr "**groups**"
 
 #: ../../source/manage_strategies/2. operator.md
 msgid "各 Group 信息（相同 run_freq/run_timing 的策略为一组）。"
-msgstr ""
+msgstr "Group details (strategies with the same ``run_freq``/``run_timing`` form one group)."
 
 #: ../../source/manage_strategies/2. operator.md:39
 msgid "设置策略参数"
-msgstr ""
+msgstr "Set Strategy Parameters"
 
 #: ../../source/manage_strategies/2. operator.md:41
 msgid ""
 "使用 **set_parameter(stg_id, pars=None, run_freq=None, run_timing=None, "
 "...)** 为指定策略设置可调参数或归组："
 msgstr ""
+"Use **``set_parameter(stg_id, pars=None, run_freq=None, run_timing=None, ...)``** to set tunable "
+"parameters or group assignment for a strategy:"
 
 #: ../../source/manage_strategies/2. operator.md:47
 msgid "运行前检查"
-msgstr ""
+msgstr "Pre-run Check"
 
 #: ../../source/manage_strategies/2. operator.md:49
 msgid "**is_ready()**：检查 Operator 是否已配置好策略与数据要求，可用于回测/优化前自检。"
 msgstr ""
-
+"**``is_ready()``**: Check whether the Operator is configured with strategies and data requirements; "
+"useful before backtest or optimization."

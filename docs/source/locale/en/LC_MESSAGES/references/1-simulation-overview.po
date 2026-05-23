@@ -245,15 +245,6 @@ msgstr ""
 msgid "排错手册：`live_trading/5-artifacts-and-troubleshooting.md`"
 msgstr ""
 
-#~ msgid "交易策略的模拟实盘运行"
-#~ msgstr "Simulated Live Trading"
 
-#~ msgid "本文介绍如何使用`qteasy`模拟实盘运行交易策略。"
-#~ msgstr ""
-#~ "This article describes how to use "
-#~ "`qteasy` to simulate live trading "
-#~ "strategies."
 
-#~ msgid "未完待续"
-#~ msgstr "To be completed"
 
