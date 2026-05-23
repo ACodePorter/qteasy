@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/api/history_data.rst:2
 msgid "历史数据获取和管理"
-msgstr "Acquiring and Managing Data"
+msgstr "Daten erfassen und verwalten"
 
 #: ../../source/api/history_data.rst:4
 msgid ""
@@ -71,7 +71,7 @@ msgstr ""
 #: qteasy.core.get_table_info qteasy.core.get_table_overview
 #: qteasy.core.refill_data_source
 msgid "参数"
-msgstr "Parameters"
+msgstr "Parameter"
 
 #: of qteasy.datatypes.find_history_data:4
 msgid "一个字符串，用于查找或匹配历史数据类型"
@@ -157,7 +157,7 @@ msgstr ""
 #: qteasy.core.get_history_data qteasy.core.get_stock_info
 #: qteasy.core.get_table_info
 msgid "返回"
-msgstr "Back"
+msgstr "Zurück"
 
 #: of qteasy.datatypes.find_history_data:29
 msgid ""
@@ -208,7 +208,7 @@ msgstr "freq: Frequenz"
 
 #: of qteasy.datatypes.find_history_data:35
 msgid "asset_type:  资产类型"
-msgstr "asset_type:  Asset type"
+msgstr "asset_type: Asset-Typ"
 
 #: of qteasy.datatypes.find_history_data:36
 msgid "table_name:  底层数据表名称"
@@ -223,11 +223,11 @@ msgstr "Spalte: Entsprechender Datenfeldname"
 #: qteasy.core.get_table_info:28 qteasy.core.refill_data_source:73
 #: qteasy.datatypes.find_history_data:40
 msgid "示例"
-msgstr "Example"
+msgstr "Beispiel"
 
 #: ../../source/api/history_data.rst
 msgid "抛出"
-msgstr "Throw"
+msgstr "Werfen"
 
 #: of qteasy.datatypes.find_history_data:83
 msgid "输入的 s 不是字符串，或者 freq/asset_type/table 不是字符串或列表"
@@ -237,7 +237,7 @@ msgstr ""
 
 #: ../../source/api/history_data.rst:18
 msgid "下载历史数据"
-msgstr "Download Historical Data"
+msgstr "Laden Sie historische Daten herunter"
 
 #: ../../source/api/history_data.rst:20
 msgid ""
@@ -301,11 +301,11 @@ msgstr ""
 
 #: of qteasy.core.refill_data_source:12
 msgid "'akshare'     : 从AKshare API获取金融数据"
-msgstr "`akshare`     : Get financial data from AKshare API"
+msgstr "`akshare`: Erhalten Sie Finanzdaten von der AKshare-API"
 
 #: of qteasy.core.refill_data_source:13
 msgid "'eastmoney'   : 从东方财富网获取金融数据"
-msgstr "`eastmoney`   : Get financial data from Eastmoney"
+msgstr "`eastmoney`: Erhalten Sie Finanzdaten von Eastmoney"
 
 #: of qteasy.core.refill_data_source:15
 msgid "数据表名，必须是database中定义的数据表，用于指定需要下载的数据表"
@@ -458,7 +458,7 @@ msgstr "Wenn True, Daten-Download-Protokoll aufzeichnen"
 #: qteasy.core.get_table_info qteasy.core.get_table_overview
 #: qteasy.core.refill_data_source
 msgid "返回类型"
-msgstr "Return type"
+msgstr "Rückgabetyp"
 
 #: ../../source/api/history_data.rst:26
 msgid "历史数据下载到本地之后，可以检查、管理、调用这些数据。"
@@ -468,7 +468,7 @@ msgstr ""
 
 #: ../../source/api/history_data.rst:29
 msgid "检查本地数据"
-msgstr "Check Local Data"
+msgstr "Überprüfen Sie die lokalen Daten"
 
 #: of qteasy.core.get_table_info:1
 msgid "获取并打印数据源中一张数据表的信息，包括数据量、占用磁盘空间、主键名称、内容以及数据列的名称、数据类型及说明"
@@ -480,7 +480,7 @@ msgstr ""
 
 #: of qteasy.core.get_table_info:3
 msgid "需要查询的数据表名称"
-msgstr "Datatable name to be queried"
+msgstr "Der abzufragende Datentabellenname"
 
 #: of qteasy.core.get_table_info:5
 msgid "需要获取数据表信息的数据源，默认None，此时获取QT_DATA_SOURCE的信息"
@@ -594,7 +594,7 @@ msgstr "Wenn True, wird die Übersicht der Systemdatentabellen angezeigt"
 
 #: of qteasy.core.get_stock_info:34 qteasy.core.get_table_overview:13
 msgid "备注"
-msgstr "Note"
+msgstr "Notiz"
 
 #: of qteasy.core.get_table_overview:14
 msgid "用法示例参见get_data_overview()"
@@ -706,7 +706,7 @@ msgstr ""
 
 #: of qteasy.core.get_stock_info:1
 msgid "等同于get_basic_info()"
-msgstr "Same as get_basic_info()"
+msgstr "Identisch mit get_basic_info()"
 
 #: of qteasy.core.get_stock_info:2
 msgid "根据输入的信息，查找股票、基金、指数或期货、期权的基本信息"
@@ -745,7 +745,7 @@ msgstr ""
 
 #: of qteasy.core.get_stock_info:35
 msgid "用法示例参见：get_basic_info()"
-msgstr "Example usage see: get_basic_info()"
+msgstr "Beispielverwendung siehe: get_basic_info()"
 
 #: of qteasy.core.filter_stock_codes:1
 msgid "根据输入的参数调用filter_stocks筛选股票，并返回股票代码的清单"

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgstr "1. Hintergrund und Ziele"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:7
 msgid "1.1 过程数据的含义"
-msgstr "1.1 Meaning of Process Data"
+msgstr "1.1 Bedeutung der Prozessdaten"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:9
 msgid "部分策略需要依赖**随回测或实盘执行路径而变化**的数据，例如："
@@ -77,7 +77,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:17
 msgid "1.2 设计目标"
-msgstr "1.2 Design Objectives"
+msgstr "1.2 Designziele"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:19
 msgid "**统一入口**：过程数据与静态历史数据一样，通过 `Strategy.get_data()` 获取，降低学习成本。"
@@ -110,7 +110,7 @@ msgstr "2. Einheitliche Definition von Prozessdaten (proc.*)"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:25
 msgid "2.1 命名与曝光方式"
-msgstr "2.1 Naming and Exposure Method"
+msgstr "2.1 Benennungs- und Belichtungsmethode"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:27
 msgid ""
@@ -133,7 +133,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:30
 msgid "2.2 已实现的内建字段"
-msgstr "2.2 Built-in fields implemented"
+msgstr "2.2 Integrierte Felder implementiert"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:32
 msgid "当前版本已实现并可在策略中使用的过程数据字段包括："
@@ -143,19 +143,19 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "类别"
-msgstr "Category"
+msgstr "Kategorie"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "字段名"
-msgstr "Field name"
+msgstr "Feldname"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "账户标量"
-msgstr "Account scalar"
+msgstr "Kontoskalar"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.own_cash`"
@@ -187,7 +187,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "持仓向量"
-msgstr "Position vector"
+msgstr "Positionsvektor"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.own_amounts`"
@@ -219,7 +219,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "成交结果"
-msgstr "Execution results"
+msgstr "Ausführungsergebnisse"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md
 msgid "`proc.trade_records`"
@@ -294,7 +294,7 @@ msgstr "3.2 Prozessdaten (Proc.-Präfix)"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:61
 msgid "**调用示例**："
-msgstr "**Call examples**:"
+msgstr "**Anrufbeispiele**:"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:62
 msgid "`self.get_data('proc.own_cash')`：截至当前步的现金序列；"
@@ -320,7 +320,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:66
 msgid "**约束**："
-msgstr "**Constraints**:"
+msgstr "**Einschränkungen**:"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:67
 msgid "一次调用**仅允许一个** `proc.*` 字段；多字段或与静态数据混合调用时抛出英文 `ValueError`。"
@@ -421,7 +421,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:89
 msgid "4.3 无前视保证"
-msgstr "4.3 No look-ahead guarantee"
+msgstr "4.3 Keine Vorausschaugarantie"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:91
 msgid "策略在第 k 步生成信号时："
@@ -551,7 +551,7 @@ msgstr "6. Test- und Dokumentationsverzeichnis"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:116
 msgid "**专门测试**：`tests/test_process_data_api.py`"
-msgstr "**Dedicated tests**: `tests/test_process_data_api.py`"
+msgstr "**Spezielle Tests**: `tests/test_process_data_api.py`"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:117
 msgid "A 组：`check_dynamic_data()` 在纯静态 / 使用 proc.* 策略下的行为；"
@@ -573,7 +573,7 @@ msgstr ""
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:120
 msgid "D 组：`proc.trade_records` 无前视验证；"
-msgstr "Group D: no look-ahead validation for `proc.trade_records`;"
+msgstr "Gruppe D: keine Look-Ahead-Validierung für `proc.trade_records`;"
 
 #: ../../source/design/09-process-data-and-dynamic-backtest.md:121
 msgid "E 组：基于 process data 的真实动态策略路径正确性。"

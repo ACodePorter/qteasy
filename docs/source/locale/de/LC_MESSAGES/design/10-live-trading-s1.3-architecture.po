@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -89,7 +89,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:21
 msgid "`Operator`：策略运行调度与信号来源"
-msgstr "`Operator`: strategy execution scheduling and signal source"
+msgstr "`Operator`: Planung der Strategieausführung und Signalquelle"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:22
 msgid "`Trader`：订单意图落地、风险闸门与执行协调"
@@ -108,7 +108,7 @@ msgstr "`Broker`: submit, cancel, report, and connection semantics"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:25
 msgid "`trade_io`：订单/成交数据契约校验"
-msgstr "`trade_io`: contract validation for order/trade data"
+msgstr "`trade_io`: Vertragsvalidierung für Auftrags-/Handelsdaten"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:27
 msgid "3. 关键设计原则"
@@ -116,7 +116,7 @@ msgstr "3. Wichtige Designprinzipien"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:29
 msgid "3.1 契约先行"
-msgstr "3.1 Contract-first"
+msgstr "3.1 Vertrag zuerst"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:31
 msgid "订单 dict 与成交 dict 在边界处校验，避免“结构错了还能跑”导致的静默错误。"
@@ -127,7 +127,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:33
 msgid "3.2 风控前置"
-msgstr "3.2 Shift risk controls left"
+msgstr "3.2 Risikokontrollen nach links verschieben"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:35
 msgid "风险评估在写库和入队之前完成，拒单不污染执行数据。"
@@ -138,7 +138,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:37
 msgid "3.3 适配解耦"
-msgstr "3.3 Adapter decoupling"
+msgstr "3.3 Adapterentkopplung"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:39
 msgid "通过 broker adapter API 承载未来接入，降低 Trader 与具体柜台的耦合度。"
@@ -148,7 +148,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:41
 msgid "3.4 可审计"
-msgstr "3.4 Auditable"
+msgstr "3.4 Überprüfbar"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:43
 msgid "拒因以 `rule_id` 和英文 `reason` 对外可见，支持运维检索与复盘。"
@@ -184,7 +184,7 @@ msgstr ""
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:55
 msgid "4.3 状态一致性"
-msgstr "4.3 State consistency"
+msgstr "4.3 Zustandskonsistenz"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:57
 msgid "分批成交场景下，状态应以累计成交量为准，减少用户观察到的语义偏差。"
@@ -245,7 +245,7 @@ msgstr "7. Weiterführende Literatur"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:76
 msgid "模块总览：`live_trading/1-overview.md`"
-msgstr "Module overview: `live_trading/1-overview.md`"
+msgstr "Modulübersicht: `live_trading/1-overview.md`"
 
 #: ../../source/design/10-live-trading-s1.3-architecture.md:77
 msgid "运行与配置：`live_trading/2-configuration-and-run.md`"

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.5. historypanel.md:15
 msgid "核心概念：三维结构与 `shape`"
-msgstr "Core concepts: 3D structure and `shape`"
+msgstr "Kernkonzepte: 3D-Struktur und `shape`"
 
 #: ../../source/manage_data/02.5. historypanel.md:17
 msgid "HistoryPanel 在内存中对应一个三维 `numpy.ndarray`，三条轴依次为："
@@ -104,23 +104,23 @@ msgstr ""
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "轴"
-msgstr "axis"
+msgstr "Achse"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "常用属性"
-msgstr "Common properties"
+msgstr "Gemeinsame Eigenschaften"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "第 0 维"
-msgstr "0th dimension"
+msgstr "0. Dimension"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "标的（证券代码等）"
-msgstr "Target (stock code, etc.)"
+msgstr "Ziel (Bestandscode usw.)"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "`shares`、`level_count`"
@@ -128,11 +128,11 @@ msgstr "`shares`、`level_count`"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "第 1 维"
-msgstr "1st dimension"
+msgstr "1. Dimension"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "时间（历史日期或时刻）"
-msgstr "Time (historical date or moment)"
+msgstr "Zeit (historisches Datum oder Moment)"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "`hdates`、`row_count`"
@@ -140,11 +140,11 @@ msgstr "`hdates`、`row_count`"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "第 2 维"
-msgstr "2nd dimension"
+msgstr "2. Dimension"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "数据类型（如 `open`、`close`、`vol`）"
-msgstr "Data types (such as `open`, `close`, `vol`)"
+msgstr "Datentypen (z. B. `open`, `close`, `vol`)"
 
 #: ../../source/manage_data/02.5. historypanel.md
 msgid "`htypes`、`column_count`"
@@ -180,7 +180,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.5. historypanel.md:31
 msgid "如何获得 HistoryPanel"
-msgstr "How to obtain HistoryPanel"
+msgstr "So erhalten Sie HistoryPanel"
 
 #: ../../source/manage_data/02.5. historypanel.md:33
 msgid ""
@@ -254,7 +254,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.5. historypanel.md:83
 msgid "**最近若干行**：`head(n)` / `tail(n)`。"
-msgstr "**Recently recent lines: `head(n)` / `tail(n)`."
+msgstr "**Zuletzt aktuelle Zeilen: `head(n)` / `tail(n)`."
 
 #: ../../source/manage_data/02.5. historypanel.md:84
 msgid "**按标的与/或指标名筛选**：`slice(shares='A, B', htypes='close, vol')`，字符串或列表均可。"
@@ -291,7 +291,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.5. historypanel.md:90
 msgid "指标与列扩展（`kline` 等）"
-msgstr "Metrics and column extensions (`kline`, etc.)"
+msgstr "Metriken und Spaltenerweiterungen (`kline` usw.)"
 
 #: ../../source/manage_data/02.5. historypanel.md:92
 msgid ""
@@ -325,7 +325,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.5. historypanel.md:96
 msgid "小结与下一步"
-msgstr "Summary and Next Steps"
+msgstr "Zusammenfassung und nächste Schritte"
 
 #: ../../source/manage_data/02.5. historypanel.md:98
 msgid "HistoryPanel 提供 **`(标的 × 时间 × 数据类型)`** 统一容器，适合多标的、多指标且时间对齐的研究与回测准备。"

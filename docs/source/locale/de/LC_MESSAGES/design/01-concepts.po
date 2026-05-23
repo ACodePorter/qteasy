@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md:1
 msgid "核心概念速览"
-msgstr "Core Concepts at a Glance"
+msgstr "Kernkonzepte auf einen Blick"
 
 #: ../../source/design/01-concepts.md:3
 msgid ""
@@ -39,11 +39,11 @@ msgstr "1. Konzepttabelle (Name / Bedeutung / Ort im Dokument)"
 
 #: ../../source/design/01-concepts.md
 msgid "概念"
-msgstr "Concepts"
+msgstr "Konzepte"
 
 #: ../../source/design/01-concepts.md
 msgid "含义"
-msgstr "Meaning"
+msgstr "Bedeutung"
 
 #: ../../source/design/01-concepts.md
 msgid "本系列中的位置"
@@ -65,7 +65,7 @@ msgstr "[Datenerfassung, Speicherung und Datentypen](02-data-layer.md)"
 
 #: ../../source/design/01-concepts.md
 msgid "**数据表**"
-msgstr "**Data Table**"
+msgstr "**Datentabelle**"
 
 #: ../../source/design/01-concepts.md
 msgid "DataSource 中的表，按统一结构存储行情、财务、宏观等数据"
@@ -355,7 +355,7 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md:42
 msgid "示例："
-msgstr "Example:"
+msgstr "Beispiel:"
 
 #: ../../source/design/01-concepts.md
 msgid "dtype_id"
@@ -367,7 +367,7 @@ msgstr "`close_E_d`"
 
 #: ../../source/design/01-concepts.md
 msgid "股票日频收盘价"
-msgstr "Daily closing price of stocks"
+msgstr "Täglicher Schlusskurs der Aktien"
 
 #: ../../source/design/01-concepts.md
 msgid "`close_IDX_d`"
@@ -417,19 +417,19 @@ msgstr "3. Semantische Vergleichstabelle der drei Signaltypen: PT/PS/VS"
 
 #: ../../source/design/01-concepts.md
 msgid "类型"
-msgstr "Type"
+msgstr "Typ"
 
 #: ../../source/design/01-concepts.md
 msgid "全称"
-msgstr "Full name"
+msgstr "Vollständiger Name"
 
 #: ../../source/design/01-concepts.md
 msgid "含义（一句话）"
-msgstr "Meaning (one sentence)"
+msgstr "Bedeutung (ein Satz)"
 
 #: ../../source/design/01-concepts.md
 msgid "示例"
-msgstr "Example"
+msgstr "Beispiel"
 
 #: ../../source/design/01-concepts.md
 msgid "**PT**"
@@ -507,19 +507,19 @@ msgstr ""
 
 #: ../../source/design/01-concepts.md
 msgid "基类"
-msgstr "Base class"
+msgstr "Basisklasse"
 
 #: ../../source/design/01-concepts.md
 msgid "典型用途"
-msgstr "Typical use cases"
+msgstr "Typische Anwendungsfälle"
 
 #: ../../source/design/01-concepts.md
 msgid "输入（get_data 等）"
-msgstr "Inputs (get_data, etc.)"
+msgstr "Eingaben (get_data usw.)"
 
 #: ../../source/design/01-concepts.md
 msgid "输出（realize 返回值）"
-msgstr "Outputs (return value of realize)"
+msgstr "Ausgaben (Rückgabewert der Realisierung)"
 
 #: ../../source/design/01-concepts.md
 msgid "**RuleIterator**"
@@ -545,7 +545,7 @@ msgstr "**FactorSorter**"
 
 #: ../../source/design/01-concepts.md
 msgid "因子选股"
-msgstr "Factor-based stock selection"
+msgstr "Faktorbasierte Aktienauswahl"
 
 #: ../../source/design/01-concepts.md
 msgid "多资产截面数据（如多只股票的因子值）"

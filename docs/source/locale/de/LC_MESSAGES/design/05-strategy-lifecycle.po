@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgstr ""
 
 #: ../../source/design/05-strategy-lifecycle.md:12
 msgid "**对每个运行中的 Group**："
-msgstr "**For each running Group**:"
+msgstr "**Für jede Laufgruppe**:"
 
 #: ../../source/design/05-strategy-lifecycle.md:13
 msgid ""
@@ -166,19 +166,19 @@ msgstr "5. Input/Output-Unterschiede zwischen den drei Strategie-Basisklassen"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "基类"
-msgstr "Base class"
+msgstr "Basisklasse"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "输入（get_data 等）"
-msgstr "Inputs (get_data, etc.)"
+msgstr "Eingaben (get_data usw.)"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "输出（realize 返回值）"
-msgstr "Outputs (return value of realize)"
+msgstr "Ausgaben (Rückgabewert der Realisierung)"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "典型用途"
-msgstr "Typical use cases"
+msgstr "Typische Anwendungsfälle"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "**RuleIterator**"
@@ -213,7 +213,7 @@ msgstr ""
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "因子选股"
-msgstr "Factor-based stock selection"
+msgstr "Faktorbasierte Aktienauswahl"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "**GeneralStg**"
@@ -221,7 +221,7 @@ msgstr "**GeneralStg**"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "多资产、多 dtype 的窗口"
-msgstr "Multi-asset, multi-dtype windows"
+msgstr "Multi-Asset- und Multi-Dtype-Fenster"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "一维信号数组（每资产一个目标仓位或比例）"
@@ -229,7 +229,7 @@ msgstr "Ein 1D-Signalarray (eine Zielposition oder ein Zielgewicht pro Asset)"
 
 #: ../../source/design/05-strategy-lifecycle.md
 msgid "通用多资产信号"
-msgstr "General-purpose multi-asset signals"
+msgstr "Allzweck-Multi-Asset-Signale"
 
 #: ../../source/design/05-strategy-lifecycle.md:38
 msgid "6. 小结"

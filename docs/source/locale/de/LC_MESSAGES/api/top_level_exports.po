@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr ""
 
 #: ../../source/api/top_level_exports.md:10
 msgid "`is_ready`（`qteasy/core.py`）：检查运行条件"
-msgstr "`is_ready` (`qteasy/core.py`): check runtime prerequisites"
+msgstr "`is_ready` (`qteasy/core.py`): Laufzeitvoraussetzungen prüfen"
 
 #: ../../source/api/top_level_exports.md:11
 msgid "`info`（`qteasy/core.py`）：帮助/信息入口（目前未实现）"
@@ -65,7 +65,7 @@ msgstr "`configure` (`qteasy/configure.py`): Konfigurationseinstiegspunkt"
 
 #: ../../source/api/top_level_exports.md:13
 msgid "`set_config`（`qteasy/configure.py`）：配置别名"
-msgstr "`set_config` (`qteasy/configure.py`): configuration aliases"
+msgstr "`set_config` (`qteasy/configure.py`): Konfigurationsaliase"
 
 #: ../../source/api/top_level_exports.md:14
 msgid ""
@@ -106,11 +106,11 @@ msgstr ""
 #: ../../source/api/top_level_exports.md:71
 #: ../../source/api/top_level_exports.md:80
 msgid "对应文档入口："
-msgstr "Corresponding documentation entry:"
+msgstr "Entsprechender Dokumentationseintrag:"
 
 #: ../../source/api/top_level_exports.md:20
 msgid "`docs/source/api/use_qteasy.rst`（启动与运行）"
-msgstr "`docs/source/api/use_qteasy.rst` (Startup and Running)"
+msgstr "`docs/source/api/use_qteasy.rst` (Starten und Ausführen)"
 
 #: ../../source/api/top_level_exports.md:21
 msgid "`docs/source/api/api_reference.rst`（配置与参考）"
@@ -118,7 +118,7 @@ msgstr "`docs/source/api/api_reference.rst` (Konfiguration und Referenz)"
 
 #: ../../source/api/top_level_exports.md:23
 msgid "1.2 数据获取/概览（core）"
-msgstr "1.2 Data retrieval/overview (core)"
+msgstr "1.2 Datenabruf/Übersicht (Kern)"
 
 #: ../../source/api/top_level_exports.md:25
 msgid "`get_basic_info` / `get_stock_info`（`qteasy/core.py`）"
@@ -150,7 +150,7 @@ msgstr "`docs/source/references/2-get-history-data.md`"
 
 #: ../../source/api/top_level_exports.md:35
 msgid "1.3 研究容器（history）"
-msgstr "1.3 Research container (history)"
+msgstr "1.3 Forschungscontainer (Geschichte)"
 
 #: ../../source/api/top_level_exports.md:37
 msgid "`HistoryPanel`（`qteasy/history.py`）"

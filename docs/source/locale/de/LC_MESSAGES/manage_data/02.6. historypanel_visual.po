@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:1
 msgid "HistoryPanel 可视化"
-msgstr "HistoryPanel Visualization"
+msgstr "HistoryPanel Visualisierung"
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:3
 #, python-format
@@ -43,7 +43,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:7
 msgid "`hp.plot()`：推荐的统一入口"
-msgstr "`hp.plot()`: Recommended unified entry point"
+msgstr "`hp.plot()`: Empfohlener einheitlicher Einstiegspunkt"
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:9
 msgid ""
@@ -67,11 +67,11 @@ msgstr ""
 
 #: ../../source/manage_data/02.6. historypanel_visual.md
 msgid "参数"
-msgstr "Parameters"
+msgstr "Parameter"
 
 #: ../../source/manage_data/02.6. historypanel_visual.md
 msgid "作用概要"
-msgstr "Function Summary"
+msgstr "Funktionszusammenfassung"
 
 #: ../../source/manage_data/02.6. historypanel_visual.md
 msgid "`shares`"
@@ -189,7 +189,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:45
 msgid "布局与多标的"
-msgstr "Layout and multiple targets"
+msgstr "Layout und mehrere Ziele"
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:47
 msgid "**`overlay`**：适合对比少数标的（如两只股票）在同一价格尺度下的走势（具体是否共享 y 轴以当前实现为准）。"
@@ -221,7 +221,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:53
 msgid "依赖与安装提示"
-msgstr "Dependency and Installation Tips"
+msgstr "Abhängigkeits- und Installationstipps"
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:55
 msgid "**静态图**：一般需要 **matplotlib**（与 qteasy 常用环境一致）。"
@@ -251,7 +251,7 @@ msgstr ""
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:60
 msgid "小结"
-msgstr "summary"
+msgstr "Zusammenfassung"
 
 #: ../../source/manage_data/02.6. historypanel_visual.md:62
 #, python-format

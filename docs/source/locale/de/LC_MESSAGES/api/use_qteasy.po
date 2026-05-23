@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../source/api/use_qteasy.rst:2
 msgid "启动QTEASY"
-msgstr "Start QTEASY"
+msgstr "Starten Sie QTEASY"
 
 #: ../../source/api/use_qteasy.rst:4
 msgid "启动qteasy的配置信息:"
-msgstr "Manage `qteasy` start up configurations"
+msgstr "Verwalten Sie `qteasy`-Startkonfigurationen"
 
 #: of qteasy.core.run:1
 msgid "根据当前配置运行给定的 Operator，并进入回测、优化或实盘等不同工作模式。"
@@ -51,7 +51,7 @@ msgstr ""
 
 #: of qteasy.core.info qteasy.core.run
 msgid "参数"
-msgstr "Parameters"
+msgstr "Parameter"
 
 #: of qteasy.core.run:8
 msgid "已配置好策略与运行参数的 Operator 对象。"
@@ -70,7 +70,7 @@ msgstr ""
 
 #: of qteasy.core.info qteasy.core.run
 msgid "返回"
-msgstr "Returns"
+msgstr "Rückgaben"
 
 #: of qteasy.core.run:13
 msgid ""
@@ -86,11 +86,11 @@ msgstr ""
 
 #: of qteasy.core.info qteasy.core.run
 msgid "返回类型"
-msgstr "Return type"
+msgstr "Rückgabetyp"
 
 #: of qteasy.core.info:11 qteasy.core.run:19
 msgid "示例"
-msgstr "Example"
+msgstr "Beispiel"
 
 #: of qteasy.core.run:20
 msgid "``run`` 通常会触及数据源、日志路径与运行模式等外部状态。下面示例展示最小的“可见且稳定”的调用准备："
@@ -122,7 +122,7 @@ msgstr ""
 
 #: of qteasy.core.info
 msgid "抛出"
-msgstr "Raises"
+msgstr "Erhöht"
 
 #: of qteasy.core.info:8
 msgid "当前版本未实现。"

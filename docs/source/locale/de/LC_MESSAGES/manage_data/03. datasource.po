@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -115,11 +115,11 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:37
 msgid "`localhost` -- 数据库的主机名"
-msgstr "`localhost` -- the hostname of the database"
+msgstr "`localhost` – der Hostname der Datenbank"
 
 #: ../../source/manage_data/2. datasource.md:38
 msgid "`3306` -- 数据库连接端口"
-msgstr "`3306` -- Database connection port"
+msgstr "`3306` – Datenbankverbindungsport"
 
 #: ../../source/manage_data/2. datasource.md:39
 msgid "`test_db` -- 数据库名称，如果不指定名称，默认数据库`qt_db`，不过这个数据库必须事先创建好"
@@ -146,7 +146,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:56
 msgid "默认数据源"
-msgstr "Default data source"
+msgstr "Standarddatenquelle"
 
 #: ../../source/manage_data/2. datasource.md:58
 msgid ""
@@ -164,7 +164,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:65
 msgid "查看数据表"
-msgstr "View data table"
+msgstr "Datentabelle anzeigen"
 
 #: ../../source/manage_data/2. datasource.md:67
 msgid "了解数据源对象的基本属性后，下一步可以进一步了解数据源中保存的数据。"
@@ -304,7 +304,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:185
 msgid "最重要的数据表"
-msgstr "The most important data table"
+msgstr "Die wichtigste Datentabelle"
 
 #: ../../source/manage_data/2. datasource.md:187
 msgid ""
@@ -411,7 +411,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:207
 msgid "其他的数据表"
-msgstr "Other tables"
+msgstr "Andere Tische"
 
 #: ../../source/manage_data/2. datasource.md:209
 msgid ""
@@ -464,7 +464,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:221
 msgid "从数据表中获取数据"
-msgstr "Reading data from tables"
+msgstr "Daten aus Tabellen lesen"
 
 #: ../../source/manage_data/2. datasource.md:223
 msgid ""
@@ -531,11 +531,13 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:269
 msgid "关于`read_table_data()`方法的更多信息，请参阅`DataSource`对象的参考信息。"
-msgstr "See `DataSource` reference for more on `read_table_data()`."
+msgstr ""
+"Weitere Informationen zu `read_table_data()` finden Sie in der "
+"`DataSource`-Referenz."
 
 #: ../../source/manage_data/2. datasource.md:271
 msgid "向数据表中添加数据"
-msgstr "Adding data to tables"
+msgstr "Daten zu Tabellen hinzufügen"
 
 #: ../../source/manage_data/2. datasource.md:273
 msgid "如果数据表中尚未填充数据，或者数据表中填充的数据不足以满足我们的需求，那么读取数据就会不成功。为了避免这种情况，我们需要向数据表中填充数据。"
@@ -545,7 +547,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:275
 msgid "请注意："
-msgstr "Note:"
+msgstr "Notiz:"
 
 #: ../../source/manage_data/2. datasource.md:277
 msgid ""
@@ -563,7 +565,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:281
 msgid "***`table`***: 一个数据表的名称，需要写入数据的数据表"
-msgstr "***`table`***: Name of the target table to write into"
+msgstr "***`table`***: Name der Zieltabelle, in die geschrieben werden soll"
 
 #: ../../source/manage_data/2. datasource.md:282
 msgid "***`df`***: 一个`DataFrame`，保存了需要写入数据表中的数据"
@@ -678,37 +680,37 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:420
 msgid "总结"
-msgstr "Summary"
+msgstr "Zusammenfassung"
 
 #: ../../source/manage_data/2. datasource.md:422
 msgid "至此，我们已经了解了`DataSource`对象，`qteasy`中金融历史数据管理的最重要的核心类的基本工作方式，了解了下面内容："
 msgstr ""
-"We now understand `DataSource`, qteasy's core class for financial history "
-"data management, including:"
+"Wir verstehen jetzt `DataSource`, die Kernklasse von qteasy für die "
+"Verwaltung von Finanzhistoriendaten, einschließlich:"
 
 #: ../../source/manage_data/2. datasource.md:424
 msgid "什么是`DataSource`，如何创建一个数据源"
-msgstr "What is `DataSource` and how to create one"
+msgstr "Was ist `DataSource` und wie erstellt man einen?"
 
 #: ../../source/manage_data/2. datasource.md:425
 msgid "如何从数据源中提取数据"
-msgstr "Extracting data from DataSource"
+msgstr "Extrahieren von Daten aus DataSource"
 
 #: ../../source/manage_data/2. datasource.md:426
 msgid "如何操作数据源"
-msgstr "Working with DataSource"
+msgstr "Arbeiten mit DataSource"
 
 #: ../../source/manage_data/2. datasource.md:428
 msgid "在后面的章节中，您将会了解更多的内容："
-msgstr "Later chapters cover more:"
+msgstr "Spätere Kapitel behandeln mehr:"
 
 #: ../../source/manage_data/2. datasource.md:430
 msgid "数据源中有哪些有用的金融数据？"
-msgstr "What useful financial data is in DataSource?"
+msgstr "Welche nützlichen Finanzdaten sind in DataSource enthalten?"
 
 #: ../../source/manage_data/2. datasource.md:431
 msgid "如何批量下载数据并填充到数据源中？"
-msgstr "How to batch-download and fill DataSource?"
+msgstr "Wie lade ich DataSource stapelweise herunter und fülle es aus?"
 
 #: ../../source/manage_data/2. datasource.md:432
 msgid "如何从数据源中更有效地提取信息？"

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_10.md:5
 msgid "最重要的数据表"
-msgstr "The most important data table"
+msgstr "Die wichtigste Datentabelle"
 
 #: ../../source/manage_data/3. data_tables_10.md:7
 msgid ""
@@ -128,7 +128,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_10.md:29
 msgid "数据表的定义"
-msgstr "Table definitions"
+msgstr "Tabellendefinitionen"
 
 #: ../../source/manage_data/3. data_tables_10.md:31
 msgid "在`qteasy`中，每一张数据表都有以下几个基本属性："
@@ -167,7 +167,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_10.md:37
 msgid "**数据表的`SCHEMA`**：数据表的`SCHEMA`定义了数据表的所有字段和数据类型"
-msgstr "**Table `SCHEMA`**: Defines all columns and data types"
+msgstr "**Tabelle `SCHEMA`**: Definiert alle Spalten und Datentypen"
 
 #: ../../source/manage_data/3. data_tables_10.md:39
 msgid "数据表的`SCHEMA`定义了数据表的所有字段和数据类型，`SCHEMA`各个字段的含义如下："
@@ -175,7 +175,7 @@ msgstr "Tabelle „SCHEMA“ definiert alle Spalten und Typen; Feldbedeutungen:"
 
 #: ../../source/manage_data/3. data_tables_10.md:41
 msgid "**`columns`** -- 字段名"
-msgstr "**`columns`** -- column names"
+msgstr "**`columns`** – Spaltennamen"
 
 #: ../../source/manage_data/3. data_tables_10.md:42
 msgid ""
@@ -188,7 +188,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_10.md:43
 msgid "**`remarks`** -- 字段备注"
-msgstr "**`remarks`** -- column remarks"
+msgstr "**`remarks`** – Spaltenbemerkungen"
 
 #: ../../source/manage_data/3. data_tables_10.md:44
 msgid "**`is_prime_key`** -- 是否是主键，`Y`表示是主键，`N`表示不是主键"
@@ -198,7 +198,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_10.md:47
 msgid "交易日历表的定义："
-msgstr "Trading calendar table definition:"
+msgstr "Definition der Handelskalendertabelle:"
 
 #: ../../source/manage_data/3. data_tables_10.md:49
 msgid "以最重要的交易日历表为例，它的属性及SCHEMA定义如下："
@@ -206,11 +206,11 @@ msgstr "Am Beispiel des Handelskalenders sind dessen Attribute und SCHEMA:"
 
 #: ../../source/manage_data/3. data_tables_10.md:51
 msgid "交易日历表: `trade_calendar`"
-msgstr "Trading calendar: `trade_calendar`"
+msgstr "Handelskalender: `trade_calendar`"
 
 #: ../../source/manage_data/3. data_tables_10.md:53
 msgid "数据表用途: `basics`, 资产类型: `none`, 数据频率: `none`"
-msgstr "Table use: `basics`, asset type: `none`, frequency: `none`"
+msgstr "Tabellenverwendung: `basics`, Asset-Typ: `none`, Häufigkeit: `none`"
 
 #: ../../source/manage_data/3. data_tables_10.md
 msgid "columns"
@@ -242,7 +242,7 @@ msgstr "date"
 
 #: ../../source/manage_data/3. data_tables_10.md
 msgid "日期: 格式YYYYMMDD"
-msgstr "Date: format YYYYMMDD"
+msgstr "Datum: Format JJJJMMTT"
 
 #: ../../source/manage_data/3. data_tables_10.md
 msgid "Y"
@@ -278,7 +278,7 @@ msgstr "tinyint"
 
 #: ../../source/manage_data/3. data_tables_10.md
 msgid "是否交易：是：1，否：0"
-msgstr "Is trading day: yes = 1, no = 0"
+msgstr "Ist Handelstag: ja = 1, nein = 0"
 
 #: ../../source/manage_data/3. data_tables_10.md
 msgid "N"
@@ -294,4 +294,4 @@ msgstr "pretrade_date"
 
 #: ../../source/manage_data/3. data_tables_10.md
 msgid "上一交易日"
-msgstr "Previous trading day"
+msgstr "Vorheriger Handelstag"

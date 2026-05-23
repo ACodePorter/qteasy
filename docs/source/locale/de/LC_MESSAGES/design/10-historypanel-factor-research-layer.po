@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +68,7 @@ msgstr ""
 
 #: ../../source/design/10-historypanel-factor-research-layer.md:13
 msgid "**可视化**：`plot` 与 `(M,L)` mask 高亮；"
-msgstr "**Visualization**: `plot` and (M,L) mask highlighting; "
+msgstr "**Visualisierung**: `plot` und (M,L) Maskenhervorhebung;"
 
 #: ../../source/design/10-historypanel-factor-research-layer.md:14
 msgid "**与计量工具衔接**：`to_df_dict`、手工长表化后接 pandas / statsmodels（见教程 2.5 §11）。"
@@ -90,7 +90,7 @@ msgstr ""
 
 #: ../../source/design/10-historypanel-factor-research-layer.md:20
 msgid "典型封装可包括："
-msgstr "Typical wrappers may include:"
+msgstr "Typische Wrapper können sein:"
 
 #: ../../source/design/10-historypanel-factor-research-layer.md:22
 msgid "给定 **因子列** 与 **收益列**（或标签），输出 **逐期 IC**、**IC 均值/IR**；"
@@ -134,7 +134,7 @@ msgstr ""
 
 #: ../../source/design/10-historypanel-factor-research-layer.md:32
 msgid "理由简述："
-msgstr "Brief rationale:"
+msgstr "Kurze Begründung:"
 
 #: ../../source/design/10-historypanel-factor-research-layer.md:34
 msgid ""

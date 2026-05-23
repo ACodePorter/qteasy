@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: ../../source/manage_data/1. overview.md:5
 msgid "总体介绍"
-msgstr "Overview"
+msgstr "Überblick"
 
 #: ../../source/manage_data/1. overview.md:7
 msgid "目前，网上有很多不同的金融数据获取渠道，可供量化交易者下载金融数据，但是直接从网上下载数据，有许多缺点："
@@ -164,7 +164,7 @@ msgstr ""
 
 #: ../../source/manage_data/1. overview.md:34
 msgid "数据获取模块结构"
-msgstr "Data acquisition module structure"
+msgstr "Struktur des Datenerfassungsmoduls"
 
 #: ../../source/manage_data/1. overview.md:36
 msgid ""

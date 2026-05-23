@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-23 23:30+0800\n"
-"Last-Translator: Jackie PENG\n"
+"PO-Revision-Date: 2026-05-23 22:00+0800\n"
+"Last-Translator: Jackie PENG (de_translate_from_en)\n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "2. Von Rohdaten zum lokalen Speicher"
 
 #: ../../source/design/02-data-layer.md:9
 msgid "2.1 数据流"
-msgstr "2.1 Data Flow"
+msgstr "2.1 Datenfluss"
 
 #: ../../source/design/02-data-layer.md:11
 msgid ""
@@ -62,7 +62,7 @@ msgstr ""
 
 #: ../../source/design/02-data-layer.md:13
 msgid "2.2 DataSource 的角色"
-msgstr "2.2 The Role of DataSource"
+msgstr "2.2 Die Rolle von DataSource"
 
 #: ../../source/design/02-data-layer.md:15
 msgid "**统一存储抽象**：无论底层是 CSV/HDF/Feather 文件还是 MySQL 等数据库，对上层而言都是“按表名、按列”读写。"
