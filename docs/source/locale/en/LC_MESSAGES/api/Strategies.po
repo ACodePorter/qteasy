@@ -3,130 +3,145 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2025-07-02 22:58+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 15:00+0800\n"
+"Last-Translator: Jackie PENG\n"
+"Language-Team: English\n"
 "Language: en\n"
-"Language-Team: en <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/api/Strategies.rst:2
-#, fuzzy
 msgid "交易策略基类"
 msgstr "Trading Strategy Class"
 
 #: ../../source/api/Strategies.rst:4
 msgid "本页提供 Strategy 相关核心类的 API 自动文档入口。 设计思路与使用教程请参考："
 msgstr ""
+"This page is the autodoc entry for core Strategy classes. For design notes "
+"and tutorials, see:"
 
 #: ../../source/api/Strategies.rst:7
 msgid "设计文档：``design/10-live-trading-s1.3-architecture.md``"
-msgstr ""
+msgstr "Design: ``design/10-live-trading-s1.3-architecture.md``"
 
 #: ../../source/api/Strategies.rst:8
 msgid "策略管理文档：``manage_strategies/*``"
-msgstr ""
+msgstr "Strategy management: ``manage_strategies/*``"
 
 #: ../../source/api/Strategies.rst:9
 msgid "实操教程：``tutorials/*``"
-msgstr ""
+msgstr "Hands-on tutorials: ``tutorials/*``"
 
 #: ../../source/api/Strategies.rst:12
 msgid "BaseStrategy"
-msgstr ""
+msgstr "BaseStrategy"
 
 #: of qteasy.strategy.BaseStrategy:1
 msgid "基类：:py:class:`object`"
-msgstr ""
+msgstr "基类：:py:class:`object`"
 
 #: of qteasy.strategy.BaseStrategy:1
 msgid "量化投资策略的抽象基类，所有具体策略都应从本类继承并实现交易信号生成逻辑。"
 msgstr ""
+"Abstract base class for quantitative strategies; concrete strategies inherit"
+" from it and implement signal generation logic."
 
 #: of qteasy.strategy.BaseStrategy:3
 msgid ""
 "一个完整的策略通常由三部分组成：可调参数（pars）、所需历史数据的声明 （data_types + window_length "
 "等）以及基于这些数据生成信号的 ``realize()`` 逻辑。 在策略运行过程中，可通过 ``get_pars()`` 和 "
-"``get_data()`` 访问参数与数据，输出 的实数信号再由 Operator 按 PT/PS/VS "
-"信号语义解析为实际交易指令。关于自定义策略 实现步骤与 PT/PS/VS 的详细说明，见文档「交易策略与 BaseStrategy」相关章节。"
+"``get_data()`` 访问参数与数据，输出 的实数信号再由 Operator 按 PT/PS/VS 信号语义解析为实际交易指令。关于自定义策略 "
+"实现步骤与 PT/PS/VS 的详细说明，见文档「交易策略与 BaseStrategy」相关章节。"
 msgstr ""
+"A complete strategy usually has three parts: tunable parameters (``pars``), "
+"declared historical data (``data_types``, ``window_length``, etc.), and "
+"``realize()`` logic that turns data into signals. During runs, use "
+"``get_pars()`` and ``get_data()``; the Operator parses numeric signals as "
+"PT/PS/VS trade instructions. See the “Trading Strategies and BaseStrategy” "
+"docs for custom strategies and PT/PS/VS details."
 
 #: of qteasy.strategy.BaseStrategy:10
 msgid "示例"
-msgstr ""
+msgstr "Example"
 
 #: of qteasy.strategy.BaseStrategy:11
 msgid "BaseStrategy 为抽象基类，通常通过继承实现自定义策略。下面示例展示其类型信息（稳定输出）："
 msgstr ""
+"``BaseStrategy`` is abstract; implement custom strategies by subclassing. "
+"The example below shows stable type output:"
 
 #: of qteasy.strategy.BaseStrategy.get_pars:1
 msgid ""
 "get the value of parameter by its name or id, alias as operator.par_name "
 "multiple parameters can be got at one time"
 msgstr ""
+"get the value of parameter by its name or id, alias as operator.par_name "
+"multiple parameters can be got at one time"
 
 #: of qteasy.strategy.BaseStrategy.info:1
 msgid "打印所有相关信息和主要属性"
-msgstr ""
+msgstr "Print all related information and main attributes"
 
 #: ../../source/api/Strategies.rst
-#, fuzzy
 msgid "参数"
 msgstr "No policy parameters"
 
 #: of qteasy.strategy.BaseStrategy.info:3
 msgid "是否打印更多的信息"
-msgstr ""
+msgstr "Whether to print extra details"
 
 #: of qteasy.strategy.BaseStrategy.info:5
 msgid "是否打印策略的运行状态"
-msgstr ""
+msgstr "Whether to print strategy run state"
 
 #: of qteasy.strategy.BaseStrategy.info:7
 msgid "策略的ID，如果为None，则打印策略的名称，否则打印策略的ID"
-msgstr ""
+msgstr "Strategy ID; if None, print the strategy name instead"
 
 #: of qteasy.strategy.BaseStrategy.info:9
 msgid "额外的信息，可以是任何字符串，会被打印在策略主信息之后，参数和数据之前"
-msgstr ""
+msgstr "Extra text printed after main info and before parameters and data"
 
 #: ../../source/api/Strategies.rst
 msgid "返回类型"
-msgstr ""
+msgstr "Return type"
 
 #: of qteasy.strategy.BaseStrategy.update_par_values:1
 msgid "快速更新策略的参数值"
-msgstr ""
+msgstr "Quickly update strategy parameter values"
 
 #: of qteasy.strategy.BaseStrategy.update_par_values:3
 msgid "策略参数的值，元组中的每个元素是按顺序排列的所有参数值，如果 没有设置参数，则必须传入kwargs参数"
 msgstr ""
+"Parameter values as a tuple in parameter order; if parameters are not set, "
+"pass ``kwargs`` instead"
 
 #: of qteasy.strategy.BaseStrategy.update_par_values:6
 msgid "以字典形式传入具体需要更新的参数值，键为参数名，值为参数值"
-msgstr ""
+msgstr "Update specific parameters via a dict mapping names to values"
 
 #: ../../source/api/Strategies.rst:19
 msgid "GeneralStg"
-msgstr ""
+msgstr "GeneralStg"
 
 #: of qteasy.strategy.FactorSorter:1 qteasy.strategy.GeneralStg:1
 #: qteasy.strategy.RuleIterator:1
 msgid "基类：:py:class:`~qteasy.strategy.BaseStrategy`"
-msgstr ""
+msgstr "基类：:py:class:`~qteasy.strategy.BaseStrategy`"
 
 #: of qteasy.strategy.GeneralStg:1
 msgid "通用交易策略类，用户需要完整定义策略的所有交易逻辑，并在realize()方法中定义策略的信号输出。"
 msgstr ""
+"General strategy class: define full trading logic and signal output in "
+"``realize()``."
 
 #: of qteasy.strategy.GeneralStg:3
 msgid "关于GeneralStg类的更详细说明，请参见qteasy的文档。"
@@ -136,47 +151,47 @@ msgstr ""
 
 #: ../../source/api/Strategies.rst:25
 msgid "FactorSorter"
-msgstr ""
+msgstr "FactorSorter"
 
 #: of qteasy.strategy.FactorSorter:1
 msgid "因子排序选股策略，根据用户定义的选股因子筛选排序后确定每个股票的选股权重(请注意，FactorSorter策略"
 msgstr ""
-"FactorSorter stock picking strategy, which determines the weighting of "
-"each stock pick based on a user-defined stock picking factor filtering "
-"and sorting (please note that the FactorSorter strategy"
+"FactorSorter stock picking strategy, which determines the weighting of each "
+"stock pick based on a user-defined stock picking factor filtering and "
+"sorting (please note that the FactorSorter strategy"
 
 #: of qteasy.strategy.FactorSorter:2
 msgid "生成的交易信号在0到1之间，推荐设置signal_type为\"PT\")"
 msgstr ""
-"The generated trading signals are between 0 and 1. It is recommended to "
-"set the signal_type to \"PT\")"
+"The generated trading signals are between 0 and 1. It is recommended to set "
+"the signal_type to \"PT\")"
 
 #: of qteasy.strategy.FactorSorter:4
-#, fuzzy
 msgid ""
 "这类策略要求用户从历史数据中提取一个选股因子，并根据选股因子的大小排序后确定投资组合中股票的交易信号 "
 "用户需要在realize()方法中计算选股因子，计算出选股因子后，接下来的排序和选股逻辑都不需要用户自行定义。 "
 "策略会根据预设的条件，从中筛选出符合标准的因子，并将剩下的因子排序，从中选择特定数量的股票，最后根据它 "
 "们的因子值分配权重或信号值。关于Strategy类的更详细说明，请参见qteasy的文档。"
 msgstr ""
-"This type of strategy requires the user to extract a stock picking factor"
-" from the historical data and determine the trading signals for the "
-"stocks in the portfolio after sorting them according to the size of the "
-"stock picking factor The user needs to compute the stock picking factor "
-"in the realize() method, and once the factor is computed, the next "
-"sorting and stock picking logic does not need to be defined by the user. "
-"The strategy will filter out the factors that meet the criteria based on "
-"the predefined conditions, sort the remaining factors, select a specific "
-"number of stocks from them, and finally assign weights or signal values "
-"based on their factor values."
+"This type of strategy requires the user to extract a stock picking factor "
+"from the historical data and determine the trading signals for the stocks in"
+" the portfolio after sorting them according to the size of the stock picking"
+" factor The user needs to compute the stock picking factor in the realize() "
+"method, and once the factor is computed, the next sorting and stock picking "
+"logic does not need to be defined by the user. The strategy will filter out "
+"the factors that meet the criteria based on the predefined conditions, sort "
+"the remaining factors, select a specific number of stocks from them, and "
+"finally assign weights or signal values based on their factor values."
 
 #: ../../source/api/Strategies.rst:31
 msgid "RuleIterator"
-msgstr ""
+msgstr "RuleIterator"
 
 #: of qteasy.strategy.RuleIterator:1
 msgid "规则迭代策略类。这一类策略不考虑每一只股票的区别，将同一套规则同时迭代应用到所有的股票上。"
 msgstr ""
+"Rule iterator strategy: apply the same rule to every share without per-share"
+" distinction."
 
 #: of qteasy.strategy.RuleIterator:3
 msgid ""
@@ -184,6 +199,9 @@ msgid ""
 "例如，用户可以设计一个均线交叉策略，并将其应用到投资组合中的所有股票上，同时可以为每只股票 "
 "设定不同的均线周期参数。关于Strategy类的更详细说明，请参见qteasy的文档。"
 msgstr ""
+"``RuleIterator`` can apply different parameters per share for the same "
+"rule—for example, different MA periods per stock. See qteasy docs for more "
+"on Strategy classes."
 
 #: of qteasy.strategy.RuleIterator:7
 msgid ""
@@ -192,241 +210,62 @@ msgid ""
 "RuleIterator 一节）。字典中可用键名 ``default`` 为未单独列出的标的 提供同一套默认初值；不支持 ``others`` "
 "等其它保留键名。"
 msgstr ""
+"**Per-share parameters**: pass ``update_par_values({code: (p1, p2, ...), "
+"...})`` with keys matching ``share_names``; a positional tuple shares one "
+"runtime parameter set across shares (see RuleIterator in “Three Strategy "
+"Base Classes”). Use ``default`` for shares not listed explicitly; ``others``"
+" is not supported."
 
 #: ../../source/api/Strategies.rst:37
-#, fuzzy
 msgid "交易策略参数对象"
 msgstr "No policy parameters"
 
 #: ../../source/api/Strategies.rst:39
 msgid "Parameter 用于定义策略可调参数的类型、范围与取值方式。"
 msgstr ""
+"``Parameter`` defines tunable strategy parameter type, range, and value "
+"semantics."
 
 #: of qteasy.parameter.Parameter:1
 msgid "可调参数对象，可以是离散型、连续型、枚举型或者数组型参数，在交易策略中对策略的运行结果产生影响。"
 msgstr ""
+"Tunable parameter object (discrete, continuous, enum, or array) affecting "
+"strategy results."
 
 #: of qteasy.parameter.Parameter.get_value:1
 msgid "获取参数的当前值"
-msgstr ""
+msgstr "Get the current parameter value"
 
 #: of qteasy.parameter.Parameter.set_value:1
 msgid "设置参数的当前值"
-msgstr ""
+msgstr "Set the current parameter value"
 
 #: of qteasy.parameter.Parameter.set_value:3
 msgid "需要设置的参数值，若参数为枚举型，则value可以是枚举值中的一个；若参数为离散型或连续型，则value可以是一个整数或浮点数"
 msgstr ""
+"Value to set; for enums, one enum value; for discrete/continuous types, int "
+"or float"
 
 #: ../../source/api/Strategies.rst
 msgid "抛出"
-msgstr ""
+msgstr "Raises"
 
 #: of qteasy.parameter.Parameter.set_value:6
 msgid "当value不在数轴的可用值中时，抛出ValueError异常"
-msgstr ""
+msgstr "``ValueError`` if ``value`` is not on the allowed axis"
 
 #: of qteasy.parameter.Parameter.update_par_range:1
 msgid "更新参数的范围"
-msgstr ""
+msgstr "Update parameter bounds"
 
 #: of qteasy.parameter.Parameter.update_par_range:3
 msgid ""
 "数轴的上下界或枚举值，当数轴类型为conti或discr时，bounds_or_enum为一个长度为2的列表或元组，分别代表数轴的上下界； "
 "当数轴类型为enum时，bounds_or_enum为一个列表或元组，其中的元素为该数轴上所有可用的值"
 msgstr ""
+"For ``conti``/``discr``, a length-2 list/tuple of lower/upper bounds; for "
+"``enum``, a list/tuple of allowed values"
 
 #: of qteasy.parameter.Parameter.update_par_range:7
 msgid "当输入的数轴类型不在可选值中时，抛出ValueError异常"
-msgstr ""
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+msgstr "``ValueError`` if the axis type is not supported"
