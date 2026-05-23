@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-23 14:20+0800\n"
-"PO-Revision-Date: 2026-05-20 21:19+0800\n"
-"Last-Translator: \n"
-"Language: en\n"
+"PO-Revision-Date: 2026-05-23 18:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: en <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.15.0\n"
 
 #: ../../source/manage_data/02. datatypes.md:1
@@ -24,12 +23,13 @@ msgid "以标准化方式从数据表中提取信息"
 msgstr "Extracting information from data tables in a standardized manner"
 
 #: ../../source/manage_data/02. datatypes.md:3
-msgid "前面的章节中，我们介绍了数据源和数据源的概念，并且介绍了如何往数据源中填充金融数据。在这一章节中，我们将介绍如何从数据源中提取对我们有用的信息，而不仅仅是读取数据。"
+msgid ""
+"前面的章节中，我们介绍了数据源和数据源的概念，并且介绍了如何往数据源中填充金融数据。在这一章节中，我们将介绍如何从数据源中提取对我们有用的信息，而不仅仅是读取数据。"
 msgstr ""
-"In previous chapters, we introduced the concepts of data sources and how "
-"to populate them with financial data. In this chapter, we will explain "
-"how to extract useful information from data sources, rather than simply "
-"reading data."
+"In previous chapters, we introduced the concepts of data sources and how to "
+"populate them with financial data. In this chapter, we will explain how to "
+"extract useful information from data sources, rather than simply reading "
+"data."
 
 #: ../../source/manage_data/02. datatypes.md:5
 msgid "`QTEASY`数据管理模块: ![数据获取模块结构](img/InformationExtraction.png)"
@@ -46,28 +46,30 @@ msgid "信息 != 数据"
 msgstr "Information != Data"
 
 #: ../../source/manage_data/02. datatypes.md:9
-msgid "在量化交易中，我们需要准备大量的金融数据，然而，数据并不是最终的目的，我们需要从数据中提取有用的信息。在交易策略中，我们使用这些信息作出交易决策。"
+msgid ""
+"在量化交易中，我们需要准备大量的金融数据，然而，数据并不是最终的目的，我们需要从数据中提取有用的信息。在交易策略中，我们使用这些信息作出交易决策。"
 msgstr ""
 "In quantitative trading, we need to prepare a large amount of financial "
-"data. However, the data itself is not the ultimate goal; we need to "
-"extract useful information from it. In our trading strategies, we use "
-"this information to make trading decisions."
+"data. However, the data itself is not the ultimate goal; we need to extract "
+"useful information from it. In our trading strategies, we use this "
+"information to make trading decisions."
 
 #: ../../source/manage_data/02. datatypes.md:11
-msgid "信息不等于数据，有些信息是可以直接从数据表中读出来的，比如股票的收盘价，开盘价等。但是，有些信息是需要通过一定的计算才能得到的，比如股票的复权价格等。"
+msgid ""
+"信息不等于数据，有些信息是可以直接从数据表中读出来的，比如股票的收盘价，开盘价等。但是，有些信息是需要通过一定的计算才能得到的，比如股票的复权价格等。"
 msgstr ""
-"Information is not the same as data. Some information can be directly "
-"read from data tables, such as the closing price and opening price of a "
-"stock. However, some information requires certain calculations to obtain,"
-" such as the adjusted price of a stock."
+"Information is not the same as data. Some information can be directly read "
+"from data tables, such as the closing price and opening price of a stock. "
+"However, some information requires certain calculations to obtain, such as "
+"the adjusted price of a stock."
 
 #: ../../source/manage_data/02. datatypes.md:13
 msgid "例如，我们在交易策略中需要用到股票的前复权价格，我们知道，复权价格是用股票的价格以及复权因子计算得到的，分别保存在下面两张表中："
 msgstr ""
-"For example, in our trading strategy, we need to use the pre-adjusted "
-"price of a stock. We know that the adjusted price is calculated using the"
-" stock price and the adjustment factor, and these are stored in the "
-"following two tables:"
+"For example, in our trading strategy, we need to use the pre-adjusted price "
+"of a stock. We know that the adjusted price is calculated using the stock "
+"price and the adjustment factor, and these are stored in the following two "
+"tables:"
 
 #: ../../source/manage_data/02. datatypes.md:15
 msgid "`stock_daily`：股票日K线行情表，包含了股票的开盘价、收盘价、最高价、最低价等信息。"
@@ -85,9 +87,9 @@ msgstr ""
 #: ../../source/manage_data/02. datatypes.md:18
 msgid "此时，上面两张表中已经保存了我们需要的数据，但它们并不是我们需要的信息，我们需要通过计算才能得到我们需要的信息。"
 msgstr ""
-"At this point, the two tables above have stored the data we need, but "
-"they are not the information we require. We need to perform calculations "
-"to obtain the information we need."
+"At this point, the two tables above have stored the data we need, but they "
+"are not the information we require. We need to perform calculations to "
+"obtain the information we need."
 
 #: ../../source/manage_data/02. datatypes.md:20
 msgid "因此，为了获取复权价格这条信息，我们无法避免繁琐的计算过程。"
@@ -96,191 +98,199 @@ msgstr ""
 "avoid the tedious calculation process."
 
 #: ../../source/manage_data/02. datatypes.md:22
-msgid "而且，还必须考虑到，如果我们需要的不是复权日K线价格，而是复权后的小时K线价格，还需要把日K线数据转换为小时K线数据，这样的计算过程更加复杂。"
+msgid ""
+"而且，还必须考虑到，如果我们需要的不是复权日K线价格，而是复权后的小时K线价格，还需要把日K线数据转换为小时K线数据，这样的计算过程更加复杂。"
 msgstr ""
 "Furthermore, it must be considered that if we need the adjusted daily "
-"candlestick price instead of the adjusted hourly candlestick price, we "
-"also need to convert the daily candlestick data to the hourly candlestick"
-" data, which makes the calculation process even more complicated."
+"candlestick price instead of the adjusted hourly candlestick price, we also "
+"need to convert the daily candlestick data to the hourly candlestick data, "
+"which makes the calculation process even more complicated."
 
 #: ../../source/manage_data/02. datatypes.md:24
 msgid ""
 "在交易策略的实现过程中，如果每次使用复权价格时都要考虑上面的转换和计算过程，那么会使得策略的实现变得复杂，而且容易出错。也会让我们把有限的精力 "
 "分散到这些琐碎的计算过程中，而不是集中在策略的实现上。"
 msgstr ""
-"In implementing a trading strategy, if the above conversion and "
-"calculation process is considered every time adjusted prices are used, it"
-" will make the strategy implementation complex and prone to errors. It "
-"will also cause us to scatter our limited energy on these trivial "
-"calculations instead of focusing on the strategy's implementation."
+"In implementing a trading strategy, if the above conversion and calculation "
+"process is considered every time adjusted prices are used, it will make the "
+"strategy implementation complex and prone to errors. It will also cause us "
+"to scatter our limited energy on these trivial calculations instead of "
+"focusing on the strategy's implementation."
 
 #: ../../source/manage_data/02. datatypes.md:27
 msgid "因此，我们需要一种方法，能够把这些琐碎的计算过程封装起来，使得我们在实现策略时，只需要关注策略本身，而不需要关注这些琐碎的计算过程。"
 msgstr ""
 "Therefore, we need a way to encapsulate these trivial computational "
-"processes so that when implementing a strategy, we only need to focus on "
-"the strategy itself, without having to worry about these trivial "
-"computational processes."
+"processes so that when implementing a strategy, we only need to focus on the"
+" strategy itself, without having to worry about these trivial computational "
+"processes."
 
 #: ../../source/manage_data/02. datatypes.md:29
 msgid "为此，`qteasy`数据管理模块提供了一种标准化的方式，用于从数据表中提取信息。这种方式就是`DataType`对象。"
 msgstr ""
-"To address this, the `qteasy` data management module provides a "
-"standardized way to extract information from data tables. This way is "
-"through the `DataType` object."
+"To address this, the `qteasy` data management module provides a standardized"
+" way to extract information from data tables. This way is through the "
+"`DataType` object."
 
 #: ../../source/manage_data/02. datatypes.md:31
 msgid "DataType对象"
 msgstr "DataType object"
 
 #: ../../source/manage_data/02. datatypes.md:33
-msgid "`DataType`对象是`QTEASY`数据管理模块中的一个重要对象，它在v1.4版本中正式引入，它封装了标准化的数据处理逻辑，用于从数据表中提取信息。使得用户只要定义好一个`DataType`对象，就不需要再将精力分散在琐碎的数据信息获取计算过程中，而是可以专注于策略的实现。"
+msgid ""
+"`DataType`对象是`QTEASY`数据管理模块中的一个重要对象，它在v1.4版本中正式引入，它封装了标准化的数据处理逻辑，用于从数据表中提取信息。使得用户只要定义好一个`DataType`对象，就不需要再将精力分散在琐碎的数据信息获取计算过程中，而是可以专注于策略的实现。"
 msgstr ""
-"The `DataType` object is an important object in the `QTEASY` data "
-"management module. Officially introduced in version 1.4, it encapsulates "
-"standardized data processing logic for extracting information from data "
-"tables. This allows users to define a single `DataType` object and focus "
-"on implementing their strategies, rather than spending time on tedious "
-"data acquisition and calculation."
+"The `DataType` object is an important object in the `QTEASY` data management"
+" module. Officially introduced in version 1.4, it encapsulates standardized "
+"data processing logic for extracting information from data tables. This "
+"allows users to define a single `DataType` object and focus on implementing "
+"their strategies, rather than spending time on tedious data acquisition and "
+"calculation."
 
 #: ../../source/manage_data/02. datatypes.md:35
 msgid "`qteasy`提供了大量内置预定义的`DataType`对象，用户也可以根据自己的需求自定义`DataType`对象。"
 msgstr ""
-"`qteasy` provides a large number of built-in predefined `DataType` "
-"objects, and users can also customize `DataType` objects according to "
-"their own needs."
+"`qteasy` provides a large number of built-in predefined `DataType` objects, "
+"and users can also customize `DataType` objects according to their own "
+"needs."
 
 #: ../../source/manage_data/02. datatypes.md:37
 msgid "举一个简单的例子，假设我们需要获取股票的后复权价格，可以直接使用内置的`DataType`: `close|b`对象，如下所示："
 msgstr ""
-"For a simple example, suppose we need to get the adjusted price of a "
-"stock after stock splits or dividends. We can directly use the built-in "
+"For a simple example, suppose we need to get the adjusted price of a stock "
+"after stock splits or dividends. We can directly use the built-in "
 "`DataType`: `close|b` object, as shown below:"
 
 #: ../../source/manage_data/02. datatypes.md:74
 msgid "所有 DataType 清单（罗列并简短介绍）"
-msgstr ""
+msgstr "List of all DataTypes (with brief descriptions)"
 
 #: ../../source/manage_data/02. datatypes.md:76
 msgid ""
 "qteasy 2.0 内置了大量 DataType，每种数据类型由 "
-"**name**（名称）、**freq**（频率）、**asset_type**（资产类型）唯一确定，并对应到具体数据表及列或计算方式。完整清单可通过"
-" ``qteasy.datatypes.get_dtype_map()`` 获取，返回的 DataFrame 索引为 (dtype, freq, "
+"**name**（名称）、**freq**（频率）、**asset_type**（资产类型）唯一确定，并对应到具体数据表及列或计算方式。完整清单可通过 "
+"``qteasy.datatypes.get_dtype_map()`` 获取，返回的 DataFrame 索引为 (dtype, freq, "
 "asset_type)，列包含 description（用途描述）、acquisition_type（获取方式）等。"
 msgstr ""
+"Qteasy 2.0 includes a large number of built-in DataTypes. Each data type is "
+"uniquely identified by **name**, **freq**, and **asset_type**, which "
+"correspond to a specific data table and column or calculation method. A "
+"complete list can be obtained using `qteasy.datatypes.get_dtype_map()`, "
+"which returns a DataFrame with indices (dtype, freq, asset_type) and columns"
+" including description (purpose description), acquisition_type (acquisition "
+"method), etc."
 
 #: ../../source/manage_data/02. datatypes.md:78
 msgid "获取完整清单"
-msgstr ""
+msgstr "Get the complete list"
 
 #: ../../source/manage_data/02. datatypes.md:92
 msgid "常见数据类型示例"
-msgstr ""
+msgstr "Examples of common data types"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "name（名称）"
-msgstr ""
+msgstr "name"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "freq"
-msgstr ""
+msgstr "freq"
 
 #: ../../source/manage_data/02. datatypes.md
-#, fuzzy
 msgid "asset_type"
 msgstr "DataType object"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "用途简述"
-msgstr ""
+msgstr "Brief description of uses"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "trade_cal"
-msgstr ""
+msgstr "trade_cal"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "d"
-msgstr ""
+msgstr "d"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "None"
-msgstr ""
+msgstr "None"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "交易日历"
-msgstr ""
+msgstr "Trading calendar"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "close|b"
-msgstr ""
+msgstr "close|b"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "股票后复权收盘价"
-msgstr ""
+msgstr "Stock closing price after stock splits"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "close|f"
-msgstr ""
+msgstr "close|f"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "股票前复权收盘价"
-msgstr ""
+msgstr "Stock closing price (adjusted for stock splits)"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "open, high, low, close, vol"
-msgstr ""
+msgstr "open, high, low, close, vol"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "D/1min/5min/…"
-msgstr ""
+msgstr "D/1min/5min/…"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "E/IDX/FD 等"
-msgstr ""
+msgstr "E/IDX/FD etc."
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "K 线开高低收、成交量"
-msgstr ""
+msgstr "K-line opening high low closing volume"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "open|b, high|b 等"
-msgstr ""
+msgstr "open|b, high|b, etc."
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "后复权开高低收"
-msgstr ""
+msgstr "Adjusted for stock splits, high and low opening prices"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "stock_symbol, stock_name, industry"
-msgstr ""
+msgstr "stock_symbol, stock_name, industry"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "股票代码、名称、行业等基本信息"
-msgstr ""
+msgstr "Basic information such as stock code, name, and industry."
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "wt_idx|%"
-msgstr ""
+msgstr "wt_idx|%"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "指数成分股权重"
-msgstr ""
+msgstr "Index constituent stock weighting"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "…"
-msgstr ""
+msgstr "…"
 
 #: ../../source/manage_data/02. datatypes.md
 msgid "完整列表见 get_dtype_map() 输出"
-msgstr ""
+msgstr "See the complete list in the output of get_dtype_map()"
 
 #: ../../source/manage_data/02. datatypes.md:105
 msgid ""
@@ -289,157 +299,24 @@ msgid ""
 "表示不限定资产。每种类型的详细说明、对应数据表及列见 ``get_dtype_map()`` 返回的 ``description`` 与 "
 "``kwargs``。"
 msgstr ""
+"In the table above, common values for `freq` are: `D` for daily charts, "
+"`1min`/`5min` for minute charts, and `None` for charts unrelated to "
+"frequency (e.g., basic information). `asset_type`: `E` for stocks, `IDX` for"
+" indices, `FD` for funds, and `None` for charts without asset restrictions. "
+"For detailed descriptions, corresponding data tables, and columns for each "
+"type, see the `description` and `kwargs` returned by `get_dtype_map()`."
 
 #: ../../source/manage_data/02. datatypes.md:107
 #, python-format
 msgid ""
 "当需要在同一时间轴上同时携带多只标的、多种数据类型（例如 OHLC 与成交量一并参与计算或出图）时，下一章 "
-"[HistoryPanel（历史数据面板）](2.5.%20historypanel.md) 介绍如何把 ``get_history_data``"
-" 的结果收拢为三维面板；制图入口则见再下一章 [HistoryPanel 可视化](2.6.%20historypanel_visual.md)。"
+"[HistoryPanel（历史数据面板）](2.5.%20historypanel.md) 介绍如何把 ``get_history_data`` "
+"的结果收拢为三维面板；制图入口则见再下一章 [HistoryPanel 可视化](2.6.%20historypanel_visual.md)。"
 msgstr ""
-
-#~ msgid "所有 DataType 清单（罗列并简短介绍）"
-#~ msgstr "List of all DataTypes (with brief descriptions)"
-
-#~ msgid ""
-#~ "qteasy 2.0 内置了大量 DataType，每种数据类型由 "
-#~ "**name**（名称）、**freq**（频率）、**asset_type**（资产类型）唯一确定，并对应到具体数据表及列或计算方式。完整清单可通过"
-#~ " ``qteasy.datatypes.get_dtype_map()`` 获取，返回的 DataFrame"
-#~ " 索引为 (dtype, freq, asset_type)，列包含 "
-#~ "description（用途描述）、acquisition_type（获取方式）等。"
-#~ msgstr ""
-#~ "Qteasy 2.0 includes a large number "
-#~ "of built-in DataTypes. Each data "
-#~ "type is uniquely identified by **name**,"
-#~ " **freq**, and **asset_type**, which "
-#~ "correspond to a specific data table "
-#~ "and column or calculation method. A "
-#~ "complete list can be obtained using "
-#~ "`qteasy.datatypes.get_dtype_map()`, which returns a"
-#~ " DataFrame with indices (dtype, freq, "
-#~ "asset_type) and columns including description"
-#~ " (purpose description), acquisition_type "
-#~ "(acquisition method), etc."
-
-#~ msgid "获取完整清单"
-#~ msgstr "Get the complete list"
-
-#~ msgid "常见数据类型示例"
-#~ msgstr "Examples of common data types"
-
-#~ msgid "name（名称）"
-#~ msgstr "name"
-
-#~ msgid "freq"
-#~ msgstr "freq"
-
-#~ msgid "asset_type"
-#~ msgstr "asset_type"
-
-#~ msgid "用途简述"
-#~ msgstr "Brief description of uses"
-
-#~ msgid "trade_cal"
-#~ msgstr "trade_cal"
-
-#~ msgid "d"
-#~ msgstr "d"
-
-#~ msgid "None"
-#~ msgstr "none"
-
-#~ msgid "交易日历"
-#~ msgstr "Trading Calendar"
-
-#~ msgid "close|b"
-#~ msgstr "close|b"
-
-#~ msgid "D"
-#~ msgstr "D"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "股票后复权收盘价"
-#~ msgstr "Stock closing price after stock splits"
-
-#~ msgid "close|f"
-#~ msgstr "close|f"
-
-#~ msgid "股票前复权收盘价"
-#~ msgstr "Stock closing price (adjusted for stock splits)"
-
-#~ msgid "open, high, low, close, vol"
-#~ msgstr "open, high, low, close, vol"
-
-#~ msgid "D/1min/5min/…"
-#~ msgstr "D/1min/5min/…"
-
-#~ msgid "E/IDX/FD 等"
-#~ msgstr "E/IDX/FD etc."
-
-#~ msgid "K 线开高低收、成交量"
-#~ msgstr "K-line opening high low closing volume"
-
-#~ msgid "open|b, high|b 等"
-#~ msgstr "open|b, high|b, etc."
-
-#~ msgid "后复权开高低收"
-#~ msgstr "Adjusted for stock splits, high and low opening prices"
-
-#~ msgid "stock_symbol, stock_name, industry"
-#~ msgstr "stock_symbol, stock_name, industry"
-
-#~ msgid "股票代码、名称、行业等基本信息"
-#~ msgstr "Basic information such as stock code, name, and industry."
-
-#~ msgid "wt_idx|%"
-#~ msgstr "wt_idx|%"
-
-#~ msgid "指数成分股权重"
-#~ msgstr "Index constituent stock weighting"
-
-#~ msgid "…"
-#~ msgstr "…"
-
-#~ msgid "完整列表见 get_dtype_map() 输出"
-#~ msgstr "See the complete list in the output of get_dtype_map()"
-
-#~ msgid ""
-#~ "上表中 ``freq`` 常用取值：``D`` 日线，``1min``/``5min`` "
-#~ "等为分钟线，``None`` 表示与频率无关（如基本信息）。``asset_type``：``E`` "
-#~ "股票，``IDX`` 指数，``FD`` 基金，``None`` "
-#~ "表示不限定资产。每种类型的详细说明、对应数据表及列见 ``get_dtype_map()`` 返回的 "
-#~ "``description`` 与 ``kwargs``。"
-#~ msgstr ""
-#~ "In the table above, common values "
-#~ "for `freq` are: `D` for daily "
-#~ "charts, `1min`/`5min` for minute charts, "
-#~ "and `None` for charts unrelated to "
-#~ "frequency (e.g., basic information). "
-#~ "`asset_type`: `E` for stocks, `IDX` for"
-#~ " indices, `FD` for funds, and `None`"
-#~ " for charts without asset restrictions. "
-#~ "For detailed descriptions, corresponding data"
-#~ " tables, and columns for each type,"
-#~ " see the `description` and `kwargs` "
-#~ "returned by `get_dtype_map()`."
-
-#~ msgid ""
-#~ "当需要在同一时间轴上同时携带多只标的、多种数据类型（例如 OHLC 与成交量一并参与计算或出图）时，下一章 "
-#~ "[HistoryPanel（历史数据面板）](2.5.%20historypanel.md) 介绍如何把 "
-#~ "``get_history_data`` 的结果收拢为三维面板；制图入口则见再下一章 [HistoryPanel"
-#~ " 可视化](2.6.%20historypanel_visual.md)。"
-#~ msgstr ""
-#~ "When multiple targets and data types "
-#~ "need to be carried on the same "
-#~ "timeline at the same time (e.g., "
-#~ "OHLC and trading volume are included "
-#~ "in the calculation or chart), the "
-#~ "next chapter [HistoryPanel](2.5.%20historypanel.md) "
-#~ "introduces how to gather the results "
-#~ "of `get_history_data` into a 3D panel;"
-#~ " the entry point for charting can "
-#~ "be found in the next chapter "
-#~ "[HistoryPanel Visualization](2.6.%20historypanel_visual.md)."
-
+"When multiple targets and data types need to be carried on the same timeline"
+" at the same time (e.g., OHLC and trading volume are included in the "
+"calculation or chart), the next chapter "
+"[HistoryPanel](2.5.%20historypanel.md) introduces how to gather the results "
+"of `get_history_data` into a 3D panel; the entry point for charting can be "
+"found in the next chapter [HistoryPanel "
+"Visualization](2.6.%20historypanel_visual.md)."

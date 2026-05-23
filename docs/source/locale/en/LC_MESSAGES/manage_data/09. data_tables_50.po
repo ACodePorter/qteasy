@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-20 21:21+0800\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-23 18:00+0800\n"
+"Last-Translator: Jackie PENG\n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -26,9 +25,7 @@ msgstr "DataTables — Fundamental and Macroeconomic Data"
 
 #: ../../source/manage_data/3. data_tables_50.md:3
 msgid ""
-"基本面数据和宏观经济数据是指反映一个国家或地区经济基本面和宏观经济状况的数"
-"据，包括了货币供应量、社会融资规模、国内生产总值、居民消费价格指数、工业品出"
-"厂价格指数、采购经理人指数等多个指标。"
+"基本面数据和宏观经济数据是指反映一个国家或地区经济基本面和宏观经济状况的数据，包括了货币供应量、社会融资规模、国内生产总值、居民消费价格指数、工业品出厂价格指数、采购经理人指数等多个指标。"
 msgstr ""
 "Fundamental data and macroeconomic data refer to data that reflect the "
 "economic fundamentals and macroeconomic conditions of a country or region, "
@@ -52,13 +49,12 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md:10
 msgid ""
-"上海银行间行业拆放利率(SHIBOR)是上海银行间同业拆息市场的利率指标，包括了隔"
-"夜、1周、2周、1个月、3个月、6个月、9个月、1年等多个利率指标。"
+"上海银行间行业拆放利率(SHIBOR)是上海银行间同业拆息市场的利率指标，包括了隔夜、1周、2周、1个月、3个月、6个月、9个月、1年等多个利率指标。"
 msgstr ""
 "The Shanghai Interbank Offered Rate (SHIBOR) is the interest rate benchmark "
 "in the Shanghai interbank lending market, including multiple interest rate "
-"benchmarks such as overnight, 1-week, 2-week, 1-month, 3-month, 6-month, 9-"
-"month, and 1-year rates."
+"benchmarks such as overnight, 1-week, 2-week, 1-month, 3-month, 6-month, "
+"9-month, and 1-year rates."
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "columns"
@@ -201,14 +197,12 @@ msgid "伦敦银行间行业拆放利率(LIBOR): `libor`"
 msgstr "London Interbank Offered Rate (LIBOR): `libor`"
 
 #: ../../source/manage_data/3. data_tables_50.md:27
-msgid ""
-"伦敦银行间行业拆放利率(LIBOR)是伦敦银行间同业拆息市场的利率指标，包括了隔夜、"
-"1周、1个月、3个月、6个月、1年等多个利率指标。"
+msgid "伦敦银行间行业拆放利率(LIBOR)是伦敦银行间同业拆息市场的利率指标，包括了隔夜、1周、1个月、3个月、6个月、1年等多个利率指标。"
 msgstr ""
 "The London Interbank Offered Rate (LIBOR) is the benchmark interest rate in "
 "the London Interbank Offered Rate market, which includes multiple interest "
-"rate benchmarks such as overnight, 1-week, 1-month, 3-month, 6-month, and 1-"
-"year rates."
+"rate benchmarks such as overnight, 1-week, 1-month, 3-month, 6-month, and "
+"1-year rates."
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "curr_type"
@@ -244,12 +238,11 @@ msgstr "Hong Kong Interbank Offered Rate (HIBOR): `hibor`"
 
 #: ../../source/manage_data/3. data_tables_50.md:44
 msgid ""
-"香港银行间行业拆放利率(HIBOR)是香港银行间同业拆息市场的利率指标，包括了隔夜、"
-"1周、2周、1个月、3个月、6个月、9个月、1年等多个利率指标。"
+"香港银行间行业拆放利率(HIBOR)是香港银行间同业拆息市场的利率指标，包括了隔夜、1周、2周、1个月、3个月、6个月、9个月、1年等多个利率指标。"
 msgstr ""
 "The Hong Kong Interbank Offered Rate (HIBOR) is the benchmark interest rate "
-"in the Hong Kong interbank market, encompassing overnight, 1-week, 2-week, 1-"
-"month, 3-month, 6-month, 9-month, and 1-year rates."
+"in the Hong Kong interbank market, encompassing overnight, 1-week, 2-week, "
+"1-month, 3-month, 6-month, 9-month, and 1-year rates."
 
 #: ../../source/manage_data/3. data_tables_50.md:58
 msgid "温州民间借贷指数: `wz_index`"
@@ -257,10 +250,7 @@ msgstr "Wenzhou Private Lending Index: `wz_index`"
 
 #: ../../source/manage_data/3. data_tables_50.md:61
 msgid ""
-"温州民间借贷指数是指温州地区民间借贷市场的利率指数，包括了温州地区民间借贷市"
-"场的综合利率指数、民间借贷服务中心利率、小额贷款公司放款利率、民间资本管理公"
-"司融资价格、社会直接借贷利率、其他市场主体利率、农村互助会互助金费率、��州地"
-"区民间借贷分期限利率（一月期、三月期、六月期、一年期、长期）等多个利率指标。"
+"温州民间借贷指数是指温州地区民间借贷市场的利率指数，包括了温州地区民间借贷市场的综合利率指数、民间借贷服务中心利率、小额贷款公司放款利率、民间资本管理公司融资价格、社会直接借贷利率、其他市场主体利率、农村互助会互助金费率、��州地区民间借贷分期限利率（一月期、三月期、六月期、一年期、长期）等多个利率指标。"
 msgstr ""
 "The Wenzhou Private Lending Index refers to the interest rate index of the "
 "private lending market in Wenzhou. It includes multiple interest rate "
@@ -392,17 +382,14 @@ msgstr "Guangzhou Private Lending Index: `gz_index`"
 
 #: ../../source/manage_data/3. data_tables_50.md:82
 msgid ""
-"广州民间借贷指数是指广州地区民间借贷市场的利率指数，包括了广州地区民间借贷市"
-"场的综合利率指数、小额贷款公司放款利率、民间资本管理公司融资价格、社会直接借"
-"贷利率、其他市场主体利率、农村互助会互助金费率、广州地区民间借贷分期限利率"
-"（一月期、三月期、六月期、一年期、长期）等多个利率指标。"
+"广州民间借贷指数是指广州地区民间借贷市场的利率指数，包括了广州地区民间借贷市场的综合利率指数、小额贷款公司放款利率、民间资本管理公司融资价格、社会直接借贷利率、其他市场主体利率、农村互助会互助金费率、广州地区民间借贷分期限利率（一月期、三月期、六月期、一年期、长期）等多个利率指标。"
 msgstr ""
-"The Guangzhou Private Lending Index refers to the interest rate index of the "
-"private lending market in Guangzhou. It includes multiple interest rate "
+"The Guangzhou Private Lending Index refers to the interest rate index of the"
+" private lending market in Guangzhou. It includes multiple interest rate "
 "indicators such as the comprehensive interest rate index of the private "
-"lending market in Guangzhou, the lending rate of microfinance companies, the "
-"financing price of private capital management companies, the direct lending "
-"rate of the social sector, the interest rate of other market entities, the "
+"lending market in Guangzhou, the lending rate of microfinance companies, the"
+" financing price of private capital management companies, the direct lending"
+" rate of the social sector, the interest rate of other market entities, the "
 "mutual aid fund rate of rural mutual aid associations, and the interest "
 "rates of private lending in Guangzhou by term (one-month, three-month, six-"
 "month, one-year, and long-term)."
@@ -414,7 +401,8 @@ msgstr "d10_rate"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "小额贷市场平均利率（十天） （单位：%，下同）"
 msgstr ""
-"Average interest rate in the microloan market (10 days) (Unit: %, same below)"
+"Average interest rate in the microloan market (10 days) (Unit: %, same "
+"below)"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "小额贷市场平均利率（一月期）"
@@ -451,9 +439,7 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md:99
 msgid ""
-"国内生产总值（GDP）是指一个国家（或地区）在一定时期内生产的全部最终产品和劳务"
-"的市场价值。GDP是衡量一个国家经济总量的重要指标，也是国家宏观调控的重要参考指"
-"标之一。"
+"国内生产总值（GDP）是指一个国家（或地区）在一定时期内生产的全部最终产品和劳务的市场价值。GDP是衡量一个国家经济总量的重要指标，也是国家宏观调控的重要参考指标之一。"
 msgstr ""
 "Gross Domestic Product (GDP) refers to the market value of all final goods "
 "and services produced by a country (or region) within a certain period. GDP "
@@ -462,9 +448,7 @@ msgstr ""
 "macroeconomic control."
 
 #: ../../source/manage_data/3. data_tables_50.md:101
-msgid ""
-"国内生产总值表涵盖了GDP的全部值、同比增速、季度值、第一产业、第二产业和第三产"
-"业多个构成指标。"
+msgid "国内生产总值表涵盖了GDP的全部值、同比增速、季度值、第一产业、第二产业和第三产业多个构成指标。"
 msgstr ""
 "The Gross Domestic Product (GDP) table covers the total GDP value, year-on-"
 "year growth rate, quarterly value, and multiple constituent indicators of "
@@ -558,25 +542,21 @@ msgstr ""
 
 #: ../../source/manage_data/3. data_tables_50.md:118
 msgid ""
-"居民消费价格指数（CPI）是指反映一定时期或特定时点居民家庭购买消费品和服务价格"
-"水平的变动情况的综合指数。CPI是衡量居民生活水平变动的重要指标，也是国家宏观调"
-"控的重要参考指标之一。"
+"居民消费价格指数（CPI）是指反映一定时期或特定时点居民家庭购买消费品和服务价格水平的变动情况的综合指数。CPI是衡量居民生活水平变动的重要指标，也是国家宏观调控的重要参考指标之一。"
 msgstr ""
-"The Consumer Price Index (CPI) is a composite index that reflects changes in "
-"the price levels of consumer goods and services purchased by households over "
-"a specific period or point in time. The CPI is an important indicator for "
-"measuring changes in residents' living standards and is also one of the key "
-"reference indicators for national macroeconomic control."
+"The Consumer Price Index (CPI) is a composite index that reflects changes in"
+" the price levels of consumer goods and services purchased by households "
+"over a specific period or point in time. The CPI is an important indicator "
+"for measuring changes in residents' living standards and is also one of the "
+"key reference indicators for national macroeconomic control."
 
 #: ../../source/manage_data/3. data_tables_50.md:120
-msgid ""
-"居民消费价格指数表涵盖了CPI的全部商品和服务、食品、非食品、工业品、农产品、服"
-"务等多个构成指数及其同比、环比变化率。"
+msgid "居民消费价格指数表涵盖了CPI的全部商品和服务、食品、非食品、工业品、农产品、服务等多个构成指数及其同比、环比变化率。"
 msgstr ""
 "The Consumer Price Index (CPI) table covers all components of the CPI, "
 "including goods and services, food, non-food items, industrial products, "
-"agricultural products, and services, as well as their year-on-year and month-"
-"on-month change rates."
+"agricultural products, and services, as well as their year-on-year and "
+"month-on-month change rates."
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "month"
@@ -688,11 +668,7 @@ msgstr "Monthly data for the Producer Price Index (PPI): `cn_ppi`"
 
 #: ../../source/manage_data/3. data_tables_50.md:141
 msgid ""
-"工业品出厂价格指数（PPI）是指工业企业生产的产品出厂时的价格指数，是衡量工业品"
-"价格变动的重要指标。PPI分为生产资料价格指数和生活资料价格指数两大类，生产资料"
-"价格指数又分为采掘工业价格指数、原料工业价格指数和加工工业价格指数三个子类��"
-"生活资料价格指数又分为食品类价格指数、衣着类价格指数、一般日用品类价格指数和"
-"耐用消费品类价格指数四个子类。"
+"工业品出厂价格指数（PPI）是指工业企业生产的产品出厂时的价格指数，是衡量工业品价格变动的重要指标。PPI分为生产资料价格指数和生活资料价格指数两大类，生产资料价格指数又分为采掘工业价格指数、原料工业价格指数和加工工业价格指数三个子类��生活资料价格指数又分为食品类价格指数、衣着类价格指数、一般日用品类价格指数和耐用消费品类价格指数四个子类。"
 msgstr ""
 "The Producer Price Index (PPI) is the price index of products manufactured "
 "by industrial enterprises at the time of their ex-factory sale. It is an "
@@ -707,9 +683,7 @@ msgstr ""
 "price index of durable consumer goods."
 
 #: ../../source/manage_data/3. data_tables_50.md:143
-msgid ""
-"工业品出厂价格指数表涵盖了PPI的全部工业品、生产资料、生活资料多个构成指数及其"
-"同比、环比变化率。"
+msgid "工业品出厂价格指数表涵盖了PPI的全部工业品、生产资料、生活资料多个构成指数及其同比、环比变化率。"
 msgstr ""
 "The Producer Price Index (PPI) table covers multiple constituent indices of "
 "the PPI for all industrial products, means of production, and consumer "
@@ -968,7 +942,8 @@ msgstr "ppi_mp_p_accu"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "PPI：生产资料：加工业：累计同比"
 msgstr ""
-"PPI: Means of Production: Processing Industry: Cumulative Year-on-Year Growth"
+"PPI: Means of Production: Processing Industry: Cumulative Year-on-Year "
+"Growth"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "26"
@@ -1038,12 +1013,10 @@ msgstr "China's money supply: `cn_money`"
 
 #: ../../source/manage_data/3. data_tables_50.md:182
 msgid ""
-"中国货币供应量是中国人民银行发布的一个重要宏观经济指标，是指金融机构向非金融"
-"企业和居民提供的各种货币信贷和融资服务的总量。货币供应量统计包括了M0、M1、M2"
-"三个指标。"
+"中国货币供应量是中国人民银行发布的一个重要宏观经济指标，是指金融机构向非金融企业和居民提供的各种货币信贷和融资服务的总量。货币供应量统计包括了M0、M1、M2三个指标。"
 msgstr ""
-"China's money supply is an important macroeconomic indicator released by the "
-"People's Bank of China. It refers to the total amount of various monetary "
+"China's money supply is an important macroeconomic indicator released by the"
+" People's Bank of China. It refers to the total amount of various monetary "
 "credit and financing services provided by financial institutions to non-"
 "financial enterprises and residents. Money supply statistics include three "
 "indicators: M0, M1, and M2."
@@ -1132,9 +1105,7 @@ msgstr "China's monthly social financing data: `cn_sf`"
 
 #: ../../source/manage_data/3. data_tables_50.md:202
 msgid ""
-"中国社会融资规模统计是中国人民银行发布的一个重要宏观经济指标，是指金融机构向"
-"非金融企业和居民提供的各种货币信贷和融资服务的总量。社会融资规模统计包括了贷"
-"款、债券、股票、信托、委托贷款、非金融企业境内外融资等多种金融工具。"
+"中国社会融资规模统计是中国人民银行发布的一个重要宏观经济指标，是指金融机构向非金融企业和居民提供的各种货币信贷和融资服务的总量。社会融资规模统计包括了贷款、债券、股票、信托、委托贷款、非金融企业境内外融资等多种金融工具。"
 msgstr ""
 "China's total social financing is an important macroeconomic indicator "
 "released by the People's Bank of China. It refers to the total amount of "
@@ -1178,29 +1149,25 @@ msgstr "Purchasing Managers' Index (PMI) Monthly Data: `cn_pmi`"
 
 #: ../../source/manage_data/3. data_tables_50.md:214
 msgid ""
-"采购经理指数（PMI），是通过对企业采购经理的月度调查结果统计汇总、编制而成的指"
-"数，它涵盖了企业采购、生产、流通等各个环节，包括制造业和非制造业领域，是国际"
-"上通用的监测宏观经济走势的先行性指数之一，具有较强的预测、预警作用。 综合PMI"
-"产出指数是PMI指标体系中反映当期全行业（制造业和非制造业）产出变化情况的综合指"
-"数。"
+"采购经理指数（PMI），是通过对企业采购经理的月度调查结果统计汇总、编制而成的指数，它涵盖了企业采购、生产、流通等各个环节，包括制造业和非制造业领域，是国际上通用的监测宏观经济走势的先行性指数之一，具有较强的预测、预警作用。"
+" 综合PMI产出指数是PMI指标体系中反映当期全行业（制造业和非制造业）产出变化情况的综合指数。"
 msgstr ""
 "The Purchasing Managers' Index (PMI) is an index compiled by statistically "
-"summarizing the results of monthly surveys of corporate purchasing managers. "
-"It covers all aspects of corporate procurement, production, and "
-"distribution, including both manufacturing and non-manufacturing sectors. It "
-"is one of the internationally recognized leading indicators for monitoring "
-"macroeconomic trends and has a strong predictive and early warning function. "
-"The Composite PMI Output Index is a comprehensive index within the PMI "
+"summarizing the results of monthly surveys of corporate purchasing managers."
+" It covers all aspects of corporate procurement, production, and "
+"distribution, including both manufacturing and non-manufacturing sectors. It"
+" is one of the internationally recognized leading indicators for monitoring "
+"macroeconomic trends and has a strong predictive and early warning function."
+" The Composite PMI Output Index is a comprehensive index within the PMI "
 "indicator system that reflects the current output changes across all "
 "industries (manufacturing and non-manufacturing)."
 
 #: ../../source/manage_data/3. data_tables_50.md:216
-msgid ""
-"采购经理人指数表涵盖了制造业PMI、非制造业PMI多个构成指数以及和中国综合PMI三个"
-"指数。"
+msgid "采购经理人指数表涵盖了制造业PMI、非制造业PMI多个构成指数以及和中国综合PMI三个指数。"
 msgstr ""
-"The Purchasing Managers' Index (PMI) table covers multiple component indices "
-"of the Manufacturing PMI, Non-Manufacturing PMI, and the China Composite PMI."
+"The Purchasing Managers' Index (PMI) table covers multiple component indices"
+" of the Manufacturing PMI, Non-Manufacturing PMI, and the China Composite "
+"PMI."
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010000"
@@ -1325,8 +1292,8 @@ msgstr "pmi010601"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/供应商配送时间指数:企业规模/大型企业"
 msgstr ""
-"Manufacturing PMI: Component Index / Supplier Delivery Time Index: Firm "
-"Size / Large Enterprises"
+"Manufacturing PMI: Component Index / Supplier Delivery Time Index: Firm Size"
+" / Large Enterprises"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010602"
@@ -1335,8 +1302,8 @@ msgstr "pmi010602"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/供应商配送时间指数:企业规模/中型企业"
 msgstr ""
-"Manufacturing PMI: Component Index / Supplier Delivery Time Index: Firm "
-"Size / Medium-sized Enterprises"
+"Manufacturing PMI: Component Index / Supplier Delivery Time Index: Firm Size"
+" / Medium-sized Enterprises"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010603"
@@ -1345,8 +1312,8 @@ msgstr "pmi010603"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/供应商配送时间指数:企业规模/小型企业"
 msgstr ""
-"Manufacturing PMI: Component Index / Supplier Delivery Time Index: Firm "
-"Size / Small Businesses"
+"Manufacturing PMI: Component Index / Supplier Delivery Time Index: Firm Size"
+" / Small Businesses"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010700"
@@ -1363,8 +1330,8 @@ msgstr "pmi010701"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/原材料库存指数:企业规模/大型企业"
 msgstr ""
-"Manufacturing PMI: Component Index/Raw Materials Inventory Index: Firm Size/"
-"Large Enterprises"
+"Manufacturing PMI: Component Index/Raw Materials Inventory Index: Firm "
+"Size/Large Enterprises"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010702"
@@ -1373,8 +1340,8 @@ msgstr "pmi010702"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/原材料库存指数:企业规模/中型企业"
 msgstr ""
-"Manufacturing PMI: Component Index/Raw Materials Inventory Index: Firm Size/"
-"Medium-sized Enterprises"
+"Manufacturing PMI: Component Index/Raw Materials Inventory Index: Firm "
+"Size/Medium-sized Enterprises"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010703"
@@ -1383,8 +1350,8 @@ msgstr "pmi010703"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "制造业PMI:构成指数/原材料库存指数:企业规模/小型企业"
 msgstr ""
-"Manufacturing PMI: Component Index/Raw Materials Inventory Index: Firm Size/"
-"Small Enterprises"
+"Manufacturing PMI: Component Index/Raw Materials Inventory Index: Firm "
+"Size/Small Enterprises"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "pmi010800"
@@ -1748,8 +1715,8 @@ msgstr "pmi020601"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:业务活动预期指数:分行业/建筑业"
 msgstr ""
-"Non-Manufacturing PMI: Business Activity Expectations Index: By Sector/"
-"Construction"
+"Non-Manufacturing PMI: Business Activity Expectations Index: By "
+"Sector/Construction"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "54"
@@ -1762,8 +1729,8 @@ msgstr "pmi020602"
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "非制造业PMI:业务活动预期指数:分行业/服务业"
 msgstr ""
-"Non-Manufacturing PMI: Business Activity Expectations Index: By Sector/"
-"Services"
+"Non-Manufacturing PMI: Business Activity Expectations Index: By "
+"Sector/Services"
 
 #: ../../source/manage_data/3. data_tables_50.md
 msgid "55"
