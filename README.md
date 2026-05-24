@@ -52,7 +52,7 @@
 - email: *jackie_pengzhao@163.com*
 - Created: 2019, July, 16
 - Latest Version: `2.5.1` — [发布历史](https://qteasy.readthedocs.io/zh-cn/latest/RELEASE_HISTORY.html)
-- Document: [https://qteasy.readthedocs.io/zh-cn/latest/](https://qteasy.readthedocs.io/zh-cn/latest/)
+- Document: [简体中文](https://qteasy.readthedocs.io/zh-cn/latest/) · [English](https://qteasy.readthedocs.io/en/latest/) · [Deutsch](https://qteasy.readthedocs.io/de/latest/) · [Français](https://qteasy.readthedocs.io/fr/latest/) · [Español](https://qteasy.readthedocs.io/es/latest/) · [繁體中文](https://qteasy.readthedocs.io/zh-tw/latest/) · [日本語](https://qteasy.readthedocs.io/ja/latest/)
 - License: BSD 3-Clause License
 
 `qteasy`是为量化交易人员开发的一套量化交易工具包，特点如下：
