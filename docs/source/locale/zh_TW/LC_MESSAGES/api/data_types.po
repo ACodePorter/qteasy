@@ -1,0 +1,125 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Jackie PENG
+# This file is distributed under the same license as the qteasy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: qteasy 2.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-23 14:20+0800\n"
+"PO-Revision-Date: 2026-05-24 16:00+0800\n"
+"Last-Translator: Jackie PENG (zh_tw_fill_opencc)\n"
+"Language-Team: zh_TW <LL@li.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../source/api/data_types.rst:2
+msgid "管理历史数据的类型——DataType对象"
+msgstr "管理歷史數據的類型——DataType對象"
+
+#: ../../source/api/data_types.rst:4
+msgid ""
+"DataType 用于以「名称 + 频率 + 资产类型」三元组的方式描述单一历史数据类型，是 数据管线与策略声明历史数据需求时的统一语言。qteasy "
+"预置了大量常用 DataType， 也支持通过文档中介绍的接口定义用户自定义数据类型。"
+msgstr ""
+"DataType 用於以「名稱 + 頻率 + 資產類型」三元組的方式描述單一歷史數據類型，是 數據管線與策略聲明歷史數據需求時的統一語言。qteasy "
+"預置了大量常用 DataType， 也支持通過文檔中介紹的接口定義用戶自定義數據類型。"
+
+#: of qteasy.datatypes.DataType:1
+msgid "qteasy 中用于描述单一历史数据类型（名称、频率与资产类型）的核心对象。"
+msgstr "qteasy 中用於描述單一歷史數據類型（名稱、頻率與資產類型）的核心對象。"
+
+#: of qteasy.datatypes.DataType:3
+msgid ""
+"每个 DataType 由 ``name``、``freq`` 和 ``asset_type`` 三要素唯一确定，可用于 统一声明策略所需的数据、驱动 "
+"``get_history_data_from_source()`` 等内部取数流程， "
+"并在需要时扩展出自定义数据类型。关于完整的数据类型表与自定义流程，见文档 「DataType 与历史数据类型管理」章节。"
+msgstr ""
+"每個 DataType 由 ``name``、``freq`` 和 ``asset_type`` 三要素唯一確定，可用於 統一聲明策略所需的數據、驅動 "
+"``get_history_data_from_source()`` 等內部取數流程， "
+"並在需要時擴展出自定義數據類型。關於完整的數據類型表與自定義流程，見文檔 「DataType 與歷史數據類型管理」章節。"
+
+#: of qteasy.datatypes.DataType:9
+msgid "示例"
+msgstr "示例"
+
+#: of qteasy.datatypes.DataType:10
+msgid "下面示例展示 DataType 类名（稳定输出）。实际创建 DataType 时，需要提供 name/freq/asset_type："
+msgstr "下面示例展示 DataType 類名（穩定輸出）。實際創建 DataType 時，需要提供 name/freq/asset_type："
+
+#: of qteasy.DataType.asset_type:1 qteasy.DataType.asset_type_str:1
+msgid "资产类型的字符串表示形式，如'E'或'E,IDX'"
+msgstr "資產類型的字符串表示形式，如'E'或'E,IDX'"
+
+#: of qteasy.DataType.asset_types:1
+msgid "所用用户定义的资产类型列表"
+msgstr "所用用戶定義的資產類型列表"
+
+#: of qteasy.DataType.data_table_names:1
+msgid "获取数据表名称，优先使用用户定义的数据表名称，如果没有用户定义的数据表名称，则使用内置数据表名称"
+msgstr "獲取數據表名稱，優先使用用戶定義的數據表名稱，如果沒有用戶定義的數據表名稱，則使用內置數據表名稱"
+
+#: of qteasy.DataType.dtype_id:1
+msgid "形如：close_E_d"
+msgstr "形如：close_E_d"
+
+#: of qteasy.datatypes.DataType.get_available_time:1
+msgid "数据类型在一天之内开始可用的时间，如收盘价在15:00可用，开盘价在9:30可用，高频数据没有可用时间"
+msgstr "數據類型在一天之內開始可用的時間，如收盤價在15:00可用，開盤價在9:30可用，高頻數據沒有可用時間"
+
+#: of qteasy.datatypes.DataType.get_available_time:4
+msgid "Properties"
+msgstr "Properties"
+
+#: of qteasy.datatypes.DataType.get_available_time:5
+msgid "asset_type: str"
+msgstr "asset_type: str"
+
+#: of qteasy.datatypes.DataType.get_available_time:6
+msgid "资产类型，如'E'、'IDX'、'FD'等，因为现在支持多资产类型，所以需要指定资产类型以获取对应的可用时间"
+msgstr "資產類型，如'E'、'IDX'、'FD'等，因爲現在支持多資產類型，所以需要指定資產類型以獲取對應的可用時間"
+
+#: of qteasy.datatypes.DataType.get_data_from_source:1
+msgid "Datatype类从DataSource类获取数据的方法，根据数据类型的获取方式，调用相应的方法获取数据并输出"
+msgstr "Datatype類從DataSource類獲取數據的方法，根據數據類型的獲取方式，調用相應的方法獲取數據並輸出"
+
+#: of qteasy.datatypes.DataType.get_data_from_source:3
+msgid "如果symbols为None，则输出为un-symbolised数据，否则输出为symbolised数据"
+msgstr "如果symbols爲None，則輸出爲un-symbolised數據，否則輸出爲symbolised數據"
+
+#: ../../source/api/data_types.rst
+msgid "参数"
+msgstr "參數"
+
+#: of qteasy.datatypes.DataType.get_data_from_source:5
+msgid "数据类型对象"
+msgstr "數據類型對象"
+
+#: of qteasy.datatypes.DataType.get_data_from_source:7
+msgid "股票代码列表，一个逗号分隔的字符串，如'000001.SZ,000002.SZ'"
+msgstr "股票代碼列表，一個逗號分隔的字符串，如'000001.SZ,000002.SZ'"
+
+#: of qteasy.datatypes.DataType.get_data_from_source:9
+msgid "开始日期, YYYYMMDD格式"
+msgstr "開始日期, YYYYMMDD格式"
+
+#: of qteasy.datatypes.DataType.get_data_from_source:11
+msgid "结束日期, YYYYMMDD格式"
+msgstr "結束日期, YYYYMMDD格式"
+
+#: of qteasy.DataType.id:1
+msgid "忽略数据频率的ID形如：close(E)，用于标记不同资产类型的数据"
+msgstr "忽略數據頻率的ID形如：close(E)，用於標記不同資產類型的數據"
+
+#: of qteasy.DataType.unsymbolized:1
+msgid ""
+"return True if this data type is unsymbolized data type (i.e. reference data"
+" type)"
+msgstr ""
+"return True if this data type is unsymbolized data type (i.e. reference data"
+" type)"

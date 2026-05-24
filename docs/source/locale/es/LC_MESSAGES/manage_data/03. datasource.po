@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -549,7 +549,7 @@ msgstr ""
 
 #: ../../source/manage_data/2. datasource.md:275
 msgid "请注意："
-msgstr "Nota:"
+msgstr "Tenga en cuenta:"
 
 #: ../../source/manage_data/2. datasource.md:277
 msgid ""

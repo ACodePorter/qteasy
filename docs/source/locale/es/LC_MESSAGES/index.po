@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -47,7 +47,6 @@ msgid "优化交易策略"
 msgstr "Optimizar la estrategia comercial"
 
 #: ../../source/index.rst:151
-#, fuzzy
 msgid "模拟实盘交易模块"
 msgstr "Simular una estrategia comercial en tiempo real"
 
@@ -80,18 +79,19 @@ msgid "欢迎使用 ``QTEASY`` 文档!"
 msgstr "¡Bienvenido a la documentación de ``QTEASY``!"
 
 #: ../../source/index.rst:15
-#, fuzzy
 msgid ""
 "`qteasy`已经升级到2.0版本，使得交易策略能更加灵活有效地使用历史数据、同时简化了交易策略的定义过程、提高了效率。 由于 ``QTEASY`` "
 "仍处于测试中，软件中不免存在一些漏洞和bug，如果大家使用中出现问题，欢迎 `报告Issue`_ 或者提交 `新功能需求`_ 给我，也可以进入 "
 "`讨论区`_ 参与讨论。欢迎各位贡献代码！"
 msgstr ""
-"Actualmente, ``qteasy`` se encuentra en una etapa intensiva de desarrollo y "
-"prueba, y es inevitable que existan algunas vulnerabilidades y errores en el"
-" softwareSi encuentra problemas durante el uso, puede ``Informar un "
-"problema`` o enviarme ``Nueva solicitud de función``. También puede ingresar"
-" al ``Área de discusión`` para participar en la discusión. ¡Agradecemos "
-"mucho sus contribuciones!"
+"`qteasy` se ha actualizado a la versión 2.0, lo que permite que las "
+"estrategias de trading utilicen datos históricos de forma más flexible y "
+"eficaz, simplificando al mismo tiempo la definición de estrategias y "
+"mejorando la eficiencia. Como ``QTEASY`` sigue en fase de pruebas, el "
+"software puede contener vulnerabilidades y errores. Si encuentra problemas "
+"durante el uso, puede `reportar un Issue`_ o enviarme una `solicitud de "
+"nueva función`_. También puede participar en el `foro de discusión`_. "
+"¡Las contribuciones son bienvenidas!"
 
 #: ../../source/index.rst:22
 msgid "作者: **Jackie PENG**"
@@ -118,7 +118,6 @@ msgid "简介"
 msgstr "Breve introducción"
 
 #: ../../source/index.rst:31
-#, fuzzy
 msgid "``QTEASY`` 是为量化交易人员开发的一套量化交易策略开发工具包，其特点如下："
 msgstr ""
 "``QTEASY`` es un conjunto de herramientas de desarrollo de estrategias "
@@ -252,9 +251,10 @@ msgstr ""
 "decepcionante\"."
 
 #: ../../source/index.rst:71
-#, fuzzy
 msgid "交易策略的回测评价、优化和模拟自动化交易"
-msgstr "Crear una estrategia comercial, simular el comercio automatizado"
+msgstr ""
+"Evaluación de backtest, optimización y trading automatizado simulado de "
+"estrategias de trading"
 
 #: ../../source/index.rst:73
 msgid "通过`Operator`交易员类管理策略运行，按照真实市场交易节奏回测策略，对交易结果进行多维度全方位评价，生成交易报告和结果图表"
@@ -273,11 +273,11 @@ msgstr ""
 " el rendimiento de la estrategia en grandes espacios de parámetros."
 
 #: ../../source/index.rst:75
-#, fuzzy
 msgid "获取实时市场数据，运行策略模拟自动化交易，跟踪记录交易日志、股票持仓、账户资金变化等信息"
 msgstr ""
-"Realice un seguimiento y registre registros de operaciones, posiciones de "
-"acciones, cambios en los fondos de la cuenta, etc."
+"Obtenga datos de mercado en tiempo real, ejecute simulaciones de estrategias "
+"para trading automatizado, y realice seguimiento y registro de registros de "
+"operaciones, posiciones de acciones, cambios en el saldo de la cuenta, etc."
 
 #: ../../source/index.rst:76
 msgid "回测、优化与实盘使用同一套运行机制，写一次策略即可全模式运行，配置清晰，便于复现与排查"

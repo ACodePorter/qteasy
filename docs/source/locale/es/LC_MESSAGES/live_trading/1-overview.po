@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-20 20:30+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -131,7 +131,7 @@ msgstr "Artículo de comparación"
 
 #: ../../source/live_trading/1-overview.md
 msgid "回测"
-msgstr "Prueba retrospectiva"
+msgstr "Backtest"
 
 #: ../../source/live_trading/1-overview.md
 msgid "模拟实盘（`mode=0`）"
@@ -322,7 +322,7 @@ msgstr "el término"
 
 #: ../../source/live_trading/1-overview.md
 msgid "说明"
-msgstr "Descripción"
+msgstr "Nota"
 
 #: ../../source/live_trading/1-overview.md
 msgid "类比"

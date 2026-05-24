@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -104,6 +104,13 @@ msgid ""
 "在[QTEASY文档](https://qteasy.readthedocs.io/zh-"
 "cn/latest/)中，还能找到更多关于如何创建交易员对象运行策略，使用历史数据回测策略，检查回测交易记录，修改策略等等相关内容。对`qteasy`的基本使用方法还不熟悉的同学，可以移步那里查看更多详细说明。"
 msgstr ""
+"En la [QTEASY documentación](https://qteasy.readthedocs.io/es/latest/), "
+"también puede encontrar más contenido sobre cómo crear un objeto comercial "
+"para ejecutar estrategias, realizar pruebas retrospectivas de estrategias "
+"utilizando datos históricos, revisar registros comerciales de pruebas "
+"retrospectivas, modificar estrategias, etc. Si aún no está familiarizado con"
+" el uso básico de `qteasy`, puede ir allí para obtener explicaciones más "
+"detalladas."
 
 #: ../../source/tutorials/4-build-in-strategies.md:23
 msgid "本节的目标"
@@ -222,11 +229,11 @@ msgstr "ID"
 
 #: ../../source/tutorials/4-build-in-strategies.md
 msgid "策略名称"
-msgstr "Nombre"
+msgstr "Nombre de la estrategia"
 
 #: ../../source/tutorials/4-build-in-strategies.md
 msgid "说明"
-msgstr "Descripción"
+msgstr "Nota"
 
 #: ../../source/tutorials/4-build-in-strategies.md
 msgid "`crossline`"

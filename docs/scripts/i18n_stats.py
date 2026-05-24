@@ -19,7 +19,7 @@ import sys
 from typing import Dict, List, Tuple
 
 LOCALE_ROOT = os.path.join(os.path.dirname(__file__), '..', 'source', 'locale')
-DEFAULT_LANGS = ['en', 'de', 'fr', 'es']
+DEFAULT_LANGS = ['en', 'de', 'fr', 'es', 'zh_TW', 'ja']
 MSGFMT = os.environ.get('MSGFMT', 'msgfmt')
 
 

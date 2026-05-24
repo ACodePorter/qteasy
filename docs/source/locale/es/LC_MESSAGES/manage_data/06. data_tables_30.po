@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -828,7 +828,7 @@ msgstr "KS11"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "韩国综合指数"
-msgstr "Índice compuesto de Corea (KOSPI)"
+msgstr "KOSPI Composite"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "AS51"
@@ -916,7 +916,7 @@ msgstr "CSX5P"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "STOXX欧洲50指数"
-msgstr "Índice STOXX Europa 50"
+msgstr "STOXX Europe 50"
 
 #: ../../source/manage_data/3. data_tables_30.md
 msgid "21"

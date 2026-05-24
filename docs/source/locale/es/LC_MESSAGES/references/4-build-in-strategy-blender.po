@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-26 09:45+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -95,11 +95,11 @@ msgstr "ID"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "策略名称"
-msgstr "Nombre"
+msgstr "Nombre de la estrategia"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "说明"
-msgstr "Descripción"
+msgstr "Nota"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "crossline"
@@ -1500,7 +1500,7 @@ msgstr "La expresión `blender` admite las siguientes funciones:"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "元素"
-msgstr "Elementos"
+msgstr "Elemento"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "示例"
@@ -1696,7 +1696,7 @@ msgstr ""
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "表达式"
-msgstr "Expresiones"
+msgstr "Expresión"
 
 #: ../../source/references/4-build-in-strategy-blender.md
 msgid "abs"

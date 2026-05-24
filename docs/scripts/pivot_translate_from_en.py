@@ -24,6 +24,7 @@ LANG_CONFIG: Dict[str, Dict[str, str]] = {
     'de': {'target': 'de', 'rtd': 'de'},
     'fr': {'target': 'fr', 'rtd': 'fr'},
     'es': {'target': 'es', 'rtd': 'es'},
+    'ja': {'target': 'ja', 'rtd': 'ja'},
 }
 
 PROTECT_PATTERNS: List[Tuple[re.Pattern[str], str]] = [

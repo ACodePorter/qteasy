@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:50+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -1038,7 +1038,7 @@ msgstr "relación precio/beneficio"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市盈率TTM"
-msgstr "P/E TTM"
+msgstr "PER TTM"
 
 #: ../../source/manage_data/3. data_tables_35.md
 msgid "市净率"

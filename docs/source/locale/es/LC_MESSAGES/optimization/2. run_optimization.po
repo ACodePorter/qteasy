@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-14 21:02+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 14:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -142,7 +142,7 @@ msgstr ""
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "参数名"
-msgstr "Parámetro"
+msgstr "Nombre del parámetro"
 
 #: ../../source/optimization/2. run_optimization.md
 msgid "类型/可选值"

@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Jackie PENG
+# This file is distributed under the same license as the qteasy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: qteasy 2.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-23 14:20+0800\n"
+"PO-Revision-Date: 2026-05-24 16:00+0800\n"
+"Last-Translator: Jackie PENG (zh_tw_fill_opencc)\n"
+"Language-Team: zh_TW <LL@li.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../source/design/02-data-layer.md:1
+msgid "数据获取、存储与数据类型"
+msgstr "數據獲取、存儲與數據類型"
+
+#: ../../source/design/02-data-layer.md:3
+msgid "1. 数据层在整体中的位置"
+msgstr "1. 數據層在整體中的位置"
+
+#: ../../source/design/02-data-layer.md:5
+msgid ""
+"数据层为策略层与运行层提供“按类型、按窗口”的历史信息。策略不直接访问原始数据表，而是声明自己需要哪些 **DataType** 以及多长的 "
+"**window_length**；运行前，引擎根据这些声明从 **DataSource** "
+"中取出对应数据、整理成数据窗口并注入策略。这样既保证了回测与实盘使用同一套数据视图，也从机制上避免了策略使用“未来数据”。"
+msgstr ""
+"數據層爲策略層與運行層提供“按類型、按窗口”的歷史資訊。策略不直接訪問原始數據表，而是聲明自己需要哪些 **DataType** 以及多長的 "
+"**window_length**；運行前，引擎根據這些聲明從 **DataSource** "
+"中取出對應數據、整理成數據窗口並注入策略。這樣既保證了回測與實盤使用同一套數據視圖，也從機制上避免了策略使用“未來數據”。"
+
+#: ../../source/design/02-data-layer.md:7
+msgid "2. 从原始数据到本地存储"
+msgstr "2. 從原始數據到本地存儲"
+
+#: ../../source/design/02-data-layer.md:9
+msgid "2.1 数据流"
+msgstr "2.1 數據流"
+
+#: ../../source/design/02-data-layer.md:11
+msgid ""
+"外部数据源（如 Tushare、东方财富等）→ 拉取与清洗（格式统一、去重、对齐）→ **DataSource**（文件或数据库）→ "
+"以统一结构写入多张**数据表**。"
+msgstr ""
+"外部數據源（如 Tushare、東方財富等）→ 拉取與清洗（格式統一、去重、對齊）→ **DataSource**（文件或數據庫）→ "
+"以統一結構寫入多張**數據表**。"
+
+#: ../../source/design/02-data-layer.md:13
+msgid "2.2 DataSource 的角色"
+msgstr "2.2 DataSource 的角色"
+
+#: ../../source/design/02-data-layer.md:15
+msgid "**统一存储抽象**：无论底层是 CSV/HDF/Feather 文件还是 MySQL 等数据库，对上层而言都是“按表名、按列”读写。"
+msgstr "**統一存儲抽象**：無論底層是 CSV/HDF/Feather 文件還是 MySQL 等數據庫，對上層而言都是“按表名、按列”讀寫。"
+
+#: ../../source/design/02-data-layer.md:16
+msgid "**多引擎支持**：可配置为 file（csv/hdf/fth）或 db（mysql 等），满足不同部署需求。"
+msgstr "**多引擎支持**：可配置爲 file（csv/hdf/fth）或 db（mysql 等），滿足不同部署需求。"
+
+#: ../../source/design/02-data-layer.md:17
+msgid ""
+"**不主动拉数**：DataSource 只负责读写本地已存在的数据；从网络拉取与更新由用户或定时任务调用数据接口完成，再写入 DataSource。"
+msgstr ""
+"**不主動拉數**：DataSource 只負責讀寫本地已存在的數據；從網絡拉取與更新由用戶或定時任務調用數據接口完成，再寫入 DataSource。"
+
+#: ../../source/design/02-data-layer.md:19
+msgid ""
+"因此，数据层设计把“拉取”和“存储”分开：拉取得到的数据经清洗后写入 DataSource，策略与回测只消费 DataSource 中已有的数据。"
+msgstr ""
+"因此，數據層設計把“拉取”和“存儲”分開：拉取得到的數據經清洗後寫入 DataSource，策略與回測只消費 DataSource 中已有的數據。"
+
+#: ../../source/design/02-data-layer.md:21
+msgid "3. 数据表"
+msgstr "3. 數據表"
+
+#: ../../source/design/02-data-layer.md:23
+msgid ""
+"**内置表划分**：qteasy "
+"预定义了多张数据表，大致包括行情类（如日线、分钟线）、财务类（利润表、资产负债表等）、宏观与指数等。每张表有固定的表名、主键与列结构。"
+msgstr ""
+"**內置表劃分**：qteasy "
+"預定義了多張數據表，大致包括行情類（如日線、分鐘線）、財務類（利潤表、資產負債表等）、宏觀與指數等。每張表有固定的表名、主鍵與列結構。"
+
+#: ../../source/design/02-data-layer.md:24
+msgid ""
+"**表结构与 DataType 的对应关系**：一种“可被策略引用的信息”往往对应某张表的某列（或若干列经计算得到）。DataType 的 "
+"**name**（及 freq、asset_type）与数据表/列的映射在系统内维护，策略只需通过 DataType 或 **dtype_id** "
+"声明需求，无需关心具体表名或列名。"
+msgstr ""
+"**表結構與 DataType 的對應關係**：一種“可被策略引用的資訊”往往對應某張表的某列（或若干列經計算得到）。DataType 的 "
+"**name**（及 freq、asset_type）與數據表/列的映射在系統內維護，策略只需通過 DataType 或 **dtype_id** "
+"聲明需求，無需關心具體表名或列名。"
+
+#: ../../source/design/02-data-layer.md:26
+msgid "4. DataType：从“表里的数据”到“策略可引用的信息”"
+msgstr "4. DataType：從“表裏的數據”到“策略可引用的資訊”"
+
+#: ../../source/design/02-data-layer.md:28
+msgid "4.1 name、freq、asset_type 与 dtype_id"
+msgstr "4.1 name、freq、asset_type 與 dtype_id"
+
+#: ../../source/design/02-data-layer.md:30
+msgid "**name**：数据类型名称（如 close、open、total_mv、pe），对应某类可用的信息。"
+msgstr "**name**：數據類型名稱（如 close、open、total_mv、pe），對應某類可用的資訊。"
+
+#: ../../source/design/02-data-layer.md:31
+msgid "**freq**：数据频率（如 d/w/m/q），与数据表的时间粒度或重采样方式相关。"
+msgstr "**freq**：數據頻率（如 d/w/m/q），與數據表的時間粒度或重採樣方式相關。"
+
+#: ../../source/design/02-data-layer.md:32
+msgid "**asset_type**：适用的资产类型（如 E、IDX、ANY），用于区分股票、指数等。"
+msgstr "**asset_type**：適用的資產類型（如 E、IDX、ANY），用於區分股票、指數等。"
+
+#: ../../source/design/02-data-layer.md:33
+msgid ""
+"**dtype_id**：由上述三者生成，规则为 `name_assettype_freq`，例如 "
+"`close_E_d`、`total_mv_E_q`。策略在 `get_data(dtype_id)` 时使用该 id。"
+msgstr ""
+"**dtype_id**：由上述三者生成，規則爲 `name_assettype_freq`，例如 "
+"`close_E_d`、`total_mv_E_q`。策略在 `get_data(dtype_id)` 時使用該 id。"
+
+#: ../../source/design/02-data-layer.md:35
+msgid "4.2 内置 DataType 与数据表/列的映射"
+msgstr "4.2 內置 DataType 與數據表/列的映射"
+
+#: ../../source/design/02-data-layer.md:37
+msgid ""
+"系统内置大量 DataType，分别映射到不同数据表的列或衍生列。具体表名、列名及获取方式见《下载并管理金融历史数据》与 API "
+"文档中的数据类型与数据表说明；本系列仅强调：**策略只通过 "
+"DataType（dtype_id）引用数据，不直接依赖表结构**，这样表结构演进时只需调整映射关系，而不必改策略代码。"
+msgstr ""
+"系統內置大量 DataType，分別映射到不同數據表的列或衍生列。具體表名、列名及獲取方式見《下載並管理金融歷史數據》與 API "
+"文檔中的數據類型與數據表說明；本系列僅強調：**策略只通過 "
+"DataType（dtype_id）引用數據，不直接依賴表結構**，這樣表結構演進時只需調整映射關係，而不必改策略代碼。"
+
+#: ../../source/design/02-data-layer.md:39
+msgid "5. 小结：为什么策略只接触 DataType 而不直接读表"
+msgstr "5. 小結：爲什麼策略只接觸 DataType 而不直接讀表"
+
+#: ../../source/design/02-data-layer.md:41
+msgid "**一致性**：回测与实盘都通过同一套“声明 DataType + 引擎按窗口注入”的路径取数，避免两套逻辑。"
+msgstr "**一致性**：回測與實盤都通過同一套“聲明 DataType + 引擎按窗口注入”的路徑取數，避免兩套邏輯。"
+
+#: ../../source/design/02-data-layer.md:42
+msgid "**防未来函数**：引擎严格按当前时间步和 window_length 准备过去的数据窗口，策略无法访问未注入的将来数据。"
+msgstr "**防未來函數**：引擎嚴格按當前時間步和 window_length 準備過去的數據窗口，策略無法訪問未注入的將來數據。"
+
+#: ../../source/design/02-data-layer.md:43
+msgid ""
+"**接口统一**：所有策略都用 `get_data(dtype_id)` 取数，dtype_id 与 DataType 一一对应，便于维护与扩展。"
+msgstr ""
+"**接口統一**：所有策略都用 `get_data(dtype_id)` 取數，dtype_id 與 DataType 一一對應，便於維護與擴展。"
+
+#: ../../source/design/02-data-layer.md:45
+msgid "更多数据配置与 API 用法见《下载并管理金融历史数据》与 API 参考。"
+msgstr "更多數據配置與 API 用法見《下載並管理金融歷史數據》與 API 參考。"
