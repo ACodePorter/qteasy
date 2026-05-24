@@ -20,7 +20,7 @@ msgstr ""
 
 #: - ../../source/tutorials/Tutorial 06 交易策略的优化.md:1
 msgid "交易策略的优化"
-msgstr ""
+msgstr "戦略を最適化する"
 
 #: - ../../source/tutorials/Tutorial 06 交易策略的优化.md:3
 msgid "TO BE COMPLETED"

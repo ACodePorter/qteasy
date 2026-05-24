@@ -20,30 +20,30 @@ msgstr ""
 
 #: ../../source/manage_data/08. data_tables_40.md:1
 msgid "`DataTables`——上市公司基本面数据"
-msgstr ""
+msgstr "`DataTables` — 上場企業のファンダメンタルズデータ"
 
 #: ../../source/manage_data/08. data_tables_40.md:3
 msgid "上市公司财务报表数据"
-msgstr ""
+msgstr "上場企業の財務諸表データ"
 
 #: ../../source/manage_data/08. data_tables_40.md:5
 msgid "`qteasy`提供了上市公司的财务报表数据，包括利润表、资产负债表、现金流量表等。数据来源于tushare，数据频率为季度频率。"
-msgstr ""
+msgstr "qteasy は、Tushare から取得した上場企業の財務諸表 (利益、貸借対照表、キャッシュ フローなど) を四半期ごとに提供します。"
 
 #: ../../source/manage_data/08. data_tables_40.md:7
 msgid "上市公司利润表: `income`"
-msgstr ""
+msgstr "上場企業の損益計算書: `income`"
 
 #: ../../source/manage_data/08. data_tables_40.md:8 data_tables_40.md:110
 #: data_tables_40.md:276 data_tables_40.md:381 data_tables_40.md:556
 #: data_tables_40.md:576
 msgid "数据表用途: `report`, 资产类型: `E`, 数据频率: `q`"
-msgstr ""
+msgstr "テーブルの使用: `report`、アセットタイプ: `E`、頻度: `q`"
 
 #: ../../source/manage_data/08. data_tables_40.md:10
 msgid ""
 "利润表是上市公司的财务报表之一，主要包括营业总收入、营业收入、营业总成本、营业成本、营业税金及附加、销售费用、管理费用、财务费用、资产减值损失、营业利润、利润总额、所得税费用、净利润等信息。"
-msgstr ""
+msgstr "損益計算書のフィールドには、総収益、営業収益/費用、税金、販売/管理/財務費用、減損、営業/総利益、税金、純利益などが含まれます。"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "columns"
@@ -75,7 +75,7 @@ msgstr "varchar(9)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "证券代码"
-msgstr ""
+msgstr "セキュリティコード"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "Y"
@@ -95,7 +95,7 @@ msgstr "date"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "报告期"
-msgstr ""
+msgstr "報告期間"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "2"
@@ -107,7 +107,7 @@ msgstr "ann_date"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "公告日期"
-msgstr ""
+msgstr "発表日"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "N"
@@ -123,7 +123,7 @@ msgstr "f_ann_date"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "实际公告日期"
-msgstr ""
+msgstr "実際の発表日"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "4"
@@ -139,7 +139,7 @@ msgstr "varchar(6)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "报告类型 见底部表"
-msgstr ""
+msgstr "レポートの種類 - 下部の表を参照"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "5"
@@ -151,7 +151,7 @@ msgstr "comp_type"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "公司类型(1一般工商业2银行3保险4证券)"
-msgstr ""
+msgstr "会社の種類 (1 一般産業 2 銀行 3 保険 4 証券)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "6"
@@ -163,7 +163,7 @@ msgstr "end_type"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "报告期类型"
-msgstr ""
+msgstr "報告期間の種類"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "7"
@@ -179,7 +179,7 @@ msgstr "double"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "基本每股收益"
-msgstr ""
+msgstr "基本的なEPS"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "8"
@@ -191,7 +191,7 @@ msgstr "diluted_eps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "稀释每股收益"
-msgstr ""
+msgstr "希薄化EPS"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "9"
@@ -203,7 +203,7 @@ msgstr "total_revenue"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业总收入"
-msgstr ""
+msgstr "総営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "10"
@@ -215,7 +215,7 @@ msgstr "revenue"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业收入"
-msgstr ""
+msgstr "営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "11"
@@ -227,7 +227,7 @@ msgstr "int_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "利息收入"
-msgstr ""
+msgstr "受取利息"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "12"
@@ -239,7 +239,7 @@ msgstr "prem_earned"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "已赚保费"
-msgstr ""
+msgstr "獲得保険料"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "13"
@@ -251,7 +251,7 @@ msgstr "comm_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "手续费及佣金收入"
-msgstr ""
+msgstr "手数料・手数料収入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "14"
@@ -263,7 +263,7 @@ msgstr "n_commis_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "手续费及佣金净收入"
-msgstr ""
+msgstr "純手数料および手数料収入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "15"
@@ -275,7 +275,7 @@ msgstr "n_oth_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他经营净收益"
-msgstr ""
+msgstr "その他の営業純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "16"
@@ -287,7 +287,7 @@ msgstr "n_oth_b_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "加:其他业务净收益"
-msgstr ""
+msgstr "その他の営業純利益を追加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "17"
@@ -299,7 +299,7 @@ msgstr "prem_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "保险业务收入"
-msgstr ""
+msgstr "保険事業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "18"
@@ -311,7 +311,7 @@ msgstr "out_prem"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:分出保费"
-msgstr ""
+msgstr "以下: 出再保険料"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "19"
@@ -323,7 +323,7 @@ msgstr "une_prem_reser"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "提取未到期责任准备金"
-msgstr ""
+msgstr "未経過保険料積立金の充当"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "20"
@@ -335,7 +335,7 @@ msgstr "reins_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中:分保费收入"
-msgstr ""
+msgstr "含む: 出再保険料収入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "21"
@@ -347,7 +347,7 @@ msgstr "n_sec_tb_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "代理买卖证券业务净收入"
-msgstr ""
+msgstr "証券代理取引による純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "22"
@@ -359,7 +359,7 @@ msgstr "n_sec_uw_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "证券承销业务净收入"
-msgstr ""
+msgstr "有価証券引受による純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "23"
@@ -371,7 +371,7 @@ msgstr "n_asset_mg_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "受托客户资产管理业务净收入"
-msgstr ""
+msgstr "資産運用受託純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "24"
@@ -383,7 +383,7 @@ msgstr "oth_b_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他业务收入"
-msgstr ""
+msgstr "その他の営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "25"
@@ -395,7 +395,7 @@ msgstr "fv_value_chg_gain"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "加:公允价值变动净收益"
-msgstr ""
+msgstr "追加: 公正価値変動による純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "26"
@@ -407,7 +407,7 @@ msgstr "invest_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "加:投资净收益"
-msgstr ""
+msgstr "追加: 純投資収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "27"
@@ -419,7 +419,7 @@ msgstr "ass_invest_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中:对联营企业和合营企业的投资收益"
-msgstr ""
+msgstr "含む: 関連会社および合弁事業からの投資収入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "28"
@@ -431,7 +431,7 @@ msgstr "forex_gain"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "加:汇兑净收益"
-msgstr ""
+msgstr "追加: 純為替差益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "29"
@@ -443,7 +443,7 @@ msgstr "total_cogs"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业总成本"
-msgstr ""
+msgstr "総運営費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "30"
@@ -455,7 +455,7 @@ msgstr "oper_cost"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:营业成本"
-msgstr ""
+msgstr "少ないもの: 運用コスト"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "31"
@@ -467,7 +467,7 @@ msgstr "int_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:利息支出"
-msgstr ""
+msgstr "控除額: 支払利息"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "32"
@@ -479,7 +479,7 @@ msgstr "comm_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:手续费及佣金支出"
-msgstr ""
+msgstr "以下: 手数料および手数料費用"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "33"
@@ -491,7 +491,7 @@ msgstr "biz_tax_surchg"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:营业税金及附加"
-msgstr ""
+msgstr "未満: 事業税および追加料金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "34"
@@ -503,7 +503,7 @@ msgstr "sell_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:销售费用"
-msgstr ""
+msgstr "控除: 販売費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "35"
@@ -515,7 +515,7 @@ msgstr "admin_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:管理费用"
-msgstr ""
+msgstr "控除: 管理費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "36"
@@ -527,7 +527,7 @@ msgstr "fin_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:财务费用"
-msgstr ""
+msgstr "控除: 財務費用"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "37"
@@ -539,7 +539,7 @@ msgstr "assets_impair_loss"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:资产减值损失"
-msgstr ""
+msgstr "未満: 資産の減損損失"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "38"
@@ -551,7 +551,7 @@ msgstr "prem_refund"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "退保金"
-msgstr ""
+msgstr "解約金の支払い"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "39"
@@ -563,7 +563,7 @@ msgstr "compens_payout"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "赔付总支出"
-msgstr ""
+msgstr "保険金支払総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "40"
@@ -575,7 +575,7 @@ msgstr "reser_insur_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "提取保险责任准备金"
-msgstr ""
+msgstr "保険積立金充当"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "41"
@@ -587,7 +587,7 @@ msgstr "div_payt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "保户红利支出"
-msgstr ""
+msgstr "契約者配当金のお支払い"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "42"
@@ -599,7 +599,7 @@ msgstr "reins_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "分保费用"
-msgstr ""
+msgstr "再保険費用"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "43"
@@ -611,7 +611,7 @@ msgstr "oper_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业支出"
-msgstr ""
+msgstr "営業費用"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "44"
@@ -623,7 +623,7 @@ msgstr "compens_payout_refu"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:摊回赔付支出"
-msgstr ""
+msgstr "少ない: 回収された再保険金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "45"
@@ -635,7 +635,7 @@ msgstr "insur_reser_refu"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:摊回保险责任准备金"
-msgstr ""
+msgstr "控除額: 再保険準備金の回収"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "46"
@@ -647,7 +647,7 @@ msgstr "reins_cost_refund"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:摊回分保费用"
-msgstr ""
+msgstr "控除額: 再保険費用の回収"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "47"
@@ -659,7 +659,7 @@ msgstr "other_bus_cost"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他业务成本"
-msgstr ""
+msgstr "その他の運営費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "48"
@@ -671,7 +671,7 @@ msgstr "operate_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润"
-msgstr ""
+msgstr "営業利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "49"
@@ -683,7 +683,7 @@ msgstr "non_oper_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "加:营业外收入"
-msgstr ""
+msgstr "営業外収益を追加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "50"
@@ -695,7 +695,7 @@ msgstr "non_oper_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:营业外支出"
-msgstr ""
+msgstr "控除: 営業外費用"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "51"
@@ -707,7 +707,7 @@ msgstr "nca_disploss"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中:减:非流动资产处置净损失"
-msgstr ""
+msgstr "含むもの: 未満: 固定資産処分による純損失"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "52"
@@ -719,7 +719,7 @@ msgstr "total_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "利润总额"
-msgstr ""
+msgstr "総利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "53"
@@ -731,7 +731,7 @@ msgstr "income_tax"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "所得税费用"
-msgstr ""
+msgstr "所得税費用"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "54"
@@ -743,7 +743,7 @@ msgstr "n_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净利润(含少数股东损益)"
-msgstr ""
+msgstr "当期純利益（少数株主利益を含む）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "55"
@@ -755,7 +755,7 @@ msgstr "n_income_attr_p"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净利润(不含少数股东损益)"
-msgstr ""
+msgstr "当期純利益（少数株主利益を除く）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "56"
@@ -767,7 +767,7 @@ msgstr "minority_gain"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "少数股东损益"
-msgstr ""
+msgstr "少数株主利益収入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "57"
@@ -779,7 +779,7 @@ msgstr "oth_compr_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他综合收益"
-msgstr ""
+msgstr "その他の包括利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "58"
@@ -791,7 +791,7 @@ msgstr "t_compr_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "综合收益总额"
-msgstr ""
+msgstr "包括利益合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "59"
@@ -803,7 +803,7 @@ msgstr "compr_inc_attr_p"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属于母公司(或股东)的综合收益总额"
-msgstr ""
+msgstr "親会社（株主）に帰属する包括利益合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "60"
@@ -815,7 +815,7 @@ msgstr "compr_inc_attr_m_s"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属于少数股东的综合收益总额"
-msgstr ""
+msgstr "少数株主に帰属する包括利益合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "61"
@@ -827,7 +827,7 @@ msgstr "ebit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "息税前利润"
-msgstr ""
+msgstr "EBIT"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "62"
@@ -839,7 +839,7 @@ msgstr "ebitda"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "息税折旧摊销前利润"
-msgstr ""
+msgstr "EBITDA"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "63"
@@ -851,7 +851,7 @@ msgstr "insurance_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "保险业务支出"
-msgstr ""
+msgstr "保険事業費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "64"
@@ -863,7 +863,7 @@ msgstr "undist_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "年初未分配利润"
-msgstr ""
+msgstr "期首利益剰余金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "65"
@@ -875,7 +875,7 @@ msgstr "distable_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "可分配利润"
-msgstr ""
+msgstr "分配可能利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "66"
@@ -887,7 +887,7 @@ msgstr "rd_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "研发费用"
-msgstr ""
+msgstr "研究開発費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "67"
@@ -899,7 +899,7 @@ msgstr "fin_exp_int_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "财务费用:利息费用"
-msgstr ""
+msgstr "金融費用: 支払利息"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "68"
@@ -911,7 +911,7 @@ msgstr "fin_exp_int_inc"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "财务费用:利息收入"
-msgstr ""
+msgstr "金融費用: 受取利息"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "69"
@@ -923,7 +923,7 @@ msgstr "transfer_surplus_rese"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "盈余公积转入"
-msgstr ""
+msgstr "剰余金からの繰入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "70"
@@ -935,7 +935,7 @@ msgstr "transfer_housing_imprest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "住房周转金转入"
-msgstr ""
+msgstr "住宅リボルビング基金からの振替"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "71"
@@ -947,7 +947,7 @@ msgstr "transfer_oth"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他转入"
-msgstr ""
+msgstr "その他の転送"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "72"
@@ -959,7 +959,7 @@ msgstr "adj_lossgain"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "调整以前年度损益"
-msgstr ""
+msgstr "前年度調整"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "73"
@@ -971,7 +971,7 @@ msgstr "withdra_legal_surplus"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "提取法定盈余公积"
-msgstr ""
+msgstr "法定剰余金積立金の処分"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "74"
@@ -983,7 +983,7 @@ msgstr "withdra_legal_pubfund"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "提取法定公益金"
-msgstr ""
+msgstr "法定厚生基金の充当"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "75"
@@ -995,7 +995,7 @@ msgstr "withdra_biz_devfund"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "提取企业发展基金"
-msgstr ""
+msgstr "企業拡大資金の充当"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "76"
@@ -1007,7 +1007,7 @@ msgstr "withdra_rese_fund"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "提取储备基金"
-msgstr ""
+msgstr "積立金の充当"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "77"
@@ -1019,7 +1019,7 @@ msgstr "withdra_oth_ersu"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "提取任意盈余公积金"
-msgstr ""
+msgstr "剰余金積立処分の裁量"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "78"
@@ -1031,7 +1031,7 @@ msgstr "workers_welfare"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "职工奖金福利"
-msgstr ""
+msgstr "従業員のボーナスと福利厚生"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "79"
@@ -1043,7 +1043,7 @@ msgstr "distr_profit_shrhder"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "可供股东分配的利润"
-msgstr ""
+msgstr "株主への分配可能な利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "80"
@@ -1055,7 +1055,7 @@ msgstr "prfshare_payable_dvd"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付优先股股利"
-msgstr ""
+msgstr "優先株の配当金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "81"
@@ -1067,7 +1067,7 @@ msgstr "comshare_payable_dvd"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付普通股股利"
-msgstr ""
+msgstr "普通株式の配当金の支払い"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "82"
@@ -1079,7 +1079,7 @@ msgstr "capit_comstock_div"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "转作股本的普通股股利"
-msgstr ""
+msgstr "普通株式の配当金を資本金に換算"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "83"
@@ -1091,7 +1091,7 @@ msgstr "net_after_nr_lp_correct"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "扣除非经常性损益后的净利润(更正前)"
-msgstr ""
+msgstr "経常外項目を除いた当期純利益（修正前）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "84"
@@ -1103,7 +1103,7 @@ msgstr "credit_impa_loss"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "信用减值损失"
-msgstr ""
+msgstr "信用減損損失"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "85"
@@ -1115,7 +1115,7 @@ msgstr "net_expo_hedging_benefits"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净敞口套期收益"
-msgstr ""
+msgstr "純ヘッジ利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "86"
@@ -1127,7 +1127,7 @@ msgstr "oth_impair_loss_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他资产减值损失"
-msgstr ""
+msgstr "その他の資産の減損損失"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "87"
@@ -1139,7 +1139,7 @@ msgstr "total_opcost"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业总成本(二)"
-msgstr ""
+msgstr "総事業費（Ⅱ）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "88"
@@ -1151,7 +1151,7 @@ msgstr "amodcost_fin_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "以摊余成本计量的金融资产终止确认收益"
-msgstr ""
+msgstr "償却原価での金融資産の認識中止による利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "89"
@@ -1163,7 +1163,7 @@ msgstr "oth_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他收益"
-msgstr ""
+msgstr "その他の収入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "90"
@@ -1175,7 +1175,7 @@ msgstr "asset_disp_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "资产处置收益"
-msgstr ""
+msgstr "資産処分益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "91"
@@ -1187,7 +1187,7 @@ msgstr "continued_net_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "持续经营净利润"
-msgstr ""
+msgstr "継続事業による純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "92"
@@ -1199,7 +1199,7 @@ msgstr "end_net_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "终止经营净利润"
-msgstr ""
+msgstr "非継続事業からの純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "93"
@@ -1215,15 +1215,15 @@ msgstr "varchar(4)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "更新标识"
-msgstr ""
+msgstr "更新識別子"
 
 #: ../../source/manage_data/08. data_tables_40.md:109
 msgid "上市公司资产负债表: `balance`"
-msgstr ""
+msgstr "上場企業の貸借対照表: `balance`"
 
 #: ../../source/manage_data/08. data_tables_40.md:112
 msgid "资产负债表是上市公司的财务报表之一，主要包括资产、负债、所有者权益等信息。"
-msgstr ""
+msgstr "貸借対照表 — 資産、負債、株主資本。"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "varchar(10)"
@@ -1231,11 +1231,11 @@ msgstr "varchar(10)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "报表类型"
-msgstr ""
+msgstr "レポートの種類"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "公司类型"
-msgstr ""
+msgstr "会社の種類"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "total_share"
@@ -1243,7 +1243,7 @@ msgstr "total_share"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "期末总股本"
-msgstr ""
+msgstr "期末発行済株式総数"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cap_rese"
@@ -1251,7 +1251,7 @@ msgstr "cap_rese"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "资本公积金"
-msgstr ""
+msgstr "資本準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "undistr_porfit"
@@ -1259,7 +1259,7 @@ msgstr "undistr_porfit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "未分配利润"
-msgstr ""
+msgstr "留保所得"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "surplus_rese"
@@ -1267,7 +1267,7 @@ msgstr "surplus_rese"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "盈余公积金"
-msgstr ""
+msgstr "剰余金準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "special_rese"
@@ -1275,7 +1275,7 @@ msgstr "special_rese"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "专项储备"
-msgstr ""
+msgstr "特別予約"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "money_cap"
@@ -1283,7 +1283,7 @@ msgstr "money_cap"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "货币资金"
-msgstr ""
+msgstr "現金及び現金同等物"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "trad_asset"
@@ -1291,7 +1291,7 @@ msgstr "trad_asset"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "交易性金融资产"
-msgstr ""
+msgstr "金融資産の取引"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "notes_receiv"
@@ -1299,7 +1299,7 @@ msgstr "notes_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收票据"
-msgstr ""
+msgstr "受取手形"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "accounts_receiv"
@@ -1307,7 +1307,7 @@ msgstr "accounts_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收账款"
-msgstr ""
+msgstr "売掛金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_receiv"
@@ -1315,7 +1315,7 @@ msgstr "oth_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他应收款"
-msgstr ""
+msgstr "その他の債権"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "prepayment"
@@ -1323,7 +1323,7 @@ msgstr "prepayment"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预付款项"
-msgstr ""
+msgstr "前払い"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "div_receiv"
@@ -1331,7 +1331,7 @@ msgstr "div_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收股利"
-msgstr ""
+msgstr "未収配当金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "int_receiv"
@@ -1339,7 +1339,7 @@ msgstr "int_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收利息"
-msgstr ""
+msgstr "受取利息"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "inventories"
@@ -1347,7 +1347,7 @@ msgstr "inventories"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存货"
-msgstr ""
+msgstr "在庫"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "amor_exp"
@@ -1355,7 +1355,7 @@ msgstr "amor_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期待摊费用"
-msgstr ""
+msgstr "長期前払費用"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "nca_within_1y"
@@ -1363,7 +1363,7 @@ msgstr "nca_within_1y"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "一年内到期的非流动资产"
-msgstr ""
+msgstr "1年以内に返済期限が到来する固定資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "sett_rsrv"
@@ -1371,7 +1371,7 @@ msgstr "sett_rsrv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "结算备付金"
-msgstr ""
+msgstr "決済準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "loanto_oth_bank_fi"
@@ -1379,7 +1379,7 @@ msgstr "loanto_oth_bank_fi"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "拆出资金"
-msgstr ""
+msgstr "資金の貸付"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "premium_receiv"
@@ -1387,7 +1387,7 @@ msgstr "premium_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收保费"
-msgstr ""
+msgstr "未収保険料"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "reinsur_receiv"
@@ -1395,7 +1395,7 @@ msgstr "reinsur_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收分保账款"
-msgstr ""
+msgstr "再保険債権"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "reinsur_res_receiv"
@@ -1403,7 +1403,7 @@ msgstr "reinsur_res_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收分保合同准备金"
-msgstr ""
+msgstr "再保険契約準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "pur_resale_fa"
@@ -1411,7 +1411,7 @@ msgstr "pur_resale_fa"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "买入返售金融资产"
-msgstr ""
+msgstr "再販契約に基づいて購入した金融資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_cur_assets"
@@ -1419,7 +1419,7 @@ msgstr "oth_cur_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他流动资产"
-msgstr ""
+msgstr "その他の流動資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "total_cur_assets"
@@ -1427,7 +1427,7 @@ msgstr "total_cur_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "流动资产合计"
-msgstr ""
+msgstr "流動資産合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fa_avail_for_sale"
@@ -1435,7 +1435,7 @@ msgstr "fa_avail_for_sale"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "可供出售金融资产"
-msgstr ""
+msgstr "売却可能金融資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "htm_invest"
@@ -1443,7 +1443,7 @@ msgstr "htm_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "持有至到期投资"
-msgstr ""
+msgstr "満期保有投資"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "lt_eqt_invest"
@@ -1451,7 +1451,7 @@ msgstr "lt_eqt_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期股权投资"
-msgstr ""
+msgstr "長期株式投資"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "invest_real_estate"
@@ -1459,7 +1459,7 @@ msgstr "invest_real_estate"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "投资性房地产"
-msgstr ""
+msgstr "投資物件"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "time_deposits"
@@ -1467,7 +1467,7 @@ msgstr "time_deposits"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "定期存款"
-msgstr ""
+msgstr "定期預金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_assets"
@@ -1475,7 +1475,7 @@ msgstr "oth_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他资产"
-msgstr ""
+msgstr "その他の資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "lt_rec"
@@ -1483,7 +1483,7 @@ msgstr "lt_rec"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期应收款"
-msgstr ""
+msgstr "長期債権"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fix_assets"
@@ -1491,7 +1491,7 @@ msgstr "fix_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "固定资产"
-msgstr ""
+msgstr "固定資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cip"
@@ -1499,7 +1499,7 @@ msgstr "cip"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "在建工程"
-msgstr ""
+msgstr "建設中"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "const_materials"
@@ -1507,7 +1507,7 @@ msgstr "const_materials"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "工程物资"
-msgstr ""
+msgstr "エンジニアリング材料"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fixed_assets_disp"
@@ -1515,7 +1515,7 @@ msgstr "fixed_assets_disp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "固定资产清理"
-msgstr ""
+msgstr "固定資産の処分"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "produc_bio_assets"
@@ -1523,7 +1523,7 @@ msgstr "produc_bio_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "生产性生物资产"
-msgstr ""
+msgstr "生産的な生物学的資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oil_and_gas_assets"
@@ -1531,7 +1531,7 @@ msgstr "oil_and_gas_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "油气资产"
-msgstr ""
+msgstr "石油およびガス資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "intan_assets"
@@ -1539,7 +1539,7 @@ msgstr "intan_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "无形资产"
-msgstr ""
+msgstr "無形資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "r_and_d"
@@ -1547,7 +1547,7 @@ msgstr "r_and_d"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "研发支出"
-msgstr ""
+msgstr "研究開発費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "goodwill"
@@ -1555,7 +1555,7 @@ msgstr "goodwill"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "商誉"
-msgstr ""
+msgstr "のれん"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "lt_amor_exp"
@@ -1567,7 +1567,7 @@ msgstr "defer_tax_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "递延所得税资产"
-msgstr ""
+msgstr "繰延税金資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "decr_in_disbur"
@@ -1575,7 +1575,7 @@ msgstr "decr_in_disbur"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "发放贷款及垫款"
-msgstr ""
+msgstr "ローンおよび前払い金の発行"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_nca"
@@ -1583,7 +1583,7 @@ msgstr "oth_nca"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他非流动资产"
-msgstr ""
+msgstr "その他の非流動資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "total_nca"
@@ -1591,7 +1591,7 @@ msgstr "total_nca"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "非流动资产合计"
-msgstr ""
+msgstr "固定資産合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cash_reser_cb"
@@ -1599,7 +1599,7 @@ msgstr "cash_reser_cb"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "现金及存放中央银行款项"
-msgstr ""
+msgstr "中央銀行への現金と預金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "depos_in_oth_bfi"
@@ -1607,7 +1607,7 @@ msgstr "depos_in_oth_bfi"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存放同业和其它金融机构款项"
-msgstr ""
+msgstr "同業他社や他の金融機関への預金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "prec_metals"
@@ -1615,7 +1615,7 @@ msgstr "prec_metals"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "贵金属"
-msgstr ""
+msgstr "貴金属"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "deriv_assets"
@@ -1623,7 +1623,7 @@ msgstr "deriv_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "衍生金融资产"
-msgstr ""
+msgstr "デリバティブ金融資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "rr_reins_une_prem"
@@ -1631,7 +1631,7 @@ msgstr "rr_reins_une_prem"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收分保未到期责任准备金"
-msgstr ""
+msgstr "再保険未収保険料準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "rr_reins_outstd_cla"
@@ -1639,7 +1639,7 @@ msgstr "rr_reins_outstd_cla"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收分保未决赔款准备金"
-msgstr ""
+msgstr "再保険未払い保険金受取準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "rr_reins_lins_liab"
@@ -1647,7 +1647,7 @@ msgstr "rr_reins_lins_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收分保寿险责任准备金"
-msgstr ""
+msgstr "再保険生命準備金受取額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "rr_reins_lthins_liab"
@@ -1655,7 +1655,7 @@ msgstr "rr_reins_lthins_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收分保长期健康险责任准备金"
-msgstr ""
+msgstr "再保険長期医療準備金受取額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "refund_depos"
@@ -1663,7 +1663,7 @@ msgstr "refund_depos"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存出保证金"
-msgstr ""
+msgstr "支払われる証拠金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ph_pledge_loans"
@@ -1671,7 +1671,7 @@ msgstr "ph_pledge_loans"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "保户质押贷款"
-msgstr ""
+msgstr "契約者担保ローン"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "refund_cap_depos"
@@ -1679,7 +1679,7 @@ msgstr "refund_cap_depos"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存出资本保证金"
-msgstr ""
+msgstr "支払われた資本証拠金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "indep_acct_assets"
@@ -1687,7 +1687,7 @@ msgstr "indep_acct_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "独立账户资产"
-msgstr ""
+msgstr "個別のアカウント資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "client_depos"
@@ -1695,7 +1695,7 @@ msgstr "client_depos"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中：客户资金存款"
-msgstr ""
+msgstr "含む: 顧客の資金預金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "client_prov"
@@ -1703,7 +1703,7 @@ msgstr "client_prov"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中：客户备付金"
-msgstr ""
+msgstr "含む: 顧客準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "transac_seat_fee"
@@ -1711,7 +1711,7 @@ msgstr "transac_seat_fee"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中:交易席位费"
-msgstr ""
+msgstr "含まれるもの: トレーディングシート料金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "invest_as_receiv"
@@ -1719,7 +1719,7 @@ msgstr "invest_as_receiv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收款项类投资"
-msgstr ""
+msgstr "債権型投資"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "total_assets"
@@ -1727,7 +1727,7 @@ msgstr "total_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "资产总计"
-msgstr ""
+msgstr "総資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "lt_borr"
@@ -1735,7 +1735,7 @@ msgstr "lt_borr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期借款"
-msgstr ""
+msgstr "長期借入金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "st_borr"
@@ -1743,7 +1743,7 @@ msgstr "st_borr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "短期借款"
-msgstr ""
+msgstr "短期借入金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cb_borr"
@@ -1751,7 +1751,7 @@ msgstr "cb_borr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "向中央银行借款"
-msgstr ""
+msgstr "中央銀行からの借入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "depos_ib_deposits"
@@ -1759,7 +1759,7 @@ msgstr "depos_ib_deposits"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "吸收存款及同业存放"
-msgstr ""
+msgstr "預金と銀行間取引"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "loan_oth_bank"
@@ -1767,7 +1767,7 @@ msgstr "loan_oth_bank"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "拆入资金"
-msgstr ""
+msgstr "借入額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "trading_fl"
@@ -1775,7 +1775,7 @@ msgstr "trading_fl"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "交易性金融负债"
-msgstr ""
+msgstr "トレーディング金融負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "notes_payable"
@@ -1783,7 +1783,7 @@ msgstr "notes_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付票据"
-msgstr ""
+msgstr "支払手形"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "acct_payable"
@@ -1791,7 +1791,7 @@ msgstr "acct_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付账款"
-msgstr ""
+msgstr "買掛金勘定"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "adv_receipts"
@@ -1799,7 +1799,7 @@ msgstr "adv_receipts"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预收款项"
-msgstr ""
+msgstr "顧客からの前払い"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "sold_for_repur_fa"
@@ -1807,7 +1807,7 @@ msgstr "sold_for_repur_fa"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "卖出回购金融资产款"
-msgstr ""
+msgstr "現先契約に基づいて売却された金融資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "comm_payable"
@@ -1815,7 +1815,7 @@ msgstr "comm_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付手续费及佣金"
-msgstr ""
+msgstr "支払われる手数料および手数料"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "payroll_payable"
@@ -1823,7 +1823,7 @@ msgstr "payroll_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付职工薪酬"
-msgstr ""
+msgstr "従業員手当の支払い"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "taxes_payable"
@@ -1831,7 +1831,7 @@ msgstr "taxes_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应交税费"
-msgstr ""
+msgstr "支払うべき税金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "int_payable"
@@ -1839,7 +1839,7 @@ msgstr "int_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付利息"
-msgstr ""
+msgstr "支払利息"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "div_payable"
@@ -1847,7 +1847,7 @@ msgstr "div_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付股利"
-msgstr ""
+msgstr "配当金の支払い"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_payable"
@@ -1855,7 +1855,7 @@ msgstr "oth_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他应付款"
-msgstr ""
+msgstr "その他の未払金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "acc_exp"
@@ -1863,7 +1863,7 @@ msgstr "acc_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预提费用"
-msgstr ""
+msgstr "未払費用"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "deferred_inc"
@@ -1871,7 +1871,7 @@ msgstr "deferred_inc"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "递延收益"
-msgstr ""
+msgstr "繰延収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "st_bonds_payable"
@@ -1879,7 +1879,7 @@ msgstr "st_bonds_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付短期债券"
-msgstr ""
+msgstr "短期社債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "payable_to_reinsurer"
@@ -1887,7 +1887,7 @@ msgstr "payable_to_reinsurer"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付分保账款"
-msgstr ""
+msgstr "再保険金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "rsrv_insur_cont"
@@ -1895,7 +1895,7 @@ msgstr "rsrv_insur_cont"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "保险合同准备金"
-msgstr ""
+msgstr "保険契約準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "acting_trading_sec"
@@ -1903,7 +1903,7 @@ msgstr "acting_trading_sec"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "代理买卖证券款"
-msgstr ""
+msgstr "代理有価証券売買債務"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "acting_uw_sec"
@@ -1911,7 +1911,7 @@ msgstr "acting_uw_sec"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "代理承销证券款"
-msgstr ""
+msgstr "買掛金引受代理店"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "non_cur_liab_due_1y"
@@ -1919,7 +1919,7 @@ msgstr "non_cur_liab_due_1y"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "一年内到期的非流动负债"
-msgstr ""
+msgstr "1年以内に返済予定の固定負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_cur_liab"
@@ -1927,7 +1927,7 @@ msgstr "oth_cur_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他流动负债"
-msgstr ""
+msgstr "その他の流動負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "94"
@@ -1939,7 +1939,7 @@ msgstr "total_cur_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "流动负债合计"
-msgstr ""
+msgstr "流動負債合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "95"
@@ -1951,7 +1951,7 @@ msgstr "bond_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付债券"
-msgstr ""
+msgstr "社債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "96"
@@ -1963,7 +1963,7 @@ msgstr "lt_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期应付款"
-msgstr ""
+msgstr "長期債務"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "97"
@@ -1975,7 +1975,7 @@ msgstr "specific_payables"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "专项应付款"
-msgstr ""
+msgstr "特別未払金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "98"
@@ -1987,7 +1987,7 @@ msgstr "estimated_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预计负债"
-msgstr ""
+msgstr "規定"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "99"
@@ -1999,7 +1999,7 @@ msgstr "defer_tax_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "递延所得税负债"
-msgstr ""
+msgstr "繰延税金負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "100"
@@ -2011,7 +2011,7 @@ msgstr "defer_inc_non_cur_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "递延收益-非流动负债"
-msgstr ""
+msgstr "繰延収益 - 固定負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "101"
@@ -2023,7 +2023,7 @@ msgstr "oth_ncl"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他非流动负债"
-msgstr ""
+msgstr "その他の固定負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "102"
@@ -2035,7 +2035,7 @@ msgstr "total_ncl"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "非流动负债合计"
-msgstr ""
+msgstr "固定負債合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "103"
@@ -2047,7 +2047,7 @@ msgstr "depos_oth_bfi"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "同业和其它金融机构存放款项"
-msgstr ""
+msgstr "同業他社や他の金融機関からの預金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "104"
@@ -2059,7 +2059,7 @@ msgstr "deriv_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "衍生金融负债"
-msgstr ""
+msgstr "デリバティブ金融負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "105"
@@ -2071,7 +2071,7 @@ msgstr "depos"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "吸收存款"
-msgstr ""
+msgstr "預金の吸収"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "106"
@@ -2083,7 +2083,7 @@ msgstr "agency_bus_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "代理业务负债"
-msgstr ""
+msgstr "代理店事業負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "107"
@@ -2095,7 +2095,7 @@ msgstr "oth_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他负债"
-msgstr ""
+msgstr "その他の負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "108"
@@ -2107,7 +2107,7 @@ msgstr "prem_receiv_adva"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预收保费"
-msgstr ""
+msgstr "事前に受け取った保険料"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "109"
@@ -2119,7 +2119,7 @@ msgstr "depos_received"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存入保证金"
-msgstr ""
+msgstr "証拠金の預け入れ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "110"
@@ -2131,7 +2131,7 @@ msgstr "ph_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "保户储金及投资款"
-msgstr ""
+msgstr "保険契約者預り金および投資未払金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "111"
@@ -2143,7 +2143,7 @@ msgstr "reser_une_prem"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "未到期责任准备金"
-msgstr ""
+msgstr "未経過保険料積立金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "112"
@@ -2155,7 +2155,7 @@ msgstr "reser_outstd_claims"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "未决赔款准备金"
-msgstr ""
+msgstr "保険金引当金残高"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "113"
@@ -2167,7 +2167,7 @@ msgstr "reser_lins_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "寿险责任准备金"
-msgstr ""
+msgstr "生命保険積立金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "114"
@@ -2179,7 +2179,7 @@ msgstr "reser_lthins_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期健康险责任准备金"
-msgstr ""
+msgstr "長期健康保険積立金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "115"
@@ -2191,7 +2191,7 @@ msgstr "indept_acc_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "独立账户负债"
-msgstr ""
+msgstr "個別のアカウントの負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "116"
@@ -2203,7 +2203,7 @@ msgstr "pledge_borr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中:质押借款"
-msgstr ""
+msgstr "含む: 質入れられた借入金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "117"
@@ -2215,7 +2215,7 @@ msgstr "indem_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付赔付款"
-msgstr ""
+msgstr "買掛金の請求"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "118"
@@ -2227,7 +2227,7 @@ msgstr "policy_div_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付保单红利"
-msgstr ""
+msgstr "契約者配当金支払額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "119"
@@ -2239,7 +2239,7 @@ msgstr "total_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "负债合计"
-msgstr ""
+msgstr "負債総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "120"
@@ -2251,7 +2251,7 @@ msgstr "treasury_share"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:库存股"
-msgstr ""
+msgstr "控除額：自己株式"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "121"
@@ -2263,7 +2263,7 @@ msgstr "ordin_risk_reser"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "一般风险准备"
-msgstr ""
+msgstr "一般的なリスク準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "122"
@@ -2275,7 +2275,7 @@ msgstr "forex_differ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "外币报表折算差额"
-msgstr ""
+msgstr "外貨換算差額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "123"
@@ -2287,7 +2287,7 @@ msgstr "invest_loss_unconf"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "未确认的投资损失"
-msgstr ""
+msgstr "未認識の投資損失"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "124"
@@ -2299,7 +2299,7 @@ msgstr "minority_int"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "少数股东权益"
-msgstr ""
+msgstr "少数株主資本"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "125"
@@ -2311,7 +2311,7 @@ msgstr "total_hldr_eqy_exc_min_int"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "股东权益合计(不含少数股东权益)"
-msgstr ""
+msgstr "株主資本合計（少数株主持分を除く）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "126"
@@ -2323,7 +2323,7 @@ msgstr "total_hldr_eqy_inc_min_int"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "股东权益合计(含少数股东权益)"
-msgstr ""
+msgstr "株主資本合計（少数株主持分を含む）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "127"
@@ -2335,7 +2335,7 @@ msgstr "total_liab_hldr_eqy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "负债及股东权益总计"
-msgstr ""
+msgstr "負債および株主資本の合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "128"
@@ -2347,7 +2347,7 @@ msgstr "lt_payroll_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期应付职工薪酬"
-msgstr ""
+msgstr "長期従業員手当の支給"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "129"
@@ -2367,7 +2367,7 @@ msgstr "oth_eqt_tools"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他权益工具"
-msgstr ""
+msgstr "その他の資本商品"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "131"
@@ -2379,7 +2379,7 @@ msgstr "oth_eqt_tools_p_shr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他权益工具(优先股)"
-msgstr ""
+msgstr "その他の資本性金融商品（優先株式）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "132"
@@ -2391,7 +2391,7 @@ msgstr "lending_funds"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "融出资金"
-msgstr ""
+msgstr "有価証券貸付残高（証拠金）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "133"
@@ -2403,7 +2403,7 @@ msgstr "acc_receivable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收款项"
-msgstr ""
+msgstr "売掛金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "134"
@@ -2415,7 +2415,7 @@ msgstr "st_fin_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付短期融资款"
-msgstr ""
+msgstr "短期資金調達債務"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "135"
@@ -2427,7 +2427,7 @@ msgstr "payables"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付款项"
-msgstr ""
+msgstr "買掛金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "136"
@@ -2439,7 +2439,7 @@ msgstr "hfs_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "持有待售的资产"
-msgstr ""
+msgstr "売却目的で保有されている資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "137"
@@ -2451,7 +2451,7 @@ msgstr "hfs_sales"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "持有待售的负债"
-msgstr ""
+msgstr "売却目的で保有する負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "138"
@@ -2463,7 +2463,7 @@ msgstr "cost_fin_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "以摊余成本计量的金融资产"
-msgstr ""
+msgstr "償却原価での金融資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "139"
@@ -2475,7 +2475,7 @@ msgstr "fair_value_fin_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "以公允价值计量且其变动计入其他综合收益的金融资产"
-msgstr ""
+msgstr "FVOCI の金融資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "140"
@@ -2487,7 +2487,7 @@ msgstr "cip_total"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "在建工程(合计)(元)"
-msgstr ""
+msgstr "建設仮勘定（合計）（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "141"
@@ -2499,7 +2499,7 @@ msgstr "oth_pay_total"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他应付款(合计)(元)"
-msgstr ""
+msgstr "その他未払金（合計）（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "142"
@@ -2511,7 +2511,7 @@ msgstr "long_pay_total"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期应付款(合计)(元)"
-msgstr ""
+msgstr "長期未払金（合計）（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "143"
@@ -2523,7 +2523,7 @@ msgstr "debt_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "债权投资(元)"
-msgstr ""
+msgstr "負債投資（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "144"
@@ -2535,7 +2535,7 @@ msgstr "oth_debt_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他债权投资(元)"
-msgstr ""
+msgstr "その他の債券投資（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "145"
@@ -2547,7 +2547,7 @@ msgstr "oth_eq_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他权益工具投资(元)"
-msgstr ""
+msgstr "その他の株式投資（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "146"
@@ -2559,7 +2559,7 @@ msgstr "oth_illiq_fin_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他非流动金融资产(元)"
-msgstr ""
+msgstr "その他の非流動資産（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "147"
@@ -2571,7 +2571,7 @@ msgstr "oth_eq_ppbond"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他权益工具:永续债(元)"
-msgstr ""
+msgstr "その他の資本性金融商品: 永久債券 (元)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "148"
@@ -2583,7 +2583,7 @@ msgstr "receiv_financing"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收款项融资"
-msgstr ""
+msgstr "債権融資"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "149"
@@ -2595,7 +2595,7 @@ msgstr "use_right_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "使用权资产"
-msgstr ""
+msgstr "使用権資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "150"
@@ -2607,7 +2607,7 @@ msgstr "lease_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "租赁负债"
-msgstr ""
+msgstr "リース負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "151"
@@ -2619,7 +2619,7 @@ msgstr "contract_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "合同资产"
-msgstr ""
+msgstr "契約資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "152"
@@ -2631,7 +2631,7 @@ msgstr "contract_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "合同负债"
-msgstr ""
+msgstr "契約上の負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "153"
@@ -2643,7 +2643,7 @@ msgstr "accounts_receiv_bill"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收票据及应收账款"
-msgstr ""
+msgstr "受取手形および売掛金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "154"
@@ -2655,7 +2655,7 @@ msgstr "accounts_pay"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应付票据及应付账款"
-msgstr ""
+msgstr "支払手形及び買掛金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "155"
@@ -2667,7 +2667,7 @@ msgstr "oth_rcv_total"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他应收款(合计)(元)"
-msgstr ""
+msgstr "その他債権（合計）（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "156"
@@ -2679,7 +2679,7 @@ msgstr "fix_assets_total"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "固定资产(合计)(元)"
-msgstr ""
+msgstr "固定資産（合計）（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "157"
@@ -2691,11 +2691,11 @@ msgstr "varchar(2)"
 
 #: ../../source/manage_data/08. data_tables_40.md:275
 msgid "上市公司现金流量表: `cashflow`"
-msgstr ""
+msgstr "上場企業のキャッシュフロー計算書: `cashflow`"
 
 #: ../../source/manage_data/08. data_tables_40.md:278
 msgid "现金流量表是上市公司的财务报表之一，主要包括经营活动、投资活动、筹资活动等现金流量信息。"
-msgstr ""
+msgstr "キャッシュ フロー計算書 — 営業、投資、財務のキャッシュ フロー。"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "net_profit"
@@ -2703,7 +2703,7 @@ msgstr "net_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净利润"
-msgstr ""
+msgstr "純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "finan_exp"
@@ -2711,7 +2711,7 @@ msgstr "finan_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "财务费用"
-msgstr ""
+msgstr "財務的支出"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_fr_sale_sg"
@@ -2719,7 +2719,7 @@ msgstr "c_fr_sale_sg"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售商品、提供劳务收到的现金"
-msgstr ""
+msgstr "商品やサービスの販売から得た現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "recp_tax_rends"
@@ -2727,7 +2727,7 @@ msgstr "recp_tax_rends"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "收到的税费返还"
-msgstr ""
+msgstr "受け取った税金の還付"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_depos_incr_fi"
@@ -2735,7 +2735,7 @@ msgstr "n_depos_incr_fi"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "客户存款和同业存放款项净增加额"
-msgstr ""
+msgstr "顧客預金と銀行間取引の純増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_loans_cb"
@@ -2743,7 +2743,7 @@ msgstr "n_incr_loans_cb"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "向中央银行借款净增加额"
-msgstr ""
+msgstr "中央銀行からの借入金の純増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_inc_borr_oth_fi"
@@ -2751,7 +2751,7 @@ msgstr "n_inc_borr_oth_fi"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "向其他金融机构拆入资金净增加额"
-msgstr ""
+msgstr "他金融機関からの借入純増加額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "prem_fr_orig_contr"
@@ -2759,7 +2759,7 @@ msgstr "prem_fr_orig_contr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "收到原保险合同保费取得的现金"
-msgstr ""
+msgstr "当初の保険料から受け取った現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_insured_dep"
@@ -2767,7 +2767,7 @@ msgstr "n_incr_insured_dep"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "保户储金净增加额"
-msgstr ""
+msgstr "契約者保証金純増額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_reinsur_prem"
@@ -2775,7 +2775,7 @@ msgstr "n_reinsur_prem"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "收到再保业务现金净额"
-msgstr ""
+msgstr "再保険から受け取った純現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_disp_tfa"
@@ -2783,7 +2783,7 @@ msgstr "n_incr_disp_tfa"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "处置交易性金融资产净增加额"
-msgstr ""
+msgstr "トレーディング金融資産処分額の純増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ifc_cash_incr"
@@ -2791,7 +2791,7 @@ msgstr "ifc_cash_incr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "收取利息和手续费净增加额"
-msgstr ""
+msgstr "利息及び手数料収入の純増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_disp_faas"
@@ -2799,7 +2799,7 @@ msgstr "n_incr_disp_faas"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "处置可供出售金融资产净增加额"
-msgstr ""
+msgstr "売却可能金融資産の純増加額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_loans_oth_bank"
@@ -2807,7 +2807,7 @@ msgstr "n_incr_loans_oth_bank"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "拆入资金净增加额"
-msgstr ""
+msgstr "借入純増額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_cap_incr_repur"
@@ -2815,7 +2815,7 @@ msgstr "n_cap_incr_repur"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "回购业务资金净增加额"
-msgstr ""
+msgstr "買戻事業資金の純増額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_fr_oth_operate_a"
@@ -2823,7 +2823,7 @@ msgstr "c_fr_oth_operate_a"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "收到其他与经营活动有关的现金"
-msgstr ""
+msgstr "その他の営業活動から得た現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_inf_fr_operate_a"
@@ -2831,7 +2831,7 @@ msgstr "c_inf_fr_operate_a"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动现金流入小计"
-msgstr ""
+msgstr "営業活動によるキャッシュ・インフロー総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_paid_goods_s"
@@ -2839,7 +2839,7 @@ msgstr "c_paid_goods_s"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "购买商品、接受劳务支付的现金"
-msgstr ""
+msgstr "商品やサービスの代金として支払われる現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_paid_to_for_empl"
@@ -2847,7 +2847,7 @@ msgstr "c_paid_to_for_empl"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "支付给职工以及为职工支付的现金"
-msgstr ""
+msgstr "従業員に、または従業員に代わって支払われる現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_paid_for_taxes"
@@ -2855,7 +2855,7 @@ msgstr "c_paid_for_taxes"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "支付的各项税费"
-msgstr ""
+msgstr "支払った税金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_clt_loan_adv"
@@ -2863,7 +2863,7 @@ msgstr "n_incr_clt_loan_adv"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "客户贷款及垫款净增加额"
-msgstr ""
+msgstr "顧客ローンおよび前払い金の純増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_dep_cbob"
@@ -2871,7 +2871,7 @@ msgstr "n_incr_dep_cbob"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存放央行和同业款项净增加额"
-msgstr ""
+msgstr "中央銀行および同業他社への預金の純増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_pay_claims_orig_inco"
@@ -2879,7 +2879,7 @@ msgstr "c_pay_claims_orig_inco"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "支付原保险合同赔付款项的现金"
-msgstr ""
+msgstr "当初の保険金請求に対して支払われた現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "pay_handling_chrg"
@@ -2887,7 +2887,7 @@ msgstr "pay_handling_chrg"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "支付手续费的现金"
-msgstr ""
+msgstr "手数料や手数料を現金で支払う"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "pay_comm_insur_plcy"
@@ -2895,7 +2895,7 @@ msgstr "pay_comm_insur_plcy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "支付保单红利的现金"
-msgstr ""
+msgstr "契約者配当金として支払われた現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_cash_pay_oper_act"
@@ -2903,7 +2903,7 @@ msgstr "oth_cash_pay_oper_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "支付其他与经营活动有关的现金"
-msgstr ""
+msgstr "その他の営業活動のために支払われた現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "st_cash_out_act"
@@ -2911,7 +2911,7 @@ msgstr "st_cash_out_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动现金流出小计"
-msgstr ""
+msgstr "営業活動によるキャッシュ・アウトフロー総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_cashflow_act"
@@ -2919,7 +2919,7 @@ msgstr "n_cashflow_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额"
-msgstr ""
+msgstr "営業活動による純キャッシュ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_recp_ral_inv_act"
@@ -2927,7 +2927,7 @@ msgstr "oth_recp_ral_inv_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "收到其他与投资活动有关的现金"
-msgstr ""
+msgstr "その他の投資活動から得た現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_disp_withdrwl_invest"
@@ -2935,7 +2935,7 @@ msgstr "c_disp_withdrwl_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "收回投资收到的现金"
-msgstr ""
+msgstr "投資回収により得た現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_recp_return_invest"
@@ -2943,7 +2943,7 @@ msgstr "c_recp_return_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "取得投资收益收到的现金"
-msgstr ""
+msgstr "投資収益から受け取った現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_recp_disp_fiolta"
@@ -2951,7 +2951,7 @@ msgstr "n_recp_disp_fiolta"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "处置固定资产、无形资产和其他长期资产收回的现金净额"
-msgstr ""
+msgstr "固定資産、無形資産およびその他の長期資産の処分による純キャッシュ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_recp_disp_sobu"
@@ -2959,7 +2959,7 @@ msgstr "n_recp_disp_sobu"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "处置子公司及其他营业单位收到的现金净额"
-msgstr ""
+msgstr "子会社およびその他の部門の処分により受け取った純現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "stot_inflows_inv_act"
@@ -2967,7 +2967,7 @@ msgstr "stot_inflows_inv_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "投资活动现金流入小计"
-msgstr ""
+msgstr "投資活動によるキャッシュ・インフロー総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_pay_acq_const_fiolta"
@@ -2975,7 +2975,7 @@ msgstr "c_pay_acq_const_fiolta"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "购建固定资产、无形资产和其他长期资产支付的现金"
-msgstr ""
+msgstr "固定資産、無形資産およびその他の長期資産に対して支払われた現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_paid_invest"
@@ -2983,7 +2983,7 @@ msgstr "c_paid_invest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "投资支付的现金"
-msgstr ""
+msgstr "投資に対して支払われた現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_disp_subs_oth_biz"
@@ -2991,7 +2991,7 @@ msgstr "n_disp_subs_oth_biz"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "取得子公司及其他营业单位支付的现金净额"
-msgstr ""
+msgstr "子会社およびその他の事業部門の買収に支払った純現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_pay_ral_inv_act"
@@ -2999,7 +2999,7 @@ msgstr "oth_pay_ral_inv_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "支付其他与投资活动有关的现金"
-msgstr ""
+msgstr "その他の投資活動のために支払われた現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_pledge_loan"
@@ -3007,7 +3007,7 @@ msgstr "n_incr_pledge_loan"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "质押贷款净增加额"
-msgstr ""
+msgstr "質入融資純増額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "stot_out_inv_act"
@@ -3015,7 +3015,7 @@ msgstr "stot_out_inv_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "投资活动现金流出小计"
-msgstr ""
+msgstr "投資活動によるキャッシュアウト総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_cashflow_inv_act"
@@ -3023,7 +3023,7 @@ msgstr "n_cashflow_inv_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "投资活动产生的现金流量净额"
-msgstr ""
+msgstr "投資活動による純キャッシュ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_recp_borrow"
@@ -3031,7 +3031,7 @@ msgstr "c_recp_borrow"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "取得借款收到的现金"
-msgstr ""
+msgstr "借入により得た現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "proc_issue_bonds"
@@ -3039,7 +3039,7 @@ msgstr "proc_issue_bonds"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "发行债券收到的现金"
-msgstr ""
+msgstr "社債発行による現金収入"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_cash_recp_ral_fnc_act"
@@ -3047,7 +3047,7 @@ msgstr "oth_cash_recp_ral_fnc_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "收到其他与筹资活动有关的现金"
-msgstr ""
+msgstr "その他の財務活動から得た現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "stot_cash_in_fnc_act"
@@ -3055,7 +3055,7 @@ msgstr "stot_cash_in_fnc_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "筹资活动现金流入小计"
-msgstr ""
+msgstr "財務活動によるキャッシュ・インフロー総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "free_cashflow"
@@ -3063,7 +3063,7 @@ msgstr "free_cashflow"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "企业自由现金流量"
-msgstr ""
+msgstr "企業のフリーキャッシュフロー"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_prepay_amt_borr"
@@ -3071,7 +3071,7 @@ msgstr "c_prepay_amt_borr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "偿还债务支付的现金"
-msgstr ""
+msgstr "借金返済のために支払った現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_pay_dist_dpcp_int_exp"
@@ -3079,7 +3079,7 @@ msgstr "c_pay_dist_dpcp_int_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "分配股利、利润或偿付利息支付的现金"
-msgstr ""
+msgstr "配当、利益、または利息として支払われる現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "incl_dvd_profit_paid_sc_ms"
@@ -3087,7 +3087,7 @@ msgstr "incl_dvd_profit_paid_sc_ms"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中:子公司支付给少数股东的股利、利润"
-msgstr ""
+msgstr "子会社が少数株主に支払った配当金を含む"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_cashpay_ral_fnc_act"
@@ -3095,7 +3095,7 @@ msgstr "oth_cashpay_ral_fnc_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "支付其他与筹资活动有关的现金"
-msgstr ""
+msgstr "その他の財務活動のために支払われた現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "stot_cashout_fnc_act"
@@ -3103,7 +3103,7 @@ msgstr "stot_cashout_fnc_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "筹资活动现金流出小计"
-msgstr ""
+msgstr "財務活動によるキャッシュ・アウトの総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_cash_flows_fnc_act"
@@ -3111,7 +3111,7 @@ msgstr "n_cash_flows_fnc_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "筹资活动产生的现金流量净额"
-msgstr ""
+msgstr "財務活動によるネットキャッシュ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "eff_fx_flu_cash"
@@ -3119,7 +3119,7 @@ msgstr "eff_fx_flu_cash"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "汇率变动对现金的影响"
-msgstr ""
+msgstr "為替レートの変動が現金に与える影響"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_incr_cash_cash_equ"
@@ -3127,7 +3127,7 @@ msgstr "n_incr_cash_cash_equ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "现金及现金等价物净增加额"
-msgstr ""
+msgstr "現金及び現金同等物の純増加額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_cash_equ_beg_period"
@@ -3135,7 +3135,7 @@ msgstr "c_cash_equ_beg_period"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "期初现金及现金等价物余额"
-msgstr ""
+msgstr "期首現金および現金同等物残高"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_cash_equ_end_period"
@@ -3143,7 +3143,7 @@ msgstr "c_cash_equ_end_period"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "期末现金及现金等价物余额"
-msgstr ""
+msgstr "現金および現金同等物の期末残高"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "c_recp_cap_contrib"
@@ -3151,7 +3151,7 @@ msgstr "c_recp_cap_contrib"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "吸收投资收到的现金"
-msgstr ""
+msgstr "投資から得た現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "incl_cash_rec_saims"
@@ -3159,7 +3159,7 @@ msgstr "incl_cash_rec_saims"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其中:子公司吸收少数股东投资收到的现金"
-msgstr ""
+msgstr "含む：子会社に投資している少数株主から受け取った現金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "uncon_invest_loss"
@@ -3167,7 +3167,7 @@ msgstr "uncon_invest_loss"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "未确认投资损失"
-msgstr ""
+msgstr "未認識の投資損失"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "prov_depr_assets"
@@ -3175,7 +3175,7 @@ msgstr "prov_depr_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "加:资产减值准备"
-msgstr ""
+msgstr "資産減損引当金を追加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "depr_fa_coga_dpba"
@@ -3183,7 +3183,7 @@ msgstr "depr_fa_coga_dpba"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "固定资产折旧、油气资产折耗、生产性生物资产折旧"
-msgstr ""
+msgstr "固定資産の減価償却、石油/ガスの枯渇、生産的な生物資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "amort_intang_assets"
@@ -3191,7 +3191,7 @@ msgstr "amort_intang_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "无形资产摊销"
-msgstr ""
+msgstr "無形固定資産の償却"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "lt_amort_deferred_exp"
@@ -3199,7 +3199,7 @@ msgstr "lt_amort_deferred_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期待摊费用摊销"
-msgstr ""
+msgstr "長期前払費用の償却"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "decr_deferred_exp"
@@ -3207,7 +3207,7 @@ msgstr "decr_deferred_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "待摊费用减少"
-msgstr ""
+msgstr "前払費用の減少"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "incr_acc_exp"
@@ -3215,7 +3215,7 @@ msgstr "incr_acc_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预提费用增加"
-msgstr ""
+msgstr "未払費用の増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "loss_disp_fiolta"
@@ -3223,7 +3223,7 @@ msgstr "loss_disp_fiolta"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "处置固定、无形资产和其他长期资产的损失"
-msgstr ""
+msgstr "固定資産・無形資産その他の長期資産除却損"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "loss_scr_fa"
@@ -3231,7 +3231,7 @@ msgstr "loss_scr_fa"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "固定资产报废损失"
-msgstr ""
+msgstr "固定資産除却損"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "loss_fv_chg"
@@ -3239,7 +3239,7 @@ msgstr "loss_fv_chg"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "公允价值变动损失"
-msgstr ""
+msgstr "公正価値変動損失"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "invest_loss"
@@ -3247,7 +3247,7 @@ msgstr "invest_loss"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "投资损失"
-msgstr ""
+msgstr "投資損失"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "decr_def_inc_tax_assets"
@@ -3255,7 +3255,7 @@ msgstr "decr_def_inc_tax_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "递延所得税资产减少"
-msgstr ""
+msgstr "繰延税金資産の減少"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "incr_def_inc_tax_liab"
@@ -3263,7 +3263,7 @@ msgstr "incr_def_inc_tax_liab"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "递延所得税负债增加"
-msgstr ""
+msgstr "繰延税金負債の増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "decr_inventories"
@@ -3271,7 +3271,7 @@ msgstr "decr_inventories"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存货的减少"
-msgstr ""
+msgstr "在庫の減少"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "decr_oper_payable"
@@ -3279,7 +3279,7 @@ msgstr "decr_oper_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营性应收项目的减少"
-msgstr ""
+msgstr "営業債権の減少"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "incr_oper_payable"
@@ -3287,7 +3287,7 @@ msgstr "incr_oper_payable"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营性应付项目的增加"
-msgstr ""
+msgstr "営業債務の増加"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "others"
@@ -3295,7 +3295,7 @@ msgstr "others"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "其他"
-msgstr ""
+msgstr "他の"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "im_net_cashflow_oper_act"
@@ -3303,7 +3303,7 @@ msgstr "im_net_cashflow_oper_act"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额(间接法)"
-msgstr ""
+msgstr "営業活動によるキャッシュ・フロー（間接法）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "conv_debt_into_cap"
@@ -3311,7 +3311,7 @@ msgstr "conv_debt_into_cap"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "债务转为资本"
-msgstr ""
+msgstr "負債が資本に変換される"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "conv_copbonds_due_within_1y"
@@ -3319,7 +3319,7 @@ msgstr "conv_copbonds_due_within_1y"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "一年内到期的可转换公司债券"
-msgstr ""
+msgstr "1年以内に満期となる転換社債型社債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fa_fnc_leases"
@@ -3327,7 +3327,7 @@ msgstr "fa_fnc_leases"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "融资租入固定资产"
-msgstr ""
+msgstr "固定資産のファイナンスリース"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "im_n_incr_cash_equ"
@@ -3335,7 +3335,7 @@ msgstr "im_n_incr_cash_equ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "现金及现金等价物净增加额(间接法)"
-msgstr ""
+msgstr "現金及び現金同等物の純増加額（間接法）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "net_dism_capital_add"
@@ -3343,7 +3343,7 @@ msgstr "net_dism_capital_add"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "拆出资金净增加额"
-msgstr ""
+msgstr "貸出資金純増額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "net_cash_rece_sec"
@@ -3351,7 +3351,7 @@ msgstr "net_cash_rece_sec"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "代理买卖证券收到的现金净额(元)"
-msgstr ""
+msgstr "代理店証券取引による純現金収入（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "use_right_asset_dep"
@@ -3359,7 +3359,7 @@ msgstr "use_right_asset_dep"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "使用权资产折旧"
-msgstr ""
+msgstr "使用権資産の減価償却費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "oth_loss_asset"
@@ -3371,7 +3371,7 @@ msgstr "end_bal_cash"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "现金的期末余额"
-msgstr ""
+msgstr "期末現金残高"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "beg_bal_cash"
@@ -3379,7 +3379,7 @@ msgstr "beg_bal_cash"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:现金的期初余额"
-msgstr ""
+msgstr "以下: 期首現金残高"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "end_bal_cash_equ"
@@ -3387,7 +3387,7 @@ msgstr "end_bal_cash_equ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "加:现金等价物的期末余额"
-msgstr ""
+msgstr "追加: 期末現金同等物残高"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "beg_bal_cash_equ"
@@ -3395,19 +3395,19 @@ msgstr "beg_bal_cash_equ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "减:现金等价物的期初余额"
-msgstr ""
+msgstr "未満: 期首現金同等物残高"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "更新标志(1最新)"
-msgstr ""
+msgstr "更新フラグ (1 = 最新)"
 
 #: ../../source/manage_data/08. data_tables_40.md:380
 msgid "上市公司财务指标: `financial`"
-msgstr ""
+msgstr "上場企業の財務指標: `financial`"
 
 #: ../../source/manage_data/08. data_tables_40.md:383
 msgid "财务指标表是上市公司的财务报表之一，主要包括每股指标、盈利能力指标、成长能力指标、偿债能力指标、现金流量指标等。"
-msgstr ""
+msgstr "財務指標 - 1 株当たり、収益性、成長、支払能力、キャッシュ フローの指標。"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "eps"
@@ -3423,7 +3423,7 @@ msgstr "total_revenue_ps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股营业总收入"
-msgstr ""
+msgstr "一株当たりの営業収益合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "revenue_ps"
@@ -3431,7 +3431,7 @@ msgstr "revenue_ps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股营业收入"
-msgstr ""
+msgstr "1株当たり営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "capital_rese_ps"
@@ -3439,7 +3439,7 @@ msgstr "capital_rese_ps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股资本公积"
-msgstr ""
+msgstr "一株当たり資本準備金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "surplus_rese_ps"
@@ -3447,7 +3447,7 @@ msgstr "surplus_rese_ps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股盈余公积"
-msgstr ""
+msgstr "一株当たり剰余金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "undist_profit_ps"
@@ -3455,7 +3455,7 @@ msgstr "undist_profit_ps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股未分配利润"
-msgstr ""
+msgstr "一株当たり利益剰余金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "extra_item"
@@ -3463,7 +3463,7 @@ msgstr "extra_item"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "非经常性损益"
-msgstr ""
+msgstr "非経常損益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "profit_dedt"
@@ -3471,7 +3471,7 @@ msgstr "profit_dedt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "扣除非经常性损益后的净利润(扣非净利润)"
-msgstr ""
+msgstr "非経常項目を差し引いた純利益（Non-GAAP純利益）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "gross_margin"
@@ -3479,7 +3479,7 @@ msgstr "gross_margin"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "毛利"
-msgstr ""
+msgstr "粗利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "current_ratio"
@@ -3487,7 +3487,7 @@ msgstr "current_ratio"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "流动比率"
-msgstr ""
+msgstr "流動比率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "quick_ratio"
@@ -3495,7 +3495,7 @@ msgstr "quick_ratio"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "速动比率"
-msgstr ""
+msgstr "当座比率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cash_ratio"
@@ -3503,7 +3503,7 @@ msgstr "cash_ratio"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "保守速动比率"
-msgstr ""
+msgstr "保守的な当座比率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "invturn_days"
@@ -3511,7 +3511,7 @@ msgstr "invturn_days"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存货周转天数"
-msgstr ""
+msgstr "在庫回転日数"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "arturn_days"
@@ -3519,7 +3519,7 @@ msgstr "arturn_days"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收账款周转天数"
-msgstr ""
+msgstr "売掛金回転日数"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "inv_turn"
@@ -3527,7 +3527,7 @@ msgstr "inv_turn"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "存货周转率"
-msgstr ""
+msgstr "在庫回転率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ar_turn"
@@ -3535,7 +3535,7 @@ msgstr "ar_turn"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "应收账款周转率"
-msgstr ""
+msgstr "売掛金回転率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ca_turn"
@@ -3543,7 +3543,7 @@ msgstr "ca_turn"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "流动资产周转率"
-msgstr ""
+msgstr "流動資産回転率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fa_turn"
@@ -3551,7 +3551,7 @@ msgstr "fa_turn"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "固定资产周转率"
-msgstr ""
+msgstr "固定資産回転率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "assets_turn"
@@ -3559,7 +3559,7 @@ msgstr "assets_turn"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "总资产周转率"
-msgstr ""
+msgstr "総資産回転率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "op_income"
@@ -3567,7 +3567,7 @@ msgstr "op_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动净收益"
-msgstr ""
+msgstr "営業純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "valuechange_income"
@@ -3575,7 +3575,7 @@ msgstr "valuechange_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "价值变动净收益"
-msgstr ""
+msgstr "公正価値変動による純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "interst_income"
@@ -3583,7 +3583,7 @@ msgstr "interst_income"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "利息费用"
-msgstr ""
+msgstr "支払利息"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "daa"
@@ -3591,7 +3591,7 @@ msgstr "daa"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "折旧与摊销"
-msgstr ""
+msgstr "減価償却費と償却費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fcff"
@@ -3603,7 +3603,7 @@ msgstr "fcfe"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "股权自由现金流量"
-msgstr ""
+msgstr "株式フリーキャッシュフロー"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "current_exint"
@@ -3611,7 +3611,7 @@ msgstr "current_exint"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "无息流动负债"
-msgstr ""
+msgstr "無利息流動負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "noncurrent_exint"
@@ -3619,7 +3619,7 @@ msgstr "noncurrent_exint"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "无息非流动负债"
-msgstr ""
+msgstr "無利息の固定負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "interestdebt"
@@ -3627,7 +3627,7 @@ msgstr "interestdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "带息债务"
-msgstr ""
+msgstr "有利子負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "netdebt"
@@ -3635,7 +3635,7 @@ msgstr "netdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净债务"
-msgstr ""
+msgstr "純負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "tangible_asset"
@@ -3643,7 +3643,7 @@ msgstr "tangible_asset"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "有形资产"
-msgstr ""
+msgstr "有形資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "working_capital"
@@ -3651,7 +3651,7 @@ msgstr "working_capital"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营运资金"
-msgstr ""
+msgstr "運転資金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "networking_capital"
@@ -3659,7 +3659,7 @@ msgstr "networking_capital"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营运流动资本"
-msgstr ""
+msgstr "運転資金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "invest_capital"
@@ -3667,7 +3667,7 @@ msgstr "invest_capital"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "全部投入资本"
-msgstr ""
+msgstr "総投下資本"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "retained_earnings"
@@ -3675,7 +3675,7 @@ msgstr "retained_earnings"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "留存收益"
-msgstr ""
+msgstr "留保所得"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "diluted2_eps"
@@ -3683,7 +3683,7 @@ msgstr "diluted2_eps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "期末摊薄每股收益"
-msgstr ""
+msgstr "希薄化EPSの終値"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "bps"
@@ -3691,7 +3691,7 @@ msgstr "bps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股净资产"
-msgstr ""
+msgstr "一株当たり純資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocfps"
@@ -3699,7 +3699,7 @@ msgstr "ocfps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股经营活动产生的现金流量净额"
-msgstr ""
+msgstr "一株当たり営業キャッシュフロー"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "retainedps"
@@ -3707,7 +3707,7 @@ msgstr "retainedps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股留存收益"
-msgstr ""
+msgstr "一株当たり利益剰余金"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cfps"
@@ -3715,7 +3715,7 @@ msgstr "cfps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股现金流量净额"
-msgstr ""
+msgstr "一株当たりのネットキャッシュフロー"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ebit_ps"
@@ -3723,7 +3723,7 @@ msgstr "ebit_ps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股息税前利润"
-msgstr ""
+msgstr "一株当たりEBIT"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fcff_ps"
@@ -3731,7 +3731,7 @@ msgstr "fcff_ps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股企业自由现金流量"
-msgstr ""
+msgstr "一株当たりのフリーキャッシュフロー（企業）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fcfe_ps"
@@ -3739,7 +3739,7 @@ msgstr "fcfe_ps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股股东自由现金流量"
-msgstr ""
+msgstr "一株当たりのフリーキャッシュフロー（自己資本）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "netprofit_margin"
@@ -3747,7 +3747,7 @@ msgstr "netprofit_margin"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售净利率"
-msgstr ""
+msgstr "純利益率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "grossprofit_margin"
@@ -3755,7 +3755,7 @@ msgstr "grossprofit_margin"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售毛利率"
-msgstr ""
+msgstr "売上総利益率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cogs_of_sales"
@@ -3763,7 +3763,7 @@ msgstr "cogs_of_sales"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售成本率"
-msgstr ""
+msgstr "売上原価率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "expense_of_sales"
@@ -3771,7 +3771,7 @@ msgstr "expense_of_sales"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售期间费用率"
-msgstr ""
+msgstr "販売費率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "profit_to_gr"
@@ -3779,7 +3779,7 @@ msgstr "profit_to_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净利润/营业总收入"
-msgstr ""
+msgstr "純利益/総営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "saleexp_to_gr"
@@ -3787,7 +3787,7 @@ msgstr "saleexp_to_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售费用/营业总收入"
-msgstr ""
+msgstr "販売費／総営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "adminexp_of_gr"
@@ -3795,7 +3795,7 @@ msgstr "adminexp_of_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "管理费用/营业总收入"
-msgstr ""
+msgstr "管理費/総営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "finaexp_of_gr"
@@ -3803,7 +3803,7 @@ msgstr "finaexp_of_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "财务费用/营业总收入"
-msgstr ""
+msgstr "財務費用 / 総営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "impai_ttm"
@@ -3811,7 +3811,7 @@ msgstr "impai_ttm"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "资产减值损失/营业总收入"
-msgstr ""
+msgstr "資産減損損失/営業収益合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "gc_of_gr"
@@ -3819,7 +3819,7 @@ msgstr "gc_of_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业总成本/营业总收入"
-msgstr ""
+msgstr "総営業費用 / 総営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "op_of_gr"
@@ -3827,7 +3827,7 @@ msgstr "op_of_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润/营业总收入"
-msgstr ""
+msgstr "営業利益／営業収益合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ebit_of_gr"
@@ -3835,7 +3835,7 @@ msgstr "ebit_of_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "息税前利润/营业总收入"
-msgstr ""
+msgstr "EBIT / 総営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roe"
@@ -3843,7 +3843,7 @@ msgstr "roe"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净资产收益率"
-msgstr ""
+msgstr "自己資本利益率（ROE）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roe_waa"
@@ -3851,7 +3851,7 @@ msgstr "roe_waa"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "加权平均净资产收益率"
-msgstr ""
+msgstr "加重平均ROE"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roe_dt"
@@ -3859,7 +3859,7 @@ msgstr "roe_dt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净资产收益率(扣除非经常损益)"
-msgstr ""
+msgstr "ROE（非経常項目を除く）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roa"
@@ -3867,7 +3867,7 @@ msgstr "roa"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "总资产报酬率"
-msgstr ""
+msgstr "総資産利益率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "npta"
@@ -3875,7 +3875,7 @@ msgstr "npta"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "总资产净利润"
-msgstr ""
+msgstr "総資産当期純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roic"
@@ -3883,7 +3883,7 @@ msgstr "roic"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "投入资本回报率"
-msgstr ""
+msgstr "投下資本利益率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roe_yearly"
@@ -3891,7 +3891,7 @@ msgstr "roe_yearly"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "年化净资产收益率"
-msgstr ""
+msgstr "年換算ROE"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roa2_yearly"
@@ -3899,7 +3899,7 @@ msgstr "roa2_yearly"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "年化总资产报酬率"
-msgstr ""
+msgstr "年間総資産利益率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roe_avg"
@@ -3907,7 +3907,7 @@ msgstr "roe_avg"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "平均净资产收益率(增发条件)"
-msgstr ""
+msgstr "平均ROE（SEO条件）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "opincome_of_ebt"
@@ -3915,7 +3915,7 @@ msgstr "opincome_of_ebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动净收益/利润总额"
-msgstr ""
+msgstr "営業純利益／総利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "investincome_of_ebt"
@@ -3923,7 +3923,7 @@ msgstr "investincome_of_ebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "价值变动净收益/利润总额"
-msgstr ""
+msgstr "公正価値変動による純利益/総利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "n_op_profit_of_ebt"
@@ -3931,7 +3931,7 @@ msgstr "n_op_profit_of_ebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业外收支净额/利润总额"
-msgstr ""
+msgstr "営業外純利益／利益合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "tax_to_ebt"
@@ -3939,7 +3939,7 @@ msgstr "tax_to_ebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "所得税/利润总额"
-msgstr ""
+msgstr "所得税/総利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "dtprofit_to_profit"
@@ -3947,7 +3947,7 @@ msgstr "dtprofit_to_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "扣除非经常损益后的净利润/净利润"
-msgstr ""
+msgstr "経常外項目を除いた純利益／純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "salescash_to_or"
@@ -3955,7 +3955,7 @@ msgstr "salescash_to_or"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售商品提供劳务收到的现金/营业收入"
-msgstr ""
+msgstr "売上キャッシュ/営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocf_to_or"
@@ -3963,7 +3963,7 @@ msgstr "ocf_to_or"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额/营业收入"
-msgstr ""
+msgstr "営業活動による純キャッシュ / 営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocf_to_opincome"
@@ -3971,7 +3971,7 @@ msgstr "ocf_to_opincome"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额/经营活动净收益"
-msgstr ""
+msgstr "営業活動によるキャッシュ／営業純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "capitalized_to_da"
@@ -3979,7 +3979,7 @@ msgstr "capitalized_to_da"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "资本支出/折旧和摊销"
-msgstr ""
+msgstr "設備投資・減価償却費"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "debt_to_assets"
@@ -3987,7 +3987,7 @@ msgstr "debt_to_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "资产负债率"
-msgstr ""
+msgstr "資産負債比率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "assets_to_eqt"
@@ -3995,7 +3995,7 @@ msgstr "assets_to_eqt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "权益乘数"
-msgstr ""
+msgstr "資本乗数"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "dp_assets_to_eqt"
@@ -4003,7 +4003,7 @@ msgstr "dp_assets_to_eqt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "权益乘数(杜邦分析)"
-msgstr ""
+msgstr "自己資本乗数 (デュポン)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ca_to_assets"
@@ -4011,7 +4011,7 @@ msgstr "ca_to_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "流动资产/总资产"
-msgstr ""
+msgstr "流動資産／総資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "nca_to_assets"
@@ -4019,7 +4019,7 @@ msgstr "nca_to_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "非流动资产/总资产"
-msgstr ""
+msgstr "固定資産／総資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "tbassets_to_totalassets"
@@ -4027,7 +4027,7 @@ msgstr "tbassets_to_totalassets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "有形资产/总资产"
-msgstr ""
+msgstr "有形資産・総資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "int_to_talcap"
@@ -4035,7 +4035,7 @@ msgstr "int_to_talcap"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "带息债务/全部投入资本"
-msgstr ""
+msgstr "有利子負債／投下資本総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "eqt_to_talcapital"
@@ -4043,7 +4043,7 @@ msgstr "eqt_to_talcapital"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属于母公司的股东权益/全部投入资本"
-msgstr ""
+msgstr "親株主資本／出資金総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "currentdebt_to_debt"
@@ -4051,7 +4051,7 @@ msgstr "currentdebt_to_debt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "流动负债/负债合计"
-msgstr ""
+msgstr "流動負債／負債合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "longdeb_to_debt"
@@ -4059,7 +4059,7 @@ msgstr "longdeb_to_debt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "非流动负债/负债合计"
-msgstr ""
+msgstr "固定負債／負債合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocf_to_shortdebt"
@@ -4067,7 +4067,7 @@ msgstr "ocf_to_shortdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额/流动负债"
-msgstr ""
+msgstr "営業活動による純キャッシュ／流動負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "debt_to_eqt"
@@ -4075,7 +4075,7 @@ msgstr "debt_to_eqt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "产权比率"
-msgstr ""
+msgstr "自己資本比率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "eqt_to_debt"
@@ -4083,7 +4083,7 @@ msgstr "eqt_to_debt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属于母公司的股东权益/负债合计"
-msgstr ""
+msgstr "親株主資本／負債合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "eqt_to_interestdebt"
@@ -4091,7 +4091,7 @@ msgstr "eqt_to_interestdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属于母公司的股东权益/带息债务"
-msgstr ""
+msgstr "親会社株主資本・有利子負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "tangibleasset_to_debt"
@@ -4099,7 +4099,7 @@ msgstr "tangibleasset_to_debt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "有形资产/负债合计"
-msgstr ""
+msgstr "有形資産・負債合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "tangasset_to_intdebt"
@@ -4107,7 +4107,7 @@ msgstr "tangasset_to_intdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "有形资产/带息债务"
-msgstr ""
+msgstr "有形資産・有利子負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "tangibleasset_to_netdebt"
@@ -4115,7 +4115,7 @@ msgstr "tangibleasset_to_netdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "有形资产/净债务"
-msgstr ""
+msgstr "有形資産・純負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocf_to_debt"
@@ -4123,7 +4123,7 @@ msgstr "ocf_to_debt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额/负债合计"
-msgstr ""
+msgstr "営業活動による純キャッシュ / 負債総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocf_to_interestdebt"
@@ -4131,7 +4131,7 @@ msgstr "ocf_to_interestdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额/带息债务"
-msgstr ""
+msgstr "営業キャッシュ・有利子負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocf_to_netdebt"
@@ -4139,7 +4139,7 @@ msgstr "ocf_to_netdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额/净债务"
-msgstr ""
+msgstr "営業活動による純キャッシュ / 純負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ebit_to_interest"
@@ -4147,7 +4147,7 @@ msgstr "ebit_to_interest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "已获利息倍数(EBIT/利息费用)"
-msgstr ""
+msgstr "インタレスト・カバレッジ・レシオ（EBIT/支払利息）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "longdebt_to_workingcapital"
@@ -4155,7 +4155,7 @@ msgstr "longdebt_to_workingcapital"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "长期债务与营运资金比率"
-msgstr ""
+msgstr "長期借入金対運転資本比率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ebitda_to_debt"
@@ -4163,7 +4163,7 @@ msgstr "ebitda_to_debt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "息税折旧摊销前利润/负债合计"
-msgstr ""
+msgstr "EBITDA / 負債総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "turn_days"
@@ -4171,7 +4171,7 @@ msgstr "turn_days"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业周期"
-msgstr ""
+msgstr "動作サイクル"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roa_yearly"
@@ -4179,7 +4179,7 @@ msgstr "roa_yearly"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "年化总资产净利率"
-msgstr ""
+msgstr "総資産に対する年換算純利益率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roa_dp"
@@ -4187,7 +4187,7 @@ msgstr "roa_dp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "总资产净利率(杜邦分析)"
-msgstr ""
+msgstr "総資産純利益率（デュポン）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "fixed_assets"
@@ -4195,7 +4195,7 @@ msgstr "fixed_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "固定资产合计"
-msgstr ""
+msgstr "固定資産合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "profit_prefin_exp"
@@ -4203,7 +4203,7 @@ msgstr "profit_prefin_exp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "扣除财务费用前营业利润"
-msgstr ""
+msgstr "金融費用控除前営業利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "non_op_profit"
@@ -4211,7 +4211,7 @@ msgstr "non_op_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "非营业利润"
-msgstr ""
+msgstr "営業外利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "op_to_ebt"
@@ -4219,7 +4219,7 @@ msgstr "op_to_ebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润／利润总额"
-msgstr ""
+msgstr "営業利益／総利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "nop_to_ebt"
@@ -4227,7 +4227,7 @@ msgstr "nop_to_ebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "非营业利润／利润总额"
-msgstr ""
+msgstr "営業外利益／総利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocf_to_profit"
@@ -4235,7 +4235,7 @@ msgstr "ocf_to_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额／营业利润"
-msgstr ""
+msgstr "営業活動によるキャッシュ／営業利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cash_to_liqdebt"
@@ -4243,7 +4243,7 @@ msgstr "cash_to_liqdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "货币资金／流动负债"
-msgstr ""
+msgstr "現金及び現金同等物・流動負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cash_to_liqdebt_withinterest"
@@ -4251,7 +4251,7 @@ msgstr "cash_to_liqdebt_withinterest"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "货币资金／带息流动负债"
-msgstr ""
+msgstr "現金及び現金同等物・有利子流動負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "op_to_liqdebt"
@@ -4259,7 +4259,7 @@ msgstr "op_to_liqdebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润／流动负债"
-msgstr ""
+msgstr "営業利益・流動負債"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "op_to_debt"
@@ -4267,7 +4267,7 @@ msgstr "op_to_debt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润／负债合计"
-msgstr ""
+msgstr "営業利益／負債総額"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roic_yearly"
@@ -4275,7 +4275,7 @@ msgstr "roic_yearly"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "年化投入资本回报率"
-msgstr ""
+msgstr "投資資本に対する年換算収益率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "total_fa_trun"
@@ -4283,7 +4283,7 @@ msgstr "total_fa_trun"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "固定资产合计周转率"
-msgstr ""
+msgstr "固定資産回転率合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "profit_to_op"
@@ -4291,7 +4291,7 @@ msgstr "profit_to_op"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "利润总额／营业收入"
-msgstr ""
+msgstr "総利益／営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_opincome"
@@ -4299,7 +4299,7 @@ msgstr "q_opincome"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动单季度净收益"
-msgstr ""
+msgstr "単一四半期営業純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_investincome"
@@ -4307,7 +4307,7 @@ msgstr "q_investincome"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "价值变动单季度净收益"
-msgstr ""
+msgstr "公正価値変動による単一四半期の純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_dtprofit"
@@ -4315,7 +4315,7 @@ msgstr "q_dtprofit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "扣除非经常损益后的单季度净利润"
-msgstr ""
+msgstr "非経常項目を除いた単一四半期純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_eps"
@@ -4323,7 +4323,7 @@ msgstr "q_eps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股收益(单季度)"
-msgstr ""
+msgstr "EPS (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_netprofit_margin"
@@ -4331,7 +4331,7 @@ msgstr "q_netprofit_margin"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售净利率(单季度)"
-msgstr ""
+msgstr "純利益率 (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_gsprofit_margin"
@@ -4339,7 +4339,7 @@ msgstr "q_gsprofit_margin"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售毛利率(单季度)"
-msgstr ""
+msgstr "売上総利益率（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_exp_to_sales"
@@ -4347,7 +4347,7 @@ msgstr "q_exp_to_sales"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售期间费用率(单季度)"
-msgstr ""
+msgstr "販売費率（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_profit_to_gr"
@@ -4355,7 +4355,7 @@ msgstr "q_profit_to_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净利润／营业总收入(单季度)"
-msgstr ""
+msgstr "純利益 / 総営業収益 (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_saleexp_to_gr"
@@ -4363,7 +4363,7 @@ msgstr "q_saleexp_to_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售费用／营业总收入(单季度)"
-msgstr ""
+msgstr "販売費/総営業収益（単一四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_adminexp_to_gr"
@@ -4371,7 +4371,7 @@ msgstr "q_adminexp_to_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "管理费用／营业总收入(单季度)"
-msgstr ""
+msgstr "管理費/総営業収益 (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_finaexp_to_gr"
@@ -4379,7 +4379,7 @@ msgstr "q_finaexp_to_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "财务费用／营业总收入(单季度)"
-msgstr ""
+msgstr "財務費用 / 総営業収益 (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_impair_to_gr_ttm"
@@ -4387,7 +4387,7 @@ msgstr "q_impair_to_gr_ttm"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "资产减值损失／营业总收入(单季度)"
-msgstr ""
+msgstr "資産減損損失/総営業収益（単一四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_gc_to_gr"
@@ -4395,7 +4395,7 @@ msgstr "q_gc_to_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业总成本／营业总收入(单季度)"
-msgstr ""
+msgstr "総営業コスト / 総営業収益 (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_op_to_gr"
@@ -4403,7 +4403,7 @@ msgstr "q_op_to_gr"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润／营业总收入(单季度)"
-msgstr ""
+msgstr "営業利益／営業収益合計（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_roe"
@@ -4411,7 +4411,7 @@ msgstr "q_roe"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净资产收益率(单季度)"
-msgstr ""
+msgstr "ROE (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_dt_roe"
@@ -4419,7 +4419,7 @@ msgstr "q_dt_roe"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净资产单季度收益率(扣除非经常损益)"
-msgstr ""
+msgstr "単四半期ROE（非経常項目を除く）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_npta"
@@ -4427,7 +4427,7 @@ msgstr "q_npta"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "总资产净利润(单季度)"
-msgstr ""
+msgstr "総資産純利益（単一四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_opincome_to_ebt"
@@ -4435,7 +4435,7 @@ msgstr "q_opincome_to_ebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动净收益／利润总额(单季度)"
-msgstr ""
+msgstr "営業純利益／総利益（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_investincome_to_ebt"
@@ -4443,7 +4443,7 @@ msgstr "q_investincome_to_ebt"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "价值变动净收益／利润总额(单季度)"
-msgstr ""
+msgstr "公正価値変動による純利益 / 総利益 (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_dtprofit_to_profit"
@@ -4451,7 +4451,7 @@ msgstr "q_dtprofit_to_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "扣除非经常损益后的净利润／净利润(单季度)"
-msgstr ""
+msgstr "非経常項目を除いた純利益／純利益（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_salescash_to_or"
@@ -4459,7 +4459,7 @@ msgstr "q_salescash_to_or"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "销售商品提供劳务收到的现金／营业收入(单季度)"
-msgstr ""
+msgstr "売上から得た現金/営業収益 (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_ocf_to_sales"
@@ -4467,7 +4467,7 @@ msgstr "q_ocf_to_sales"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额／营业收入(单季度)"
-msgstr ""
+msgstr "営業活動による純キャッシュ / 営業収益 (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_ocf_to_or"
@@ -4475,7 +4475,7 @@ msgstr "q_ocf_to_or"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额／经营活动净收益(单季度)"
-msgstr ""
+msgstr "営業活動による純キャッシュ／営業純利益（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "basic_eps_yoy"
@@ -4483,7 +4483,7 @@ msgstr "basic_eps_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "基本每股收益同比增长率(%)"
-msgstr ""
+msgstr "基本的EPS前年同期比成長率(%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "dt_eps_yoy"
@@ -4491,7 +4491,7 @@ msgstr "dt_eps_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "稀释每股收益同比增长率(%)"
-msgstr ""
+msgstr "希薄化後EPS前年比成長率(%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "cfps_yoy"
@@ -4499,7 +4499,7 @@ msgstr "cfps_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股经营活动产生的现金流量净额同比增长率(%)"
-msgstr ""
+msgstr "一株当たり営業キャッシュフロー前年比成長率（％）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "op_yoy"
@@ -4507,7 +4507,7 @@ msgstr "op_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润同比增长率(%)"
-msgstr ""
+msgstr "営業利益前年比成長率(%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ebt_yoy"
@@ -4515,7 +4515,7 @@ msgstr "ebt_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "利润总额同比增长率(%)"
-msgstr ""
+msgstr "総利益前年比成長率(%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "netprofit_yoy"
@@ -4523,7 +4523,7 @@ msgstr "netprofit_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属母公司股东的净利润同比增长率(%)"
-msgstr ""
+msgstr "親会社に帰属する当期純利益の前年同期比伸び率（％）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "dt_netprofit_yoy"
@@ -4531,7 +4531,7 @@ msgstr "dt_netprofit_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属母公司股东的净利润-扣除非经常损益同比增长率(%)"
-msgstr ""
+msgstr "親会社純利益（利益を除く）の前年比成長率非経常項目 (%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "ocf_yoy"
@@ -4539,7 +4539,7 @@ msgstr "ocf_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "经营活动产生的现金流量净额同比增长率(%)"
-msgstr ""
+msgstr "営業活動によるキャッシュ・フロー 前年同期比成長率（%）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "roe_yoy"
@@ -4547,7 +4547,7 @@ msgstr "roe_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净资产收益率(摊薄)同比增长率(%)"
-msgstr ""
+msgstr "希薄化後ROE前年比成長率（%）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "bps_yoy"
@@ -4555,7 +4555,7 @@ msgstr "bps_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股净资产相对年初增长率(%)"
-msgstr ""
+msgstr "年初に対する一株当たり純資産の増加率 (%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "assets_yoy"
@@ -4563,7 +4563,7 @@ msgstr "assets_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "资产总计相对年初增长率(%)"
-msgstr ""
+msgstr "年初に対する総資産の増加率 (%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "eqt_yoy"
@@ -4571,7 +4571,7 @@ msgstr "eqt_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属母公司的股东权益相对年初增长率(%)"
-msgstr ""
+msgstr "親株主資本の期首に対する成長率 (%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "tr_yoy"
@@ -4579,7 +4579,7 @@ msgstr "tr_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业总收入同比增长率(%)"
-msgstr ""
+msgstr "総営業収益前年比成長率（%）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "or_yoy"
@@ -4587,7 +4587,7 @@ msgstr "or_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业收入同比增长率(%)"
-msgstr ""
+msgstr "営業収益前年比成長率（％）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_gr_yoy"
@@ -4595,7 +4595,7 @@ msgstr "q_gr_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业总收入同比增长率(%)(单季度)"
-msgstr ""
+msgstr "総営業収益前年比成長率 (%) (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_gr_qoq"
@@ -4603,7 +4603,7 @@ msgstr "q_gr_qoq"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业总收入环比增长率(%)(单季度)"
-msgstr ""
+msgstr "総営業収益前四半期比成長率 (%) (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_sales_yoy"
@@ -4611,7 +4611,7 @@ msgstr "q_sales_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业收入同比增长率(%)(单季度)"
-msgstr ""
+msgstr "営業収益前年比成長率（％）（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "q_sales_qoq"
@@ -4619,7 +4619,7 @@ msgstr "q_sales_qoq"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业收入环比增长率(%)(单季度)"
-msgstr ""
+msgstr "営業収益前四半期比成長率 (%) (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "158"
@@ -4631,7 +4631,7 @@ msgstr "q_op_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润同比增长率(%)(单季度)"
-msgstr ""
+msgstr "営業利益前年比成長率（％）（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "159"
@@ -4643,7 +4643,7 @@ msgstr "q_op_qoq"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润环比增长率(%)(单季度)"
-msgstr ""
+msgstr "営業利益対前四半期成長率（％）（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "160"
@@ -4655,7 +4655,7 @@ msgstr "q_profit_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净利润同比增长率(%)(单季度)"
-msgstr ""
+msgstr "純利益前年比成長率（％）（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "161"
@@ -4667,7 +4667,7 @@ msgstr "q_profit_qoq"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净利润环比增长率(%)(单季度)"
-msgstr ""
+msgstr "純利益前四半期比成長率 (%) (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "162"
@@ -4679,7 +4679,7 @@ msgstr "q_netprofit_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属母公司股东的净利润同比增长率(%)(单季度)"
-msgstr ""
+msgstr "親会社に帰属する純利益の前年同期比伸び率（%）（単四半期）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "163"
@@ -4691,7 +4691,7 @@ msgstr "q_netprofit_qoq"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "归属母公司股东的净利润环比增长率(%)(单季度)"
-msgstr ""
+msgstr "親会社に帰属する純利益の前期比成長率 (%) (単一四半期)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "164"
@@ -4703,7 +4703,7 @@ msgstr "equity_yoy"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净资产同比增长率"
-msgstr ""
+msgstr "純資産前年比増加率"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "165"
@@ -4715,11 +4715,11 @@ msgstr "166"
 
 #: ../../source/manage_data/08. data_tables_40.md:555
 msgid "上市公司财报预测: `forecast`"
-msgstr ""
+msgstr "上場企業の業績予想: `forecast`"
 
 #: ../../source/manage_data/08. data_tables_40.md:558
 msgid "财报预测表是上市公司的财务报表之一，主要包括业绩预告、业绩快报、业绩预测等。"
-msgstr ""
+msgstr "収益予測レポート — ガイダンス、エクスプレス、予測。"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "type"
@@ -4727,7 +4727,7 @@ msgstr "type"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "业绩预告类型"
-msgstr ""
+msgstr "収益指導型"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "p_change_min"
@@ -4739,7 +4739,7 @@ msgstr "float"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预告净利润变动幅度下限(%)"
-msgstr ""
+msgstr "予想純利益変化下限(%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "p_change_max"
@@ -4747,7 +4747,7 @@ msgstr "p_change_max"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预告净利润变动幅度上限(%)"
-msgstr ""
+msgstr "予想純利益変動上限(%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "net_profit_min"
@@ -4755,7 +4755,7 @@ msgstr "net_profit_min"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预告净利润下限(万元)"
-msgstr ""
+msgstr "予想純利益の下限（1万元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "net_profit_max"
@@ -4763,7 +4763,7 @@ msgstr "net_profit_max"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "预告净利润上限(万元)"
-msgstr ""
+msgstr "予想純利益上限（1万元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "last_parent_net"
@@ -4771,7 +4771,7 @@ msgstr "last_parent_net"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "上年同期归属母公司净利润"
-msgstr ""
+msgstr "前年同期の親会社に帰属する純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "first_ann_date"
@@ -4779,7 +4779,7 @@ msgstr "first_ann_date"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "首次公告日"
-msgstr ""
+msgstr "最初の発表日"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "summary"
@@ -4791,7 +4791,7 @@ msgstr "text"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "业绩预告摘要"
-msgstr ""
+msgstr "収益ガイダンスの概要"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "change_reason"
@@ -4799,43 +4799,43 @@ msgstr "change_reason"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "业绩变动原因"
-msgstr ""
+msgstr "収益変動の理由"
 
 #: ../../source/manage_data/08. data_tables_40.md:575
 msgid "上市公司财报快报: `express`"
-msgstr ""
+msgstr "上場企業の収益エクスプレス: `express`"
 
 #: ../../source/manage_data/08. data_tables_40.md:578
 msgid "财报快报表是上市公司的财务报表之一，主要包括业绩快报、业绩预告、业绩预测等。"
-msgstr ""
+msgstr "収益エクスプレス レポート — エクスプレス、ガイダンス、予測。"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业收入(元)"
-msgstr ""
+msgstr "営業収益（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "营业利润(元)"
-msgstr ""
+msgstr "営業利益（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "利润总额(元)"
-msgstr ""
+msgstr "総利益（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净利润(元)"
-msgstr ""
+msgstr "純利益（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "总资产(元)"
-msgstr ""
+msgstr "総資産（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "股东权益合计(不含少数股东权益)(元)"
-msgstr ""
+msgstr "株主資本合計（少数株主持分を除く）（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "每股收益(摊薄)(元)"
-msgstr ""
+msgstr "希薄化後EPS（元）"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "diluted_roe"
@@ -4843,7 +4843,7 @@ msgstr "diluted_roe"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "净资产收益率(摊薄)(%)"
-msgstr ""
+msgstr "希薄化ROE(%)"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "yoy_net_profit"
@@ -4851,7 +4851,7 @@ msgstr "yoy_net_profit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "去年同期修正后净利润"
-msgstr ""
+msgstr "前年同期の再表示純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "yoy_sales"
@@ -4859,7 +4859,7 @@ msgstr "yoy_sales"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "同比增长率:营业收入"
-msgstr ""
+msgstr "前年比成長率：営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "yoy_op"
@@ -4867,7 +4867,7 @@ msgstr "yoy_op"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "同比增长率:营业利润"
-msgstr ""
+msgstr "前年比成長率：営業利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "yoy_tp"
@@ -4875,7 +4875,7 @@ msgstr "yoy_tp"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "同比增长率:利润总额"
-msgstr ""
+msgstr "前年比成長率：総利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "yoy_dedu_np"
@@ -4883,7 +4883,7 @@ msgstr "yoy_dedu_np"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "同比增长率:归属母公司股东的净利润"
-msgstr ""
+msgstr "前年同期比成長率：親会社に帰属する当期純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "yoy_eps"
@@ -4891,7 +4891,7 @@ msgstr "yoy_eps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "同比增长率:基本每股收益"
-msgstr ""
+msgstr "前年同期比成長率：基本的EPS"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "yoy_roe"
@@ -4899,7 +4899,7 @@ msgstr "yoy_roe"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "同比增减:加权平均净资产收益率"
-msgstr ""
+msgstr "前年同期比：加重平均ROE"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "growth_assets"
@@ -4907,7 +4907,7 @@ msgstr "growth_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "比年初增长率:总资产"
-msgstr ""
+msgstr "成長率と開始年度の比較: 総資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "yoy_equity"
@@ -4915,7 +4915,7 @@ msgstr "yoy_equity"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "比年初增长率:归属母公司的股东权益"
-msgstr ""
+msgstr "成長率と開始年度: 親株主資本"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "growth_bps"
@@ -4923,7 +4923,7 @@ msgstr "growth_bps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "比年初增长率:归属于母公司股东的每股净资产"
-msgstr ""
+msgstr "成長率と開始年度の比較: 親会社に帰属する一株当たりの純資産"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "or_last_year"
@@ -4931,7 +4931,7 @@ msgstr "or_last_year"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "去年同期营业收入"
-msgstr ""
+msgstr "前年同期の営業収益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "op_last_year"
@@ -4939,7 +4939,7 @@ msgstr "op_last_year"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "去年同期营业利润"
-msgstr ""
+msgstr "前年同期営業利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "tp_last_year"
@@ -4947,7 +4947,7 @@ msgstr "tp_last_year"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "去年同期利润总额"
-msgstr ""
+msgstr "前年同期の利益合計"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "np_last_year"
@@ -4955,7 +4955,7 @@ msgstr "np_last_year"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "去年同期净利润"
-msgstr ""
+msgstr "前年同期の純利益"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "eps_last_year"
@@ -4963,7 +4963,7 @@ msgstr "eps_last_year"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "去年同期每股收益"
-msgstr ""
+msgstr "前年同期のEPS"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "open_net_assets"
@@ -4971,7 +4971,7 @@ msgstr "open_net_assets"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "期初净资产"
-msgstr ""
+msgstr "純資産額の推移"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "open_bps"
@@ -4979,7 +4979,7 @@ msgstr "open_bps"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "期初每股净资产"
-msgstr ""
+msgstr "一株当たり純資産額の期首"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "perf_summary"
@@ -4987,7 +4987,7 @@ msgstr "perf_summary"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "业绩简要说明"
-msgstr ""
+msgstr "収益の簡単な説明"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "is_audit"
@@ -4995,7 +4995,7 @@ msgstr "is_audit"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "是否审计： 1是 0否"
-msgstr ""
+msgstr "監査済み: 1 はい 0 いいえ"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "remark"
@@ -5003,4 +5003,4 @@ msgstr "remark"
 
 #: ../../source/manage_data/08. data_tables_40.md
 msgid "备注"
-msgstr ""
+msgstr "備考"
