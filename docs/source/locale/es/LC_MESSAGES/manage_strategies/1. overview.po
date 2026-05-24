@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the qteasy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qteasy 2.4\n"
@@ -21,7 +20,7 @@ msgstr ""
 
 #: ../../source/manage_strategies/overview.md:1
 msgid "使用交易策略"
-msgstr ""
+msgstr "Uso de estrategias comerciales"
 
 #: ../../source/manage_strategies/overview.md:3
 msgid "未完待续"
