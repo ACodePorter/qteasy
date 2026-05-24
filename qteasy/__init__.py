@@ -242,6 +242,73 @@ def _refresh_log_paths() -> None:
     os.makedirs(QT_TRADE_LOG_PATH, exist_ok=True)
 
 
+def _parse_trade_log_file_created_time(full_path: str, name: str) -> Optional[datetime]:
+    """解析 trade/risk 日志文件的创建时间（文件名时间戳优先，失败则用 mtime）。"""
+    is_trade_csv = (
+        name.endswith('.csv')
+        and (name.startswith('trade_log_') or name.startswith('trade_summary_') or name.startswith('value_curve_'))
+    )
+    is_risk_log = name.endswith('.risk.log')
+    if not (is_trade_csv or is_risk_log):
+        return None
+
+    created_time: Optional[datetime] = None
+    try:
+        if is_trade_csv:
+            stem = name[:-4]
+            parts = stem.split('_')
+            if len(parts) >= 3:
+                date_str, time_str = parts[-2], parts[-1]
+                created_time = datetime.strptime(f'{date_str}_{time_str}', '%Y%m%d_%H%M%S')
+    except Exception:
+        created_time = None
+
+    if created_time is None:
+        try:
+            created_time = datetime.fromtimestamp(os.path.getmtime(full_path))
+        except Exception:
+            return None
+    return created_time
+
+
+def _collect_expired_trade_log_files(base_path: str, keep_days: int) -> list[tuple[str, datetime]]:
+    """列出保留天数阈值之外、将被轮换删除的 trade/risk 日志文件。
+
+    Parameters
+    ----------
+    base_path : str
+        日志目录路径。
+    keep_days : int
+        保留天数。
+
+    Returns
+    -------
+    list[tuple[str, datetime]]
+        ``(full_path, created_time)`` 列表，按创建时间升序。
+    """
+    if keep_days is None or keep_days <= 0:
+        return []
+
+    if not os.path.isdir(base_path):
+        return []
+
+    threshold = datetime.now() - timedelta(days=keep_days)
+    candidates: list[tuple[str, datetime]] = []
+
+    for name in os.listdir(base_path):
+        full_path = os.path.join(base_path, name)
+        if not os.path.isfile(full_path):
+            continue
+        created_time = _parse_trade_log_file_created_time(full_path, name)
+        if created_time is None:
+            continue
+        if created_time < threshold:
+            candidates.append((full_path, created_time))
+
+    candidates.sort(key=lambda item: item[1])
+    return candidates
+
+
 def _rotate_trade_logs(base_path: str, keep_days: int) -> list[str]:
     """根据保留天数删除指定目录下的旧 trade/risk 日志文件。
 
@@ -252,58 +319,19 @@ def _rotate_trade_logs(base_path: str, keep_days: int) -> list[str]:
     风控日志通常使用 ``*.risk.log`` 命名（一般不含时间戳）。
     若解析失败，则退回使用文件修改时间近似作为创建时间。
     """
-    from qteasy import QT_CONFIG  # 局部导入以避免循环引用
-
     if keep_days is None or keep_days <= 0:
         return []
 
-    if not os.path.isdir(base_path):
-        return []
-
-    threshold = datetime.now() - timedelta(days=keep_days)
+    candidates = _collect_expired_trade_log_files(base_path, keep_days)
     removed_files: list[str] = []
-
-    for name in os.listdir(base_path):
-        full_path = os.path.join(base_path, name)
-        if not os.path.isfile(full_path):
-            continue
-        is_trade_csv = (
-            name.endswith('.csv')
-            and (name.startswith('trade_log_') or name.startswith('trade_summary_') or name.startswith('value_curve_'))
-        )
-        is_risk_log = name.endswith('.risk.log')
-        if not (is_trade_csv or is_risk_log):
-            continue
-
-        created_time: Optional[datetime] = None
-
+    for full_path, _created_time in candidates:
         try:
-            if is_trade_csv:
-                # 解析文件名中的时间戳部分：{prefix}_{operator_name}_%Y%m%d_%H%M%S.csv
-                stem = name[:-4]  # 去除 .csv
-                parts = stem.split('_')
-                if len(parts) >= 3:
-                    date_str, time_str = parts[-2], parts[-1]
-                    created_time = datetime.strptime(f'{date_str}_{time_str}', '%Y%m%d_%H%M%S')
-        except Exception:
-            created_time = None
-
-        if created_time is None:
-            # 解析失败时退回到 mtime
-            try:
-                created_time = datetime.fromtimestamp(os.path.getmtime(full_path))
-            except Exception:
-                continue
-
-        if created_time < threshold:
-            try:
-                os.remove(full_path)
-                removed_files.append(full_path)
-            except Exception as e:
-                # 仅记录 warning，不中断程序
-                logging.getLogger('core').warning(
-                    'Failed to remove old trade log file "%s": %s', full_path, e
-                )
+            os.remove(full_path)
+            removed_files.append(full_path)
+        except Exception as e:
+            logging.getLogger('core').warning(
+                'Failed to remove old trade log file "%s": %s', full_path, e
+            )
 
     if removed_files:
         logging.getLogger('core').info(

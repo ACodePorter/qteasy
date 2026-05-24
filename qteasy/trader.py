@@ -1787,8 +1787,11 @@ class Trader(object):
         positions = get_account_positions(self.account_id, data_source=self._datasource)
         order_details = orders.join(positions, on='pos_id', rsuffix='_p')
         order_details.drop(columns=['pos_id', 'account_id', 'qty_p', 'available_qty'], inplace=True)
+        order_details['order_id'] = order_details.index.astype(int)
+        if 'broker_order_id' not in order_details.columns:
+            order_details['broker_order_id'] = None
         order_details = order_details.reindex(
-                columns=['symbol', 'position', 'direction', 'order_type',
+                columns=['order_id', 'broker_order_id', 'symbol', 'position', 'direction', 'order_type',
                          'qty', 'price',
                          'submitted_time', 'status']
         )
@@ -1797,7 +1800,7 @@ class Trader(object):
         results = read_trade_results_by_order_id(orders.index.to_list(), data_source=self._datasource)
         order_result_details = order_details.join(results.set_index('order_id'), lsuffix='_quoted', rsuffix='_filled')
         order_result_details = order_result_details.reindex(
-                columns=['symbol', 'position', 'direction', 'order_type',
+                columns=['order_id', 'broker_order_id', 'symbol', 'position', 'direction', 'order_type',
                          'qty', 'price_quoted', 'submitted_time', 'status',
                          'price_filled', 'filled_qty', 'canceled_qty', 'transaction_fee', 'execution_time',
                          'delivery_status'],
