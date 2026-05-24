@@ -220,8 +220,8 @@ msgstr ""
 "`qteasy`內置了大量的技術指標，這些技術指標的計算依賴於`TA-lib`，如果需要使用`qteasy`內置的所有技術指標，需要安裝`TA-"
 "lib`。 "
 "如果跳過這一步，將只能使用以下內置策略，這裏有[完整的內置策略清單及詳細說明參考文檔](https://qteasy.readthedocs.io/zh-"
-"tw/latest/api/Built_In.html)以及[內置交易策略回測結果](https://qteasy.readthedocs.io/zh/latest/references/1-build-"
-"in-results.html):"
+"tw/latest/api/Built_In.html)以及[內置交易策略回測結果](https://qteasy.readthedocs.io/zh-"
+"tw/latest/references/1-build-in-results.html):"
 
 #: ../../source/tutorials/1-get-started.md
 msgid "ID"

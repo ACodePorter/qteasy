@@ -392,7 +392,7 @@ msgid ""
 "关于`get_history_data`函数参数的详细解释，请参见[qteasy文档](https://qteasy.readthedocs.io)"
 msgstr ""
 "`get_history_data` 関数のパラメーターの詳細については、[qteasy "
-"ドキュメント](https://⟦QTEASY2⟧.readthedocs.io) を参照してください。"
+"ドキュメント](https://qteasy.readthedocs.io) を参照してください。"
 
 #: ../../source/tutorials/2.0-get-data.md:250
 msgid "生成K线图"
@@ -616,5 +616,5 @@ msgstr ""
 #: ../../source/tutorials/2.0-get-data.md:443
 msgid "关于`qteasy`的更多介绍，请参见[qteasy文档](https://qteasy.readthedocs.io)"
 msgstr ""
-"`qteasy` の詳細については、[qteasy ドキュメント](https://⟦QTEASY2⟧.readthedocs.io) "
+"`qteasy` の詳細については、[qteasy ドキュメント](https://qteasy.readthedocs.io) "
 "を参照してください。"

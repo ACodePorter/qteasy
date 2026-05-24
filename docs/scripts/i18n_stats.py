@@ -158,7 +158,12 @@ def main() -> int:
     langs = sys.argv[1:] if len(sys.argv) > 1 else DEFAULT_LANGS
     print(f"[i18n_stats] locale root: {os.path.abspath(LOCALE_ROOT)}\n")
     print_report(langs)
-    return 0
+    failed = False
+    for lang in langs:
+        stats = scan_language(lang)
+        if stats['untranslated'] or stats['fuzzy']:
+            failed = True
+    return 1 if failed else 0
 
 
 if __name__ == '__main__':

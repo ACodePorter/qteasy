@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qteasy 2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-23 14:20+0800\n"
-"PO-Revision-Date: 2026-05-24 10:00+0800\n"
+"PO-Revision-Date: 2026-05-24 16:00+0800\n"
 "Last-Translator: Jackie PENG (pivot_translate_from_en)\n"
 "Language-Team: ja <LL@li.org>\n"
 "Language: ja\n"
@@ -274,7 +274,7 @@ msgstr ""
 "**注意** "
 "バックテスト用に履歴データをダウンロードする場合、ダウンロードされるデータはバックテストの開始日以降である必要があります。たとえば、バックテストが "
 "2013 年 1 月 1 日に開始される場合、実際にはさらに多くのデータが必要となるため、ダウンロードされるデータの開始点は 2012 年 9 "
-"月から開始される必要があります。これに関する詳細な分析については、[参考資料](http://⟦QTEASY0⟧.readthedocs.io) "
+"月から開始される必要があります。これに関する詳細な分析については、[参考資料](http://qteasy.readthedocs.io) "
 "を参照してください。"
 
 #: ../../source/tutorials/3-start-first-strategy.md:180
@@ -375,8 +375,10 @@ msgstr "`sell_batch_size=0.01`: 資産を売却する際の最小取引ロット
 
 #: ../../source/tutorials/3-start-first-strategy.md:221
 msgid ""
-"`qteasy`还有其他的配置参数，参见[QTEASY文档](https://qteasy.readthedocs.io/zh-cn/latest/)。"
+"`qteasy`还有其他的配置参数，参见[QTEASY文档](https://qteasy.readthedocs.io/ja/latest/)。"
 msgstr ""
+"`qteasy` には他の構成パラメータもあります。 [QTEASY "
+"ドキュメント](https://qteasy.readthedocs.io/ja/latest/) を参照してください。"
 
 #: ../../source/tutorials/3-start-first-strategy.md:223
 msgid "策略的回测结果"

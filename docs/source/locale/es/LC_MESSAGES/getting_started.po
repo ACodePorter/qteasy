@@ -34,8 +34,8 @@ msgstr ""
 "Instalar con `pip` (requiere `Python >= 3.9, <3.13`): algunas funciones "
 "(como todas las estrategias integradas, el almacenamiento en base de datos, "
 "etc.) requieren dependencias opcionales; consulta el "
-"[FAQ](https://qteasy.readthedocs.io/zh-cn/latest/faq.html) y las "
-"instrucciones de instalación para más detalles."
+"[FAQ](https://qteasy.readthedocs.io/es/latest/faq.html) y las instrucciones "
+"de instalación para más detalles."
 
 #: ../../source/getting_started.md:10
 msgid "启动后即可导入 `qteasy` 并查看版本号："

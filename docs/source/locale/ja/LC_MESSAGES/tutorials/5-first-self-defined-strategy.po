@@ -84,7 +84,7 @@ msgstr ""
 msgid ""
 "在[QTEASY文档](https://qteasy.readthedocs.io)中，还能找到更多关于使用内置交易策略、创建自定义策略等等相关内容。对`qteasy`的基本使用方法还不熟悉的同学，可以移步那里查看更多详细说明。"
 msgstr ""
-"[QTEASY ドキュメント](https://⟦QTEASY2⟧.readthedocs.io) "
+"[QTEASY ドキュメント](https://qteasy.readthedocs.io) "
 "では、組み込み取引戦略の使用、カスタム戦略の作成などに関する詳細情報を見つけることができます。 `qteasy` "
 "の基本的な使用法に慣れていない場合は、そこにアクセスして詳細な手順を参照してください。"
 

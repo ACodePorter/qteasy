@@ -35,9 +35,9 @@ msgid ""
 "request---新功能需求.md&title=)** "
 "，这些都是有价值的贡献。我也非常希望你分享使用`qteasy`创建的交易策略，或实现的好想法。当然，为`qteasy`编写代码也是一种很好的贡献方式。对任何贡献，我在此都深表谢意。"
 msgstr ""
-"貢献する方法は、**質問する**、**[問題を報告する](https://github.com/shepherdpp/⟦QTEASY0⟧/issues/new?assignees=&labels=&projects=&template=bug-"
+"貢献する方法は、**質問する**、**[問題を報告する](https://github.com/shepherdpp/qteasy/issues/new?assignees=&labels=&projects=&template=bug-"
 "report---"
-"bug报告.md&title=)**、**[ディスカッションに参加する](https://github.com/shepherdpp/⟦QTEASY1⟧/discussions)**、**[新機能を提案する](https://github.com/shepherdpp/⟦QTEASY2⟧/issues/new?assignees=&labels=&projects=&template=feature-"
+"bug报告.md&title=)**、**[ディスカッションに参加する](https://github.com/shepherdpp/qteasy/discussions)**、**[新機能を提案する](https://github.com/shepherdpp/qteasy/issues/new?assignees=&labels=&projects=&template=feature-"
 "request---新功能需求.md&title=)** などと簡単です。 **これらはすべて貴重です!** 貢献する方法はたくさんあります。  "
 "また、qteasy を *使用して行った創造的なこと (コードとプロット イメージの両方) を共有していただければ、とても感謝しています。  "
 "そしてもちろん、qteasy のコードを書くことも貢献する素晴らしい方法です。    ありがとう。"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: ../../source/CONTRIBUTING.md:10
 msgid "[报告问题](https://github.com/shepherdpp/qteasy/issues/new)"
-msgstr "[問題の報告](https://github.com/shepherdpp/⟦QTEASY0⟧/issues/new)"
+msgstr "[問題の報告](https://github.com/shepherdpp/qteasy/issues/new)"
 
 #: ../../source/CONTRIBUTING.md:11
 msgid ""
@@ -61,7 +61,7 @@ msgid ""
 "report---bug报告.md&title=)以便在您的描述中包括以下部分："
 msgstr ""
 "問題の明確な説明と、作業している環境の情報を提供してください。できれば、[バグ レポート "
-"テンプレート](https://github.com/shepherdpp/⟦QTEASY0⟧/issues/new?assignees=&labels=&projects=&template=bug-"
+"テンプレート](https://github.com/shepherdpp/qteasy/issues/new?assignees=&labels=&projects=&template=bug-"
 "report---bug报告.md&title=) を使用し、説明に次のセクションを含めてください。"
 
 #: ../../source/CONTRIBUTING.md:12
@@ -255,7 +255,7 @@ msgid ""
 "如果您添加了一个重要的功能，请在**[tests文件夹](https://github.com/shepherdpp/qteasy/tree/master/tests)**中创建一个回归测试文件，类似于那里的其他回归测试文件。*通常，最简单的方法是从该功能的“功能教程”中选取一些示例*（参见上一点）。"
 msgstr ""
 "重要な機能を追加する場合は、他の回帰テストと同様に、回帰テスト ファイル **[テスト "
-"フォルダー内](https://github.com/shepherdpp/⟦QTEASY0⟧/tree/master/tests)** "
+"フォルダー内](https://github.com/shepherdpp/qteasy/tree/master/tests)** "
 "も作成してください。  *多くの場合、これを行う最も簡単な方法は、機能の「チュートリアル ノートブック」* からいくつかの例を取り上げることです "
 "(前のポイントを参照)。"
 
