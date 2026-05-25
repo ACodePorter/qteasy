@@ -1076,10 +1076,13 @@ class TestTrader(unittest.TestCase):
         # test history orders without results
         history_orders = ts.history_orders(with_trade_results=False)
         self.assertIsInstance(ts.history_orders(), pd.DataFrame)
-        self.assertEqual(history_orders.shape, (9, 8))
-        self.assertEqual(history_orders.columns.tolist(), ['symbol', 'position', 'direction', 'order_type',
+        self.assertEqual(history_orders.shape, (9, 10))
+        self.assertEqual(history_orders.columns.tolist(), ['order_id', 'broker_order_id', 'symbol', 'position',
+                                                           'direction', 'order_type',
                                                            'qty', 'price',
                                                            'submitted_time', 'status'])
+        print(' history_orders columns:', history_orders.columns.tolist())
+        self.assertTrue(history_orders['order_id'].between(1, 9).all())
         # test manual change of cashes and positions
         self.assertEqual(ts.account_cash, (73905.0, 73905.0, 100000.0))
         ts.manual_change_cash(10000.0)
@@ -2223,7 +2226,7 @@ class TestTraderAccountOrders(unittest.TestCase):
     def test_history_orders_without_results_columns(self):
         ho = self.trader.history_orders(with_trade_results=False)
         self.assertIsInstance(ho, pd.DataFrame)
-        for col in ['symbol', 'position', 'direction', 'qty', 'price', 'status']:
+        for col in ['order_id', 'broker_order_id', 'symbol', 'position', 'direction', 'qty', 'price', 'status']:
             self.assertIn(col, ho.columns)
 
     def test_history_orders_with_results_columns(self):
