@@ -2520,6 +2520,56 @@ class TestTraderInfoAndMessages(unittest.TestCase):
         if os.path.exists(path):
             os.remove(path)
 
+    def test_read_sys_log_row_count_returns_n_logical_non_debug_entries(self):
+        """row_count 在过滤 DEBUG 后仍返回 N 条逻辑 INFO 记录（非物理行截断）。"""
+        print('\n[TestTraderInfoAndMessages] read_sys_log row_count after debug filter')
+        from qteasy.trading_util import sys_log_file_path_name
+
+        path = sys_log_file_path_name(self.trader.account_id, self.trader.datasource)
+        if os.path.exists(path):
+            os.remove(path)
+        with open(path, 'w', encoding='utf-8') as f:
+            for i in range(40):
+                f.write(f'INFO: replay_info_{i:02d}\n')
+            for i in range(40):
+                f.write(f'DEBUG: replay_debug_{i:02d}\n')
+
+        filtered = self.trader.read_sys_log(row_count=20, include_debug=False)
+        print(' filtered count:', len(filtered))
+        print(' filtered tail:', filtered)
+        self.assertEqual(len(filtered), 20)
+        for line in filtered:
+            self.assertIn('replay_info_', line)
+            self.assertNotIn('replay_debug_', line)
+        self.assertIn('replay_info_39', filtered[-1])
+        self.assertIn('replay_info_20', filtered[0])
+        if os.path.exists(path):
+            os.remove(path)
+
+    def test_read_sys_log_row_count_one_returns_last_non_debug_entry(self):
+        """row_count=1 在过滤 DEBUG 后返回最后一条非 DEBUG 逻辑记录。"""
+        print('\n[TestTraderInfoAndMessages] read_sys_log row_count=1 last non-debug entry')
+        from qteasy.trading_util import sys_log_file_path_name
+
+        path = sys_log_file_path_name(self.trader.account_id, self.trader.datasource)
+        if os.path.exists(path):
+            os.remove(path)
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write('<DEBUG><May18 14:55:10>running: generated trade signals:\n')
+            f.write('symbols: []\n')
+            f.write('positions: []\n')
+            f.write('<May18 14:55:10>running: strategy done.\n')
+            f.write('INFO: trailing_info_record\n')
+
+        filtered = self.trader.read_sys_log(row_count=1, include_debug=False)
+        print(' filtered:', filtered)
+        self.assertEqual(len(filtered), 1)
+        self.assertIn('trailing_info_record', filtered[0])
+        combined = ''.join(filtered)
+        self.assertNotIn('symbols: []', combined)
+        if os.path.exists(path):
+            os.remove(path)
+
 
 class TestTraderBoundaries(unittest.TestCase):
     """Boundary and edge cases: empty account, cost_params None, read_sys_log row_count edge, etc."""

@@ -5,7 +5,7 @@
 ## 2.5.2 (2026-05-24)
 
 - **Trader Shell CLI 可用性**  
-  **`orders`** 列表现显示本地订单 ID（`id`）与券商委托号（`broker_id`，若有），便于对照 **`cancel ORDER_ID`** 撤单或排障。**`history`** 仅展示确有成交的记录，未成交或已取消且无成交量的订单不再混入列表。**`task -l`** 默认列出排队中的任务（`queued`），**`task -l -s all`** 与 **`tasks`** 以与 **`schedule`** 一致的表格展示任务 ID、名称、状态与参数；仍可用 **`task TASK_ID`** 查看详情、**`task TASK_ID -c`** 取消排队任务。**`broker`**、**`gate`**、**`reconcile`**、**`liveconfig`** 改为分段键值可读输出（风格接近 **`overview`** / **`config`**），布尔项以颜色区分；程序化集成请直接调用 Trader API。**`rotatelogs`** 执行前预览待删文件并提示确认，非交互环境须加 **`--yes` / `-y`**；别名 **`rotatelog`**、**`rotate-logs`** 仍可用。
+  **`orders`** 列表现显示本地订单 ID（`id`）与券商委托号（`broker_id`，若有），便于对照 **`cancel ORDER_ID`** 撤单或排障。**`history`** 仅展示确有成交的记录，未成交或已取消且无成交量的订单不再混入列表。**`task -l`** 默认列出排队中的任务（`queued`），**`task -l -s all`** 与 **`tasks`** 以与 **`schedule`** 一致的表格展示任务 ID、名称、状态与参数；仍可用 **`task TASK_ID`** 查看详情、**`task TASK_ID -c`** 取消排队任务。**`broker`**、**`gate`**、**`reconcile`**、**`liveconfig`** 改为分段键值可读输出（风格接近 **`overview`** / **`config`**），布尔项以颜色区分；程序化集成请直接调用 Trader API。**`rotatelogs`** 执行前预览待删文件并提示确认，非交互环境须加 **`--yes` / `-y`**；别名 **`rotatelog`**、**`rotate-logs`** 仍可用。从命令模式回到 **dashboard** 时，**`-r`** 回放的系统日志条数与设定一致（按逻辑日志条目计数）；非 DEBUG 模式下不再因先截物理行再过滤 DEBUG 而明显变少。
 - **券商成交回报（Broker）**  
   券商 **`transaction()`** 回报现支持 **4 元组或 5 元组**：第 5 项为可选真实柜台委托号。内置模拟券商仍使用 4 元组，与 2.5.1 兼容。修复分段成交时误将本笔成交量当作订单总量校验的问题；5 元组委托号可写入成交结果，供实盘对账与撤单映射。
 - **实盘配置（XtQuant 协作）**  

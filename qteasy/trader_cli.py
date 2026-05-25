@@ -736,7 +736,7 @@ class TraderShell(Cmd):
         'dashboard':  dict(prog='', description='Exit shell and enter dashboard',
                            usage='dashboard [-h] [--rewind REWIND]',
                            epilog='Exit shell and enter dashboard mode, where trading logs '
-                                  'are displayed in real time, provide an integer to rewind '
+                                  'are displayed in real time; provide an integer to rewind '
                                   'previous rows of logs, default 50 rows'),
         'strategies': dict(prog='', description='Show or change strategy parameters',
                            usage='strategies [STRATEGY [STRATEGY ...]] [-h] [--detail] '
@@ -985,7 +985,7 @@ class TraderShell(Cmd):
         'dashboard':  [{'action':  'store',
                         'type':    int,
                         'default': 50,
-                        'help':    'rewind previous rows of logs, default to 50'}],
+                        'help':    'rewind previous log entries (logical records), default 50'}],
         'strategies': [{'action': 'append',  # TODO: for python version >= 3.8, use action='extend' instead
                         'nargs':  '*',  # nargs='+' will require at least one argument
                         'help':   'strategy to show or change parameters for'},
@@ -1121,7 +1121,7 @@ class TraderShell(Cmd):
         self._dashboard_on_status_line = True
 
     def _replay_dashboard_logs(self, rewind: int) -> None:
-        """排空消息队列并按当前 ``debug`` 设置回放系统日志尾部若干行。
+        """排空消息队列并按当前 ``debug`` 设置回放系统日志尾部若干条逻辑记录。
 
         ``send_message`` 会先写入系统日志再放入队列；此处排空队列不做打印，
         仅回放日志尾部，避免与 ``read_sys_log`` 同一内容重复输出。
@@ -1129,7 +1129,7 @@ class TraderShell(Cmd):
         Parameters
         ----------
         rewind : int
-            系统日志回卷行数，与 ``dashboard -r`` 一致。
+            逻辑日志条数上限，与 ``dashboard -r`` 一致（非文件物理行数）。
 
         Returns
         -------
@@ -2579,13 +2579,13 @@ class TraderShell(Cmd):
         optional arguments:
           -h, --help    show this help message and exit
           --rewind REWIND, -r REWIND
-                        number of lines to rewind  (default: 50)
+                        number of logical log entries to rewind (default: 50)
 
         Examples:
         ---------
         to enter dashboard mode:
         (QTEASY) dashboard
-        to enter dashboard mode and rewind 100 lines:
+        to enter dashboard mode and rewind 100 log entries:
         (QTEASY) dashboard -r 100
         """
 
@@ -2593,7 +2593,7 @@ class TraderShell(Cmd):
         if not args:
             return False
         if args.rewind < 0 or args.rewind > 999:
-            print('can not rewind more than 999 lines or less than 0 lines. please check your input.')
+            print('can not rewind more than 999 log entries or less than 0. please check your input.')
             return False
 
         import os

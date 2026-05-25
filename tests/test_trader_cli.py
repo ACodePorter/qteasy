@@ -1896,6 +1896,36 @@ class TestTraderCLIDashboardDisplay(unittest.TestCase):
         finally:
             clear_tables(test_ds)
 
+    def test_replay_dashboard_logs_returns_requested_entry_count(self):
+        """``_replay_dashboard_logs(N)`` 在 debug=False 时回放 N 条非 DEBUG 逻辑记录。"""
+        from tests.trader_test_helpers import create_trader_with_account, clear_tables
+
+        print('\n[TestTraderCLIDashboardDisplay] replay returns N non-debug entries')
+        trader, test_ds = create_trader_with_account(debug=False, legacy=True)
+        try:
+            _detach_live_logger_handlers()
+            log_path = sys_log_file_path_name(trader.account_id, test_ds)
+            with open(log_path, 'w', encoding='utf-8') as f:
+                for i in range(30):
+                    f.write(f'INFO: cli_replay_info_{i:02d}\n')
+                for i in range(30):
+                    f.write(f'DEBUG: cli_replay_debug_{i:02d}\n')
+            shell = TraderShell(trader)
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                shell._replay_dashboard_logs(20)
+            out = buf.getvalue()
+            print(' replay line count in stdout:', out.count('\n'))
+            info_hits = sum(out.count(f'cli_replay_info_{i:02d}') for i in range(30))
+            debug_hits = sum(out.count(f'cli_replay_debug_{i:02d}') for i in range(30))
+            print(' info_hits:', info_hits, ' debug_hits:', debug_hits)
+            self.assertEqual(info_hits, 20)
+            self.assertEqual(debug_hits, 0)
+            self.assertIn('cli_replay_info_29', out)
+            self.assertIn('cli_replay_info_10', out)
+        finally:
+            clear_tables(test_ds)
+
     def test_print_status_line_pads_to_width(self):
         """状态行按终端宽度用空格填充并以 ``\\r`` 结尾。"""
         tss = TraderShell.__new__(TraderShell)
