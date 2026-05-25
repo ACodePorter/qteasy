@@ -158,6 +158,7 @@ def _valid_qt_kwargs():
                                                                                      'simple',
                                                                                      'random',  # to be deprecated
                                                                                      'manual',
+                                                                                     'xtquant',
                                                                                      ],
              'level':     1,
              'text':      '实盘交易账户的交易代理商类型，可以设置为模拟交易代理商返回交易结果、'
