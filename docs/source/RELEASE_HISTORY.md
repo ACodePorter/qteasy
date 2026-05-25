@@ -2,16 +2,16 @@
 
 本页记录 qteasy 各版本的**用户可见**变更。升级前可查阅对应版本；2.0 大版本请参阅 [2.0 迁移指南](qteasy_2_migration_guide.md)。
 
-## 未发布（草案：xtQuant / MiniQMT 合作 S0）
+## 2.5.2 (2026-05-24)
 
-> **说明**：以下为 `qt_2.5_dev` 上 PR-0a / PR-0b 与契约文档的 **RELEASE 草案**，版本号与发布日由维护者在合并发布时确定（预计 PATCH，如 2.5.2）。正式条目发布前请勿对外引用为已发布版本。
-
+- **Trader Shell CLI 可用性**  
+  **`orders`** 列表现显示本地订单 ID（`id`）与券商委托号（`broker_id`，若有），便于对照 **`cancel ORDER_ID`** 撤单或排障。**`history`** 仅展示确有成交的记录，未成交或已取消且无成交量的订单不再混入列表。**`task -l`** 默认列出排队中的任务（`queued`），**`task -l -s all`** 与 **`tasks`** 以与 **`schedule`** 一致的表格展示任务 ID、名称、状态与参数；仍可用 **`task TASK_ID`** 查看详情、**`task TASK_ID -c`** 取消排队任务。**`broker`**、**`gate`**、**`reconcile`**、**`liveconfig`** 改为分段键值可读输出（风格接近 **`overview`** / **`config`**），布尔项以颜色区分；程序化集成请直接调用 Trader API。**`rotatelogs`** 执行前预览待删文件并提示确认，非交互环境须加 **`--yes` / `-y`**；别名 **`rotatelog`**、**`rotate-logs`** 仍可用。
 - **券商成交回报（Broker）**  
-  `transaction()` 现支持 **4 元组或 5 元组** 回报：第 5 项为可选 `broker_order_id`（真实柜台委托号）。内置 `SimulatorBroker` / `SimpleBroker` 仍使用 4 元组，行为与 2.5.1 兼容。修复分段成交时本笔成交量误当作订单总量校验的问题，避免多笔成交回报校验失败。5 元组中的委托号可写入 `raw_trade_result['broker_order_id']`，供实盘对账与撤单映射。
-- **实盘配置**  
-  `live_trade_broker_type` 与 `qt.configure(...)` 现允许取值 **`xtquant`**。仅表示配置合法；实际使用须安装并注册扩展包（如 `qteasy-xtquant` 的 `register()`），未注册时 `get_broker('xtquant')` 可能仍回落为模拟券商。
+  券商 **`transaction()`** 回报现支持 **4 元组或 5 元组**：第 5 项为可选真实柜台委托号。内置模拟券商仍使用 4 元组，与 2.5.1 兼容。修复分段成交时误将本笔成交量当作订单总量校验的问题；5 元组委托号可写入成交结果，供实盘对账与撤单映射。
+- **实盘配置（XtQuant 协作）**  
+  **`live_trade_broker_type`** 与 **`qt.configure(...)`** 现允许取值 **`xtquant`**（须安装并注册扩展包后方可实际接入；未注册时可能回落为模拟券商）。
 - **文档**  
-  新增英文契约 [XtQuant / MiniQMT Broker Adapter Contract v1](live_trading/4a-xtquant-broker-adapter-contract-v1.md)，说明 `submit_with_ack`、`poll_fills` 与 5 元组语义及禁止对 QMT 双重下单；**不**包含 fork 中 Trader 大段改动或 MySQL-only 数据策略。
+  新增英文契约 [XtQuant / MiniQMT Broker Adapter Contract v1](live_trading/4a-xtquant-broker-adapter-contract-v1.md)，说明受理、轮询成交与 5 元组语义及禁止对 QMT 双重下单。
 
 ## 2.5.1 (2026-05-18)
 

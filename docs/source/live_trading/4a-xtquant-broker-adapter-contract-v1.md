@@ -1,6 +1,6 @@
 # XtQuant / MiniQMT Broker Adapter Contract (v1)
 
-> **Audience**: Contributors implementing `qteasy-xtquant` or reviewing MiniQMT integration against qteasy **2.5.1+**.  
+> **Audience**: Contributors implementing `qteasy-xtquant` or reviewing MiniQMT integration against qteasy **2.5.2+**.  
 > **Language**: English (normative for collaboration).  
 > **Related**: :doc:`4-broker-adapter-and-integration`, `qteasy.trade_io`, `qteasy.broker`.
 
@@ -29,7 +29,7 @@ This document is the **v1 contract** for wiring **XtQuant / MiniQMT** into qteas
 
 ### 1.1 Configuration
 
-`build_live_trade_config(..., live_trade_broker_type='xtquant')` and `qt.configure(live_trade_broker_type='xtquant')` are **allowed** as of qteasy 2.5.1 (PR-0b).
+`build_live_trade_config(..., live_trade_broker_type='xtquant')` and `qt.configure(live_trade_broker_type='xtquant')` are **allowed** as of qteasy 2.5.2 (PR-0b).
 
 This only validates the **string**; it does **not** install XtQuant or register the broker class.
 
@@ -136,7 +136,7 @@ Trader.submit_trade_order()
 
 ## 4. Fill delivery: `poll_fills`, `result_queue`, and `broker.run`
 
-qteasy 2.5.1 uses **two** fill paths. XtQuant adapters must support the **Trader main loop** path.
+qteasy 2.5.2 uses **two** fill paths. XtQuant adapters must support the **Trader main loop** path.
 
 ### 4.1 Primary path (Trader live loop)
 
@@ -243,7 +243,7 @@ If `submit()` is used in tests with 5-tuples, `broker_order_id` in each fill sho
 
 ## 7. Differences from helloeveroneday fork (ext-dev)
 
-| Topic | Fork tendency | qteasy 2.5.1 + this contract |
+| Topic | Fork tendency | qteasy 2.5.2 + this contract |
 |-------|---------------|------------------------------|
 | Trader changes | Large pre-check / DIAG / queue drain | **No** merge; use `RiskManager` + Broker adapter |
 | Tuple contract | 5-tuple only | 4-tuple allowed for simulators; **XtQuant uses 5-tuple** |
@@ -272,4 +272,4 @@ Problem definitions from fork production incidents (ghost orders, rebalance race
 - Code: `qteasy/broker.py`, `qteasy/trader.py`, `qteasy/trade_io.py`  
 - Upstream tests: `tests/test_broker_order_id_persistence_20260429.py`, `tests/test_trade_io_contracts.py`
 
-**Contract version**: v1 (2026-05; qteasy 2.5.1, PR-0a/0b). Changes should be discussed via GitHub issue before implementation drift.
+**Contract version**: v1 (2026-05; qteasy 2.5.2, PR-0a/0b). Changes should be discussed via GitHub issue before implementation drift.

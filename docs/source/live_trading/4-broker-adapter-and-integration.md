@@ -91,7 +91,7 @@ Operator.run_live_trade()
 
 ## 4. 扩展新 Broker 类型
 
-**XtQuant / MiniQMT**：配置项 ``live_trade_broker_type='xtquant'`` 已在 2.5.1 白名单中；实现细节与禁止双重下单等规则见英文契约 :doc:`4a-xtquant-broker-adapter-contract-v1`（协作方 PR 评审基准）。
+**XtQuant / MiniQMT**：配置项 ``live_trade_broker_type='xtquant'`` 已在 2.5.2 白名单中；实现细节与禁止双重下单等规则见英文契约 :doc:`4a-xtquant-broker-adapter-contract-v1`（协作方 PR 评审基准）。
 
 注册工厂（示例）：
 
